@@ -1,6 +1,6 @@
 ---
 deployment:
   tasks:
-    - export DEPLOYPATH=/home2/anushkaf/neonelite.in/
+    - export DEPLOYPATH=/home2/anushkaf/neonelite.in/granthaa
     - /bin/cp * $DEPLOYPATH
     
