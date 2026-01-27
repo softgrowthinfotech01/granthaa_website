@@ -1,56 +1,59 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>CSS Only Menu</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-</head>
+  <head>
+    <meta charset="UTF-8" />
+    <title>CSS Only Menu</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
 
-<body class="bg-black overflow-x-hidden">
+  <body class="bg-black overflow-x-hidden">
+    <input type="checkbox" id="menuToggle" class="peer hidden" />
 
-  <input type="checkbox" id="menuToggle" class="peer hidden">
+    <header
+      class="w-full h-16 md:h-24 flex items-center justify-between px-4 md:px-10 border-b border-gray-800 relative z-50"
+    >
+      <label
+        for="menuToggle"
+        class="flex items-center gap-3 text-[#d4b07a] cursor-pointer"
+      >
+        <div class="space-y-1">
+          <span class="block w-6 h-[2px] bg-[#d4b07a]"></span>
+          <span class="block w-6 h-[2px] bg-[#d4b07a]"></span>
+          <span class="block w-6 h-[2px] bg-[#d4b07a]"></span>
+        </div>
+        <span class="hidden sm:block text-lg font-light">Menu</span>
+      </label>
 
-  <header
-    class="w-full h-16 md:h-24 flex items-center justify-between px-4 md:px-10 border-b border-gray-800 relative z-50">
-
-    <label for="menuToggle" class="flex items-center gap-3 text-[#d4b07a] cursor-pointer">
-      <div class="space-y-1">
-        <span class="block w-6 h-[2px] bg-[#d4b07a]"></span>
-        <span class="block w-6 h-[2px] bg-[#d4b07a]"></span>
-        <span class="block w-6 h-[2px] bg-[#d4b07a]"></span>
+      <div class="flex flex-col items-center text-[#d4b07a]">
+        <div class="border border-[#d4b07a] p-2 mb-1">
+          <span class="text-lg md:text-xl font-bold">GR</span>
+        </div>
+        <span class="text-[10px] md:text-xs tracking-widest">GRANTHA</span>
       </div>
-      <span class="hidden sm:block text-lg font-light">Menu</span>
+
+      <a
+        href="#"
+        class="hidden md:block border border-[#d4b07a] text-[#d4b07a] px-5 py-2 rounded hover:bg-[#d4b07a] hover:text-black transition"
+      >
+        Download Brochure
+      </a>
+    </header>
+
+    <label
+      for="menuToggle"
+      class="fixed inset-0 bg-black/60 opacity-0 pointer-events-none peer-checked:opacity-100 peer-checked:pointer-events-auto transition-opacity duration-300 z-40"
+    >
     </label>
 
-    <div class="flex flex-col items-center text-[#d4b07a]">
-      <div class="border border-[#d4b07a] p-2 mb-1">
-        <span class="text-lg md:text-xl font-bold">GR</span>
+    <div
+      class="fixed top-0 left-0 h-full w-full sm:w-80 bg-black text-[#d4b07a] transform -translate-x-full peer-checked:translate-x-0 transition-transform duration-300 z-50 border-r border-gray-800"
+    >
+      <div class="p-8 space-y-8 mt-16">
+        <a href="#" class="block text-xl hover:opacity-50">Home</a>
+        <a href="#" class="block text-xl hover:opacity-50">About</a>
+        <a href="#" class="block text-xl hover:opacity-50">Projects</a>
+        <a href="#" class="block text-xl hover:opacity-50">Contact</a>
       </div>
-      <span class="text-[10px] md:text-xs tracking-widest">GRANTHA</span>
     </div>
-
-    <a href="#"
-      class="hidden md:block border border-[#d4b07a] text-[#d4b07a] px-5 py-2 rounded hover:bg-[#d4b07a] hover:text-black transition">
-      Download Brochure
-    </a>
-  </header>
-
-  <label for="menuToggle"
-    class="fixed inset-0 bg-black/60 opacity-0 pointer-events-none peer-checked:opacity-100 peer-checked:pointer-events-auto transition-opacity duration-300 z-40">
-  </label>
-
-  <div
-    class="fixed top-0 left-0 h-full w-full sm:w-80 bg-black text-[#d4b07a]
-           transform -translate-x-full peer-checked:translate-x-0
-           transition-transform duration-300 z-50 border-r border-gray-800">
-
-    <div class="p-8 space-y-8 mt-16">
-      <a href="#" class="block text-xl hover:opacity-50">Home</a>
-      <a href="#" class="block text-xl hover:opacity-50">About</a>
-      <a href="#" class="block text-xl hover:opacity-50">Projects</a>
-      <a href="#" class="block text-xl hover:opacity-50">Contact</a>
-    </div>
-  </div>
-
-</body>
+  </body>
 </html>
