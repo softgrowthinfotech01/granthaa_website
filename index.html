@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>index</title>
+    <style>
+        .writing-mode-vertical {
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+  }
+ 
+@keyframes bounce-slow {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+.animate-bounce-slow {
+  animation: bounce-slow 2s infinite;
+}
+</style>
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Flowbite JS -->
+  <script src="https://unpkg.com/flowbite@1.6.5/dist/flowbite.min.js"></script>
+</head>
+<body class="bg-white">
+
+  <div id="default-carousel" class="relative w-full h-screen" data-carousel="slide">
+  <!-- Carousel wrapper -->
+  <div class="relative h-full overflow-hidden">
+
+    <!-- Item 1 -->
+    <div class="hidden duration-700 ease-in-out h-full" data-carousel-item>
+      <img src="images/GLDimg1.png"
+           class="absolute w-full h-full object-cover"
+           alt="Slide 1">
+    </div>
+
+    <!-- Item 2 -->
+    <div class="hidden duration-700 ease-in-out h-full" data-carousel-item>
+      <img src="images/GLDimg2.png"
+           class="absolute w-full h-full object-cover"
+           alt="Slide 2">
+    </div>
+
+    <!-- Item 3 -->
+    <div class="hidden duration-700 ease-in-out h-full" data-carousel-item>
+      <img src="images/GLDimg3.png"
+           class="absolute w-full h-full object-cover"
+           alt="Slide 3">
+    </div>
+
+    <!-- Item 4 -->
+    <div class="hidden duration-700 ease-in-out h-full" data-carousel-item>
+      <img src="images/GLDimg4.png"
+           class="absolute w-full h-full object-cover"
+           alt="Slide 4">
+    </div>
+
+    <!-- Item 5 -->
+    <div class="hidden duration-700 ease-in-out h-full" data-carousel-item>
+      <img src="images/GLDimg5.png"
+           class="absolute w-full h-full object-cover"
+           alt="Slide 5">
+    </div>
+
+  </div>
+
+  <!-- Slider indicators -->
+  <div class="absolute z-30 flex -translate-x-1/2 bottom-5 left-1/2 space-x-3">
+    <button type="button" class="w-3 h-3 rounded-full bg-white/40" data-carousel-slide-to="0"></button>
+    <button type="button" class="w-3 h-3 rounded-full bg-white/40" data-carousel-slide-to="1"></button>
+    <button type="button" class="w-3 h-3 rounded-full bg-white/40" data-carousel-slide-to="2"></button>
+    <button type="button" class="w-3 h-3 rounded-full bg-white/40" data-carousel-slide-to="3"></button>
+    <button type="button" class="w-3 h-3 rounded-full bg-white/40" data-carousel-slide-to="4"></button>
+  </div>
+
+  <!-- Controls (Updated Buttons) -->
+  <a href="#slide-prev"
+     class="group absolute left-4 top-1/2 -translate-y-1/2 z-30
+            w-14 h-14 rounded-full
+            bg-black/70 backdrop-blur
+            flex items-center justify-center
+            border border-[#d4af37]/40
+            shadow-[0_0_0_#d4af37]
+            hover:shadow-[0_0_25px_#d4af37]
+            hover:scale-110
+            transition-all duration-300"
+     data-carousel-prev>
+    <span class="text-[#d4af37] text-5xl
+                 group-hover:-translate-x-1
+                 transition-transform duration-300 mb-4">‹</span>
+  </a>
+
+  <a href="#slide-next"
+     class="group absolute right-4 top-1/2 -translate-y-1/2 z-30
+            w-14 h-14 rounded-full
+            bg-black/70 backdrop-blur
+            flex items-center justify-center
+            border border-[#d4af37]/40
+            shadow-[0_0_0_#d4af37]
+            hover:shadow-[0_0_25px_#d4af37]
+            hover:scale-110
+            transition-all duration-300"
+     data-carousel-next>
+    <span class="text-[#d4af37] text-5xl
+                 group-hover:translate-x-1
+                 transition-transform duration-300 mb-4">›</span>
+  </a>
+</div>
+
+ 
+<!-- ABOUT SECTION -->
+<section class="max-w-7xl mx-auto px-6 py-20 grid md:grid-cols-2 gap-16 items-center">
+
+  <!-- LEFT IMAGE -->
+  <div class="rounded-2xl overflow-hidden shadow-lg">
+    <img src="images/villas img.jpg" alt="Building" class="w-full h-full object-cover">
+
+     <h2 class="text-4xl md:text-5xl font-serif mt-6 text-[#d2b48c] mb-4">
+        Amenities
+    </h2>
+    <p class="text-lg text-gray-300 leading-relaxed max-w-xl">
+     Discover top-notch amenities designed to enhance your experience, comfort, and convenience at every step.
+    </p>
+
+  </div>
+
+  <!-- RIGHT CONTENT -->
+  <div class="mb-[200px]">
+    <h2 class="text-4xl md:text-5xl font-serif text-[#d2b48c]  mb-[30px]">
+      About Us
+    </h2>
+
+    <p class="text-lg text-gray-300 leading-relaxed max-w-xl ">
+      Roswalt Zyon in Andheri Oshiwara stands tall like the 'Hills of God',
+      representing power, prestige, and perfection. It's not just a home;
+      it's a symbol of excellence for a select few.
+    </p>
+
+    <button class="mt-8 bg-[#b38350] hover:bg-[#9e6f3f] text-white justify-items-center px-8 py-3 rounded-md transition">
+      Schedule A Site Visit 
+    </button>
+  </div>
+
+</section>
+
+
+<section class="max-w-7xl mx-auto px-6 py-20">
+
+  <div class="relative max-w-6xl mx-auto py-16">
+
+  <!-- LEFT ARROW -->
+<a href="#slide1"
+   class="group absolute left-4 top-1/2 -translate-y-1/2 z-10
+          w-14 h-14 rounded-full
+          bg-black/70 backdrop-blur
+          flex items-center justify-center
+          border border-[#d4af37]/40
+          shadow-[0_0_0_#d4af37]
+          hover:shadow-[0_0_25px_#d4af37]
+          hover:scale-110
+          transition-all duration-300">
+  <span class="text-[#d4af37] text-5xl
+               group-hover:-translate-x-1
+               transition-transform duration-300 mb-4">‹</span>
+</a>
+
+
+<a href="#slide7"
+   class="group absolute right-4 top-1/2 -translate-y-1/2 z-10
+          w-14 h-14 rounded-full
+          bg-black/70 backdrop-blur
+          flex items-center justify-center
+          border border-[#d4af37]/40
+          shadow-[0_0_0_#d4af37]
+          hover:shadow-[0_0_25px_#d4af37]
+          hover:scale-110
+          transition-all duration-300">
+  <span class="text-[#d4af37] text-5xl
+               group-hover:translate-x-1
+               transition-transform duration-300 mb-4">›</span>
+</a>
+
+
+
+
+
+
+
+  <!-- SLIDER -->
+  <div
+    class="flex gap-6 overflow-x-auto scroll-smooth snap-x snap-mandatory
+           px-14 scrollbar-hide">
+
+    <!-- CARD 1 -->
+    <div id="slide1"
+         class="min-w-[320px] snap-center bg-white rounded-xl shadow-xl overflow-hidden">
+      <img src="https://picsum.photos/500/350?1" class="w-full h-56 object-cover">
+      <div class="p-4">
+        <h3 class="text-lg font-semibold">Luxury Interior</h3>
+        <p class="text-sm text-gray-500">Modern premium design</p>
+      </div>
+    </div>
+
+    <!-- CARD 2 -->
+    <div id="slide2"
+         class="min-w-[320px] snap-center bg-white rounded-xl shadow-xl overflow-hidden">
+      <img src="https://picsum.photos/500/350?2" class="w-full h-56 object-cover">
+      <div class="p-4">
+        <h3 class="text-lg font-semibold">Architecture</h3>
+        <p class="text-sm text-gray-500">Minimal & clean</p>
+      </div>
+    </div>
+
+    <!-- CARD 3 -->
+    <div id="slide3"
+         class="min-w-[320px] snap-center bg-white rounded-xl shadow-xl overflow-hidden">
+      <img src="https://picsum.photos/500/350?3" class="w-full h-56 object-cover">
+      <div class="p-4">
+        <h3 class="text-lg font-semibold">Creative Space</h3>
+        <p class="text-sm text-gray-500">Bright & elegant</p>
+      </div>
+    </div>
+
+    <!-- CARD 4 -->
+    <div id="slide4"
+         class="min-w-[320px] snap-center bg-white rounded-xl shadow-xl overflow-hidden">
+      <img src="https://picsum.photos/500/350?4" class="w-full h-56 object-cover">
+      <div class="p-4">
+        <h3 class="text-lg font-semibold">Premium Living</h3>
+        <p class="text-sm text-gray-500">High-end comfort</p>
+      </div>
+    </div>
+
+     <div id="slide5"
+         class="min-w-[320px] snap-center bg-white rounded-xl shadow-xl overflow-hidden">
+      <img src="https://picsum.photos/500/350?4" class="w-full h-56 object-cover">
+      <div class="p-4">
+        <h3 class="text-lg font-semibold">Premium Living</h3>
+        <p class="text-sm text-gray-500">High-end comfort</p>
+      </div>
+    </div>
+
+     <div id="slide6"
+         class="min-w-[320px] snap-center bg-white rounded-xl shadow-xl overflow-hidden">
+      <img src="https://picsum.photos/500/350?4" class="w-full h-56 object-cover">
+      <div class="p-4">
+        <h3 class="text-lg font-semibold">Premium Living</h3>
+        <p class="text-sm text-gray-500">High-end comfort</p>
+      </div>
+    </div>
+
+     <div id="slide7"
+         class="min-w-[320px] snap-center bg-white rounded-xl shadow-xl overflow-hidden">
+      <img src="https://picsum.photos/500/350?4" class="w-full h-56 object-cover">
+      <div class="p-4">
+        <h3 class="text-lg font-semibold">Premium Living</h3>
+        <p class="text-sm text-gray-500">High-end comfort</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+            <button class="mt-8 bg-[#b38350] hover:bg-[#9e6f3f] text-white ml-[535px] px-8 py-3 rounded-md transition">
+                    Schedule A Site Visit
+            </button>
+       
+
+</section>
+<section class="py-24 text-center">
+    <h2 class="text-4xl font-heading text-gold mb-12">
+      Configuration
+    </h2>
+
+    <div class="max-w-4xl mx-auto px-6">
+      <div
+        class="relative rounded-xl border border-gold/60 
+               bg-gradient-to-r from-[#1b140d] via-[#3b2a1a] to-[#1b140d]
+               px-10 py-14 shadow-2xl">
+
+        <h3 class="text-4xl font-heading text-gold mb-8">
+          4BHK as Unique as You
+        </h3>
+
+       <button class=" bg-[#b38350] hover:bg-[#9e6f3f] text-white  px-8 py-3 rounded-md transition">
+                    Enquire Now
+            </button>
+      </div>
+    </div>
+</section>
+
+
+<div class="min-h-screen bg-[radial-gradient(circle_at_1px_1px,#1f1f1f_1px,transparent_0)] bg-[length:24px_24px]">
+
+    <!-- Header -->
+    <div class="text-center pt-20 pb-16">
+      <h1 class="text-5xl md:text-6xl font-[Playfair_Display] text-[#d8b78c]">
+        Gallery
+      </h1>
+      <p class="mt-4 text-gray-300 text-lg">
+        Explore Our Gallery And Experience The Beauty In Every Detail
+      </p>
+    </div>
+    
+    <div class="max-w-7xl mx-auto px-1">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-5 items-center">
+    
+        <!-- Left Card -->
+        <div class="bg-[#e6c89f] text-black max-w-lg rounded-3xl p-10 shadow-lg">
+          <h2 class="text-3xl font-[Playfair_Display] mb-4">
+            Visualise Your Dream Home.
+          </h2>
+          <p class="text-gray-700 mb-8">
+            Turn Your Dreams Into A Home You'll Love.
+          </p>
+          <button class="bg-[#9c6b3f] text-white px-6 py-3 rounded-lg hover:bg-[#875b34] transition">
+            Schedule A Site Visit
+          </button>
+        </div>
+    
+        <!-- Image Gallery -->
+        <div class=" md:col-span-2 relative w-full overflow-hidden py-10">
+    
+          <!-- LEFT ARROW -->
+          <a href="#s1-slide1" class="group absolute left-4 top-1/2 -translate-y-1/2 z-10
+              w-14 h-14 rounded-full
+              bg-black/70 backdrop-blur
+              flex items-center justify-center
+              border border-[#d4af37]/40
+              shadow-[0_0_0_#d4af37]
+              hover:shadow-[0_0_25px_#d4af37]
+              hover:scale-110
+              transition-all duration-300">
+            <span class="text-[#d4af37] text-5xl
+                   group-hover:-translate-x-1
+                   transition-transform duration-300 mb-3">‹</span>
+          </a>
+    
+          <!-- RIGHT ARROW -->
+          <a href="#s1-slide7" class="group absolute right-4 top-1/2 -translate-y-1/2 z-10
+              w-14 h-14 rounded-full
+              bg-black/70 backdrop-blur
+              flex items-center justify-center
+              border border-[#d4af37]/40
+              shadow-[0_0_0_#d4af37]
+              hover:shadow-[0_0_25px_#d4af37]
+              hover:scale-110
+              transition-all duration-300">
+            <span class="text-[#d4af37] text-5xl
+                   group-hover:translate-x-1
+                   transition-transform duration-300 mb-3">›</span>
+          </a>
+    
+          <!-- SLIDER -->
+          <div class="flex w-[800px] gap-4  overflow-x-auto  scroll-smooth snap-x snap-mandatory
+                 px-4 md:px-8 scrollbar-hide">
+    
+            <!-- CARD 1 -->
+            <div id="s1-slide1" class="min-w-[280px] snap-center bg-white rounded-xl shadow-xl overflow-hidden">
+              <img src="https://picsum.photos/500/350?1" class="w-full h-48 object-cover">
+              <div class="p-4">
+                <h3 class="text-lg font-semibold">Luxury Interior</h3>
+                <p class="text-sm text-gray-500">Modern premium design</p>
+              </div>
+            </div>
+    
+            <!-- CARD 2 -->
+            <div id="s1-slide2" class="min-w-[280px] snap-center bg-white rounded-xl shadow-xl overflow-hidden">
+              <img src="https://picsum.photos/500/350?2" class="w-full h-48 object-cover">
+              <div class="p-4">
+                <h3 class="text-lg font-semibold">Architecture</h3>
+                <p class="text-sm text-gray-500">Minimal & clean</p>
+              </div>
+            </div>
+    
+            <!-- CARD 3 -->
+            <div id="s1-slide3" class="min-w-[280px] snap-center bg-white rounded-xl shadow-xl overflow-hidden">
+              <img src="https://picsum.photos/500/350?3" class="w-full h-48 object-cover">
+              <div class="p-4">
+                <h3 class="text-lg font-semibold">Creative Space</h3>
+                <p class="text-sm text-gray-500">Bright & elegant</p>
+              </div>
+            </div>
+    
+            <!-- CARD 4 -->
+            <div id="s1-slide4" class="min-w-[280px] snap-center bg-white rounded-xl shadow-xl overflow-hidden">
+              <img src="https://picsum.photos/500/350?4" class="w-full h-48 object-cover">
+              <div class="p-4">
+                <h3 class="text-lg font-semibold">Premium Living</h3>
+                <p class="text-sm text-gray-500">High-end comfort</p>
+              </div>
+            </div>
+    
+            <div id="s1-slide5" class="min-w-[280px] snap-center bg-white rounded-xl shadow-xl overflow-hidden">
+              <img src="https://picsum.photos/500/350?4" class="w-full h-48 object-cover">
+              <div class="p-4">
+                <h3 class="text-lg font-semibold">Premium Living</h3>
+                <p class="text-sm text-gray-500">High-end comfort</p>
+              </div>
+            </div>
+    
+            <div id="s1-slide6" class="min-w-[280px] snap-center bg-white rounded-xl shadow-xl overflow-hidden">
+              <img src="https://picsum.photos/500/350?4" class="w-full h-48 object-cover">
+              <div class="p-4">
+                <h3 class="text-lg font-semibold">Premium Living</h3>
+                <p class="text-sm text-gray-500">High-end comfort</p>
+              </div>
+            </div>
+    
+            <div id="s1-slide7" class="min-w-[280px] snap-center bg-white rounded-xl shadow-xl overflow-hidden">
+              <img src="https://picsum.photos/500/350?4" class="w-full h-48 object-cover">
+              <div class="p-4">
+                <h3 class="text-lg font-semibold">Premium Living</h3>
+                <p class="text-sm text-gray-500">High-end comfort</p>
+              </div>
+            </div>
+    
+          </div>
+        </div>
+    
+      </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- DOWNLOAD BROCHURE BUTTON (RIGHT SIDE) -->
+<div id="brochureBtn"
+     class="fixed right-0 top-1/2 -translate-y-1/2 z-30
+            transition-opacity duration-500 opacity-100">
+  <a href="#"
+     class="bg-[#b38350] text-white px-4 py-6 rounded-l-md
+            writing-mode-vertical tracking-widest font-semibold">
+    Download Brochure
+  </a>
+</div>
+
+
+
+
+<!-- WHATSAPP STICKY BUTTON -->
+<a href="https://wa.me/919999999999"
+   target="_blank"
+   class="fixed bottom-6 right-6 z-50 bg-green-500 p-4 rounded-full shadow-lg
+          hover:scale-110 hover:shadow-2xl
+          transition-all duration-300
+          animate-bounce-slow">
+
+  <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7 fill-white drop-shadow-lg" viewBox="0 0 32 32">
+    <path d="M19.11 17.2c-.28-.14-1.65-.81-1.91-.9-.26-.09-.45-.14-.64.14-.19.28-.73.9-.9 1.08-.17.19-.34.21-.62.07-.28-.14-1.19-.44-2.27-1.4-.84-.75-1.4-1.67-1.57-1.95-.17-.28-.02-.43.13-.57.13-.13.28-.34.42-.51.14-.17.19-.28.28-.47.09-.19.05-.35-.02-.49-.07-.14-.64-1.54-.88-2.11-.23-.56-.46-.49-.64-.5-.17-.01-.35-.01-.54-.01-.19 0-.49.07-.75.35-.26.28-.98.96-.98 2.35s1.01 2.73 1.15 2.92c.14.19 1.99 3.04 4.82 4.26.67.29 1.2.46 1.61.59.68.22 1.29.19 1.78.11.54-.08 1.65-.67 1.88-1.32.23-.65.23-1.2.16-1.32-.07-.12-.26-.19-.54-.33z"/>
+    <path d="M16 2.67C8.64 2.67 2.67 8.64 2.67 16c0 2.61.77 5.05 2.1 7.1L2.67 29.33l6.39-2.07c1.98 1.08 4.25 1.74 6.94 1.74 7.36 0 13.33-5.97 13.33-13.33S23.36 2.67 16 2.67zm0 24.22c-2.34 0-4.5-.64-6.36-1.75l-.45-.27-3.78 1.22 1.24-3.68-.29-.47c-1.23-1.95-1.88-4.2-1.88-6.55 0-6.68 5.44-12.11 12.11-12.11s12.11 5.44 12.11 12.11-5.44 12.11-12.11 12.11z"/>
+  </svg>
+</a>
+
+</body>
+</html>
+
+
