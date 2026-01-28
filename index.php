@@ -26,7 +26,7 @@
 </head>
 <body class="bg-white">
 
-
+<?php include "header.php"; ?>
 
   
   <div id="default-carousel" class="relative w-full h-screen" data-carousel="slide">
