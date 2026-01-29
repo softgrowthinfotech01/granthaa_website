@@ -15,7 +15,7 @@
   class="w-full sticky top-0
          bg-gradient-to-tr from-cyan-950 via-gray-900 to-slate-950
          h-16 md:h-24 flex items-center justify-between
-         px-4 md:px-10 border-b border-gray-800 z-50"
+         px-4 md:px-6 border-b border-gray-800 z-50"
 >
 
     <!-- MENU ICON -->
@@ -32,7 +32,7 @@
       <img
         src="images/granthalogo.webp"
         alt="Grantha Logo"
-        class="h-6 sm:h-8 md:h-10 lg:h-12 xl:h-14 w-auto object-contain"
+        class="sm:h-14 md:h-16 lg:h-18 xl:h-20 w-auto object-contain"
       />
     </div>
 
