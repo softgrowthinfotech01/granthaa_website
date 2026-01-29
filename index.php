@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>index</title>
   <style>
+    
     .writing-mode-vertical {
       writing-mode: vertical-rl;
       text-orientation: mixed;
@@ -34,7 +35,7 @@
   <script src="https://unpkg.com/flowbite@1.6.5/dist/flowbite.min.js"></script>
 </head>
 
-<body class="bg-white">
+<body class="bg-black">
 
   <?php include "header.php"; ?>
 
@@ -199,7 +200,9 @@
 
           <!-- SLIDER -->
           <div class="flex w-[800px] gap-4  overflow-x-auto  scroll-smooth snap-x snap-mandatory
-                 px-4 md:px-8 scrollbar-hide">
+                 px-4 md:px-8 scrollbar-hide [&::-webkit-scrollbar]:hidden
+[-ms-overflow-style:none]
+[scrollbar-width:none]">
 
             <!-- CARD 1 -->
             <div id="s1-slide1" class="min-w-[280px] snap-center bg-white rounded-xl shadow-xl overflow-hidden">
@@ -270,118 +273,64 @@
 
   </div>
 
-  <section class="min-h-screen bg-gray-200 mx-auto px-6 py-20">
+  <section class="min-h-screen bg-black mx-auto  py-10">
 
-    <div class="relative max-w-6xl bg-cyan-950 rounded-xl mx-auto py-16">
-
-      <!-- LEFT ARROW -->
-      <a href="#slider1"
-        class="arrowbtn  group absolute -left-[60px] top-1/2 -translate-y-1/2 z-10
-          w-14 h-14 rounded-full
-          bg-black/70 backdrop-blur
-          flex items-center justify-center
-          border border-[#d4af37]/40
-          shadow-[0_0_0_#d4af37]
-          hover:shadow-[0_0_25px_#d4af37]
-          hover:scale-110
-          transition-all duration-300">
-        <span class="text-[#d4af37] text-5xl
-               group-hover:-translate-x-1
-               transition-transform duration-300 mb-4">‹</span>
-      </a>
-
-
-      <a href="#slider7"
-        class="arrowbtn  group absolute -right-[60px] top-1/2 -translate-y-1/2 z-10
-          w-14 h-14 rounded-full
-          bg-black/70 backdrop-blur
-          flex items-center justify-center
-          border border-[#d4af37]/40
-          shadow-[0_0_0_#d4af37]
-          hover:shadow-[0_0_25px_#d4af37]
-          hover:scale-110
-          transition-all duration-300">
-        <span class="text-[#d4af37] text-5xl
-               group-hover:translate-x-1
-               transition-transform duration-300 mb-4">›</span>
-      </a>
-
-
-
-
-
-
+    <div class="relative w-full  rounded-xl mx-auto py-16 ">
 
       <!-- SLIDER -->
       <div
+        id="autoSlider"
         class="flex gap-6 overflow-x-auto scroll-smooth snap-x snap-mandatory
-           px-14 scrollbar-hide">
+        scrollbar-hide [&::-webkit-scrollbar]:hidden
+[-ms-overflow-style:none]
+[scrollbar-width:none]
+">
 
         <!-- CARD 1 -->
         <div id="slider1"
-          class="min-w-[320px] snap-center bg-white rounded-xl shadow-xl overflow-hidden">
-          <img src="https://picsum.photos/500/350?1" class="w-full h-56 object-cover">
-          <div class="p-4">
-            <h3 class="text-lg font-semibold">Luxury Interior</h3>
-            <p class="text-sm text-gray-500">Modern premium design</p>
-          </div>
+          class="min-w-[320px] snap-center bg-white rounded-lg shadow-xl overflow-hidden">
+          <img src="https://picsum.photos/500/350?1" class="w-full h-80 object-cover">
+         
         </div>
 
         <!-- CARD 2 -->
         <div id="slider2"
-          class="min-w-[320px] snap-center bg-white rounded-xl shadow-xl overflow-hidden">
-          <img src="https://picsum.photos/500/350?2" class="w-full h-56 object-cover">
-          <div class="p-4">
-            <h3 class="text-lg font-semibold">Architecture</h3>
-            <p class="text-sm text-gray-500">Minimal & clean</p>
-          </div>
+          class="min-w-[320px] snap-center bg-white rounded-lg shadow-xl overflow-hidden">
+          <img src="https://picsum.photos/500/350?2" class="w-full h-80 object-cover">
+         
         </div>
 
         <!-- CARD 3 -->
         <div id="slider3"
-          class="min-w-[320px] snap-center bg-white rounded-xl shadow-xl overflow-hidden">
-          <img src="https://picsum.photos/500/350?3" class="w-full h-56 object-cover">
-          <div class="p-4">
-            <h3 class="text-lg font-semibold">Creative Space</h3>
-            <p class="text-sm text-gray-500">Bright & elegant</p>
-          </div>
+          class="min-w-[320px] snap-center bg-white rounded-lg shadow-xl overflow-hidden">
+          <img src="https://picsum.photos/500/350?3" class="w-full h-80 object-cover">
+         
+
         </div>
 
         <!-- CARD 4 -->
         <div id="slider4"
-          class="min-w-[320px] snap-center bg-white rounded-xl shadow-xl overflow-hidden">
-          <img src="https://picsum.photos/500/350?4" class="w-full h-56 object-cover">
-          <div class="p-4">
-            <h3 class="text-lg font-semibold">Premium Living</h3>
-            <p class="text-sm text-gray-500">High-end comfort</p>
-          </div>
+          class="min-w-[320px] snap-center bg-white rounded-lg shadow-xl overflow-hidden">
+          <img src="https://picsum.photos/500/350?4" class="w-full h-80 object-cover">
+          
         </div>
 
         <div id="slider5"
-          class="min-w-[320px] snap-center bg-white rounded-xl shadow-xl overflow-hidden">
-          <img src="https://picsum.photos/500/350?4" class="w-full h-56 object-cover">
-          <div class="p-4">
-            <h3 class="text-lg font-semibold">Premium Living</h3>
-            <p class="text-sm text-gray-500">High-end comfort</p>
-          </div>
+          class="min-w-[320px] snap-center bg-white rounded-lg shadow-xl overflow-hidden">
+          <img src="https://picsum.photos/500/350?4" class="w-full h-80 object-cover">
+    
         </div>
 
         <div id="slider6"
-          class="min-w-[320px] snap-center bg-white rounded-xl shadow-xl overflow-hidden">
-          <img src="https://picsum.photos/500/350?4" class="w-full h-56 object-cover">
-          <div class="p-4">
-            <h3 class="text-lg font-semibold">Premium Living</h3>
-            <p class="text-sm text-gray-500">High-end comfort</p>
-          </div>
+          class="min-w-[320px] snap-center bg-white rounded-lg shadow-xl overflow-hidden">
+          <img src="https://picsum.photos/500/350?4" class="w-full h-80 object-cover">
+         
         </div>
 
         <div id="slider7"
-          class="min-w-[320px] snap-center bg-white rounded-xl shadow-xl overflow-hidden">
-          <img src="https://picsum.photos/500/350?4" class="w-full h-56 object-cover">
-          <div class="p-4">
-            <h3 class="text-lg font-semibold">Premium Living</h3>
-            <p class="text-sm text-gray-500">High-end comfort</p>
-          </div>
+          class="min-w-[320px] snap-center bg-white rounded-lg shadow-xl overflow-hidden">
+          <img src="https://picsum.photos/500/350?4" class="w-full h-80 object-cover">
+         
         </div>
 
       </div>
@@ -679,15 +628,21 @@
 
 
   <!-- DOWNLOAD BROCHURE BUTTON (RIGHT SIDE) -->
-  <div id="brochureBtn"
-    class="fixed right-0 top-1/2 -translate-y-1/2 z-30
-            transition-opacity duration-500 opacity-85">
-    <a href="#"
-      class="bg-[#b38350] text-white px-4 py-6 rounded-l-md
-            writing-mode-vertical tracking-widest font-semibold">
-      Download Brochure
-    </a>
-  </div>
+<div
+  id="brochureBtn"
+  class="fixed right-0 top-1/2 -translate-y-1/2 z-30
+         opacity-0 pointer-events-none
+         transition-opacity duration-100
+         bg-[#73bc01]/40">
+  <a
+    href="#"
+    class="text-[#73bc01] border border-[#73bc01]
+           px-4 py-6 rounded-l-md
+           writing-mode-vertical tracking-widest font-semibold">
+    Download Brochure
+  </a>
+</div>
+
 
 
 
@@ -705,6 +660,55 @@
       <path d="M16 2.67C8.64 2.67 2.67 8.64 2.67 16c0 2.61.77 5.05 2.1 7.1L2.67 29.33l6.39-2.07c1.98 1.08 4.25 1.74 6.94 1.74 7.36 0 13.33-5.97 13.33-13.33S23.36 2.67 16 2.67zm0 24.22c-2.34 0-4.5-.64-6.36-1.75l-.45-.27-3.78 1.22 1.24-3.68-.29-.47c-1.23-1.95-1.88-4.2-1.88-6.55 0-6.68 5.44-12.11 12.11-12.11s12.11 5.44 12.11 12.11-5.44 12.11-12.11 12.11z" />
     </svg>
   </a>
+<script>
+  const brochureBtn = document.getElementById("brochureBtn");
+
+  window.addEventListener("scroll", () => {
+    if (window.scrollY > 100) {
+      brochureBtn.classList.remove("opacity-0", "pointer-events-none");
+      brochureBtn.classList.add("opacity-100");
+    } else {
+      brochureBtn.classList.add("opacity-0", "pointer-events-none");
+      brochureBtn.classList.remove("opacity-100");
+    }
+  });
+
+
+
+  // Autoslider for slider after galary
+
+   const slider = document.getElementById("autoSlider");
+  let autoScroll;
+  const scrollStep = 340; // card width + gap
+  const delay = 1000;
+
+  function startAutoScroll() {
+    autoScroll = setInterval(() => {
+      if (
+        slider.scrollLeft + slider.clientWidth >=
+        slider.scrollWidth - 5
+      ) {
+        // go back to start
+        slider.scrollTo({ left: 0, behavior: "smooth" });
+      } else {
+        slider.scrollBy({ left: scrollStep, behavior: "smooth" });
+      }
+    }, delay);
+  }
+
+  function stopAutoScroll() {
+    clearInterval(autoScroll);
+  }
+
+  // start on load
+  startAutoScroll();
+
+  // pause on interaction
+  slider.addEventListener("mouseenter", stopAutoScroll);
+  slider.addEventListener("mouseleave", startAutoScroll);
+  slider.addEventListener("touchstart", stopAutoScroll);
+  slider.addEventListener("touchend", startAutoScroll);
+</script>
 
 </body>
 
