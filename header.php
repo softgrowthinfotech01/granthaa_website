@@ -13,7 +13,7 @@
   <!-- HEADER -->
   <header
   class="w-full sticky top-0
-         bg-gradient-to-tr from-cyan-950 via-gray-900 to-slate-950
+        bg-black
          h-16 md:h-24 flex items-center justify-between
          px-4 md:px-6 border-b border-gray-800 z-50"
 >
@@ -28,7 +28,7 @@
     </label>
 
     <!-- LOGO -->
-    <div class="flex flex-col items-center justify-center">
+    <div class="flex flex-col items-center ml-[100px] justify-center">
       <img
         src="images/granthalogo.webp"
         alt="Grantha Logo"
@@ -41,7 +41,7 @@
       href="#"
       class="hidden md:block border border-[#73bc01] text-[#73bc01]
              px-5 py-2 rounded
-             hover:bg-[#73bc01] hover:text-black transition"
+             hover:bg-[#73bc01] hover:text-black hover:scale-110 transition"
     >
       Download Brochure
     </a>
