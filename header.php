@@ -12,10 +12,12 @@
 
   <!-- HEADER -->
   <header
-    class="w-full bg-gradient-to-tr from-cyan-950 via-gray-900 to-slate-950
-           h-16 md:h-24 flex items-center justify-between
-           px-4 md:px-10 border-b border-gray-800 relative z-50"
-  >
+  class="w-full sticky top-0
+         bg-gradient-to-tr from-cyan-950 via-gray-900 to-slate-950
+         h-16 md:h-24 flex items-center justify-between
+         px-4 md:px-10 border-b border-gray-800 z-50"
+>
+
     <!-- MENU ICON -->
     <label
       for="menuToggle"
@@ -28,7 +30,7 @@
     <!-- LOGO -->
     <div class="flex flex-col items-center justify-center">
       <img
-        src="/images/granthalogo.webp"
+        src="images/granthalogo.webp"
         alt="Grantha Logo"
         class="h-6 sm:h-8 md:h-10 lg:h-12 xl:h-14 w-auto object-contain"
       />

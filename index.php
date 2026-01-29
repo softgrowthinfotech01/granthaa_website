@@ -17,6 +17,7 @@
 .animate-bounce-slow {
   animation: bounce-slow 2s infinite;
 }
+
 </style>
   <!-- Tailwind CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -125,27 +126,38 @@
       </p>
     </div>
     
-    <div class="max-w-7xl mx-auto px-1">
+    <div class="max-w-7xl mx-auto px-1 ">
       <div class="grid grid-cols-1 md:grid-cols-3 gap-5 items-center">
     
         <!-- Left Card -->
-        <div class="bg-[#e6c89f] text-black max-w-lg rounded-3xl p-10 shadow-lg">
-          <h2 class="text-3xl font-[Playfair_Display] mb-4">
-            Visualise Your Dream Home.
-          </h2>
-          <p class="text-gray-700 mb-8">
-            Turn Your Dreams Into A Home You'll Love.
-          </p>
-          <button class="bg-[#9c6b3f] text-white px-6 py-3 rounded-lg hover:bg-[#875b34] transition">
-            Schedule A Site Visit
-          </button>
-        </div>
+        <div class="bg-gradient-to-r from-cyan-950 via-slate-900 to-cyan-950
+            text-black max-w-lg mr-[60px] rounded-3xl p-10 shadow-lg
+            animate-bounce
+            [animation-duration:4s]
+            [animation-timing-function:ease-in-out]
+            transition-all duration-700 hover:scale-[1.02]">
+
+  <h2 class="text-3xl text-white mb-4 transition-colors duration-500">
+    Visualise Your Dream Home.
+  </h2>
+
+  <p class="text-gray-300 mb-8 transition-colors duration-500">
+    Turn Your Dreams Into A Home You'll Love.
+  </p>
+
+  <button class="bg-red-950 text-white px-6 py-3 rounded-lg
+                 transition-all duration-500 ease-in-out
+                 hover:bg-[#875b34] hover:scale-105 hover:shadow-lg">
+    Schedule A Site Visit
+  </button>
+</div>
+
     
         <!-- Image Gallery -->
-        <div class=" md:col-span-2 relative w-full  overflow-hidden py-10">
+        <div class=" md:col-span-2 relative w-full bg-red-100 rounded-xl  p-10 overflow-hidden py-10">
     
           <!-- LEFT ARROW -->
-          <a href="#s1-slide1" class="group absolute left-4 top-1/2 -translate-y-1/2 z-10
+          <a href="#s1-slide1" class="group absolute left-1 top-1/2 -translate-y-1/2 z-10
               w-14 h-14 rounded-full
               bg-black/70 backdrop-blur
               flex items-center justify-center
@@ -252,8 +264,8 @@
   <div class="relative max-w-6xl bg-cyan-950 rounded-xl mx-auto py-16">
 
   <!-- LEFT ARROW -->
-<a href="#slide1"
-   class="group absolute -left-[60px] top-1/2 -translate-y-1/2 z-10
+<a href="#slider1"
+   class="arrowbtn  group absolute -left-[60px] top-1/2 -translate-y-1/2 z-10
           w-14 h-14 rounded-full
           bg-black/70 backdrop-blur
           flex items-center justify-center
@@ -268,8 +280,8 @@
 </a>
 
 
-<a href="#slide7"
-   class="group absolute -right-[60px] top-1/2 -translate-y-1/2 z-10
+<a href="#slider7"
+   class="arrowbtn  group absolute -right-[60px] top-1/2 -translate-y-1/2 z-10
           w-14 h-14 rounded-full
           bg-black/70 backdrop-blur
           flex items-center justify-center
@@ -295,7 +307,7 @@
            px-14 scrollbar-hide">
 
     <!-- CARD 1 -->
-    <div id="slide1"
+    <div id="slider1"
          class="min-w-[320px] snap-center bg-white rounded-xl shadow-xl overflow-hidden">
       <img src="https://picsum.photos/500/350?1" class="w-full h-56 object-cover">
       <div class="p-4">
@@ -305,7 +317,7 @@
     </div>
 
     <!-- CARD 2 -->
-    <div id="slide2"
+    <div id="slider2"
          class="min-w-[320px] snap-center bg-white rounded-xl shadow-xl overflow-hidden">
       <img src="https://picsum.photos/500/350?2" class="w-full h-56 object-cover">
       <div class="p-4">
@@ -315,7 +327,7 @@
     </div>
 
     <!-- CARD 3 -->
-    <div id="slide3"
+    <div id="slider3"
          class="min-w-[320px] snap-center bg-white rounded-xl shadow-xl overflow-hidden">
       <img src="https://picsum.photos/500/350?3" class="w-full h-56 object-cover">
       <div class="p-4">
@@ -325,7 +337,7 @@
     </div>
 
     <!-- CARD 4 -->
-    <div id="slide4"
+    <div id="slider4"
          class="min-w-[320px] snap-center bg-white rounded-xl shadow-xl overflow-hidden">
       <img src="https://picsum.photos/500/350?4" class="w-full h-56 object-cover">
       <div class="p-4">
@@ -334,7 +346,7 @@
       </div>
     </div>
 
-     <div id="slide5"
+     <div id="slider5"
          class="min-w-[320px] snap-center bg-white rounded-xl shadow-xl overflow-hidden">
       <img src="https://picsum.photos/500/350?4" class="w-full h-56 object-cover">
       <div class="p-4">
@@ -343,7 +355,7 @@
       </div>
     </div>
 
-     <div id="slide6"
+     <div id="slider6"
          class="min-w-[320px] snap-center bg-white rounded-xl shadow-xl overflow-hidden">
       <img src="https://picsum.photos/500/350?4" class="w-full h-56 object-cover">
       <div class="p-4">
@@ -352,7 +364,7 @@
       </div>
     </div>
 
-     <div id="slide7"
+     <div id="slider7"
          class="min-w-[320px] snap-center bg-white rounded-xl shadow-xl overflow-hidden">
       <img src="https://picsum.photos/500/350?4" class="w-full h-56 object-cover">
       <div class="p-4">
@@ -364,7 +376,7 @@
   </div>
 </div>
 
-            <button class="mt-8 bg-red-950 hover:bg-red-800 text-white ml-[535px] px-8 py-3 rounded-md transition">
+            <button class="mt-8 bg-red-950 hover:bg-red-800 text-white ml-[635px] px-8 py-3 rounded-md transition">
                     Schedule A Site Visit
             </button>
        
@@ -568,10 +580,10 @@
 
       <!-- LEFT : BRAND -->
       <div>
-        <img src="logo.png" alt="Roswalt Zyon" class="w-32 mb-6">
+        <img src="images/granthalogo.webp" alt="Roswalt Zyon" class="w-[190px] mb-6">
 
         <h3 class="font-serif text-3xl text-[#d2a679] mb-6 leading-tight">
-          ROSWALT<br>ZYON
+          Granthaa Land Developer<br>Pvt. Ltd.
         </h3>
 
         <div class="flex gap-4">
@@ -658,7 +670,7 @@
 <!-- DOWNLOAD BROCHURE BUTTON (RIGHT SIDE) -->
 <div id="brochureBtn"
      class="fixed right-0 top-1/2 -translate-y-1/2 z-30
-            transition-opacity duration-500 opacity-100">
+            transition-opacity duration-500 opacity-85">
   <a href="#"
      class="bg-[#b38350] text-white px-4 py-6 rounded-l-md
             writing-mode-vertical tracking-widest font-semibold">
