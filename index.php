@@ -30,7 +30,7 @@
 <?php include "header.php"; ?>
 
   
-  <div id="default-carousel" class="relative w-full h-screen" data-carousel="slide">
+  <div id="default-carousel" class="relative w-full h-[600px]" data-carousel="slide">
   <!-- Carousel wrapper -->
   <div class="relative h-full overflow-hidden">
 
@@ -69,6 +69,7 @@
            alt="Slide 5">
     </div>
 
+  </div>
   </div>
 
   <!-- Slider indicators -->
@@ -147,7 +148,7 @@
 
   <button class="bg-red-950 text-white px-6 py-3 rounded-lg
                  transition-all duration-500 ease-in-out
-                 hover:bg-[#875b34] hover:scale-105 hover:shadow-lg">
+                 hover:bg-red-800 hover:scale-105 hover:shadow-lg">
     Schedule A Site Visit
   </button>
 </div>
@@ -376,7 +377,7 @@
   </div>
 </div>
 
-            <button class="mt-8 bg-red-950 hover:bg-red-800 text-white ml-[635px] px-8 py-3 rounded-md transition">
+            <button class="mt-8 bg-red-950 hover:bg-red-800 hover:scale-105 hover:shadow-lg  text-white ml-[635px] px-8 py-3 rounded-md transition">
                     Schedule A Site Visit
             </button>
        
