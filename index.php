@@ -593,14 +593,14 @@
         <div>
           <img src="images/granthalogo.webp" alt="Roswalt Zyon" class="w-[190px] mb-6">
 
-          <h3 class="font-serif text-3xl text-[#d2a679] mb-6 leading-tight">
+          <h3 class="font-serif text-3xl text-[#73bc01] mb-6 leading-tight">
             Granthaa Land Developer<br>Pvt. Ltd.
           </h3>
 
           <div class="flex gap-4">
-            <div class="w-10 h-10 rounded-full bg-[#1f1f1f] flex items-center justify-center text-[#d2a679]">f</div>
-            <div class="w-10 h-10 rounded-full bg-[#1f1f1f] flex items-center justify-center text-[#d2a679]">◎</div>
-            <div class="w-10 h-10 rounded-full bg-[#1f1f1f] flex items-center justify-center text-[#d2a679]">▶</div>
+            <div class="w-10 h-10 rounded-full bg-black flex items-center justify-center text-[#73bc01]">f</div>
+            <div class="w-10 h-10 rounded-full bg-black flex items-center justify-center text-[#73bc01]">◎</div>
+            <div class="w-10 h-10 rounded-full bg-black flex items-center justify-center text-[#73bc01]">▶</div>
           </div>
         </div>
 
@@ -648,7 +648,7 @@
 
       <!-- CONTACT ROW -->
       <div class="mt-16 pt-6 border-t border-[#b38350]/40
-                flex flex-col lg:flex-row gap-6 text-sm text-gray-300">
+                flex flex-col justify-center lg:flex-row gap-6 text-sm text-gray-300">
 
         <div class="flex items-center gap-2">
           ☎ <span>Phone: +91 7507070707</span>
@@ -665,7 +665,7 @@
       </div>
 
       <!-- BOTTOM TEXT -->
-      <div class="text-center text-sm text-[#d2a679] mt-8">
+      <div class="text-center text-sm text-[#73bc01] mt-8">
         All Rights Reserved. | Privacy Policy Applies.
       </div>
 
