@@ -83,11 +83,11 @@
 
   <!-- Slider indicators -->
   <div class="absolute z-30 flex -translate-x-1/2 bottom-5 left-1/2 space-x-3">
-    <button type="button" class="w-3 h-3 rounded-full bg-white/40" data-carousel-slide-to="0"></button>
-    <button type="button" class="w-3 h-3 rounded-full bg-white/40" data-carousel-slide-to="1"></button>
-    <button type="button" class="w-3 h-3 rounded-full bg-white/40" data-carousel-slide-to="2"></button>
-    <button type="button" class="w-3 h-3 rounded-full bg-white/40" data-carousel-slide-to="3"></button>
-    <button type="button" class="w-3 h-3 rounded-full bg-white/40" data-carousel-slide-to="4"></button>
+    <button type="button" class="w-3 h-3 rounded-full bg-[#73bc01]" data-carousel-slide-to="0"></button>
+    <button type="button" class="w-3 h-3 rounded-full bg-[#73bc01]" data-carousel-slide-to="1"></button>
+    <button type="button" class="w-3 h-3 rounded-full bg-[#73bc01]" data-carousel-slide-to="2"></button>
+    <button type="button" class="w-3 h-3 rounded-full bg-[#73bc01]" data-carousel-slide-to="3"></button>
+    <button type="button" class="w-3 h-3 rounded-full bg-[#73bc01]" data-carousel-slide-to="4"></button>
   </div>
 
   <!-- Controls (Updated Buttons) -->
@@ -96,13 +96,13 @@
             w-14 h-14 rounded-full
             bg-black/70 backdrop-blur
             flex items-center justify-center
-            border border-[#d4af37]/40
-            shadow-[0_0_0_#d4af37]
-            hover:shadow-[0_0_25px_#d4af37]
+                       border border-[#73bc01]
+  shadow-[0_4px_12px_rgba(115,188,1,0.45)]
+  hover:shadow-[0_0_22px_rgba(115,188,1,0.75)]
             hover:scale-110
             transition-all duration-300"
-    data-carousel-prev>
-    <span class="text-[#d4af37] text-5xl
+     data-carousel-prev>
+    <span class="text-[#73bc01] text-5xl
                  group-hover:-translate-x-1
                  transition-transform duration-300 mb-4">‹</span>
   </a>
@@ -112,13 +112,14 @@
             w-14 h-14 rounded-full
             bg-black/70 backdrop-blur
             flex items-center justify-center
-            border border-[#d4af37]/40
-            shadow-[0_0_0_#d4af37]
-            hover:shadow-[0_0_25px_#d4af37]
+            border border-[#73bc01]
+  shadow-[0_4px_12px_rgba(115,188,1,0.45)]
+  hover:shadow-[0_0_22px_rgba(115,188,1,0.75)]
+ 
             hover:scale-110
             transition-all duration-300"
-    data-carousel-next>
-    <span class="text-[#d4af37] text-5xl
+     data-carousel-next>
+    <span class="text-[#73bc01] text-5xl
                  group-hover:translate-x-1
                  transition-transform duration-300 mb-4">›</span>
   </a>
