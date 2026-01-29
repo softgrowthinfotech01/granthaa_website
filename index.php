@@ -168,100 +168,71 @@
         <!-- Image Gallery -->
         <div class=" md:col-span-2  relative w-full rounded-2xl  overflow-hidden py-4">
 
-          <!-- LEFT ARROW -->
-          <a href="#s1-slide1" class="group absolute left-1 top-1/2 -translate-y-1/2 z-10
-              w-14 h-14 rounded-full
-              bg-black/70 backdrop-blur
-              flex items-center justify-center
-              border border-[#d4af37]/40
-              shadow-[0_0_0_#d4af37]
-              hover:shadow-[0_0_25px_#d4af37]
-              hover:scale-110
-              transition-all duration-300">
-            <span class="text-[#d4af37] text-5xl
-                   group-hover:-translate-x-1
-                   transition-transform duration-300 mb-3">‹</span>
-          </a>
-
-          <!-- RIGHT ARROW -->
-          <a href="#s1-slide7" class="group absolute right-4 top-1/2 -translate-y-1/2 z-10
-              w-14 h-14 rounded-full
-              bg-black/70 backdrop-blur
-              flex items-center justify-center
-              border border-[#d4af37]/40
-              shadow-[0_0_0_#d4af37]
-              hover:shadow-[0_0_25px_#d4af37]
-              hover:scale-110
-              transition-all duration-300">
-            <span class="text-[#d4af37] text-5xl
-                   group-hover:translate-x-1
-                   transition-transform duration-300 mb-3">›</span>
-          </a>
+        
+          
 
           <!-- SLIDER -->
           <div class="flex w-[800px] gap-4  overflow-x-auto  scroll-smooth snap-x snap-mandatory
-                 px-4 md:px-8 scrollbar-hide [&::-webkit-scrollbar]:hidden
-[-ms-overflow-style:none]
-[scrollbar-width:none]">
+                 px-4 md:px-8 scrollbar-hide [&::-webkit-scrollbar]:hidden[-ms-overflow-style:none][scrollbar-width:none]">
 
             <!-- CARD 1 -->
             <div id="s1-slide1" class="min-w-[280px] snap-center bg-white rounded-xl shadow-xl overflow-hidden">
-              <img src="https://picsum.photos/500/350?1" class="w-full h-48 object-cover">
-              <div class="p-4">
+              <img src="https://picsum.photos/500/350?1" class="w-full h-80 object-cover">
+              <!-- <div class="p-4">
                 <h3 class="text-lg font-semibold">Luxury Interior</h3>
                 <p class="text-sm text-gray-500">Modern premium design</p>
-              </div>
+              </div> -->
             </div>
 
             <!-- CARD 2 -->
             <div id="s1-slide2" class="min-w-[280px] snap-center bg-white rounded-xl shadow-xl overflow-hidden">
-              <img src="https://picsum.photos/500/350?2" class="w-full h-48 object-cover">
-              <div class="p-4">
+              <img src="https://picsum.photos/500/350?2" class="w-full h-80 object-cover">
+              <!-- <div class="p-4">
                 <h3 class="text-lg font-semibold">Architecture</h3>
                 <p class="text-sm text-gray-500">Minimal & clean</p>
-              </div>
+              </div> -->
             </div>
 
             <!-- CARD 3 -->
             <div id="s1-slide3" class="min-w-[280px] snap-center bg-white rounded-xl shadow-xl overflow-hidden">
-              <img src="https://picsum.photos/500/350?3" class="w-full h-48 object-cover">
-              <div class="p-4">
+              <img src="https://picsum.photos/500/350?3" class="w-full h-80 object-cover">
+              <!-- <div class="p-4">
                 <h3 class="text-lg font-semibold">Creative Space</h3>
                 <p class="text-sm text-gray-500">Bright & elegant</p>
-              </div>
+              </div> -->
             </div>
 
             <!-- CARD 4 -->
             <div id="s1-slide4" class="min-w-[280px] snap-center bg-white rounded-xl shadow-xl overflow-hidden">
-              <img src="https://picsum.photos/500/350?4" class="w-full h-48 object-cover">
-              <div class="p-4">
+              <img src="https://picsum.photos/500/350?4" class="w-full h-80 object-cover">
+              <!-- <div class="p-4">
                 <h3 class="text-lg font-semibold">Premium Living</h3>
                 <p class="text-sm text-gray-500">High-end comfort</p>
-              </div>
+              </div> -->
             </div>
 
             <div id="s1-slide5" class="min-w-[280px] snap-center bg-white rounded-xl shadow-xl overflow-hidden">
-              <img src="https://picsum.photos/500/350?4" class="w-full h-48 object-cover">
-              <div class="p-4">
+              <img src="https://picsum.photos/500/350?4" class="w-full h-80 object-cover">
+              <!-- <div class="p-4">
                 <h3 class="text-lg font-semibold">Premium Living</h3>
                 <p class="text-sm text-gray-500">High-end comfort</p>
-              </div>
+              </div> -->
             </div>
 
             <div id="s1-slide6" class="min-w-[280px] snap-center bg-white rounded-xl shadow-xl overflow-hidden">
-              <img src="https://picsum.photos/500/350?4" class="w-full h-48 object-cover">
-              <div class="p-4">
+              <img src="https://picsum.photos/500/350?4" class="w-full h-80 object-cover">
+              <!-- <div class="p-4">
                 <h3 class="text-lg font-semibold">Premium Living</h3>
                 <p class="text-sm text-gray-500">High-end comfort</p>
-              </div>
+              </div> -->
             </div>
 
             <div id="s1-slide7" class="min-w-[280px] snap-center bg-white rounded-xl shadow-xl overflow-hidden">
-              <img src="https://picsum.photos/500/350?4" class="w-full h-48 object-cover">
-              <div class="p-4">
+              <img src="https://picsum.photos/500/350?4" class="w-full h-80 object-cover">
+              <!-- <div class="p-4">
                 <h3 class="text-lg font-semibold">Premium Living</h3>
                 <p class="text-sm text-gray-500">High-end comfort</p>
-              </div>
+              </div> -->
             </div>
 
           </div>
@@ -661,10 +632,13 @@
     </svg>
   </a>
 <script>
+
+  // Side Brochure Button started
+
   const brochureBtn = document.getElementById("brochureBtn");
 
   window.addEventListener("scroll", () => {
-    if (window.scrollY > 100) {
+    if (window.scrollY > 200) {
       brochureBtn.classList.remove("opacity-0", "pointer-events-none");
       brochureBtn.classList.add("opacity-100");
     } else {
@@ -673,7 +647,7 @@
     }
   });
 
-
+// Side Brochure Button Ended
 
   // Autoslider for slider after galary
 
