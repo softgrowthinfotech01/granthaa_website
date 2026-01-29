@@ -125,14 +125,14 @@
   </a>
   </div>
 
-  <div class="min-h-screen bg-gradient-to-tr from-cyan-950 via-gray-900 to-slate-950 ">
+  <div class="min-h-screen bg-black ">
 
     <!-- Header -->
     <div class="text-center pt-20 pb-16">
-      <h1 class="text-5xl md:text-6xl font-bold text-cyan-800">
+      <h1 class="text-5xl md:text-6xl font-bold text-[#73bc01]">
         Gallery
       </h1>
-      <p class="mt-4 text-violet-950 text-2xl font-semibold font-mono">
+      <p class="mt-4 text-white text-3xl font-semibold ">
         Explore Our Gallery And Experience The Beauty In Every Detail
       </p>
     </div>
@@ -141,7 +141,7 @@
       <div class="grid grid-cols-1 md:grid-cols-3 gap-5 items-center">
 
         <!-- Left Card -->
-        <div class="bg-gradient-to-r from-cyan-950 via-slate-900 to-cyan-950
+        <div class="bg-black
             text-black max-w-lg mr-[60px] rounded-3xl p-10 shadow-lg
             animate-bounce
             [animation-duration:4s]
@@ -165,7 +165,7 @@
 
 
         <!-- Image Gallery -->
-        <div class=" md:col-span-2 relative w-full bg-gradient-to-br from-green-800 via-[#3b2a1a] to-green-800 rounded-2xl  p-12 overflow-hidden py-10">
+        <div class=" md:col-span-2  relative w-full rounded-2xl  overflow-hidden py-4">
 
           <!-- LEFT ARROW -->
           <a href="#s1-slide1" class="group absolute left-1 top-1/2 -translate-y-1/2 z-10
