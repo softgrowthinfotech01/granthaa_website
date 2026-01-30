@@ -26,6 +26,55 @@
     .animate-bounce-slow {
       animation: bounce-slow 2s infinite;
     }
+     .carousel {
+      --items: 6;
+      --carousel-duration: 30s;
+      --carousel-width: 80vw;
+      --carousel-item-width: 280px;
+      --carousel-item-height: 350px;
+      --carousel-item-gap: 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .carousel-mask {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      mask-image: linear-gradient(to right, transparent, black 10% 90%, transparent);
+    }
+
+    .carousel-inner {
+      position: relative;
+      width: var(--carousel-width);
+      max-width: 1200px;
+      height: var(--carousel-item-height);
+    }
+
+    .carousel-item {
+      animation: marquee var(--carousel-duration) linear infinite;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .carousel:hover .carousel-item {
+      animation-play-state: paused;
+    }
+
+    .carousel-item:hover {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 0 18px 35px rgba(15, 23, 42, 0.35);
+    }
+
+    @keyframes marquee {
+      0% { transform: translateX(0); }
+      100% {
+        transform: translateX(
+          calc(
+            (var(--items) * (var(--carousel-item-width) + var(--carousel-item-gap))) * -1
+          )
+        );
+      }
+    }
   </style>
   <!-- Tailwind CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -171,70 +220,98 @@
 
 
           <!-- SLIDER -->
-          <div id="smoothSlider" class="flex w-[800px] gap-4  overflow-x-auto  scroll-smooth snap-x snap-mandatory
-                 px-4 md:px-8 scrollbar-hide [&::-webkit-scrollbar]:hidden[-ms-overflow-style:none][scrollbar-width:none]">
+          <div class="carousel mx-auto">
 
-            <!-- CARD 1 -->
-            <div id="s1-slide1" class="min-w-[280px] snap-center bg-white rounded-xl shadow-xl overflow-hidden">
-              <img src="https://picsum.photos/500/350?1" class="w-full h-80 object-cover">
-              <!-- <div class="p-4">
-                <h3 class="text-lg font-semibold">Luxury Interior</h3>
-                <p class="text-sm text-gray-500">Modern premium design</p>
-              </div> -->
-            </div>
+    <div class="carousel-mask"></div>
 
-            <!-- CARD 2 -->
-            <div id="s1-slide2" class="min-w-[280px] snap-center bg-white rounded-xl shadow-xl overflow-hidden">
-              <img src="https://picsum.photos/500/350?2" class="w-full h-80 object-cover">
-              <!-- <div class="p-4">
-                <h3 class="text-lg font-semibold">Architecture</h3>
-                <p class="text-sm text-gray-500">Minimal & clean</p>
-              </div> -->
-            </div>
+    <div class="carousel-inner">
 
-            <!-- CARD 3 -->
-            <div id="s1-slide3" class="min-w-[280px] snap-center bg-white rounded-xl shadow-xl overflow-hidden">
-              <img src="https://picsum.photos/500/350?3" class="w-full h-80 object-cover">
-              <!-- <div class="p-4">
-                <h3 class="text-lg font-semibold">Creative Space</h3>
-                <p class="text-sm text-gray-500">Bright & elegant</p>
-              </div> -->
-            </div>
+ 
+      <!-- ITEM 1 -->
+<article class="carousel-item absolute top-0 bg-black rounded-xl overflow-hidden border border-slate-200 shadow-sm "
+  style=" left: calc(100% + var(--carousel-item-gap)); width: var(--carousel-item-width); height: 300px; animation-delay: calc(var(--carousel-duration)/var(--items)*0*-1);">
 
-            <!-- CARD 4 -->
-            <div id="s1-slide4" class="min-w-[280px] snap-center bg-white rounded-xl shadow-xl overflow-hidden">
-              <img src="https://picsum.photos/500/350?4" class="w-full h-80 object-cover">
-              <!-- <div class="p-4">
-                <h3 class="text-lg font-semibold">Premium Living</h3>
-                <p class="text-sm text-gray-500">High-end comfort</p>
-              </div> -->
-            </div>
+  <div class="w-full h-[160px]">
+    <img src="" class="w-full h-full object-cover" />
+  </div>
 
-            <div id="s1-slide5" class="min-w-[280px] snap-center bg-white rounded-xl shadow-xl overflow-hidden">
-              <img src="https://picsum.photos/500/350?4" class="w-full h-80 object-cover">
-              <!-- <div class="p-4">
-                <h3 class="text-lg font-semibold">Premium Living</h3>
-                <p class="text-sm text-gray-500">High-end comfort</p>
-              </div> -->
-            </div>
+  
 
-            <div id="s1-slide6" class="min-w-[280px] snap-center bg-white rounded-xl shadow-xl overflow-hidden">
-              <img src="https://picsum.photos/500/350?4" class="w-full h-80 object-cover">
-              <!-- <div class="p-4">
-                <h3 class="text-lg font-semibold">Premium Living</h3>
-                <p class="text-sm text-gray-500">High-end comfort</p>
-              </div> -->
-            </div>
+</article>
 
-            <div id="s1-slide7" class="min-w-[280px] snap-center bg-white rounded-xl shadow-xl overflow-hidden">
-              <img src="https://picsum.photos/500/350?4" class="w-full h-80 object-cover">
-              <!-- <div class="p-4">
-                <h3 class="text-lg font-semibold">Premium Living</h3>
-                <p class="text-sm text-gray-500">High-end comfort</p>
-              </div> -->
-            </div>
 
-          </div>
+
+<!-- ITEM 2 -->
+<article class="carousel-item absolute top-0 bg-black  rounded-xl overflow-hidden border border-slate-200  shadow-sm"
+  style="left: calc(100% + var(--carousel-item-gap)); width: var(--carousel-item-width); height: 300px; animation-delay: calc(var(--carousel-duration)/var(--items)*1*-1);">
+
+  <div class="w-full h-[160px]">
+    <img src="img/tigor.webp" class="w-full h-full object-cover" />
+  </div>
+
+ 
+
+</article>
+
+
+
+<!-- ITEM 3 -->
+<article class="carousel-item absolute top-0 bg-black  rounded-xl overflow-hidden border border-slate-200  shadow-sm"
+  style="left: calc(100% + var(--carousel-item-gap)); width: var(--carousel-item-width); height: 300px; animation-delay: calc(var(--carousel-duration)/var(--items)*2*-1);">
+
+  <div class="w-full h-[160px]">
+    <img src="img/city.webp" class="w-full h-full object-cover" />
+  </div>
+
+  
+
+</article>
+
+
+
+<!-- ITEM 4 -->
+<article class="carousel-item absolute top-0 bg-black  rounded-xl overflow-hidden border border-slate-200  shadow-sm"
+  style="left: calc(100% + var(--carousel-item-gap)); width: var(--carousel-item-width); height: 300px; animation-delay: calc(var(--carousel-duration)/var(--items)*3*-1);">
+
+  <div class="w-full h-[160px]">
+    <img src="img/scorpio.webp" class="w-full h-full object-cover" />
+  </div>
+
+ 
+
+</article>
+
+
+
+<!-- ITEM 5 -->
+<article class="carousel-item absolute top-0 bg-black  rounded-xl overflow-hidden border border-slate-200  shadow-sm"
+  style="left: calc(100% + var(--carousel-item-gap)); width: var(--carousel-item-width); height: 300px; animation-delay: calc(var(--carousel-duration)/var(--items)*4*-1);">
+
+  <div class="w-full h-[160px]">
+    <img src="img/ciaz.webp" class="w-full h-full object-cover" />
+  </div>
+
+ 
+
+</article>
+
+
+
+<!-- ITEM 6 -->
+<article class="carousel-item absolute top-0 bg-black  rounded-xl overflow-hidden border border-slate-200  shadow-sm"
+  style="left: calc(100% + var(--carousel-item-gap)); width: var(--carousel-item-width); height: 300px; animation-delay: calc(var(--carousel-duration)/var(--items)*5*-1);">
+
+  <div class="w-full h-[160px]">
+    <img src="img/creta.webp" class="w-full h-full object-cover" />
+  </div>
+
+ 
+</article>
+
+
+
+    </div>
+  </div>
         </div>
 
       </div>
