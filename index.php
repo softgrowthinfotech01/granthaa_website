@@ -76,20 +76,21 @@
       }
     }
     .slide-card {
-    min-width: 320px;
+    min-width: 360px;
     scroll-snap-align: center;
     background: #fff;
     border-radius: 18px;
     overflow: hidden;
     box-shadow: 0 20px 50px rgba(0,0,0,0.4);
-    transition: transform 0.6s ease, box-shadow 0.6s ease, opacity 0.6s ease;
-    opacity: 0.6;
+    height: 450px;
+    border-radius: 10px;
   }
 
   .slide-card img {
     width: 100%;
-    height: 320px;
+    height: 450px;
     object-fit: cover;
+
   }
 
   .slide-card.active {
@@ -348,17 +349,15 @@
 
   </div>
 
-  <section class="min-h-screen bg-black py-16">
+  <section class="min-h-screen bg-black py-15">
 
-  <div class="relative max-w-7xl mx-auto px-6">
+  <div class="relative  mx-auto ">
 
 
 
   
     <!-- GRADIENT FADES -->
-    <div class="pointer-events-none absolute left-0 top-0 h-full w-24 bg-gradient-to-r from-black to-transparent z-10"></div>
-    <div class="pointer-events-none absolute right-0 top-0 h-full w-24 bg-gradient-to-l from-black to-transparent z-10"></div>
-
+    
     <!-- SLIDER -->
     <div
       id="autoSlider"
@@ -399,10 +398,6 @@
       </div>
 
     </div>
-
-    <button class="mt-8 bg-red-950 hover:bg-red-800 hover:scale-105 hover:shadow-lg  text-white ml-[635px] px-8 py-3 rounded-md transition">
-      Schedule A Site Visit
-    </button>
 
 
 </section>
