@@ -350,8 +350,6 @@
         <div id="slider3"
           class="min-w-[320px] snap-center bg-white rounded-lg shadow-xl overflow-hidden">
           <img src="https://picsum.photos/500/350?3" class="w-full h-80 object-cover">
-
-
         </div>
 
         <!-- CARD 4 -->
@@ -387,37 +385,38 @@
     </button>
 
 
-  </section>
-
+</section>
 
  <!-- Make Appointment -->
 
-  <section class="py-24 text-center">
+ <section class="text-center">
   <div
-    class="relative bg-cover bg-center px-10 py-20 shadow-2xl overflow-hidden"
-    style="background-image: url('/images/appointment-bg.jpg');"
+    class="relative bg-cover bg-center shadow-2xl overflow-hidden min-h-[600px]
+           flex items-center justify-center"
+    style="background-image: url('./images/makeappointment.jpg');"
   >
     <!-- Overlay -->
     <div class="absolute inset-0 bg-black/60"></div>
 
     <!-- Content -->
     <div class="relative z-10">
-      <h2 class="text-xl font-heading text-gray-200 mb-4">
+      <h2 class="text-xl text-gray-200 mb-4 tracking-wider">
         DON'T HESITATE TO CONTACT US
       </h2>
 
-      <h3 class="text-3xl font-bold text-white mb-8">
+      <h3 class="text-12xl md:text-6xl font-bold text-[#73bc01] mb-8">
         MAKE AN APPOINTMENT NOW
       </h3>
 
       <button
-        class="bg-red-700 hover:bg-red-500 text-white px-8 py-3 rounded-md transition"
+        class="bg-transparent border border-[#73bc01] text-[#73bc01] hover:bg-[#73bc01] hover:text-black px-8 py-3 rounded-md transition duration-300"
       >
         Enquire Now
       </button>
     </div>
   </div>
 </section>
+
 
 
 
