@@ -400,19 +400,6 @@
 
     </div>
 
-<<<<<<< HEAD
-    <!-- CTA -->
-    <div class="text-center mt-12">
-     
-    </div>
-
-  </div>
-</section>
-  <section class="py-24 bg-gradient-to-l from-slate-950 via-gray-950 to-cyan-950 text-center">
-    <h2 class="text-3xl font-heading text-gray-200 mb-12">
-      DON'T HESITATE TO CONTACT US
-    </h2>
-=======
     <button class="mt-8 bg-red-950 hover:bg-red-800 hover:scale-105 hover:shadow-lg  text-white ml-[635px] px-8 py-3 rounded-md transition">
       Schedule A Site Visit
     </button>
@@ -421,7 +408,6 @@
 </section>
 
  <!-- Make Appointment -->
->>>>>>> bb03a10d7cf5bdaafb0102e23023afae1fba1da4
 
  <section class="text-center">
   <div
