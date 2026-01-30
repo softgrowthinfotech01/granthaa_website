@@ -350,9 +350,41 @@
 
   <section class="min-h-screen bg-black py-16">
 
+<<<<<<< HEAD
   <div class="relative max-w-7xl mx-auto px-6">
 
 
+=======
+    <div class="relative w-full  rounded-xl mx-auto py-16 ">
+
+      <!-- SLIDER -->
+      <div
+        id="autoSlider"
+        class="flex gap-6 overflow-x-hidden scroll-smooth snap-x snap-mandatory
+        scrollbar-hide [&::-webkit-scrollbar]:hidden
+[-ms-overflow-style:none]
+[scrollbar-width:none]
+">
+        <div id="autoSliderTrack" class="flex gap-6">        <!-- CARD 1 -->
+        <div id="slider1"
+          class="min-w-[320px] snap-center bg-white rounded-lg shadow-xl overflow-hidden">
+          <img src="https://picsum.photos/500/350?1" class="w-full h-80 object-cover">
+
+        </div>
+
+        <!-- CARD 2 -->
+        <div id="slider2"
+          class="min-w-[320px] snap-center bg-white rounded-lg shadow-xl overflow-hidden">
+          <img src="https://picsum.photos/500/350?2" class="w-full h-80 object-cover">
+
+        </div>
+
+        <!-- CARD 3 -->
+        <div id="slider3"
+          class="min-w-[320px] snap-center bg-white rounded-lg shadow-xl overflow-hidden">
+          <img src="https://picsum.photos/500/350?3" class="w-full h-80 object-cover">
+        </div>
+>>>>>>> bb03a10d7cf5bdaafb0102e23023afae1fba1da4
 
   
     <!-- GRADIENT FADES -->
@@ -400,6 +432,7 @@
 
     </div>
 
+<<<<<<< HEAD
     <!-- CTA -->
     <div class="text-center mt-12">
      
@@ -411,30 +444,46 @@
     <h2 class="text-3xl font-heading text-gray-200 mb-12">
       DON'T HESITATE TO CONTACT US
     </h2>
+=======
+    <button class="mt-8 bg-red-950 hover:bg-red-800 hover:scale-105 hover:shadow-lg  text-white ml-[635px] px-8 py-3 rounded-md transition">
+      Schedule A Site Visit
+    </button>
 
-    <div class="max-w-4xl mx-auto px-6">
-      <div
-        class="relative rounded-xl border border-gold/60
-           bg-[url('/images/appointment-bg.jpg')] bg-cover bg-center
-           px-10 py-14 shadow-2xl overflow-hidden">
 
-        <!-- Overlay -->
-        <div class="absolute inset-0 bg-black/60"></div>
+</section>
 
-        <!-- Content -->
-        <div class="relative z-10">
-          <h3 class="text-3xl font-bold text-gray-200 mb-8">
-            MAKE AN APPOINTMENT NOW
-          </h3>
+ <!-- Make Appointment -->
+>>>>>>> bb03a10d7cf5bdaafb0102e23023afae1fba1da4
 
-          <button class="bg-red-700 hover:bg-red-500 text-white px-8 py-3 rounded-md transition">
-            Enquire Now
-          </button>
-        </div>
-      </div>
+ <section class="text-center">
+  <div
+    class="relative bg-cover bg-center shadow-2xl overflow-hidden min-h-[600px]
+           flex items-center justify-center"
+    style="background-image: url('./images/makeappointment.jpg');"
+  >
+    <!-- Overlay -->
+    <div class="absolute inset-0 bg-black/60"></div>
+
+    <!-- Content -->
+    <div class="relative z-10">
+      <h2 class="text-xl text-gray-200 mb-4 tracking-wider">
+        DON'T HESITATE TO CONTACT US
+      </h2>
+
+      <h3 class="text-12xl md:text-6xl font-bold text-[#73bc01] mb-8">
+        MAKE AN APPOINTMENT NOW
+      </h3>
+
+      <button
+        class="bg-transparent border border-[#73bc01] text-[#73bc01] hover:bg-[#73bc01] hover:text-black px-8 py-3 rounded-md transition duration-300"
+      >
+        Enquire Now
+      </button>
     </div>
+  </div>
+</section>
 
-  </section>
+
 
 
 
