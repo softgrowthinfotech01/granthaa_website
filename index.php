@@ -350,41 +350,9 @@
 
   <section class="min-h-screen bg-black py-16">
 
-<<<<<<< HEAD
   <div class="relative max-w-7xl mx-auto px-6">
 
 
-=======
-    <div class="relative w-full  rounded-xl mx-auto py-16 ">
-
-      <!-- SLIDER -->
-      <div
-        id="autoSlider"
-        class="flex gap-6 overflow-x-hidden scroll-smooth snap-x snap-mandatory
-        scrollbar-hide [&::-webkit-scrollbar]:hidden
-[-ms-overflow-style:none]
-[scrollbar-width:none]
-">
-        <div id="autoSliderTrack" class="flex gap-6">        <!-- CARD 1 -->
-        <div id="slider1"
-          class="min-w-[320px] snap-center bg-white rounded-lg shadow-xl overflow-hidden">
-          <img src="https://picsum.photos/500/350?1" class="w-full h-80 object-cover">
-
-        </div>
-
-        <!-- CARD 2 -->
-        <div id="slider2"
-          class="min-w-[320px] snap-center bg-white rounded-lg shadow-xl overflow-hidden">
-          <img src="https://picsum.photos/500/350?2" class="w-full h-80 object-cover">
-
-        </div>
-
-        <!-- CARD 3 -->
-        <div id="slider3"
-          class="min-w-[320px] snap-center bg-white rounded-lg shadow-xl overflow-hidden">
-          <img src="https://picsum.photos/500/350?3" class="w-full h-80 object-cover">
-        </div>
->>>>>>> bb03a10d7cf5bdaafb0102e23023afae1fba1da4
 
   
     <!-- GRADIENT FADES -->
