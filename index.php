@@ -6,7 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>index</title>
   <style>
-    
     .writing-mode-vertical {
       writing-mode: vertical-rl;
       text-orientation: mixed;
@@ -102,7 +101,7 @@
   hover:shadow-[0_0_22px_rgba(115,188,1,0.75)]
             hover:scale-110
             transition-all duration-300"
-     data-carousel-prev>
+    data-carousel-prev>
     <span class="text-[#73bc01] text-5xl
                  group-hover:-translate-x-1
                  transition-transform duration-300 mb-4">‹</span>
@@ -119,7 +118,7 @@
  
             hover:scale-110
             transition-all duration-300"
-     data-carousel-next>
+    data-carousel-next>
     <span class="text-[#73bc01] text-5xl
                  group-hover:translate-x-1
                  transition-transform duration-300 mb-4">›</span>
@@ -168,11 +167,11 @@
         <!-- Image Gallery -->
         <div class=" md:col-span-2  relative w-full rounded-2xl  overflow-hidden py-4">
 
-        
-          
+
+
 
           <!-- SLIDER -->
-          <div class="flex w-[800px] gap-4  overflow-x-auto  scroll-smooth snap-x snap-mandatory
+          <div id="smoothSlider" class="flex w-[800px] gap-4  overflow-x-auto  scroll-smooth snap-x snap-mandatory
                  px-4 md:px-8 scrollbar-hide [&::-webkit-scrollbar]:hidden[-ms-overflow-style:none][scrollbar-width:none]">
 
             <!-- CARD 1 -->
@@ -251,31 +250,30 @@
       <!-- SLIDER -->
       <div
         id="autoSlider"
-        class="flex gap-6 overflow-x-auto scroll-smooth snap-x snap-mandatory
+        class="flex gap-6 overflow-x-hidden scroll-smooth snap-x snap-mandatory
         scrollbar-hide [&::-webkit-scrollbar]:hidden
 [-ms-overflow-style:none]
 [scrollbar-width:none]
 ">
-
-        <!-- CARD 1 -->
+        <div id="autoSliderTrack" class="flex gap-6">        <!-- CARD 1 -->
         <div id="slider1"
           class="min-w-[320px] snap-center bg-white rounded-lg shadow-xl overflow-hidden">
           <img src="https://picsum.photos/500/350?1" class="w-full h-80 object-cover">
-         
+
         </div>
 
         <!-- CARD 2 -->
         <div id="slider2"
           class="min-w-[320px] snap-center bg-white rounded-lg shadow-xl overflow-hidden">
           <img src="https://picsum.photos/500/350?2" class="w-full h-80 object-cover">
-         
+
         </div>
 
         <!-- CARD 3 -->
         <div id="slider3"
           class="min-w-[320px] snap-center bg-white rounded-lg shadow-xl overflow-hidden">
           <img src="https://picsum.photos/500/350?3" class="w-full h-80 object-cover">
-         
+
 
         </div>
 
@@ -283,27 +281,27 @@
         <div id="slider4"
           class="min-w-[320px] snap-center bg-white rounded-lg shadow-xl overflow-hidden">
           <img src="https://picsum.photos/500/350?4" class="w-full h-80 object-cover">
-          
+
         </div>
 
         <div id="slider5"
           class="min-w-[320px] snap-center bg-white rounded-lg shadow-xl overflow-hidden">
           <img src="https://picsum.photos/500/350?4" class="w-full h-80 object-cover">
-    
+
         </div>
 
         <div id="slider6"
           class="min-w-[320px] snap-center bg-white rounded-lg shadow-xl overflow-hidden">
           <img src="https://picsum.photos/500/350?4" class="w-full h-80 object-cover">
-         
+
         </div>
 
         <div id="slider7"
           class="min-w-[320px] snap-center bg-white rounded-lg shadow-xl overflow-hidden">
           <img src="https://picsum.photos/500/350?4" class="w-full h-80 object-cover">
-         
-        </div>
 
+        </div>
+        <
       </div>
     </div>
 
@@ -380,7 +378,7 @@
 
   </section>
 
-  <section class="min-h-screen bg-red-50 mx-auto px-6 py-20">
+  <section class="min-h-screen bg-red-100 mx-auto px-6 py-20">
     <div class="grid md:grid-cols-2 gap-14 items-start">
 
       <!-- LEFT FORM -->
@@ -599,25 +597,20 @@
 
 
   <!-- DOWNLOAD BROCHURE BUTTON (RIGHT SIDE) -->
-<div
-  id="brochureBtn"
-  class="fixed right-0 top-1/2 -translate-y-1/2 z-30
+  <div
+    id="brochureBtn"
+    class="fixed right-0 top-1/2 -translate-y-1/2 z-30
          opacity-0 pointer-events-none
          transition-opacity duration-100
          bg-[#73bc01]/40">
-  <a
-    href="#"
-    class="text-[#73bc01] border border-[#73bc01]
+    <a
+      href="#"
+      class="text-[#73bc01] border border-[#73bc01]
            px-4 py-6 rounded-l-md
            writing-mode-vertical tracking-widest font-semibold">
-    Download Brochure
-  </a>
-</div>
-
-
-
-
-
+      Download Brochure
+    </a>
+  </div>
   <!-- WHATSAPP STICKY BUTTON -->
   <a href="https://wa.me/919999999999"
     target="_blank"
@@ -631,57 +624,124 @@
       <path d="M16 2.67C8.64 2.67 2.67 8.64 2.67 16c0 2.61.77 5.05 2.1 7.1L2.67 29.33l6.39-2.07c1.98 1.08 4.25 1.74 6.94 1.74 7.36 0 13.33-5.97 13.33-13.33S23.36 2.67 16 2.67zm0 24.22c-2.34 0-4.5-.64-6.36-1.75l-.45-.27-3.78 1.22 1.24-3.68-.29-.47c-1.23-1.95-1.88-4.2-1.88-6.55 0-6.68 5.44-12.11 12.11-12.11s12.11 5.44 12.11 12.11-5.44 12.11-12.11 12.11z" />
     </svg>
   </a>
-<script>
+  <script>
+    // Side Brochure Button started
 
-  // Side Brochure Button started
+    const brochureBtn = document.getElementById("brochureBtn");
 
-  const brochureBtn = document.getElementById("brochureBtn");
+    window.addEventListener("scroll", () => {
+      if (window.scrollY > 200) {
+        brochureBtn.classList.remove("opacity-0", "pointer-events-none");
+        brochureBtn.classList.add("opacity-100");
+      } else {
+        brochureBtn.classList.add("opacity-0", "pointer-events-none");
+        brochureBtn.classList.remove("opacity-100");
+      }
+    });
 
-  window.addEventListener("scroll", () => {
-    if (window.scrollY > 200) {
-      brochureBtn.classList.remove("opacity-0", "pointer-events-none");
-      brochureBtn.classList.add("opacity-100");
-    } else {
-      brochureBtn.classList.add("opacity-0", "pointer-events-none");
-      brochureBtn.classList.remove("opacity-100");
-    }
+    // Side Brochure Button Ended
+
+    // Autoslider for slider after galary
+
+    
+  const autoSlider = document.getElementById("autoSlider");
+
+  let autoScroll1;
+  let isPaused = false;
+
+  const speed = 0.8; // ⬅️ lower = slower, higher = faster
+
+  function startAutoScroll1() {
+    stopAutoScroll1(); // prevent duplicate loops
+
+    autoScroll1 = setInterval(() => {
+      if (!isPaused) {
+        autoSlider.scrollLeft += speed;
+
+        // seamless loop
+        if (
+          autoSlider.scrollLeft + autoSlider.clientWidth >=
+          autoSlider.scrollWidth
+        ) {
+          autoSlider.scrollLeft = 0;
+        }
+      }
+    }, 16); // ~60fps
+  }
+
+  function stopAutoScroll1() {
+    clearInterval(autoScroll1);
+  }
+
+  // start scrolling
+  startAutoScroll1();
+
+  // pause on hover
+  autoSlider.addEventListener("mouseenter", () => {
+    isPaused = true;
   });
 
-// Side Brochure Button Ended
+  autoSlider.addEventListener("mouseleave", () => {
+    isPaused = false;
+  });
 
-  // Autoslider for slider after galary
+  // pause on touch
+  autoSlider.addEventListener("touchstart", () => {
+    isPaused = true;
+  });
 
-   const slider = document.getElementById("autoSlider");
-  let autoScroll;
-  const scrollStep = 340; // card width + gap
-  const delay = 1000;
+  autoSlider.addEventListener("touchend", () => {
+    isPaused = false;
+  });
 
-  function startAutoScroll() {
-    autoScroll = setInterval(() => {
-      if (
-        slider.scrollLeft + slider.clientWidth >=
-        slider.scrollWidth - 5
-      ) {
-        // go back to start
-        slider.scrollTo({ left: 0, behavior: "smooth" });
-      } else {
-        slider.scrollBy({ left: scrollStep, behavior: "smooth" });
+  const smoothSlider = document.getElementById("smoothSlider");
+
+  let autoScroll2;
+  let isHovering = false;
+
+  const scrollAmount = 300;
+  const delay2 = 2500;
+
+  function startAutoScroll2() {
+    autoScroll2 = setInterval(() => {
+      if (!isHovering) {
+        smoothSlider.scrollBy({ left: scrollAmount, behavior: "smooth" });
+
+        if (
+          smoothSlider.scrollLeft + smoothSlider.clientWidth >=
+          smoothSlider.scrollWidth - 10
+        ) {
+          smoothSlider.scrollTo({ left: 0, behavior: "smooth" });
+        }
       }
-    }, delay);
+    }, delay2);
   }
 
-  function stopAutoScroll() {
-    clearInterval(autoScroll);
+  function stopAutoScroll2() {
+    clearInterval(autoScroll2);
   }
 
-  // start on load
-  startAutoScroll();
+  smoothSlider.addEventListener("mouseenter", () => {
+    isHovering = true;
+    stopAutoScroll2();
+  });
 
-  // pause on interaction
-  slider.addEventListener("mouseenter", stopAutoScroll);
-  slider.addEventListener("mouseleave", startAutoScroll);
-  slider.addEventListener("touchstart", stopAutoScroll);
-  slider.addEventListener("touchend", startAutoScroll);
+  smoothSlider.addEventListener("mouseleave", () => {
+    isHovering = false;
+    startAutoScroll2();
+  });
+
+  let scrollTimeout;
+  smoothSlider.addEventListener("scroll", () => {
+    stopAutoScroll2();
+    clearTimeout(scrollTimeout);
+    scrollTimeout = setTimeout(() => {
+      if (!isHovering) startAutoScroll2();
+    }, 1200);
+  });
+
+  startAutoScroll2();
+
 </script>
 
 </body>
