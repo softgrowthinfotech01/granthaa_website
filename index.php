@@ -312,34 +312,36 @@
 
   </section>
 
-  <section class="py-24 bg-gradient-to-l from-slate-950 via-gray-950 to-cyan-950 text-center">
-    <h2 class="text-3xl font-heading text-gray-200 mb-12">
-      DON'T HESITATE TO CONTACT US
-    </h2>
 
-    <div class="max-w-4xl mx-auto px-6">
-      <div
-        class="relative rounded-xl border border-gold/60
-           bg-[url('/images/appointment-bg.jpg')] bg-cover bg-center
-           px-10 py-14 shadow-2xl overflow-hidden">
+ <!-- Make Appointment -->
 
-        <!-- Overlay -->
-        <div class="absolute inset-0 bg-black/60"></div>
+  <section class="py-24 text-center">
+  <div
+    class="relative bg-cover bg-center px-10 py-20 shadow-2xl overflow-hidden"
+    style="background-image: url('/images/appointment-bg.jpg');"
+  >
+    <!-- Overlay -->
+    <div class="absolute inset-0 bg-black/60"></div>
 
-        <!-- Content -->
-        <div class="relative z-10">
-          <h3 class="text-3xl font-bold text-gray-200 mb-8">
-            MAKE AN APPOINTMENT NOW
-          </h3>
+    <!-- Content -->
+    <div class="relative z-10">
+      <h2 class="text-xl font-heading text-gray-200 mb-4">
+        DON'T HESITATE TO CONTACT US
+      </h2>
 
-          <button class="bg-red-700 hover:bg-red-500 text-white px-8 py-3 rounded-md transition">
-            Enquire Now
-          </button>
-        </div>
-      </div>
+      <h3 class="text-3xl font-bold text-white mb-8">
+        MAKE AN APPOINTMENT NOW
+      </h3>
+
+      <button
+        class="bg-red-700 hover:bg-red-500 text-white px-8 py-3 rounded-md transition"
+      >
+        Enquire Now
+      </button>
     </div>
+  </div>
+</section>
 
-  </section>
 
 
 
