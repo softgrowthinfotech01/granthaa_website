@@ -75,6 +75,34 @@
         );
       }
     }
+    .slide-card {
+    min-width: 320px;
+    scroll-snap-align: center;
+    background: #fff;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+    transition: transform 0.6s ease, box-shadow 0.6s ease, opacity 0.6s ease;
+    opacity: 0.6;
+  }
+
+  .slide-card img {
+    width: 100%;
+    height: 320px;
+    object-fit: cover;
+  }
+
+  .slide-card.active {
+    transform: scale(1.15);
+    opacity: 10;
+    box-shadow: 0 40px 90px rgba(115,188,1,0.45);
+  }
+
+  @media (max-width: 768px) {
+    .slide-card.active {
+      transform: scale(1.05);
+    }
+  }
   </style>
   <!-- Tailwind CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -205,9 +233,9 @@
             Turn Your Dreams Into A Home You'll Love.
           </p>
 
-          <button class="bg-red-950 text-white px-6 py-3 rounded-lg
+          <button class="bg-transparent text-[#73bc01] border border-[#73bc01] font-semibold px-6 py-3 rounded-lg
                  transition-all duration-500 ease-in-out
-                 hover:bg-red-800 hover:scale-105 hover:shadow-lg">
+                 hover:bg-[#73bc01] hover:text-black hover:scale-105 hover:shadow-lg">
             Schedule A Site Visit
           </button>
         </div>
@@ -228,11 +256,11 @@
 
  
       <!-- ITEM 1 -->
-<article class="carousel-item absolute top-0 bg-black rounded-xl overflow-hidden border border-slate-200 shadow-sm "
+<article class="carousel-item absolute top-0 bg-black rounded-xl overflow-hidden border border-gray-950 shadow-sm "
   style=" left: calc(100% + var(--carousel-item-gap)); width: var(--carousel-item-width); height: 300px; animation-delay: calc(var(--carousel-duration)/var(--items)*0*-1);">
 
-  <div class="w-full h-[160px]">
-    <img src="" class="w-full h-full object-cover" />
+  <div class="w-full h-[300px]">
+    <img src="images/flat1.jpg" class="w-full h-full object-cover" />
   </div>
 
   
@@ -242,11 +270,11 @@
 
 
 <!-- ITEM 2 -->
-<article class="carousel-item absolute top-0 bg-black  rounded-xl overflow-hidden border border-slate-200  shadow-sm"
+<article class="carousel-item absolute top-0 bg-black  rounded-xl overflow-hidden border border-gray-950  shadow-sm"
   style="left: calc(100% + var(--carousel-item-gap)); width: var(--carousel-item-width); height: 300px; animation-delay: calc(var(--carousel-duration)/var(--items)*1*-1);">
 
-  <div class="w-full h-[160px]">
-    <img src="img/tigor.webp" class="w-full h-full object-cover" />
+  <div class="w-full h-[300px]">
+    <img src="images/flat2.webp" class="w-full h-full object-cover" />
   </div>
 
  
@@ -256,11 +284,11 @@
 
 
 <!-- ITEM 3 -->
-<article class="carousel-item absolute top-0 bg-black  rounded-xl overflow-hidden border border-slate-200  shadow-sm"
+<article class="carousel-item absolute top-0 bg-black  rounded-xl overflow-hidden border border-gray-950 shadow-sm"
   style="left: calc(100% + var(--carousel-item-gap)); width: var(--carousel-item-width); height: 300px; animation-delay: calc(var(--carousel-duration)/var(--items)*2*-1);">
 
-  <div class="w-full h-[160px]">
-    <img src="img/city.webp" class="w-full h-full object-cover" />
+  <div class="w-full h-[300px]">
+    <img src="images/flat3.jpeg" class="w-full h-full object-cover" />
   </div>
 
   
@@ -270,11 +298,11 @@
 
 
 <!-- ITEM 4 -->
-<article class="carousel-item absolute top-0 bg-black  rounded-xl overflow-hidden border border-slate-200  shadow-sm"
+<article class="carousel-item absolute top-0 bg-black  rounded-xl overflow-hidden border border-gray-950  shadow-sm"
   style="left: calc(100% + var(--carousel-item-gap)); width: var(--carousel-item-width); height: 300px; animation-delay: calc(var(--carousel-duration)/var(--items)*3*-1);">
 
-  <div class="w-full h-[160px]">
-    <img src="img/scorpio.webp" class="w-full h-full object-cover" />
+  <div class="w-full h-[300px]">
+    <img src="images/flat4.jpeg" class="w-full h-full object-cover" />
   </div>
 
  
@@ -284,11 +312,11 @@
 
 
 <!-- ITEM 5 -->
-<article class="carousel-item absolute top-0 bg-black  rounded-xl overflow-hidden border border-slate-200  shadow-sm"
+<article class="carousel-item absolute top-0 bg-black  rounded-xl overflow-hidden border border-gray-950  shadow-sm"
   style="left: calc(100% + var(--carousel-item-gap)); width: var(--carousel-item-width); height: 300px; animation-delay: calc(var(--carousel-duration)/var(--items)*4*-1);">
 
-  <div class="w-full h-[160px]">
-    <img src="img/ciaz.webp" class="w-full h-full object-cover" />
+  <div class="w-full h-[300px]">
+    <img src="images/flat5.jpg" class="w-full h-full object-cover" />
   </div>
 
  
@@ -298,11 +326,11 @@
 
 
 <!-- ITEM 6 -->
-<article class="carousel-item absolute top-0 bg-black  rounded-xl overflow-hidden border border-slate-200  shadow-sm"
+<article class="carousel-item absolute top-0 bg-black  rounded-xl overflow-hidden border border-gray-950  shadow-sm"
   style="left: calc(100% + var(--carousel-item-gap)); width: var(--carousel-item-width); height: 300px; animation-delay: calc(var(--carousel-duration)/var(--items)*5*-1);">
 
-  <div class="w-full h-[160px]">
-    <img src="img/creta.webp" class="w-full h-full object-cover" />
+  <div class="w-full h-[300px]">
+    <img src="images/flat6.webp" class="w-full h-full object-cover" />
   </div>
 
  
@@ -320,75 +348,65 @@
 
   </div>
 
-  <section class="min-h-screen bg-black mx-auto  py-10">
+  <section class="min-h-screen bg-black py-16">
 
-    <div class="relative w-full  rounded-xl mx-auto py-16 ">
-
-      <!-- SLIDER -->
-      <div
-        id="autoSlider"
-        class="flex gap-6 overflow-x-hidden scroll-smooth snap-x snap-mandatory
-        scrollbar-hide [&::-webkit-scrollbar]:hidden
-[-ms-overflow-style:none]
-[scrollbar-width:none]
-">
-        <div id="autoSliderTrack" class="flex gap-6">        <!-- CARD 1 -->
-        <div id="slider1"
-          class="min-w-[320px] snap-center bg-white rounded-lg shadow-xl overflow-hidden">
-          <img src="https://picsum.photos/500/350?1" class="w-full h-80 object-cover">
-
-        </div>
-
-        <!-- CARD 2 -->
-        <div id="slider2"
-          class="min-w-[320px] snap-center bg-white rounded-lg shadow-xl overflow-hidden">
-          <img src="https://picsum.photos/500/350?2" class="w-full h-80 object-cover">
-
-        </div>
-
-        <!-- CARD 3 -->
-        <div id="slider3"
-          class="min-w-[320px] snap-center bg-white rounded-lg shadow-xl overflow-hidden">
-          <img src="https://picsum.photos/500/350?3" class="w-full h-80 object-cover">
+  <div class="relative max-w-7xl mx-auto px-6">
 
 
-        </div>
 
-        <!-- CARD 4 -->
-        <div id="slider4"
-          class="min-w-[320px] snap-center bg-white rounded-lg shadow-xl overflow-hidden">
-          <img src="https://picsum.photos/500/350?4" class="w-full h-80 object-cover">
+  
+    <!-- GRADIENT FADES -->
+    <div class="pointer-events-none absolute left-0 top-0 h-full w-24 bg-gradient-to-r from-black to-transparent z-10"></div>
+    <div class="pointer-events-none absolute right-0 top-0 h-full w-24 bg-gradient-to-l from-black to-transparent z-10"></div>
 
-        </div>
+    <!-- SLIDER -->
+    <div
+      id="autoSlider"
+      class="flex gap-6 overflow-x-hidden scroll-smooth snap-x snap-mandatory
+             [&::-webkit-scrollbar]:hidden
+             [-ms-overflow-style:none]
+             [scrollbar-width:none]
+             group"
+    >
 
-        <div id="slider5"
-          class="min-w-[320px] snap-center bg-white rounded-lg shadow-xl overflow-hidden">
-          <img src="https://picsum.photos/500/350?4" class="w-full h-80 object-cover">
-
-        </div>
-
-        <div id="slider6"
-          class="min-w-[320px] snap-center bg-white rounded-lg shadow-xl overflow-hidden">
-          <img src="https://picsum.photos/500/350?4" class="w-full h-80 object-cover">
-
-        </div>
-
-        <div id="slider7"
-          class="min-w-[320px] snap-center bg-white rounded-lg shadow-xl overflow-hidden">
-          <img src="https://picsum.photos/500/350?4" class="w-full h-80 object-cover">
-
-        </div>
-        <
+      <!-- CARD -->
+      <div class="slide-card">
+        <img src="https://picsum.photos/500/350?1">
       </div>
+
+      <div class="slide-card">
+        <img src="https://picsum.photos/500/350?2">
+      </div>
+
+      <div class="slide-card">
+        <img src="https://picsum.photos/500/350?3">
+      </div>
+
+      <div class="slide-card">
+        <img src="https://picsum.photos/500/350?4">
+      </div>
+
+      <div class="slide-card">
+        <img src="https://picsum.photos/500/350?5">
+      </div>
+
+      <div class="slide-card">
+        <img src="https://picsum.photos/500/350?6">
+      </div>
+
+      <div class="slide-card">
+        <img src="https://picsum.photos/500/350?7">
+      </div>
+
     </div>
 
-    <button class="mt-8 bg-red-950 hover:bg-red-800 hover:scale-105 hover:shadow-lg  text-white ml-[635px] px-8 py-3 rounded-md transition">
-      Schedule A Site Visit
-    </button>
+    <!-- CTA -->
+    <div class="text-center mt-12">
+     
+    </div>
 
-
-  </section>
-
+  </div>
+</section>
   <section class="py-24 bg-gradient-to-l from-slate-950 via-gray-950 to-cyan-950 text-center">
     <h2 class="text-3xl font-heading text-gray-200 mb-12">
       DON'T HESITATE TO CONTACT US
@@ -448,9 +466,7 @@
         it's a symbol of excellence for a select few.
       </p>
 
-      <button class="mt-8 bg-red-950 hover:bg-red-800 text-white justify-items-center px-8 py-3 rounded-md transition">
-        Schedule A Site Visit
-      </button>
+      
     </div>
 
   </section>
@@ -721,103 +737,30 @@
     // Autoslider for slider after galary
 
     
-  const autoSlider = document.getElementById("autoSlider");
+  const slider = document.getElementById("autoSlider");
 
-  let autoScroll1;
-  let isPaused = false;
+  let autoScroll;
+  const scrollStep = 350; // card width + gap
+  const delay = 2500;
 
-  const speed = 0.8; // ⬅️ lower = slower, higher = faster
-
-  function startAutoScroll1() {
-    stopAutoScroll1(); // prevent duplicate loops
-
-    autoScroll1 = setInterval(() => {
-      if (!isPaused) {
-        autoSlider.scrollLeft += speed;
-
-        // seamless loop
-        if (
-          autoSlider.scrollLeft + autoSlider.clientWidth >=
-          autoSlider.scrollWidth
-        ) {
-          autoSlider.scrollLeft = 0;
-        }
+  function startAutoScroll() {
+    autoScroll = setInterval(() => {
+      if (slider.scrollLeft + slider.clientWidth >= slider.scrollWidth - 10) {
+        slider.scrollTo({ left: 0, behavior: "smooth" });
+      } else {
+        slider.scrollBy({ left: scrollStep, behavior: "smooth" });
       }
-    }, 16); // ~60fps
+    }, delay);
   }
 
-  function stopAutoScroll1() {
-    clearInterval(autoScroll1);
+  function stopAutoScroll() {
+    clearInterval(autoScroll);
   }
 
-  // start scrolling
-  startAutoScroll1();
+  startAutoScroll();
 
-  // pause on hover
-  autoSlider.addEventListener("mouseenter", () => {
-    isPaused = true;
-  });
-
-  autoSlider.addEventListener("mouseleave", () => {
-    isPaused = false;
-  });
-
-  // pause on touch
-  autoSlider.addEventListener("touchstart", () => {
-    isPaused = true;
-  });
-
-  autoSlider.addEventListener("touchend", () => {
-    isPaused = false;
-  });
-
-  const smoothSlider = document.getElementById("smoothSlider");
-
-  let autoScroll2;
-  let isHovering = false;
-
-  const scrollAmount = 300;
-  const delay2 = 2500;
-
-  function startAutoScroll2() {
-    autoScroll2 = setInterval(() => {
-      if (!isHovering) {
-        smoothSlider.scrollBy({ left: scrollAmount, behavior: "smooth" });
-
-        if (
-          smoothSlider.scrollLeft + smoothSlider.clientWidth >=
-          smoothSlider.scrollWidth - 10
-        ) {
-          smoothSlider.scrollTo({ left: 0, behavior: "smooth" });
-        }
-      }
-    }, delay2);
-  }
-
-  function stopAutoScroll2() {
-    clearInterval(autoScroll2);
-  }
-
-  smoothSlider.addEventListener("mouseenter", () => {
-    isHovering = true;
-    stopAutoScroll2();
-  });
-
-  smoothSlider.addEventListener("mouseleave", () => {
-    isHovering = false;
-    startAutoScroll2();
-  });
-
-  let scrollTimeout;
-  smoothSlider.addEventListener("scroll", () => {
-    stopAutoScroll2();
-    clearTimeout(scrollTimeout);
-    scrollTimeout = setTimeout(() => {
-      if (!isHovering) startAutoScroll2();
-    }, 1200);
-  });
-
-  startAutoScroll2();
+  slider.addEventListener("mouseenter", stopAutoScroll);
+  slider.addEventListener("mouseleave", startAutoScroll);
 
 </script>
 
