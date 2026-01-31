@@ -26,7 +26,8 @@
     .animate-bounce-slow {
       animation: bounce-slow 2s infinite;
     }
-     .carousel {
+
+    .carousel {
       --items: 6;
       --carousel-duration: 30s;
       --carousel-width: 80vw;
@@ -66,44 +67,44 @@
     }
 
     @keyframes marquee {
-      0% { transform: translateX(0); }
+      0% {
+        transform: translateX(0);
+      }
+
       100% {
-        transform: translateX(
-          calc(
-            (var(--items) * (var(--carousel-item-width) + var(--carousel-item-gap))) * -1
-          )
-        );
+        transform: translateX(calc((var(--items) * (var(--carousel-item-width) + var(--carousel-item-gap))) * -1));
       }
     }
+
     .slide-card {
-    min-width: 360px;
-    scroll-snap-align: center;
-    background: #fff;
-    border-radius: 18px;
-    overflow: hidden;
-    box-shadow: 0 20px 50px rgba(0,0,0,0.4);
-    height: 450px;
-    border-radius: 10px;
-  }
-
-  .slide-card img {
-    width: 100%;
-    height: 450px;
-    object-fit: cover;
-
-  }
-
-  .slide-card.active {
-    transform: scale(1.15);
-    opacity: 10;
-    box-shadow: 0 40px 90px rgba(115,188,1,0.45);
-  }
-
-  @media (max-width: 768px) {
-    .slide-card.active {
-      transform: scale(1.05);
+      min-width: 360px;
+      scroll-snap-align: center;
+      background: #fff;
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+      height: 450px;
+      border-radius: 10px;
     }
-  }
+
+    .slide-card img {
+      width: 100%;
+      height: 450px;
+      object-fit: cover;
+
+    }
+
+    .slide-card.active {
+      transform: scale(1.15);
+      opacity: 10;
+      box-shadow: 0 40px 90px rgba(115, 188, 1, 0.45);
+    }
+
+    @media (max-width: 768px) {
+      .slide-card.active {
+        transform: scale(1.05);
+      }
+    }
   </style>
   <!-- Tailwind CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -251,96 +252,96 @@
           <!-- SLIDER -->
           <div class="carousel mx-auto">
 
-    <div class="carousel-mask"></div>
+            <div class="carousel-mask"></div>
 
-    <div class="carousel-inner">
+            <div class="carousel-inner">
 
- 
-      <!-- ITEM 1 -->
-<article class="carousel-item absolute top-0 bg-black rounded-xl overflow-hidden border border-gray-950 shadow-sm "
-  style=" left: calc(100% + var(--carousel-item-gap)); width: var(--carousel-item-width); height: 300px; animation-delay: calc(var(--carousel-duration)/var(--items)*0*-1);">
 
-  <div class="w-full h-[300px]">
-    <img src="images/flat1.jpg" class="w-full h-full object-cover" />
-  </div>
+              <!-- ITEM 1 -->
+              <article class="carousel-item absolute top-0 bg-black rounded-xl overflow-hidden border border-gray-950 shadow-sm "
+                style=" left: calc(100% + var(--carousel-item-gap)); width: var(--carousel-item-width); height: 300px; animation-delay: calc(var(--carousel-duration)/var(--items)*0*-1);">
 
-  
-
-</article>
+                <div class="w-full h-[300px]">
+                  <img src="images/flat1.jpg" class="w-full h-full object-cover" />
+                </div>
 
 
 
-<!-- ITEM 2 -->
-<article class="carousel-item absolute top-0 bg-black  rounded-xl overflow-hidden border border-gray-950  shadow-sm"
-  style="left: calc(100% + var(--carousel-item-gap)); width: var(--carousel-item-width); height: 300px; animation-delay: calc(var(--carousel-duration)/var(--items)*1*-1);">
-
-  <div class="w-full h-[300px]">
-    <img src="images/flat2.webp" class="w-full h-full object-cover" />
-  </div>
-
- 
-
-</article>
+              </article>
 
 
 
-<!-- ITEM 3 -->
-<article class="carousel-item absolute top-0 bg-black  rounded-xl overflow-hidden border border-gray-950 shadow-sm"
-  style="left: calc(100% + var(--carousel-item-gap)); width: var(--carousel-item-width); height: 300px; animation-delay: calc(var(--carousel-duration)/var(--items)*2*-1);">
+              <!-- ITEM 2 -->
+              <article class="carousel-item absolute top-0 bg-black  rounded-xl overflow-hidden border border-gray-950  shadow-sm"
+                style="left: calc(100% + var(--carousel-item-gap)); width: var(--carousel-item-width); height: 300px; animation-delay: calc(var(--carousel-duration)/var(--items)*1*-1);">
 
-  <div class="w-full h-[300px]">
-    <img src="images/flat3.jpeg" class="w-full h-full object-cover" />
-  </div>
-
-  
-
-</article>
+                <div class="w-full h-[300px]">
+                  <img src="images/flat2.webp" class="w-full h-full object-cover" />
+                </div>
 
 
 
-<!-- ITEM 4 -->
-<article class="carousel-item absolute top-0 bg-black  rounded-xl overflow-hidden border border-gray-950  shadow-sm"
-  style="left: calc(100% + var(--carousel-item-gap)); width: var(--carousel-item-width); height: 300px; animation-delay: calc(var(--carousel-duration)/var(--items)*3*-1);">
-
-  <div class="w-full h-[300px]">
-    <img src="images/flat4.jpeg" class="w-full h-full object-cover" />
-  </div>
-
- 
-
-</article>
+              </article>
 
 
 
-<!-- ITEM 5 -->
-<article class="carousel-item absolute top-0 bg-black  rounded-xl overflow-hidden border border-gray-950  shadow-sm"
-  style="left: calc(100% + var(--carousel-item-gap)); width: var(--carousel-item-width); height: 300px; animation-delay: calc(var(--carousel-duration)/var(--items)*4*-1);">
+              <!-- ITEM 3 -->
+              <article class="carousel-item absolute top-0 bg-black  rounded-xl overflow-hidden border border-gray-950 shadow-sm"
+                style="left: calc(100% + var(--carousel-item-gap)); width: var(--carousel-item-width); height: 300px; animation-delay: calc(var(--carousel-duration)/var(--items)*2*-1);">
 
-  <div class="w-full h-[300px]">
-    <img src="images/flat5.jpg" class="w-full h-full object-cover" />
-  </div>
-
- 
-
-</article>
+                <div class="w-full h-[300px]">
+                  <img src="images/flat3.jpeg" class="w-full h-full object-cover" />
+                </div>
 
 
 
-<!-- ITEM 6 -->
-<article class="carousel-item absolute top-0 bg-black  rounded-xl overflow-hidden border border-gray-950  shadow-sm"
-  style="left: calc(100% + var(--carousel-item-gap)); width: var(--carousel-item-width); height: 300px; animation-delay: calc(var(--carousel-duration)/var(--items)*5*-1);">
-
-  <div class="w-full h-[300px]">
-    <img src="images/flat6.webp" class="w-full h-full object-cover" />
-  </div>
-
- 
-</article>
+              </article>
 
 
 
-    </div>
-  </div>
+              <!-- ITEM 4 -->
+              <article class="carousel-item absolute top-0 bg-black  rounded-xl overflow-hidden border border-gray-950  shadow-sm"
+                style="left: calc(100% + var(--carousel-item-gap)); width: var(--carousel-item-width); height: 300px; animation-delay: calc(var(--carousel-duration)/var(--items)*3*-1);">
+
+                <div class="w-full h-[300px]">
+                  <img src="images/flat4.jpeg" class="w-full h-full object-cover" />
+                </div>
+
+
+
+              </article>
+
+
+
+              <!-- ITEM 5 -->
+              <article class="carousel-item absolute top-0 bg-black  rounded-xl overflow-hidden border border-gray-950  shadow-sm"
+                style="left: calc(100% + var(--carousel-item-gap)); width: var(--carousel-item-width); height: 300px; animation-delay: calc(var(--carousel-duration)/var(--items)*4*-1);">
+
+                <div class="w-full h-[300px]">
+                  <img src="images/flat5.jpg" class="w-full h-full object-cover" />
+                </div>
+
+
+
+              </article>
+
+
+
+              <!-- ITEM 6 -->
+              <article class="carousel-item absolute top-0 bg-black  rounded-xl overflow-hidden border border-gray-950  shadow-sm"
+                style="left: calc(100% + var(--carousel-item-gap)); width: var(--carousel-item-width); height: 300px; animation-delay: calc(var(--carousel-duration)/var(--items)*5*-1);">
+
+                <div class="w-full h-[300px]">
+                  <img src="images/flat6.webp" class="w-full h-full object-cover" />
+                </div>
+
+
+              </article>
+
+
+
+            </div>
+          </div>
         </div>
 
       </div>
@@ -351,86 +352,83 @@
 
   <section class="min-h-screen bg-black py-15">
 
-  <div class="relative  mx-auto ">
+    <div class="relative  mx-auto ">
 
 
 
-  
-    <!-- GRADIENT FADES -->
-    
-    <!-- SLIDER -->
-    <div
-      id="autoSlider"
-      class="flex gap-6 overflow-x-hidden scroll-smooth snap-x snap-mandatory
+
+      <!-- GRADIENT FADES -->
+
+      <!-- SLIDER -->
+      <div
+        id="autoSlider"
+        class="flex gap-6 overflow-x-hidden scroll-smooth snap-x snap-mandatory
              [&::-webkit-scrollbar]:hidden
              [-ms-overflow-style:none]
              [scrollbar-width:none]
-             group"
-    >
+             group">
 
-      <!-- CARD -->
-      <div class="slide-card">
-        <img src="https://picsum.photos/500/350?1">
+        <!-- CARD -->
+        <div class="slide-card">
+          <img src="https://picsum.photos/500/350?1">
+        </div>
+
+        <div class="slide-card">
+          <img src="https://picsum.photos/500/350?2">
+        </div>
+
+        <div class="slide-card">
+          <img src="https://picsum.photos/500/350?3">
+        </div>
+
+        <div class="slide-card">
+          <img src="https://picsum.photos/500/350?4">
+        </div>
+
+        <div class="slide-card">
+          <img src="https://picsum.photos/500/350?5">
+        </div>
+
+        <div class="slide-card">
+          <img src="https://picsum.photos/500/350?6">
+        </div>
+
+        <div class="slide-card">
+          <img src="https://picsum.photos/500/350?7">
+        </div>
+
       </div>
 
-      <div class="slide-card">
-        <img src="https://picsum.photos/500/350?2">
-      </div>
 
-      <div class="slide-card">
-        <img src="https://picsum.photos/500/350?3">
-      </div>
+  </section>
 
-      <div class="slide-card">
-        <img src="https://picsum.photos/500/350?4">
-      </div>
+  <!-- Make Appointment -->
 
-      <div class="slide-card">
-        <img src="https://picsum.photos/500/350?5">
-      </div>
-
-      <div class="slide-card">
-        <img src="https://picsum.photos/500/350?6">
-      </div>
-
-      <div class="slide-card">
-        <img src="https://picsum.photos/500/350?7">
-      </div>
-
-    </div>
-
-
-</section>
-
- <!-- Make Appointment -->
-
- <section class="text-center">
-  <div
-    class="relative bg-cover bg-center shadow-2xl overflow-hidden min-h-[600px]
+  <section class="text-center">
+    <div
+      class="relative bg-cover bg-center shadow-2xl overflow-hidden min-h-[600px]
            flex items-center justify-center"
-    style="background-image: url('./images/makeappointment.jpg');"
-  >
-    <!-- Overlay -->
-    <div class="absolute inset-0 bg-black/60"></div>
+      style="background-image: url('./images/makeappointment.jpg');">
+      <!-- Overlay -->
+      <div class="absolute inset-0 bg-black/60"></div>
 
-    <!-- Content -->
-    <div class="relative z-10">
-      <h2 class="text-xl text-gray-200 mb-4 tracking-wider">
-        DON'T HESITATE TO CONTACT US
-      </h2>
+      <!-- Content -->
+      <div class="relative z-10">
+        <h2 class="text-xl text-gray-200 mb-4 tracking-wider">
+          DON'T HESITATE TO CONTACT US
+        </h2>
 
-      <h3 class="text-12xl md:text-6xl font-bold text-[#73bc01] mb-8">
-        MAKE AN APPOINTMENT NOW
-      </h3>
+        <h3 class="text-12xl md:text-6xl font-bold text-[#73bc01] mb-8">
+          MAKE AN APPOINTMENT NOW
+        </h3>
 
-      <button
-        class="bg-transparent border border-[#73bc01] text-[#73bc01] hover:bg-[#73bc01] hover:text-black px-8 py-3 rounded-md transition duration-300"
-      >
-        Enquire Now
-      </button>
+        <button
+          class="bg-transparent border border-[#73bc01] text-[#73bc01] hover:bg-[#73bc01] hover:text-black px-8 py-3 rounded-md transition duration-300">
+          Enquire Now
+        </button>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
 
 
 
@@ -464,7 +462,7 @@
         it's a symbol of excellence for a select few.
       </p>
 
-      
+
     </div>
 
   </section>
@@ -734,33 +732,38 @@
 
     // Autoslider for slider after galary
 
-    
-  const slider = document.getElementById("autoSlider");
 
-  let autoScroll;
-  const scrollStep = 350; // card width + gap
-  const delay = 2500;
+    const slider = document.getElementById("autoSlider");
 
-  function startAutoScroll() {
-    autoScroll = setInterval(() => {
-      if (slider.scrollLeft + slider.clientWidth >= slider.scrollWidth - 10) {
-        slider.scrollTo({ left: 0, behavior: "smooth" });
-      } else {
-        slider.scrollBy({ left: scrollStep, behavior: "smooth" });
-      }
-    }, delay);
-  }
+    let autoScroll;
+    const scrollStep = 350; // card width + gap
+    const delay = 2500;
 
-  function stopAutoScroll() {
-    clearInterval(autoScroll);
-  }
+    function startAutoScroll() {
+      autoScroll = setInterval(() => {
+        if (slider.scrollLeft + slider.clientWidth >= slider.scrollWidth - 10) {
+          slider.scrollTo({
+            left: 0,
+            behavior: "smooth"
+          });
+        } else {
+          slider.scrollBy({
+            left: scrollStep,
+            behavior: "smooth"
+          });
+        }
+      }, delay);
+    }
 
-  startAutoScroll();
+    function stopAutoScroll() {
+      clearInterval(autoScroll);
+    }
 
-  slider.addEventListener("mouseenter", stopAutoScroll);
-  slider.addEventListener("mouseleave", startAutoScroll);
+    startAutoScroll();
 
-</script>
+    slider.addEventListener("mouseenter", stopAutoScroll);
+    slider.addEventListener("mouseleave", startAutoScroll);
+  </script>
 
 </body>
 
