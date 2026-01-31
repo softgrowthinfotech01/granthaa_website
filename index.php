@@ -100,8 +100,36 @@
         transform: scale(1.05);
       }
     }
+/* .slide {
+    min-width: 25%;
+    transition: transform 0.5s ease, opacity 0.5s ease;
+  }
+
+  .slide img {
+    border-radius: 14px;
+    width: 100%;
+  }
+
+  .slide.active {
+    transform: scale(1.15);
+    z-index: 10;
+  }
+
+  .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 9999px;
+    background: #555;
+  }
+
+  .dot.active {
+    background: white;
+    transform: scale(1.4);
+  } */
+</style>
+
      
-  </style>
+ 
   <!-- Tailwind CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
 
@@ -326,69 +354,43 @@
 
   </div>
 
-  <section class="min-h-screen bg-black py-15">
+  <!-- <div class="relative w-full overflow-hidden bg-black py-10">
 
-    <div class="relative  mx-auto ">
-
-
-
-
-      <!-- GRADIENT FADES -->
-
-      <!-- SLIDER -->
-      <div
-        id="autoSlider"
-        class="flex gap-6 overflow-x-hidden scroll-smooth snap-x snap-mandatory
-             [&::-webkit-scrollbar]:hidden
-             [-ms-overflow-style:none]
-             [scrollbar-width:none]
-             group">
-
-        <!-- CARD -->
-        <div class="slide-card">
-          <img src="https://picsum.photos/500/350?1">
-        </div>
-
-        <div class="slide-card">
-          <img src="https://picsum.photos/500/350?2">
-        </div>
-
-        <div class="slide-card">
-          <img src="https://picsum.photos/500/350?3">
-        </div>
-
-        <div class="slide-card">
-          <img src="https://picsum.photos/500/350?4">
-        </div>
-
-        <div class="slide-card">
-          <img src="https://picsum.photos/500/350?5">
-        </div>
-
-        <div class="slide-card">
-          <img src="https://picsum.photos/500/350?6">
-        </div>
-
-        <div class="slide-card">
-          <img src="https://picsum.photos/500/350?7">
-        </div>
-
-      </div>
+  <div
+    id="slider"
+    class="flex gap-14 transition-transform duration-700 ease-linear"
+  >
+    <div class="slide"><img src="images/card1.jpg" class="w-[150px] h-[300px]"></div>
+    <div class="slide"><img src="images/card2.jpeg " class="w-[150px] h-[300px]"></div>
+    <div class="slide"><img src="images/card3.webp " class="w-[150px] h-[300px]"></div>
+    <div class="slide"><img src="images/card4.avif " class="w-[150px] h-[300px]"></div>
+    <div class="slide"><img src="images/card5.jpg " class="w-[150px] h-[300px]"></div>
+    <div class="slide"><img src="images/card6.jpg " class="w-[150px] h-[300px]"></div>
+    <div class="slide"><img src="images/card7.jpg " class="w-[150px] h-[300px]"></div>
 
 
-       <div class="absolute z-30 bottom-6 left-1/2 -translate-x-1/2 flex gap-3">
-  <div class="absolute z-30 bottom-6 left-1/2 -translate-x-1/2 flex gap-3">
-  <button data-carousel-slide-to="1" class="indicator w-9 h-9 rounded-full bg-black/70 border border-[#73bc01] text-white transition">1</button>
-  <button data-carousel-slide-to="2" class="indicator w-9 h-9 rounded-full bg-black/70 border border-[#73bc01] text-white transition">2</button>
-  <button data-carousel-slide-to="3" class="indicator w-9 h-9 rounded-full bg-black/70 border border-[#73bc01] text-white transition">3</button>
-  <button data-carousel-slide-to="4" class="indicator w-9 h-9 rounded-full bg-black/70 border border-[#73bc01] text-white transition">4</button>
-  <button data-carousel-slide-to="5" class="indicator w-9 h-9 rounded-full bg-black/70 border border-[#73bc01] text-white transition">5</button>
-  <button data-carousel-slide-to="6" class="indicator w-9 h-9 rounded-full bg-black/70 border border-[#73bc01] text-white transition">6</button>
-  <button data-carousel-slide-to="7" class="indicator w-9 h-9 rounded-full bg-black/70 border border-[#73bc01] text-white transition">7</button>
-</div>
-</div>
+     <div class="slide"><img src="images/card1.jpg" class="w-[150px] h-[300px]"></div>
+    <div class="slide"><img src="images/card2.jpeg " class="w-[150px] h-[300px]"></div>
+    <div class="slide"><img src="images/card3.webp " class="w-[150px] h-[300px]"></div>
+    <div class="slide"><img src="images/card4.avif " class="w-[150px] h-[300px]"></div>
+    <div class="slide"><img src="images/card5.jpg " class="w-[150px] h-[300px]"></div>
+    <div class="slide"><img src="images/card6.jpg " class="w-[150px] h-[300px]"></div>
+    <div class="slide"><img src="images/card7.jpg " class="w-[150px] h-[300px]"></div>
 
-  </section>
+  </div>
+
+  <div class="flex justify-center gap-3 mt-6">
+    <button class="dot active"></button>
+    <button class="dot"></button>
+    <button class="dot"></button>
+    <button class="dot"></button>
+    <button class="dot"></button>
+    <button class="dot"></button>
+     <button class="dot"></button>
+
+  </div>
+
+</div> -->
 
   <!-- Make Appointment -->
 
@@ -727,61 +729,43 @@
     // Autoslider for slider after galary
 
 
-  const slider = document.getElementById("autoSlider");
-  const slides = slider.children;
-  const indicators = document.querySelectorAll(".indicator");
+  // const slider = document.getElementById("slider");
+  // const slides = document.querySelectorAll(".slide");
+  // const dots = document.querySelectorAll(".dot");
 
-  let currentIndex = 0;
-  const slideWidth = slides[0].offsetWidth + 24; // card width + gap
-  const delay = 2500;
-  let autoScroll;
+  // let index = 0;
+  // const visible = 4;
+  // const total = slides.length / 2;
 
-  function updateIndicators(index) {
-    indicators.forEach(btn => btn.classList.remove("active"));
-    indicators[index].classList.add("active");
-  }
+  // function updateSlider() {
+  //   slider.style.transform = `translateX(-${index * (100 / visible)}%)`;
 
-  function goToSlide(index) {
-    slider.scrollTo({
-      left: index * slideWidth,
-      behavior: "smooth"
-    });
-    currentIndex = index;
-    updateIndicators(index);
-  }
+  //   slides.forEach(s => s.classList.remove("active"));
+  //   const center = index + 1;
+  //   slides[center]?.classList.add("active");
 
-  function startAutoScroll() {
-    autoScroll = setInterval(() => {
-      currentIndex++;
+  //   dots.forEach(d => d.classList.remove("active"));
+  //   dots[index % total]?.classList.add("active");
+  // }
 
-      if (currentIndex >= slides.length) {
-        currentIndex = 0;
-        slider.scrollTo({ left: 0, behavior: "smooth" });
-      } else {
-        goToSlide(currentIndex);
-      }
-    }, delay);
-  }
+  // function autoScroll() {
+  //   index++;
 
-  function stopAutoScroll() {
-    clearInterval(autoScroll);
-  }
+  //   if (index >= total) {
+  //     setTimeout(() => {
+  //       slider.style.transition = "none";
+  //       index = 0;
+  //       updateSlider();
+  //       slider.offsetHeight;
+  //       slider.style.transition = "transform 0.7s linear";
+  //     }, 700);
+  //   }
 
-  // Indicator click
-  indicators.forEach(btn => {
-    btn.addEventListener("click", () => {
-      stopAutoScroll();
-      goToSlide(+btn.dataset.carouselSlideTo);
-      startAutoScroll();
-    });
-  });
+  //   updateSlider();
+  // }
 
-  // Pause on hover (nice UX)
-  slider.addEventListener("mouseenter", stopAutoScroll);
-  slider.addEventListener("mouseleave", startAutoScroll);
-
-  updateIndicators(0);
-  startAutoScroll();
+  // updateSlider();
+  // setInterval(autoScroll, 2500);
 </script>
 </body>
 
