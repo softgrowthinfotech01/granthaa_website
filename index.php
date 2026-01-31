@@ -76,35 +76,31 @@
       }
     }
 
-    .slide-card {
-      min-width: 360px;
-      scroll-snap-align: center;
-      background: #fff;
-      border-radius: 18px;
-      overflow: hidden;
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
-      height: 450px;
-      border-radius: 10px;
-    }
+     .slide-card {
+    min-width: 320px;
+    flex-shrink: 0;
+    scroll-snap-align: center;
+    border-radius: 16px;
+    overflow: hidden;
+  }
 
-    .slide-card img {
-      width: 100%;
-      height: 450px;
-      object-fit: cover;
+  .slide-card img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
 
-    }
-
-    .slide-card.active {
-      transform: scale(1.15);
-      opacity: 10;
-      box-shadow: 0 40px 90px rgba(115, 188, 1, 0.45);
-    }
+  .indicator.active {
+    background-color: #73bc01 !important;
+    color: black;
+  }
 
     @media (max-width: 768px) {
       .slide-card.active {
         transform: scale(1.05);
       }
     }
+     
   </style>
   <!-- Tailwind CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -118,91 +114,71 @@
   <?php include "header.php"; ?>
 
 
-  <div id="default-carousel" class="relative w-full h-[600px]" data-carousel="slide">
-    <!-- Carousel wrapper -->
-    <div class="relative h-full overflow-hidden">
+<div id="default-carousel"
+     class="relative w-full h-[600px]"
+     data-carousel="slide">
 
-      <!-- Item 1 -->
-      <div class="hidden duration-700 ease-in-out h-full" data-carousel-item>
-        <img src="images/GLDimg1.png"
-          class="absolute w-full h-full object-cover"
-          alt="Slide 1">
-      </div>
+  <!-- Carousel wrapper -->
+  <div class="relative h-full overflow-hidden">
 
-      <!-- Item 2 -->
-      <div class="hidden duration-700 ease-in-out h-full" data-carousel-item>
-        <img src="images/GLDimg2.png"
-          class="absolute w-full h-full object-cover"
-          alt="Slide 2">
-      </div>
+    <div class="hidden duration-700 ease-in-out h-full" data-carousel-item>
+      <img src="images/GLDimg1.png" class="absolute w-full h-full object-cover">
+    </div>
 
-      <!-- Item 3 -->
-      <div class="hidden duration-700 ease-in-out h-full" data-carousel-item>
-        <img src="images/GLDimg3.png"
-          class="absolute w-full h-full object-cover"
-          alt="Slide 3">
-      </div>
+    <div class="hidden duration-700 ease-in-out h-full" data-carousel-item>
+      <img src="images/GLDimg2.png" class="absolute w-full h-full object-cover">
+    </div>
 
-      <!-- Item 4 -->
-      <div class="hidden duration-700 ease-in-out h-full" data-carousel-item>
-        <img src="images/GLDimg4.png"
-          class="absolute w-full h-full object-cover"
-          alt="Slide 4">
-      </div>
+    <div class="hidden duration-700 ease-in-out h-full" data-carousel-item>
+      <img src="images/GLDimg3.png" class="absolute w-full h-full object-cover">
+    </div>
 
-      <!-- Item 5 -->
-      <div class="hidden duration-700 ease-in-out h-full" data-carousel-item>
-        <img src="images/GLDimg5.png"
-          class="absolute w-full h-full object-cover"
-          alt="Slide 5">
-      </div>
+    <div class="hidden duration-700 ease-in-out h-full" data-carousel-item>
+      <img src="images/GLDimg4.png" class="absolute w-full h-full object-cover">
+    </div>
 
+    <div class="hidden duration-700 ease-in-out h-full" data-carousel-item>
+      <img src="images/GLDimg5.png" class="absolute w-full h-full object-cover">
     </div>
   </div>
 
-  <!-- Slider indicators -->
-  <div class="absolute z-30 flex -translate-x-1/2 bottom-5 left-1/2 space-x-3">
-    <button type="button" class="w-3 h-3 rounded-full bg-[#73bc01]" data-carousel-slide-to="0"></button>
-    <button type="button" class="w-3 h-3 rounded-full bg-[#73bc01]" data-carousel-slide-to="1"></button>
-    <button type="button" class="w-3 h-3 rounded-full bg-[#73bc01]" data-carousel-slide-to="2"></button>
-    <button type="button" class="w-3 h-3 rounded-full bg-[#73bc01]" data-carousel-slide-to="3"></button>
-    <button type="button" class="w-3 h-3 rounded-full bg-[#73bc01]" data-carousel-slide-to="4"></button>
-  </div>
+  <!-- INDICATORS -->
+ <div class="absolute z-30 bottom-6 left-1/2 -translate-x-1/2 flex gap-3">
+  <button data-carousel-slide-to="0"
+    class="w-9 h-9 rounded-full bg-black/70 border border-[#73bc01] text-white
+           hover:bg-[#73bc01]
+           transition">1</button>
 
-  <!-- Controls (Updated Buttons) -->
-  <a href="#slide-prev"
+  <button data-carousel-slide-to="1" class="w-9 h-9 rounded-full bg-black/70 border border-[#73bc01] hover:bg-[#73bc01]  text-white transition">2</button>
+  <button data-carousel-slide-to="2" class="w-9 h-9 rounded-full bg-black/70 border border-[#73bc01] hover:bg-[#73bc01] text-white transition">3</button>
+  <button data-carousel-slide-to="3" class="w-9 h-9 rounded-full bg-black/70 border border-[#73bc01] hover:bg-[#73bc01] text-white transition">4</button>
+  <button data-carousel-slide-to="4" class="w-9 h-9 rounded-full bg-black/70 border border-[#73bc01] hover:bg-[#73bc01] text-white transition">5</button>
+</div>
+
+
+  <!-- PREV -->
+  <button type="button"
     class="group absolute left-4 top-1/2 -translate-y-1/2 z-30
-            w-14 h-14 rounded-full
-            bg-black/70 backdrop-blur
-            flex items-center justify-center
-                       border border-[#73bc01]
-  shadow-[0_4px_12px_rgba(115,188,1,0.45)]
-  hover:shadow-[0_0_22px_rgba(115,188,1,0.75)]
-            hover:scale-110
-            transition-all duration-300"
+           w-14 h-14 rounded-full bg-black/70 backdrop-blur
+           flex items-center justify-center
+           border border-[#73bc01]
+           hover:scale-110 transition-all"
     data-carousel-prev>
-    <span class="text-[#73bc01] text-5xl
-                 group-hover:-translate-x-1
-                 transition-transform duration-300 mb-4">‹</span>
-  </a>
+    <span class="text-[#73bc01] text-5xl mb-4">‹</span>
+  </button>
 
-  <a href="#slide-next"
+  <!-- NEXT -->
+  <button type="button"
     class="group absolute right-4 top-1/2 -translate-y-1/2 z-30
-            w-14 h-14 rounded-full
-            bg-black/70 backdrop-blur
-            flex items-center justify-center
-            border border-[#73bc01]
-  shadow-[0_4px_12px_rgba(115,188,1,0.45)]
-  hover:shadow-[0_0_22px_rgba(115,188,1,0.75)]
- 
-            hover:scale-110
-            transition-all duration-300"
+           w-14 h-14 rounded-full bg-black/70 backdrop-blur
+           flex items-center justify-center
+           border border-[#73bc01]
+           hover:scale-110 transition-all"
     data-carousel-next>
-    <span class="text-[#73bc01] text-5xl
-                 group-hover:translate-x-1
-                 transition-transform duration-300 mb-4">›</span>
-  </a>
-  </div>
+    <span class="text-[#73bc01] text-5xl mb-4">›</span>
+  </button>
+
+</div>
 
   <div class="min-h-screen bg-black ">
 
@@ -399,6 +375,18 @@
 
       </div>
 
+
+       <div class="absolute z-30 bottom-6 left-1/2 -translate-x-1/2 flex gap-3">
+  <div class="absolute z-30 bottom-6 left-1/2 -translate-x-1/2 flex gap-3">
+  <button data-carousel-slide-to="1" class="indicator w-9 h-9 rounded-full bg-black/70 border border-[#73bc01] text-white transition">1</button>
+  <button data-carousel-slide-to="2" class="indicator w-9 h-9 rounded-full bg-black/70 border border-[#73bc01] text-white transition">2</button>
+  <button data-carousel-slide-to="3" class="indicator w-9 h-9 rounded-full bg-black/70 border border-[#73bc01] text-white transition">3</button>
+  <button data-carousel-slide-to="4" class="indicator w-9 h-9 rounded-full bg-black/70 border border-[#73bc01] text-white transition">4</button>
+  <button data-carousel-slide-to="5" class="indicator w-9 h-9 rounded-full bg-black/70 border border-[#73bc01] text-white transition">5</button>
+  <button data-carousel-slide-to="6" class="indicator w-9 h-9 rounded-full bg-black/70 border border-[#73bc01] text-white transition">6</button>
+  <button data-carousel-slide-to="7" class="indicator w-9 h-9 rounded-full bg-black/70 border border-[#73bc01] text-white transition">7</button>
+</div>
+</div>
 
   </section>
 
@@ -713,6 +701,7 @@
       <path d="M16 2.67C8.64 2.67 2.67 8.64 2.67 16c0 2.61.77 5.05 2.1 7.1L2.67 29.33l6.39-2.07c1.98 1.08 4.25 1.74 6.94 1.74 7.36 0 13.33-5.97 13.33-13.33S23.36 2.67 16 2.67zm0 24.22c-2.34 0-4.5-.64-6.36-1.75l-.45-.27-3.78 1.22 1.24-3.68-.29-.47c-1.23-1.95-1.88-4.2-1.88-6.55 0-6.68 5.44-12.11 12.11-12.11s12.11 5.44 12.11 12.11-5.44 12.11-12.11 12.11z" />
     </svg>
   </a>
+  <script src="https://unpkg.com/flowbite@1.6.5/dist/flowbite.min.js"></script>
   <script>
     // Side Brochure Button started
 
@@ -733,38 +722,62 @@
     // Autoslider for slider after galary
 
 
-    const slider = document.getElementById("autoSlider");
+  const slider = document.getElementById("autoSlider");
+  const slides = slider.children;
+  const indicators = document.querySelectorAll(".indicator");
 
-    let autoScroll;
-    const scrollStep = 350; // card width + gap
-    const delay = 2500;
+  let currentIndex = 0;
+  const slideWidth = slides[0].offsetWidth + 24; // card width + gap
+  const delay = 2500;
+  let autoScroll;
 
-    function startAutoScroll() {
-      autoScroll = setInterval(() => {
-        if (slider.scrollLeft + slider.clientWidth >= slider.scrollWidth - 10) {
-          slider.scrollTo({
-            left: 0,
-            behavior: "smooth"
-          });
-        } else {
-          slider.scrollBy({
-            left: scrollStep,
-            behavior: "smooth"
-          });
-        }
-      }, delay);
-    }
+  function updateIndicators(index) {
+    indicators.forEach(btn => btn.classList.remove("active"));
+    indicators[index].classList.add("active");
+  }
 
-    function stopAutoScroll() {
-      clearInterval(autoScroll);
-    }
+  function goToSlide(index) {
+    slider.scrollTo({
+      left: index * slideWidth,
+      behavior: "smooth"
+    });
+    currentIndex = index;
+    updateIndicators(index);
+  }
 
-    startAutoScroll();
+  function startAutoScroll() {
+    autoScroll = setInterval(() => {
+      currentIndex++;
 
-    slider.addEventListener("mouseenter", stopAutoScroll);
-    slider.addEventListener("mouseleave", startAutoScroll);
-  </script>
+      if (currentIndex >= slides.length) {
+        currentIndex = 0;
+        slider.scrollTo({ left: 0, behavior: "smooth" });
+      } else {
+        goToSlide(currentIndex);
+      }
+    }, delay);
+  }
 
+  function stopAutoScroll() {
+    clearInterval(autoScroll);
+  }
+
+  // Indicator click
+  indicators.forEach(btn => {
+    btn.addEventListener("click", () => {
+      stopAutoScroll();
+      goToSlide(+btn.dataset.carouselSlideTo);
+      startAutoScroll();
+    });
+  });
+
+  // Pause on hover (nice UX)
+  slider.addEventListener("mouseenter", stopAutoScroll);
+  slider.addEventListener("mouseleave", startAutoScroll);
+
+  updateIndicators(0);
+  startAutoScroll();
+</script>
 </body>
 
 </html>
