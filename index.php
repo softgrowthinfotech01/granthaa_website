@@ -423,44 +423,45 @@
 
 
   <!-- ABOUT SECTION -->
-  <section class="min-h-screen bg-gray-400 mx-auto px-6 py-20 grid md:grid-cols-2 gap-16 items-center">
+  <section class="min-h-screen bg-black mx-auto px-6 py-20 flex flex-col md:flex-row gap-16 items-center">
 
-    <!-- LEFT IMAGE -->
-    <div class="rounded-2xl overflow-hidden shadow-lg">
-      <img src="images/villas img.jpg" alt="Building" class="w-full h-full object-cover">
+  <!-- LEFT IMAGE -->
+  <div class="rounded-2xl overflow-hidden shadow-lg w-full md:w-1/2">
+    <img
+      src="images/villas img.jpg"
+      alt="Building"
+      class="w-full h-full object-cover"
+    />
+  </div>
 
-      <h2 class="text-4xl md:text-5xl font-serif ml-[15px] mt-6 text-cyan-900 mb-5">
-        Amenities
-      </h2>
-      <p class="text-lg text-black ml-[15px] leading-relaxed max-w-xl mb-6">
-        Discover top-notch amenities designed to enhance your experience, comfort, and convenience at every step.
-      </p>
+  <!-- RIGHT CONTENT -->
+  <div class="w-full md:w-1/2 mb-[200px]">
+    <h2 class="text-4xl md:text-5xl font-serif text-[#73bc01] mb-[30px]">
+      About Us
+    </h2>
+
+    <p class="text-lg text-white leading-relaxed max-w-xl">
+      Roswalt Zyon in Andheri Oshiwara stands tall like the 'Hills of God',
+      representing power, prestige, and perfection. It's not just a home;
+      it's a symbol of excellence for a select few.
+    </p>
+  </div>
+
+</section>
+
+
 
     </div>
 
-    <!-- RIGHT CONTENT -->
-    <div class="mb-[200px]">
-      <h2 class="text-4xl md:text-5xl font-serif text-cyan-900  mb-[30px]">
-        About Us
-      </h2>
 
-      <p class="text-lg text-black leading-relaxed max-w-xl ">
-        Roswalt Zyon in Andheri Oshiwara stands tall like the 'Hills of God',
-        representing power, prestige, and perfection. It's not just a home;
-        it's a symbol of excellence for a select few.
-      </p>
+  <!-- Contact Sections-->
 
-
-    </div>
-
-  </section>
-
-  <section class="min-h-screen bg-red-100 mx-auto px-6 py-20">
+  <section class="min-h-screen bg-black mx-auto px-6 py-20">
     <div class="grid md:grid-cols-2 gap-14 items-start">
 
       <!-- LEFT FORM -->
-      <div class="border-4 border-red-800 rounded-xl p-5">
-        <h2 class="text-4xl font-serif text-black mb-4">
+      <div class="border-4 border-[#73bc01] rounded-xl p-5">
+        <h2 class="text-4xl font-serif text-white mb-4">
           Book Site Visit <span class="uppercase">Now !</span>
         </h2>
 
@@ -505,7 +506,7 @@
 
           <!-- Submit -->
           <button
-            class="bg-green-600 hover:bg-green-900 text-white ml-[230px] px-10 py-3 rounded-md tracking-wide">
+            class="bg-transparent border border-[#73bc01] hover:bg-[#73bc01] hover:text-black text-[#73bc01]  ml-[230px] px-10 py-3 rounded-md tracking-wide">
             SUBMIT
           </button>
 
@@ -513,8 +514,8 @@
       </div>
 
       <!-- RIGHT CONTENT -->
-      <div class="relative border-4 border-red-800 rounded-xl p-5">
-        <h2 class="text-4xl font-serif text-black mb-4">
+      <div class="relative border-4 border-[#73bc01] rounded-xl p-5">
+        <h2 class="text-4xl font-serif text-white mb-4">
           Unlock Your Dream Home!
         </h2>
 
