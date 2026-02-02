@@ -97,7 +97,6 @@
         Unlock a world of comfort and luxury in your dream home.
       </p>
 
-<<<<<<< HEAD
       <!-- Contact Items -->
       <div class="space-y-10">
 
@@ -105,17 +104,6 @@
         <div class="flex gap-5 items-start">
           <div class="w-12 h-12 rounded-full bg-[#d2a679] flex items-center justify-center text-black">
             ✉
-=======
-          <!-- Email -->
-          <div class="flex gap-4 items-start">
-            <div class="w-12 h-12 rounded-full bg-[#d2a679] flex items-center justify-center text-black">
-              ✉
-            </div>
-            <div>
-              <h4 class="text-xl font-serif">Send An Email</h4>
-              <p class="text-[#73bc01]">grantha@gmail.com</p>
-            </div>
->>>>>>> 19bbfced697b753b152fe763ca6ccc6ac875f6b1
           </div>
           <div>
             <h4 class="text-xl font-serif">Send An Email</h4>
