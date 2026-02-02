@@ -4,6 +4,9 @@
     <meta charset="UTF-8" />
     <title>Header</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+ 
+    </style>
   </head>
 
  <body class="bg-transparent overflow-x-hidden">
@@ -22,7 +25,7 @@
       for="menuToggle"
       class="flex items-center gap-3 text-[#73bc01] cursor-pointer"
     >
-      <span class="text-2xl font-bold">☰</span>
+      <span class="text-xl mb-1 font-bold">☰</span>
       <span class="hidden sm:block text-lg font-bold">Menu</span>
     </label>
 
@@ -31,14 +34,14 @@
       <img
         src="images/granthalogo.webp"
         alt="Grantha Logo"
-        class=" h-[50px] w-[50px] sm:h-14 md:h-[50px] lg:h-18 xl:h-20 w-auto object-contain"
+        class="w-[180px] h-[100px]"
       />
     </div>
 
     <!-- CTA -->
     <a
       href="#"
-      class="hidden md:block border border-[#73bc01] text-[#73bc01]
+      class="hidden font-semibold md:block border border-[#73bc01] text-[#73bc01]
              px-5 py-2 rounded
              hover:bg-[#73bc01] hover:text-black hover:scale-110 transition"
     >

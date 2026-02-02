@@ -5,7 +5,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>index</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Yeseva+One&display=swap" rel="stylesheet">
   <style>
+
     .writing-mode-vertical {
       writing-mode: vertical-rl;
       text-orientation: mixed;
@@ -100,6 +104,28 @@
         transform: scale(1.05);
       }
     }
+    
+.family {
+  font-family: "Yeseva One", serif;
+  font-optical-sizing: auto;
+  font-weight: weight;
+  font-style: normal;
+}
+.yeseva {
+  font-family: "Yeseva One", serif;
+  font-weight: 400;
+  font-style: normal;
+}
+.ubuntu {
+  font-family: "Ubuntu", sans-serif;
+  font-weight: 300;
+  font-style: italic;
+}
+.jersey {
+  font-family: "Jersey 25", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
 /* .slide {
     min-width: 25%;
     transition: transform 0.5s ease, opacity 0.5s ease;
@@ -212,10 +238,9 @@
 
     <!-- Header -->
     <div class="text-center pt-20 pb-16">
-      <h1 class="text-5xl md:text-6xl font-bold text-[#73bc01]">
-        Gallery
-      </h1>
-      <p class="mt-4 text-black text-3xl font-semibold ">
+      <h1 class="family text-5xl md:text-6xl font-Bold-700-Italic text-[#73bc01]">
+        Gallery      </h1>
+      <p class="yeseva mt-4 text-black text-3xl  ">
         Explore Our Gallery And Experience The Beauty In Every Detail
       </p>
     </div>
@@ -231,15 +256,15 @@
             [animation-timing-function:ease-in-out]
             transition-all duration-700 hover:scale-[1.02] mt-12">
 
-          <h2 class="text-3xl text-white mb-4 transition-colors duration-500">
-            Visualise Your Dream Home.
+          <h2 class="ubuntu text-3xl text-white mb-4 transition-colors duration-500">
+            Visualise Your <span class="ml-[60px]"> Dream Home.</span>
           </h2>
 
-          <p class="text-gray-300 mb-8 transition-colors duration-500">
+          <p class="text-gray-400 font-semibold mb-8 transition-colors duration-500">
             Turn Your Dreams Into A Home You'll Love.
           </p>
 
-          <button class="bg-transparent text-[#73bc01] border border-[#73bc01] font-semibold px-6 py-3 rounded-lg
+          <button class="jersey bg-transparent text-[#73bc01] border border-[#73bc01] font-semibold ml-7 px-8 py-3 rounded-lg
                  transition-all duration-500 ease-in-out
                  hover:bg-[#73bc01] hover:text-black hover:scale-105 hover:shadow-lg">
             Schedule A Site Visit
@@ -404,16 +429,16 @@
 
       <!-- Content -->
       <div class="relative z-10">
-        <h2 class="text-xl text-gray-200 mb-4 tracking-wider">
+        <h2 class="yeseva text-xl text-gray-200 mb-4 tracking-wider">
           DON'T HESITATE TO CONTACT US
         </h2>
 
-        <h3 class="text-12xl md:text-6xl font-bold text-[#73bc01] mb-8">
+        <h3 class="family text-12xl md:text-6xl font-bold text-[#73bc01] mb-8">
           MAKE AN APPOINTMENT NOW
         </h3>
 
         <button
-          class="bg-transparent border border-[#73bc01] text-[#73bc01] hover:bg-[#73bc01] hover:text-black px-8 py-3 rounded-md transition duration-300">
+          class="jersey font-semibold bg-transparent border border-[#73bc01] text-[#73bc01] hover:bg-[#73bc01] hover:text-black px-8 py-3 rounded-md transition duration-300">
           Enquire Now
         </button>
       </div>
@@ -438,7 +463,7 @@
 
   <!-- RIGHT CONTENT -->
   <div class="w-full md:w-1/2 mb-[200px]">
-    <h2 class="text-4xl md:text-5xl font-serif text-[#73bc01] mb-[30px]">
+    <h2 class="family font-bold text-4xl md:text-5xl font-serif text-[#73bc01] mb-[30px]">
       About Us
     </h2>
 
@@ -467,7 +492,7 @@
           Book Site Visit <span class="uppercase">Now !</span>
         </h2>
 
-        <p class="text-gray-700 mb-8">
+        <p class="text-black font-semibold mb-8">
           Take The First Step Towards Your Dream Home – Book Today!
         </p>
 
@@ -489,7 +514,7 @@
           </div>
 
           <!-- Checkbox -->
-          <label class="flex items-start gap-3 text-sm text-gray-700">
+          <label class="flex items-start gap-3 text-sm text-gray-800">
             <input type="checkbox" checked
               class="mt-1 accent-green-500" />
             I agree and authorize team to contact me. This will override the registry with DNC / NDNC
@@ -508,7 +533,7 @@
 
           <!-- Submit -->
           <button
-            class="bg-transparent border border-[#73bc01] hover:bg-[#73bc01] hover:text-black text-[#73bc01]  ml-[230px] px-10 py-3 rounded-md tracking-wide">
+            class="jersey font-semibold bg-transparent border border-[#73bc01] hover:bg-[#73bc01] hover:text-black text-[#73bc01]  ml-[230px] px-10 py-3 rounded-md tracking-wide">
             SUBMIT
           </button>
 
@@ -521,7 +546,7 @@
           Unlock Your Dream Home!
         </h2>
 
-        <p class="text-gray-700 mb-10">
+        <p class="text-black font-semibold mb-10">
           Unlock a world of comfort and luxury in your dream home.
         </p>
 
@@ -689,7 +714,7 @@
          bg-[#73bc01]/40">
     <a
       href="#"
-      class="text-[#73bc01] border border-[#73bc01]
+      class="jersey text-[#73bc01] border border-[#73bc01]
            px-4 py-6 rounded-l-md
            writing-mode-vertical tracking-widest font-semibold">
       Download Brochure
