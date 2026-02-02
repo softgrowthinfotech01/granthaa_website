@@ -90,7 +90,7 @@
     </div>
 
     <!-- RIGHT CONTENT -->
-    <div class="border-2 border-blue-900 rounded-2xl p-10 bg-blue-50 relative">
+    <div class="border-2 border-blue-900 rounded-2xl p-10  relative">
       <h2 class="text-4xl font-serif text-blue-900 mb-4">
         Unlock Your Dream Home!
       </h2>
