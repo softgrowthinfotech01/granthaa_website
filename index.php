@@ -487,8 +487,8 @@
     <div class="grid md:grid-cols-2 gap-14 items-start">
 
       <!-- LEFT FORM -->
-      <div class="border-[4px] border-blue-800 rounded-xl p-5">
-        <h2 class="text-4xl font-serif text-black mb-4">
+      <div class="border-[4px] border-[#73bc01] rounded-xl p-5">
+        <h2 class="text-4xl font-serif text-[#73bc01] mb-4">
           Book Site Visit <span class="uppercase">Now !</span>
         </h2>
 
@@ -523,7 +523,7 @@
           <!-- reCAPTCHA placeholder -->
           <div class="bg-white text-black ml-[150px] border border-gray-950 rounded-md p-4 w-72">
             <div class="flex items-center gap-3">
-              <input type="checkbox" class="w-5 h-5">
+              <input type="checkbox" class="w-5 h-5 text-[#73bc01]">
               <span>I’m not a robot</span>
             </div>
             <p class="text-xs text-gray-500 mt-2">
@@ -541,8 +541,8 @@
       </div>
 
       <!-- RIGHT CONTENT -->
-      <div class="relative border-[4px] border-blue-800 rounded-xl p-5">
-        <h2 class="text-4xl font-serif text-black mb-4">
+      <div class="relative border-[4px] border-[#73bc01] rounded-xl p-5">
+        <h2 class="text-4xl font-serif text-[#73bc01] mb-4">
           Unlock Your Dream Home!
         </h2>
 
@@ -555,34 +555,34 @@
 
           <!-- Email -->
           <div class="flex gap-4 items-start">
-            <div class="w-12 h-12 rounded-full bg-[#d2a679] flex items-center justify-center text-black">
+            <div class="w-12 h-12 rounded-full bg-[#73bc01] flex items-center justify-center text-black">
               ✉
             </div>
             <div>
               <h4 class="text-xl font-serif">Send An Email</h4>
-              <p class="text-red-800">grantha@gmail.com</p>
+              <p class="text-[#73bc01]">grantha@gmail.com</p>
             </div>
           </div>
 
           <!-- Phone -->
           <div class="flex gap-4 items-start">
-            <div class="w-12 h-12 rounded-full bg-[#d2a679] flex items-center justify-center text-black">
+            <div class="w-12 h-12 rounded-full bg-[#73bc01] flex items-center justify-center text-black">
               ☎
             </div>
             <div>
               <h4 class="text-xl font-serif">Give Us A Call</h4>
-              <p class="text-red-800">+91 9090909090</p>
+              <p class="text-[#73bc01]">+91 9090909090</p>
             </div>
           </div>
 
           <!-- Address -->
           <div class="flex gap-4 items-start">
-            <div class="w-12 h-12 rounded-full bg-[#d2a679] flex items-center justify-center text-black">
+            <div class="w-12 h-12 rounded-full bg-[#73bc01] flex items-center justify-center text-black">
               📍
             </div>
             <div>
               <h4 class="text-xl font-serif">Site Address</h4>
-              <p class="text-red-800 max-w-sm">
+              <p class="text-[#73bc01] max-w-sm">
                 comming soon
               </p>
             </div>
