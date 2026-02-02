@@ -155,10 +155,10 @@
 
     <!-- MENU LINKS -->
     <div class="p-8 space-y-8 mt-16">
-      <a href="#" class="block text-xl hover:opacity-90">Home</a>
-      <a href="#" class="block text-xl hover:opacity-90">About</a>
-      <a href="#" class="block text-xl hover:opacity-90">Projects</a>
-      <a href="#" class="block text-xl hover:opacity-90">Contact</a>
+      <a href="index.php" class="block text-xl hover:opacity-90">Home</a>
+      <a href="about.php" class="block text-xl hover:opacity-90">About</a>
+      <a href="project.php" class="block text-xl hover:opacity-90">Projects</a>
+      <a href="contact.php" class="block text-xl hover:opacity-90">Contact</a>
     </div>
   </div>
 </body>
