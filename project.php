@@ -16,7 +16,7 @@
        <?php include "header.php"; ?> 
       
 <section class="bg-white py-16">
-     <h1 class="text-3xl text-blue-800 font-bold  ml-[150px] mb-5 "> PROJECT <span >:</span></h1>
+     <h1 class="text-3xl font-bold text-blue-900 border-l-4 border-green-500 pl-4 ml-[150px] mb-5"> PROJECT <span >:</span></h1>
   <div class="max-w-7xl mx-auto px-4 space-y-20">
 
     <!-- SECTION 1 : Layout Plan -->

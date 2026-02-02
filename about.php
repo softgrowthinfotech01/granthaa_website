@@ -17,7 +17,7 @@
   <?php include "header.php"; ?> 
 
 <section class="bg-white mx-auto px-6 py-24">
-  <h1 class="text-3xl text-blue-800 font-bold  ml-[105px] mb-6 "> ABOUT US : </h1>
+  <h1 class="text-3xl font-bold text-blue-900 border-l-4 border-green-500 pl-4  ml-[105px] mb-6 "> ABOUT US : </h1>
   <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
 
     <!-- LEFT IMAGE -->

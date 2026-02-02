@@ -483,119 +483,128 @@
 
   <!-- Contact Sections-->
 
-  <section class="min-h-screen bg-white mx-auto px-6 py-20">
-    <div class="grid md:grid-cols-2 gap-14 items-start">
+  <section class="bg-white px-6 py-24">
+  <!-- Section Heading -->
+  <div class="max-w-7xl mx-auto mb-12">
+    <h1 class="text-3xl font-bold text-blue-900 border-l-4 border-green-500 pl-4">
+      CONTACT US :
+    </h1>
+  </div>
 
-      <!-- LEFT FORM -->
-      <div class="border-[4px] border-[#73bc01] rounded-xl p-5">
-        <h2 class="text-4xl font-serif text-[#73bc01] mb-4">
-          Book Site Visit <span class="uppercase">Now !</span>
+  <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-14 items-stretch">
+
+    <!-- LEFT FORM -->
+    <div class="border-2 border-blue-900 rounded-2xl p-10 flex flex-col justify-between bg-white shadow-sm">
+      <div>
+        <h2 class="text-4xl font-serif text-blue-900 mb-4">
+          Book Site Visit <span class="uppercase text-green-600">Now !</span>
         </h2>
 
-        <p class="text-black font-semibold mb-8">
+        <p class="text-gray-800 font-semibold mb-10">
           Take The First Step Towards Your Dream Home – Book Today!
         </p>
 
         <form class="space-y-6">
 
-          <!-- Name -->
-          <input type="text" placeholder="Name"
-            class="w-full bg-transparent border-2 border-gray-700 rounded-lg px-5 py-4 focus:outline-none focus:border-[#d2a679]" />
+          <input
+            type="text"
+            placeholder="Name"
+            class="w-full bg-white border-2 border-blue-200 rounded-lg px-5 py-4
+                   focus:outline-none focus:border-green-500"
+          />
 
-          <!-- Email -->
-          <input type="email" placeholder="Email"
-            class="w-full bg-transparent border-2 border-gray-700 rounded-lg px-5 py-4 focus:outline-none focus:border-[#d2a679]" />
+          <input
+            type="email"
+            placeholder="Email"
+            class="w-full bg-white border-2 border-blue-200 rounded-lg px-5 py-4
+                   focus:outline-none focus:border-green-500"
+          />
 
-          <!-- Phone -->
-          <div class="flex items-center bg-transparent border-2 border-gray-700 rounded-lg px-4 py-3">
+          <div class="flex items-center border-2 border-blue-200 rounded-lg px-4 py-3">
             <span class="mr-3">🇮🇳</span>
-            <input type="tel" placeholder="Phone"
-              class="bg-transparent w-full focus:outline-none" />
+            <input
+              type="tel"
+              placeholder="Phone"
+              class="bg-transparent w-full focus:outline-none"
+            />
           </div>
 
-          <!-- Checkbox -->
-          <label class="flex items-start gap-3 text-sm text-gray-800">
-            <input type="checkbox" checked
-              class="mt-1 accent-green-500" />
+          <label class="flex items-start gap-3 text-sm text-gray-700">
+            <input type="checkbox" checked class="mt-1 accent-green-600" />
             I agree and authorize team to contact me. This will override the registry with DNC / NDNC
           </label>
 
-          <!-- reCAPTCHA placeholder -->
-          <div class="bg-white text-black ml-[150px] border border-gray-950 rounded-md p-4 w-72">
+          <div class="border border-blue-900 rounded-md p-4 max-w-xs">
             <div class="flex items-center gap-3">
-              <input type="checkbox" class="w-5 h-5 text-[#73bc01]">
+              <input type="checkbox" class="w-5 h-5 accent-green-600">
               <span>I’m not a robot</span>
             </div>
             <p class="text-xs text-gray-500 mt-2">
               reCAPTCHA Privacy - Terms
             </p>
           </div>
-
-          <!-- Submit -->
-          <button
-            class="jersey font-semibold bg-transparent border border-[#73bc01] hover:bg-[#73bc01] hover:text-black text-[#73bc01]  ml-[230px] px-10 py-3 rounded-md tracking-wide">
-            SUBMIT
-          </button>
-
         </form>
       </div>
 
-      <!-- RIGHT CONTENT -->
-      <div class="relative border-[4px] border-[#73bc01] rounded-xl p-5">
-        <h2 class="text-4xl font-serif text-[#73bc01] mb-4">
-          Unlock Your Dream Home!
-        </h2>
+      <div class="pt-10">
+        <button
+          class="font-semibold bg-green-600 text-white
+                 hover:bg-green-500
+                 px-14 py-3 rounded-md tracking-wide transition">
+          SUBMIT
+        </button>
+      </div>
+    </div>
 
-        <p class="text-black font-semibold mb-10">
-          Unlock a world of comfort and luxury in your dream home.
-        </p>
+    <!-- RIGHT CONTENT -->
+    <div class="border-2 border-blue-900 rounded-2xl p-10 bg-blue-50 relative">
+      <h2 class="text-4xl font-serif text-blue-900 mb-4">
+        Unlock Your Dream Home!
+      </h2>
 
-        <!-- Contact Items -->
-        <div class="space-y-8">
+      <p class="text-gray-800 font-semibold mb-12">
+        Unlock a world of comfort and luxury in your dream home.
+      </p>
 
-          <!-- Email -->
-          <div class="flex gap-4 items-start">
-            <div class="w-12 h-12 rounded-full bg-[#73bc01] flex items-center justify-center text-black">
-              ✉
-            </div>
-            <div>
-              <h4 class="text-xl font-serif">Send An Email</h4>
-              <p class="text-[#73bc01]">grantha@gmail.com</p>
-            </div>
+      <div class="space-y-10">
+
+        <div class="flex gap-5 items-start">
+          <div class="w-12 h-12 rounded-full bg-green-600 flex items-center justify-center text-white">
+            ✉
           </div>
-
-          <!-- Phone -->
-          <div class="flex gap-4 items-start">
-            <div class="w-12 h-12 rounded-full bg-[#73bc01] flex items-center justify-center text-black">
-              ☎
-            </div>
-            <div>
-              <h4 class="text-xl font-serif">Give Us A Call</h4>
-              <p class="text-[#73bc01]">+91 9090909090</p>
-            </div>
+          <div>
+            <h4 class="text-xl font-serif text-blue-900">Send An Email</h4>
+            <p class="text-blue-700">grantha@gmail.com</p>
           </div>
-
-          <!-- Address -->
-          <div class="flex gap-4 items-start">
-            <div class="w-12 h-12 rounded-full bg-[#73bc01] flex items-center justify-center text-black">
-              📍
-            </div>
-            <div>
-              <h4 class="text-xl font-serif">Site Address</h4>
-              <p class="text-[#73bc01] max-w-sm">
-                comming soon
-              </p>
-            </div>
-          </div>
-
         </div>
 
-        <!-- Decorative line -->
-        <div class="absolute right-0 top-0 h-full w-px bg-gradient-to-b from-transparent via-[#d2a679] to-transparent hidden md:block"></div>
-      </div>
+        <div class="flex gap-5 items-start">
+          <div class="w-12 h-12 rounded-full bg-green-600 flex items-center justify-center text-white">
+            ☎
+          </div>
+          <div>
+            <h4 class="text-xl font-serif text-blue-900">Give Us A Call</h4>
+            <p class="text-blue-700">+91 9090909090</p>
+          </div>
+        </div>
 
+        <div class="flex gap-5 items-start">
+          <div class="w-12 h-12 rounded-full bg-green-600 flex items-center justify-center text-white">
+            📍
+          </div>
+          <div>
+            <h4 class="text-xl font-serif text-blue-900">Site Address</h4>
+            <p class="text-blue-700 max-w-sm">
+              comming soon
+            </p>
+          </div>
+        </div>
+
+      </div>
     </div>
-  </section>
+
+  </div>
+</section>
 
 
 
