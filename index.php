@@ -396,9 +396,9 @@
 
   <section class="text-center">
     <div
-      class="relative bg-cover bg-center shadow-2xl overflow-hidden min-h-[600px]
+      class="relative bg-cover bg-center shadow-2xl overflow-hidden min-h-[450px]
            flex items-center justify-center"
-      style="background-image: url('./images/makeappointment.jpg');">
+      style="background-image: url('./images/Interial.avif');">
       <!-- Overlay -->
       <div class="absolute inset-0 bg-black/60"></div>
 
