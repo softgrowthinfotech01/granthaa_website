@@ -25,8 +25,8 @@
       for="menuToggle"
       class="flex items-center gap-3 text-[#73bc01] cursor-pointer"
     >
-      <span class="text-xl mb-1 font-bold">☰</span>
-      <span class="hidden sm:block text-lg font-bold">Menu</span>
+      <div class="bg-black rounded-lg" ><span class="text-2xl mb-1 font-bold text-white p-[4px] ">☰</span></div>
+      <span class="hidden sm:block text-xl font-bold">Menu</span>
     </label>
 
     <!-- LOGO -->
