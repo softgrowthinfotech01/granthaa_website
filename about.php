@@ -6,7 +6,12 @@
     <title>grantha developers</title>
 </head>
 <body>
-Grantha Website </br>
-    land developers
+
+  <?php include "header.php"; ?> 
+
+ewivhbiehbfbekjbfkjefb
+
+
+<?php include "footer.php"; ?> 
 </body>
 </html>
