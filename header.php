@@ -30,7 +30,7 @@
     </label>
 
     <!-- LOGO -->
-  <div class="flex items-center mt-6 justify-center ml-16 bg-white rounded-2xl">
+  <div class="flex items-center mt-6 justify-center ml-16 bg-transparent rounded-2xl">
   <div class="relative p-3 bg-white rounded-xl">
 
     <!-- SVG BORDER -->

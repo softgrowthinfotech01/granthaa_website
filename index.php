@@ -163,13 +163,13 @@
   <script src="https://unpkg.com/flowbite@1.6.5/dist/flowbite.min.js"></script>
 </head>
 
-<body class="bg-white">
+<body class="bg-transparent">
 
     <?php include "header.php"; ?> 
 
 
 <div id="default-carousel"
-     class="relative w-full h-[600px]"
+     class="relative w-full h-[700px]"
      data-carousel="slide">
 
   <!-- Carousel wrapper -->
