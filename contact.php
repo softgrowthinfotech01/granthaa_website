@@ -93,7 +93,7 @@
             </div>
             <div>
               <h4 class="text-xl font-serif">Send An Email</h4>
-              <p class="text-red-800">grantha@gmail.com</p>
+              <p class="text-[#73bc01]">grantha@gmail.com</p>
             </div>
           </div>
 
