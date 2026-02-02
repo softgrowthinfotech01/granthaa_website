@@ -450,31 +450,43 @@
 
 
   <!-- ABOUT SECTION -->
-  <section class="min-h-screen bg-white mx-auto px-6 py-20 flex flex-col md:flex-row gap-16 items-center">
+  <section class="bg-white mx-auto px-6 py-24">
+  <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
 
-  <!-- LEFT IMAGE -->
-  <div class="rounded-2xl overflow-hidden shadow-lg w-full md:w-1/2">
-    <img
-      src="images/villas img.jpg"
-      alt="Building"
-      class="w-full h-full object-cover"
-    />
+    <!-- LEFT IMAGE -->
+    <div class="relative rounded-2xl overflow-hidden shadow-xl">
+      <img
+        src="images/plot booking img.jpeg"
+        alt="Premium Plot Development"
+        class="w-full h-[450px] object-cover"
+      />
+    </div>
+
+    <!-- RIGHT CONTENT -->
+    <div class="space-y-6">
+      <h2 class="family text-[#73bc01]  font-bold text-2xl md:text-4xl ">
+        About Us
+      </h2>
+
+      <p class="text-lg text-gray-700 leading-relaxed">
+        We specialize in premium plot developments designed for those who value
+        location, long-term growth, and lifestyle excellence. Every project is
+        carefully planned to ensure legal clarity, superior infrastructure,
+        and future-ready living.
+      </p>
+
+      <p class="text-lg text-gray-700 leading-relaxed">
+        Our developments combine modern planning with nature-friendly layouts,
+        offering well-connected roads, open spaces, and a secure investment
+        environment for families and investors alike.
+      </p>
+
+      
+    </div>
+
   </div>
-
-  <!-- RIGHT CONTENT -->
-  <div class="w-full md:w-1/2 mb-[200px]">
-    <h2 class="family font-bold text-4xl md:text-5xl font-serif text-[#73bc01] mb-[30px]">
-      About Us
-    </h2>
-
-    <p class="text-lg text-black leading-relaxed max-w-xl">
-      Roswalt Zyon in Andheri Oshiwara stands tall like the 'Hills of God',
-      representing power, prestige, and perfection. It's not just a home;
-      it's a symbol of excellence for a select few.
-    </p>
-  </div>
-
 </section>
+
 
 
 
@@ -486,8 +498,8 @@
   <section class="bg-white px-6 py-24">
   <!-- Section Heading -->
   <div class="max-w-7xl mx-auto mb-12">
-    <h1 class="text-3xl font-bold text-blue-900 border-l-4 border-green-500 pl-4">
-      CONTACT US :
+    <h1 class="family text-3xl font-bold text-[#73bc01] flex justify-center">
+      CONTACT US 
     </h1>
   </div>
 
