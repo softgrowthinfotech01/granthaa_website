@@ -17,7 +17,7 @@
   <header
   class="w-full sticky top-0
         h-16 md:h-24 flex items-center justify-between
-         px-4 md:px-6 border-b border-gray-800 z-50"
+         px-4 md:px-6  z-50"
 >
 
     <!-- MENU ICON -->
@@ -30,12 +30,12 @@
     </label>
 
     <!-- LOGO -->
-  <div class="flex items-center mt-10 justify-center  bg-transparent rounded-2xl">
-  <div class="relative p-2 bg-white rounded-xl">
+  <div class="flex items-center mt-6 justify-center ml-16 bg-white rounded-2xl">
+  <div class="relative p-3 bg-white rounded-xl">
 
     <!-- SVG BORDER -->
     <svg
-      class="absolute inset-0 w-full h-full pointer-events-none"
+      class="absolute inset-0 w-full h-full  pointer-events-none"
       viewBox="0 0 400 250"
       preserveAspectRatio="none"
     >
@@ -52,47 +52,57 @@
 
       <!-- TOP + RIGHT border (moving pen) -->
       <path
-        d="M20 15 L380 15 L380 120"
-        fill="none"
-        stroke="#1e40af"
-        stroke-width="5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-dasharray="500"
-        stroke-dashoffset="500"
-        filter="url(#penGlow)"
-      >
-        <animate
-          attributeName="stroke-dashoffset"
-          from="500"
-          to="0"
-          dur="3.8s"
-           begin="1.4s"
-          repeatCount="indefinite"
-        />
-      </path>
+  d="
+    M40 20
+    H360
+    A20 20 0 0 1 380 40
+    V110
+  "
+  fill="none"
+  stroke="#71BE00"
+  stroke-width="10"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-dasharray="520"
+  stroke-dashoffset="520"
+  filter="url(#penGlow)"
+>
+  <animate
+    attributeName="stroke-dashoffset"
+    from="520"
+    to="0"
+    dur="3.8s"
+    begin="1.4s"
+    repeatCount="indefinite"
+  />
+</path>
 
       <!-- BOTTOM + LEFT border (moving pen) -->
       <path
-        d="M380 235 L20 235 L20 120"
-        fill="none"
-        stroke="#1e40af"
-        stroke-width="5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-dasharray="500"
-        stroke-dashoffset="500"
-        filter="url(#penGlow)"
-      >
-        <animate
-          attributeName="stroke-dashoffset"
-          from="500"
-          to="0"
-          dur="3.8s"
-          begin="1.4s"
-          repeatCount="indefinite"
-        />
-      </path>
+  d="
+    M360 230
+    H40
+    A20 20 0 0 1 20 210
+    V120
+  "
+  fill="none"
+  stroke="#1e40af"
+  stroke-width="10"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-dasharray="520"
+  stroke-dashoffset="520"
+  filter="url(#penGlow)"
+>
+  <animate
+    attributeName="stroke-dashoffset"
+    from="520"
+    to="0"
+    dur="3.8s"
+    begin="1.4s"
+    repeatCount="indefinite"
+  />
+</path>
     </svg>
 
     <!-- LOGO -->
@@ -118,15 +128,15 @@
   <!-- OVERLAY -->
   <label
     for="menuToggle"
-    class="fixed inset-0 bg-black/60
+    class="fixed inset-0 bg-white
            opacity-0 pointer-events-none
-           peer-checked:opacity-100 peer-checked:pointer-events-auto
+          
            transition-opacity duration-300 z-40"
   ></label>
 
   <!-- SIDE MENU -->
   <div
-    class="fixed top-0 left-0 h-full w-full sm:w-80 bg-black text-[#73bc01]
+    class="fixed top-0 left-0 h-full w-full sm:w-80 bg-white text-black font-bold
            transform -translate-x-full peer-checked:translate-x-0
            transition-transform duration-300 z-50
            border-r border-gray-800"
