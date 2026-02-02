@@ -67,7 +67,7 @@
 
     .carousel-item:hover {
       transform: translateY(-8px) scale(1.02);
-      box-shadow: 0 18px 35px rgb(22, 243, 6);
+      /* box-shadow: 0 18px 35px rgb(22, 243, 6); */
     }
 
     @keyframes marquee {
@@ -487,7 +487,7 @@
     <div class="grid md:grid-cols-2 gap-14 items-start">
 
       <!-- LEFT FORM -->
-      <div class="border-4 border-[#73bc01] rounded-xl p-5">
+      <div class="border-[4px] border-blue-800 rounded-xl p-5">
         <h2 class="text-4xl font-serif text-black mb-4">
           Book Site Visit <span class="uppercase">Now !</span>
         </h2>
@@ -541,7 +541,7 @@
       </div>
 
       <!-- RIGHT CONTENT -->
-      <div class="relative border-4 border-[#73bc01] rounded-xl p-5">
+      <div class="relative border-[4px] border-blue-800 rounded-xl p-5">
         <h2 class="text-4xl font-serif text-black mb-4">
           Unlock Your Dream Home!
         </h2>
