@@ -7,7 +7,13 @@
 </head>
 <body>
        <?php include "header.php"; ?> 
-hihiiihihuvibvbb
-         <?php include "footer.php"; ?> 
+<section class="">
+
+
+
+
+
+</section> 
+        <?php include "footer.php"; ?> 
 </body>
 </html>
