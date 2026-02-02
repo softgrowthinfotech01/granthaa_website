@@ -6,15 +6,14 @@
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
 
- <body class="bg-black overflow-x-hidden">
+ <body class="bg-transparent overflow-x-hidden">
   <!-- MENU TOGGLE -->
   <input type="checkbox" id="menuToggle" class="peer hidden" />
 
   <!-- HEADER -->
   <header
   class="w-full sticky top-0
-        bg-black
-         h-16 md:h-24 flex items-center justify-between
+        h-16 md:h-24 flex items-center justify-between
          px-4 md:px-6 border-b border-gray-800 z-50"
 >
 
@@ -28,11 +27,11 @@
     </label>
 
     <!-- LOGO -->
-    <div class="flex flex-col items-center ml-[100px] justify-center">
+    <div class="flex flex-col bg-white  items-center p-2 border-2 border-black mt-[63px] ml-[100px] justify-center">
       <img
         src="images/granthalogo.webp"
         alt="Grantha Logo"
-        class="sm:h-14 md:h-16 lg:h-18 xl:h-20 w-auto object-contain"
+        class=" h-[50px] w-[50px] sm:h-14 md:h-[50px] lg:h-18 xl:h-20 w-auto object-contain"
       />
     </div>
 

@@ -63,7 +63,7 @@
 
     .carousel-item:hover {
       transform: translateY(-8px) scale(1.02);
-      box-shadow: 0 18px 35px rgba(15, 23, 42, 0.35);
+      box-shadow: 0 18px 35px rgb(22, 243, 6);
     }
 
     @keyframes marquee {
@@ -91,7 +91,7 @@
   }
 
   .indicator.active {
-    background-color: #73bc01 !important;
+    background-color: #21ee39 !important;
     color: black;
   }
 
@@ -137,9 +137,9 @@
   <script src="https://unpkg.com/flowbite@1.6.5/dist/flowbite.min.js"></script>
 </head>
 
-<body class="bg-black">
+<body class="bg-white">
 
-  <?php include "header.php"; ?>
+    <?php include "header.php"; ?> 
 
 
 <div id="default-carousel"
@@ -173,14 +173,14 @@
   <!-- INDICATORS -->
  <div class="absolute z-30 bottom-6 left-1/2 -translate-x-1/2 flex gap-3">
   <button data-carousel-slide-to="0"
-    class="w-9 h-9 rounded-full bg-black/70 border border-[#73bc01] text-white
+    class="w-5 h-5 rounded-full bg-black/70 border border-[#73bc01] 
            hover:bg-[#73bc01]
-           transition">1</button>
+           transition"></button>
 
-  <button data-carousel-slide-to="1" class="w-9 h-9 rounded-full bg-black/70 border border-[#73bc01] hover:bg-[#73bc01]  text-white transition">2</button>
-  <button data-carousel-slide-to="2" class="w-9 h-9 rounded-full bg-black/70 border border-[#73bc01] hover:bg-[#73bc01] text-white transition">3</button>
-  <button data-carousel-slide-to="3" class="w-9 h-9 rounded-full bg-black/70 border border-[#73bc01] hover:bg-[#73bc01] text-white transition">4</button>
-  <button data-carousel-slide-to="4" class="w-9 h-9 rounded-full bg-black/70 border border-[#73bc01] hover:bg-[#73bc01] text-white transition">5</button>
+  <button data-carousel-slide-to="1" class="w-5 h-5 rounded-full bg-black/70 border border-[#73bc01] hover:bg-[#73bc01]   transition"></button>
+  <button data-carousel-slide-to="2" class="w-5 h-5 rounded-full bg-black/70 border border-[#73bc01] hover:bg-[#73bc01]  transition"></button>
+  <button data-carousel-slide-to="3" class="w-5 h-5 rounded-full bg-black/70 border border-[#73bc01] hover:bg-[#73bc01] transition"></button>
+  <button data-carousel-slide-to="4" class="w-5 h-5 rounded-full bg-black/70 border border-[#73bc01] hover:bg-[#73bc01]  transition"></button>
 </div>
 
 
@@ -208,14 +208,14 @@
 
 </div>
 
-  <div class="min-h-screen bg-black ">
+  <div class="min-h-screen bg-white ">
 
     <!-- Header -->
     <div class="text-center pt-20 pb-16">
       <h1 class="text-5xl md:text-6xl font-bold text-[#73bc01]">
         Gallery
       </h1>
-      <p class="mt-4 text-white text-3xl font-semibold ">
+      <p class="mt-4 text-black text-3xl font-semibold ">
         Explore Our Gallery And Experience The Beauty In Every Detail
       </p>
     </div>
@@ -425,7 +425,7 @@
 
 
   <!-- ABOUT SECTION -->
-  <section class="min-h-screen bg-black mx-auto px-6 py-20 flex flex-col md:flex-row gap-16 items-center">
+  <section class="min-h-screen bg-white mx-auto px-6 py-20 flex flex-col md:flex-row gap-16 items-center">
 
   <!-- LEFT IMAGE -->
   <div class="rounded-2xl overflow-hidden shadow-lg w-full md:w-1/2">
@@ -442,7 +442,7 @@
       About Us
     </h2>
 
-    <p class="text-lg text-white leading-relaxed max-w-xl">
+    <p class="text-lg text-black leading-relaxed max-w-xl">
       Roswalt Zyon in Andheri Oshiwara stands tall like the 'Hills of God',
       representing power, prestige, and perfection. It's not just a home;
       it's a symbol of excellence for a select few.
@@ -458,7 +458,7 @@
 
   <!-- Contact Sections-->
 
-  <section class="min-h-screen bg-black mx-auto px-6 py-20">
+  <section class="min-h-screen bg-white mx-auto px-6 py-20">
     <div class="grid md:grid-cols-2 gap-14 items-start">
 
       <!-- LEFT FORM -->
@@ -587,7 +587,7 @@
       </svg>
     </div>
 
-    <div class="relative max-w-7xl mx-auto px-6">
+    <div class="relative  max-w-7xl mx-auto px-6">
 
       <div class="grid lg:grid-cols-3 gap-14 items-start">
 
