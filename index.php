@@ -238,8 +238,8 @@
 
     <!-- Header -->
     <div class="text-center pt-20 pb-16">
-      <h1 class="family text-5xl md:text-6xl font-Bold-700-Italic text-[#73bc01]">
-        Gallery      </h1>
+      <!-- <h1 class="family text-5xl md:text-6xl font-Bold-700-Italic text-[#73bc01]">
+        Gallery      </h1> -->
       <p class="yeseva mt-4 text-black text-3xl  ">
         Explore Our Gallery And Experience The Beauty In Every Detail
       </p>
@@ -488,7 +488,7 @@
 
       <!-- LEFT FORM -->
       <div class="border-4 border-[#73bc01] rounded-xl p-5">
-        <h2 class="text-4xl font-serif text-white mb-4">
+        <h2 class="text-4xl font-serif text-black mb-4">
           Book Site Visit <span class="uppercase">Now !</span>
         </h2>
 
@@ -542,7 +542,7 @@
 
       <!-- RIGHT CONTENT -->
       <div class="relative border-4 border-[#73bc01] rounded-xl p-5">
-        <h2 class="text-4xl font-serif text-white mb-4">
+        <h2 class="text-4xl font-serif text-black mb-4">
           Unlock Your Dream Home!
         </h2>
 
