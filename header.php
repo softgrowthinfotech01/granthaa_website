@@ -30,13 +30,79 @@
     </label>
 
     <!-- LOGO -->
-    <div class="flex flex-col bg-white  items-center p-2 border-2 border-black mt-[63px] ml-[100px] justify-center">
-      <img
-        src="images/granthalogo.webp"
-        alt="Grantha Logo"
-        class="w-[180px] h-[100px]"
-      />
-    </div>
+  <div class="flex items-center mt-10 justify-center  bg-transparent rounded-2xl">
+  <div class="relative p-2 bg-white rounded-xl">
+
+    <!-- SVG BORDER -->
+    <svg
+      class="absolute inset-0 w-full h-full pointer-events-none"
+      viewBox="0 0 400 250"
+      preserveAspectRatio="none"
+    >
+      <defs>
+        <!-- Glow -->
+        <filter id="penGlow">
+          <feGaussianBlur stdDeviation="15" result="blur" />
+          <feMerge>
+            <feMergeNode in="blur" />
+            <feMergeNode in="SourceGraphic" />
+          </feMerge>
+        </filter>
+      </defs>
+
+      <!-- TOP + RIGHT border (moving pen) -->
+      <path
+        d="M20 15 L380 15 L380 120"
+        fill="none"
+        stroke="#1e40af"
+        stroke-width="5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-dasharray="500"
+        stroke-dashoffset="500"
+        filter="url(#penGlow)"
+      >
+        <animate
+          attributeName="stroke-dashoffset"
+          from="500"
+          to="0"
+          dur="3.8s"
+           begin="1.4s"
+          repeatCount="indefinite"
+        />
+      </path>
+
+      <!-- BOTTOM + LEFT border (moving pen) -->
+      <path
+        d="M380 235 L20 235 L20 120"
+        fill="none"
+        stroke="#1e40af"
+        stroke-width="5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-dasharray="500"
+        stroke-dashoffset="500"
+        filter="url(#penGlow)"
+      >
+        <animate
+          attributeName="stroke-dashoffset"
+          from="500"
+          to="0"
+          dur="3.8s"
+          begin="1.4s"
+          repeatCount="indefinite"
+        />
+      </path>
+    </svg>
+
+    <!-- LOGO -->
+    <img
+      src="images/granthalogo.webp"
+      alt="Logo"
+      class="w-[150px] h-[100px]"
+    />
+  </div>
+</div>
 
     <!-- CTA -->
     <a
