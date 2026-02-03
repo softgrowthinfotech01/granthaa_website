@@ -687,8 +687,36 @@
     </svg>
   </a>
 
+<?php
+include "conn.php";
+
+if(isset($_POST['submit'])){
+
+$name = $_POST['name'];
+$email = $_POST['email'];
+$phone = $_POST['phone'];
 
 
+
+$stmt = $conn->prepare("INSERT INTO enquiries( name, email, phone)
+
+values( :name, :email, :phone  )");
+
+
+$stmt->execute([
+    ':name' => $name,
+    ':email' => $email,
+    ':phone' => $phone
+
+  
+]);
+
+header("Location: index.php");
+exit;
+}
+
+
+?>
 <div
   id="modalBackdrop"
   class="fixed inset-0 z-50 flex items-center justify-center
@@ -738,11 +766,12 @@
     </div>
 
     <!-- FORM -->
-    <form class="space-y-3 sm:space-y-4">
+    <form method="post" class="space-y-3 sm:space-y-4">
 
       <input
         type="text"
         placeholder="Name"
+        name="name"
         class="w-full px-4 py-2.5 sm:py-3
                rounded-lg border border-blue-300
                focus:ring-2 focus:ring-blue-500 outline-none"
@@ -751,6 +780,7 @@
       <input
         type="email"
         placeholder="Email"
+        name="email"
         class="w-full px-4 py-2.5 sm:py-3
                rounded-lg border border-blue-300
                focus:ring-2 focus:ring-blue-500 outline-none"
@@ -768,6 +798,7 @@
         <input
           type="tel"
           placeholder="Phone"
+          name="phone"
           class="flex-1 px-4 py-2.5 sm:py-3
                  rounded-lg border border-blue-300
                  focus:ring-2 focus:ring-blue-500 outline-none"
@@ -793,6 +824,7 @@
 
       <button
         type="submit"
+        name="submit"
         class="w-full bg-green-600 hover:bg-green-700
                text-white  py-2.5 sm:py-3
                rounded-lg font-semibold tracking-wide
@@ -804,7 +836,6 @@
     </form>
   </div>
 </div>
-
 
 
 

@@ -1,3 +1,33 @@
+<?php
+include "conn.php";
+
+if(isset($_POST['submit'])){
+
+$name = $_POST['name'];
+$email = $_POST['email'];
+$phone = $_POST['phone'];
+
+
+
+$stmt = $conn->prepare("INSERT INTO contact( name, email, phone)
+
+values( :name, :email, :phone  )");
+
+
+$stmt->execute([
+    ':name' => $name,
+    ':email' => $email,
+    ':phone' => $phone
+
+  
+]);
+
+header("Location: index.php");
+exit;
+}
+
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -37,18 +67,18 @@
           Take The First Step Towards Your Dream Home – Book Today!
         </p>
 
-        <form class="space-y-6">
+        <form method="post" class="space-y-6">
 
           <input
             type="text"
-            placeholder="Name"
+            placeholder="Name" name="name"
             class="w-full bg-white border-2 border-blue-200 rounded-lg px-5 py-4
                    focus:outline-none focus:border-green-500"
           />
 
           <input
             type="email"
-            placeholder="Email"
+            placeholder="Email" name="email"
             class="w-full bg-white border-2 border-blue-200 rounded-lg px-5 py-4
                    focus:outline-none focus:border-green-500"
           />
@@ -57,7 +87,7 @@
             <span class="mr-3">🇮🇳</span>
             <input
               type="tel"
-              placeholder="Phone"
+              placeholder="Phone" name="phone"
               class="bg-transparent w-full focus:outline-none"
             />
           </div>
@@ -76,17 +106,18 @@
               reCAPTCHA Privacy - Terms
             </p>
           </div>
-        </form>
-      </div>
-
-      <div class="pt-10">
-        <button
+          <div class="pt-10">
+        <button name="submit"
           class="font-semibold bg-green-600 text-white
                  hover:bg-green-500
                  px-14 py-3 rounded-md tracking-wide transition">
           SUBMIT
         </button>
       </div>
+        </form>
+      </div>
+
+      
     </div>
 
     <!-- RIGHT CONTENT -->
