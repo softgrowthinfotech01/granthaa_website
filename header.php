@@ -7,6 +7,18 @@
 <style>
 
   .source-serif { font-family: "Source Serif 4", serif; font-optical-sizing: auto; font-weight: weight; font-style: normal; }
+  @keyframes breathe {
+  0%, 100% {
+    filter: drop-shadow(0 0 25px rgb(5, 53, 245));
+  }
+  50% {
+    filter: drop-shadow(0 0 25px rgb(6, 200, 74));
+  }
+}
+
+.logo-glow {
+  animation: breathe 2s infinite ease-in-out;
+}
 </style>
   <!-- GOOGLE FONT -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -34,7 +46,7 @@
     </label>
 
     <!-- LOGO -->
-    <div class="relative bg-white rounded-xl p-2 mt-4 md:p-3">
+    <div class="relative bg-white rounded-xl p-2 mt-4 md:p-3 logo-glow ml-[90px]">
       <svg class="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 400 250" preserveAspectRatio="none">
         <defs>
           <filter id="glow">
@@ -73,11 +85,13 @@
         </path>
       </svg>
 
-      <img
-        src="images/granthalogo.webp"
-        alt="Logo"
-        class="relative w-28  h-auto md:w-36"
-      />
+     <div class="relative inline-block">
+  <img
+    src="images/granthalogo.webp"
+    alt="Logo"
+    class="relative w-28 h-auto md:w-36 "
+  />
+</div>
     </div>
 
     <!-- CTA -->
