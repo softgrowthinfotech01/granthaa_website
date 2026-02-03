@@ -25,7 +25,7 @@
       for="menuToggle"
       class="flex items-center gap-3 text-[#73bc01] cursor-pointer"
     >
-      <div class="bg-black rounded-lg" ><span class="text-2xl mb-1 font-bold text-white p-[4px] ">☰</span></div>
+      <div class="bg-black rounded-lg" ><span class="text-2xl font-bold text-white p-[4px] ">☰</span></div>
       <span class="hidden sm:block text-xl font-bold">Menu</span>
     </label>
 
@@ -142,11 +142,11 @@
            border-r border-gray-800"
   >
     <!-- CLOSE BUTTON (FUNCTIONAL) -->
-    <label for="menuToggle" class="absolute top-4 right-4 cursor-pointer">
+    <label for="menuToggle" class="absolute top-4 right-4 bg-black rounded-lg cursor-pointer">
       <span
-        class="w-10 h-10 flex items-center justify-center
-               text-[#73bc01] rounded-full
-               hover:bg-[#73bc01] hover:text-black transition"
+        class="w-10 h-10 flex text-2xl  font-bold text-white p-[4px] items-center justify-center
+                rounded-full
+                transition"
         aria-label="Close"
       >
         ✕
