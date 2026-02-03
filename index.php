@@ -720,8 +720,10 @@
     <!-- HEADER -->
     <div class="text-center mb-5">
       <h2 class="text-xl sm:text-2xl font-bold text-blue-700">
-        Call Us <span class="text-green-600">+91 7507070707</span>
-      </h2>
+        Call Us <span class="text-green-600">+91 9975086229</span>
+</br><span class="text-green-600">
+        +91 8975280850</span>
+</h2>
 
       <p class="text-xs text-gray-500 mt-1">OR</p>
 
@@ -775,7 +777,7 @@
       <label class="flex gap-2 text-xs sm:text-sm text-gray-600">
         <input type="checkbox" checked class="mt-1 accent-green-600">
         I agree and authorize the team to contact me. This overrides
-        <span class="font-semibold">DNC / NDNC</span>.
+       
       </label>
 
       <!-- CAPTCHA MOCK -->
