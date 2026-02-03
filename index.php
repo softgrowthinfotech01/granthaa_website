@@ -574,7 +574,7 @@
       <div class="pt-10">
         <button
           class="font-semibold bg-green-600 text-white
-                 hover:bg-green-500
+                 hover:bg-green-500 ml-[50px]
                  px-14 py-3 rounded-md tracking-wide transition">
           SUBMIT
         </button>
@@ -785,7 +785,7 @@
       <button
         type="submit"
         class="w-full bg-green-600 hover:bg-green-700
-               text-white py-2.5 sm:py-3
+               text-white  py-2.5 sm:py-3
                rounded-lg font-semibold tracking-wide
                transition"
       >

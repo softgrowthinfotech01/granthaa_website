@@ -16,7 +16,7 @@
 <body >
     <?php include "header.php"; ?> 
 
-  <section class="bg-white px-6 py-24">
+  <section class="bg-white mt-[50px] px-6 py-24">
   <!-- Section Heading -->
   <div class="max-w-7xl mx-auto mb-12">
     <h1 class="text-3xl font-bold text-blue-900 border-l-4 border-green-500 pl-4">
