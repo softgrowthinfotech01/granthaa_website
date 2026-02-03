@@ -4,7 +4,10 @@
   <meta charset="UTF-8" />
   <title>Header</title>
   <script src="https://cdn.tailwindcss.com"></script>
+<style>
 
+  .source-serif { font-family: "Source Serif 4", serif; font-optical-sizing: auto; font-weight: weight; font-style: normal; }
+</style>
   <!-- GOOGLE FONT -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -22,10 +25,10 @@
 
     <!-- MENU BUTTON -->
     <label for="menuToggle" class="flex items-center gap-2 cursor-pointer">
-      <div class="bg-black rounded-md px-2 py-1">
+      <div class="bg-black rounded-md p-[2px]">
         <span class="text-white text-2xl font-bold">☰</span>
       </div>
-      <span class="hidden sm:block text-2xl font-semibold font-[Source_Serif_4]">
+      <span class="source-serif  sm:block text-2xl font-semibold text-[#73bc01]">
         Menu
       </span>
     </label>
@@ -80,7 +83,7 @@
     <!-- CTA -->
     <a
       href="#"
-      class="hidden md:block font-[Source_Serif_4] font-semibold
+      class="source-serif hidden md:block font-[Source_Serif_4] font-semibold
              border border-[#73bc01] text-[#73bc01]
              px-4 py-2 rounded-md
              hover:bg-[#73bc01] hover:text-black

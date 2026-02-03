@@ -105,7 +105,7 @@
         All Rights Reserved. | Privacy Policy Applies.
       </div>
       <div>
-       <p class="text-center text-sm text-[#73bc01]"> Designed and Developer by <a href="https://softgrowthinfotech.com/" class="underline">Softgwroth Infotech</a></p>
+       <p class="text-center text-sm text-[#73bc01]"> Designed and Developer by <a href="https://softgrowthinfotech.com/" class="underline">Softgrowth Infotech</a></p>
       </div>
     </div>
 
