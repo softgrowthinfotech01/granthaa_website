@@ -75,7 +75,7 @@
             stroke-linecap="round"
             stroke-dasharray="520"
             stroke-dashoffset="520"
-            filter="url(#glow)">
+            filter="url(#)">
             <animate attributeName="stroke-dashoffset" from="520" to="0" dur="3s" repeatCount="indefinite" />
           </path>
 
@@ -87,7 +87,7 @@
             stroke-linecap="round"
             stroke-dasharray="520"
             stroke-dashoffset="520"
-            filter="url(#glow)">
+            filter="url(#)">
             <animate attributeName="stroke-dashoffset" from="520" to="0" dur="3s" repeatCount="indefinite" />
           </path>
         </svg>

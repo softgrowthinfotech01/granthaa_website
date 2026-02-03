@@ -64,7 +64,7 @@
 
           <label class="flex items-start gap-3 text-sm text-gray-700">
             <input type="checkbox" checked class="mt-1 accent-green-600" />
-            I agree and authorize team to contact me. This will override the registry with DNC / NDNC
+            I agree and authorize team to contact me. This will override the register with us.
           </label>
 
           <div class="border border-blue-900 rounded-md p-4 max-w-xs">
