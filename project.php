@@ -40,12 +40,12 @@
           <h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
             Project Layout Plan
           </h2>
-          <p class="text-gray-700 leading-relaxed mb-4 text-base sm:text-lg">
+          <p class="text-gray-700 leading-relaxed mb-4 text-base sm:text-lg md:text-xl">
             The layout plan presents a well-organized and thoughtfully designed
             development that ensures efficient space utilization and smooth
             connectivity throughout the project.
           </p>
-          <p class="text-gray-700 leading-relaxed text-base sm:text-lg">
+          <p class="text-gray-700 leading-relaxed text-base sm:text-lg md:text-xl">
             With clearly defined plots, wide internal roads, and designated open
             spaces, the layout supports comfortable living and long-term value.
           </p>
@@ -58,11 +58,11 @@
           <h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
             Infinity Park – Grantha
           </h2>
-          <p class="text-gray-700 leading-relaxed mb-4 text-base sm:text-lg">
+          <p class="text-gray-700 leading-relaxed mb-4 text-base sm:text-lg md:text-xl">
             Infinity Park is a beautifully designed green space that enhances the
             overall lifestyle experience within the project.
           </p>
-          <p class="text-gray-700 leading-relaxed text-base sm:text-lg">
+          <p class="text-gray-700 leading-relaxed text-base sm:text-lg md:text-xl">
             Featuring landscaped gardens, walking paths, and open seating areas,
             the park encourages healthy outdoor activities and social interaction.
           </p>

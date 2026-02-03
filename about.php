@@ -37,23 +37,30 @@
       </div>
 
       <!-- CONTENT -->
-      <div class="space-y-6">
+      <div class="space-y-6 ">
         <!-- <h2 class="text-2xl md:text-3xl font-bold text-black">
           About Us
         </h2> -->
 
-        <p class="text-base sm:text-lg text-gray-700 leading-relaxed">
+        <p class="text-semibold sm:text-lg md:text-xl  text-gray-700 leading-relaxed">
           We specialize in premium plot developments designed for those who value
           location, long-term growth, and lifestyle excellence. Every project is
           carefully planned to ensure legal clarity, superior infrastructure,
           and future-ready living.
         </p>
 
-        <p class="text-base sm:text-lg text-gray-700 leading-relaxed">
+        <p class="text-semibold sm:text-lg md:text-xl text-gray-700 leading-relaxed">
           Our developments combine modern planning with nature-friendly layouts,
           offering well-connected roads, open spaces, and a secure investment
           environment for families and investors alike.
         </p>
+        <p class="text-semibold sm:text-lg md:text-xl text-gray-700 leading-relaxed">
+          Each of our communities is thoughtfully crafted to enhance the quality
+           of life, blending convenience with tranquility. From landscaped parks and 
+           recreational areas to essential amenities within easy reach, we ensure a 
+           harmonious balance between urban comforts and natural serenity. By prioritizing 
+           sustainability, safety, and aesthetic appeal, our developments provide not just 
+           a plot, but a lifestyle that grows in value and prestige over time.</p>
       </div>
 
     </div>

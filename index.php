@@ -451,7 +451,7 @@
         </h3>
 
         <button
-          class="jersey font-semibold bg-transparent border border-[#73bc01] text-[#73bc01] hover:bg-[#73bc01] hover:text-black px-8 py-3 rounded-md transition duration-300">
+          class="jersey font-semibold bg-transparent  border border-[#73bc01] text-[#73bc01] hover:bg-[#73bc01] hover:text-black px-8 py-3 rounded-md transition duration-300">
           Enquire Now
         </button>
       </div>
