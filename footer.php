@@ -36,27 +36,24 @@
           <div class="flex gap-4">
             <div class="w-10 h-10 rounded-full bg-black flex items-center justify-center text-[#73bc01]">f</div>
             <div class="w-10 h-10 rounded-full bg-black flex items-center justify-center text-[#73bc01]">◎</div>
-            <div class="w-10 h-10 rounded-full bg-black flex items-center justify-center text-[#73bc01]">▶</div>
+           
           </div>
         </div>
 
         <!-- CENTER : TEXT / DISCLAIMER -->
-        <div class="text-sm text-gray-300 leading-relaxed">
-          <p class="mb-4">
-            Roswalt Zyon is registered with MahaRERA under Project Registration No.
-            <span class="text-[#73bc01]">P51800047680</span>, which can be viewed at
-            maharera.mahaonline.gov.in under registered projects.
-          </p>
+        <div class="flex flex-col text-sm text-gray-300 gap-[40px]">
+         
+                <div class="flex items-center ">
+                      ☎ <span> Phone: +91 9975086229 , 8975280650</span>
+                </div>
 
-          <p>
-            <span class="text-[#73bc01]">Disclaimer:</span>
-            This content is for informational purposes only and does not constitute an offer to avail
-            of any service. Prices mentioned are subject to change without notice, and properties
-            mentioned are subject to availability. Images are for representation purposes only.
-            This is the official website of an authorized marketing partner. We may share data with
-            RERA-registered brokers/companies for further processing and may also send updates to the
-            registered mobile number/email ID.
-          </p>
+                <div class="flex items-center">
+                      ✉ <span> Email: info@roswalt.com</span>
+                </div>
+
+                <div class="flex items-center">
+                      📍 <span> D.S.K Groups, Ekdant Plaza, Hospital Ward, Kasturba Road, Chandrapur - 442401</span>
+                 </div>
         </div>
 
         <!-- RIGHT : QR CODES -->
@@ -65,18 +62,14 @@
             <img src="./images/qr1.png" alt="EC QR"
               class="w-32 h-32 border-4 border-white rounded-lg mx-auto">
             <p class="mt-2 text-sm">EC</p>
-            <div class="mt-2 w-10 h-10 bg-black rounded-full flex items-center justify-center mx-auto">
-              ⬇
-            </div>
+           
           </div>
 
           <div class="text-center">
             <img src="./images/qr1.png" alt="SMC QR"
               class="w-32 h-32 border-4 border-white rounded-lg mx-auto">
             <p class="mt-2 text-sm">SMC</p>
-            <div class="mt-2 w-10 h-10 bg-black rounded-full flex items-center justify-center mx-auto">
-              ⬇
-            </div>
+          
           </div>
         </div>
 
@@ -86,17 +79,6 @@
       <div class="mt-16 pt-6 border-t border-[#73bc01]/40
                 flex flex-col justify-center lg:flex-row gap-6 text-sm text-gray-300">
 
-        <div class="flex items-center gap-2">
-          ☎ <span>Phone: +91 7507070707</span>
-        </div>
-
-        <div class="flex items-center gap-2">
-          ✉ <span>Email: info@roswalt.com</span>
-        </div>
-
-        <div class="flex items-center gap-2">
-          📍 <span>Roswalt Zyon, M/s. A, next to Ruby Hospital, Oshiwara, Andheri West</span>
-        </div>
 
       </div>
 
