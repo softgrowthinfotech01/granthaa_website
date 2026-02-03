@@ -25,8 +25,8 @@
 
     <!-- MENU BUTTON -->
     <label for="menuToggle" class="flex items-center gap-2 cursor-pointer">
-      <div class="bg-black rounded-md p-[2px]">
-        <span class="text-white text-2xl font-bold">☰</span>
+      <div class="bg-black rounded-md p-[2px] hover:bg-white ">
+        <span class="text-white text-2xl font-bold hover:text-black">☰</span>
       </div>
       <span class="source-serif  sm:block text-2xl font-semibold text-[#73bc01]">
         Menu
@@ -110,8 +110,8 @@
          transition-transform duration-300"
 >
   <!-- CLOSE -->
-  <label for="menuToggle" class="absolute top-4 right-4 bg-black rounded-md cursor-pointer">
-    <span class="text-white text-xl px-3 py-1">✕</span>
+  <label for="menuToggle" class="absolute top-4 right-4 bg-black rounded-md hover:bg-white cursor-pointer">
+    <span class="text-white text-xl px-3 py-1 hover:text-black font-bold">✕</span>
   </label>
 
   <!-- LINKS -->
