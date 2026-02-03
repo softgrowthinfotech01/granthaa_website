@@ -198,17 +198,30 @@
 
   <!-- INDICATORS -->
  <div class="absolute z-30 bottom-6 left-1/2 -translate-x-1/2 flex gap-3">
-  <button data-carousel-slide-to="0"
-    class="w-5 h-5 rounded-full bg-black/70 border border-[#73bc01] 
+  <button
+    data-carousel-slide-to="0"
+    class="w-4 h-4 rounded-full bg-black/70 border border-[#73bc01]
+           transition-all duration-300
            hover:bg-[#73bc01]
-           transition"></button>
+           aria-[current=true]:scale-150
+           aria-[current=true]:bg-[#73bc01]">
+  </button>
 
-  <button data-carousel-slide-to="1" class="w-5 h-5 rounded-full bg-black/70 border border-[#73bc01] hover:bg-[#73bc01]   transition"></button>
-  <button data-carousel-slide-to="2" class="w-5 h-5 rounded-full bg-black/70 border border-[#73bc01] hover:bg-[#73bc01]  transition"></button>
-  <button data-carousel-slide-to="3" class="w-5 h-5 rounded-full bg-black/70 border border-[#73bc01] hover:bg-[#73bc01] transition"></button>
-  <button data-carousel-slide-to="4" class="w-5 h-5 rounded-full bg-black/70 border border-[#73bc01] hover:bg-[#73bc01]  transition"></button>
+  <button data-carousel-slide-to="1" class="w-4 h-4 rounded-full bg-black/70 border border-[#73bc01]
+           transition-all duration-300 hover:bg-[#73bc01]
+           aria-[current=true]:scale-150 aria-[current=true]:bg-[#73bc01]"></button>
+
+  <button data-carousel-slide-to="2" class="w-4 h-4 rounded-full bg-black/70 border border-[#73bc01]
+           transition-all duration-300 hover:bg-[#73bc01]
+           aria-[current=true]:scale-150 aria-[current=true]:bg-[#73bc01]"></button>
+           <button data-carousel-slide-to="1" class="w-4 h-4 rounded-full bg-black/70 border border-[#73bc01]
+           transition-all duration-300 hover:bg-[#73bc01]
+           aria-[current=true]:scale-150 aria-[current=true]:bg-[#73bc01]"></button>
+           <button data-carousel-slide-to="1" class="w-4 h-4 rounded-full bg-black/70 border border-[#73bc01]
+           transition-all duration-300 hover:bg-[#73bc01]
+           aria-[current=true]:scale-150 aria-[current=true]:bg-[#73bc01]"></button>
+           
 </div>
-
 
   <!-- PREV -->
   <button type="button"
@@ -631,19 +644,28 @@
 
   <!-- DOWNLOAD BROCHURE BUTTON (RIGHT SIDE) -->
   <div
-    id="brochureBtn"
-    class="fixed right-0 top-1/2 -translate-y-1/2 z-30
+  id="brochureBtn"
+  class="fixed right-0 top-1/2 -translate-y-1/2 z-30
          opacity-0 pointer-events-none
-         transition-opacity duration-100
-         bg-[#73bc01]/40">
-    <a
-      href="#"
-      class="jersey text-[#73bc01] border border-[#73bc01]
-           px-4 py-6 rounded-l-md
-           writing-mode-vertical tracking-widest font-semibold">
-      Download Brochure
-    </a>
-  </div>
+         transition-opacity duration-100">
+
+  <a
+    href="#"
+    class="jersey
+           flex items-center justify-center
+           bg-[#73bc01]/40
+           text-[#73bc01]
+           border border-[#73bc01]
+           px-4 py-4
+           rounded-l-md
+           writing-mode-vertical
+           tracking-widest
+           font-semibold
+           overflow-hidden">
+    Download Brochure
+  </a>
+
+</div>
   <!-- WHATSAPP STICKY BUTTON -->
   <a href="https://wa.me/919999999999"
     target="_blank"

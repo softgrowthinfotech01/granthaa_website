@@ -1,166 +1,124 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Header</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
- 
-    </style>
-  </head>
+<head>
+  <meta charset="UTF-8" />
+  <title>Header</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 
- <body class="bg-transparent overflow-x-hidden">
-  <!-- MENU TOGGLE -->
-  <input type="checkbox" id="menuToggle" class="peer hidden" />
+  <!-- GOOGLE FONT -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@200..900&display=swap" rel="stylesheet">
+</head>
 
-  <!-- HEADER -->
-  <header
-  class="w-full sticky top-0
-        h-16 md:h-24 flex items-center justify-between
-         px-4 md:px-6  z-50"
->
+<body class="overflow-x-hidden">
 
-    <!-- MENU ICON -->
-    <label
-      for="menuToggle"
-      class="flex items-center gap-3 text-[#73bc01] cursor-pointer"
-    >
-      <div class="bg-black rounded-lg" ><span class="text-2xl font-bold text-white p-[4px] ">☰</span></div>
-      <span class="hidden sm:block text-xl font-bold">Menu</span>
+<!-- MENU TOGGLE -->
+<input type="checkbox" id="menuToggle" class="peer hidden" />
+
+<!-- HEADER -->
+<header class="sticky top-0 z-50 bg-transparent">
+  <div class="flex items-center justify-between h-16 md:h-24 px-4 md:px-8">
+
+    <!-- MENU BUTTON -->
+    <label for="menuToggle" class="flex items-center gap-2 cursor-pointer">
+      <div class="bg-black rounded-md px-2 py-1">
+        <span class="text-white text-2xl font-bold">☰</span>
+      </div>
+      <span class="hidden sm:block text-2xl font-semibold font-[Source_Serif_4]">
+        Menu
+      </span>
     </label>
 
     <!-- LOGO -->
-  <div class="flex items-center mt-6 justify-center ml-16 bg-transparent rounded-2xl ">
-  <div class="relative p-3 bg-white rounded-xl">
+    <div class="relative bg-white rounded-xl p-2 mt-4 md:p-3">
+      <svg class="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 400 250" preserveAspectRatio="none">
+        <defs>
+          <filter id="glow">
+            <feGaussianBlur stdDeviation="10" result="blur" />
+            <feMerge>
+              <feMergeNode in="blur"/>
+              <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+          </filter>
+        </defs>
 
-    <!-- SVG BORDER -->
-    <svg
-      class="absolute inset-0 w-full h-full  pointer-events-none"
-      viewBox="0 0 400 250"
-      preserveAspectRatio="none"
-    >
-      <defs>
-        <!-- Glow -->
-        <filter id="penGlow">
-          <feGaussianBlur stdDeviation="15" result="blur" />
-          <feMerge>
-            <feMergeNode in="blur" />
-            <feMergeNode in="SourceGraphic" />
-          </feMerge>
-        </filter>
-      </defs>
+        <path
+          d="M40 20 H360 A20 20 0 0 1 380 40 V110"
+          fill="none"
+          stroke="#71BE00"
+          stroke-width="8"
+          stroke-linecap="round"
+          stroke-dasharray="520"
+          stroke-dashoffset="520"
+          filter="url(#glow)"
+        >
+          <animate attributeName="stroke-dashoffset" from="520" to="0" dur="3s" repeatCount="indefinite"/>
+        </path>
 
-      <!-- TOP + RIGHT border (moving pen) -->
-      <path
-  d="
-    M40 20
-    H360
-    A20 20 0 0 1 380 40
-    V110
-  "
-  fill="none"
-  stroke="#71BE00"
-  stroke-width="10"
-  stroke-linecap="round"
-  stroke-linejoin="round"
-  stroke-dasharray="520"
-  stroke-dashoffset="520"
-  filter="url(#penGlow)"
->
-  <animate
-    attributeName="stroke-dashoffset"
-    from="520"
-    to="0"
-    dur="3.8s"
-    begin="1.4s"
-    repeatCount="indefinite"
-  />
-</path>
+        <path
+          d="M360 230 H40 A20 20 0 0 1 20 210 V120"
+          fill="none"
+          stroke="#1e40af"
+          stroke-width="8"
+          stroke-linecap="round"
+          stroke-dasharray="520"
+          stroke-dashoffset="520"
+          filter="url(#glow)"
+        >
+          <animate attributeName="stroke-dashoffset" from="520" to="0" dur="3s" repeatCount="indefinite"/>
+        </path>
+      </svg>
 
-      <!-- BOTTOM + LEFT border (moving pen) -->
-      <path
-  d="
-    M360 230
-    H40
-    A20 20 0 0 1 20 210
-    V120
-  "
-  fill="none"
-  stroke="#1e40af"
-  stroke-width="10"
-  stroke-linecap="round"
-  stroke-linejoin="round"
-  stroke-dasharray="520"
-  stroke-dashoffset="520"
-  filter="url(#penGlow)"
->
-  <animate
-    attributeName="stroke-dashoffset"
-    from="520"
-    to="0"
-    dur="3.8s"
-    begin="1.4s"
-    repeatCount="indefinite"
-  />
-</path>
-    </svg>
-
-    <!-- LOGO -->
-    <img
-      src="images/granthalogo.webp"
-      alt="Logo"
-      class="w-[150px] h-[100px]"
-    />
-  </div>
-</div>
+      <img
+        src="images/granthalogo.webp"
+        alt="Logo"
+        class="relative w-28  h-auto md:w-36"
+      />
+    </div>
 
     <!-- CTA -->
     <a
       href="#"
-      class="hidden font-semibold md:block border border-[#73bc01] text-[#73bc01]
-             px-5 py-2 rounded
-             hover:bg-[#73bc01] hover:text-black hover:scale-110 transition"
+      class="hidden md:block font-[Source_Serif_4] font-semibold
+             border border-[#73bc01] text-[#73bc01]
+             px-4 py-2 rounded-md
+             hover:bg-[#73bc01] hover:text-black
+             transition-transform hover:scale-105"
     >
       Download Brochure
     </a>
-  </header>
 
-  <!-- OVERLAY -->
-  <label
-    for="menuToggle"
-    class="fixed inset-0 bg-white
-           opacity-0 pointer-events-none
-          
-           transition-opacity duration-300 z-40"
-  ></label>
-
-  <!-- SIDE MENU -->
-  <div
-    class="fixed top-0 left-0 h-full w-full sm:w-80 bg-white text-black font-bold
-           transform -translate-x-full peer-checked:translate-x-0
-           transition-transform duration-300 z-50
-           border-r border-gray-800"
-  >
-    <!-- CLOSE BUTTON (FUNCTIONAL) -->
-    <label for="menuToggle" class="absolute top-4 right-4 bg-black rounded-lg cursor-pointer">
-      <span
-        class="w-10 h-10 flex text-2xl  font-bold text-white p-[4px] items-center justify-center
-                rounded-full
-                transition"
-        aria-label="Close"
-      >
-        ✕
-      </span>
-    </label>
-
-    <!-- MENU LINKS -->
-    <div class="p-8 space-y-8 mt-16">
-      <a href="index.php" class="block text-xl hover:opacity-90">Home</a>
-      <a href="about.php" class="block text-xl hover:opacity-90">About</a>
-      <a href="project.php" class="block text-xl hover:opacity-90">Projects</a>
-      <a href="contact.php" class="block text-xl hover:opacity-90">Contact</a>
-    </div>
   </div>
-</body>
+</header>
 
+<!-- OVERLAY -->
+<label
+  for="menuToggle"
+  class="fixed inset-0 bg-black/30 opacity-0 peer-checked:opacity-100
+         pointer-events-none peer-checked:pointer-events-auto
+         transition z-40"
+></label>
+
+<!-- SIDE MENU -->
+<aside
+  class="fixed top-0 left-0 h-full w-72 bg-white z-50
+         transform -translate-x-full peer-checked:translate-x-0
+         transition-transform duration-300"
+>
+  <!-- CLOSE -->
+  <label for="menuToggle" class="absolute top-4 right-4 bg-black rounded-md cursor-pointer">
+    <span class="text-white text-xl px-3 py-1">✕</span>
+  </label>
+
+  <!-- LINKS -->
+  <nav class="mt-20 px-6 space-y-6 font-[Source_Serif_4] font-semibold">
+    <a href="index.php" class="block text-xl hover:text-[#73bc01]">Home</a>
+    <a href="about.php" class="block text-xl hover:text-[#73bc01]">About</a>
+    <a href="project.php" class="block text-xl hover:text-[#73bc01]">Projects</a>
+    <a href="contact.php" class="block text-xl hover:text-[#73bc01]">Contact</a>
+  </nav>
+</aside>
+
+</body>
 </html>
