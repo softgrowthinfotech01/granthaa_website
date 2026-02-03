@@ -224,26 +224,28 @@
 </div>
 
   <!-- PREV -->
-  <button type="button"
-    class="group absolute left-4 top-1/2 -translate-y-1/2 z-30
-           w-14 h-14 rounded-full bg-black/70 backdrop-blur
-           flex items-center justify-center
-           border border-[#73bc01]
-           hover:scale-110 transition-all"
-    data-carousel-prev>
-    <span class="text-[#73bc01] text-5xl mb-4">‹</span>
-  </button>
+ <button type="button"
+  class="group absolute  left-2 md:left-4 top-1/2 -translate-y-1/2 z-30
+         w-10 h-10 md:w-14 md:h-14
+         rounded-full bg-black/70 backdrop-blur
+         flex items-center justify-center
+         border border-[#73bc01]
+         hover:scale-110 transition-all"
+  data-carousel-prev>
+  <span class="text-[#73bc01] text-3xl md:text-5xl mb-2 md:mb-3 leading-none">‹</span>
+</button>
 
   <!-- NEXT -->
-  <button type="button"
-    class="group absolute right-4 top-1/2 -translate-y-1/2 z-30
-           w-14 h-14 rounded-full bg-black/70 backdrop-blur
-           flex items-center justify-center
-           border border-[#73bc01]
-           hover:scale-110 transition-all"
-    data-carousel-next>
-    <span class="text-[#73bc01] text-5xl mb-4">›</span>
-  </button>
+ <button type="button"
+  class="group absolute right-2 md:right-4 top-1/2 -translate-y-1/2 z-30
+         w-10 h-10 md:w-14 md:h-14
+         rounded-full bg-black/70 backdrop-blur
+         flex items-center justify-center
+         border border-[#73bc01]
+         hover:scale-110 transition-all"
+  data-carousel-next>
+  <span class="text-[#73bc01] text-3xl md:text-5xl mb-2 md:mb-3 leading-none">›</span>
+</button>
 
 </div>
 
@@ -493,8 +495,13 @@
         offering well-connected roads, open spaces, and a secure investment
         environment for families and investors alike.
       </p>
-
-      
+      <p class="text-semibold sm:text-lg md:text-xl text-gray-700 leading-relaxed">
+          Each of our communities is thoughtfully crafted to enhance the quality
+           of life, blending convenience with tranquility. From landscaped parks and 
+           recreational areas to essential amenities within easy reach, we ensure a 
+           harmonious balance between urban comforts and natural serenity. By prioritizing 
+           sustainability, safety, and aesthetic appeal, our developments provide not just 
+           a plot, but a lifestyle that grows in value and prestige over time.</p> 
     </div>
 
   </div>
@@ -609,7 +616,7 @@
           </div>
           <div>
             <h4 class="text-xl font-serif text-blue-900">Give Us A Call</h4>
-            <p class="text-blue-700">+91 9090909090</p>
+            <p class="text-blue-700">+91 9975086229 , 8975280850</p>
           </div>
         </div>
 

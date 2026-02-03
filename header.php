@@ -31,14 +31,28 @@
     <div class="flex items-center justify-between h-16 md:h-24 px-4 md:px-8">
 
       <!-- MENU BUTTON -->
-      <label for="menuToggle" class="flex items-center  gap-2 bg-white cursor-pointer border border-[#73bc01] p-1 rounded-md">
-        <div class=" rounded-md p-[2px] ">
-          <span class="text-black text-xl mb-2 font-bold ">☰</span>
-        </div>
-        <span class="source-serif   sm:block text-xl font-semibold text-[#73bc01] p-1 ">
-          Menu
-        </span>
-      </label>
+      <label
+  for="menuToggle"
+  class="flex items-center gap-2 cursor-pointer
+         bg-white border border-[#73bc01] rounded-md p-1
+         transition-all duration-300 ease-in-out
+         hover:bg-[#73bc01] hover:scale-105">
+
+  <div class="rounded-md p-[2px]">
+    <span
+      class="text-black text-xl font-bold
+             transition-colors duration-300">
+      ☰
+    </span>
+  </div>
+
+  <span
+    class="source-serif mt-1 sm:block text-xl font-semibold p-1
+           text-[#73bc01] transition-colors duration-300
+           hover:text-black">
+    Menu
+  </span>
+</label>
 
       <!-- LOGO -->
       <div class="relative bg-white rounded-xl p-2 mt-4 md:p-3 logo-glow ml-[90px]">
@@ -113,9 +127,20 @@
          transform -translate-x-full peer-checked:translate-x-0
          transition-transform duration-300">
     <!-- CLOSE -->
-    <label for="menuToggle" class="absolute top-4 right-4 bg-black rounded-md hover:bg-white cursor-pointer">
-      <span class="text-white text-xl px-3 py-1 hover:text-black font-bold">✕</span>
-    </label>
+    <label
+  for="menuToggle"
+  class="absolute top-4 right-4 bg-white cursor-pointer
+         border border-[#73bc01] rounded-md
+         transform transition-all duration-300 ease-in-out
+         hover:bg-[#73bc01] hover:scale-110">
+
+  <span
+    class="text-[#73bc01] text-xl px-3 py-1 font-bold
+           transition-colors duration-300
+           hover:text-black">
+    ✕
+  </span>
+</label>
 
     <!-- LINKS -->
     <nav class="mt-20 px-6 space-y-6 font-[Source_Serif_4] font-semibold">
