@@ -679,6 +679,128 @@
       <path d="M16 2.67C8.64 2.67 2.67 8.64 2.67 16c0 2.61.77 5.05 2.1 7.1L2.67 29.33l6.39-2.07c1.98 1.08 4.25 1.74 6.94 1.74 7.36 0 13.33-5.97 13.33-13.33S23.36 2.67 16 2.67zm0 24.22c-2.34 0-4.5-.64-6.36-1.75l-.45-.27-3.78 1.22 1.24-3.68-.29-.47c-1.23-1.95-1.88-4.2-1.88-6.55 0-6.68 5.44-12.11 12.11-12.11s12.11 5.44 12.11 12.11-5.44 12.11-12.11 12.11z" />
     </svg>
   </a>
+
+
+
+<div
+  id="modalBackdrop"
+  class="fixed inset-0 z-50 flex items-center justify-center
+         bg-black/60 px-4
+         opacity-0 pointer-events-none
+         transition-opacity duration-300"
+>
+
+  <!-- MODAL -->
+  <div
+    id="modalBox"
+    class="relative w-full max-w-sm sm:max-w-md
+           bg-white rounded-2xl shadow-2xl
+           border-2 border-blue-600
+           p-4 sm:p-6
+           transform translate-y-24 scale-95 opacity-0
+           transition-all duration-300 ease-out"
+  >
+
+    <!-- CLOSE -->
+    <button
+      id="closeModal"
+      class="absolute top-3 right-3 text-blue-600
+             hover:text-red-500 text-2xl font-bold"
+    >
+      ✕
+    </button>
+
+    <!-- HEADER -->
+    <div class="text-center mb-5">
+      <h2 class="text-xl sm:text-2xl font-bold text-blue-700">
+        Call Us <span class="text-green-600">+91 7507070707</span>
+      </h2>
+
+      <p class="text-xs text-gray-500 mt-1">OR</p>
+
+      <h3 class="text-lg sm:text-xl font-semibold text-blue-700 mt-1">
+        Enquire Now!
+      </h3>
+
+      <p class="text-sm text-gray-600 mt-3">
+        Take the first step towards your dream home —
+        <span class="font-semibold text-green-600">book today!</span>
+      </p>
+    </div>
+
+    <!-- FORM -->
+    <form class="space-y-3 sm:space-y-4">
+
+      <input
+        type="text"
+        placeholder="Name"
+        class="w-full px-4 py-2.5 sm:py-3
+               rounded-lg border border-blue-300
+               focus:ring-2 focus:ring-blue-500 outline-none"
+      />
+
+      <input
+        type="email"
+        placeholder="Email"
+        class="w-full px-4 py-2.5 sm:py-3
+               rounded-lg border border-blue-300
+               focus:ring-2 focus:ring-blue-500 outline-none"
+      />
+
+      <div class="flex gap-2">
+        <select
+          class="px-3 py-2.5 sm:py-3 rounded-lg
+                 border border-blue-300 bg-white
+                 focus:ring-2 focus:ring-blue-500"
+        >
+          <option>🇮🇳 +91</option>
+        </select>
+
+        <input
+          type="tel"
+          placeholder="Phone"
+          class="flex-1 px-4 py-2.5 sm:py-3
+                 rounded-lg border border-blue-300
+                 focus:ring-2 focus:ring-blue-500 outline-none"
+        />
+      </div>
+
+      <label class="flex gap-2 text-xs sm:text-sm text-gray-600">
+        <input type="checkbox" checked class="mt-1 accent-green-600">
+        I agree and authorize the team to contact me. This overrides
+        <span class="font-semibold">DNC / NDNC</span>.
+      </label>
+
+      <!-- CAPTCHA MOCK -->
+      <div class="border border-blue-900 rounded-md p-3 max-w-xs">
+        <div class="flex items-center gap-3 text-sm">
+          <input type="checkbox" class="w-5 h-5 accent-green-600">
+          <span>I’m not a robot</span>
+        </div>
+        <p class="text-[11px] text-gray-500 mt-2">
+          reCAPTCHA · Privacy · Terms
+        </p>
+      </div>
+
+      <button
+        type="submit"
+        class="w-full bg-green-600 hover:bg-green-700
+               text-white py-2.5 sm:py-3
+               rounded-lg font-semibold tracking-wide
+               transition"
+      >
+        SUBMIT
+      </button>
+
+    </form>
+  </div>
+</div>
+
+
+
+
+
+
   <script src="https://unpkg.com/flowbite@1.6.5/dist/flowbite.min.js"></script>
   <script>
     // Side Brochure Button started
@@ -737,6 +859,46 @@
 
   // updateSlider();
   // setInterval(autoScroll, 2500);
+
+
+
+
+
+  const backdrop = document.getElementById("modalBackdrop");
+  const modalBox = document.getElementById("modalBox");
+  const closeBtn = document.getElementById("closeModal");
+
+  // OPEN MODAL
+  function openModal() {
+    backdrop.classList.remove("opacity-0", "pointer-events-none");
+    modalBox.classList.remove("translate-y-24", "scale-95", "opacity-0");
+  }
+
+  // CLOSE MODAL
+  function closeModal() {
+    backdrop.classList.add("opacity-0", "pointer-events-none");
+    modalBox.classList.add("translate-y-24", "scale-95", "opacity-0");
+  }
+
+  // SHOW MODAL ON EVERY PAGE LOAD
+  window.addEventListener("load", () => {
+    setTimeout(() => {
+      openModal();
+    }, 300); // small delay for smooth UX
+  });
+
+  // CLOSE BUTTON
+  closeBtn.addEventListener("click", closeModal);
+
+  // CLICK OUTSIDE TO CLOSE
+  backdrop.addEventListener("click", (e) => {
+    if (e.target === backdrop) closeModal();
+  });
+
+
+
+
+
 </script>
 
 </body>
