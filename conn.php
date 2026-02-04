@@ -1,4 +1,4 @@
-<?php
+<!-- <?php
 $server = 'localhost';
 $username = "root";
 $password = "";
@@ -13,4 +13,4 @@ $dbname = "realestate";
            echo $th;
       }
 
-?>
+?> -->
