@@ -742,7 +742,7 @@ exit;
 
   <!-- MODAL -->
   <div
-    id="6"
+    id="modalBox"
     class="relative w-full max-w-sm sm:max-w-md
            bg-white rounded-2xl shadow-2xl
            border-2 border-blue-600
