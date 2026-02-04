@@ -173,87 +173,87 @@
     <?php include "header.php"; ?> 
 
 
-<div id="default-carousel"
-     class="relative w-full h-[700px]"
+   <!-- slider start -->
+    <div id="default-carousel"
+     class="relative w-full
+            h-[260px] sm:h-[360px] md:h-[500px] lg:h-[650px] xl:h-[700px]"
      data-carousel="slide">
 
   <!-- Carousel wrapper -->
   <div class="relative h-full overflow-hidden">
 
     <div class="hidden duration-700 ease-in-out h-full" data-carousel-item>
-      <img src="images/GLDimg1.png" class="absolute w-full h-full object-cover">
+      <img src="images/GLDimg1.png"
+           class="absolute w-full h-full object-cover">
     </div>
 
     <div class="hidden duration-700 ease-in-out h-full" data-carousel-item>
-      <img src="images/GLDimg2.png" class="absolute w-full h-full object-cover">
+      <img src="images/GLDimg2.png"
+           class="absolute w-full h-full object-cover">
     </div>
 
     <div class="hidden duration-700 ease-in-out h-full" data-carousel-item>
-      <img src="images/GLDimg3.png" class="absolute w-full h-full object-cover">
+      <img src="images/GLDimg3.png"
+           class="absolute w-full h-full object-cover">
     </div>
 
     <div class="hidden duration-700 ease-in-out h-full" data-carousel-item>
-      <img src="images/GLDimg4.png" class="absolute w-full h-full object-cover">
+      <img src="images/GLDimg4.png"
+           class="absolute w-full h-full object-cover">
     </div>
 
     <div class="hidden duration-700 ease-in-out h-full" data-carousel-item>
-      <img src="images/GLDimg5.png" class="absolute w-full h-full object-cover">
+      <img src="images/GLDimg5.png"
+           class="absolute w-full h-full object-cover">
     </div>
+
   </div>
 
   <!-- INDICATORS -->
- <div class="absolute z-30 bottom-6 left-1/2 -translate-x-1/2 flex gap-3">
-  <button
-    data-carousel-slide-to="0"
-    class="w-4 h-4 rounded-full bg-black/70 border border-[#73bc01]
-           transition-all duration-300
-           hover:bg-[#73bc01]
-           aria-[current=true]:scale-150
-           aria-[current=true]:bg-[#73bc01]">
-  </button>
+  <div class="absolute z-30 bottom-4 sm:bottom-6
+              left-1/2 -translate-x-1/2 flex gap-2 sm:gap-3">
 
-  <button data-carousel-slide-to="1" class="w-4 h-4 rounded-full bg-black/70 border border-[#73bc01]
-           transition-all duration-300 hover:bg-[#73bc01]
-           aria-[current=true]:scale-150 aria-[current=true]:bg-[#73bc01]"></button>
+    <button data-carousel-slide-to="0"
+      class="w-2.5 h-2.5 sm:w-3 sm:h-3 md:w-4 md:h-4
+             rounded-full bg-black/70 border border-[#73bc01]
+             transition-all duration-300
+             hover:bg-[#73bc01]
+             aria-[current=true]:scale-125
+             aria-[current=true]:bg-[#73bc01]"></button>
 
-  <button data-carousel-slide-to="2" class="w-4 h-4 rounded-full bg-black/70 border border-[#73bc01]
-           transition-all duration-300 hover:bg-[#73bc01]
-           aria-[current=true]:scale-150 aria-[current=true]:bg-[#73bc01]"></button>
-           <button data-carousel-slide-to="1" class="w-4 h-4 rounded-full bg-black/70 border border-[#73bc01]
-           transition-all duration-300 hover:bg-[#73bc01]
-           aria-[current=true]:scale-150 aria-[current=true]:bg-[#73bc01]"></button>
-           <button data-carousel-slide-to="1" class="w-4 h-4 rounded-full bg-black/70 border border-[#73bc01]
-           transition-all duration-300 hover:bg-[#73bc01]
-           aria-[current=true]:scale-150 aria-[current=true]:bg-[#73bc01]"></button>
-           
-</div>
+    <button data-carousel-slide-to="1" class="same-indicator"></button>
+    <button data-carousel-slide-to="2" class="same-indicator"></button>
+    <button data-carousel-slide-to="3" class="same-indicator"></button>
+    <button data-carousel-slide-to="4" class="same-indicator"></button>
+  </div>
 
   <!-- PREV -->
- <button type="button"
-  class="group absolute  left-2 md:left-4 top-1/2 -translate-y-1/2 z-30
-         w-10 h-10 md:w-14 md:h-14
-         rounded-full bg-black/70 backdrop-blur
-         flex items-center justify-center
-         border border-[#73bc01]
-         hover:scale-110 transition-all"
-  data-carousel-prev>
-  <span class="text-[#73bc01] text-3xl md:text-5xl mb-2 md:mb-3 leading-none">‹</span>
-</button>
+  <button type="button"
+    class="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 z-30
+           w-8 h-8 sm:w-10 sm:h-10 md:w-14 md:h-14
+           rounded-full bg-black/70 backdrop-blur
+           flex items-center justify-center
+           border border-[#73bc01]
+           hover:scale-110 transition-all"
+    data-carousel-prev>
+    <span class="text-[#73bc01] text-2xl sm:text-3xl md:text-5xl leading-none">‹</span>
+  </button>
 
   <!-- NEXT -->
- <button type="button"
-  class="group absolute right-2 md:right-4 top-1/2 -translate-y-1/2 z-30
-         w-10 h-10 md:w-14 md:h-14
-         rounded-full bg-black/70 backdrop-blur
-         flex items-center justify-center
-         border border-[#73bc01]
-         hover:scale-110 transition-all"
-  data-carousel-next>
-  <span class="text-[#73bc01] text-3xl md:text-5xl mb-2 md:mb-3 leading-none">›</span>
-</button>
+  <button type="button"
+    class="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 z-30
+           w-8 h-8 sm:w-10 sm:h-10 md:w-14 md:h-14
+           rounded-full bg-black/70 backdrop-blur
+           flex items-center justify-center
+           border border-[#73bc01]
+           hover:scale-110 transition-all"
+    data-carousel-next>
+    <span class="text-[#73bc01] text-2xl sm:text-3xl md:text-5xl leading-none">›</span>
+  </button>
 
 </div>
 
+    <!-- slider end -->
   <div class="min-h-screen bg-white ">
 
     <!-- Header -->
