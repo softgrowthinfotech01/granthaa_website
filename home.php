@@ -4,7 +4,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>index</title>
+  <title>Granthaa Developer Pvt Ltd | Plots, Flats & Land for Sale in Chandrapur</title>
+   <meta name="description" content="Granthaa Developer Pvt Ltd offers trusted property solutions in Chandrapur. Buy, sell, or resell plots, flats, and land in Chandrapur and nearby areas with expert guidance and transparent deals.">
+  <meta name="author" content="Granthaa Developer Pvt Ltd, Chandrapur">
+<meta name="keywords" content="Granthaa Developer, Chandrapur real estate, plots for sale in Chandrapur, flats in Chandrapur, land for sale Chandrapur, property dealer Chandrapur, land resale Chandrapur, real estate developer Chandrapur">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Yeseva+One&display=swap" rel="stylesheet">
