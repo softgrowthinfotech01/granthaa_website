@@ -292,7 +292,7 @@
             Turn Your Dreams Into A Home You'll Love.
           </p>
 
-          <button onclick="openModal()"6 class="jersey bg-transparent text-[#73bc01] border border-[#73bc01] font-semibold ml-7 px-8 py-3 rounded-lg
+          <button  class="jersey bg-transparent text-[#73bc01] border border-[#73bc01] font-semibold ml-7 px-8 py-3 rounded-lg
                  transition-all duration-500 ease-in-out
                  hover:bg-[#73bc01] hover:text-black hover:scale-105 hover:shadow-lg">
             Schedule A Site Visit
@@ -739,7 +739,6 @@ exit;
          opacity-0 pointer-events-none
          transition-opacity duration-300"
 >
-
   <!-- MODAL -->
   <div
     id="modalBox"
