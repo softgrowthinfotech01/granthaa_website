@@ -36,7 +36,7 @@
   class="flex items-center gap-2 cursor-pointer
          bg-white border border-[#73bc01] rounded-md p-1
          transition-all duration-300 ease-in-out
-         hover:bg-[#73bc01] hover:scale-105">
+         hover:bg-[#73bc01] hover:scale-105 hover:text-black">
 
   <div class="rounded-md p-[2px]">
     <span

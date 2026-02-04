@@ -29,7 +29,7 @@
       <!-- SECTION 1 -->
       <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
         <div class="rounded-2xl transition-transform duration-500 ease-in-out
-hover:scale-105 overflow-hidden shadow-lg">
+                    hover:scale-105 overflow-hidden shadow-lg">
           <img
             src="images/facilities.png"
             alt="Project Layout Plan"
@@ -76,7 +76,7 @@ hover:scale-105 overflow-hidden shadow-lg">
         </div>
 
         <div class="order-1 md:order-2 transition-transform duration-500 ease-in-out
-hover:scale-105 rounded-2xl overflow-hidden shadow-lg">
+                    hover:scale-105 rounded-2xl overflow-hidden shadow-lg">
           <img
             src="images/specialities img.png"
             alt="Infinity Park Grantha"

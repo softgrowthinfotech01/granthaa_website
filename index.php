@@ -453,7 +453,8 @@
         </h3>
 
         <button
-          class="jersey font-semibold bg-transparent  border border-[#73bc01] text-[#73bc01] hover:bg-[#73bc01] hover:text-black px-8 py-3 rounded-md transition duration-300">
+          class="jersey font-semibold bg-transparent  border border-[#73bc01] text-[#73bc01]
+                 hover:bg-[#73bc01] hover:text-black px-8 py-3 rounded-md transition duration-300">
           Enquire Now
         </button>
       </div>
@@ -470,7 +471,7 @@
 
     <!-- LEFT IMAGE -->
     <div class="relative rounded-2xl transition-transform duration-500 ease-in-out
-hover:scale-105 overflow-hidden shadow-2xl">
+                hover:scale-105 overflow-hidden shadow-2xl">
       <img
         src="images/plot booking.jpeg"
         alt="Premium Plot Development"
