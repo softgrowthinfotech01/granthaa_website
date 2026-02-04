@@ -38,7 +38,7 @@
          transition-all duration-300 ease-in-out
          hover:bg-[#73bc01] hover:scale-105 hover:text-black">
 
-  <div class="rounded-md p-[2px]">
+  <div class="rounded-md p-[2px] gap-1">
     <span
       class="text-black text-xl font-bold
              transition-colors duration-300">
@@ -47,8 +47,8 @@
   </div>
 
   <span
-    class="source-serif mt-1 sm:block text-xl font-semibold p-1
-           text-[#73bc01] transition-colors duration-300
+    class="source-serif mt-1 sm:block text-lg  p-1
+           text-black transition-colors duration-300
            hover:text-black">
     Menu
   </span>
@@ -104,8 +104,8 @@
       <a
         href="#"
         class="source-serif hidden md:block bg-white font-[Source_Serif_4] 
-             border border-[#73bc01] text-[#73bc01]
-             px-4 py-2 rounded-md
+             border border-[#73bc01] text-black
+             px-4 py-2 rounded-md text-lg
              hover:bg-[#73bc01] hover:text-black
              transition-transform hover:scale-105">
         Download Brochure
@@ -144,7 +144,7 @@
 
     <!-- LINKS -->
     <nav class="mt-20 px-6 space-y-6 font-[Source_Serif_4] font-semibold">
-      <a href="index.php" class="block text-xl hover:text-[#73bc01]">Home</a>
+      <a href="home.php" class="block text-xl hover:text-[#73bc01]">Home</a>
       <a href="about.php" class="block text-xl hover:text-[#73bc01]">About</a>
       <a href="project.php" class="block text-xl hover:text-[#73bc01]">Projects</a>
       <a href="contact.php" class="block text-xl hover:text-[#73bc01]">Contact</a>

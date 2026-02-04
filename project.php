@@ -41,16 +41,16 @@
           <h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
             Project Layout Plan
           </h2>
-          <p class="text-gray-700 leading-relaxed mb-4 text-base sm:text-lg md:text-xl">
+          <p class="text-gray-700 leading-relaxed mb-4 text-base sm:text-lg md:text-lg">
             The layout plan presents a well-organized and thoughtfully designed
             development that ensures efficient space utilization and smooth
             connectivity throughout the project.
           </p>
-          <p class="text-gray-700 leading-relaxed text-base sm:text-lg md:text-xl">
+          <p class="text-gray-700 leading-relaxed text-base sm:text-lg md:text-lg">
             With clearly defined plots, wide internal roads, and designated open
             spaces, the layout supports comfortable living and long-term value.
           </p>
-          <p class="text-gray-700 leading-relaxed text-base sm:text-lg md:text-xl">
+          <p class="text-gray-700 leading-relaxed text-base sm:text-lg md:text-lg">
             The layout is designed with care to provide a smooth flow of roads and
             well-planned plot arrangements, making everyday living convenient
              and stress-free.</p>
@@ -63,15 +63,15 @@
           <h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
             Infinity Park – Grantha
           </h2>
-          <p class="text-gray-700 leading-relaxed mb-4 text-base sm:text-lg md:text-xl">
+          <p class="text-gray-700 leading-relaxed mb-4 text-base sm:text-lg md:text-lg">
             Infinity Park is a beautifully designed green space that enhances the
             overall lifestyle experience within the project.
           </p>
-          <p class="text-gray-700 leading-relaxed text-base sm:text-lg md:text-xl">
+          <p class="text-gray-700 leading-relaxed text-base sm:text-lg md:text-lg">
             Featuring landscaped gardens, walking paths, and open seating areas,
             the park encourages healthy outdoor activities and social interaction.
           </p>
-          <p class="text-gray-700 leading-relaxed text-base sm:text-lg md:text-xl">
+          <p class="text-gray-700 leading-relaxed text-base sm:text-lg md:text-lg">
           Surrounded by landscaped greenery, walking trails, and leisure seating, 
           the park promotes active lifestyles while creating a welcoming social environment.
           </p>
@@ -101,14 +101,14 @@
           <h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
             Infinity Park – Your Gateway to Peaceful Living
           </h2>
-          <p class="text-gray-700 leading-relaxed mb-4 text-base sm:text-lg md:text-xl">
+          <p class="text-gray-700 leading-relaxed mb-4 text-base sm:text-lg md:text-lg">
              Infinity Park is a thoughtfully planned residential plotting project located
               in Chandrapur, offering a perfect blend of nature and modern infrastructure.
                Designed for comfortable living and smart investment, the project provides 
                well-developed plots with essential amenities including internal roads, drainage, 
                electricity, and water facilities.
           </p>
-          <p class="text-gray-700 leading-relaxed text-base sm:text-lg md:text-xl">
+          <p class="text-gray-700 leading-relaxed text-base sm:text-lg md:text-lg">
             With quality development, clear access routes, and future growth potential,
              Infinity Park is an ideal destination to build your dream home or grow your
               property investment.

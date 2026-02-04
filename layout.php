@@ -41,7 +41,7 @@
           <h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
             Elevated Living at Shobhaa Residency
           </h2>
-          <p class="text-gray-700 leading-relaxed mb-4 text-base sm:text-lg md:text-xl">
+          <p class="text-gray-700 leading-relaxed mb-4 text-base sm:text-lg md:text-lg">
             Shobhaa Residency is a premium residential plot development created for those
             who value location, quality planning, and smart investment opportunities. 
             Strategically located with excellent road access, the project offers NA-approved
@@ -61,7 +61,7 @@
           <h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
             Well-Organized Layout Designed for Comfort & Growth
           </h2>
-          <p class="text-gray-700 leading-relaxed mb-4 text-base sm:text-lg md:text-xl">
+          <p class="text-gray-700 leading-relaxed mb-4 text-base sm:text-lg md:text-lg">
              Our thoughtfully designed residential layout offers a perfect balance of modern
             infrastructure and natural surroundings. Featuring well-demarcated plots, wide
             internal roads, dedicated open spaces, and a centrally located amenity area, the

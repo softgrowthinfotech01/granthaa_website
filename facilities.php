@@ -41,12 +41,12 @@
           <h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
             Well-Planned Facilities for Better Living
           </h2>
-          <p class="text-gray-700 leading-relaxed mb-4 text-base sm:text-lg md:text-xl">
+          <p class="text-gray-700 leading-relaxed mb-4 text-base sm:text-lg md:text-lg">
                 D.S.K. RadhaKrishna Nagari offers thoughtfully planned amenities designed 
                 to give you comfort, convenience, and long-term value. The project features
                  well-developed WPM internal roads, proper drainage systems, bright street
                   lighting, and open green spaces that create a peaceful living environment.</p>
-           <p class="text-gray-700 leading-relaxed mb-4 text-base sm:text-lg md:text-xl">
+           <p class="text-gray-700 leading-relaxed mb-4 text-base sm:text-lg md:text-lg">
             Residents enjoy landscaped open areas for relaxation, safe internal roads for 
             smooth connectivity, and modern infrastructure that supports everyday needs. 
             Every plot is carefully developed to ensure easy access, cleanliness, and 
@@ -61,12 +61,12 @@
           <h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
             Premium Plots with Trusted Development
           </h2>
-          <p class="text-gray-700 leading-relaxed mb-4 text-base sm:text-lg md:text-xl">
+          <p class="text-gray-700 leading-relaxed mb-4 text-base sm:text-lg md:text-lg">
             D.S.K. RadhaKrishna Nagari brings you premium residential plots at an affordable
             price in a rapidly developing location. With NATP-sanctioned plots and clear legal
             documentation, this project offers complete peace of mind for buyers.
           </p>
-       <p class="text-gray-700 leading-relaxed mb-4 text-base sm:text-lg md:text-xl">
+       <p class="text-gray-700 leading-relaxed mb-4 text-base sm:text-lg md:text-lg">
         Enjoy flexible payment options with up to 12 months easy installments, making 
         ownership simpler than ever. Located near the city’s upcoming growth zone, the
         project provides excellent investment potential along with plots suitable for

@@ -502,7 +502,7 @@
         offering well-connected roads, open spaces, and a secure investment
         environment for families and investors alike.
       </p>
-      <p class="text-semibold sm:text-lg md:text-xl text-gray-700 leading-relaxed">
+      <p class="text-lg text-gray-700 leading-relaxed">
           Each of our communities is thoughtfully crafted to enhance the quality
            of life, blending convenience with tranquility. From landscaped parks and 
            recreational areas to essential amenities within easy reach, we ensure a 
@@ -718,7 +718,7 @@ $stmt->execute([
   
 ]);
 
-header("Location: index.php");
+header("Location: home.php");
 exit;
 }
 

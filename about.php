@@ -43,7 +43,7 @@
           About Us
         </h2> -->
 
-        <p class="text-semibold sm:text-lg md:text-xl  text-gray-700 leading-relaxed">
+        <p class="sm:text-lg md:text-lg text-gray-700 leading-relaxed">
           We specialize in premium plot developments designed for those who value
           location, long-term growth, and lifestyle excellence. Every project is
           carefully planned to ensure legal clarity, superior infrastructure,
@@ -51,7 +51,7 @@
         </p>
 
         
-        <p class="text-semibold sm:text-lg md:text-xl text-gray-700 leading-relaxed">
+        <p class="sm:text-lg md:text-lg text-gray-700 leading-relaxed">
           Each of our communities is thoughtfully crafted to enhance the quality
            of life, blending convenience with tranquility. From landscaped parks and 
            recreational areas to essential amenities within easy reach, we ensure a 
