@@ -73,19 +73,19 @@
           </p>
           
         </div>
-<div class="order-1 md:order-2 h-[320px] sm:h-[350px] md:h-[375px]
-transition-transform duration-500 ease-in-out
-hover:scale-105
-shadow-2xl rounded-2xl overflow-hidden
-flex items-center justify-center ">
+                <div class="order-1 md:order-2 h-[320px] sm:h-[350px] md:h-[375px]
+                transition-transform duration-500 ease-in-out
+                hover:scale-105
+                shadow-2xl rounded-2xl overflow-hidden
+                flex items-center justify-center ">
 
-  <img
-    src="images/layout 1.jpeg"
-    alt="Infinity Park Grantha"
-    class="w-full h-full object-contain"
-  />
+                <img
+                    src="images/layout 1.jpeg"
+                    alt="Infinity Park Grantha"
+                    class="w-full h-full object-contain"
+                />
 
-</div>
+                </div>
       </div>
 
     </div>

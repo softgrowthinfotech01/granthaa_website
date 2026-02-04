@@ -29,7 +29,7 @@
       <!-- SECTION 1 -->
       <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
         <div class="rounded-2xl transition-transform duration-500 ease-in-out
-hover:scale-105 overflow-hidden shadow-2xl">
+                    hover:scale-105 overflow-hidden shadow-2xl">
           <img
             src="images/Shobha residency plan.jpeg"
             alt="Project Layout Plan"

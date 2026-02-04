@@ -29,7 +29,7 @@
 
       <!-- IMAGE -->
       <div class="rounded-2xl transition-transform duration-500 ease-in-out
-hover:scale-105 overflow-hidden shadow-2xl">
+                  hover:scale-105 overflow-hidden shadow-2xl">
         <img
           src="images/plot booking.jpeg"
           alt="Premium Plot Development"
