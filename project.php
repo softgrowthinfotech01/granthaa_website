@@ -28,9 +28,10 @@
 
       <!-- SECTION 1 -->
       <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
-        <div class="rounded-2xl overflow-hidden shadow-lg">
+        <div class="rounded-2xl transition-transform duration-500 ease-in-out
+hover:scale-105 overflow-hidden shadow-2xl">
           <img
-            src="images/layout plan img.jpeg"
+            src="images/Shobha residency plan.jpeg"
             alt="Project Layout Plan"
             class="w-full h-64 sm:h-80 md:h-[420px] object-contain bg-white"
           />
@@ -49,6 +50,10 @@
             With clearly defined plots, wide internal roads, and designated open
             spaces, the layout supports comfortable living and long-term value.
           </p>
+          <p class="text-gray-700 leading-relaxed text-base sm:text-lg md:text-xl">
+            The layout is designed with care to provide a smooth flow of roads and
+            well-planned plot arrangements, making everyday living convenient
+             and stress-free.</p>
         </div>
       </div>
 
@@ -66,16 +71,52 @@
             Featuring landscaped gardens, walking paths, and open seating areas,
             the park encourages healthy outdoor activities and social interaction.
           </p>
+          <p class="text-gray-700 leading-relaxed text-base sm:text-lg md:text-xl">
+          Surrounded by landscaped greenery, walking trails, and leisure seating, 
+          the park promotes active lifestyles while creating a welcoming social environment.
+          </p>
         </div>
 
-        <div class="order-1 md:order-2 rounded-2xl overflow-hidden shadow-lg">
+        <div class="order-1 md:order-2 transition-transform duration-500 ease-in-out
+                  hover:scale-105 rounded-2xl overflow-hidden shadow-2xl">    
           <img
-            src="images/infiity park grantha.jpeg"
+            src="images/infinity park.jpeg"
             alt="Infinity Park Grantha"
-            class="w-full h-64 sm:h-80 md:h-[420px] object-contain bg-white"
+            class="w-full h-[480px] sm:h-80 md:h-[450px]  object-contain"
           />
         </div>
       </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+        <div class="rounded-2xl transition-transform duration-500 ease-in-out
+                  hover:scale-105 overflow-hidden shadow-2xl">
+          <img
+            src="images/infinity park layout.jpeg"
+            alt="Project Layout Plan"
+            class="w-full h-64 sm:h-80 md:h-[435px] object-contain bg-white"
+          />
+        </div>
+
+        <div>
+          <h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
+            Infinity Park – Your Gateway to Peaceful Living
+          </h2>
+          <p class="text-gray-700 leading-relaxed mb-4 text-base sm:text-lg md:text-xl">
+             Infinity Park is a thoughtfully planned residential plotting project located
+              in Chandrapur, offering a perfect blend of nature and modern infrastructure.
+               Designed for comfortable living and smart investment, the project provides 
+               well-developed plots with essential amenities including internal roads, drainage, 
+               electricity, and water facilities.
+          </p>
+          <p class="text-gray-700 leading-relaxed text-base sm:text-lg md:text-xl">
+            With quality development, clear access routes, and future growth potential,
+             Infinity Park is an ideal destination to build your dream home or grow your
+              property investment.
+          </p>
+        
+        </div>
+      </div>
+     
 
     </div>
   </div>

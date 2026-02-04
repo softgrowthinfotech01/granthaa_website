@@ -28,9 +28,10 @@
     <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
 
       <!-- IMAGE -->
-      <div class="rounded-2xl overflow-hidden shadow-xl">
+      <div class="rounded-2xl transition-transform duration-500 ease-in-out
+hover:scale-105 overflow-hidden shadow-2xl">
         <img
-          src="images/plot booking img.jpeg"
+          src="images/plot booking.jpeg"
           alt="Premium Plot Development"
           class="w-full h-64 sm:h-80 md:h-[420px] object-cover"
         />
@@ -49,11 +50,7 @@
           and future-ready living.
         </p>
 
-        <p class="text-semibold sm:text-lg md:text-xl text-gray-700 leading-relaxed">
-          Our developments combine modern planning with nature-friendly layouts,
-          offering well-connected roads, open spaces, and a secure investment
-          environment for families and investors alike.
-        </p>
+        
         <p class="text-semibold sm:text-lg md:text-xl text-gray-700 leading-relaxed">
           Each of our communities is thoughtfully crafted to enhance the quality
            of life, blending convenience with tranquility. From landscaped parks and 

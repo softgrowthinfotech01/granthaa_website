@@ -57,7 +57,8 @@ exit;
   <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-14 items-stretch">
 
     <!-- LEFT FORM -->
-    <div class="border-2 border-blue-900 rounded-2xl p-10 flex flex-col justify-between bg-white shadow-sm">
+    <div class="border-2 border-blue-900 rounded-2xl p-10 flex flex-col justify-between bg-white transition-transform duration-500 ease-in-out
+                hover:scale-105 shadow-sm">
       <div>
         <h2 class="text-4xl font-serif text-blue-900 mb-4">
           Book Site Visit <span class="uppercase text-green-600">Now !</span>
@@ -121,7 +122,8 @@ exit;
     </div>
 
     <!-- RIGHT CONTENT -->
-    <div class="border-2 border-blue-900 rounded-2xl p-10  relative">
+    <div class="border-2 border-blue-900 rounded-2xl p-10  relative transition-transform duration-500 ease-in-out
+hover:scale-105">
       <h2 class="text-4xl font-serif text-blue-900 mb-4">
         Unlock Your Dream Home!
       </h2>

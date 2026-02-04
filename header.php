@@ -148,6 +148,10 @@
       <a href="about.php" class="block text-xl hover:text-[#73bc01]">About</a>
       <a href="project.php" class="block text-xl hover:text-[#73bc01]">Projects</a>
       <a href="contact.php" class="block text-xl hover:text-[#73bc01]">Contact</a>
+      <a href="layout.php" class="block text-xl hover:text-[#73bc01]">Layout</a>
+      <a href="facilities.php" class="block text-xl hover:text-[#73bc01]">
+        Facilities</a>
+
     </nav>
   </aside>
 

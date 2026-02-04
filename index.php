@@ -469,11 +469,12 @@
   <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
 
     <!-- LEFT IMAGE -->
-    <div class="relative rounded-2xl overflow-hidden shadow-xl">
+    <div class="relative rounded-2xl transition-transform duration-500 ease-in-out
+hover:scale-105 overflow-hidden shadow-2xl">
       <img
-        src="images/plot booking img.jpeg"
+        src="images/plot booking.jpeg"
         alt="Premium Plot Development"
-        class="w-full h-[450px] object-cover"
+        class="w-full h-[450px] rounded-lg "
       />
     </div>
 
