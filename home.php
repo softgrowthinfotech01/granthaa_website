@@ -616,7 +616,7 @@
       <div class="space-y-10">
 
         <div class="flex gap-5 items-start">
-          <div class="w-12 h-12 rounded-full bg-green-600 flex items-center justify-center text-white">
+          <div class="w-12 h-12 rounded-full bg-lime-500 flex items-center justify-center text-white">
             ✉
           </div>
           <div>
@@ -626,7 +626,7 @@
         </div>
 
         <div class="flex gap-5 items-start">
-          <div class="w-12 h-12 rounded-full bg-green-600 flex items-center justify-center text-white">
+          <div class="w-12 h-12 rounded-full bg-lime-500 flex items-center justify-center text-white">
             ☎
           </div>
           <div>
