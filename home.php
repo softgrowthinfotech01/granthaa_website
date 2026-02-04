@@ -265,10 +265,10 @@
   <div class="min-h-screen bg-white ">
 
     <!-- Header -->
-    <div class="text-center pt-20 pb-16">
+    <div class="text-center pt-15 pb-16">
       <!-- <h1 class="family text-5xl md:text-6xl font-Bold-700-Italic text-[#73bc01]">
         Gallery      </h1> -->
-      <p class="yeseva mt-4 text-black text-3xl  ">
+      <p class="yeseva mt-2 text-black text-3xl  ">
         Explore Our Gallery And Experience The Beauty In Every Detail
       </p>
     </div>
@@ -544,7 +544,7 @@
     <div class="border-2 border-blue-900 rounded-2xl p-10 flex flex-col justify-between bg-white shadow-sm">
       <div>
         <h2 class="text-4xl font-serif text-blue-900 mb-4">
-          Book Site Visit <span class="uppercase text-green-600">Now !</span>
+          Book Site Visit <span class="uppercase bg-green-600">Now !</span>
         </h2>
 
         <p class="text-gray-800 font-semibold mb-10">
