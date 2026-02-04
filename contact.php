@@ -109,7 +109,7 @@ exit;
           </div>
           <div class="pt-10">
         <button name="submit"
-          class="font-semibold bg-green-600 text-white
+          class="font-semibold bg-[#73bc01] text-white
                  hover:bg-green-500
                  px-14 py-3 rounded-md tracking-wide transition">
           SUBMIT
@@ -135,7 +135,7 @@ exit;
       <div class="space-y-10">
 
         <div class="flex gap-5 items-start">
-          <div class="w-12 h-12 rounded-full bg-green-600 flex items-center justify-center text-white">
+          <div class="w-12 h-12 rounded-full bg-[#73bc01] flex items-center justify-center text-white">
             ✉
           </div>
           <div>
@@ -145,7 +145,7 @@ exit;
         </div>
 
         <div class="flex gap-5 items-start">
-          <div class="w-12 h-12 rounded-full bg-green-600 flex items-center justify-center text-white">
+          <div class="w-12 h-12 rounded-full bg-[#73bc01] flex items-center justify-center text-white">
             ☎
           </div>
           <div>
@@ -155,7 +155,7 @@ exit;
         </div>
 
         <div class="flex gap-5 items-start">
-          <div class="w-12 h-12 rounded-full bg-green-600 flex items-center justify-center text-white">
+          <div class="w-12 h-12 rounded-full bg-[#73bc01] flex items-center justify-center text-white">
             📍
           </div>
           <div>
