@@ -103,14 +103,14 @@
     background-color: #21ee39 !important;
     color: black;
   }
-  .same-indicator {
+  /* .same-indicator {
     @apply w-2.5 h-2.5 sm:w-3 sm:h-3 md:w-4 md:h-4
            rounded-full bg-black/70 border border-[#73bc01]
            transition-all duration-300
            hover:bg-[#73bc01]
            aria-[current=true]:scale-125
            aria-[current=true]:bg-[#73bc01];
-  }
+  } */
 
     @media (max-width: 768px) {
       .slide-card.active {
