@@ -1,8 +1,8 @@
-<!-- <?php
+<?php
 $server = 'localhost';
-$username = "root";
-$password = "";
-$dbname = "realestate";
+$username = "anushkaf_granthaa";
+$password = "oys1e)8uz3@,jE-1";
+$dbname = "anushkaf_granthaa";
 
 	  try {
          $conn = new PDO("mysql:host=$server;dbname=$dbname", $username, $password,array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
@@ -13,4 +13,4 @@ $dbname = "realestate";
            echo $th;
       }
 
-?> -->
+?> 
