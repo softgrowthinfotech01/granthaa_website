@@ -218,7 +218,7 @@
   </div>
 
   <!-- INDICATORS -->
-  <div class="absolute z-30 bottom-4 sm:bottom-6
+  <!-- <div class="absolute z-30 bottom-4 sm:bottom-6
               left-1/2 -translate-x-1/2 flex gap-2 sm:gap-3">
 
     <button data-carousel-slide-to="0"
@@ -233,7 +233,7 @@
     <button data-carousel-slide-to="2" class="same-indicator"></button>
     <button data-carousel-slide-to="3" class="same-indicator"></button>
     <button data-carousel-slide-to="4" class="same-indicator"></button>
-  </div>
+  </div> -->
 
   <!-- PREV -->
   <button type="button"
@@ -244,7 +244,7 @@
            border border-[#73bc01]
            hover:scale-110 transition-all"
     data-carousel-prev>
-    <span class="text-[#73bc01] text-2xl sm:text-3xl md:text-5xl leading-none">‹</span>
+    <span class="text-[#73bc01] text-2xl sm:text-3xl md:text-5xl leading-none ">‹</span>
   </button>
 
   <!-- NEXT -->
