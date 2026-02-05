@@ -146,15 +146,65 @@
     <nav class="mt-20 px-6 space-y-6 font-[Source_Serif_4] font-semibold">
       <a href="home.php" class="block text-xl hover:text-[#73bc01]">Home</a>
       <a href="about.php" class="block text-xl hover:text-[#73bc01]">About</a>
-      <a href="project.php" class="block text-xl hover:text-[#73bc01]">Projects</a>
-      <a href="contact.php" class="block text-xl hover:text-[#73bc01]">Contact</a>
-      <a href="layout.php" class="block text-xl hover:text-[#73bc01]">Layout</a>
-      <a href="facilities.php" class="block text-xl hover:text-[#73bc01]">
-        Facilities</a>
+      <div class="relative">
 
+  <!-- Button -->
+  <button onclick="toggleDropdown()"
+    class="flex items-center gap-5 text-xl hover:text-[#73bc01] focus:outline-none">
+
+    Projects
+
+    <!-- Arrow -->
+    <svg id="arrow" xmlns="http://www.w3.org/2000/svg"
+      class="w-4 h-4 transition-transform duration-300"
+      fill="none" viewBox="0 0 24 24" stroke="currentColor">
+
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+        d="M19 9l-7 7-7-7" />
+    </svg>
+
+  </button>
+
+  <!-- Dropdown -->
+  <div id="dropdown"
+    class="hidden absolute left-0 mt-2 bg-white shadow-lg rounded-xl w-48 z-50">
+
+    <a href="infinity_park" class="block px-4 py-2 hover:bg-gray-100 rounded-t-xl">
+      Infinity Park 
+    </a>
+
+    <a href="shobhaa_resi.php" class="block px-4 py-2 hover:bg-gray-100">
+      Shobhaa Residency
+    </a>
+
+    <a href="layout.php" class="block px-4 py-2 hover:bg-gray-100 rounded-b-xl">
+     Layout
+    </a>
+    <a href="facilities.php" class="block px-4 py-2 hover:bg-gray-100 rounded-b-xl">
+      Facilities
+    </a>
+
+  </div>
+</div>
+
+
+
+      <a href="contact.php" class="block text-xl hover:text-[#73bc01]">Contact</a>
+      <!-- <a href="facilities.php" class="block text-xl hover:text-[#73bc01]">
+        Facilities</a> -->
+<!--  -->
     </nav>
   </aside>
+<!-- Script -->
+<script>
+function toggleDropdown() {
+  const dropdown = document.getElementById("dropdown");
+  const arrow = document.getElementById("arrow");
 
+  dropdown.classList.toggle("hidden");
+  arrow.classList.toggle("rotate-180");
+}
+</script>
 </body>
 
 </html>

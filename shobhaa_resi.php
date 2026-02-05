@@ -29,7 +29,7 @@
       <!-- SECTION 1 -->
       <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
         <div class="rounded-2xl transition-transform duration-500 ease-in-out
-                    hover:scale-105 overflow-hidden shadow-2xl">
+                    hover:scale-105 overflow-hidden shadow-lg">
           <img
             src="images/Shobha residency plan.jpeg"
             alt="Project Layout Plan"
@@ -39,56 +39,24 @@
 
         <div>
           <h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
-            Project Layout Plan
+            Elevated Living at Shobhaa Residency
           </h2>
           <p class="text-gray-700 leading-relaxed mb-4 text-base sm:text-lg md:text-lg">
-            The layout plan presents a well-organized and thoughtfully designed
-            development that ensures efficient space utilization and smooth
-            connectivity throughout the project.
+            Shobhaa Residency is a premium residential plot development created for those
+            who value location, quality planning, and smart investment opportunities. 
+            Strategically located with excellent road access, the project offers NA-approved
+            plots with bank finance availability and easy EMI options. Surrounded by open 
+            green spaces and supported by modern infrastructure, Shobhaa Residency promises 
+            peaceful living with strong appreciation potential—making it the perfect choice 
+            for building your dream home or securing a high-growth property investment.
           </p>
-          <p class="text-gray-700 leading-relaxed text-base sm:text-lg md:text-lg">
-            With clearly defined plots, wide internal roads, and designated open
-            spaces, the layout supports comfortable living and long-term value.
-          </p>
-          <p class="text-gray-700 leading-relaxed text-base sm:text-lg md:text-lg">
-            The layout is designed with care to provide a smooth flow of roads and
-            well-planned plot arrangements, making everyday living convenient
-             and stress-free.</p>
+
+          
         </div>
       </div>
 
       <!-- SECTION 2 -->
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
-        <div class="order-2 md:order-1">
-          <h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
-            Well-Organized Layout Designed for Comfort & Growth
-          </h2>
-          <p class="text-gray-700 leading-relaxed mb-4 text-base sm:text-lg md:text-lg">
-             Our thoughtfully designed residential layout offers a perfect balance of modern
-            infrastructure and natural surroundings. Featuring well-demarcated plots, wide
-            internal roads, dedicated open spaces, and a centrally located amenity area, the
-            layout ensures smooth connectivity and comfortable living. With proper road alignment,
-            Vaastu-friendly planning, and clear plot numbering, every detail is crafted to provide
-            convenience, safety, and long-term value. This well-organized development creates an 
-            ideal environment for families and investors seeking a secure and future-ready residential
-            community.
-          </p>
-          
-        </div>
-                <div class="order-1 md:order-2 h-[320px] sm:h-[350px] md:h-[375px]
-                transition-transform duration-500 ease-in-out
-                hover:scale-105
-                shadow-2xl rounded-2xl overflow-hidden
-                flex items-center justify-center ">
-
-                <img
-                    src="images/layout 1.jpeg"
-                    alt="Infinity Park Grantha"
-                    class="w-full h-full object-contain"
-                />
-
-                </div>
-      </div>
+      
 
     </div>
   </div>
