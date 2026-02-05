@@ -49,7 +49,7 @@
   <span
     class="source-serif mt-1 sm:block text-lg  p-1
            text-black transition-colors duration-300
-           hover:text-black">
+           hover:text-black hidden md:block">
     Menu
   </span>
 </label>

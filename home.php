@@ -802,7 +802,7 @@ exit;
 
       <div class="flex gap-2">
         <select
-          class="px-3 py-2.5 sm:py-3 rounded-lg
+          class="px-3 py-2 sm:py-2.5 rounded-lg
                  border border-blue-300 bg-white
                  focus:ring-2 focus:ring-blue-500"
         >
@@ -813,7 +813,7 @@ exit;
           type="tel"
           placeholder="Phone"
           name="phone"
-          class="flex-1 px-4 py-2.5 sm:py-3
+          class="flex-1 px-4 py-2 sm:py-2.5
                  rounded-lg border border-blue-300
                  focus:ring-2 focus:ring-blue-500 outline-none"
         />
