@@ -278,11 +278,11 @@
 
         <!-- Left Card -->
         <div class="bg-black
-            text-black max-w-lg mr-[60px] rounded-3xl p-10 shadow-lg
+            text-black max-w-lg  rounded-3xl p-10 shadow-lg
             animate-bounce
             [animation-duration:4s]
             [animation-timing-function:ease-in-out]
-            transition-all duration-700 hover:scale-[1.02] mt-12">
+            transition-all duration-700 hover:scale-[1.02] mt-12 ">
 
           <h2 class="ubuntu text-3xl text-white mb-4 transition-colors duration-500">
             Visualise Your <span class="ml-[60px]"> Dream Home.</span>
@@ -292,11 +292,18 @@
             Turn Your Dreams Into A Home You'll Love.
           </p>
 
-          <button  class="jersey bg-transparent text-[#73bc01] border border-[#73bc01] font-semibold ml-7 px-8 py-3 rounded-lg
-                 transition-all duration-500 ease-in-out
-                 hover:bg-[#73bc01] hover:text-black hover:scale-105 hover:shadow-lg">
-            Schedule A Site Visit
-          </button>
+        <a
+  href="contact.php"
+  class="inline-block jersey bg-transparent text-[#73bc01]
+         border border-[#73bc01] font-semibold ml-7
+         px-8 py-3 rounded-lg
+         transition-all duration-500 ease-in-out
+         hover:bg-[#73bc01] hover:text-black
+         hover:scale-105 hover:shadow-lg"
+>
+  Schedule A Site Visit
+</a>
+
         </div>
 
 
@@ -465,11 +472,16 @@
           MAKE AN APPOINTMENT NOW
         </h3>
 
-        <button
-          class="jersey font-semibold bg-transparent  border border-[#73bc01] text-[#73bc01]
-                 hover:bg-[#73bc01] hover:text-black px-8 py-3 rounded-md transition duration-300">
-          Enquire Now
-        </button>
+      <a
+  href="contact.php"
+  class="inline-block jersey font-semibold bg-transparent
+         border border-[#73bc01] text-[#73bc01]
+         hover:bg-[#73bc01] hover:text-black
+         px-8 py-3 rounded-md transition duration-300"
+>
+  Enquire Now
+</a>
+
       </div>
     </div>
   </section>
@@ -938,7 +950,7 @@ exit;
   window.addEventListener("load", () => {
     setTimeout(() => {
       openModal();
-    }, 300); // small delay for smooth UX
+    }, 100); // small delay for smooth UX
   });
 
   // CLOSE BUTTON
