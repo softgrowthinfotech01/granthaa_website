@@ -240,11 +240,11 @@
     class="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 z-30
            w-8 h-8 sm:w-10 sm:h-10 md:w-14 md:h-14
            rounded-full bg-black/70 backdrop-blur
-           flex items-center justify-center
+           flex items-center justify-center 
            border border-[#73bc01]
            hover:scale-110 transition-all"
     data-carousel-prev>
-    <span class="text-[#73bc01] text-2xl sm:text-3xl md:text-5xl leading-none">‹</span>
+    <span class="text-[#73bc01] text-2xl sm:text-3xl md:text-5xl md:mb-3 leading-none">‹</span>
   </button>
 
   <!-- NEXT -->
@@ -256,7 +256,7 @@
            border border-[#73bc01]
            hover:scale-110 transition-all"
     data-carousel-next>
-    <span class="text-[#73bc01] text-2xl sm:text-3xl md:text-5xl leading-none">›</span>
+    <span class="text-[#73bc01] text-2xl sm:text-3xl md:text-5xl md:mb-3 leading-none">›</span>
   </button>
 
 </div>
