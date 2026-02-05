@@ -244,7 +244,7 @@
            border border-[#73bc01]
            hover:scale-110 transition-all"
     data-carousel-prev>
-    <span class="text-[#73bc01] text-2xl sm:text-3xl md:text-5xl leading-none">‹</span>
+    <span class="text-[#73bc01] text-2xl sm:text-3xl md:text-5xl md:mb-3 leading-none">‹</span>
   </button>
 
   <!-- NEXT -->
@@ -256,7 +256,7 @@
            border border-[#73bc01]
            hover:scale-110 transition-all"
     data-carousel-next>
-    <span class="text-[#73bc01] text-2xl sm:text-3xl md:text-5xl leading-none">›</span>
+    <span class="text-[#73bc01] text-2xl sm:text-3xl md:text-5xl md:mb-3 leading-none">›</span>
   </button>
 
 </div>
