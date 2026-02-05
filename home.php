@@ -218,7 +218,7 @@
   </div>
 
   <!-- INDICATORS -->
-  <div class="absolute z-30 bottom-4 sm:bottom-6
+  <!-- <div class="absolute z-30 bottom-4 sm:bottom-6
               left-1/2 -translate-x-1/2 flex gap-2 sm:gap-3">
 
     <button data-carousel-slide-to="0"
@@ -233,7 +233,7 @@
     <button data-carousel-slide-to="2" class="same-indicator"></button>
     <button data-carousel-slide-to="3" class="same-indicator"></button>
     <button data-carousel-slide-to="4" class="same-indicator"></button>
-  </div>
+  </div> -->
 
   <!-- PREV -->
   <button type="button"
@@ -244,7 +244,7 @@
            border border-[#73bc01]
            hover:scale-110 transition-all"
     data-carousel-prev>
-    <span class="text-[#73bc01] text-2xl sm:text-3xl md:text-5xl leading-none">‹</span>
+    <span class="text-[#73bc01] text-2xl sm:text-3xl md:text-5xl mb-1 md:mb-3 leading-none">‹</span>
   </button>
 
   <!-- NEXT -->
@@ -256,19 +256,19 @@
            border border-[#73bc01]
            hover:scale-110 transition-all"
     data-carousel-next>
-    <span class="text-[#73bc01] text-2xl sm:text-3xl md:text-5xl leading-none">›</span>
+    <span class="text-[#73bc01] text-2xl sm:text-3xl md:text-5xl mb-1 md:mb-3 leading-none">›</span>
   </button>
 
 </div>
 
     <!-- slider end -->
-  <div class="min-h-screen bg-white ">
+  <div class=" bg-white ">
 
     <!-- Header -->
     <div class="text-center pt-15 pb-16">
       <!-- <h1 class="family text-5xl md:text-6xl font-Bold-700-Italic text-[#73bc01]">
         Gallery      </h1> -->
-      <p class="yeseva mt-2 text-black text-3xl  ">
+      <p class="yeseva mt-10 text-black text-3xl  ">
         Explore Our Gallery And Experience The Beauty In Every Detail
       </p>
     </div>
@@ -278,11 +278,11 @@
 
         <!-- Left Card -->
         <div class="bg-black
-            text-black max-w-lg mr-[60px] rounded-3xl p-10 shadow-lg
+            text-black max-w-lg  rounded-3xl p-10 shadow-lg
             animate-bounce
             [animation-duration:4s]
             [animation-timing-function:ease-in-out]
-            transition-all duration-700 hover:scale-[1.02] mt-12">
+            transition-all duration-700 hover:scale-[1.02] mt-12 ">
 
           <h2 class="ubuntu text-3xl text-white mb-4 transition-colors duration-500">
             Visualise Your <span class="ml-[60px]"> Dream Home.</span>
@@ -292,11 +292,18 @@
             Turn Your Dreams Into A Home You'll Love.
           </p>
 
-          <button  class="jersey bg-transparent text-[#73bc01] border border-[#73bc01] font-semibold ml-7 px-8 py-3 rounded-lg
-                 transition-all duration-500 ease-in-out
-                 hover:bg-[#73bc01] hover:text-black hover:scale-105 hover:shadow-lg">
-            Schedule A Site Visit
-          </button>
+        <a
+  href="contact.php"
+  class="inline-block jersey bg-transparent text-[#73bc01]
+         border border-[#73bc01] font-semibold ml-7
+         px-8 py-3 rounded-lg
+         transition-all duration-500 ease-in-out
+         hover:bg-[#73bc01] hover:text-black
+         hover:scale-105 hover:shadow-lg"
+>
+  Schedule A Site Visit
+</a>
+
         </div>
 
 
@@ -465,11 +472,16 @@
           MAKE AN APPOINTMENT NOW
         </h3>
 
-        <button
-          class="jersey font-semibold bg-transparent  border border-[#73bc01] text-[#73bc01]
-                 hover:bg-[#73bc01] hover:text-black px-8 py-3 rounded-md transition duration-300">
-          Enquire Now
-        </button>
+      <a
+  href="contact.php"
+  class="inline-block jersey font-semibold bg-transparent
+         border border-[#73bc01] text-[#73bc01]
+         hover:bg-[#73bc01] hover:text-black
+         px-8 py-3 rounded-md transition duration-300"
+>
+  Enquire Now
+</a>
+
       </div>
     </div>
   </section>
@@ -479,7 +491,7 @@
 
 
   <!-- ABOUT SECTION -->
-  <section class="bg-white mx-auto px-6 py-24">
+  <section class="bg-white mx-auto px-6 py-8 mt-[80px]">
   <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
 
     <!-- LEFT IMAGE -->
@@ -494,7 +506,7 @@
 
     <!-- RIGHT CONTENT -->
     <div class="space-y-6">
-      <h2 class="family text-[#73bc01]  font-bold text-2xl md:text-4xl ">
+      <h2 class="family text-[#73bc01]  font-bold text-2xl md:text-4xl  ">
         About Us
       </h2>
 
@@ -530,7 +542,7 @@
 
   <!-- Contact Sections-->
 
-  <section class="bg-white px-6 py-24">
+  <section class="bg-white px-6 py-20">
   <!-- Section Heading -->
   <div class="max-w-7xl mx-auto mb-12">
     <h1 class="family text-3xl font-bold text-[#73bc01] flex justify-center">
@@ -813,7 +825,7 @@ exit;
           type="tel"
           placeholder="Phone"
           name="phone"
-          class="flex-1 px-4 py-2.5 sm:py-3
+          class="flex-1 px-4 py-2.5 sm:py-3 w-full
                  rounded-lg border border-blue-300
                  focus:ring-2 focus:ring-blue-500 outline-none"
         />
@@ -938,7 +950,7 @@ exit;
   window.addEventListener("load", () => {
     setTimeout(() => {
       openModal();
-    }, 300); // small delay for smooth UX
+    }, 100); // small delay for smooth UX
   });
 
   // CLOSE BUTTON

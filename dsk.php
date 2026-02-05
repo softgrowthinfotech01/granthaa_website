@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>DSK</title>
 </head>
 <style>
    .writing-mode-vertical {
@@ -21,7 +21,7 @@
     <!-- PAGE TITLE -->
     <h1 class="text-2xl sm:text-3xl font-bold text-blue-900
                border-l-4 border-green-500 pl-4 mb-12">
-      FACILITIES :
+      D.S.K :
     </h1>
 
     <div class="space-y-20">
@@ -82,6 +82,34 @@
             alt="Infinity Park Grantha"
             class="w-full h-64 sm:h-80 md:h-[325px] md:w-full object-contain "
           />
+        </div>
+      </div>
+     
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+        <div class="rounded-2xl transition-transform duration-500 ease-in-out
+                    hover:scale-105 overflow-hidden shadow-lg">
+          <img
+            src="images/layout 1.jpeg"
+            alt="Project Layout Plan"
+            class="w-full h-64 sm:h-80 md:h-[390px] object-contain bg-white"
+          />
+        </div>
+
+        <div>
+          <h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
+            Well-Planned Facilities for Better Living
+          </h2>
+          <p class="text-gray-700 leading-relaxed mb-4 text-base sm:text-lg md:text-lg">
+                D.S.K. RadhaKrishna Nagari offers thoughtfully planned amenities designed 
+                to give you comfort, convenience, and long-term value. The project features
+                 well-developed WPM internal roads, proper drainage systems, bright street
+                  lighting, and open green spaces that create a peaceful living environment.</p>
+           <p class="text-gray-700 leading-relaxed mb-4 text-base sm:text-lg md:text-lg">
+            Residents enjoy landscaped open areas for relaxation, safe internal roads for 
+            smooth connectivity, and modern infrastructure that supports everyday needs. 
+            Every plot is carefully developed to ensure easy access, cleanliness, and 
+            future-ready living — making it an ideal choice for families and smart investors alike.
+           </p>
         </div>
       </div>
 

@@ -9,7 +9,7 @@
 
 <body >
 
-<section class="relative bg-gradient-to-l from-slate-950 via-gray-950 to-slate-950  overflow-hidden py-20">
+<section class="relative bg-gradient-to-l from-slate-950 via-gray-950 to-slate-950  overflow-hidden ">
 
     <!-- Background Decorative Lines -->
     <div class="absolute inset-0 opacity-20 pointer-events-none">
@@ -21,7 +21,7 @@
       </svg>
     </div>
 
-    <div class="relative  max-w-7xl mx-auto px-6">
+    <div class="relative  max-w-7xl mx-auto px-6 mt-[50px]">
 
       <div class="grid lg:grid-cols-3 gap-14 items-start">
 
@@ -41,7 +41,7 @@
         </div>
 
         <!-- CENTER : TEXT / DISCLAIMER -->
-        <div class="flex flex-col text-sm text-gray-300 gap-[40px]">
+        <div class="flex flex-col text-sm text-gray-300 gap-[30px]">
          
                 <div class="flex items-center ">
                       ☎ <span> Phone: +91 9975086229 , 8975280650</span>
@@ -76,18 +76,18 @@
       </div>
 
       <!-- CONTACT ROW -->
-      <div class="mt-16 pt-6 border-t border-[#73bc01]/40
+      <div class="mt-4  pt-6 border-t border-[#73bc01]/40
                 flex flex-col justify-center lg:flex-row gap-6 text-sm text-gray-300">
 
 
       </div>
 
       <!-- BOTTOM TEXT -->
-      <div class="text-center text-sm text-[#73bc01] mt-8">
+      <div class="text-center  text-sm text-[#73bc01] ]">
         All Rights Reserved. | Privacy Policy Applies.
       </div>
       <div>
-       <p class="text-center text-sm text-[#73bc01]"> Designed and Developer by <a href="https://softgrowthinfotech.com/" class="underline">Softgrowth Infotech</a></p>
+       <p class="text-center text-sm text-[#73bc01] mb-5 "> Designed and Developer by <a href="https://softgrowthinfotech.com/" class="underline">Softgrowth Infotech</a></p>
       </div>
     </div>
 
