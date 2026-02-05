@@ -262,13 +262,13 @@
 </div>
 
     <!-- slider end -->
-  <div class="min-h-screen bg-white ">
+  <div class=" bg-white ">
 
     <!-- Header -->
     <div class="text-center pt-15 pb-16">
       <!-- <h1 class="family text-5xl md:text-6xl font-Bold-700-Italic text-[#73bc01]">
         Gallery      </h1> -->
-      <p class="yeseva mt-2 text-black text-3xl  ">
+      <p class="yeseva mt-10 text-black text-3xl  ">
         Explore Our Gallery And Experience The Beauty In Every Detail
       </p>
     </div>
@@ -491,7 +491,7 @@
 
 
   <!-- ABOUT SECTION -->
-  <section class="bg-white mx-auto px-6 py-24">
+  <section class="bg-white mx-auto px-6 py-8 mt-[80px]">
   <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
 
     <!-- LEFT IMAGE -->
@@ -506,7 +506,7 @@
 
     <!-- RIGHT CONTENT -->
     <div class="space-y-6">
-      <h2 class="family text-[#73bc01]  font-bold text-2xl md:text-4xl ">
+      <h2 class="family text-[#73bc01]  font-bold text-2xl md:text-4xl  ">
         About Us
       </h2>
 
@@ -542,7 +542,7 @@
 
   <!-- Contact Sections-->
 
-  <section class="bg-white px-6 py-24">
+  <section class="bg-white px-6 py-20">
   <!-- Section Heading -->
   <div class="max-w-7xl mx-auto mb-12">
     <h1 class="family text-3xl font-bold text-[#73bc01] flex justify-center">
