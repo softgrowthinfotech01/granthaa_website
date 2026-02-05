@@ -177,11 +177,8 @@
       Shobhaa Residency
     </a>
 
-    <a href="layout.php" class="block px-4 py-2 hover:bg-gray-100 rounded-b-xl">
-     Layout
-    </a>
-    <a href="facilities.php" class="block px-4 py-2 hover:bg-gray-100 rounded-b-xl">
-      Facilities
+    <a href="dsk.php" class="block px-4 py-2 hover:bg-gray-100 rounded-b-xl">
+      D.S.K 
     </a>
 
   </div>
