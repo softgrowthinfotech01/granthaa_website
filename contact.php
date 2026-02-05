@@ -21,12 +21,13 @@ $stmt->execute([
     ':email' => $email,
     ':phone' => $phone
 
-  
+ 
 ]);
 
 header("Location: home.php");
 exit;
 }
+
 
 
 ?>

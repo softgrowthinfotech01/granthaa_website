@@ -774,8 +774,8 @@ exit;
     <!-- HEADER -->
     <div class="text-center mb-5">
       <h2 class="text-xl sm:text-2xl font-bold text-blue-700">
-        Call Us <span class="text-green-600">+91 9975086229</span>
-</br><span class="text-green-600">
+        Call Us <span class="text-[#73bc01]">+91 9975086229</span>
+</br><span class="text-[#73bc01]">
         +91 8975280850</span>
 </h2>
 
@@ -787,7 +787,7 @@ exit;
 
       <p class="text-sm text-gray-600 mt-3">
         Take the first step towards your dream home —
-        <span class="font-semibold text-green-600">book today!</span>
+        <span class="font-semibold text-[#73bc01]">book today!</span>
       </p>
     </div>
 
