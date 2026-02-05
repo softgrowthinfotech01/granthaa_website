@@ -21,74 +21,74 @@
     <!-- PAGE TITLE -->
     <h1 class="text-2xl sm:text-3xl font-bold text-blue-900
                border-l-4 border-green-500 pl-4 mb-12">
-      LAYOUT :
+      PROJECT :
     </h1>
 
     <div class="space-y-20">
 
       <!-- SECTION 1 -->
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
-        <div class="rounded-2xl transition-transform duration-500 ease-in-out
-                    hover:scale-105 overflow-hidden shadow-2xl">
-          <img
-            src="images/Shobha residency plan.jpeg"
-            alt="Project Layout Plan"
-            class="w-full h-64 sm:h-80 md:h-[420px] object-contain bg-white"
-          />
-        </div>
-
-        <div>
-          <h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
-            Project Layout Plan
-          </h2>
-          <p class="text-gray-700 leading-relaxed mb-4 text-base sm:text-lg md:text-lg">
-            The layout plan presents a well-organized and thoughtfully designed
-            development that ensures efficient space utilization and smooth
-            connectivity throughout the project.
-          </p>
-          <p class="text-gray-700 leading-relaxed text-base sm:text-lg md:text-lg">
-            With clearly defined plots, wide internal roads, and designated open
-            spaces, the layout supports comfortable living and long-term value.
-          </p>
-          <p class="text-gray-700 leading-relaxed text-base sm:text-lg md:text-lg">
-            The layout is designed with care to provide a smooth flow of roads and
-            well-planned plot arrangements, making everyday living convenient
-             and stress-free.</p>
-        </div>
-      </div>
+      
 
       <!-- SECTION 2 -->
       <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
         <div class="order-2 md:order-1">
           <h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
-            Well-Organized Layout Designed for Comfort & Growth
+            Infinity Park – Grantha
           </h2>
           <p class="text-gray-700 leading-relaxed mb-4 text-base sm:text-lg md:text-lg">
-             Our thoughtfully designed residential layout offers a perfect balance of modern
-            infrastructure and natural surroundings. Featuring well-demarcated plots, wide
-            internal roads, dedicated open spaces, and a centrally located amenity area, the
-            layout ensures smooth connectivity and comfortable living. With proper road alignment,
-            Vaastu-friendly planning, and clear plot numbering, every detail is crafted to provide
-            convenience, safety, and long-term value. This well-organized development creates an 
-            ideal environment for families and investors seeking a secure and future-ready residential
-            community.
+            Infinity Park is a beautifully designed green space that enhances the
+            overall lifestyle experience within the project.
           </p>
-          
+          <p class="text-gray-700 leading-relaxed text-base sm:text-lg md:text-lg">
+            Featuring landscaped gardens, walking paths, and open seating areas,
+            the park encourages healthy outdoor activities and social interaction.
+          </p>
+          <p class="text-gray-700 leading-relaxed text-base sm:text-lg md:text-lg">
+          Surrounded by landscaped greenery, walking trails, and leisure seating, 
+          the park promotes active lifestyles while creating a welcoming social environment.
+          </p>
         </div>
-                <div class="order-1 md:order-2 h-[320px] sm:h-[350px] md:h-[375px]
-                transition-transform duration-500 ease-in-out
-                hover:scale-105
-                shadow-2xl rounded-2xl overflow-hidden
-                flex items-center justify-center ">
 
-                <img
-                    src="images/layout 1.jpeg"
-                    alt="Infinity Park Grantha"
-                    class="w-full h-full object-contain"
-                />
-
-                </div>
+        <div class="order-1 md:order-2 transition-transform duration-500 ease-in-out
+                  hover:scale-105 rounded-2xl overflow-hidden shadow-2xl">    
+          <img
+            src="images/infinity park.jpeg"
+            alt="Infinity Park Grantha"
+            class="w-full h-[480px] sm:h-80 md:h-[450px]  object-contain"
+          />
+        </div>
       </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+        <div class="rounded-2xl transition-transform duration-500 ease-in-out
+                  hover:scale-105 overflow-hidden shadow-2xl">
+          <img
+            src="images/infinity park layout.jpeg"
+            alt="Project Layout Plan"
+            class="w-full h-64 sm:h-80 md:h-[435px] object-contain bg-white"
+          />
+        </div>
+
+        <div>
+          <h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
+            Infinity Park – Your Gateway to Peaceful Living
+          </h2>
+          <p class="text-gray-700 leading-relaxed mb-4 text-base sm:text-lg md:text-lg">
+             Infinity Park is a thoughtfully planned residential plotting project located
+              in Chandrapur, offering a perfect blend of nature and modern infrastructure.
+               Designed for comfortable living and smart investment, the project provides 
+               well-developed plots with essential amenities including internal roads, drainage, 
+               electricity, and water facilities.
+          </p>
+          <p class="text-gray-700 leading-relaxed text-base sm:text-lg md:text-lg">
+            With quality development, clear access routes, and future growth potential,
+             Infinity Park is an ideal destination to build your dream home or grow your
+              property investment.
+          </p>
+        
+        </div>
+      </div>
+     
 
     </div>
   </div>
