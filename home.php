@@ -218,7 +218,7 @@
   </div>
 
   <!-- INDICATORS -->
-  <div class="absolute z-30 bottom-4 sm:bottom-6
+  <!-- <div class="absolute z-30 bottom-4 sm:bottom-6
               left-1/2 -translate-x-1/2 flex gap-2 sm:gap-3">
 
     <button data-carousel-slide-to="0"
@@ -233,7 +233,7 @@
     <button data-carousel-slide-to="2" class="same-indicator"></button>
     <button data-carousel-slide-to="3" class="same-indicator"></button>
     <button data-carousel-slide-to="4" class="same-indicator"></button>
-  </div>
+  </div> -->
 
   <!-- PREV -->
   <button type="button"
