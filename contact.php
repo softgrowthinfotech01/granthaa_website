@@ -1,6 +1,7 @@
 <?php
 include "conn.php";
 
+
 if(isset($_POST['submit'])){
 
 $name = $_POST['name'];
@@ -12,6 +13,7 @@ $phone = $_POST['phone'];
 $stmt = $conn->prepare("INSERT INTO contact( name, email, phone)
 
 values( :name, :email, :phone  )");
+
 
 
 $stmt->execute([

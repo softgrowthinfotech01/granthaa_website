@@ -556,7 +556,7 @@
     <div class="border-2 border-blue-900 rounded-2xl p-10 flex flex-col justify-between bg-white shadow-sm">
       <div>
         <h2 class="text-4xl font-serif text-blue-900 mb-4">
-          Book Site Visit <span class="uppercase bg-green-600">Now !</span>
+          Book Site Visit <span class="uppercase bg-[#73bc01]">Now !</span>
         </h2>
 
         <p class="text-gray-800 font-semibold mb-10">
