@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>infinity park</title>
 </head>
 <style>
    .writing-mode-vertical {
@@ -21,7 +21,7 @@
     <!-- PAGE TITLE -->
     <h1 class="text-2xl sm:text-3xl font-bold text-blue-900
                border-l-4 border-green-500 pl-4 mb-12">
-      PROJECT :
+     INFINITY PARK :
     </h1>
 
     <div class="space-y-20">
