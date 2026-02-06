@@ -59,14 +59,14 @@
         <!-- RIGHT : QR CODES -->
         <div class="flex gap-10 justify-start lg:justify-end">
           <div class="text-center">
-            <img src="./images/qr1.png" alt="EC QR"
+            <img src="./images/qr.JPG" alt="EC QR"
               class="w-32 h-32 border-4 border-white rounded-lg mx-auto">
             <p class="mt-2 text-sm">EC</p>
            
           </div>
 
           <div class="text-center">
-            <img src="./images/qr1.png" alt="SMC QR"
+            <img src="./images/qr.JPG" alt="SMC QR"
               class="w-32 h-32 border-4 border-white rounded-lg mx-auto">
             <p class="mt-2 text-sm">SMC</p>
           
