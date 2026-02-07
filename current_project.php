@@ -1,76 +1,85 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
- 
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Projects</title>
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
-     <?php include "header.php"; ?> 
+
+<?php include "header.php"; ?>
 
 <div class="min-h-screen flex items-center justify-center px-4">
   <div class="max-w-7xl w-full">
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
 
       <!-- Card 1 -->
-      <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition">
-        <img
-          src="https://via.placeholder.com/400x250"
-          alt="Card Image"
-          class="w-full h-48 object-cover"
-        />
-        <div class="p-6 flex flex-col h-full">
+      <div class="bg-white rounded-xl shadow-md hover:shadow-lg transition h-full flex flex-col">
+        <div class="w-full aspect-[16/9] bg-gray-100 flex items-center justify-center">
+          <img
+            src="images/infinity park.jpeg"
+            alt="Infinity Park"
+            class="w-full h-full object-contain"
+          />
+        </div>
+        <div class="p-6 flex flex-col flex-grow">
           <h3 class="text-lg font-semibold text-gray-800 mb-2">
-            Card Title One
+            INFINITY PARK
           </h3>
           <p class="text-gray-600 text-sm mb-4">
-            This is a short description for the first card. You can explain your
-            service, feature, or content here.
+            Infinity Park is a beautifully designed green space that enhances the
+            overall lifestyle experience within the project.
           </p>
-          <a href="#" class="mt-auto text-indigo-600 font-medium hover:underline">
+          <a href="infinity_park.php" class="mt-auto text-black font-medium hover:underline">
             Read More →
           </a>
         </div>
       </div>
 
       <!-- Card 2 -->
-      <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition">
-        <img
-          src="https://via.placeholder.com/400x250"
-          alt="Card Image"
-          class="w-full h-48 object-cover"
-        />
-        <div class="p-6 flex flex-col h-full">
+      <div class="bg-white rounded-xl shadow-md hover:shadow-lg transition h-full flex flex-col">
+        <div class="w-full aspect-[16/9] bg-gray-100 flex items-center justify-center">
+          <img
+            src="images/Shobha residency plan.jpeg"
+            alt="Shobhaa Residency"
+            class="w-full h-full object-contain"
+          />
+        </div>
+        <div class="p-6 flex flex-col flex-grow">
           <h3 class="text-lg font-semibold text-gray-800 mb-2">
-            Card Title Two
+            SHOBHAA RESIDENCY
           </h3>
           <p class="text-gray-600 text-sm mb-4">
-            Use this card to highlight another feature, blog post, or product.
-            Keep the content simple and readable.
+            Shobhaa Residency is a premium residential plot development created for those
+            who value location, quality planning, and smart investment opportunities.
           </p>
-          <a href="#" class="mt-auto text-indigo-600 font-medium hover:underline">
+          <a href="shobhaa_resi.php" class="mt-auto text-black font-medium hover:underline">
             Read More →
           </a>
         </div>
       </div>
 
       <!-- Card 3 -->
-      <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition">
-        <img
-          src="https://via.placeholder.com/400x250"
-          alt="Card Image"
-          class="w-full h-48 object-cover"
-        />
-        <div class="p-6 flex flex-col h-full">
+      <div class="bg-white rounded-xl shadow-md hover:shadow-lg transition h-full flex flex-col">
+        <div class="w-full aspect-[16/9] bg-gray-100 flex items-center justify-center">
+          <img
+            src="images/facilities.png"
+            alt="DSK Project"
+            class="w-full h-full object-contain"
+          />
+        </div>
+        <div class="p-6 flex flex-col flex-grow">
           <h3 class="text-lg font-semibold text-gray-800 mb-2">
-            Card Title Three
+            D.S.K
           </h3>
           <p class="text-gray-600 text-sm mb-4">
-            Perfect for portfolio items, services, or promotions. Tailwind keeps
-            everything responsive by default.
+            D.S.K. RadhaKrishna Nagari offers thoughtfully planned amenities designed
+            to give you comfort, convenience, and long-term value.
           </p>
-          <a href="#" class="mt-auto text-indigo-600 font-medium hover:underline">
+          <a href="dsk.php" class="mt-auto text-black font-medium hover:underline">
             Read More →
           </a>
         </div>
@@ -80,7 +89,7 @@
   </div>
 </div>
 
- <?php include "footer.php"; ?> 
+<?php include "footer.php"; ?>
 
 </body>
 </html>
