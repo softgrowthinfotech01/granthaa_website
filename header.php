@@ -144,8 +144,8 @@
 
     <!-- LINKS -->
     <nav class="mt-20 px-6 space-y-6 font-[Source_Serif_4] font-semibold">
-      <a href="home.php" class="block text-xl hover:text-[#73bc01]">Home</a>
-      <a href="about.php" class="block text-xl hover:text-[#73bc01]">About</a>
+      <a href="home" class="block text-xl hover:text-[#73bc01]">Home</a>
+      <a href="about" class="block text-xl hover:text-[#73bc01]">About</a>
       <div class="relative">
 
   <!-- Button -->
@@ -169,15 +169,15 @@
   <div id="dropdown"
     class="hidden absolute left-0 mt-2 bg-white shadow-lg rounded-xl w-48 z-50">
 
-    <a href="current_project.php" class="block px-4 py-2 hover:bg-gray-100 rounded-t-xl">
+    <a href="current_project" class="block px-4 py-2 hover:bg-gray-100 rounded-t-xl">
      Current Project 
     </a>
 
-    <a href="upcoming_project.php" class="block px-4 py-2 hover:bg-gray-100">
+    <a href="upcoming_project" class="block px-4 py-2 hover:bg-gray-100">
       Upcoming Project
     </a>
 
-    <a href="completed_project.php" class="block px-4 py-2 hover:bg-gray-100 rounded-b-xl">
+    <a href="completed_project" class="block px-4 py-2 hover:bg-gray-100 rounded-b-xl">
       Completed Project
     </a>
 
@@ -186,7 +186,7 @@
 
 
 
-      <a href="contact.php" class="block text-xl hover:text-[#73bc01]">Contact</a>
+      <a href="contact" class="block text-xl hover:text-[#73bc01]">Contact</a>
       <!-- <a href="facilities.php" class="block text-xl hover:text-[#73bc01]">
         Facilities</a> -->
 <!--  -->
