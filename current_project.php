@@ -33,7 +33,7 @@
             Infinity Park is a beautifully designed green space that enhances the
             overall lifestyle experience within the project.
           </p>
-          <a href="infinity_park.php" class="mt-auto text-black font-medium hover:underline">
+          <a href="infinity_park" class="mt-auto text-black font-medium hover:underline">
             Read More →
           </a>
         </div>
@@ -56,7 +56,7 @@
             Shobhaa Residency is a premium residential plot development created for those
             who value location, quality planning, and smart investment opportunities.
           </p>
-          <a href="shobhaa_resi.php" class="mt-auto text-black font-medium hover:underline">
+          <a href="shobhaa_resi" class="mt-auto text-black font-medium hover:underline">
             Read More →
           </a>
         </div>
@@ -79,7 +79,7 @@
             D.S.K. RadhaKrishna Nagari offers thoughtfully planned amenities designed
             to give you comfort, convenience, and long-term value.
           </p>
-          <a href="dsk.php" class="mt-auto text-black font-medium hover:underline">
+          <a href="dsk" class="mt-auto text-black font-medium hover:underline">
             Read More →
           </a>
         </div>

@@ -293,7 +293,7 @@
           </p>
 
         <a
-  href="contact.php"
+  href="contact"
   class="inline-block jersey bg-transparent text-[#73bc01]
          border border-[#73bc01] font-semibold ml-7
          px-8 py-3 rounded-lg
