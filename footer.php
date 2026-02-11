@@ -87,7 +87,7 @@
         All Rights Reserved. | Privacy Policy Applies.
       </div>
       <div>
-       <p class="text-center text-sm text-[#73bc01] mb-5 "> Designed and Developer by <a href="https://softgrowthinfotech.com/" class="underline">Softgrowth Infotech</a></p>
+       <p class="text-center text-sm text-[#73bc01] mb-5 "> Designed and Developer by <a href="https://softgrowthinfotech.com/" class="underline hover:text-blue-500">Softgrowth Infotech</a></p>
       </div>
     </div>
 

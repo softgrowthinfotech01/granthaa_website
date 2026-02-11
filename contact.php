@@ -1,36 +1,42 @@
 <?php
 include "conn.php";
 
-
 if(isset($_POST['submit'])){
+
+$secretKey = "6Lf45GcsAAAAAP8NfLwWSmj14LTXgSqQuuZ6-tTM";
+
+$response = $_POST['g-recaptcha-response'];
+
+$verify = file_get_contents(
+"https://www.google.com/recaptcha/api/siteverify?secret=$secretKey&response=$response"
+);
+
+$captcha = json_decode($verify);
+
+if(!$captcha->success){
+    echo "<script>alert('Please verify captcha');</script>";
+}else{
 
 $name = $_POST['name'];
 $email = $_POST['email'];
 $phone = $_POST['phone'];
 
-
-
-$stmt = $conn->prepare("INSERT INTO contact( name, email, phone)
-
-values( :name, :email, :phone  )");
-
-
+$stmt = $conn->prepare("INSERT INTO contact(name,email,phone)
+VALUES(:name,:email,:phone)");
 
 $stmt->execute([
-    ':name' => $name,
-    ':email' => $email,
-    ':phone' => $phone
-
- 
+ ':name'=>$name,
+ ':email'=>$email,
+ ':phone'=>$phone
 ]);
 
 header("Location: home.php");
 exit;
+
 }
-
-
-
+}
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -44,6 +50,8 @@ exit;
     }
 
 </style>
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
 </head>
 
 <body >
@@ -101,15 +109,8 @@ exit;
             I agree and authorize team to contact me. This will override the register with us.
           </label>
 
-          <div class="border border-blue-900 rounded-md p-4 max-w-xs">
-            <div class="flex items-center gap-3">
-              <input type="checkbox" class="w-5 h-5 accent-green-600">
-              <span>I’m not a robot</span>
-            </div>
-            <p class="text-xs text-gray-500 mt-2">
-              reCAPTCHA Privacy - Terms
-            </p>
-          </div>
+          <div class="g-recaptcha" data-sitekey="6Lf45GcsAAAAAIDRQ-udUFSe_D_KMi4a1vmwEfnd"></div>
+
           <div class="pt-10">
         <button name="submit"
           class="font-semibold bg-[#73bc01] text-white
