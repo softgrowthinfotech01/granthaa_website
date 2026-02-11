@@ -555,28 +555,29 @@
   <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-14 items-stretch">
 
     <!-- LEFT FORM -->
-    <div class="border-2 border-blue-900 rounded-2xl p-10 flex flex-col justify-between bg-white shadow-sm">
+    <div class="border-2 border-blue-900 rounded-2xl p-10 flex flex-col justify-between bg-white transition-transform duration-500 ease-in-out
+                hover:scale-105 shadow-sm">
       <div>
         <h2 class="text-4xl font-serif text-blue-900 mb-4">
-          Book Site Visit <span class="uppercase bg-[#73bc01]">Now !</span>
+          Book Site Visit <span class="uppercase text-green-600">Now !</span>
         </h2>
 
         <p class="text-gray-800 font-semibold mb-10">
           Take The First Step Towards Your Dream Home – Book Today!
         </p>
 
-        <form class="space-y-6">
+        <form method="post" class="space-y-6">
 
           <input
             type="text"
-            placeholder="Name"
+            placeholder="Name" name="name"
             class="w-full bg-white border-2 border-blue-200 rounded-lg px-5 py-4
                    focus:outline-none focus:border-green-500"
           />
 
           <input
             type="email"
-            placeholder="Email"
+            placeholder="Email" name="email"
             class="w-full bg-white border-2 border-blue-200 rounded-lg px-5 py-4
                    focus:outline-none focus:border-green-500"
           />
@@ -585,36 +586,30 @@
             <span class="mr-3">🇮🇳</span>
             <input
               type="tel"
-              placeholder="Phone"
+              placeholder="Phone" name="phone"
               class="bg-transparent w-full focus:outline-none"
             />
           </div>
 
           <label class="flex items-start gap-3 text-sm text-gray-700">
             <input type="checkbox" checked class="mt-1 accent-green-600" />
-            I agree and authorize team to contact me. This will override the registry with DNC / NDNC
+            I agree and authorize team to contact me. This will override the register with us.
           </label>
 
-          <div class="border border-blue-900 rounded-md p-4 max-w-xs">
-            <div class="flex items-center gap-3">
-              <input type="checkbox" class="w-5 h-5 accent-green-600">
-              <span>I’m not a robot</span>
-            </div>
-            <p class="text-xs text-gray-500 mt-2">
-              reCAPTCHA Privacy - Terms
-            </p>
-          </div>
-        </form>
-      </div>
+          <div class="g-recaptcha" data-sitekey="6Lf45GcsAAAAAIDRQ-udUFSe_D_KMi4a1vmwEfnd"></div>
 
-      <div class="pt-10">
-        <button
+          <div class="pt-10">
+        <button name="submit"
           class="font-semibold bg-[#73bc01] text-white
-                 hover:bg-green-500 ml-[50px]
+                 hover:bg-green-500
                  px-14 py-3 rounded-md tracking-wide transition">
           SUBMIT
         </button>
       </div>
+        </form>
+      </div>
+
+      
     </div>
 
     <!-- RIGHT CONTENT -->
