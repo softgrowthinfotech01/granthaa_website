@@ -16,6 +16,5 @@ RewriteRule ^(.*)$ $1.html
 Options -Indexes
 
 <files .htaccess>
-order allow,deny
-deny from all
+
 </files>

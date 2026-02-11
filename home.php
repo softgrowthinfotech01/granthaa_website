@@ -193,27 +193,27 @@
   <div class="relative h-full overflow-hidden">
 
     <div class="hidden duration-700 ease-in-out h-full" data-carousel-item>
-      <img src="images/GLDimg1.png"
+      <img src="images/GLDimg1.webp"
            class="absolute w-full h-full object-cover">
     </div>
 
     <div class="hidden duration-700 ease-in-out h-full" data-carousel-item>
-      <img src="images/GLDimg2.png"
+      <img src="images/GLDimg2.webp"
            class="absolute w-full h-full object-cover">
     </div>
 
     <div class="hidden duration-700 ease-in-out h-full" data-carousel-item>
-      <img src="images/GLDimg3.png"
+      <img src="images/GLDimg3.webp"
            class="absolute w-full h-full object-cover">
     </div>
 
     <div class="hidden duration-700 ease-in-out h-full" data-carousel-item>
-      <img src="images/GLDimg4.png"
+      <img src="images/GLDimg4.webp"
            class="absolute w-full h-full object-cover">
     </div>
 
     <div class="hidden duration-700 ease-in-out h-full" data-carousel-item>
-      <img src="images/GLDimg5.png"
+      <img src="images/GLDimg5.webp"
            class="absolute w-full h-full object-cover">
     </div>
 
@@ -295,7 +295,7 @@
           </p>
 
         <a
-  href="contact.php"
+  href="contact"
   class="inline-block jersey bg-transparent text-[#73bc01]
          border border-[#73bc01] font-semibold ml-7
          px-8 py-3 rounded-lg
