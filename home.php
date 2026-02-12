@@ -663,16 +663,7 @@
   </div>
 </section>
 
-
-
-
      <?php include "footer.php"; ?> 
-
-
-
-
-
-
 
   <!-- DOWNLOAD BROCHURE BUTTON (RIGHT SIDE) -->
   <div
