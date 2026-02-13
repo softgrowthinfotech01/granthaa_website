@@ -613,7 +613,8 @@
     </div>
 
     <!-- RIGHT CONTENT -->
-    <div class="border-2 border-blue-900 rounded-2xl p-10  relative">
+    <div class="border-2 border-blue-900 rounded-2xl p-10  relative transition-transform duration-500 ease-in-out
+                hover:scale-105 shadow-sm">
       <h2 class="text-4xl font-serif text-blue-900 mb-4">
         Unlock Your Dream Home!
       </h2>
@@ -630,7 +631,7 @@
           </div>
           <div>
             <h4 class="text-xl font-serif text-blue-900">Send An Email</h4>
-            <p class="text-blue-700">grantha@gmail.com</p>
+            <p class="text-blue-700">email id : info@granthaadeveloperpvtltd.com</p>
           </div>
         </div>
 
@@ -651,7 +652,7 @@
           <div>
             <h4 class="text-xl font-serif text-blue-900">Site Address</h4>
             <p class="text-blue-700 max-w-sm">
-              comming soon
+              Near ram setu bridge, devki complex, Chandrapur.
             </p>
           </div>
         </div>
@@ -662,16 +663,7 @@
   </div>
 </section>
 
-
-
-
      <?php include "footer.php"; ?> 
-
-
-
-
-
-
 
   <!-- DOWNLOAD BROCHURE BUTTON (RIGHT SIDE) -->
   <div
@@ -841,7 +833,7 @@ exit;
 
       <label class="flex gap-2 text-xs sm:text-sm text-gray-600">
         <input type="checkbox" checked class="mt-1 accent-green-600">
-        I agree and authorize the team to contact me. This overrides
+        I agree and authorize the team to contact me. This will override the register with us.
        
       </label>
 

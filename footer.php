@@ -48,7 +48,7 @@
                 </div>
 
                 <div class="flex items-center">
-                      ✉ <span> Email: info@roswalt.com</span>
+                      ✉ <span> Email: info@granthaadeveloperpvtltd.com</span>
                 </div>
 
                 <div class="flex items-center">
