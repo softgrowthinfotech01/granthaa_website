@@ -10,26 +10,49 @@ if (isset($_POST['submit'])) {
   $details2 = $_POST['project_details2'];
 
   // ---------- IMAGE UPLOAD ----------
-  $imageName = $_FILES['project_image']['name'];
-  $tmpName   = $_FILES['project_image']['tmp_name'];
-
   $uploadDir = "uploads/";
-  $newName   = time() . "_" . $imageName;
 
-  move_uploaded_file($tmpName, $uploadDir . $newName);
+  $image1 = "";
+  $image2 = "";
+  $image3 = "";
+
+  // Image 1
+  if (!empty($_FILES['project_image1']['name'])) {
+    $image1 = time() . "_1_" . $_FILES['project_image1']['name'];
+    move_uploaded_file($_FILES['project_image1']['tmp_name'], $uploadDir . $image1);
+  }
+
+  // Image 2
+  if (!empty($_FILES['project_image2']['name'])) {
+    $image2 = time() . "_2_" . $_FILES['project_image2']['name'];
+    move_uploaded_file($_FILES['project_image2']['tmp_name'], $uploadDir . $image2);
+  }
+
+  // Image 3
+  if (!empty($_FILES['project_image3']['name'])) {
+    $image3 = time() . "_3_" . $_FILES['project_image3']['name'];
+    move_uploaded_file($_FILES['project_image3']['tmp_name'], $uploadDir . $image3);
+  }
+
 
   // ---------- INSERT QUERY ----------
   $sql = "INSERT INTO project 
-            (project_name, project_location, project_status, project_image, project_details1, project_details2)
-            VALUES 
-            (:name, :location, :status, :image, :details1, :details2)";
+        (project_name, project_location, project_status, 
+         project_image1, project_image2, project_image3, 
+         project_details1, project_details2)
+        VALUES 
+        (:name, :location, :status, 
+         :img1, :img2, :img3, 
+         :details1, :details2)";
 
   $stmt = $conn->prepare($sql);
   $stmt->execute([
     ':name'     => $name,
     ':location' => $location,
     ':status'   => $status,
-    ':image'    => $newName,
+    ':img1'     => $image1,
+    ':img2'     => $image2,
+    ':img3'     => $image3,
     ':details1' => $details1,
     ':details2' => $details2
   ]);
@@ -120,7 +143,7 @@ if (isset($_POST['submit'])) {
                             type="text"
                             class="form-control"
                             id="studentname"
-                            placeholder="Enter Name" />
+                            placeholder="Enter location" />
                         </div>
                       </div>
                       <div class="col-md-4 ">
@@ -141,18 +164,24 @@ if (isset($_POST['submit'])) {
                     <div class="mb-4 ms-3">
 
                       <div class="row g-3">
-                        <div class="col-md-6">
-                          <div class="form-check d-flex align-items-center gap-2">
 
-                            <label
-                              for="project">Project Images (Add Max 4 Images)</label>
-                            <input name="project_image"
-                              type="file"
-                              class="form-control form-control-sm w-auto"
-                              id="project_image" />
-                          </div>
+                        <div class="col-md-4">
+                          <label>Project Image 1</label>
+                          <input type="file" name="project_image1" class="form-control">
                         </div>
+
+                        <div class="col-md-4">
+                          <label>Project Image 2</label>
+                          <input type="file" name="project_image2" class="form-control">
+                        </div>
+
+                        <div class="col-md-4">
+                          <label>Project Image 3</label>
+                          <input type="file" name="project_image3" class="form-control">
+                        </div>
+
                       </div>
+
                       <div class="row">
                         <div class="row">
                           <div class="col-md-6">
@@ -162,7 +191,7 @@ if (isset($_POST['submit'])) {
                                 class="form-control"
                                 id="project_details1"
 
-                                placeholder="Enter remark here"></textarea>
+                                placeholder="Enter project details"></textarea>
                             </div>
                           </div>
                           <div class="col-md-6">
@@ -172,7 +201,7 @@ if (isset($_POST['submit'])) {
                                 class="form-control"
                                 id="project_details2"
 
-                                placeholder="Enter remark here"></textarea>
+                                placeholder="Enter project details"></textarea>
                             </div>
                           </div>
                         </div>
@@ -189,168 +218,9 @@ if (isset($_POST['submit'])) {
         </div>
       </div>
     </div>
-    
-  </div>
-  <?php include "footer.php"; ?>
-  <!-- Custom template | don't include it in your project! -->
-  <div class="custom-template">
-    <div class="title">Settings</div>
-    <div class="custom-content">
-      <div class="switcher">
-        <div class="switch-block">
-          <h4>Logo Header</h4>
-          <div class="btnSwitch">
-            <button
-              type="button"
-              class="selected changeLogoHeaderColor"
-              data-color="dark"></button>
-            <button
-              type="button"
-              class="selected changeLogoHeaderColor"
-              data-color="blue"></button>
-            <button
-              type="button"
-              class="changeLogoHeaderColor"
-              data-color="purple"></button>
-            <button
-              type="button"
-              class="changeLogoHeaderColor"
-              data-color="light-blue"></button>
-            <button
-              type="button"
-              class="changeLogoHeaderColor"
-              data-color="green"></button>
-            <button
-              type="button"
-              class="changeLogoHeaderColor"
-              data-color="orange"></button>
-            <button
-              type="button"
-              class="changeLogoHeaderColor"
-              data-color="red"></button>
-            <button
-              type="button"
-              class="changeLogoHeaderColor"
-              data-color="white"></button>
-            <br />
-            <button
-              type="button"
-              class="changeLogoHeaderColor"
-              data-color="dark2"></button>
-            <button
-              type="button"
-              class="changeLogoHeaderColor"
-              data-color="blue2"></button>
-            <button
-              type="button"
-              class="changeLogoHeaderColor"
-              data-color="purple2"></button>
-            <button
-              type="button"
-              class="changeLogoHeaderColor"
-              data-color="light-blue2"></button>
-            <button
-              type="button"
-              class="changeLogoHeaderColor"
-              data-color="green2"></button>
-            <button
-              type="button"
-              class="changeLogoHeaderColor"
-              data-color="orange2"></button>
-            <button
-              type="button"
-              class="changeLogoHeaderColor"
-              data-color="red2"></button>
-          </div>
-        </div>
-        <div class="switch-block">
-          <h4>Navbar Header</h4>
-          <div class="btnSwitch">
-            <button
-              type="button"
-              class="changeTopBarColor"
-              data-color="dark"></button>
-            <button
-              type="button"
-              class="changeTopBarColor"
-              data-color="blue"></button>
-            <button
-              type="button"
-              class="changeTopBarColor"
-              data-color="purple"></button>
-            <button
-              type="button"
-              class="changeTopBarColor"
-              data-color="light-blue"></button>
-            <button
-              type="button"
-              class="changeTopBarColor"
-              data-color="green"></button>
-            <button
-              type="button"
-              class="changeTopBarColor"
-              data-color="orange"></button>
-            <button
-              type="button"
-              class="changeTopBarColor"
-              data-color="red"></button>
-            <button
-              type="button"
-              class="changeTopBarColor"
-              data-color="white"></button>
-            <br />
-            <button
-              type="button"
-              class="changeTopBarColor"
-              data-color="dark2"></button>
-            <button
-              type="button"
-              class="selected changeTopBarColor"
-              data-color="blue2"></button>
-            <button
-              type="button"
-              class="changeTopBarColor"
-              data-color="purple2"></button>
-            <button
-              type="button"
-              class="changeTopBarColor"
-              data-color="light-blue2"></button>
-            <button
-              type="button"
-              class="changeTopBarColor"
-              data-color="green2"></button>
-            <button
-              type="button"
-              class="changeTopBarColor"
-              data-color="orange2"></button>
-            <button
-              type="button"
-              class="changeTopBarColor"
-              data-color="red2"></button>
-          </div>
-        </div>
-        <div class="switch-block">
-          <h4>Sidebar</h4>
-          <div class="btnSwitch">
-            <button
-              type="button"
-              class="selected changeSideBarColor"
-              data-color="white"></button>
-            <button
-              type="button"
-              class="changeSideBarColor"
-              data-color="dark"></button>
-            <button
-              type="button"
-              class="changeSideBarColor"
-              data-color="dark2"></button>
-          </div>
-        </div>
-      </div>
-    </div>
 
   </div>
-  <!-- End Custom template -->
+  <?php include "footer.php"; ?>
 
   <!--   Core JS Files   -->
   <script src="assets/js/core/jquery-3.7.1.min.js"></script>

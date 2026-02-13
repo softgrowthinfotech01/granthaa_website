@@ -46,11 +46,11 @@
                         <span class="sub-item">Add Project</span>
                       </a>
                     </li>
-                    <li>
+                    <!-- <li>
                       <a href="updateproject.php">
                         <span class="sub-item">Student Registartion</span>
                       </a>
-                    </li>
+                    </li> -->
                   </ul>
                 </div>
               </li>
@@ -72,12 +72,35 @@
                 </div>
               </li>
 
+              <li class="nav-item">
+                <a data-bs-toggle="collapse" href="#contactdata">
+                  <i class="fas fa-comments"></i>
+                  <p>Inquiries</p>
+                  <span class="caret"></span>
+                </a>
+                <div class="collapse" id="contactdata">
+                  <ul class="nav nav-collapse">
+                    <li>
+                      <a href="contact_record.php">
+                        <span class="sub-item">Contact</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="enquiry_record.php">
+                        <span class="sub-item">Enquiry</span>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+
+              
+
               <li class="nav-item ">
                 <a
                   href="logout.php"
                 >
                   <i class="fas fa-sign-out-alt"></i>
-
                   <p>Logout</p>
                 </a>
               </li>

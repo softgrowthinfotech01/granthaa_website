@@ -1,182 +1,178 @@
 <?php
-include "conn.php";
+include "website/conn.php";
 
-if(isset($_POST['submit'])){
+if (isset($_POST['submit'])) {
 
-$secretKey = "6Lf45GcsAAAAAP8NfLwWSmj14LTXgSqQuuZ6-tTM";
+  $secretKey = "6Lf45GcsAAAAAP8NfLwWSmj14LTXgSqQuuZ6-tTM";
 
-$response = $_POST['g-recaptcha-response'];
+  $response = $_POST['g-recaptcha-response'];
 
-$verify = file_get_contents(
-"https://www.google.com/recaptcha/api/siteverify?secret=$secretKey&response=$response"
-);
+  $verify = file_get_contents(
+    "https://www.google.com/recaptcha/api/siteverify?secret=$secretKey&response=$response"
+  );
 
-$captcha = json_decode($verify);
+  $captcha = json_decode($verify);
 
-if(!$captcha->success){
+  if (!$captcha->success) {
     echo "<script>alert('Please verify captcha');</script>";
-}else{
+  } else {
 
-$name = $_POST['name'];
-$email = $_POST['email'];
-$phone = $_POST['phone'];
+    $name = $_POST['name'];
+    $email = $_POST['email'];
+    $phone = $_POST['phone'];
 
-$stmt = $conn->prepare("INSERT INTO contact(name,email,phone)
+    $stmt = $conn->prepare("INSERT INTO contact(name,email,phone)
 VALUES(:name,:email,:phone)");
 
-$stmt->execute([
- ':name'=>$name,
- ':email'=>$email,
- ':phone'=>$phone
-]);
+    $stmt->execute([
+      ':name' => $name,
+      ':email' => $email,
+      ':phone' => $phone
+    ]);
 
-header("Location: home.php");
-exit;
-
-}
+    header("Location: home.php");
+    exit;
+  }
 }
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Contact For booking</title>
-<style>
-   .writing-mode-vertical {
+  <style>
+    .writing-mode-vertical {
       writing-mode: vertical-rl;
       text-orientation: mixed;
     }
-
-</style>
-<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+  </style>
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
 </head>
 
-<body >
-    <?php include "header.php"; ?> 
+<body>
+  <?php include "header.php"; ?>
 
   <section class="bg-white mt-[50px] px-6 py-24">
-  <!-- Section Heading -->
-  <div class="max-w-7xl mx-auto mb-12">
-    <h1 class="text-3xl font-bold text-blue-900 border-l-4 border-green-500 pl-4">
-      CONTACT US :
-    </h1>
-  </div>
+    <!-- Section Heading -->
+    <div class="max-w-7xl mx-auto mb-12">
+      <h1 class="text-3xl font-bold text-blue-900 border-l-4 border-green-500 pl-4">
+        CONTACT US :
+      </h1>
+    </div>
 
-  <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-14 items-stretch">
+    <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-14 items-stretch">
 
-    <!-- LEFT FORM -->
-    <div class="border-2 border-blue-900 rounded-2xl p-10 flex flex-col justify-between bg-white transition-transform duration-500 ease-in-out
+      <!-- LEFT FORM -->
+      <div class="border-2 border-blue-900 rounded-2xl p-10 flex flex-col justify-between bg-white transition-transform duration-500 ease-in-out
                 hover:scale-105 shadow-sm">
-      <div>
-        <h2 class="text-4xl font-serif text-blue-900 mb-4">
-          Book Site Visit <span class="uppercase text-green-600">Now !</span>
-        </h2>
+        <div>
+          <h2 class="text-4xl font-serif text-blue-900 mb-4">
+            Book Site Visit <span class="uppercase text-green-600">Now !</span>
+          </h2>
 
-        <p class="text-gray-800 font-semibold mb-10">
-          Take The First Step Towards Your Dream Home – Book Today!
-        </p>
+          <p class="text-gray-800 font-semibold mb-10">
+            Take The First Step Towards Your Dream Home – Book Today!
+          </p>
 
-        <form method="post" class="space-y-6">
+          <form method="post" class="space-y-6">
 
-          <input
-            type="text"
-            placeholder="Name" name="name"
-            class="w-full bg-white border-2 border-blue-200 rounded-lg px-5 py-4
-                   focus:outline-none focus:border-green-500"
-          />
-
-          <input
-            type="email"
-            placeholder="Email" name="email"
-            class="w-full bg-white border-2 border-blue-200 rounded-lg px-5 py-4
-                   focus:outline-none focus:border-green-500"
-          />
-
-          <div class="flex items-center border-2 border-blue-200 rounded-lg px-4 py-3">
-            <span class="mr-3">🇮🇳</span>
             <input
-              type="tel"
-              placeholder="Phone" name="phone"
-              class="bg-transparent w-full focus:outline-none"
-            />
-          </div>
+              type="text"
+              placeholder="Name" name="name"
+              class="w-full bg-white border-2 border-blue-200 rounded-lg px-5 py-4
+                   focus:outline-none focus:border-green-500" />
 
-          <label class="flex items-start gap-3 text-sm text-gray-700">
-            <input type="checkbox" checked class="mt-1 accent-green-600" />
-            I agree and authorize team to contact me. This will override the register with us.
-          </label>
+            <input
+              type="email"
+              placeholder="Email" name="email"
+              class="w-full bg-white border-2 border-blue-200 rounded-lg px-5 py-4
+                   focus:outline-none focus:border-green-500" />
 
-          <div class="g-recaptcha" data-sitekey="6Lf45GcsAAAAAIDRQ-udUFSe_D_KMi4a1vmwEfnd"></div>
+            <div class="flex items-center border-2 border-blue-200 rounded-lg px-4 py-3">
+              <span class="mr-3">🇮🇳</span>
+              <input
+                type="tel"
+                placeholder="Phone" name="phone"
+                class="bg-transparent w-full focus:outline-none" />
+            </div>
 
-          <div class="pt-10">
-        <button name="submit"
-          class="font-semibold bg-[#73bc01] text-white
+            <label class="flex items-start gap-3 text-sm text-gray-700">
+              <input type="checkbox" checked class="mt-1 accent-green-600" />
+              I agree and authorize team to contact me. This will override the register with us.
+            </label>
+
+            <div class="g-recaptcha" data-sitekey="6Lf45GcsAAAAAIDRQ-udUFSe_D_KMi4a1vmwEfnd"></div>
+
+            <div class="pt-10">
+              <button name="submit"
+                class="font-semibold bg-[#73bc01] text-white
                  hover:bg-green-500
                  px-14 py-3 rounded-md tracking-wide transition">
-          SUBMIT
-        </button>
-      </div>
-        </form>
+                SUBMIT
+              </button>
+            </div>
+          </form>
+        </div>
+
+
       </div>
 
-      
-    </div>
-
-    <!-- RIGHT CONTENT -->
-    <div class="border-2 border-blue-900 rounded-2xl p-10  relative transition-transform duration-500 ease-in-out
+      <!-- RIGHT CONTENT -->
+      <div class="border-2 border-blue-900 rounded-2xl p-10  relative transition-transform duration-500 ease-in-out
                 hover:scale-105">
-      <h2 class="text-4xl font-serif text-blue-900 mb-4">
-        Unlock Your Dream Home!
-      </h2>
+        <h2 class="text-4xl font-serif text-blue-900 mb-4">
+          Unlock Your Dream Home!
+        </h2>
 
-      <p class="text-gray-800 font-semibold mb-12">
-        Unlock a world of comfort and luxury in your dream home.
-      </p>
+        <p class="text-gray-800 font-semibold mb-12">
+          Unlock a world of comfort and luxury in your dream home.
+        </p>
 
-      <div class="space-y-10">
+        <div class="space-y-10">
 
-        <div class="flex gap-5 items-start">
-          <div class="w-12 h-12 rounded-full bg-[#73bc01] flex items-center justify-center text-white">
-            ✉
+          <div class="flex gap-5 items-start">
+            <div class="w-12 h-12 rounded-full bg-[#73bc01] flex items-center justify-center text-white">
+              ✉
+            </div>
+            <div>
+              <h4 class="text-xl font-serif text-blue-900">Send An Email</h4>
+              <p class="text-blue-700">grantha@gmail.com</p>
+            </div>
           </div>
-          <div>
-            <h4 class="text-xl font-serif text-blue-900">Send An Email</h4>
-            <p class="text-blue-700">grantha@gmail.com</p>
+
+          <div class="flex gap-5 items-start">
+            <div class="w-12 h-12 rounded-full bg-[#73bc01] flex items-center justify-center text-white">
+              ☎
+            </div>
+            <div>
+              <h4 class="text-xl font-serif text-blue-900">Give Us A Call</h4>
+              <p class="text-blue-700">+91 9090909090</p>
+            </div>
           </div>
+
+          <div class="flex gap-5 items-start">
+            <div class="w-12 h-12 rounded-full bg-[#73bc01] flex items-center justify-center text-white">
+              📍
+            </div>
+            <div>
+              <h4 class="text-xl font-serif text-blue-900">Site Address</h4>
+              <p class="text-blue-700 max-w-sm">
+                coming soon
+              </p>
+            </div>
+          </div>
+
         </div>
-
-        <div class="flex gap-5 items-start">
-          <div class="w-12 h-12 rounded-full bg-[#73bc01] flex items-center justify-center text-white">
-            ☎
-          </div>
-          <div>
-            <h4 class="text-xl font-serif text-blue-900">Give Us A Call</h4>
-            <p class="text-blue-700">+91 9090909090</p>
-          </div>
-        </div>
-
-        <div class="flex gap-5 items-start">
-          <div class="w-12 h-12 rounded-full bg-[#73bc01] flex items-center justify-center text-white">
-            📍
-          </div>
-          <div>
-            <h4 class="text-xl font-serif text-blue-900">Site Address</h4>
-            <p class="text-blue-700 max-w-sm">
-              comming soon
-            </p>
-          </div>
-        </div>
-
       </div>
-    </div>
 
-  </div>
-</section>
-    <?php include "footer.php"; ?> 
-    <div
+    </div>
+  </section>
+  <?php include "footer.php"; ?>
+  <div
     id="brochureBtn"
     class="fixed right-0 top-1/2 -translate-y-1/2 z-30
          opacity-0 pointer-events-none
@@ -190,7 +186,7 @@ exit;
       Download Brochure
     </a>
   </div>
-    <a href="https://wa.me/919999999999"
+  <a href="https://wa.me/919999999999"
     target="_blank"
     class="fixed bottom-6 right-6 z-50 bg-green-500 p-4 rounded-full shadow-lg
           hover:scale-110 hover:shadow-2xl
@@ -218,6 +214,7 @@ exit;
       }
     });
   </script>
-  
+
 </body>
+
 </html>

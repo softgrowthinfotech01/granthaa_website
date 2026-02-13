@@ -1,9 +1,9 @@
 <?php
 include "conn.php";
 
-$stmt = $conn->prepare("SELECT * FROM project ORDER BY id ASC");
+$stmt = $conn->prepare("SELECT * FROM enquiries ORDER BY id ASC");
 $stmt->execute();
-$projects = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$enquiries = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 
@@ -16,8 +16,7 @@ $projects = $stmt->fetchAll(PDO::FETCH_ASSOC);
   <meta
     content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
     name="viewport" />
-
-
+  
   <!-- Fonts and icons -->
   <script src="assets/js/plugin/webfont/webfont.min.js"></script>
   <script>
@@ -61,7 +60,7 @@ $projects = $stmt->fetchAll(PDO::FETCH_ASSOC);
       <div class="container">
         <div class="page-inner">
           <div class="page-header">
-            <h3 class="fw-bold mb-3">Project List</h3>
+            <h3 class="fw-bold mb-3">Enquiry List</h3>
 
           </div>
           <div class="row">
@@ -73,77 +72,38 @@ $projects = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <div class="card-body">
                   <div class="table-responsive">
                     <table class="table table-bordered table-striped">
-                      <thead class="table-dark">
-                        <tr>
-                          <th>Sr. No.</th>
-                          <th>Project Name</th>
-                          <th>Location</th>
-                          <th>Status</th>
-                          <th>Image 1</th>
-                          <th>Image 2</th>
-                          <th>Image 3</th>
-                          <th>Action</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <?php $i = 1;
-                        foreach ($projects as $row): ?>
-                          <tr>
+                                            <thead class="table-dark">
+                                                <tr>
+                                                    <th>Sr. No.</th>
+                                                    <th>Name</th>
+                                                    <th>Email</th>
+                                                    <th>Phone</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php $i = 1;
+                                                foreach ($enquiries as $row): ?>
+                                                    <tr>
+                                                        <td><?php echo $i++; ?></td>
+                                                        <td><?php echo $row['name']; ?></td>
+                                                        <td><?php echo $row['email']; ?></td>
+                                                        <td><?php echo $row['phone']; ?></td>
+                                                        <td>
+                                                            <div class="flex gap-2">
+                                                            <!-- <a href="view_message.php?id=<?php echo $row['id']; ?>" class="btn btn-md btn-info">Edit</a> -->
 
-                            <td><?php echo $i++; ?></td>
-
-                            <td><?php echo $row['project_name']; ?></td>
-
-                            <td><?php echo $row['project_location']; ?></td>
-
-                            <td><?php echo $row['project_status']; ?></td>
-
-                            <!-- Image 1 -->
-                            <td>
-                              <?php if (!empty($row['project_image1'])): ?>
-                                <img src="uploads/<?php echo $row['project_image1']; ?>" width="70">
-                              <?php else: ?>
-                                No Image
-                              <?php endif; ?>
-                            </td>
-
-                            <!-- Image 2 -->
-                            <td>
-                              <?php if (!empty($row['project_image2'])): ?>
-                                <img src="uploads/<?php echo $row['project_image2']; ?>" width="70">
-                              <?php else: ?>
-                                No Image
-                              <?php endif; ?>
-                            </td>
-
-                            <!-- Image 3 -->
-                            <td>
-                              <?php if (!empty($row['project_image3'])): ?>
-                                <img src="uploads/<?php echo $row['project_image3']; ?>" width="70">
-                              <?php else: ?>
-                                No Image
-                              <?php endif; ?>
-                            </td>
-
-                            <td>
-                              <div class="d-flex gap-2">
-                                <a href="update_project.php?id=<?php echo $row['id']; ?>"
-                                  class="btn btn-sm btn-info">
-                                  Edit
-                                </a>
-
-                                <a href="delete_project.php?id=<?php echo $row['id']; ?>"
-                                  class="btn btn-sm btn-danger"
-                                  onclick="return confirm('Delete this project?');">
-                                  Delete
-                                </a>
-                              </div>
-                            </td>
-
-                          </tr>
-                        <?php endforeach; ?>
-                      </tbody>
-                    </table>
+                                                            <a href="delete_message.php?id=<?php echo $row['id']; ?>"
+                                                                class="btn btn-md btn-danger"
+                                                                onclick="return confirm('Delete this enquiry record?');">
+                                                                Delete
+                                                            </a>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                <?php endforeach; ?>
+                                            </tbody>
+                                        </table>
 
 
                   </div>
