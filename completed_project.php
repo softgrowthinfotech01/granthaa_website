@@ -89,42 +89,50 @@ $projects = $stmt->fetchAll(PDO::FETCH_ASSOC);
       </div> -->
 
         <!-- Dynamic Cards -->
-        <?php foreach ($projects as $row): ?>
+        <?php if (count($projects) > 0): ?>
 
-          <div class="bg-white rounded-xl shadow-md hover:shadow-lg transition h-full flex flex-col my-1">
+          <?php foreach ($projects as $row): ?>
 
-            <div class="w-full aspect-[16/9] bg-gray-100 flex items-center justify-center">
+            <div class="bg-white rounded-xl shadow-md hover:shadow-lg transition h-full flex flex-col my-1">
 
-              <?php if (!empty($row['project_image1'])): ?>
-                <img
-                  src="website/uploads/<?php echo $row['project_image1']; ?>"
-                  alt="<?php echo $row['project_name']; ?>"
-                  class="w-full h-full object-contain" />
-              <?php else: ?>
-                <span class="text-gray-400">No Image</span>
-              <?php endif; ?>
+              <div class="w-full aspect-[16/9] bg-gray-100 flex items-center justify-center">
+
+                <?php if (!empty($row['project_image1'])): ?>
+                  <img
+                    src="website/uploads/<?php echo $row['project_image1']; ?>"
+                    alt="<?php echo $row['project_name']; ?>"
+                    class="w-full h-full object-contain" />
+                <?php else: ?>
+                  <span class="text-gray-400">No Image</span>
+                <?php endif; ?>
+
+              </div>
+
+              <div class="p-6 flex flex-col flex-grow">
+                <h3 class="text-lg font-semibold text-gray-800 mb-2">
+                  <?php echo strtoupper($row['project_name']); ?>
+                </h3>
+
+                <p class="text-gray-600 text-sm mb-4">
+                  <?php echo substr($row['project_details1'], 0, 120); ?>...
+                </p>
+
+                <a href="project_details.php?id=<?php echo $row['id']; ?>"
+                  class="mt-auto text-black font-medium hover:underline">
+                  Read More →
+                </a>
+              </div>
 
             </div>
 
-            <div class="p-6 flex flex-col flex-grow">
-              <h3 class="text-lg font-semibold text-gray-800 mb-2">
-                <?php echo strtoupper($row['project_name']); ?>
-              </h3>
+          <?php endforeach; ?>
+        <?php else: ?>
 
-              <p class="text-gray-600 text-sm mb-4">
-                <?php echo substr($row['project_details1'], 0, 120); ?>...
-              </p>
-
-              <a href="project_details.php?id=<?php echo $row['id']; ?>"
-                class="mt-auto text-black font-medium hover:underline">
-                Read More →
-              </a>
-            </div>
-
+          <div class="col-span-3 text-center py-20">
+            <h2 class="text-2xl font-semibold text-gray-500">Coming Soon</h2>
           </div>
 
-        <?php endforeach; ?>
-
+        <?php endif; ?>
 
       </div>
     </div>
