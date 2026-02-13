@@ -73,7 +73,7 @@ if (!$project) {
           <?php if (!empty($project['project_image2'])): ?>
             <div class="transition-transform duration-500 hover:scale-105 rounded-2xl overflow-hidden shadow-2xl">
               <img
-                src="website/uploads/<?php echo $project['project_image3']; ?>"
+                src="website/uploads/<?php echo $project['project_image2']; ?>"
                 class="w-full h-[450px] object-contain"
                 alt="">
             </div>
