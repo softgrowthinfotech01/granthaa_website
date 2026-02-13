@@ -8,6 +8,7 @@ if (isset($_POST['submit'])) {
   $status   = $_POST['project_status'];
   $details1 = $_POST['project_details1'];
   $details2 = $_POST['project_details2'];
+  $details3 = $_POST['project_details3'];
 
   // ---------- IMAGE UPLOAD ----------
   $uploadDir = "uploads/";
@@ -39,11 +40,11 @@ if (isset($_POST['submit'])) {
   $sql = "INSERT INTO project 
         (project_name, project_location, project_status, 
          project_image1, project_image2, project_image3, 
-         project_details1, project_details2)
+         project_details1, project_details2, project_details3)
         VALUES 
         (:name, :location, :status, 
          :img1, :img2, :img3, 
-         :details1, :details2)";
+         :details1, :details2, :details3)";
 
   $stmt = $conn->prepare($sql);
   $stmt->execute([
@@ -54,7 +55,8 @@ if (isset($_POST['submit'])) {
     ':img2'     => $image2,
     ':img3'     => $image3,
     ':details1' => $details1,
-    ':details2' => $details2
+    ':details2' => $details2,
+    ':details3' => $details3
   ]);
 
   header("Location: project_record.php");
@@ -186,20 +188,33 @@ if (isset($_POST['submit'])) {
                         <div class="row">
                           <div class="col-md-6">
                             <div class="form-group">
-                              <label for="remark">Project Details</label>
+                              <label for="remark">Project Details 1</label>
                               <textarea name="project_details1"
                                 class="form-control"
                                 id="project_details1"
+                                maxlength="1000"
 
                                 placeholder="Enter project details"></textarea>
                             </div>
                           </div>
                           <div class="col-md-6">
                             <div class="form-group">
-                              <label for="remark">Project Details</label>
+                              <label for="remark">Project Details 2</label>
                               <textarea name="project_details2"
                                 class="form-control"
                                 id="project_details2"
+                                maxlength="1000"
+
+                                placeholder="Enter project details"></textarea>
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="remark">Project Details 3</label>
+                              <textarea name="project_details3"
+                                class="form-control"
+                                id="project_details3"
+                                maxlength="1000"
 
                                 placeholder="Enter project details"></textarea>
                             </div>

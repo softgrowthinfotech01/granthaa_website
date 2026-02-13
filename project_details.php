@@ -85,7 +85,29 @@ if (!$project) {
             </p>
           </div>
 
-        </div>        
+        </div>
+        
+        <!-- SECTION 3 -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+
+          <?php if (!empty($project['project_image2'])): ?>
+            <div class="transition-transform duration-500 hover:scale-105 rounded-2xl overflow-hidden shadow-2xl">
+              <img
+                src="website/uploads/<?php echo $project['project_image3']; ?>"
+                class="w-full h-[450px] object-contain"
+                alt="">
+            </div>
+          <?php endif; ?>
+
+          <div>
+            <p class="text-gray-700 leading-relaxed text-base sm:text-lg md:text-lg">
+              <?php echo $project['project_details3']; ?>
+            </p>
+          </div>
+
+        </div> 
+
+        
 
       </div>
     </div>
