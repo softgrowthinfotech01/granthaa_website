@@ -129,11 +129,30 @@ $projects = $stmt->fetchAll(PDO::FETCH_ASSOC);
                               <?php endif; ?>
                             </td>
 
-                            <td><?php echo $row['project_details1']; ?></td>
+                            <td>
+                              <?php
+                              echo strlen($row['project_details1']) > 50
+                                ? substr($row['project_details1'], 0, 50) . '...'
+                                : $row['project_details1'];
+                              ?>
+                            </td>
 
-                            <td><?php echo $row['project_details2']; ?></td>
+                            <td>
+                              <?php
+                              echo strlen($row['project_details2']) > 50
+                                ? substr($row['project_details2'], 0, 50) . '...'
+                                : $row['project_details2'];
+                              ?>
+                            </td>
 
-                            <td><?php echo $row['project_details3']; ?></td>
+                            <td>
+                              <?php
+                              echo strlen($row['project_details3']) > 50
+                                ? substr($row['project_details3'], 0, 50) . '...'
+                                : $row['project_details3'];
+                              ?>
+                            </td>
+
 
                             <td>
                               <div class="d-flex gap-2">
