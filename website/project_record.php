@@ -82,6 +82,8 @@ $projects = $stmt->fetchAll(PDO::FETCH_ASSOC);
                           <th>Image 1</th>
                           <th>Image 2</th>
                           <th>Image 3</th>
+                          <th>Project Details 1</th>
+                          <th>Project Details 2</th>
                           <th>Action</th>
                         </tr>
                       </thead>
@@ -97,6 +99,7 @@ $projects = $stmt->fetchAll(PDO::FETCH_ASSOC);
                             <td><?php echo $row['project_location']; ?></td>
 
                             <td><?php echo $row['project_status']; ?></td>
+
 
                             <!-- Image 1 -->
                             <td>
@@ -124,6 +127,10 @@ $projects = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                 No Image
                               <?php endif; ?>
                             </td>
+
+                            <td><?php echo $row['project_details1']; ?></td>
+
+                            <td><?php echo $row['project_details2']; ?></td>
 
                             <td>
                               <div class="d-flex gap-2">
