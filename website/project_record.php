@@ -84,6 +84,7 @@ $projects = $stmt->fetchAll(PDO::FETCH_ASSOC);
                           <th>Image 3</th>
                           <th>Project Details 1</th>
                           <th>Project Details 2</th>
+                          <th>Project Details 3</th>
                           <th>Action</th>
                         </tr>
                       </thead>
@@ -131,6 +132,8 @@ $projects = $stmt->fetchAll(PDO::FETCH_ASSOC);
                             <td><?php echo $row['project_details1']; ?></td>
 
                             <td><?php echo $row['project_details2']; ?></td>
+
+                            <td><?php echo $row['project_details3']; ?></td>
 
                             <td>
                               <div class="d-flex gap-2">
