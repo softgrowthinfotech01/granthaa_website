@@ -68,6 +68,8 @@ if (!$project) {
         </div>
 
         <!-- SECTION 2 -->
+         <?php if (!empty($project['project_image2']) || !empty($project['project_details2'])): ?>
+
         <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
 
           <?php if (!empty($project['project_image2'])): ?>
@@ -84,10 +86,12 @@ if (!$project) {
               <?php echo $project['project_details2']; ?>
             </p>
           </div>
-
         </div>
+
+        <?php endif; ?>
         
         <!-- SECTION 3 -->
+         <?php if (!empty($project['project_image3']) || !empty($project['project_details3'])): ?>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
 
           <?php if (!empty($project['project_image2'])): ?>
@@ -104,8 +108,9 @@ if (!$project) {
               <?php echo $project['project_details3']; ?>
             </p>
           </div>
-
         </div> 
+
+        <?php endif; ?>
 
         
 
