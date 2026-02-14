@@ -105,6 +105,7 @@ $enquiryCount = $stmt->fetchColumn();
           </div>
           <div class="row">
             <div class="col-sm-6 col-md-3">
+              <a href="project_record.php" class="text-decoration-none">
               <div class="card card-stats card-round bg-primary">
                 <div class="card-body">
                   <div class="row align-items-center">
@@ -123,8 +124,10 @@ $enquiryCount = $stmt->fetchColumn();
                   </div>
                 </div>
               </div>
+              </a>
             </div>
             <div class="col-sm-6 col-md-3">
+              <a href="project_record.php" class="text-decoration-none">
               <div class="card card-stats card-round bg-warning">
                 <div class="card-body">
                   <div class="row align-items-center">
@@ -143,8 +146,10 @@ $enquiryCount = $stmt->fetchColumn();
                   </div>
                 </div>
               </div>
+              </a>
             </div>
             <div class="col-sm-6 col-md-3">
+              <a href="project_record.php" class="text-decoration-none">
               <div class="card card-stats card-round bg-success">
                 <div class="card-body">
                   <div class="row align-items-center">
@@ -163,8 +168,10 @@ $enquiryCount = $stmt->fetchColumn();
                   </div>
                 </div>
               </div>
+              </a>
             </div>
             <div class="col-sm-6 col-md-3">
+              <a href="enquiry_record.php" class="text-decoration-none">
               <div class="card card-stats card-round bg-secondary">
                 <div class="card-body">
                   <div class="row align-items-center">
@@ -183,8 +190,10 @@ $enquiryCount = $stmt->fetchColumn();
                   </div>
                 </div>
               </div>
+              </a>
             </div>
             <div class="col-sm-6 col-md-3">
+              <a href="contact_record.php" class="text-decoration-none">
               <div class="card card-stats card-round bg-dark">
                 <div class="card-body">
                   <div class="row align-items-center">
@@ -203,6 +212,7 @@ $enquiryCount = $stmt->fetchColumn();
                   </div>
                 </div>
               </div>
+              </a>
             </div>
           </div>
         </div>
