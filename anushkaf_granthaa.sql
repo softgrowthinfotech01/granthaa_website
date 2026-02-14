@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.3
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1:3306
--- Generation Time: Feb 13, 2026 at 06:08 AM
--- Server version: 8.4.7
--- PHP Version: 8.3.28
+-- Host: 127.0.0.1
+-- Generation Time: Feb 14, 2026 at 07:58 AM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -27,14 +27,12 @@ SET time_zone = "+00:00";
 -- Table structure for table `contact`
 --
 
-DROP TABLE IF EXISTS `contact`;
-CREATE TABLE IF NOT EXISTS `contact` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(11) COLLATE utf8mb4_general_ci NOT NULL,
-  `email` varchar(11) COLLATE utf8mb4_general_ci NOT NULL,
-  `phone` varchar(30) COLLATE utf8mb4_general_ci NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+CREATE TABLE `contact` (
+  `id` int(11) NOT NULL,
+  `name` varchar(11) NOT NULL,
+  `email` varchar(11) NOT NULL,
+  `phone` varchar(30) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `contact`
@@ -50,14 +48,12 @@ INSERT INTO `contact` (`id`, `name`, `email`, `phone`) VALUES
 -- Table structure for table `enquiries`
 --
 
-DROP TABLE IF EXISTS `enquiries`;
-CREATE TABLE IF NOT EXISTS `enquiries` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
-  `email` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
-  `phone` varchar(20) COLLATE utf8mb4_general_ci NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+CREATE TABLE `enquiries` (
+  `id` int(11) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `phone` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `enquiries`
@@ -73,32 +69,27 @@ INSERT INTO `enquiries` (`id`, `name`, `email`, `phone`) VALUES
 -- Table structure for table `project`
 --
 
-DROP TABLE IF EXISTS `project`;
-CREATE TABLE IF NOT EXISTS `project` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `project_name` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `project_location` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `project_status` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `project_image1` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `project_image2` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `project_image3` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `project_details1` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `project_details2` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+CREATE TABLE `project` (
+  `id` int(11) NOT NULL,
+  `project_name` varchar(100) NOT NULL,
+  `project_location` varchar(100) NOT NULL,
+  `project_status` varchar(100) NOT NULL,
+  `project_image1` varchar(100) NOT NULL,
+  `project_image2` varchar(255) DEFAULT NULL,
+  `project_image3` varchar(255) DEFAULT NULL,
+  `project_details1` varchar(1000) NOT NULL,
+  `project_details2` varchar(1000) NOT NULL,
+  `project_details3` varchar(1000) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `project`
 --
 
-INSERT INTO `project` (`id`, `project_name`, `project_location`, `project_status`, `project_image1`, `project_image2`, `project_image3`, `project_details1`, `project_details2`) VALUES
-(7, '7', '7', 'Upcoming', '1770796938_adidas.jpg', NULL, NULL, '7', '7'),
-(2, 'asd', 'asd', 'Current', '1770713643_adidas.jpg', NULL, NULL, 'asdsad', 'sdada'),
-(9, '9', '9', 'Complete', '1770797279_53607.jpg', NULL, NULL, '9', '9'),
-(4, '4', '4', 'Complete', '1770794030_adidas.jpg', NULL, NULL, '                                                            4 details 1                             ', '                                                            4 details 2                             '),
-(5, '5', '5', 'Complete', '1770794134_53607.jpg', NULL, NULL, '5', '5'),
-(10, '3', '3', 'Current', '1770894769_0_adidas.jpg', NULL, NULL, '3', '3'),
-(11, 'new', 'new', 'Complete', '1770895467_1_adidas.jpg', '1770895467_2_adidas.jpg', '1770895467_3_53607.jpg', 'details 1', 'details 2');
+INSERT INTO `project` (`id`, `project_name`, `project_location`, `project_status`, `project_image1`, `project_image2`, `project_image3`, `project_details1`, `project_details2`, `project_details3`) VALUES
+(17, 'INFINITY PARK', '', 'Current', '1770974098_1_infinity park.jpeg', '1770974098_2_infinity park layout.jpeg', '', 'Infinity Park – Grantha\r\nInfinity Park is a beautifully designed green space that enhances the overall lifestyle experience within the project.\r\n\r\nFeaturing landscaped gardens, walking paths, and open seating areas, the park encourages healthy outdoor activities and social interaction.\r\n\r\nSurrounded by landscaped greenery, walking trails, and leisure seating, the park promotes active lifestyles while creating a welcoming social environment.', 'Infinity Park – Your Gateway to Peaceful Living\r\nInfinity Park is a thoughtfully planned residential plotting project located in Chandrapur, offering a perfect blend of nature and modern infrastructure. Designed for comfortable living and smart investment, the project provides well-developed plots with essential amenities including internal roads, drainage, electricity, and water facilities.\r\n\r\nWith quality development, clear access routes, and future growth potential, Infinity Park is an ideal destination to build your dream home or grow your property investment.', ''),
+(18, 'SHOBHAA RESIDENCY', '', 'Current', '1770975345_1_Shobha residency plan.jpeg', '', '', 'Elevated Living at Shobhaa Residency\r\nShobhaa Residency is a premium residential plot development created for those who value location, quality planning, and smart investment opportunities. Strategically located with excellent road access, the project offers NA-approved plots with bank finance availability and easy EMI options. Surrounded by open green spaces and supported by modern infrastructure, Shobhaa Residency promises peaceful living with strong appreciation potential—making it the perfect choice for building your dream home or securing a high-growth property investment.', '', ''),
+(19, 'D.S.K', '', 'Current', '1770975493_1_facilities.png', '1770975493_2_specialities img.png', '1770975493_3_layout 1.jpeg', 'Well-Planned Facilities for Better Living\r\nD.S.K. RadhaKrishna Nagari offers thoughtfully planned amenities designed to give you comfort, convenience, and long-term value. The project features well-developed WPM internal roads, proper drainage systems, bright street lighting, and open green spaces that create a peaceful living environment.\r\n\r\nResidents enjoy landscaped open areas for relaxation, safe internal roads for smooth connectivity, and modern infrastructure that supports everyday needs. Every plot is carefully developed to ensure easy access, cleanliness, and future-ready living — making it an ideal choice for families and smart investors alike.', 'Premium Plots with Trusted Development\r\nD.S.K. RadhaKrishna Nagari brings you premium residential plots at an affordable price in a rapidly developing location. With NATP-sanctioned plots and clear legal documentation, this project offers complete peace of mind for buyers.\r\n\r\nEnjoy flexible payment options with up to 12 months easy installments, making ownership simpler than ever. Located near the city’s upcoming growth zone, the project provides excellent investment potential along with plots suitable for immediate home construction.', 'Well-Planned Facilities for Better Living\r\nD.S.K. RadhaKrishna Nagari offers thoughtfully planned amenities designed to give you comfort, convenience, and long-term value. The project features well-developed WPM internal roads, proper drainage systems, bright street lighting, and open green spaces that create a peaceful living environment.\r\n\r\nResidents enjoy landscaped open areas for relaxation, safe internal roads for smooth connectivity, and modern infrastructure that supports everyday needs. Every plot is carefully developed to ensure easy access, cleanliness, and future-ready living — making it an ideal choice for families and smart investors alike.');
 
 -- --------------------------------------------------------
 
@@ -106,13 +97,11 @@ INSERT INTO `project` (`id`, `project_name`, `project_location`, `project_status
 -- Table structure for table `users`
 --
 
-DROP TABLE IF EXISTS `users`;
-CREATE TABLE IF NOT EXISTS `users` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `username` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `password` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+CREATE TABLE `users` (
+  `id` int(11) NOT NULL,
+  `username` varchar(100) NOT NULL,
+  `password` varchar(100) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `users`
@@ -120,6 +109,62 @@ CREATE TABLE IF NOT EXISTS `users` (
 
 INSERT INTO `users` (`id`, `username`, `password`) VALUES
 (1, 'admin', 'Admin');
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `contact`
+--
+ALTER TABLE `contact`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `enquiries`
+--
+ALTER TABLE `enquiries`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `project`
+--
+ALTER TABLE `project`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `contact`
+--
+ALTER TABLE `contact`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `enquiries`
+--
+ALTER TABLE `enquiries`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `project`
+--
+ALTER TABLE `project`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
