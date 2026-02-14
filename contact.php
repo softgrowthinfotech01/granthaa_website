@@ -140,7 +140,7 @@ VALUES(:name,:email,:phone)");
             </div>
             <div>
               <h4 class="text-xl font-serif text-blue-900">Send An Email</h4>
-              <p class="text-blue-700">grantha@gmail.com</p>
+              <p class="text-blue-700">info@granthaadeveloperpvtltd.com</p>
             </div>
           </div>
 
@@ -150,7 +150,7 @@ VALUES(:name,:email,:phone)");
             </div>
             <div>
               <h4 class="text-xl font-serif text-blue-900">Give Us A Call</h4>
-              <p class="text-blue-700">+91 9090909090</p>
+              <p class="text-blue-700">+91 9975086229 , 8975280850</p>
             </div>
           </div>
 
@@ -161,7 +161,7 @@ VALUES(:name,:email,:phone)");
             <div>
               <h4 class="text-xl font-serif text-blue-900">Site Address</h4>
               <p class="text-blue-700 max-w-sm">
-                coming soon
+                Near ram setu bridge, devki complex, Chandrapur.
               </p>
             </div>
           </div>
