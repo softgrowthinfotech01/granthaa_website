@@ -52,7 +52,7 @@
                 </div>
 
                 <div class="flex items-center">
-                      📍 <span> D.S.K Groups, Ekdant Plaza, Hospital Ward, Kasturba Road, Chandrapur - 442401</span>
+                      📍 <span> Near ram setu bridge, devki complex, Chandrapur.</span>
                  </div>
         </div>
 
