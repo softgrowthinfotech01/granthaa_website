@@ -7,7 +7,33 @@ if (!isset($_SESSION['user'])) {
   header("Location: login.php?error=login_required");
   exit();
 }
+
+// Adding counter to cards
+$stmt = $conn->prepare("
+    SELECT 
+        SUM(project_status = 'current') AS current_count,
+        SUM(project_status = 'upcoming') AS upcoming_count,
+        SUM(project_status = 'completed') AS completed_count
+    FROM project
+");
+$stmt->execute();
+$projectCounts = $stmt->fetch(PDO::FETCH_ASSOC);
+
+$currentCount = $projectCounts['current_count'] ?? 0;
+$upcomingCount = $projectCounts['upcoming_count'] ?? 0;
+$completedCount = $projectCounts['completed_count'] ?? 0;
+
+// Contact Records
+$stmt = $conn->prepare("SELECT COUNT(*) FROM contact");
+$stmt->execute();
+$contactCount = $stmt->fetchColumn();
+
+// Enquiries
+$stmt = $conn->prepare("SELECT COUNT(*) FROM enquiries");
+$stmt->execute();
+$enquiryCount = $stmt->fetchColumn();
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -54,7 +80,7 @@ if (!isset($_SESSION['user'])) {
 <body>
   <div class="wrapper">
 
-  
+
     <!-- Sidebar -->
 
     <?php require "side-menu.php"; ?>
@@ -64,13 +90,13 @@ if (!isset($_SESSION['user'])) {
 
       <div class="container mt-0">
 
-      
-        <div>
-      <?php include "header.php";?>
 
-      </div>
+        <div>
+          <?php include "header.php"; ?>
+
+        </div>
         <div class="page-inner">
-          
+
           <div
             class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
             <div>
@@ -79,64 +105,114 @@ if (!isset($_SESSION['user'])) {
           </div>
           <div class="row">
             <div class="col-sm-6 col-md-3">
-              <div class="card card-stats card-round">
+              <a href="project_record.php" class="text-decoration-none">
+              <div class="card card-stats card-round bg-primary">
                 <div class="card-body">
                   <div class="row align-items-center">
                     <div class="col-icon">
                       <div
-                        class="icon-big text-center icon-primary bubble-shadow-small">
-                        <i class="fas fa-users"></i>
+                        class="icon-big text-center icon-white  text-white bubble-shadow-small">
+                        <i class="fas fa-tasks"></i>
                       </div>
                     </div>
                     <div class="col col-stats ms-3 ms-sm-0">
                       <div class="numbers">
-                        <p class="card-category">Current Project</p>
-                        <h4 class="card-title"></h4>
+                        <p class="card-category text-white">Current Project</p>
+                        <h4 class="fw-bold mb-0 text-white"><?= $currentCount ?></h4>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
+              </a>
             </div>
             <div class="col-sm-6 col-md-3">
-              <div class="card card-stats card-round">
+              <a href="project_record.php" class="text-decoration-none">
+              <div class="card card-stats card-round bg-warning">
                 <div class="card-body">
                   <div class="row align-items-center">
                     <div class="col-icon">
                       <div
-                        class="icon-big text-center icon-info bubble-shadow-small">
-                        <i class="fas fa-user-check"></i>
+                        class="icon-big text-center bg-warning text-white bubble-shadow-small">
+                        <i class="fas fa-calendar-alt"></i>
                       </div>
                     </div>
                     <div class="col col-stats ms-3 ms-sm-0">
                       <div class="numbers">
-                        <p class="card-category">Upcoming Project</p>
-                        <h4 class="card-title"></h4>
+                        <p class="card-category text-dark">Upcoming Project</p>
+                        <h4 class="fw-bold mb-0 text-dark"><?= $upcomingCount ?></h4>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
+              </a>
             </div>
             <div class="col-sm-6 col-md-3">
-              <div class="card card-stats card-round">
+              <a href="project_record.php" class="text-decoration-none">
+              <div class="card card-stats card-round bg-success">
                 <div class="card-body">
                   <div class="row align-items-center">
                     <div class="col-icon">
                       <div
-                        class="icon-big text-center icon-success bubble-shadow-small">
-                        <i class="fas fa-luggage-cart"></i>
+                        class="icon-big text-center bg-success bg-dark text-white bubble-shadow-small">
+                        <i class="fas fa-check-circle"></i>
                       </div>
                     </div>
                     <div class="col col-stats ms-3 ms-sm-0">
                       <div class="numbers">
-                        <p class="card-category">Completed Project</p>
-                        <h4 class="card-title"></h4>
+                        <p class="card-category text-white">Completed Project</p>
+                        <h4 class="fw-bold mb-0 text-white"><?= $completedCount ?></h4>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
+              </a>
+            </div>
+            <div class="col-sm-6 col-md-3">
+              <a href="enquiry_record.php" class="text-decoration-none">
+              <div class="card card-stats card-round bg-secondary">
+                <div class="card-body">
+                  <div class="row align-items-center">
+                    <div class="col-icon">
+                      <div
+                        class="icon-big text-center  bg-secondary text-white bubble-shadow-small">
+                        <i class="fas fa-envelope"></i>
+                      </div>
+                    </div>
+                    <div class="col col-stats ms-3 ms-sm-0">
+                      <div class="numbers">
+                        <p class="card-category text-white">Enquiries</p>
+                        <h4 class="fw-bold mb-0 text-white"><?= $enquiryCount ?></h4>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              </a>
+            </div>
+            <div class="col-sm-6 col-md-3">
+              <a href="contact_record.php" class="text-decoration-none">
+              <div class="card card-stats card-round bg-dark">
+                <div class="card-body">
+                  <div class="row align-items-center">
+                    <div class="col-icon">
+                      <div
+                        class="icon-big text-center icon-success bg-dark text-white bubble-shadow-small">
+                        <i class="fas fa-address-book"></i>
+                      </div>
+                    </div>
+                    <div class="col col-stats ms-3 ms-sm-0">
+                      <div class="numbers">
+                        <p class="card-category text-white">Contact Records</p>
+                        <h4 class="fw-bold mb-0 text-white"><?= $contactCount ?></h4>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              </a>
             </div>
           </div>
         </div>
@@ -305,7 +381,7 @@ if (!isset($_SESSION['user'])) {
         </div>
       </div>
     </div>
-    
+
   </div>
   <!-- End Custom template -->
   </div>
