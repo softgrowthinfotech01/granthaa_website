@@ -27,3 +27,7 @@ Route::middleware(['auth:sanctum', 'role:admin,leader'])->group(function () {
 });
 
 Route::get('/site-location', [LocationMasterController::class, 'index']);
+
+Route::get('/test', function () {
+    return response()->json(['status' => 'working']);
+});
