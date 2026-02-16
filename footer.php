@@ -33,11 +33,11 @@
             Granthaa Land Developer<br>Pvt. Ltd.
           </h3>
 
-          <div class="flex gap-4">
+          <!-- <div class="flex gap-4">
             <div class="w-10 h-10 rounded-full bg-black flex items-center justify-center text-[#73bc01]">f</div>
             <div class="w-10 h-10 rounded-full bg-black flex items-center justify-center text-[#73bc01]">◎</div>
            
-          </div>
+          </div> -->
         </div>
 
         <!-- CENTER : TEXT / DISCLAIMER -->
