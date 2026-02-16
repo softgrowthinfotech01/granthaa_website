@@ -126,16 +126,16 @@ document.getElementById("loginForm").addEventListener("submit", function (e) {
         // 🔁 Redirect based on role
         switch (data.user.role) {
             case "admin":
-                window.location.href = "admin/home.php";
+                window.location.href = "admin";
                 break;
             case "leader":
-                window.location.href = "leader/dashboard.php";
+                window.location.href = "leader";
                 break;
             case "adviser":
-                window.location.href = "adviser/dashboard.php";
+                window.location.href = "adviser";
                 break;
             case "customer":
-                window.location.href = "dashboard/home.php";
+                window.location.href = "dashboard";
                 break;
             default:
                 alert("Unknown role");
