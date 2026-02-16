@@ -6,7 +6,7 @@ if (isset($_POST['submit'])) {
     $username = $_POST['username'];
     $password = $_POST['password'];
 
-    $smt = $conn->prepare("SELECT * FROM users WHERE username = :username and password = :pass");
+    $smt = $conn->prepare("SELECT * FROM users WHERE name = :username and password = :pass");
     $smt->execute([
         ":username" => $username,
         ":pass" => $password
