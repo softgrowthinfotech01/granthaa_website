@@ -3,12 +3,12 @@ session_start();
 include "conn.php";
 
 if (isset($_POST['submit'])) {
-    $username = $_POST['username'];
+    $name = $_POST['name'];
     $password = $_POST['password'];
 
-    $smt = $conn->prepare("SELECT * FROM users WHERE name = :username and password = :pass");
+    $smt = $conn->prepare("SELECT * FROM users WHERE name = :name and password = :pass");
     $smt->execute([
-        ":username" => $username,
+        ":name" => $name,
         ":pass" => $password
     ]);
 
@@ -16,7 +16,7 @@ if (isset($_POST['submit'])) {
     $auth = count($auth);
 
     if ($auth) {
-        $_SESSION['user'] = $username;
+        $_SESSION['user'] = $name;
         echo "<script>window.location.href='website.php';</script>";
     } else {
         echo "<script>alert('Login Attempt Fail');window.location.href='login.php';</script>";
@@ -48,7 +48,7 @@ if (isset($_GET['error']) && $_GET['error'] == 'login_required') {
                 </div>
                 <form class="flex flex-col gap-1 py-2" method="post">
                     <label for="" class="">Username:</label>
-                    <input class="p-2 mt-1 rounded-xl border" type="text" name="username" placeholder="Your username">
+                    <input class="p-2 mt-1 rounded-xl border" type="text" name="name" placeholder="Your username">
                     <label for="">Password:</label>
                     <input class="p-2 mt-1 rounded-xl border w-full" type="password" name="password" placeholder="Your password">
                     <button class="Login-button bg-blue-500 rounded-xl text-white mt-2 py-2" name="submit">Login</button>

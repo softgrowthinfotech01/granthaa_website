@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8" />
-  <title>Header</title>
+
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     .source-serif {
