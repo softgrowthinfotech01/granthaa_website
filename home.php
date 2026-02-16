@@ -499,11 +499,18 @@
     <!-- LEFT IMAGE -->
     <div class="relative rounded-2xl transition-transform duration-500 ease-in-out
                 hover:scale-105 overflow-hidden shadow-2xl">
-      <img
-        src="images/plot booking.jpeg"
-        alt="Premium Plot Development"
-        class="w-full h-[450px] rounded-lg "
-      />
+    <img
+  src="images/plot booking.jpeg"
+  alt="Premium Plot Development"
+  class="w-full h-[450px] rounded-lg
+      "
+/>
+<span class="absolute top-0 right-0 w-80 h-[7px] bg-[#73bc01] "></span>
+  <span class="absolute top-0 right-0 w-[7px] h-80 bg-[#73bc01] "></span>
+
+  <!-- Bottom Left Blue -->
+  <span class="absolute bottom-0 left-0 w-80 h-[7px] bg-blue-800"></span>
+  <span class="absolute bottom-0 left-0 w-[7px] h-80 bg-blue-800"></span>
     </div>
 
     <!-- RIGHT CONTENT -->
@@ -512,19 +519,19 @@
         About Us
       </h2>
 
-      <p class="text-lg text-gray-700 leading-relaxed">
+      <p class="text-lg text-gray-700 leading-relaxed text-justify">
         We specialize in premium plot developments designed for those who value
         location, long-term growth, and lifestyle excellence. Every project is
         carefully planned to ensure legal clarity, superior infrastructure,
         and future-ready living.
       </p>
 
-      <p class="text-lg text-gray-700 leading-relaxed">
+      <p class="text-lg text-gray-700 leading-relaxed text-justify">
         Our developments combine modern planning with nature-friendly layouts,
         offering well-connected roads, open spaces, and a secure investment
         environment for families and investors alike.
       </p>
-      <p class="text-lg text-gray-700 leading-relaxed">
+      <p class="text-lg text-gray-700 leading-relaxed text-justify">
           Each of our communities is thoughtfully crafted to enhance the quality
            of life, blending convenience with tranquility. From landscaped parks and 
            recreational areas to essential amenities within easy reach, we ensure a 

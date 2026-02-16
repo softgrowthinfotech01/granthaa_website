@@ -29,11 +29,11 @@
       <!-- SECTION 1 -->
       <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
         <div class="rounded-2xl transition-transform duration-500 ease-in-out
-                    hover:scale-105 overflow-hidden shadow-lg">
+                    hover:scale-105 overflow-hidden shadow-lg bg-red-500">
           <img
             src="images/Shobha residency plan.jpeg"
             alt="Project Layout Plan"
-            class="w-full h-64 sm:h-80 md:h-[420px] object-contain bg-white"
+            class="w-full h-[490px] sm:h-80 md:h-[620px] object-contain "
           />
         </div>
 
@@ -41,7 +41,7 @@
           <h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
             Elevated Living at Shobhaa Residency
           </h2>
-          <p class="text-gray-700 leading-relaxed mb-4 text-base sm:text-lg md:text-lg">
+          <p class="text-gray-700 leading-relaxed mb-4 text-base sm:text-lg md:text-lg text-justify">
             Shobhaa Residency is a premium residential plot development created for those
             who value location, quality planning, and smart investment opportunities. 
             Strategically located with excellent road access, the project offers NA-approved
