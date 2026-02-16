@@ -9,7 +9,7 @@
 
             <!-- Active Item -->
             <li class="bg-gray-200">
-                <a href="home.php"
+                <a href="home"
                     class="flex items-center justify-between px-4 py-3">
                     <span class="flex items-center gap-3">
                         <i class="fas fa-tachometer-alt"></i>
@@ -31,14 +31,14 @@
 
                 <ul id="categoryMenu" class="hidden bg-gray-100">
                     <li class="border-t">
-                        <a href="add_leader.php"
+                        <a href="add_leader"
                             class="block px-10 py-3 bg-gray-500 text-white">
                             <i class="fas fa-angle-right transition-transform mx-2"></i>
                             Add Leader
                         </a>
                     </li>
                     <li class="border-t">
-                        <a href="view_leader.php"
+                        <a href="view_leader"
                             class="block px-10 py-3 bg-gray-500 text-white">
                             <i class="fas fa-angle-right transition-transform mx-2"></i>
                             View Leaders
@@ -60,14 +60,14 @@
 
                 <ul id="location" class="hidden bg-gray-100">
                     <li class="border-t">
-                        <a href="add_location.php"
+                        <a href="add_location"
                             class="block px-10 py-3 bg-gray-500 text-white">
                             <i class="fas fa-angle-right transition-transform mx-2"></i>
                             Add Location
                         </a>
                     </li>
                     <li class="border-t">
-                        <a href="view_location.php"
+                        <a href="view_location"
                             class="block px-10 py-3 bg-gray-500 text-white">
                             <i class="fas fa-angle-right transition-transform mx-2"></i>
                             View Locations
@@ -89,14 +89,14 @@
 
                 <ul id="commission" class="hidden bg-gray-100">
                     <li class="border-t">
-                        <a href="add_commission.php"
+                        <a href="add_commission"
                             class="block px-10 py-3 bg-gray-500 text-white">
                             <i class="fas fa-angle-right transition-transform mx-2"></i>
                             Add Commission
                         </a>
                     </li>
                     <li class="border-t">
-                        <a href="view_commission.php"
+                        <a href="view_commission"
                             class="block px-10 py-3 bg-gray-500 text-white">
                             <i class="fas fa-angle-right transition-transform mx-2"></i>
                             View Commission
@@ -119,35 +119,35 @@
 
                 <ul id="reportMenu" class="hidden bg-gray-100">
                     <li class="border-t">
-                        <a href="product_add.php"
+                        <a href="product_add"
                             class="block px-10 py-3 bg-gray-500 text-white">
                             <i class="fas fa-angle-right transition-transform mx-1"></i>
                             Total Sales Report
                         </a>
                     </li>
                     <li class="border-t">
-                        <a href="product_view.php"
+                        <a href="product_view"
                             class="block px-10 py-3 bg-gray-500 text-white">
                             <i class="fas fa-angle-right transition-transform mx-1"></i>
                             Total Commission Report
                         </a>
                     </li>
                     <li class="border-t">
-                        <a href="product_add.php"
+                        <a href="product_add"
                             class="block px-10 py-3 bg-gray-500 text-white">
                             <i class="fas fa-angle-right transition-transform mx-1"></i>
                             Leader-wise Business Report
                         </a>
                     </li>
                     <li class="border-t">
-                        <a href="product_add.php"
+                        <a href="product_add"
                             class="block px-10 py-3 bg-gray-500 text-white">
                             <i class="fas fa-angle-right transition-transform mx-1"></i>
                             Advisor-wise Business Report
                         </a>
                     </li>
                     <li class="border-t">
-                        <a href="product_add.php"
+                        <a href="product_add"
                             class="block px-10 py-3 bg-gray-500 text-white">
                             <i class="fas fa-angle-right transition-transform mx-1"></i>
                             Project-wise Sales Report
@@ -169,13 +169,13 @@
 
                 <ul id="commissionReport" class="hidden bg-gray-100">
                     <li class="border-t">
-                        <a href="add_leader.php"
+                        <a href="add_leader"
                             class="block px-10 py-3 bg-gray-500 text-white">
                             
                         </a>
                     </li>
                     <li class="border-t">
-                        <a href="view_leader.php"
+                        <a href="view_leader"
                             class="block px-10 py-3 bg-gray-500 text-white">
                             
                         </a>
@@ -197,13 +197,13 @@
 
                 <ul id="pReports" class="hidden bg-gray-100">
                     <li class="border-t">
-                        <a href="add_leader.php"
+                        <a href="add_leader"
                             class="block px-10 py-3 bg-gray-500 text-white">
                             
                         </a>
                     </li>
                     <li class="border-t">
-                        <a href="view_leader.php"
+                        <a href="view_leader"
                             class="block px-10 py-3 bg-gray-500 text-white">
                             
                         </a>
