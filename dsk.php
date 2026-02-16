@@ -29,22 +29,21 @@
 
         <!-- SECTION 1 -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
-        <div class="relative rounded-2xl ">
+        <div class="relative group rounded-2xl transition-transform duration-500 ease-in-out
+                    hover:scale-105 rounded-2xl overflow-hidden shadow-lg ">
 
   <img
     src="images/facilities.png"
     alt="Project Layout Plan"
-    class="w-full h-[550px] rounded-2xl " />
+    class="w-full h-[380px] rounded-2xl " />
+    <span class="absolute top-0 right-0 w-80 h-[6px] bg-[#73bc01] "></span>
+  <span class="absolute top-0 right-0 w-[6px] h-80 bg-[#73bc01] "></span>
+
+  <!-- Bottom Left Blue -->
+  <span class="absolute bottom-0 left-0 w-80 h-[6px] bg-blue-800"></span>
+  <span class="absolute bottom-0 left-0 w-[6px] h-80 bg-blue-800"></span>
 
 </div>
-
-
-
-
-
-
-
-
 
           <div>
   <h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
@@ -88,22 +87,34 @@
 
           </div>
 
-          <div class="order-1 md:order-2 transition-transform duration-500 ease-in-out
+          <div class=" relative group order-1 md:order-2 transition-transform duration-500 ease-in-out
                     hover:scale-105 rounded-2xl overflow-hidden shadow-lg">
             <img
               src="images/specialities img.png"
               alt="Infinity Park Grantha"
-              class="w-full h-64 sm:h-80 md:h-[325px] md:w-full object-contain " />
+              class="w-full h-[380px] object-cover " />
+              <span class="absolute top-0 right-0 w-80 h-[6px] bg-[#73bc01] "></span>
+  <span class="absolute top-0 right-0 w-[6px] h-80 bg-[#73bc01] "></span>
+
+  <!-- Bottom Left Blue -->
+  <span class="absolute bottom-0 left-0 w-80 h-[6px] bg-blue-800"></span>
+  <span class="absolute bottom-0 left-0 w-[6px] h-80 bg-blue-800"></span>
           </div>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
-          <div class="rounded-2xl transition-transform duration-500 ease-in-out
+          <div class="relative group rounded-2xl transition-transform duration-500 ease-in-out
                     hover:scale-105 overflow-hidden shadow-lg">
             <img
               src="images/layout 1.jpeg"
               alt="Project Layout Plan"
-              class="w-full h-64 sm:h-80 md:h-[390px] object-contain bg-white" />
+              class="w-full h-[380px]  object-cover " />
+              <span class="absolute top-0 right-0 w-80 h-[7px] bg-[#73bc01] "></span>
+  <span class="absolute top-0 right-0 w-[7px] h-80 bg-[#73bc01] "></span>
+
+  <!-- Bottom Left Blue -->
+  <span class="absolute bottom-0 left-0 w-80 h-[7px] bg-blue-800"></span>
+  <span class="absolute bottom-0 left-0 w-[7px] h-80 bg-blue-800"></span>
           </div>
 
           <div>
