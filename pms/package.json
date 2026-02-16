@@ -1,0 +1,24 @@
+{
+  "name": "granthaa_software",
+  "version": "1.0.0",
+  "description": "granthaa_software",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/softgrowthinfotech01/granthaa_software.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/softgrowthinfotech01/granthaa_software/issues"
+  },
+  "homepage": "https://github.com/softgrowthinfotech01/granthaa_software#readme",
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.1.18",
+    "tailwindcss": "^4.1.18"
+  }
+}
