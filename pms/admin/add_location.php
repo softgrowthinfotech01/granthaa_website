@@ -58,6 +58,8 @@
 
     </div>
 
+<script src="url.js"></script>
+
     <script>
 document.getElementById('loginForm').addEventListener('submit', async function (e) {
     e.preventDefault();
@@ -67,7 +69,7 @@ document.getElementById('loginForm').addEventListener('submit', async function (
 
     if (!token || !user) {
         alert('Please login first');
-        window.location.href = '../login.php';
+        window.location.href = '../login';
         return;
     }
 
@@ -85,7 +87,7 @@ document.getElementById('loginForm').addEventListener('submit', async function (
     }
 
     try {
-        const response = await fetch('http://127.0.0.1:8000/api/site-location', {
+        const response = await fetch(url + 'site-location', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
