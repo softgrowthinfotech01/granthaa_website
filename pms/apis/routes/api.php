@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\CommissionController;
 use App\Http\Controllers\Api\LocationMasterController;
 use App\Http\Controllers\Api\UserController;
 use Illuminate\Support\Facades\Route;
@@ -16,6 +17,8 @@ Route::middleware(['auth:sanctum', 'role:admin'])->group(function () {
     Route::post('/admin/create-leader', [UserController::class, 'createLeader']);
     Route::post('/users', [UserController::class, 'store']);
     Route::post('/site-location', [LocationMasterController::class, 'store']);
+    Route::post('/admin/set-commission', [CommissionController::class, 'setCommission']);
+    Route::get('/admin/commissions', [CommissionController::class, 'index']);
 });
 
 Route::middleware(['auth:sanctum', 'role:leader'])->group(function () {
@@ -27,7 +30,3 @@ Route::middleware(['auth:sanctum', 'role:admin,leader'])->group(function () {
 });
 
 Route::get('/site-location', [LocationMasterController::class, 'index']);
-
-Route::get('/test', function () {
-    return response()->json(['status' => 'working']);
-});
