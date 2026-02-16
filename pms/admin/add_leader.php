@@ -25,7 +25,7 @@
                 <!--/Sidebar-->
 
                 <!--Main-->
-                <div class="w-[60%] mx-auto my-4 self-start rounded-lg bg-gray-300 p-6 border border-default rounded-base shadow-xs hover:bg-neutral-secondary-medium">
+                <div class="w-[60%] mx-auto my-4 self-start rounded-lg bg-gray-200 p-6 border border-default rounded-base shadow-xs hover:bg-neutral-secondary-medium">
                     <form class="w-full">
                         <div class="personal-details">
                             <h5 class="text-xl font-bold text-heading p-1">Add Leader Details</h5>
