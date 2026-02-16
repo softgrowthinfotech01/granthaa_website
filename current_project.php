@@ -24,7 +24,7 @@ $projects = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
   <div class="min-h-screen flex items-center justify-center px-4">
     <div class="max-w-7xl w-full">
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-10 mt-24 md:mt-[180px] lg:mt-[180px] mb-10">
 
         <!-- Card 1 -->
         <!-- <div class="bg-white rounded-xl shadow-md hover:shadow-lg transition h-full flex flex-col">
@@ -97,7 +97,8 @@ $projects = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
           <?php foreach ($projects as $row): ?>
 
-            <div class="bg-white rounded-xl shadow-md hover:shadow-lg transition h-full flex flex-col my-1">
+            <div class="bg-white rounded-xl shadow-md hover:shadow-lg transition h-full flex  flex-col my-1 transition-transform duration-500 ease-in-out
+                hover:scale-105">
 
               <div class="w-full aspect-[16/9] bg-gray-100 flex items-center justify-center">
 
@@ -105,7 +106,7 @@ $projects = $stmt->fetchAll(PDO::FETCH_ASSOC);
                   <img
                     src="website/uploads/<?php echo $row['project_image1']; ?>"
                     alt="<?php echo $row['project_name']; ?>"
-                    class="w-full h-full object-contain" />
+                    class="w-full h-full object-contain rounded-xl" />
                 <?php else: ?>
                   <span class="text-gray-400">No Image</span>
                 <?php endif; ?>
