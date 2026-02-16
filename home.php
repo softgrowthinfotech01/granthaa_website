@@ -685,7 +685,7 @@
            flex items-center justify-center
            bg-[#73bc01]/40
            text-[#73bc01]
-           border border-[#73bc01]
+           border-2 border-blue-900
            px-4 py-4
            rounded-l-md
            writing-mode-vertical
@@ -960,9 +960,6 @@ exit;
   backdrop.addEventListener("click", (e) => {
     if (e.target === backdrop) closeModal();
   });
-
-
-
 
 
 </script>

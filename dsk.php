@@ -29,41 +29,41 @@
 
         <!-- SECTION 1 -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
-        <div class="relative group rounded-2xl transition-transform duration-500 ease-in-out
+          <div class="relative group rounded-2xl transition-transform duration-500 ease-in-out
                     hover:scale-105 rounded-2xl overflow-hidden shadow-lg ">
 
-  <img
-    src="images/facilities.png"
-    alt="Project Layout Plan"
-    class="w-full h-[380px] rounded-2xl " />
-    <span class="absolute top-0 right-0 w-80 h-[6px] bg-[#73bc01] "></span>
-  <span class="absolute top-0 right-0 w-[6px] h-80 bg-[#73bc01] "></span>
+            <img
+              src="images/facilities.png"
+              alt="Project Layout Plan"
+              class="w-full h-[380px] rounded-2xl " />
+            <span class="absolute top-0 right-0 w-80 h-[6px] bg-[#73bc01] "></span>
+            <span class="absolute top-0 right-0 w-[6px] h-80 bg-[#73bc01] "></span>
 
-  <!-- Bottom Left Blue -->
-  <span class="absolute bottom-0 left-0 w-80 h-[6px] bg-blue-800"></span>
-  <span class="absolute bottom-0 left-0 w-[6px] h-80 bg-blue-800"></span>
+            <!-- Bottom Left Blue -->
+            <span class="absolute bottom-0 left-0 w-80 h-[6px] bg-blue-800"></span>
+            <span class="absolute bottom-0 left-0 w-[6px] h-80 bg-blue-800"></span>
 
-</div>
+          </div>
 
           <div>
-  <h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
-    Amenities & Features – D.S.K. Radhakrishna Nagari
-  </h2>
+            <h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
+              Amenities & Features – D.S.K. Radhakrishna Nagari
+            </h2>
 
-  <p class="text-gray-700 leading-relaxed mb-4 text-base sm:text-lg md:text-lg text-justify">
-    D.S.K. Radhakrishna Nagari is a premium residential plotting project offering modern 
-    infrastructure in a calm and green surroundings. The layout includes well-developed
-     WBM internal roads, street lights, proper drainage facilities, and 12-month electricity
-      availability to ensure hassle-free living.
-  </p>
+            <p class="text-gray-700 leading-relaxed mb-4 text-base sm:text-lg md:text-lg text-justify">
+              D.S.K. Radhakrishna Nagari is a premium residential plotting project offering modern
+              infrastructure in a calm and green surroundings. The layout includes well-developed
+              WBM internal roads, street lights, proper drainage facilities, and 12-month electricity
+              availability to ensure hassle-free living.
+            </p>
 
-  <p class="text-gray-700 leading-relaxed mb-4 text-base sm:text-lg md:text-lg text-justify">
-   The project also features open garden areas that provide a refreshing environment for families.
-    With NATP-sanctioned, construction-ready plots, this development is perfect for building your
-     dream home or making a smart real estate investment. Designed for comfort, safety, and future 
-     growth, D.S.K. Radhakrishna Nagari delivers the ideal blend of nature and urban convenience.
-  </p>
-</div>
+            <p class="text-gray-700 leading-relaxed mb-4 text-base sm:text-lg md:text-lg text-justify">
+              The project also features open garden areas that provide a refreshing environment for families.
+              With NATP-sanctioned, construction-ready plots, this development is perfect for building your
+              dream home or making a smart real estate investment. Designed for comfort, safety, and future
+              growth, D.S.K. Radhakrishna Nagari delivers the ideal blend of nature and urban convenience.
+            </p>
+          </div>
 
         </div>
 
@@ -93,12 +93,12 @@
               src="images/specialities img.png"
               alt="Infinity Park Grantha"
               class="w-full h-[380px] object-cover " />
-              <span class="absolute top-0 right-0 w-80 h-[6px] bg-[#73bc01] "></span>
-  <span class="absolute top-0 right-0 w-[6px] h-80 bg-[#73bc01] "></span>
+            <span class="absolute top-0 right-0 w-80 h-[6px] bg-[#73bc01] "></span>
+            <span class="absolute top-0 right-0 w-[6px] h-80 bg-[#73bc01] "></span>
 
-  <!-- Bottom Left Blue -->
-  <span class="absolute bottom-0 left-0 w-80 h-[6px] bg-blue-800"></span>
-  <span class="absolute bottom-0 left-0 w-[6px] h-80 bg-blue-800"></span>
+            <!-- Bottom Left Blue -->
+            <span class="absolute bottom-0 left-0 w-80 h-[6px] bg-blue-800"></span>
+            <span class="absolute bottom-0 left-0 w-[6px] h-80 bg-blue-800"></span>
           </div>
         </div>
 
@@ -109,12 +109,12 @@
               src="images/layout 1.jpeg"
               alt="Project Layout Plan"
               class="w-full h-[380px]  object-cover " />
-              <span class="absolute top-0 right-0 w-80 h-[7px] bg-[#73bc01] "></span>
-  <span class="absolute top-0 right-0 w-[7px] h-80 bg-[#73bc01] "></span>
+            <span class="absolute top-0 right-0 w-80 h-[7px] bg-[#73bc01] "></span>
+            <span class="absolute top-0 right-0 w-[7px] h-80 bg-[#73bc01] "></span>
 
-  <!-- Bottom Left Blue -->
-  <span class="absolute bottom-0 left-0 w-80 h-[7px] bg-blue-800"></span>
-  <span class="absolute bottom-0 left-0 w-[7px] h-80 bg-blue-800"></span>
+            <!-- Bottom Left Blue -->
+            <span class="absolute bottom-0 left-0 w-80 h-[7px] bg-blue-800"></span>
+            <span class="absolute bottom-0 left-0 w-[7px] h-80 bg-blue-800"></span>
           </div>
 
           <div>
@@ -146,19 +146,24 @@
     id="brochureBtn"
     class="fixed right-0 top-1/2 -translate-y-1/2 z-30
          opacity-0 pointer-events-none
-         transition-opacity duration-300">
+         transition-opacity duration-100">
 
     <a
       href="#"
-      class="border border-[#73bc01] text-[#73bc01]
-           bg-white/80 backdrop-blur
-           px-3 py-5 rounded-l-md
-           tracking-widest font-semibold text-sm
-           [writing-mode:vertical-rl]
-           [text-orientation:mixed]
-           hover:bg-[#73bc01] hover:text-black transition">
+      class="jersey
+           flex items-center justify-center
+           bg-[#73bc01]/40
+           text-[#73bc01]
+           border-2 border-blue-900
+           px-4 py-4
+           rounded-l-md
+           writing-mode-vertical
+           tracking-widest
+           font-semibold
+           overflow-hidden">
       Download Brochure
     </a>
+
   </div>
 
   <!-- WHATSAPP BUTTON -->
