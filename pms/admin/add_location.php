@@ -30,7 +30,7 @@
                         <div class="personal-details">
                             <h5 class="text-xl font-bold text-heading p-1">Location Details</h5>
                             <div class="w-full">
-                               
+
                                 <div class="mb-5  px-1">
                                     <label for="site_location" class="block mb-2.5 text-sm font-medium text-heading">Site Location</label>
                                     <input type="text" id="site_location" class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" placeholder="Enter your site location" required />
@@ -58,67 +58,69 @@
 
     </div>
 
+    <script src="../url.js"></script>
+
     <script>
-document.getElementById('loginForm').addEventListener('submit', async function (e) {
-    e.preventDefault();
+        document.getElementById('loginForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
 
-    const token = localStorage.getItem('auth_token');
-    const user  = JSON.parse(localStorage.getItem('auth_user'));
+            const token = localStorage.getItem('auth_token');
+            const user = JSON.parse(localStorage.getItem('auth_user'));
 
-    if (!token || !user) {
-        alert('Please login first');
-        window.location.href = '../login.php';
-        return;
-    }
+            if (!token || !user) {
+                alert('Please login first');
+                window.location.href = '../login';
+                return;
+            }
 
-    // UI level role protection (backend already protected)
-    if (user.role !== 'admin') {
-        alert('You are not allowed to update site location');
-        return;
-    }
+            // UI level role protection (backend already protected)
+            if (user.role !== 'admin') {
+                alert('You are not allowed to update site location');
+                return;
+            }
 
-    const siteLocation = document.getElementById('site_location').value.trim();
+            const siteLocation = document.getElementById('site_location').value.trim();
 
-    if (!siteLocation) {
-        alert('Operating location is required');
-        return;
-    }
+            if (!siteLocation) {
+                alert('Operating location is required');
+                return;
+            }
 
-    try {
-        const response = await fetch('http://127.0.0.1:8000/api/site-location', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + token
-            },
-            body: JSON.stringify({
-                site_location: siteLocation
-            })
+            try {
+                const response = await fetch(url + 'site-location', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + token
+                    },
+                    body: JSON.stringify({
+                        site_location: siteLocation
+                    })
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    alert(data.message || 'Something went wrong');
+                    return;
+                }
+
+                alert('Site location saved successfully');
+                document.getElementById('loginForm').reset();
+
+            } catch (error) {
+                console.error(error);
+                alert('Server error');
+            }
         });
 
-        const data = await response.json();
-
-        if (!response.ok) {
-            alert(data.message || 'Something went wrong');
-            return;
+        // Reset confirmation
+        function confirmReset() {
+            if (confirm('Are you sure you want to reset the form?')) {
+                document.getElementById('loginForm').reset();
+            }
         }
-
-        alert('Site location saved successfully');
-        document.getElementById('loginForm').reset();
-
-    } catch (error) {
-        console.error(error);
-        alert('Server error');
-    }
-});
-
-// Reset confirmation
-function confirmReset() {
-    if (confirm('Are you sure you want to reset the form?')) {
-        document.getElementById('loginForm').reset();
-    }
-}
-</script>
+    </script>
 
     <script src="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.js"></script>
 
