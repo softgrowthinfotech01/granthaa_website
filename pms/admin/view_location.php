@@ -31,21 +31,7 @@
                 <!--Main-->
                 <div class="w-[40%] mx-auto my-4 self-start rounded-lg bg-slate-100 p-6 border border-default rounded-base shadow-xs hover:bg-neutral-secondary-medium">
 
-                <table class="w-full text-sm text-left text-gray-600">
-    <thead class="text-xs text-gray-700 uppercase bg-gray-100">
-        <tr>
-            <th class="px-4 py-3">#</th>
-            <th class="px-4 py-3">Site Location</th>
-            <th class="px-4 py-3">Created At</th>
-        </tr>
-    </thead>
-    <tbody id="locationTableBody">
-        <tr>
-            <td colspan="3" class="text-center py-4">Loading...</td>
-        </tr>
-    </tbody>
-</table>
-
+            
                 <h5 class="text-lg font-bold text-heading p-1 my-2">Location Data</h5>
 
                     <table id="pagination-table">
@@ -53,20 +39,31 @@
                             <tr>
                                 
                                 <th>
-                                    <span class="flex ">
+                                    <span class=" text-center">
+                                        #
+                                    </span>
+                                </th>
+                                 <th>
+                                    <span class=" text-center">
                                         Site Location
                                     </span>
                                 </th>
+                                 <th>
+                                    <span class=" text-center">
+                                        Created At
+                                    </span>
+                                </th>
                                 <th>
-                                    <span class="flex ">
+                                    <span class=" text-center">
                                         Actions
                                     </span>
                                 </th>
+
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="locationTableBody">
                             <tr>
-                                <td class="font-medium text-heading whitespace-nowrap">test data</td>
+                                <td colspan="1" class="font-medium text-heading whitespace-nowrap">Loading...</td>
                                 <td class="flex gap-2">
                                     <a href="update_location.php" class="px-3 py-1.5 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-500 focus:ring-2 focus:ring-blue-300">Edit</a>
 
@@ -75,28 +72,7 @@
                                     </button>
                                 </td>
                             </tr>
-                            <tr>
-                               <td class="font-medium text-heading whitespace-nowrap">test data</td>
-                                
-                                <td class="flex gap-2">
-                                    <a href="update_location.php" class="px-3 py-1.5 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-500 focus:ring-2 focus:ring-blue-300">Edit</a>
-
-                                    <button class="px-3 py-1.5 text-sm font-medium text-white bg-red-600 rounded-md hover:bg-red-500 focus:ring-2 focus:ring-red-300">
-                                        Delete
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="font-medium text-heading whitespace-nowrap">test data</td>
-                                
-                                <td class="flex gap-2">
-                                   <a href="update_location.php" class="px-3 py-1.5 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-500 focus:ring-2 focus:ring-blue-300">Edit</a>
-
-                                    <button class="px-3 py-1.5 text-sm font-medium text-white bg-red-600 rounded-md hover:bg-red-500 focus:ring-2 focus:ring-red-300">
-                                        Delete
-                                    </button>
-                                </td>
-                            </tr>
+                            
                             
                         </tbody>
                     </table>
@@ -142,7 +118,7 @@ async function fetchLocations() {
         if (!result.data || result.data.length === 0) {
             tbody.innerHTML = `
                 <tr>
-                    <td colspan="3" class="text-center py-4">No locations found</td>
+                    <td colspan="4" class="text-center py-4">No locations found</td>
                 </tr>`;
             return;
         }
@@ -150,11 +126,17 @@ async function fetchLocations() {
         result.data.forEach((loc, index) => {
             tbody.innerHTML += `
                 <tr class="border-b">
-                    <td class="px-4 py-2">${index + 1}</td>
-                    <td class="px-4 py-2 font-medium">${loc.site_location}</td>
-                    <td class="px-4 py-2 text-gray-500">
+                    <td class="px-4 py-2 text-center">${index + 1}</td>
+                    <td class="px-4 py-2 font-medium text-center">${loc.site_location}</td>
+                    <td class="px-4 py-2 text-gray-500 text-center">
                         ${new Date(loc.created_at).toLocaleDateString()}
                     </td>
+                    <td class="px-4 py-2 flex gap-2">
+                        <a href="update_location.php?id=${loc.id}" class="px-3 py-1.5 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-500 focus:ring-2 focus:ring-blue-300">Edit</a>
+
+                        <button onclick="deleteLocation(${loc.id})" class="px-3 py-1.5 text-sm font-medium text-white bg-red-600 rounded-md hover:bg-red-500 focus:ring-2 focus:ring-red-300">
+                            Delete
+                        </button>
                 </tr>
             `;
         });

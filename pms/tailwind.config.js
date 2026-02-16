@@ -1,6 +1,9 @@
-
 export default {
-  content: ["./*.php", "./**/*.php"],
+  content: [
+    "./*.php",
+    "./**/*.php",
+    "./*.html"
+  ],
   theme: {
     extend: {},
   },

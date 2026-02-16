@@ -1,27 +1,27 @@
-<header class="bg-slate-700">
-    <div class="flex justify-between items-center px-4 h-16">
+<header class="bg-white shadow-lg">
+    <div class="flex justify-between items-center px-4 h-22">
 
         <!-- Left -->
         <div class="flex items-center gap-5">
-            <i class="fas fa-bars text-white cursor-pointer hover:bg-gray-500 p-2 rounded-sm"
+            <i class="fas fa-bars text-gray-700 cursor-pointer hover:bg-gray-300 p-2 rounded-sm"
                 onclick="sidebarToggle()"></i>
 
-            <h1 class="text-white text-lg font-semibold">
+            <h1 class="text-gray-700 text-lg font-semibold">
                 Granthaa Admin Panel
             </h1>
         </div>
 
         <!-- Center -->
-        <img src="../images/logo.png" alt="logo" width="95px" class="rounded-sm">
+        <img src="../images/logo.png" alt="logo" width="130px" class="rounded-sm">
         <!-- Center -->
 
         <!-- Right -->
-        <div class="relative flex items-center bg-gray-700 rounded-sm">
+        <div class="relative flex items-center bg-gray-300 rounded-lg">
             <a href="#"
                 onclick="profileToggle()"
-                class="flex items-center gap-2 text-white px-3 py-2 rounded-sm hover:bg-gray-500 cursor-pointer">
+                class="flex items-center gap-2 px-3 py-2 rounded-sm hover:bg-gray-500 cursor-pointer text-gray-900 hover:text-white hover:rounded-lg">
                 <img src="../images/profile.png" class="w-8 h-8 rounded-full">
-                <span class="hidden md:block font-medium">User</span>
+                <span class="hidden md:block font-medium ">User</span>
             </a>
 
 
