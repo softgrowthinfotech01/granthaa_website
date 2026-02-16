@@ -39,7 +39,7 @@
            
           </div> -->
         </div>
-
+        
         <!-- CENTER : TEXT / DISCLAIMER -->
         <div class="flex flex-col text-sm text-gray-300 gap-[30px]">
          
