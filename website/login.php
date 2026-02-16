@@ -3,12 +3,12 @@ session_start();
 include "conn.php";
 
 if (isset($_POST['submit'])) {
-    $username = $_POST['name'];
+    $name = $_POST['name'];
     $password = $_POST['password'];
 
     $smt = $conn->prepare("SELECT * FROM users WHERE name = :name and password = :pass");
     $smt->execute([
-        ":name" => $username,
+        ":name" => $name,
         ":pass" => $password
     ]);
 
@@ -16,7 +16,7 @@ if (isset($_POST['submit'])) {
     $auth = count($auth);
 
     if ($auth) {
-        $_SESSION['user'] = $username;
+        $_SESSION['user'] = $name;
         echo "<script>window.location.href='website.php';</script>";
     } else {
         echo "<script>alert('Login Attempt Fail');window.location.href='login.php';</script>";
