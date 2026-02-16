@@ -125,10 +125,11 @@
     </script>
     <script src="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.js"></script>
 
+    <script src="../url.js"></script>
 <script>
 async function fetchLocations() {
     try {
-        const response = await fetch('http://127.0.0.1:8000/api/site-location', {
+        const response = await fetch(url + 'site-location', {
             headers: {
                 'Accept': 'application/json'
             }
