@@ -72,23 +72,28 @@
 <?php include "footer.php"; ?>
 
 <!-- SIDE BROCHURE BUTTON -->
-<div
+  <div
   id="brochureBtn"
   class="fixed right-0 top-1/2 -translate-y-1/2 z-30
          opacity-0 pointer-events-none
-         transition-opacity duration-300">
+         transition-opacity duration-100">
 
   <a
     href="#"
-    class="border border-[#73bc01] text-[#73bc01]
-           bg-white/80 backdrop-blur
-           px-3 py-5 rounded-l-md
-           tracking-widest font-semibold text-sm
-           [writing-mode:vertical-rl]
-           [text-orientation:mixed]
-           hover:bg-[#73bc01] hover:text-black transition">
+    class="jersey
+           flex items-center justify-center
+           bg-[#73bc01]/40
+           text-[#73bc01]
+           border-2 border-blue-900
+           px-4 py-4
+           rounded-l-md
+           writing-mode-vertical
+           tracking-widest
+           font-semibold
+           overflow-hidden">
     Download Brochure
   </a>
+
 </div>
 
 <!-- WHATSAPP BUTTON -->

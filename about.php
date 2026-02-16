@@ -75,8 +75,8 @@
 
   <a
     href="#"
-    class="border border-[#73bc01] text-[#73bc01]
-           bg-white/80 backdrop-blur
+    class="border-2 border-blue-900 text-[#73bc01]
+           bg-[#73bc01]/40 backdrop-blur
            px-3 py-5 rounded-l-md
            tracking-widest font-semibold text-sm
            [writing-mode:vertical-rl]
