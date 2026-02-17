@@ -131,27 +131,39 @@ $projects = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
                             <td>
                               <?php
-                              echo strlen($row['project_details1']) > 50
-                                ? substr($row['project_details1'], 0, 50) . '...'
-                                : $row['project_details1'];
+                              $text = trim($row['project_details1']); // clean start/end spaces
+                              $text = str_replace(["\r", "\n"], ' ', $text); // replace line breaks
+
+                              echo strlen($text) > 50
+                                ? substr($text, 0, 50) . '...'
+                                : $text;
                               ?>
                             </td>
 
-                            <td>
-                              <?php
-                              echo strlen($row['project_details2']) > 50
-                                ? substr($row['project_details2'], 0, 50) . '...'
-                                : $row['project_details2'];
-                              ?>
-                            </td>
 
                             <td>
                               <?php
-                              echo strlen($row['project_details3']) > 50
-                                ? substr($row['project_details3'], 0, 50) . '...'
-                                : $row['project_details3'];
+                              $text = trim($row['project_details2']); 
+                              $text = str_replace(["\r", "\n"], ' ', $text); 
+
+                              echo strlen($text) > 50
+                                ? substr($text, 0, 50) . '...'
+                                : $text;
                               ?>
                             </td>
+
+
+                            <td>
+                              <?php
+                              $text = trim($row['project_details3']);
+                              $text = str_replace(["\r", "\n"], ' ', $text); 
+
+                              echo strlen($text) > 50
+                                ? substr($text, 0, 50) . '...'
+                                : $text;
+                              ?>
+                            </td>
+
 
 
                             <td>
