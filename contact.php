@@ -173,19 +173,28 @@ VALUES(:name,:email,:phone)");
   </section>
   <?php include "footer.php"; ?>
   <div
-    id="brochureBtn"
-    class="fixed right-0 top-1/2 -translate-y-1/2 z-30
+  id="brochureBtn"
+  class="fixed right-0 top-1/2 -translate-y-1/2 z-30
          opacity-0 pointer-events-none
-         transition-opacity duration-100
-         bg-[#73bc01]/40">
-    <a
-      href="#"
-      class="jersey text-[#73bc01] border border-[#73bc01]
-           px-4 py-6 rounded-l-md
-           writing-mode-vertical tracking-widest font-semibold">
-      Download Brochure
-    </a>
-  </div>
+         transition-opacity duration-100">
+
+  <a
+    href="#"
+    class="jersey
+           flex items-center justify-center
+           bg-[#73bc01]/40
+           text-[#73bc01]
+           border-2 border-blue-900
+           px-4 py-4
+           rounded-l-md
+           writing-mode-vertical
+           tracking-widest
+           font-semibold
+           overflow-hidden">
+    Download Brochure
+  </a>
+
+</div>
   <a href="https://wa.me/919999999999"
     target="_blank"
     class="fixed bottom-6 right-6 z-50 bg-green-500 p-4 rounded-full shadow-lg

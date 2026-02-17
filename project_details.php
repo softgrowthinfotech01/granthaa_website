@@ -51,9 +51,14 @@ if (!$project) {
         <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
 
           <div>
+            <?php 
+$project_details1 = explode("/*/*/", $project['project_details1']);
+// print_r($project_details1);exit;
+            ?>
+            <h2 class="text-2xl font-bold py-2"><?= $project_details1[0]; ?></h2>
             
             <p class="text-gray-700 leading-relaxed text-base sm:text-lg md:text-lg">
-              <?php echo $project['project_details1']; ?>
+              <?php echo $project_details1[1]; ?>
             </p>
           </div>
 
@@ -83,8 +88,12 @@ if (!$project) {
           <?php endif; ?>
 
           <div>
+            <?php
+            $project_details2 = explode("/*/*/", $project['project_details2']);
+             ?>
+             <h2 class="text-2xl font-bold py-2"><?= $project_details2[0]; ?></h2>
             <p class="text-gray-700 leading-relaxed text-base sm:text-lg md:text-lg">
-              <?php echo $project['project_details2']; ?>
+              <?php echo $project_details2[1]; ?>
             </p>
           </div>
         </div>
@@ -98,8 +107,12 @@ if (!$project) {
          
 
           <div>
+             <?php
+            $project_details3 = explode("/*/*/", $project['project_details3']);
+             ?>
+             <h2 class="text-2xl"><?= $project_details3[0]; ?></h2>
             <p class="text-gray-700 leading-relaxed text-base sm:text-lg md:text-lg">
-              <?php echo $project['project_details3']; ?>
+              <?php echo $project_details3[1]; ?>
             </p>
           </div>
            <?php if (!empty($project['project_image2'])): ?>

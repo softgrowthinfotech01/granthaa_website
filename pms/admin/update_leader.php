@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Leader</title>
+    <link rel="stylesheet" href="../style.css">
+    <link href="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.css" rel="stylesheet" />
+
+</head>
+
+<body>
+    <!--Container -->
+    <div class="mx-auto">
+        <!--Screen-->
+        <div class="flex flex-col">
+            <!--Header Section Starts Here-->
+            <?php include "header.php"; ?>
+            <!--/Header-->
+
+            <div class="flex">
+                <!--Sidebar-->
+                <?php include 'sidebar.php'; ?>
+                <!--/Sidebar-->
+
+                <!--Main-->
+                <div class="w-[60%] mx-auto my-4 self-start rounded-lg bg-gray-200 p-6 border border-default rounded-base shadow-xs hover:bg-neutral-secondary-medium">
+                    <form class="w-full">
+                        <div class="personal-details">
+                            <h5 class="text-xl font-bold text-heading p-1">Update Leader Details</h5>
+                            <div class="grid grid-cols-2">
+                                <div class="mb-5 col-span-1 px-1">
+                                    <label for="leader_code" class="block mb-2.5 text-sm font-medium text-heading">Leader Code</label>
+                                    <input type="text" id="leader_code" class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" placeholder="Enter leader code" required />
+                                </div>
+                                <div class="mb-5 col-span-1 px-1">
+                                    <label for="name" class="block mb-2.5 text-sm font-medium text-heading">Full Name</label>
+                                    <input type="text" id="name" class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" placeholder="Enter your name" required />
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-2">
+                                <div class="mb-5 col-span-1 px-1">
+                                    <label for="age" class="block mb-2.5 text-sm font-medium text-heading">Age</label>
+                                    <input type="number" id="age" class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" placeholder="Enter your age" required />
+                                </div>
+                                <div class="mb-5 col-span-1 px-1">
+                                    <label for="gender" class="block mb-2.5 text-sm font-medium text-heading">Gender</label>
+                                    <select id="gender" class="block w-full px-3 py-2.5 rounded-lg bg-white border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand shadow-xs placeholder:text-body">
+                                        <option selected>Choose a gender</option>
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                        <option value="Others">Others</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="">
+                                <div class="mb-5 px-1">
+                                    <label class="block mb-2.5 text-sm font-medium text-heading" for="file_input">Upload Image</label>
+                                    <input class="rounded-lg cursor-pointer bg-white border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full shadow-xs placeholder:text-body" id="file_input" type="file">
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="border-white-300 mb-3">
+                        <div class="contact-details">
+                            <h5 class="text-xl font-bold text-heading p-1">Update Contact Details</h5>
+                            <div class="grid grid-cols-2">
+                                <div class="mb-5 col-span-1 px-1">
+                                    <label for="mobile" class="block mb-2.5 text-sm font-medium text-heading">Mobile Number</label>
+                                    <input type="number" id="mobile" class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" placeholder="Enter your mobile number" required />
+                                </div>
+                                <div class="mb-5 col-span-1 px-1">
+                                    <label for="email" class="block mb-2.5 text-sm font-medium text-heading">Email</label>
+                                    <input type="email" id="email" class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" placeholder="Enter your email" required />
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-2">
+                                <div class="mb-5 col-span-1 px-1">
+                                    <label for="city" class="block mb-2.5 text-sm font-medium text-heading">City</label>
+                                    <input type="text" id="city" class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" placeholder="Enter your city" required />
+                                </div>
+                                <div class="mb-5 col-span-1 px-1">
+                                    <label for="state" class="block mb-2.5 text-sm font-medium text-heading">State</label>
+                                    <input type="text" id="state" class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" placeholder="Enter your state" required />
+                                </div>
+                            </div>
+                            <div class="">
+                                <div class="grid grid-cols-2">
+                                    <div class="mb-5 col-span-1 px-1">
+                                        <label for="address" class="block mb-2.5 text-sm font-medium text-heading">Address</label>
+                                        <input type="textarea" id="address" class="rounded-lg bg-white border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" placeholder="Enter your address" required />
+                                    </div>
+                                    <div class="mb-5 col-span-1 px-1">
+                                        <label for="pincode" class="block mb-2.5 text-sm font-medium text-heading">Pincode</label>
+                                        <input type="number" id="pincode" class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" placeholder="Enter your pincode" required />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                         <hr class="border-white-300 mb-3">
+                        <div class="contact-details">
+                            <h5 class="text-xl font-bold text-heading p-1">Update Bank Details</h5>
+                            <div class="grid grid-cols-2">
+                                <div class="mb-5 col-span-1 px-1">
+                                    <label for="bank_name" class="block mb-2.5 text-sm font-medium text-heading">Bank Name</label>
+                                    <input type="text" id="bank_name" class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" placeholder="Enter your bank name" required />
+                                </div>
+                                <div class="mb-5 col-span-1 px-1">
+                                    <label for="branch" class="block mb-2.5 text-sm font-medium text-heading">Branch</label>
+                                    <input type="text" id="branch" class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" placeholder="Enter your branch name" required />
+                                </div>
+                               
+                            </div>
+                            <div class="grid grid-cols-2">
+                                 <div class="mb-5 col-span-1 px-1">
+                                    <label for="account_number" class="block mb-2.5 text-sm font-medium text-heading">Account Number</label>
+                                    <input type="number" id="account_number" class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" placeholder="Enter your account number" required />
+                                </div>
+                                <div class="mb-5 col-span-1 px-1">
+                                    <label for="ifsc_code" class="block mb-2.5 text-sm font-medium text-heading">IFSC Code</label>
+                                    <input type="text" id="ifsc_code" class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" placeholder="Enter your IFSC code" required />
+                                </div>
+                              
+                            </div>
+                            
+                        </div>
+                        <hr class="border-white-300 mb-3">
+                        <div class="flex justify-center gap-2">
+                            <button type="submit" class="w-[15%] text-white bg-blue-600 box-border border border-transparent hover:bg-blue-400 rounded-lg focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none">Update</button>
+                            <button type="button"
+                                onclick=""
+                                class="w-[15%] text-gray-700 bg-white hover:bg-gray-200 rounded-lg text-sm px-5 py-2.5">
+                                Back
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                <!--/Main-->
+            </div>
+            <!--Footer-->
+            <?php include 'footer.php'; ?>
+            <!--/footer-->
+
+        </div>
+
+    </div>
+
+    <script>
+
+</script>
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.js"></script>
+
+</body>
+
+</html>
