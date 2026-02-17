@@ -110,7 +110,7 @@ $project_details1 = explode("/*/*/", $project['project_details1']);
              <?php
             $project_details3 = explode("/*/*/", $project['project_details3']);
              ?>
-             <h2 class="text-2xl"><?= $project_details3[0]; ?></h2>
+             <h2 class="text-2xl font-bold py-2"><?= $project_details3[0]; ?></h2>
             <p class="text-gray-700 leading-relaxed text-base sm:text-lg md:text-lg">
               <?php echo $project_details3[1]; ?>
             </p>
