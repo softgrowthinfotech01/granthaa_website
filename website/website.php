@@ -51,6 +51,16 @@ $enquiryCount = $stmt->fetchColumn();
     content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
     name="viewport" />
 
+  <!-- Code for browser cache -->
+  <script>
+    window.addEventListener("pageshow", function(event) {
+      if (event.persisted) {
+        window.location.reload();
+      }
+    });
+  </script>
+
+
 
   <!-- Fonts and icons -->
   <script src="assets/js/plugin/webfont/webfont.min.js"></script>
@@ -112,112 +122,112 @@ $enquiryCount = $stmt->fetchColumn();
           <div class="row">
             <div class="col-sm-6 col-md-3">
               <a href="project_record.php" class="text-decoration-none">
-              <div class="card card-stats card-round bg-primary">
-                <div class="card-body">
-                  <div class="row align-items-center">
-                    <div class="col-icon">
-                      <div
-                        class="icon-big text-center icon-white  text-white bubble-shadow-small">
-                        <i class="fas fa-tasks"></i>
+                <div class="card card-stats card-round bg-primary">
+                  <div class="card-body">
+                    <div class="row align-items-center">
+                      <div class="col-icon">
+                        <div
+                          class="icon-big text-center icon-white  text-white bubble-shadow-small">
+                          <i class="fas fa-tasks"></i>
+                        </div>
                       </div>
-                    </div>
-                    <div class="col col-stats ms-3 ms-sm-0">
-                      <div class="numbers">
-                        <p class="card-category text-white">Current Project</p>
-                        <h4 class="fw-bold mb-0 text-white"><?= $currentCount ?></h4>
+                      <div class="col col-stats ms-3 ms-sm-0">
+                        <div class="numbers">
+                          <p class="card-category text-white">Current Project</p>
+                          <h4 class="fw-bold mb-0 text-white"><?= $currentCount ?></h4>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
               </a>
             </div>
             <div class="col-sm-6 col-md-3">
               <a href="project_record.php" class="text-decoration-none">
-              <div class="card card-stats card-round bg-warning">
-                <div class="card-body">
-                  <div class="row align-items-center">
-                    <div class="col-icon">
-                      <div
-                        class="icon-big text-center bg-warning text-white bubble-shadow-small">
-                        <i class="fas fa-calendar-alt"></i>
+                <div class="card card-stats card-round bg-warning">
+                  <div class="card-body">
+                    <div class="row align-items-center">
+                      <div class="col-icon">
+                        <div
+                          class="icon-big text-center bg-warning text-white bubble-shadow-small">
+                          <i class="fas fa-calendar-alt"></i>
+                        </div>
                       </div>
-                    </div>
-                    <div class="col col-stats ms-3 ms-sm-0">
-                      <div class="numbers">
-                        <p class="card-category text-dark">Upcoming Project</p>
-                        <h4 class="fw-bold mb-0 text-dark"><?= $upcomingCount ?></h4>
+                      <div class="col col-stats ms-3 ms-sm-0">
+                        <div class="numbers">
+                          <p class="card-category text-dark">Upcoming Project</p>
+                          <h4 class="fw-bold mb-0 text-dark"><?= $upcomingCount ?></h4>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
               </a>
             </div>
             <div class="col-sm-6 col-md-3">
               <a href="project_record.php" class="text-decoration-none">
-              <div class="card card-stats card-round bg-success">
-                <div class="card-body">
-                  <div class="row align-items-center">
-                    <div class="col-icon">
-                      <div
-                        class="icon-big text-center bg-success bg-dark text-white bubble-shadow-small">
-                        <i class="fas fa-check-circle"></i>
+                <div class="card card-stats card-round bg-success">
+                  <div class="card-body">
+                    <div class="row align-items-center">
+                      <div class="col-icon">
+                        <div
+                          class="icon-big text-center bg-success bg-dark text-white bubble-shadow-small">
+                          <i class="fas fa-check-circle"></i>
+                        </div>
                       </div>
-                    </div>
-                    <div class="col col-stats ms-3 ms-sm-0">
-                      <div class="numbers">
-                        <p class="card-category text-white">Completed Project</p>
-                        <h4 class="fw-bold mb-0 text-white"><?= $completedCount ?></h4>
+                      <div class="col col-stats ms-3 ms-sm-0">
+                        <div class="numbers">
+                          <p class="card-category text-white">Completed Project</p>
+                          <h4 class="fw-bold mb-0 text-white"><?= $completedCount ?></h4>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
               </a>
             </div>
             <div class="col-sm-6 col-md-3">
               <a href="enquiry_record.php" class="text-decoration-none">
-              <div class="card card-stats card-round bg-secondary">
-                <div class="card-body">
-                  <div class="row align-items-center">
-                    <div class="col-icon">
-                      <div
-                        class="icon-big text-center  bg-secondary text-white bubble-shadow-small">
-                        <i class="fas fa-envelope"></i>
+                <div class="card card-stats card-round bg-secondary">
+                  <div class="card-body">
+                    <div class="row align-items-center">
+                      <div class="col-icon">
+                        <div
+                          class="icon-big text-center  bg-secondary text-white bubble-shadow-small">
+                          <i class="fas fa-envelope"></i>
+                        </div>
                       </div>
-                    </div>
-                    <div class="col col-stats ms-3 ms-sm-0">
-                      <div class="numbers">
-                        <p class="card-category text-white">Enquiries</p>
-                        <h4 class="fw-bold mb-0 text-white"><?= $enquiryCount ?></h4>
+                      <div class="col col-stats ms-3 ms-sm-0">
+                        <div class="numbers">
+                          <p class="card-category text-white">Enquiries</p>
+                          <h4 class="fw-bold mb-0 text-white"><?= $enquiryCount ?></h4>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
               </a>
             </div>
             <div class="col-sm-6 col-md-3">
               <a href="contact_record.php" class="text-decoration-none">
-              <div class="card card-stats card-round bg-dark">
-                <div class="card-body">
-                  <div class="row align-items-center">
-                    <div class="col-icon">
-                      <div
-                        class="icon-big text-center icon-success bg-dark text-white bubble-shadow-small">
-                        <i class="fas fa-address-book"></i>
+                <div class="card card-stats card-round bg-dark">
+                  <div class="card-body">
+                    <div class="row align-items-center">
+                      <div class="col-icon">
+                        <div
+                          class="icon-big text-center icon-success bg-dark text-white bubble-shadow-small">
+                          <i class="fas fa-address-book"></i>
+                        </div>
                       </div>
-                    </div>
-                    <div class="col col-stats ms-3 ms-sm-0">
-                      <div class="numbers">
-                        <p class="card-category text-white">Contact Records</p>
-                        <h4 class="fw-bold mb-0 text-white"><?= $contactCount ?></h4>
+                      <div class="col col-stats ms-3 ms-sm-0">
+                        <div class="numbers">
+                          <p class="card-category text-white">Contact Records</p>
+                          <h4 class="fw-bold mb-0 text-white"><?= $contactCount ?></h4>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
               </a>
             </div>
           </div>
