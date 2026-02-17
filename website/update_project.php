@@ -14,7 +14,7 @@ if (isset($_POST['submit'])) {
     $project_status   = $_POST['project_status'];
     $project_details1 = $_POST['project_details1'];
     $project_details2 = $_POST['project_details2'];
-    $project_details2 = $_POST['project_details3'];
+    $project_details3 = $_POST['project_details3'];
 
     $uploadDir = "uploads/";
 
@@ -53,7 +53,7 @@ if (isset($_POST['submit'])) {
             project_image3 = :img3,
             project_details1 = :details1,
             project_details2 = :details2,
-            project_details2 = :details3
+            project_details3 = :details3
         WHERE id = :id
     ");
 
@@ -66,7 +66,7 @@ if (isset($_POST['submit'])) {
         ':img3'     => $image3,
         ':details1' => $project_details1,
         ':details2' => $project_details2,
-        ':details2' => $project_details3,
+        ':details3' => $project_details3,
         ':id'       => $id
     ]);
 
