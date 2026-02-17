@@ -149,70 +149,71 @@ $projects = $stmt->fetchAll(PDO::FETCH_ASSOC);
       font-weight: 400;
       font-style: normal;
     }
-/* Root carousel wrapper */
-.project-carousel {
-  --carousel-item-width: 340px;
-  --carousel-item-gap: 30px;
-  --carousel-duration: 28s;
 
-  position: relative;
-  width: 100%;
-  max-width: 1200px;
-  height: 380px;
-  overflow: hidden;
-  margin: auto;
-}
+    /* Root carousel wrapper */
+    .project-carousel {
+      --carousel-item-width: 340px;
+      --carousel-item-gap: 30px;
+      --carousel-duration: 28s;
 
-/* Mask (optional fade edges) */
-.project-carousel-mask {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 5;
-}
+      position: relative;
+      width: 100%;
+      max-width: 1200px;
+      height: 380px;
+      overflow: hidden;
+      margin: auto;
+    }
 
-/* Inner container */
-.project-carousel-inner {
-  position: relative;
-  height: 100%;
-}
+    /* Mask (optional fade edges) */
+    .project-carousel-mask {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 5;
+    }
 
-/* Each card */
-.project-carousel-item {
-  position: absolute;
-  animation: project-carousel-slide var(--carousel-duration) linear infinite;
-}
+    /* Inner container */
+    .project-carousel-inner {
+      position: relative;
+      height: 100%;
+    }
 
-/* Animation */
-@keyframes project-carousel-slide {
-  from {
-    transform: translateX(0);
-  }
+    /* Each card */
+    .project-carousel-item {
+      position: absolute;
+      animation: project-carousel-slide var(--carousel-duration) linear infinite;
+    }
 
-  to {
-    transform: translateX(calc(-1 * (var(--carousel-item-width) + var(--carousel-item-gap)) * var(--items)));
-  }
-}
+    /* Animation */
+    @keyframes project-carousel-slide {
+      from {
+        transform: translateX(0);
+      }
 
-/* Pause on hover */
-.project-carousel:hover .project-carousel-item {
-  animation-play-state: paused;
-}
+      to {
+        transform: translateX(calc(-1 * (var(--carousel-item-width) + var(--carousel-item-gap)) * var(--items)));
+      }
+    }
 
-/* Responsive */
-@media (max-width: 768px) {
-  .project-carousel {
-    --carousel-item-width: 220px;
-    height: 280px;
-  }
-}
+    /* Pause on hover */
+    .project-carousel:hover .project-carousel-item {
+      animation-play-state: paused;
+    }
 
-@media (max-width: 480px) {
-  .project-carousel {
-    --carousel-item-width: 200px;
-    height: 260px;
-  }
-}
+    /* Responsive */
+    @media (max-width: 768px) {
+      .project-carousel {
+        --carousel-item-width: 220px;
+        height: 280px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .project-carousel {
+        --carousel-item-width: 200px;
+        height: 260px;
+      }
+    }
 
 
 
@@ -619,102 +620,105 @@ $projects = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 
   <section>
-<div class="bg-white">
+    <div class="bg-white">
 
-<div class="max-w-7xl mx-auto px-4">
+      <div class="max-w-7xl mx-auto px-4">
 
-<div class="grid grid-cols-1 lg:grid-cols-3 gap-10 items-center">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-10 items-center">
 
-<!-- LEFT CARD -->
-<div class="bg-black w-full max-w-sm mx-auto lg:mx-0 rounded-3xl p-5 shadow-lg mb-5 lg:ml-10 flex flex-col items-center text-center">
+          <!-- LEFT CARD -->
+          <div class="bg-black w-full max-w-sm mx-auto lg:mx-0 rounded-3xl p-5 shadow-lg mb-5 lg:ml-10 flex flex-col items-center text-center">
 
-<h2 class="ubuntu text-3xl text-white mb-4">
-Our Projects
-</h2>
+            <h2 class="ubuntu text-3xl text-white mb-4">
+              Our Projects
+            </h2>
 
-<p class="text-gray-400 font-semibold mb-8">
-Building Homes That Match Your Dreams
-</p>
+            <p class="text-gray-400 font-semibold mb-8">
+              Building Homes That Match Your Dreams
+            </p>
 
-<a href="contact"
-class="jersey bg-transparent text-[#73bc01] border border-[#73bc01] font-semibold w-60 px-6 py-2 rounded-lg transition-all duration-500 hover:bg-[#73bc01] hover:text-black hover:scale-105">
-Schedule A Site Visit
-</a>
+            <a href="contact"
+              class="jersey bg-transparent text-[#73bc01] border border-[#73bc01] font-semibold w-60 px-6 py-2 rounded-lg transition-all duration-500 hover:bg-[#73bc01] hover:text-black hover:scale-105">
+              Schedule A Site Visit
+            </a>
 
-</div>
+          </div>
 
-<!-- RIGHT CAROUSEL -->
-<div class=" lg:col-span-2 relative w-full max-w-full lg:max-w-[745px] mx-auto lg:ml-20 rounded-2xl py-4">
+          <!-- RIGHT CAROUSEL -->
+          <div class="  lg:col-span-2 relative w-full max-w-full lg:max-w-[745px] mx-auto lg:ml-20 rounded-2xl py-4">
 
-<div class="project-carousel mx-auto"
-style="--items: <?php echo max(count($projects),1); ?>;">
+            <div class="project-carousel mx-auto"
+              style="--items: <?php echo max(count($projects), 1); ?>;">
 
-<div class="project-carousel-mask"></div>
+              <div class="project-carousel-mask"></div>
 
-<div class="project-carousel-inner relative min-h-[420px]">
+              <div class="project-carousel-inner relative min-h-[420px]">
 
-<?php if (count($projects) > 0): ?>
-<?php $i = 0; ?>
+                <?php if (count($projects) > 0): ?>
+                  <?php $i = 0; ?>
 
-<?php foreach ($projects as $row): ?>
+                  <?php foreach ($projects as $row): ?>
 
-<article
-class="project-carousel-item absolute top-0 bg-white rounded-xl border border-gray-200 shadow-sm transition-transform duration-500 hover:scale-105 flex flex-col min-h-[380px]"
-style="
-left: calc(100% + var(--carousel-item-gap));
-width: var(--carousel-item-width);
-animation-delay: calc(var(--carousel-duration)/var(--items)*<?php echo $i; ?>*-1);
-">
+                    <article
+                      class="project-carousel-item absolute top-0 bg-white rounded-xl border border-gray-200 shadow-sm transition-transform duration-500 hover:scale-105 flex flex-col min-h-[380px] pb-12 sm:pb-4"
 
-<!-- IMAGE -->
-<div class="w-full h-[200px] bg-gray-100 shrink-0">
+                      style="
+                              left: calc(100% + var(--carousel-item-gap));
+                              width: var(--carousel-item-width);
+                              animation-delay: calc(var(--carousel-duration)/var(--items)*<?php echo $i; ?>*-1);
+                              ">
 
-<?php if (!empty($row['project_image1'])): ?>
-<img
-src="website/uploads/<?php echo $row['project_image1']; ?>"
-alt="<?php echo $row['project_name']; ?>"
-class="w-full h-full object-cover" />
-<?php else: ?>
-<span class="flex h-full items-center justify-center text-gray-400">
-No Image
-</span>
-<?php endif; ?>
+                      <!-- IMAGE -->
+                      <div class="w-full h-[200px] bg-gray-100 shrink-0">
 
-</div>
+                        <?php if (!empty($row['project_image1'])): ?>
+                          <img
+                            src="website/uploads/<?php echo $row['project_image1']; ?>"
+                            alt="<?php echo $row['project_name']; ?>"
+                            class="w-full h-full object-cover" />
+                        <?php else: ?>
+                          <span class="flex h-full items-center justify-center text-gray-400">
+                            No Image
+                          </span>
+                        <?php endif; ?>
 
-<!-- CONTENT -->
-<div class="p-4 flex flex-col flex-1">
+                      </div>
 
-<h3 class="text-sm font-semibold mb-1">
-<?php echo strtoupper($row['project_name']); ?>
-</h3>
+                      <!-- CONTENT -->
+                      <div class="p-4 flex flex-col flex-1">
 
-<p class="text-xs text-gray-600 mb-2">
-<?php echo substr($row['project_details1'], 0, 80); ?>...
-</p>
+                        <h3 class="text-sm font-semibold mb-1">
+                          <?php echo strtoupper($row['project_name']); ?>
+                        </h3>
 
-<a
-href="project_details.php?id=<?php echo $row['id']; ?>"
-class="mt-auto text-sm font-medium text-black underline">
-Read More →
-</a>
+                        <p class=" hidden sm:block text-xs text-gray-600 mb-2 ">
+                          <?php echo substr($row['project_details1'], 0, 80); ?>...
+                        </p>
 
-</div>
+                        <a
+                          href="project_details.php?id=<?php echo $row['id']; ?>"
+                          class="mt-1 mb-6 md:mt-[65px] text-sm font-medium text-black underline">
+                          Read More →
+                        </a>
 
-</article>
+                      </div>
 
-<?php $i++; ?>
-<?php endforeach; ?>
-<?php endif; ?>
+                    </article>
 
-</div>
-</div>
+                    <?php $i++; ?>
+                  <?php endforeach; ?>
+                <?php endif; ?>
 
-</div>
+              </div>
+            </div>
 
-</div>
-</div>
-</section>
+          </div>
+
+        </div>
+      </div>
+    
+    </div>
+  </section>
 
 
   <!-- Contact Sections-->
