@@ -1,5 +1,32 @@
 <?php
 session_start();
+
+$timeout = 1800; // 30 minutes
+
+// If not logged in
+if (!isset($_SESSION['user'])) {
+    header("Location: login.php?error=login_required");
+    exit();
+}
+
+// If session expired due to inactivity
+if (isset($_SESSION['LAST_ACTIVITY']) && 
+    (time() - $_SESSION['LAST_ACTIVITY']) > $timeout) {
+
+    session_unset();
+    session_destroy();
+    header("Location: login.php?error=timeout");
+    exit();
+}
+
+// Update last activity time
+$_SESSION['LAST_ACTIVITY'] = time();
+
+// Disable browser cache
+header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+header("Cache-Control: post-check=0, pre-check=0", false);
+header("Pragma: no-cache");
+header("Expires: 0");
 include "conn.php";
 
 if (isset($_POST['submit'])) {
