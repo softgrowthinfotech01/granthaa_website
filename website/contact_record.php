@@ -1,4 +1,5 @@
 <?php
+session_start();
 include "conn.php";
 
 $stmt = $conn->prepare("SELECT * FROM contact ORDER BY id ASC");
