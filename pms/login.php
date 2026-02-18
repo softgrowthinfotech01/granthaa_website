@@ -21,7 +21,7 @@
 
     <!-- Logo -->
     <div class="flex justify-center mb-3">
-      <img src="../images/logo.png" alt="Logo" class="h-25 w-60 rounded-lg border-2 border-yellow-400 shadow-md">
+      <img src="images/logo.png" alt="Logo" class="h-25 w-60 rounded-lg border-2 border-yellow-400 shadow-md">
     </div>
 
     <!-- Heading -->
