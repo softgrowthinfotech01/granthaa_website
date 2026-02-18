@@ -195,7 +195,7 @@ if (isset($_POST['submit'])) {
                       </div>
                       <div class="col-md-4 ">
                         <div class="form-group">
-                          <label for="studentname">Location</label>
+                          <label for="studentname">Location<span class="sticky-top text-danger fw-bold">*</span></label>
                           <input name="project_location"
                             type="text"
                             class="form-control"
@@ -211,7 +211,7 @@ if (isset($_POST['submit'])) {
                       </div>
                       <div class="col-md-4 ">
                         <div class="form-group">
-                          <label for="studentname">Project Status</label>
+                          <label for="studentname">Project Status<span class="sticky-top text-danger fw-bold">*</span></label>
                           <select class="form-select" name="project_status" aria-label="Default select example">
                             <option selected>Select One</option>
                             <option value="Current">Current</option>
