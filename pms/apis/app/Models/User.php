@@ -15,7 +15,7 @@ class User extends Authenticatable
 
     /**
      * The attributes that are mass assignable.
-     *
+     * 
      * @var list<string>
      */
     protected $fillable = [
@@ -33,6 +33,10 @@ class User extends Authenticatable
     'pin_code',
     'password',
     'role',
+    'bank_name',
+    'bank_branch',
+    'bank_account_no',
+    'bank_ifsc_code',
     'created_by'
     ];
 

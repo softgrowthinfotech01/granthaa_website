@@ -1,3 +1,10 @@
+<?php
+include "website/conn.php";
+
+$stmt = $conn->prepare("SELECT * FROM project WHERE project_status='Current'");
+$stmt->execute();
+$projects = $stmt->fetchAll(PDO::FETCH_ASSOC);
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,16 +12,15 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Granthaa Developer Pvt Ltd | Plots, Flats & Land for Sale in Chandrapur</title>
-   <meta name="description" content="Granthaa Developer Pvt Ltd offers trusted property solutions in Chandrapur. Buy, sell, or resell plots, flats, and land in Chandrapur and nearby areas with expert guidance and transparent deals.">
+  <meta name="description" content="Granthaa Developer Pvt Ltd offers trusted property solutions in Chandrapur. Buy, sell, or resell plots, flats, and land in Chandrapur and nearby areas with expert guidance and transparent deals.">
   <meta name="author" content="Granthaa Developer Pvt Ltd, Chandrapur">
-<meta name="keywords" content="Granthaa Developer, Chandrapur real estate, plots for sale in Chandrapur, flats in Chandrapur, land for sale Chandrapur, property dealer Chandrapur, land resale Chandrapur, real estate developer Chandrapur">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="keywords" content="Granthaa Developer, Chandrapur real estate, plots for sale in Chandrapur, flats in Chandrapur, land for sale Chandrapur, property dealer Chandrapur, land resale Chandrapur, real estate developer Chandrapur">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Yeseva+One&display=swap" rel="stylesheet">
   <style>
-
     .writing-mode-vertical {
       writing-mode: vertical-rl;
       text-orientation: mixed;
@@ -85,25 +91,26 @@
       }
     }
 
-     .slide-card {
-    min-width: 320px;
-    flex-shrink: 0;
-    scroll-snap-align: center;
-    border-radius: 16px;
-    overflow: hidden;
-  }
+    .slide-card {
+      min-width: 320px;
+      flex-shrink: 0;
+      scroll-snap-align: center;
+      border-radius: 16px;
+      overflow: hidden;
+    }
 
-  .slide-card img {
-    width: 100%;
-    height: auto;
-    display: block;
-  }
+    .slide-card img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
 
-  .indicator.active {
-    background-color: #21ee39 !important;
-    color: black;
-  }
-  /* .same-indicator {
+    .indicator.active {
+      background-color: #21ee39 !important;
+      color: black;
+    }
+
+    /* .same-indicator {
     @apply w-2.5 h-2.5 sm:w-3 sm:h-3 md:w-4 md:h-4
            rounded-full bg-black/70 border border-[#73bc01]
            transition-all duration-300
@@ -117,29 +124,100 @@
         transform: scale(1.05);
       }
     }
-    
-.family {
-  font-family: "Yeseva One", serif;
-  font-optical-sizing: auto;
-  font-weight: weight;
-  font-style: normal;
-}
-.yeseva {
-  font-family: "Yeseva One", serif;
-  font-weight: 400;
-  font-style: normal;
-}
-.ubuntu {
-  font-family: "Ubuntu", sans-serif;
-  font-weight: 300;
-  font-style: italic;
-}
-.jersey {
-  font-family: "Jersey 25", sans-serif;
-  font-weight: 400;
-  font-style: normal;
-}
-/* .slide {
+
+    .family {
+      font-family: "Yeseva One", serif;
+      font-optical-sizing: auto;
+      font-weight: weight;
+      font-style: normal;
+    }
+
+    .yeseva {
+      font-family: "Yeseva One", serif;
+      font-weight: 400;
+      font-style: normal;
+    }
+
+    .ubuntu {
+      font-family: "Ubuntu", sans-serif;
+      font-weight: 300;
+      font-style: italic;
+    }
+
+    .jersey {
+      font-family: "Jersey 25", sans-serif;
+      font-weight: 400;
+      font-style: normal;
+    }
+
+    /* Root carousel wrapper */
+    .project-carousel {
+      --carousel-item-width: 340px;
+      --carousel-item-gap: 30px;
+      --carousel-duration: 28s;
+
+      position: relative;
+      width: 100%;
+      max-width: 1200px;
+      height: 380px;
+      overflow: hidden;
+      margin: auto;
+    }
+
+    /* Mask (optional fade edges) */
+    .project-carousel-mask {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 5;
+    }
+
+    /* Inner container */
+    .project-carousel-inner {
+      position: relative;
+      height: 100%;
+    }
+
+    /* Each card */
+    .project-carousel-item {
+      position: absolute;
+      animation: project-carousel-slide var(--carousel-duration) linear infinite;
+    }
+
+    /* Animation */
+    @keyframes project-carousel-slide {
+      from {
+        transform: translateX(0);
+      }
+
+      to {
+        transform: translateX(calc(-1 * (var(--carousel-item-width) + var(--carousel-item-gap)) * var(--items)));
+      }
+    }
+
+    /* Pause on hover */
+    .project-carousel:hover .project-carousel-item {
+      animation-play-state: paused;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .project-carousel {
+        --carousel-item-width: 220px;
+        height: 280px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .project-carousel {
+        --carousel-item-width: 200px;
+        height: 260px;
+      }
+    }
+
+
+
+    /* .slide {
     min-width: 25%;
     transition: transform 0.5s ease, opacity 0.5s ease;
   }
@@ -165,10 +243,10 @@
     background: white;
     transform: scale(1.4);
   } */
-</style>
+  </style>
 
-     
- 
+
+
   <!-- Tailwind CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
 
@@ -180,47 +258,47 @@
 
 <body class="bg-transparent">
 
-    <?php include "header.php"; ?> 
+  <?php include "header.php"; ?>
 
 
-   <!-- slider start -->
-    <div id="default-carousel"
-     class="relative w-full
+  <!-- slider start -->
+  <div id="default-carousel"
+    class="relative w-full
             h-[260px] sm:h-[360px] md:h-[500px] lg:h-[650px] xl:h-[700px]"
-     data-carousel="slide">
+    data-carousel="slide">
 
-  <!-- Carousel wrapper -->
-  <div class="relative h-full overflow-hidden">
+    <!-- Carousel wrapper -->
+    <div class="relative h-full overflow-hidden">
 
-    <div class="hidden duration-700 ease-in-out h-full" data-carousel-item>
-      <img src="images/GLDimg1.webp"
-           class="absolute w-full h-full object-cover">
+      <div class="hidden duration-700 ease-in-out h-full" data-carousel-item>
+        <img src="images/GLDimg1.webp"
+          class="absolute w-full h-full object-cover">
+      </div>
+
+      <div class="hidden duration-700 ease-in-out h-full" data-carousel-item>
+        <img src="images/GLDimg2.webp"
+          class="absolute w-full h-full object-cover">
+      </div>
+
+      <div class="hidden duration-700 ease-in-out h-full" data-carousel-item>
+        <img src="images/GLDimg3.webp"
+          class="absolute w-full h-full object-cover">
+      </div>
+
+      <div class="hidden duration-700 ease-in-out h-full" data-carousel-item>
+        <img src="images/GLDimg4.webp"
+          class="absolute w-full h-full object-cover">
+      </div>
+
+      <div class="hidden duration-700 ease-in-out h-full" data-carousel-item>
+        <img src="images/GLDimg5.webp"
+          class="absolute w-full h-full object-cover">
+      </div>
+
     </div>
 
-    <div class="hidden duration-700 ease-in-out h-full" data-carousel-item>
-      <img src="images/GLDimg2.webp"
-           class="absolute w-full h-full object-cover">
-    </div>
-
-    <div class="hidden duration-700 ease-in-out h-full" data-carousel-item>
-      <img src="images/GLDimg3.webp"
-           class="absolute w-full h-full object-cover">
-    </div>
-
-    <div class="hidden duration-700 ease-in-out h-full" data-carousel-item>
-      <img src="images/GLDimg4.webp"
-           class="absolute w-full h-full object-cover">
-    </div>
-
-    <div class="hidden duration-700 ease-in-out h-full" data-carousel-item>
-      <img src="images/GLDimg5.webp"
-           class="absolute w-full h-full object-cover">
-    </div>
-
-  </div>
-
-  <!-- INDICATORS -->
-  <!-- <div class="absolute z-30 bottom-4 sm:bottom-6
+    <!-- INDICATORS -->
+    <!-- <div class="absolute z-30 bottom-4 sm:bottom-6
               left-1/2 -translate-x-1/2 flex gap-2 sm:gap-3">
 
     <button data-carousel-slide-to="0"
@@ -237,33 +315,33 @@
     <button data-carousel-slide-to="4" class="same-indicator"></button>
   </div> -->
 
-  <!-- PREV -->
-  <button type="button"
-    class="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 z-30
+    <!-- PREV -->
+    <button type="button"
+      class="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 z-30
            w-8 h-8 sm:w-10 sm:h-10 md:w-14 md:h-14
            rounded-full bg-black/70 backdrop-blur
            flex items-center justify-center
            border border-[#73bc01]
            hover:scale-110 transition-all"
-    data-carousel-prev>
-    <span class="text-[#73bc01] text-2xl sm:text-3xl md:text-5xl mb-1 md:mb-3 leading-none">‹</span>
-  </button>
+      data-carousel-prev>
+      <span class="text-[#73bc01] text-2xl sm:text-3xl md:text-5xl mb-1 md:mb-3 leading-none">‹</span>
+    </button>
 
-  <!-- NEXT -->
-  <button type="button"
-    class="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 z-30
+    <!-- NEXT -->
+    <button type="button"
+      class="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 z-30
            w-8 h-8 sm:w-10 sm:h-10 md:w-14 md:h-14
            rounded-full bg-black/70 backdrop-blur
            flex items-center justify-center
            border border-[#73bc01]
            hover:scale-110 transition-all"
-    data-carousel-next>
-    <span class="text-[#73bc01] text-2xl sm:text-3xl md:text-5xl mb-1 md:mb-3 leading-none">›</span>
-  </button>
+      data-carousel-next>
+      <span class="text-[#73bc01] text-2xl sm:text-3xl md:text-5xl mb-1 md:mb-3 leading-none">›</span>
+    </button>
 
-</div>
+  </div>
 
-    <!-- slider end -->
+  <!-- slider end -->
   <div class=" bg-white ">
 
     <!-- Header -->
@@ -294,17 +372,16 @@
             Turn Your Dreams Into A Home You'll Love.
           </p>
 
-        <a
-  href="contact"
-  class="inline-block jersey bg-transparent text-[#73bc01]
+          <a
+            href="contact"
+            class="inline-block jersey bg-transparent text-[#73bc01]
          border border-[#73bc01] font-semibold ml-7
          px-8 py-3 rounded-lg
          transition-all duration-500 ease-in-out
          hover:bg-[#73bc01] hover:text-black
-         hover:scale-105 hover:shadow-lg"
->
-  Schedule A Site Visit
-</a>
+         hover:scale-105 hover:shadow-lg">
+            Schedule A Site Visit
+          </a>
 
         </div>
 
@@ -474,15 +551,14 @@
           MAKE AN APPOINTMENT NOW
         </h3>
 
-      <a
-  href="contact.php"
-  class="inline-block jersey font-semibold bg-transparent
+        <a
+          href="contact.php"
+          class="inline-block jersey font-semibold bg-transparent
          border border-[#73bc01] text-[#73bc01]
          hover:bg-[#73bc01] hover:text-black
-         px-8 py-3 rounded-md transition duration-300"
->
-  Enquire Now
-</a>
+         px-8 py-3 rounded-md transition duration-300">
+          Enquire Now
+        </a>
 
       </div>
     </div>
@@ -494,194 +570,287 @@
 
   <!-- ABOUT SECTION -->
   <section class="bg-white mx-auto px-6 py-8 mt-[80px]">
-  <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+    <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
 
-    <!-- LEFT IMAGE -->
-    <div class="relative rounded-2xl transition-transform duration-500 ease-in-out
+      <!-- LEFT IMAGE -->
+      <div class="relative rounded-2xl transition-transform duration-500 ease-in-out
                 hover:scale-105 overflow-hidden shadow-2xl">
-    <img
-  src="images/plot booking.jpeg"
-  alt="Premium Plot Development"
-  class="w-full h-[450px] rounded-lg
-      "
-/>
-<span class="absolute top-0 right-0 w-80 h-[7px] bg-[#73bc01] "></span>
-  <span class="absolute top-0 right-0 w-[7px] h-80 bg-[#73bc01] "></span>
+        <img
+          src="images/plot booking.jpeg"
+          alt="Premium Plot Development"
+          class="w-full h-[450px] rounded-lg
+      " />
+        <span class="absolute top-0 right-0 w-80 h-[7px] bg-[#73bc01] "></span>
+        <span class="absolute top-0 right-0 w-[7px] h-80 bg-[#73bc01] "></span>
 
-  <!-- Bottom Left Blue -->
-  <span class="absolute bottom-0 left-0 w-80 h-[7px] bg-blue-800"></span>
-  <span class="absolute bottom-0 left-0 w-[7px] h-80 bg-blue-800"></span>
-    </div>
+        <!-- Bottom Left Blue -->
+        <span class="absolute bottom-0 left-0 w-80 h-[7px] bg-blue-800"></span>
+        <span class="absolute bottom-0 left-0 w-[7px] h-80 bg-blue-800"></span>
+      </div>
 
-    <!-- RIGHT CONTENT -->
-    <div class="space-y-6">
-      <h2 class="family text-[#73bc01]  font-bold text-2xl md:text-4xl  ">
-        About Us
-      </h2>
+      <!-- RIGHT CONTENT -->
+      <div class="space-y-6">
+        <h2 class="family text-[#73bc01]  font-bold text-2xl md:text-4xl  ">
+          About Us
+        </h2>
 
-      <p class="text-lg text-gray-700 leading-relaxed text-justify">
-        We specialize in premium plot developments designed for those who value
-        location, long-term growth, and lifestyle excellence. Every project is
-        carefully planned to ensure legal clarity, superior infrastructure,
-        and future-ready living.
-      </p>
+        <p class="text-lg text-gray-700 leading-relaxed text-justify">
+          We specialize in premium plot developments designed for those who value
+          location, long-term growth, and lifestyle excellence. Every project is
+          carefully planned to ensure legal clarity, superior infrastructure,
+          and future-ready living.
+        </p>
 
-      <p class="text-lg text-gray-700 leading-relaxed text-justify">
-        Our developments combine modern planning with nature-friendly layouts,
-        offering well-connected roads, open spaces, and a secure investment
-        environment for families and investors alike.
-      </p>
-      <p class="text-lg text-gray-700 leading-relaxed text-justify">
+        <p class="text-lg text-gray-700 leading-relaxed text-justify">
+          Our developments combine modern planning with nature-friendly layouts,
+          offering well-connected roads, open spaces, and a secure investment
+          environment for families and investors alike.
+        </p>
+        <p class="text-lg text-gray-700 leading-relaxed text-justify">
           Each of our communities is thoughtfully crafted to enhance the quality
-           of life, blending convenience with tranquility. From landscaped parks and 
-           recreational areas to essential amenities within easy reach, we ensure a 
-           harmonious balance between urban comforts and natural serenity. By prioritizing 
-           sustainability, safety, and aesthetic appeal, our developments provide not just 
-           a plot, but a lifestyle that grows in value and prestige over time.</p> 
-    </div>
-
-  </div>
-</section>
-
-
-
+          of life, blending convenience with tranquility. From landscaped parks and
+          recreational areas to essential amenities within easy reach, we ensure a
+          harmonious balance between urban comforts and natural serenity. By prioritizing
+          sustainability, safety, and aesthetic appeal, our developments provide not just
+          a plot, but a lifestyle that grows in value and prestige over time.</p>
+      </div>
 
     </div>
+  </section>
+
+
+  <section>
+    <div class="bg-white">
+
+      <div class="max-w-7xl mx-auto px-4">
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-10 items-center">
+
+          <!-- LEFT CARD -->
+          <div class="bg-black w-full max-w-sm mx-auto lg:mx-0 rounded-3xl p-5 shadow-lg mb-5 lg:ml-10 flex flex-col items-center text-center">
+
+            <h2 class="ubuntu text-3xl text-white mb-4">
+              Our Projects
+            </h2>
+
+            <p class="text-gray-400 font-semibold mb-8">
+              Building Homes That Match Your Dreams
+            </p>
+
+            <a href="contact"
+              class="jersey bg-transparent text-[#73bc01] border border-[#73bc01] font-semibold w-60 px-6 py-2 rounded-lg transition-all duration-500 hover:bg-[#73bc01] hover:text-black hover:scale-105">
+              Schedule A Site Visit
+            </a>
+
+          </div>
+
+          <!-- RIGHT CAROUSEL -->
+          <div class="  lg:col-span-2 relative w-full max-w-full lg:max-w-[745px] mx-auto lg:ml-20 rounded-2xl py-4">
+
+            <div class="project-carousel mx-auto"
+              style="--items: <?php echo max(count($projects), 1); ?>;">
+
+              <div class="project-carousel-mask"></div>
+
+              <div class="project-carousel-inner relative min-h-[420px]">
+
+                <?php if (count($projects) > 0): ?>
+                  <?php $i = 0; ?>
+
+                  <?php foreach ($projects as $row): ?>
+
+                    <article
+                      class="project-carousel-item absolute top-0 bg-white rounded-xl border border-gray-200 shadow-sm transition-transform duration-500 hover:scale-105 flex flex-col min-h-[380px] pb-12 sm:pb-4"
+
+                      style="
+                              left: calc(100% + var(--carousel-item-gap));
+                              width: var(--carousel-item-width);
+                              animation-delay: calc(var(--carousel-duration)/var(--items)*<?php echo $i; ?>*-1);
+                              ">
+
+                      <!-- IMAGE -->
+                      <div class="w-full h-[200px] bg-gray-100 shrink-0">
+
+                        <?php if (!empty($row['project_image1'])): ?>
+                          <img
+                            src="website/uploads/<?php echo $row['project_image1']; ?>"
+                            alt="<?php echo $row['project_name']; ?>"
+                            class="w-full h-full object-cover" />
+                        <?php else: ?>
+                          <span class="flex h-full items-center justify-center text-gray-400">
+                            No Image
+                          </span>
+                        <?php endif; ?>
+
+                      </div>
+
+                      <!-- CONTENT -->
+                      <div class="p-4 flex flex-col flex-1">
+
+                        <h3 class="text-sm font-semibold mb-1">
+                          <?php echo strtoupper($row['project_name']); ?>
+                        </h3>
+
+                        <p class=" hidden sm:block text-xs text-gray-600 mb-2 ">
+                          <?php echo substr($row['project_details1'], 0, 80); ?>...
+                        </p>
+
+                        <a
+                          href="project_details.php?id=<?php echo $row['id']; ?>"
+                          class="mt-1 mb-6 md:mt-[65px] text-sm font-medium text-black underline">
+                          Read More →
+                        </a>
+
+                      </div>
+
+                    </article>
+
+                    <?php $i++; ?>
+                  <?php endforeach; ?>
+                <?php endif; ?>
+
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    
+    </div>
+  </section>
 
 
   <!-- Contact Sections-->
 
   <section class="bg-white px-6 py-20">
-  <!-- Section Heading -->
-  <div class="max-w-7xl mx-auto mb-12">
-    <h1 class="family text-3xl font-bold text-[#73bc01] flex justify-center">
-      CONTACT US 
-    </h1>
-  </div>
+    <!-- Section Heading -->
+    <div class="max-w-7xl mx-auto mb-12">
+      <h1 class="family text-3xl font-bold text-[#73bc01] flex justify-center">
+        CONTACT US
+      </h1>
+    </div>
 
-  <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-14 items-stretch">
+    <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-14 items-stretch">
 
-    <!-- LEFT FORM -->
-    <div class="border-2 border-blue-900 rounded-2xl p-10 flex flex-col justify-between bg-white transition-transform duration-500 ease-in-out
+      <!-- LEFT FORM -->
+      <div class="border-2 border-blue-900 rounded-2xl p-10 flex flex-col justify-between bg-white transition-transform duration-500 ease-in-out
                 hover:scale-105 shadow-sm">
-      <div>
-        <h2 class="text-4xl font-serif text-blue-900 mb-4">
-          Book Site Visit <span class="uppercase text-green-600">Now !</span>
-        </h2>
+        <div>
+          <h2 class="text-4xl font-serif text-blue-900 mb-4">
+            Book Site Visit <span class="uppercase text-green-600">Now !</span>
+          </h2>
 
-        <p class="text-gray-800 font-semibold mb-10">
-          Take The First Step Towards Your Dream Home – Book Today!
-        </p>
+          <p class="text-gray-800 font-semibold mb-10">
+            Take The First Step Towards Your Dream Home – Book Today!
+          </p>
 
-        <form method="post" class="space-y-6">
+          <form method="post" class="space-y-6">
 
-          <input
-            type="text"
-            placeholder="Name" name="name"
-            class="w-full bg-white border-2 border-blue-200 rounded-lg px-5 py-4
-                   focus:outline-none focus:border-green-500"
-          />
-
-          <input
-            type="email"
-            placeholder="Email" name="email"
-            class="w-full bg-white border-2 border-blue-200 rounded-lg px-5 py-4
-                   focus:outline-none focus:border-green-500"
-          />
-
-          <div class="flex items-center border-2 border-blue-200 rounded-lg px-4 py-3">
-            <span class="mr-3">🇮🇳</span>
             <input
-              type="tel"
-              placeholder="Phone" name="phone"
-              class="bg-transparent w-full focus:outline-none"
-            />
-          </div>
+              type="text"
+              placeholder="Name" name="name"
+              class="w-full bg-white border-2 border-blue-200 rounded-lg px-5 py-4
+                   focus:outline-none focus:border-green-500" />
 
-          <label class="flex items-start gap-3 text-sm text-gray-700">
-            <input type="checkbox" checked class="mt-1 accent-green-600" />
-            I agree and authorize team to contact me. This will override the register with us.
-          </label>
+            <input
+              type="email"
+              placeholder="Email" name="email"
+              class="w-full bg-white border-2 border-blue-200 rounded-lg px-5 py-4
+                   focus:outline-none focus:border-green-500" />
 
-          <div class="g-recaptcha" data-sitekey="6Lf45GcsAAAAAIDRQ-udUFSe_D_KMi4a1vmwEfnd"></div>
+            <div class="flex items-center border-2 border-blue-200 rounded-lg px-4 py-3">
+              <span class="mr-3">🇮🇳</span>
+              <input
+                type="tel"
+                placeholder="Phone" name="phone"
+                class="bg-transparent w-full focus:outline-none" />
+            </div>
 
-          <div class="pt-10">
-        <button name="submit"
-          class="font-semibold bg-[#73bc01] text-white
+            <label class="flex items-start gap-3 text-sm text-gray-700">
+              <input type="checkbox" checked class="mt-1 accent-green-600" />
+              I agree and authorize team to contact me. This will override the register with us.
+            </label>
+
+            <div class="g-recaptcha" data-sitekey="6Lf45GcsAAAAAIDRQ-udUFSe_D_KMi4a1vmwEfnd"></div>
+
+            <div class="pt-10">
+              <button name="submit"
+                class="font-semibold bg-[#73bc01] text-white
                  hover:bg-green-500
                  px-14 py-3 rounded-md tracking-wide transition">
-          SUBMIT
-        </button>
-      </div>
-        </form>
+                SUBMIT
+              </button>
+            </div>
+          </form>
+        </div>
+
+
       </div>
 
-      
-    </div>
-
-    <!-- RIGHT CONTENT -->
-    <div class="border-2 border-blue-900 rounded-2xl p-10  relative transition-transform duration-500 ease-in-out
+      <!-- RIGHT CONTENT -->
+      <div class="border-2 border-blue-900 rounded-2xl p-10  relative transition-transform duration-500 ease-in-out
                 hover:scale-105 shadow-sm">
-      <h2 class="text-4xl font-serif text-blue-900 mb-4">
-        Unlock Your Dream Home!
-      </h2>
+        <h2 class="text-4xl font-serif text-blue-900 mb-4">
+          Unlock Your Dream Home!
+        </h2>
 
-      <p class="text-gray-800 font-semibold mb-12">
-        Unlock a world of comfort and luxury in your dream home.
-      </p>
+        <p class="text-gray-800 font-semibold mb-12">
+          Unlock a world of comfort and luxury in your dream home.
+        </p>
 
-      <div class="space-y-10">
+        <div class="space-y-10">
 
-        <div class="flex gap-5 items-start">
-          <div class="w-12 h-12 rounded-full bg-[#73bc01] flex items-center justify-center text-white">
-            ✉
+          <div class="flex gap-5 items-start">
+            <div class="w-12 h-12 rounded-full bg-[#73bc01] flex items-center justify-center text-white">
+              ✉
+            </div>
+            <div>
+              <h4 class="text-xl font-serif text-blue-900">Send An Email</h4>
+              <p class="text-blue-700">email id : info@granthaadeveloperpvtltd.com</p>
+            </div>
           </div>
-          <div>
-            <h4 class="text-xl font-serif text-blue-900">Send An Email</h4>
-            <p class="text-blue-700">email id : info@granthaadeveloperpvtltd.com</p>
+
+          <div class="flex gap-5 items-start">
+            <div class="w-12 h-12 rounded-full bg-[#73bc01] flex items-center justify-center text-white">
+              ☎
+            </div>
+            <div>
+              <h4 class="text-xl font-serif text-blue-900">Give Us A Call</h4>
+              <p class="text-blue-700">+91 9975086229 , 8975280850</p>
+            </div>
           </div>
+
+          <div class="flex gap-5 items-start">
+            <div class="w-12 h-12 rounded-full bg-[#73bc01] flex items-center justify-center text-white">
+              📍
+            </div>
+            <div>
+              <h4 class="text-xl font-serif text-blue-900">Site Address</h4>
+              <p class="text-blue-700 max-w-sm">
+                Near ram setu bridge, devki complex, Chandrapur.
+              </p>
+            </div>
+          </div>
+
         </div>
-
-        <div class="flex gap-5 items-start">
-          <div class="w-12 h-12 rounded-full bg-[#73bc01] flex items-center justify-center text-white">
-            ☎
-          </div>
-          <div>
-            <h4 class="text-xl font-serif text-blue-900">Give Us A Call</h4>
-            <p class="text-blue-700">+91 9975086229 , 8975280850</p>
-          </div>
-        </div>
-
-        <div class="flex gap-5 items-start">
-          <div class="w-12 h-12 rounded-full bg-[#73bc01] flex items-center justify-center text-white">
-            📍
-          </div>
-          <div>
-            <h4 class="text-xl font-serif text-blue-900">Site Address</h4>
-            <p class="text-blue-700 max-w-sm">
-              Near ram setu bridge, devki complex, Chandrapur.
-            </p>
-          </div>
-        </div>
-
       </div>
+
     </div>
+  </section>
 
-  </div>
-</section>
-
-     <?php include "footer.php"; ?> 
+  <?php include "footer.php"; ?>
 
   <!-- DOWNLOAD BROCHURE BUTTON (RIGHT SIDE) -->
   <div
-  id="brochureBtn"
-  class="fixed right-0 top-1/2 -translate-y-1/2 z-30
+    id="brochureBtn"
+    class="fixed right-0 top-1/2 -translate-y-1/2 z-30
          opacity-0 pointer-events-none
          transition-opacity duration-100">
 
-  <a
-    href="#"
-    class="jersey
+    <a
+      href="#"
+      class="jersey
            flex items-center justify-center
            bg-[#73bc01]/40
            text-[#73bc01]
@@ -692,10 +861,10 @@
            tracking-widest
            font-semibold
            overflow-hidden">
-    Download Brochure
-  </a>
+      Download Brochure
+    </a>
 
-</div>
+  </div>
   <!-- WHATSAPP STICKY BUTTON -->
   <a href="https://wa.me/919999999999"
     target="_blank"
@@ -710,158 +879,148 @@
     </svg>
   </a>
 
-<?php
-include "website/conn.php";
+  <?php
+  include "website/conn.php";
 
-if(isset($_POST['submit'])){
+  if (isset($_POST['submit'])) {
 
-$secretKey = "6Lf45GcsAAAAAP8NfLwWSmj14LTXgSqQuuZ6-tTM";
+    $secretKey = "6Lf45GcsAAAAAP8NfLwWSmj14LTXgSqQuuZ6-tTM";
 
-$response = $_POST['g-recaptcha-response'];
+    $response = $_POST['g-recaptcha-response'];
 
-$verify = file_get_contents(
-"https://www.google.com/recaptcha/api/siteverify?secret=$secretKey&response=$response"
-);
+    $verify = file_get_contents(
+      "https://www.google.com/recaptcha/api/siteverify?secret=$secretKey&response=$response"
+    );
 
-$captcha = json_decode($verify);
+    $captcha = json_decode($verify);
 
-if(!$captcha->success){
+    if (!$captcha->success) {
 
-echo "<script>alert('Please verify captcha');</script>";
+      echo "<script>alert('Please verify captcha');</script>";
+    } else {
 
-}else{
+      $name = $_POST['name'];
+      $email = $_POST['email'];
+      $phone = $_POST['phone'];
 
-$name = $_POST['name'];
-$email = $_POST['email'];
-$phone = $_POST['phone'];
-
-$stmt = $conn->prepare("INSERT INTO enquiries(name,email,phone)
+      $stmt = $conn->prepare("INSERT INTO enquiries(name,email,phone)
 VALUES(:name,:email,:phone)");
 
-$stmt->execute([
- ':name'=>$name,
- ':email'=>$email,
- ':phone'=>$phone
-]);
+      $stmt->execute([
+        ':name' => $name,
+        ':email' => $email,
+        ':phone' => $phone
+      ]);
 
-header("Location: home.php");
-exit;
+      header("Location: home.php");
+      exit;
+    }
+  }
+  ?>
 
-}
-}
-?>
-
-<div
-  id="modalBackdrop"
-  class="fixed inset-0 z-50 flex items-center justify-center
+  <div
+    id="modalBackdrop"
+    class="fixed inset-0 z-50 flex items-center justify-center
          bg-black/60 px-4
          opacity-0 pointer-events-none
-         transition-opacity duration-300"
->
-  <!-- MODAL -->
-  <div
-    id="modalBox"
-    class="relative w-full max-w-sm sm:max-w-md
+         transition-opacity duration-300">
+    <!-- MODAL -->
+    <div
+      id="modalBox"
+      class="relative w-full max-w-sm sm:max-w-md
            bg-white rounded-2xl shadow-2xl
            border-2 border-blue-600
            p-4 sm:p-6
            transform translate-y-24 scale-95 opacity-0
-           transition-all duration-300 ease-out"
-  >
+           transition-all duration-300 ease-out">
 
-    <!-- CLOSE -->
-    <button
-      id="closeModal"
-      class="absolute top-3 right-3 text-blue-600
-             hover:text-red-500 text-2xl font-bold"
-    >
-      ✕
-    </button>
-
-    <!-- HEADER -->
-    <div class="text-center mb-5">
-      <h2 class="text-xl sm:text-2xl font-bold text-blue-700">
-        Call Us <span class="text-[#73bc01]">+91 9975086229</span>
-</br><span class="text-[#73bc01]">
-        +91 8975280850</span>
-</h2>
-
-      <p class="text-xs text-gray-500 mt-1">OR</p>
-
-      <h3 class="text-lg sm:text-xl font-semibold text-blue-700 mt-1">
-        Enquire Now!
-      </h3>
-
-      <p class="text-sm text-gray-600 mt-3">
-        Take the first step towards your dream home —
-        <span class="font-semibold text-[#73bc01]">book today!</span>
-      </p>
-    </div>
-
-    <!-- FORM -->
-    <form method="post" class="space-y-3 sm:space-y-4">
-
-      <input
-        type="text"
-        placeholder="Name"
-        name="name"
-        class="w-full px-4 py-2.5 sm:py-3
-               rounded-lg border border-blue-300
-               focus:ring-2 focus:ring-blue-500 outline-none"
-      />
-
-      <input
-        type="email"
-        placeholder="Email"
-        name="email"
-        class="w-full px-4 py-2.5 sm:py-3
-               rounded-lg border border-blue-300
-               focus:ring-2 focus:ring-blue-500 outline-none"
-      />
-
-      <div class="flex gap-2">
-        <select
-          class="px-3 py-2.5 sm:py-3 rounded-lg
-                 border border-blue-300 bg-white
-                 focus:ring-2 focus:ring-blue-500"
-        >
-          <option>🇮🇳 +91</option>
-        </select>
-
-        <input
-          type="tel"
-          placeholder="Phone"
-          name="phone"
-          class="flex-1 px-4 py-2.5 sm:py-3 w-full
-                 rounded-lg border border-blue-300
-                 focus:ring-2 focus:ring-blue-500 outline-none"
-        />
-      </div>
-
-      <label class="flex gap-2 text-xs sm:text-sm text-gray-600">
-        <input type="checkbox" checked class="mt-1 accent-green-600">
-        I agree and authorize the team to contact me. This will override the register with us.
-       
-      </label>
-
-      <!-- CAPTCHA MOCK -->
-    <div class="g-recaptcha" data-sitekey="6Lf45GcsAAAAAIDRQ-udUFSe_D_KMi4a1vmwEfnd"></div>
-
-
+      <!-- CLOSE -->
       <button
-        type="submit"
-        name="submit"
-        class="w-full bg-[#73bc01] hover:bg-green-700
-               text-white  py-2.5 sm:py-3
-               rounded-lg font-semibold tracking-wide
-               transition"
-      >
-        SUBMIT
+        id="closeModal"
+        class="absolute top-3 right-3 text-blue-600
+             hover:text-red-500 text-2xl font-bold">
+        ✕
       </button>
 
-    </form>
+      <!-- HEADER -->
+      <div class="text-center mb-5">
+        <h2 class="text-xl sm:text-2xl font-bold text-blue-700">
+          Call Us <span class="text-[#73bc01]">+91 9975086229</span>
+          </br><span class="text-[#73bc01]">
+            +91 8975280850</span>
+        </h2>
+
+        <p class="text-xs text-gray-500 mt-1">OR</p>
+
+        <h3 class="text-lg sm:text-xl font-semibold text-blue-700 mt-1">
+          Enquire Now!
+        </h3>
+
+        <p class="text-sm text-gray-600 mt-3">
+          Take the first step towards your dream home —
+          <span class="font-semibold text-[#73bc01]">book today!</span>
+        </p>
+      </div>
+
+      <!-- FORM -->
+      <form method="post" class="space-y-3 sm:space-y-4">
+
+        <input
+          type="text"
+          placeholder="Name"
+          name="name"
+          class="w-full px-4 py-2.5 sm:py-3
+               rounded-lg border border-blue-300
+               focus:ring-2 focus:ring-blue-500 outline-none" />
+
+        <input
+          type="email"
+          placeholder="Email"
+          name="email"
+          class="w-full px-4 py-2.5 sm:py-3
+               rounded-lg border border-blue-300
+               focus:ring-2 focus:ring-blue-500 outline-none" />
+
+        <div class="flex gap-2">
+          <select
+            class="px-3 py-2.5 sm:py-3 rounded-lg
+                 border border-blue-300 bg-white
+                 focus:ring-2 focus:ring-blue-500">
+            <option>🇮🇳 +91</option>
+          </select>
+
+          <input
+            type="tel"
+            placeholder="Phone"
+            name="phone"
+            class="flex-1 px-4 py-2.5 sm:py-3 w-full
+                 rounded-lg border border-blue-300
+                 focus:ring-2 focus:ring-blue-500 outline-none" />
+        </div>
+
+        <label class="flex gap-2 text-xs sm:text-sm text-gray-600">
+          <input type="checkbox" checked class="mt-1 accent-green-600">
+          I agree and authorize the team to contact me. This will override the register with us.
+
+        </label>
+
+        <!-- CAPTCHA MOCK -->
+        <div class="g-recaptcha" data-sitekey="6Lf45GcsAAAAAIDRQ-udUFSe_D_KMi4a1vmwEfnd"></div>
+
+
+        <button
+          type="submit"
+          name="submit"
+          class="w-full bg-[#73bc01] hover:bg-green-700
+               text-white  py-2.5 sm:py-3
+               rounded-lg font-semibold tracking-wide
+               transition">
+          SUBMIT
+        </button>
+
+      </form>
+    </div>
   </div>
-</div>
 
 
 
@@ -888,81 +1047,79 @@ exit;
     // Autoslider for slider after galary
 
 
-  // const slider = document.getElementById("slider");
-  // const slides = document.querySelectorAll(".slide");
-  // const dots = document.querySelectorAll(".dot");
+    // const slider = document.getElementById("slider");
+    // const slides = document.querySelectorAll(".slide");
+    // const dots = document.querySelectorAll(".dot");
 
-  // let index = 0;
-  // const visible = 4;
-  // const total = slides.length / 2;
+    // let index = 0;
+    // const visible = 4;
+    // const total = slides.length / 2;
 
-  // function updateSlider() {
-  //   slider.style.transform = `translateX(-${index * (100 / visible)}%)`;
+    // function updateSlider() {
+    //   slider.style.transform = `translateX(-${index * (100 / visible)}%)`;
 
-  //   slides.forEach(s => s.classList.remove("active"));
-  //   const center = index + 1;
-  //   slides[center]?.classList.add("active");
+    //   slides.forEach(s => s.classList.remove("active"));
+    //   const center = index + 1;
+    //   slides[center]?.classList.add("active");
 
-  //   dots.forEach(d => d.classList.remove("active"));
-  //   dots[index % total]?.classList.add("active");
-  // }
+    //   dots.forEach(d => d.classList.remove("active"));
+    //   dots[index % total]?.classList.add("active");
+    // }
 
-  // function autoScroll() {
-  //   index++;
+    // function autoScroll() {
+    //   index++;
 
-  //   if (index >= total) {
-  //     setTimeout(() => {
-  //       slider.style.transition = "none";
-  //       index = 0;
-  //       updateSlider();
-  //       slider.offsetHeight;
-  //       slider.style.transition = "transform 0.7s linear";
-  //     }, 700);
-  //   }
+    //   if (index >= total) {
+    //     setTimeout(() => {
+    //       slider.style.transition = "none";
+    //       index = 0;
+    //       updateSlider();
+    //       slider.offsetHeight;
+    //       slider.style.transition = "transform 0.7s linear";
+    //     }, 700);
+    //   }
 
-  //   updateSlider();
-  // }
+    //   updateSlider();
+    // }
 
-  // updateSlider();
-  // setInterval(autoScroll, 2500);
-
-
+    // updateSlider();
+    // setInterval(autoScroll, 2500);
 
 
 
-  const backdrop = document.getElementById("modalBackdrop");
-  const modalBox = document.getElementById("modalBox");
-  const closeBtn = document.getElementById("closeModal");
-
-  // OPEN MODAL
-  function openModal() {
-    backdrop.classList.remove("opacity-0", "pointer-events-none");
-    modalBox.classList.remove("translate-y-24", "scale-95", "opacity-0");
-  }
-
-  // CLOSE MODAL
-  function closeModal() {
-    backdrop.classList.add("opacity-0", "pointer-events-none");
-    modalBox.classList.add("translate-y-24", "scale-95", "opacity-0");
-  }
-
-  // SHOW MODAL ON EVERY PAGE LOAD
-  window.addEventListener("load", () => {
-    setTimeout(() => {
-      openModal();
-    }, 100); // small delay for smooth UX
-  });
-
-  // CLOSE BUTTON
-  closeBtn.addEventListener("click", closeModal);
-
-  // CLICK OUTSIDE TO CLOSE
-  backdrop.addEventListener("click", (e) => {
-    if (e.target === backdrop) closeModal();
-  });
 
 
-</script>
+    const backdrop = document.getElementById("modalBackdrop");
+    const modalBox = document.getElementById("modalBox");
+    const closeBtn = document.getElementById("closeModal");
+
+    // OPEN MODAL
+    function openModal() {
+      backdrop.classList.remove("opacity-0", "pointer-events-none");
+      modalBox.classList.remove("translate-y-24", "scale-95", "opacity-0");
+    }
+
+    // CLOSE MODAL
+    function closeModal() {
+      backdrop.classList.add("opacity-0", "pointer-events-none");
+      modalBox.classList.add("translate-y-24", "scale-95", "opacity-0");
+    }
+
+    // SHOW MODAL ON EVERY PAGE LOAD
+    window.addEventListener("load", () => {
+      setTimeout(() => {
+        openModal();
+      }, 100); // small delay for smooth UX
+    });
+
+    // CLOSE BUTTON
+    closeBtn.addEventListener("click", closeModal);
+
+    // CLICK OUTSIDE TO CLOSE
+    backdrop.addEventListener("click", (e) => {
+      if (e.target === backdrop) closeModal();
+    });
+  </script>
 
 </body>
 

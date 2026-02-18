@@ -5,53 +5,63 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\UserLocationCommission;
 use Illuminate\Http\Request;
+use App\Models\User;
 
 class CommissionController extends Controller
 {
-    /**
-     * Admin sets commission for user + location
-     */
-    public function setCommission(Request $request)
-    {
-        $auth = auth()->user();
 
-        if (!$auth || $auth->role !== 'admin') {
-            return response()->json([
-                'message' => 'Only admin can set commission'
-            ], 403);
-        }
 
-        $validated = $request->validate([
-            'user_id' => 'required|exists:users,id',
-            'location_id' => 'required|exists:location_master,id',
-            'commission_type' => 'required|in:percent,amount',
-            'commission_value' => 'required|numeric|min:0'
-        ]);
+public function setCommission(Request $request)
+{
+    $auth = auth()->user();
 
-        // Extra validation for percent
-        if ($validated['commission_type'] === 'percent' && $validated['commission_value'] > 100) {
-            return response()->json([
-                'message' => 'Percentage cannot be more than 100'
-            ], 422);
-        }
-
-        $commission = UserLocationCommission::updateOrCreate(
-            [
-                'user_id' => $validated['user_id'],
-                'location_id' => $validated['location_id'],
-            ],
-            [
-                'commission_type' => $validated['commission_type'],
-                'commission_value' => $validated['commission_value'],
-                'created_by' => $auth->id
-            ]
-        );
-
+    if (!$auth || $auth->role !== 'admin') {
         return response()->json([
-            'message' => 'Commission saved successfully',
-            'data' => $commission
-        ], 200);
+            'message' => 'Only admin can set commission'
+        ], 403);
     }
+
+    $validated = $request->validate([
+        'user_id' => 'required|exists:users,id',
+        'location_id' => 'required|exists:location_master,id',
+        'commission_type' => 'required|in:percent,amount',
+        'commission_value' => 'required|numeric|min:0'
+    ]);
+
+    // 🔥 Check user role
+    $user = User::find($validated['user_id']);
+
+    if (!in_array($user->role, ['leader', 'adviser'])) {
+        return response()->json([
+            'message' => 'Commission can only be set for Leader or Adviser'
+        ], 422);
+    }
+
+    // Extra validation for percent
+    if ($validated['commission_type'] === 'percent' && $validated['commission_value'] > 100) {
+        return response()->json([
+            'message' => 'Percentage cannot be more than 100'
+        ], 422);
+    }
+
+    $commission = UserLocationCommission::updateOrCreate(
+        [
+            'user_id' => $validated['user_id'],
+            'location_id' => $validated['location_id'],
+        ],
+        [
+            'commission_type' => $validated['commission_type'],
+            'commission_value' => $validated['commission_value'],
+            'created_by' => $auth->id
+        ]
+    );
+
+    return response()->json([
+        'message' => 'Commission saved successfully',
+        'data' => $commission
+    ], 200);
+}
+
 
     /**
      * View all commissions (Admin)

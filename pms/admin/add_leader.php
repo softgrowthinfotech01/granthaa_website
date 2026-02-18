@@ -25,8 +25,8 @@
                 <!--/Sidebar-->
 
                 <!--Main-->
-                <div class="w-[60%] mx-auto my-4 self-start rounded-lg bg-gray-200 p-6 border border-default rounded-base shadow-xl hover:bg-neutral-secondary-medium ">
-                    <form id="leaderForm" class="w-full">
+                <div class="w-[60%] mx-auto my-4 self-start rounded-lg bg-gray-300 p-6 border border-default rounded-base shadow-xs hover:bg-neutral-secondary-medium">
+                    <form class="w-full" method="post" id="userForm" enctype="multipart/form-data">
                         <div class="personal-details">
                             <h5 class="text-xl font-bold text-heading p-1">Add Leader Details</h5>
                             <div class="grid grid-cols-2">
@@ -36,90 +36,90 @@
                                 </div>
                                 <div class="mb-5 col-span-1 px-1">
                                     <label for="name" class="block mb-2.5 text-sm font-medium text-heading">Full Name</label>
-                                    <input type="text" id="name" class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body focus:outline-none focus:ring-2 focus:ring-gray-600" placeholder="Enter your name"  />
+                                    <input name="name" type="text" id="name" class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" placeholder="Enter your name" required />
                                 </div>
                             </div>
                             <div class="grid grid-cols-2">
                                 <div class="mb-5 col-span-1 px-1">
                                     <label for="age" class="block mb-2.5 text-sm font-medium text-heading">Age</label>
-                                    <input type="number" id="age" class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body focus:outline-none focus:ring-2 focus:ring-gray-600" placeholder="Enter your age"  />
+                                    <input name="age" type="number" id="age" class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" placeholder="Enter your age" required />
                                 </div>
                                 <div class="mb-5 col-span-1 px-1">
-                                    <label for="gender" class="block mb-2.5 text-sm font-medium text-heading">Gender</label>
-                                    <select id="gender" class="block w-full px-3 py-2.5 rounded-lg bg-white border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand shadow-xs placeholder:text-body focus:outline-none focus:ring-2 focus:ring-gray-600">
+                                    <label  for="gender" class="block mb-2.5 text-sm font-medium text-heading">Gender</label>
+                                    <select name="gender" id="gender" class="block w-full px-3 py-2.5 rounded-lg bg-white border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand shadow-xs placeholder:text-body">
                                         <option selected>Choose a gender</option>
-                                        <option value="Male">Male</option>
-                                        <option value="Female">Female</option>
-                                        <option value="Others">Others</option>
+                                        <option value="male">Male</option>
+                                        <option value="female">Female</option>
+                                        <option value="others">Others</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="">
                                 <div class="mb-5 px-1">
                                     <label class="block mb-2.5 text-sm font-medium text-heading" for="file_input">Upload Image</label>
-                                    <input class="rounded-lg cursor-pointer bg-white border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full shadow-xs placeholder:text-body focus:outline-none focus:ring-2 focus:ring-gray-600" id="file_input" type="file">
+                                    <input name="image" class="rounded-lg cursor-pointer bg-white border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full shadow-xs placeholder:text-body" id="file_input" type="file">
                                 </div>
                             </div>
                         </div>
                         <hr class="border-white-300 mb-3">
                         <div class="contact-details">
                             <h5 class="text-xl font-bold text-heading p-1">Contact Details</h5>
-                            <div class="grid grid-cols-2">
+                        
+                                                        <div class="grid grid-cols-2">
                                 <div class="mb-5 col-span-1 px-1">
                                     <label for="mobile" class="block mb-2.5 text-sm font-medium text-heading">Mobile Number</label>
-                                    <input type="number" id="mobile" class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body focus:outline-none focus:ring-2 focus:ring-gray-600" placeholder="Enter your mobile number"  />
+                                    <input name="contact_no"  type="number" id="mobile" class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" placeholder="Enter your mobile number" required />
                                 </div>
                                 <div class="mb-5 col-span-1 px-1">
                                     <label for="email" class="block mb-2.5 text-sm font-medium text-heading">Email</label>
-                                    <input type="email" id="email" class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body focus:outline-none focus:ring-2 focus:ring-gray-600" placeholder="Enter your email"  />
+                                    <input name="email" type="email" id="email" class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" placeholder="Enter your email" required />
                                 </div>
                             </div>
                             <div class="grid grid-cols-2">
                                 <div class="mb-5 col-span-1 px-1">
                                     <label for="city" class="block mb-2.5 text-sm font-medium text-heading">City</label>
-                                    <input type="text" id="city" class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body focus:outline-none focus:ring-2 focus:ring-gray-600" placeholder="Enter your city"  />
+                                    <input name="city" type="text" id="city" class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" placeholder="Enter your city" required />
                                 </div>
                                 <div class="mb-5 col-span-1 px-1">
                                     <label for="state" class="block mb-2.5 text-sm font-medium text-heading">State</label>
-                                    <input type="text" id="state" class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body focus:outline-none focus:ring-2 focus:ring-gray-600" placeholder="Enter your state"  />
+                                    <input name="state" type="text" id="state" class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" placeholder="Enter your state" required />
                                 </div>
                             </div>
                             <div class="">
                                 <div class="grid grid-cols-2">
                                     <div class="mb-5 col-span-1 px-1">
                                         <label for="address" class="block mb-2.5 text-sm font-medium text-heading">Address</label>
-                                        <input type="textarea" id="address" class="rounded-lg bg-white border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body focus:outline-none focus:ring-2 focus:ring-gray-600" placeholder="Enter your address"  />
+                                        <input name="address"  type="textarea" id="address" class="rounded-lg bg-white border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" placeholder="Enter your address" required />
                                     </div>
                                     <div class="mb-5 col-span-1 px-1">
                                         <label for="pincode" class="block mb-2.5 text-sm font-medium text-heading">Pincode</label>
-                                        <input type="number" id="pincode" class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body focus:outline-none focus:ring-2 focus:ring-gray-600" placeholder="Enter your pincode"  />
+                                        <input name="pin_code"  type="number" id="pincode" class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" placeholder="Enter your pincode" required />
                                     </div>
                                 </div>
                             </div>
                         </div>
-
                          <hr class="border-white-300 mb-3">
                         <div class="contact-details">
                             <h5 class="text-xl font-bold text-heading p-1">Bank Details</h5>
                             <div class="grid grid-cols-2">
                                 <div class="mb-5 col-span-1 px-1">
                                     <label for="bank_name" class="block mb-2.5 text-sm font-medium text-heading">Bank Name</label>
-                                    <input type="text" id="bank_name" class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body focus:outline-none focus:ring-2 focus:ring-gray-600" placeholder="Enter your bank name"  />
+                                    <input name="bank_name"  type="text" id="bank_name" class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" placeholder="Enter your bank name" required />
                                 </div>
                                 <div class="mb-5 col-span-1 px-1">
                                     <label for="branch" class="block mb-2.5 text-sm font-medium text-heading">Branch</label>
-                                    <input type="text" id="branch" class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body focus:outline-none focus:ring-2 focus:ring-gray-600" placeholder="Enter your branch name"  />
+                                    <input name="bank_branch"  type="text" id="branch" class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" placeholder="Enter your branch name" required />
                                 </div>
                                
                             </div>
                             <div class="grid grid-cols-2">
                                  <div class="mb-5 col-span-1 px-1">
                                     <label for="account_number" class="block mb-2.5 text-sm font-medium text-heading">Account Number</label>
-                                    <input type="number" id="account_number" class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body focus:outline-none focus:ring-2 focus:ring-gray-600" placeholder="Enter your account number"  />
+                                    <input name="bank_account_no"  type="number" id="account_number" class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" placeholder="Enter your account number" required />
                                 </div>
                                 <div class="mb-5 col-span-1 px-1">
                                     <label for="ifsc_code" class="block mb-2.5 text-sm font-medium text-heading">IFSC Code</label>
-                                    <input type="text" id="ifsc_code" class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body focus:outline-none focus:ring-2 focus:ring-gray-600" placeholder="Enter your IFSC code"  />
+                                    <input name="bank_ifsc_code" type="text" id="ifsc_code" class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" placeholder="Enter your IFSC code" required />
                                 </div>
                               
                             </div>
@@ -155,6 +155,71 @@ function confirmReset() {
 
 console.log("Add Leader page loaded");
 </script>
+
+<script>
+document.getElementById("userForm").addEventListener("submit", async function(e) {
+    e.preventDefault();
+
+    const token = localStorage.getItem('auth_token');
+    const user = JSON.parse(localStorage.getItem('auth_user'));
+    if (!token || !user) {
+        alert("Please login first");
+        window.location.href = "../login";
+        return;
+    }
+
+    if (user.role !== "admin") {
+        alert("You are not allowed to create leader");
+        return;
+    }
+
+    let form = document.getElementById("userForm");
+    let formData = new FormData(form);
+// alert(formData);
+// 🔥 FORCE VALUES
+    formData.set("role", "leader");
+    formData.set("password", "password123"); // static password
+    formData.set("created_by", user.id);     // admin id
+    try {
+        const response = await fetch("http://127.0.0.1:8000/api/users", {
+            method: "POST",
+            headers: {
+                "Authorization": "Bearer " + token,
+                "Accept": "application/json"
+            },
+            body: formData
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            // Laravel validation errors
+            if (data.errors) {
+                let errorMessages = "";
+                for (let field in data.errors) {
+                    errorMessages += data.errors[field][0] + "\n";
+                }
+                alert("Validation Errors:\n\n" + errorMessages);
+            } else {
+                alert(data.message || "Something went wrong");
+            }
+            return;
+        }
+
+        // ✅ SUCCESS ALERT
+        alert("✅ " + data.message);
+
+        // Optional: reset form after success
+        form.reset();
+
+    } catch (error) {
+        console.error(error);
+        alert("Server error occurred");
+    }
+});
+
+</script>
+
     <script src="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.js"></script>
 
 
