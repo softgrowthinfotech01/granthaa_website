@@ -94,10 +94,11 @@
         </tbody>
     </table>
 
+    <script src="../url.js"></script>
     <script>
         const token = localStorage.getItem("auth_token");
 
-        fetch("http://127.0.0.1:8000/api/leader_list?role=leader", {
+        fetch(url + "leader_list?role=leader", {
                 headers: {
                     "Authorization": "Bearer " + token,
                     "Accept": "application/json"
@@ -113,7 +114,7 @@
                 users.forEach(user => {
 
                     let imageUrl = user.profile_image ?
-                        "http://127.0.0.1:8000/storage/" + user.profile_image :
+                        url + "storage/" + user.profile_image :
                         "https://via.placeholder.com/50";
 
                     table.innerHTML += `

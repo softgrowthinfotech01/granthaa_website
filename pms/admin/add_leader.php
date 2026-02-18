@@ -152,7 +152,7 @@ function confirmReset() {
     }
 }
 </script>
-
+<script src="../url.js"></script>
 <script>
 document.getElementById("userForm").addEventListener("submit", async function(e) {
     e.preventDefault();
@@ -178,7 +178,7 @@ document.getElementById("userForm").addEventListener("submit", async function(e)
     formData.set("password", "password123"); // static password
     formData.set("created_by", user.id);     // admin id
     try {
-        const response = await fetch("http://127.0.0.1:8000/api/users", {
+        const response = await fetch(url + "users", {
             method: "POST",
             headers: {
                 "Authorization": "Bearer " + token,
