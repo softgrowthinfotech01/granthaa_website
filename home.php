@@ -748,24 +748,46 @@ $projects = $stmt->fetchAll(PDO::FETCH_ASSOC);
           <form method="post" class="space-y-6">
 
             <input
-              type="text"
-              placeholder="Name" name="name"
-              class="w-full bg-white border-2 border-blue-200 rounded-lg px-5 py-4
-                   focus:outline-none focus:border-green-500" />
+          type="text"
+          placeholder="Name" required
+          name="name"
+          class="w-full px-4 py-2.5 sm:py-3
+               rounded-lg border border-blue-300
+               focus:ring-2 focus:ring-blue-500 outline-none" />
 
-            <input
-              type="email"
-              placeholder="Email" name="email"
-              class="w-full bg-white border-2 border-blue-200 rounded-lg px-5 py-4
-                   focus:outline-none focus:border-green-500" />
+       <input
+  type="email"
+  name="email"
+  placeholder="Email"
+  required
+  pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+  title="Enter valid email address"
+  class="w-full bg-white border-2 border-blue-200 rounded-lg px-5 py-4
+         focus:outline-none focus:border-green-500"
+/>
+                  <?php if (!empty($errors['email'])): ?>
+<small style="color:red;"><?php echo $errors['email']; ?></small>
+<?php endif; ?>
 
-            <div class="flex items-center border-2 border-blue-200 rounded-lg px-4 py-3">
+        <div class="flex items-center border-2 border-blue-200 rounded-lg px-4 py-3">
               <span class="mr-3">🇮🇳</span>
               <input
                 type="tel"
-                placeholder="Phone" name="phone"
-                class="bg-transparent w-full focus:outline-none" />
+                name="number"
+                placeholder="Phone"
+                maxlength="10"
+                pattern="[0-9]{10}"
+                oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,10)"
+                required
+                class="bg-transparent w-full focus:outline-none"
+              />
+                <?php if (!empty($errors['phone'])): ?>
+<small style="color:red;"><?php echo $errors['phone']; ?></small>
+<?php endif; ?>
+
             </div>
+
+
 
             <label class="flex items-start gap-3 text-sm text-gray-700">
               <input type="checkbox" checked class="mt-1 accent-green-600" />
@@ -880,13 +902,45 @@ $projects = $stmt->fetchAll(PDO::FETCH_ASSOC);
   </a>
 
   <?php
-  include "website/conn.php";
+include "website/conn.php";
 
-  if (isset($_POST['submit'])) {
+$errors = [];
 
-    $secretKey = "6Lf45GcsAAAAAP8NfLwWSmj14LTXgSqQuuZ6-tTM";
+if (isset($_POST['submit'])) {
 
-    $response = $_POST['g-recaptcha-response'];
+  // Trim inputs
+  $name  = trim($_POST['name'] ?? '');
+  $email = trim($_POST['email'] ?? '');
+  $phone = trim($_POST['number'] ?? '');
+
+  /* ======================
+     BASIC VALIDATIONS
+  =======================*/
+
+  if (empty($name)) {
+    $errors['name'] = "Name is required";
+  }
+
+  if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    $errors['email'] = "Enter valid email";
+  }
+
+  if (!preg_match('/^[0-9]{10}$/', $phone)) {
+    $errors['phone'] = "Enter valid 10 digit mobile";
+  }
+
+  /* ======================
+     CAPTCHA CHECK
+  =======================*/
+
+  $secretKey = "6Lf45GcsAAAAAP8NfLwWSmj14LTXgSqQuuZ6-tTM";
+  $response = $_POST['g-recaptcha-response'] ?? '';
+
+  if (!$response) {
+    $errors['captcha'] = "Captcha required";
+  }
+
+  if (empty($errors)) {
 
     $verify = file_get_contents(
       "https://www.google.com/recaptcha/api/siteverify?secret=$secretKey&response=$response"
@@ -895,28 +949,32 @@ $projects = $stmt->fetchAll(PDO::FETCH_ASSOC);
     $captcha = json_decode($verify);
 
     if (!$captcha->success) {
-
-      echo "<script>alert('Please verify captcha');</script>";
-    } else {
-
-      $name = $_POST['name'];
-      $email = $_POST['email'];
-      $phone = $_POST['phone'];
-
-      $stmt = $conn->prepare("INSERT INTO enquiries(name,email,phone)
-VALUES(:name,:email,:phone)");
-
-      $stmt->execute([
-        ':name' => $name,
-        ':email' => $email,
-        ':phone' => $phone
-      ]);
-
-      header("Location: home.php");
-      exit;
+      $errors['captcha'] = "Captcha failed";
     }
   }
-  ?>
+
+  /* ======================
+     INSERT IF NO ERRORS
+  =======================*/
+
+  if (empty($errors)) {
+
+    $stmt = $conn->prepare("
+      INSERT INTO contact(name,email,phone)
+      VALUES(:name,:email,:phone)
+    ");
+
+    $stmt->execute([
+      ':name' => htmlspecialchars($name),
+      ':email' => htmlspecialchars($email),
+      ':phone' => htmlspecialchars($phone)
+    ]);
+
+    header("Location: home.php");
+    exit;
+  }
+}
+?>
 
   <div
     id="modalBackdrop"
@@ -967,36 +1025,39 @@ VALUES(:name,:email,:phone)");
 
         <input
           type="text"
-          placeholder="Name"
+          placeholder="Name" required
           name="name"
           class="w-full px-4 py-2.5 sm:py-3
                rounded-lg border border-blue-300
                focus:ring-2 focus:ring-blue-500 outline-none" />
 
         <input
-          type="email"
-          placeholder="Email"
-          name="email"
-          class="w-full px-4 py-2.5 sm:py-3
-               rounded-lg border border-blue-300
-               focus:ring-2 focus:ring-blue-500 outline-none" />
+              type="email"
+              placeholder="Email" name="email" required
+              class="w-full bg-white border-2 border-blue-200 rounded-lg px-5 py-4
+                   focus:outline-none focus:border-green-500" />
+                  <?php if (!empty($errors['email'])): ?>
+<small style="color:red;"><?php echo $errors['email']; ?></small>
+<?php endif; ?>
 
-        <div class="flex gap-2">
-          <select
-            class="px-3 py-2.5 sm:py-3 rounded-lg
-                 border border-blue-300 bg-white
-                 focus:ring-2 focus:ring-blue-500">
-            <option>🇮🇳 +91</option>
-          </select>
+        <div class="flex items-center border-2 border-blue-200 rounded-lg px-4 py-3">
+              <span class="mr-3">🇮🇳</span>
+              <input
+                type="tel"
+                name="number"
+                placeholder="Phone"
+                maxlength="10"
+                pattern="[0-9]{10}"
+                oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,10)"
+                required
+                class="bg-transparent w-full focus:outline-none"
+              />
+                <?php if (!empty($errors['phone'])): ?>
+<small style="color:red;"><?php echo $errors['phone']; ?></small>
+<?php endif; ?>
 
-          <input
-            type="tel"
-            placeholder="Phone"
-            name="phone"
-            class="flex-1 px-4 py-2.5 sm:py-3 w-full
-                 rounded-lg border border-blue-300
-                 focus:ring-2 focus:ring-blue-500 outline-none" />
-        </div>
+            </div>
+
 
         <label class="flex gap-2 text-xs sm:text-sm text-gray-600">
           <input type="checkbox" checked class="mt-1 accent-green-600">

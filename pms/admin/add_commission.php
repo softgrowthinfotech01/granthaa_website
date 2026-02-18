@@ -131,7 +131,7 @@ function confirmReset() {
             
 
             try {
-                const response = await fetch('http://127.0.0.1:8000/api/admin/set-commission', {
+                const response = await fetch(url + 'admin/set-commission', {
                     method: 'POST',
                     headers: {
                         'Accept': 'application/json',

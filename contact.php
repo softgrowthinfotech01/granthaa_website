@@ -1,33 +1,70 @@
 <?php
 include "website/conn.php";
 
+$errors = [];
+
 if (isset($_POST['submit'])) {
 
+  // Trim inputs
+  $name  = trim($_POST['name'] ?? '');
+  $email = trim($_POST['email'] ?? '');
+  $phone = trim($_POST['number'] ?? '');
+
+  /* ======================
+     BASIC VALIDATIONS
+  =======================*/
+
+  if (empty($name)) {
+    $errors['name'] = "Name is required";
+  }
+
+  if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    $errors['email'] = "Enter valid email";
+  }
+
+  if (!preg_match('/^[0-9]{10}$/', $phone)) {
+    $errors['phone'] = "Enter valid 10 digit mobile";
+  }
+
+  /* ======================
+     CAPTCHA CHECK
+  =======================*/
+
   $secretKey = "6Lf45GcsAAAAAP8NfLwWSmj14LTXgSqQuuZ6-tTM";
+  $response = $_POST['g-recaptcha-response'] ?? '';
 
-  $response = $_POST['g-recaptcha-response'];
+  if (!$response) {
+    $errors['captcha'] = "Captcha required";
+  }
 
-  $verify = file_get_contents(
-    "https://www.google.com/recaptcha/api/siteverify?secret=$secretKey&response=$response"
-  );
+  if (empty($errors)) {
 
-  $captcha = json_decode($verify);
+    $verify = file_get_contents(
+      "https://www.google.com/recaptcha/api/siteverify?secret=$secretKey&response=$response"
+    );
 
-  if (!$captcha->success) {
-    echo "<script>alert('Please verify captcha');</script>";
-  } else {
+    $captcha = json_decode($verify);
 
-    $name = $_POST['name'];
-    $email = $_POST['email'];
-    $phone = $_POST['phone'];
+    if (!$captcha->success) {
+      $errors['captcha'] = "Captcha failed";
+    }
+  }
 
-    $stmt = $conn->prepare("INSERT INTO contact(name,email,phone)
-VALUES(:name,:email,:phone)");
+  /* ======================
+     INSERT IF NO ERRORS
+  =======================*/
+
+  if (empty($errors)) {
+
+    $stmt = $conn->prepare("
+      INSERT INTO contact(name,email,phone)
+      VALUES(:name,:email,:phone)
+    ");
 
     $stmt->execute([
-      ':name' => $name,
-      ':email' => $email,
-      ':phone' => $phone
+      ':name' => htmlspecialchars($name),
+      ':email' => htmlspecialchars($email),
+      ':phone' => htmlspecialchars($phone)
     ]);
 
     header("Location: home.php");
@@ -82,22 +119,35 @@ VALUES(:name,:email,:phone)");
 
             <input
               type="text"
-              placeholder="Name" name="name"
+              placeholder="Name" name="name" required
               class="w-full bg-white border-2 border-blue-200 rounded-lg px-5 py-4
                    focus:outline-none focus:border-green-500" />
 
             <input
               type="email"
-              placeholder="Email" name="email"
+              placeholder="Email" name="email" required
               class="w-full bg-white border-2 border-blue-200 rounded-lg px-5 py-4
                    focus:outline-none focus:border-green-500" />
+                  <?php if (!empty($errors['email'])): ?>
+<small style="color:red;"><?php echo $errors['email']; ?></small>
+<?php endif; ?>
 
             <div class="flex items-center border-2 border-blue-200 rounded-lg px-4 py-3">
               <span class="mr-3">🇮🇳</span>
               <input
                 type="tel"
-                placeholder="Phone" name="phone"
-                class="bg-transparent w-full focus:outline-none" />
+                name="number"
+                placeholder="Phone"
+                maxlength="10"
+                pattern="[0-9]{10}"
+                oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,10)"
+                required
+                class="bg-transparent w-full focus:outline-none"
+              />
+                <?php if (!empty($errors['phone'])): ?>
+<small style="color:red;"><?php echo $errors['phone']; ?></small>
+<?php endif; ?>
+
             </div>
 
             <label class="flex items-start gap-3 text-sm text-gray-700">
@@ -106,6 +156,10 @@ VALUES(:name,:email,:phone)");
             </label>
 
             <div class="g-recaptcha" data-sitekey="6Lf45GcsAAAAAIDRQ-udUFSe_D_KMi4a1vmwEfnd"></div>
+            <?php if (!empty($errors['captcha'])): ?>
+<small style="color:red;"><?php echo $errors['captcha']; ?></small>
+<?php endif; ?>
+
 
             <div class="pt-10">
               <button name="submit"

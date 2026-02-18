@@ -30,7 +30,7 @@
                         <div class="personal-details">
                             <h5 class="text-xl font-bold text-heading p-1">Update Location Details</h5>
                             <div class="w-full">
-                               
+                                <input type="hidden" id="location_id">
                                 <div class="mb-5  px-1">
                                     <label for="site_location" class="block mb-2.5 text-sm font-medium text-heading">Site Location</label>
                                     <input type="text" id="site_location" class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" placeholder="Enter your site location" required />
@@ -39,11 +39,11 @@
                         </div>
                         <hr class="border-white-300 mb-3">
                         <div class="flex justify-center gap-2">
-                            <button type="submit" class="w-[15%] text-white bg-blue-600 box-border border border-transparent hover:bg-blue-400 rounded-lg focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none">Update</button>
+                            <button type="button" onclick="updateLocation()" class="w-[15%] text-white bg-blue-600 box-border border border-transparent hover:bg-blue-400 rounded-lg focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none">Update</button>
                             <button type="button"
-                                onclick=""
+                                href="view_location"
                                 class="w-[15%] text-gray-700 bg-white hover:bg-gray-200 rounded-lg text-sm px-5 py-2.5">
-                               Back
+                                Back
                             </button>
                         </div>
                     </form>
@@ -57,10 +57,79 @@
         </div>
 
     </div>
+    <script src="../url.js"></script>
 
     <script>
+        const token = localStorage.getItem("auth_token");
 
-</script>
+        // ✅ Get ID from URL
+        const params = new URLSearchParams(window.location.search);
+        const id = params.get("id");
+
+        // Load single data
+        async function loadLocation() {
+            try {
+
+                const response = await fetch(
+                    url + `site-location/${id}`, {
+                        method: "GET",
+                        headers: {
+                            "Accept": "application/json",
+                            "Authorization": "Bearer " + token
+                        }
+                    }
+                );
+
+                const result = await response.json();
+console.log(result);
+                document.getElementById("location_id").value = result.data.id;
+                document.getElementById("site_location").value = result.data.site_location;
+
+            } catch (error) {
+                console.error("Error loading location:", error);
+            }
+        }
+
+        // Update function
+        async function updateLocation() {
+
+            const locationId = document.getElementById("location_id").value;
+            const siteLocation = document.getElementById("site_location").value;
+
+            try {
+
+                const response = await fetch(
+                    url + `site-location/${locationId}`, {
+                        method: "PUT",
+                        headers: {
+                            "Accept": "application/json",
+                            "Content-Type": "application/json",
+                            "Authorization": "Bearer " + token
+                        },
+                        body: JSON.stringify({
+                            site_location: siteLocation
+                        })
+                    }
+                );
+
+                const result = await response.json();
+
+
+                if (response.ok) {
+                    alert(result.message || "Updated successfully");
+                    window.location.href = "view_location";
+                } else {
+                    alert(result.message || "Something went wrong");
+                }
+
+            } catch (error) {
+                console.error("Update error:", error);
+            }
+        }
+
+        // Load data on page load
+        loadLocation();
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.js"></script>
 
 </body>
