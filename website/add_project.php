@@ -5,18 +5,20 @@ $timeout = 1800; // 30 minutes
 
 // If not logged in
 if (!isset($_SESSION['user'])) {
-    header("Location: login.php?error=login_required");
-    exit();
+  header("Location: login.php?error=login_required");
+  exit();
 }
 
 // If session expired due to inactivity
-if (isset($_SESSION['LAST_ACTIVITY']) && 
-    (time() - $_SESSION['LAST_ACTIVITY']) > $timeout) {
+if (
+  isset($_SESSION['LAST_ACTIVITY']) &&
+  (time() - $_SESSION['LAST_ACTIVITY']) > $timeout
+) {
 
-    session_unset();
-    session_destroy();
-    header("Location: login.php?error=timeout");
-    exit();
+  session_unset();
+  session_destroy();
+  header("Location: login.php?error=timeout");
+  exit();
 }
 
 // Update last activity time
@@ -29,7 +31,9 @@ header("Pragma: no-cache");
 header("Expires: 0");
 include "conn.php";
 
+
 if (isset($_POST['submit'])) {
+  $errors = [];
 
   $name     = $_POST['project_name'];
   $location = $_POST['project_location'];
@@ -63,9 +67,26 @@ if (isset($_POST['submit'])) {
     move_uploaded_file($_FILES['project_image3']['tmp_name'], $uploadDir . $image3);
   }
 
+  // Validation for Project name field
+  if (empty($name)) {
+    $errors['project_name'] = "Project name is required";
+  }
 
-  // ---------- INSERT QUERY ----------
-  $sql = "INSERT INTO project 
+  // Validation for Project name field
+  if (empty($location)) {
+    $errors['project_location'] = "Project location is required";
+  }
+
+  // validation for select field status
+  $status = $_POST['project_status'] ?? '';
+
+  if (empty($status) || $status == "Select One") {
+    $errors['project_status'] = "Please select project status";
+  }
+
+  if (empty($errors)) {
+    // ---------- INSERT QUERY ----------
+    $sql = "INSERT INTO project 
         (project_name, project_location, project_status, 
          project_image1, project_image2, project_image3, 
          project_details1, project_details2, project_details3)
@@ -74,21 +95,22 @@ if (isset($_POST['submit'])) {
          :img1, :img2, :img3, 
          :details1, :details2, :details3)";
 
-  $stmt = $conn->prepare($sql);
-  $stmt->execute([
-    ':name'     => $name,
-    ':location' => $location,
-    ':status'   => $status,
-    ':img1'     => $image1,
-    ':img2'     => $image2,
-    ':img3'     => $image3,
-    ':details1' => $details1,
-    ':details2' => $details2,
-    ':details3' => $details3
-  ]);
+    $stmt = $conn->prepare($sql);
+    $stmt->execute([
+      ':name'     => $name,
+      ':location' => $location,
+      ':status'   => $status,
+      ':img1'     => $image1,
+      ':img2'     => $image2,
+      ':img3'     => $image3,
+      ':details1' => $details1,
+      ':details2' => $details2,
+      ':details3' => $details3
+    ]);
 
-  header("Location: project_record.php");
-  exit();
+    header("Location: project_record.php");
+    exit();
+  }
 }
 ?>
 
@@ -158,35 +180,50 @@ if (isset($_POST['submit'])) {
                     <div class="row mb-2">
                       <div class="col-md-4 ">
                         <div class="form-group">
-                          <label for="studentID">Project Name</label>
+                          <label for="studentID">Project Name <span class="sticky-top text-danger fw-bold">*</span></label>
                           <input name="project_name"
                             type="text"
                             class="form-control"
                             id="studentID"
-                            placeholder="Enter Project Name" />
+                            placeholder="Enter Project Name" required />
+                          <?php if (!empty($errors['project_name'])): ?>
+                            <small style="color:red;">
+                              <?php echo $errors['project_name']; ?>
+                            </small>
+                          <?php endif; ?>
                         </div>
                       </div>
                       <div class="col-md-4 ">
                         <div class="form-group">
-                          <label for="studentname">Location</label>
+                          <label for="studentname">Location<span class="sticky-top text-danger fw-bold">*</span></label>
                           <input name="project_location"
                             type="text"
                             class="form-control"
                             id="studentname"
                             placeholder="Enter location" />
+                            <!-- Error Message -->
+                          <?php if (!empty($errors['project_location'])): ?>
+                            <small style="color:red;">
+                              <?php echo $errors['project_location']; ?>
+                            </small>
+                          <?php endif; ?>
                         </div>
                       </div>
                       <div class="col-md-4 ">
                         <div class="form-group">
-                          <label for="studentname">Project Status</label>
+                          <label for="studentname">Project Status<span class="sticky-top text-danger fw-bold">*</span></label>
                           <select class="form-select" name="project_status" aria-label="Default select example">
                             <option selected>Select One</option>
                             <option value="Current">Current</option>
                             <option value="Upcoming">Upcoming</option>
-                            <option value="Complete">Complete</option>
-
-
+                            <option value="Complete">Completed</option>
                           </select>
+                          <!-- Error Message -->
+                          <?php if (!empty($errors['project_status'])): ?>
+                            <small style="color:red;">
+                              <?php echo $errors['project_status']; ?>
+                            </small>
+                          <?php endif; ?>
                         </div>
                       </div>
                     </div>
