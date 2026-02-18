@@ -3,29 +3,33 @@ session_start();
 include "conn.php";
 
 if (isset($_POST['submit'])) {
+
     $name = $_POST['name'];
     $password = $_POST['password'];
 
-    $smt = $conn->prepare("SELECT * FROM users WHERE name = :name and password = :pass");
+    $smt = $conn->prepare("SELECT * FROM users WHERE name = :name AND password = :pass");
     $smt->execute([
         ":name" => $name,
         ":pass" => $password
     ]);
 
-    $auth = $smt->fetchAll(PDO::FETCH_ASSOC);
-    $auth = count($auth);
+    $user = $smt->fetch(PDO::FETCH_ASSOC);
 
-    if ($auth) {
+    if ($user) {
         $_SESSION['user'] = $name;
-        echo "<script>window.location.href='website.php';</script>";
+
+        // Set activity time (for timeout)
+        $_SESSION['LAST_ACTIVITY'] = time();
+
+        header("Location: website.php");
+        exit();
     } else {
-        echo "<script>alert('Login Attempt Fail');window.location.href='login.php';</script>";
+        header("Location: login.php?error=invalid");
+        exit();
     }
 }
-if (isset($_GET['error']) && $_GET['error'] == 'login_required') {
-    echo "<script>alert('Please login first');</script>";
-}
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 

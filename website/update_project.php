@@ -1,5 +1,32 @@
 <?php
-include "conn.php";
+session_start();
+
+$timeout = 1800; // 30 minutes
+
+// If not logged in
+if (!isset($_SESSION['user'])) {
+    header("Location: login.php?error=login_required");
+    exit();
+}
+
+// If session expired due to inactivity
+if (isset($_SESSION['LAST_ACTIVITY']) && 
+    (time() - $_SESSION['LAST_ACTIVITY']) > $timeout) {
+
+    session_unset();
+    session_destroy();
+    header("Location: login.php?error=timeout");
+    exit();
+}
+
+// Update last activity time
+$_SESSION['LAST_ACTIVITY'] = time();
+
+// Disable browser cache
+header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+header("Cache-Control: post-check=0, pre-check=0", false);
+header("Pragma: no-cache");
+header("Expires: 0");include "conn.php";
 
 $id = $_GET['id'];
 
@@ -14,6 +41,7 @@ if (isset($_POST['submit'])) {
     $project_status   = $_POST['project_status'];
     $project_details1 = $_POST['project_details1'];
     $project_details2 = $_POST['project_details2'];
+    $project_details3 = $_POST['project_details3'];
 
     $uploadDir = "uploads/";
 
@@ -51,7 +79,8 @@ if (isset($_POST['submit'])) {
             project_image2 = :img2,
             project_image3 = :img3,
             project_details1 = :details1,
-            project_details2 = :details2
+            project_details2 = :details2,
+            project_details3 = :details3
         WHERE id = :id
     ");
 
@@ -64,6 +93,7 @@ if (isset($_POST['submit'])) {
         ':img3'     => $image3,
         ':details1' => $project_details1,
         ':details2' => $project_details2,
+        ':details3' => $project_details3,
         ':id'       => $id
     ]);
 
@@ -232,6 +262,17 @@ if (isset($_POST['submit'])) {
                                                             id="project_details2"
                                                             placeholder="Enter remark here">
                                                             <?php echo htmlspecialchars($row['project_details2']); ?>
+                                                            </textarea>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="remark">Project Details</label>
+                                                        <textarea name="project_details3"
+                                                            class="form-control"
+                                                            id="project_details3"
+                                                            placeholder="Enter remark here">
+                                                            <?php echo htmlspecialchars($row['project_details3']); ?>
                                                             </textarea>
                                                     </div>
                                                 </div>

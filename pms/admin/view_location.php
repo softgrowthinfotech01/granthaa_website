@@ -125,7 +125,7 @@ async function fetchLocations(page = 1) {
         if (!locations || locations.length === 0) {
             tbody.innerHTML = `
                 <tr>
-                    <td colspan="3" class="text-center py-4">No locations found</td>
+                    <td colspan="4" class="text-center py-4">No locations found</td>
                 </tr>`;
             return;
         }
@@ -141,6 +141,12 @@ async function fetchLocations(page = 1) {
                     <td class="px-4 py-2 text-gray-500">
                         ${new Date(loc.created_at).toLocaleDateString()}
                     </td>
+                    <td class="px-4 py-2 flex gap-2">
+                        <a href="update_location.php?id=${loc.id}" class="px-3 py-1.5 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-500 focus:ring-2 focus:ring-blue-300">Edit</a>
+
+                        <button onclick="deleteLocation(${loc.id})" class="px-3 py-1.5 text-sm font-medium text-white bg-red-600 rounded-md hover:bg-red-500 focus:ring-2 focus:ring-red-300">
+                            Delete
+                        </button>
                 </tr>
             `;
         });

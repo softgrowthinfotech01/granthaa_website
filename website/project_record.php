@@ -1,4 +1,34 @@
 <?php
+session_start();
+
+$timeout = 1800; // 30 minutes
+
+// If not logged in
+if (!isset($_SESSION['user'])) {
+  header("Location: login.php?error=login_required");
+  exit();
+}
+
+// If session expired due to inactivity
+if (
+  isset($_SESSION['LAST_ACTIVITY']) &&
+  (time() - $_SESSION['LAST_ACTIVITY']) > $timeout
+) {
+
+  session_unset();
+  session_destroy();
+  header("Location: login.php?error=timeout");
+  exit();
+}
+
+// Update last activity time
+$_SESSION['LAST_ACTIVITY'] = time();
+
+// Disable browser cache
+header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+header("Cache-Control: post-check=0, pre-check=0", false);
+header("Pragma: no-cache");
+header("Expires: 0");
 include "conn.php";
 
 $stmt = $conn->prepare("SELECT * FROM project ORDER BY id ASC");
@@ -40,6 +70,15 @@ $projects = $stmt->fetchAll(PDO::FETCH_ASSOC);
     });
   </script>
 
+  <style>
+    .sticky-action {
+      position: sticky;
+      right: 0;
+      background: white;
+      z-index: 2;
+    }
+  </style>
+
   <!-- CSS Files -->
   <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
   <link rel="stylesheet" href="assets/css/plugins.min.css" />
@@ -48,6 +87,8 @@ $projects = $stmt->fetchAll(PDO::FETCH_ASSOC);
   <!-- CSS Just for demo purpose, don't include it in your project -->
   <link rel="stylesheet" href="assets/css/demo.css" />
 </head>
+
+
 
 <body>
   <div class="wrapper">
@@ -85,7 +126,7 @@ $projects = $stmt->fetchAll(PDO::FETCH_ASSOC);
                           <th>Project Details 1</th>
                           <th>Project Details 2</th>
                           <th>Project Details 3</th>
-                          <th>Action</th>
+                          <th class="sticky-action border border-black">Action</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -131,30 +172,42 @@ $projects = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
                             <td>
                               <?php
-                              echo strlen($row['project_details1']) > 50
-                                ? substr($row['project_details1'], 0, 50) . '...'
-                                : $row['project_details1'];
+                              $text = trim($row['project_details1']); // clean start/end spaces
+                              $text = str_replace(["\r", "\n"], ' ', $text); // replace line breaks
+
+                              echo strlen($text) > 50
+                                ? substr($text, 0, 50) . '...'
+                                : $text;
                               ?>
                             </td>
+
 
                             <td>
                               <?php
-                              echo strlen($row['project_details2']) > 50
-                                ? substr($row['project_details2'], 0, 50) . '...'
-                                : $row['project_details2'];
+                              $text = trim($row['project_details2']);
+                              $text = str_replace(["\r", "\n"], ' ', $text);
+
+                              echo strlen($text) > 50
+                                ? substr($text, 0, 50) . '...'
+                                : $text;
                               ?>
                             </td>
+
 
                             <td>
                               <?php
-                              echo strlen($row['project_details3']) > 50
-                                ? substr($row['project_details3'], 0, 50) . '...'
-                                : $row['project_details3'];
+                              $text = trim($row['project_details3']);
+                              $text = str_replace(["\r", "\n"], ' ', $text);
+
+                              echo strlen($text) > 50
+                                ? substr($text, 0, 50) . '...'
+                                : $text;
                               ?>
                             </td>
 
 
-                            <td>
+
+                            <td class="sticky-action border border-black">
                               <div class="d-flex gap-2">
                                 <a href="update_project.php?id=<?php echo $row['id']; ?>"
                                   class="btn btn-sm btn-info">
