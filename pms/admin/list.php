@@ -57,7 +57,7 @@ async function fetchCommissions() {
     const token = localStorage.getItem("auth_token");
 
     try {
-        const response = await fetch("http://127.0.0.1:8000/api/admin/commissions", {
+        const response = await fetch( url + "admin/commissions", {
             headers: {
                 "Authorization": "Bearer " + token,
                 "Accept": "application/json"
@@ -77,7 +77,7 @@ async function fetchCommissions() {
         result.data.forEach(item => {
 
             const imageUrl = item.user.profile_image
-                ? "http://127.0.0.1:8000/storage/" + item.user.profile_image
+                ? url + "storage/" + item.user.profile_image
                 : "https://via.placeholder.com/80";
 
             const commissionDisplay = item.commission_type === "percent"
