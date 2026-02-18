@@ -21,12 +21,12 @@
 
     <!-- Logo -->
     <div class="flex justify-center mb-3">
-      <img src="../images/logo.png" alt="Logo" class="h-25 w-60 rounded-lg border-2 border-yellow-400 shadow-md">
+      <img src="images/logo.png" alt="Logo" class="h-25 w-60 rounded-lg border-2 border-yellow-400 shadow-md">
     </div>
 
     <!-- Heading -->
     <h2 class="text-center text-xl font-serif font-semibold tracking-widest text-yellow-400">
-      LEADER LOGIN
+      SOFTWARE LOGIN
     </h2>
     <p class="text-center text-md text-gray-300 mt-1">
       Granthaa Land Developer Pvt Ltd
@@ -93,7 +93,7 @@ function togglePassword(){
 <script>
 
   // const url ="https://granthaadeveloperpvtltd.com/pms/apis/api/";
-const API_URL = url + "login";
+const API_URL ="http://127.0.0.1:8000/api/login";
 console.log(API_URL);
 document.getElementById("loginForm").addEventListener("submit", function (e) {
     e.preventDefault();

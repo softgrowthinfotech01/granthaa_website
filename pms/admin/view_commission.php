@@ -29,7 +29,7 @@
                 <!--/Sidebar-->
 
                 <!--Main-->
-                <div class="w-[60%] mx-auto my-4 self-start rounded-lg bg-slate-100 p-6 border border-default rounded-base shadow-xs hover:bg-neutral-secondary-medium">
+                <div class="w-[60%] mx-auto my-4 self-start rounded-lg bg-gray-200 p-6 border border-default rounded-base shadow-xl hover:bg-neutral-secondary-medium">
 
                 <h5 class="text-lg font-bold text-heading p-1 my-2">Commission Data</h5>
 

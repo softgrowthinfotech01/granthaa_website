@@ -28,6 +28,8 @@
                 <div class="w-[60%] mx-auto my-4 self-start rounded-lg bg-gray-200 p-6 border border-default rounded-base shadow-xs hover:bg-neutral-secondary-medium">
                     <form class="w-full">
                         <div class="personal-details">
+                            <h2>Data has shared successfully!</h2>
+                          
                             <h5 class="text-xl font-bold text-heading p-1">Update Leader Commission</h5>
                             <div class="grid grid-cols-2">
                                 <div class="mb-5 col-span-1 px-1">

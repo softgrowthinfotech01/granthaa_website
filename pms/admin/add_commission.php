@@ -25,27 +25,27 @@
                 <!--/Sidebar-->
 
                 <!--Main-->
-                <div class="w-[60%] mx-auto my-4 self-start rounded-lg bg-gray-200 p-6 border border-default rounded-base shadow-xs hover:bg-neutral-secondary-medium">
-                    <form class="w-full">
+                <div class="w-[60%] mx-auto my-4 self-start rounded-lg bg-gray-200 p-6 border border-default rounded-base shadow-xl hover:bg-neutral-secondary-medium">
+                    <form id="commissionForm" class="w-full">
                         <div class="personal-details">
                             <h5 class="text-xl font-bold text-heading p-1">Set Leader Commission</h5>
                             <div class="grid grid-cols-2">
                                 <div class="mb-5 col-span-1 px-1">
                                     <label for="site" class="block mb-2.5 text-sm font-medium text-heading">Site Location</label>
-                                    <select id="site" class="block w-full px-3 py-2.5 rounded-lg bg-white border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand shadow-xs placeholder:text-body">
+                                    <select name="location_id" id="location_id" class="block w-full px-3 py-2.5 rounded-lg bg-white border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand shadow-xs placeholder:text-body focus:outline-none focus:ring-2 focus:ring-gray-600">
                                         <option selected>Choose a site location</option>
-                                        <option value="Male">DSK</option>
-                                        <option value="Female">Grantha</option>
-                                        <option value="Others">Datala</option>
+                                        <option value="3">DSK</option>
+                                        <option value="grantha">Grantha</option>
+                                        <option value="datala">Datala</option>
                                     </select>
                                 </div>
                                 <div class="mb-5 col-span-1 px-1">
                                     <label for="leader" class="block mb-2.5 text-sm font-medium text-heading">Select Leader</label>
-                                    <select id="leader" class="block w-full px-3 py-2.5 rounded-lg bg-white border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand shadow-xs placeholder:text-body">
+                                    <select name="user_id" id="user_id" class="block w-full px-3 py-2.5 rounded-lg bg-white border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand shadow-xs placeholder:text-body focus:outline-none focus:ring-2 focus:ring-gray-600">
                                         <option selected>Choose a leader</option>
-                                        <option value="">LEAD001</option>
-                                        <option value="">LEAD002</option>
-                                        <option value="">LEAD003</option>
+                                        <option value="1">LEAD001</option>
+                                        <option value="2">LEAD002</option>
+                                        <option value="3">LEAD003</option>
                                     </select>
                                 </div>
                             </div>
@@ -54,12 +54,12 @@
                                     <label class="block mb-2.5 text-sm font-medium text-heading">Commission Type</label>
                                     <div class="flex gap-4">
                                         <div class="flex items-center">
-                                            <input type="radio" id="percentage" name="commissionType" value="percentage" class="w-4 h-4" checked />
+                                            <input  name="commission_type" value="percent"  type="radio" id="percentage" name="commissionType" value="percentage" class="w-4 h-4" checked />
                                             <label for="percentage" class="ml-2 text-sm font-medium text-heading">Percentage</label>
                                         </div>
                                         <div class="flex items-center">
-                                            <input type="radio" id="amount" name="commissionType" value="amount" class="w-4 h-4" />
-                                            <label for="amount" class="ml-2 text-sm font-medium text-heading">Amount</label>
+                                            <input name="commission_type" value="amount" type="radio" id="amount" name="commissionType" value="amount" class="w-4 h-4" />
+                                            <label  for="amount" class="ml-2 text-sm font-medium text-heading">Amount</label>
                                         </div>
                                     </div></div>
                                 
@@ -67,7 +67,7 @@
                             <div class="">
                                 <div class="mb-5 px-1">
                                    <label for="commission" class="block mb-2.5 text-sm font-medium text-heading">Commission Value</label>
-                                    <input type="text" id="commission" class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" placeholder="Enter commission value" required />
+                                    <input name="commission_value" type="text" id="commission_value" class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body focus:outline-none focus:ring-2 focus:ring-gray-600" placeholder="Enter commission value" required />
                                 </div>
                             </div>
                         </div>
@@ -101,6 +101,69 @@ function confirmReset() {
 }
 </script>
     <script src="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.js"></script>
+
+
+
+        <script src="../url.js"></script>
+
+    <script>
+        document.getElementById('commissionForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const token = localStorage.getItem('auth_token');
+            const user = JSON.parse(localStorage.getItem('auth_user'));
+            if (!token || !user) {
+                alert('Please login first');
+                window.location.href = '../login';
+                return;
+            }
+
+            // UI level role protection (backend already protected)
+            if (user.role !== 'admin') {
+                alert('You are not allowed to update commission');
+                return;
+            }
+
+           let form = document.getElementById('commissionForm');
+           let formData = new FormData(form);
+// alert(formData.get('user_id') + ' ' + formData.get('location_id') + ' ' + formData.get('commission_type') + ' ' + formData.get('commission_value'))
+
+            
+
+            try {
+                const response = await fetch('http://127.0.0.1:8000/api/admin/set-commission', {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Authorization': 'Bearer ' + token
+                    },
+                    body: formData
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    alert(data.message || 'Something went wrong');
+                    return;
+                }
+
+                alert('Commission saved successfully');
+                document.getElementById('commissionForm').reset();
+
+            } catch (error) {
+                console.error(error);
+                alert('Server error');
+            }
+        });
+
+        // Reset confirmation
+        function confirmReset() {
+            if (confirm('Are you sure you want to reset the form?')) {
+                document.getElementById('loginForm').reset();
+            }
+        }
+    </script>
+
 
 </body>
 
