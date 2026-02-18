@@ -147,6 +147,7 @@ async function fetchLocations(page = 1) {
                         <button onclick="deleteLocation(${loc.id})" class="px-3 py-1.5 text-sm font-medium text-white bg-red-600 rounded-md hover:bg-red-500 focus:ring-2 focus:ring-red-300">
                             Delete
                         </button>
+                        
                 </tr>
             `;
         });
@@ -192,6 +193,44 @@ async function fetchLocations(page = 1) {
         loader.classList.add('hidden');
     }
 }
+
+
+// delete data 
+async function deleteLocation(id) {
+
+    if (!confirm("Are you sure you want to delete this location?")) {
+        return;
+    }
+
+    try {
+
+        const response = await fetch(
+            url + `site-location/${id}`, {
+                method: "DELETE",
+                headers: {
+                    "Accept": "application/json",
+                    "Authorization": "Bearer " + token
+                }
+            }
+        );
+
+        const result = await response.json();
+
+        if (!response.ok) {
+            throw new Error(result.message || "Delete failed");
+        }
+
+        alert(result.message || "Location deleted successfully");
+
+        // Reload current page
+        fetchLocations(currentPage);
+
+    } catch (error) {
+        alert(error.message);
+        console.error("Delete error:", error);
+    }
+}
+
 
 /* -------------------------
    EVENT LISTENERS (OUTSIDE)

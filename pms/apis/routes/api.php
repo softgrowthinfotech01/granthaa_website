@@ -17,7 +17,13 @@ Route::middleware(['auth:sanctum', 'role:admin'])->group(function () {
     Route::post('/admin/create-leader', [UserController::class, 'createLeader']);
     Route::post('/users', [UserController::class, 'store']);
     Route::get('/leader_list', [UserController::class, 'index']);
+
     Route::post('/site-location', [LocationMasterController::class, 'store']);
+    Route::get('/site-location', [LocationMasterController::class, 'index']);
+    Route::get('site-location/{id}', [LocationMasterController::class, 'show']);
+    Route::put('site-location/{id}', [LocationMasterController::class, 'update']);
+    Route::delete('site-location/{id}', [LocationMasterController::class, 'destroy']);
+
     Route::post('/admin/set-commission', [CommissionController::class, 'setCommission']);
     Route::get('/admin/commissions', [CommissionController::class, 'index']);
 });
@@ -29,6 +35,4 @@ Route::middleware(['auth:sanctum', 'role:leader'])->group(function () {
 Route::middleware(['auth:sanctum', 'role:admin,leader'])->group(function () {
     Route::get('/my-network', [UserController::class, 'myNetwork']);
 });
-
-Route::get('/site-location', [LocationMasterController::class, 'index']);
  
