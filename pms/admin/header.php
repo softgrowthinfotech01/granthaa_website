@@ -45,7 +45,7 @@
                         <hr class="my-1 border-gray-200">
                     </li>
                     <li>
-                        <a href="logout.php" onclick="logout()"  class="block px-4 py-2 hover:bg-gray-100 text-red-600">
+                        <a  onclick="logout()"  class="block px-4 py-2 hover:bg-gray-100 text-red-600">
                             Logout
                         </a>
                     </li>
