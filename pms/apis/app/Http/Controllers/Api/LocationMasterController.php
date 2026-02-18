@@ -8,15 +8,28 @@ use Illuminate\Http\Request;
 
 class LocationMasterController extends Controller
 {
-     /**
-     * Get site location
-     */
-    public function index()
-    {
-        return response()->json([
-            'data' => LocationMaster::latest()->get()
-        ]);
+    
+    public function index(Request $request)
+{
+    $query = LocationMaster::query();
+
+    // Search filter
+    if ($request->search) {
+        $query->where('site_location', 'like', '%' . $request->search . '%');
     }
+
+    // Per page value (default 5)
+    $perPage = $request->per_page ?? 5;
+
+    $locations = $query
+        ->orderBy('id', 'desc')
+        ->paginate($perPage);
+
+    return response()->json([
+        'data' => $locations
+    ]);
+}
+
 
     /**
      * Create or Update site location (ADMIN only)

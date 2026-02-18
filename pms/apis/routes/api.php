@@ -16,6 +16,7 @@ Route::middleware('auth:sanctum')->group(function () {
 Route::middleware(['auth:sanctum', 'role:admin'])->group(function () {
     Route::post('/admin/create-leader', [UserController::class, 'createLeader']);
     Route::post('/users', [UserController::class, 'store']);
+    Route::get('/leader_list', [UserController::class, 'index']);
     Route::post('/site-location', [LocationMasterController::class, 'store']);
     Route::post('/admin/set-commission', [CommissionController::class, 'setCommission']);
     Route::get('/admin/commissions', [CommissionController::class, 'index']);
@@ -30,3 +31,4 @@ Route::middleware(['auth:sanctum', 'role:admin,leader'])->group(function () {
 });
 
 Route::get('/site-location', [LocationMasterController::class, 'index']);
+ 

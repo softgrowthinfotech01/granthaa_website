@@ -25,7 +25,7 @@
                 <!--/Sidebar-->
 
                 <!--Main-->
-                <div class="w-[60%] mx-auto my-4 self-start rounded-lg bg-gray-200 p-6 border border-default rounded-base shadow-xs hover:bg-neutral-secondary-medium">
+                <div class="w-[60%] mx-auto my-4 self-start rounded-lg bg-gray-200 p-6 border border-default rounded-base shadow-xl hover:bg-neutral-secondary-medium">
                     <form class="w-full" id="loginForm">
                         <div class="personal-details">
                             <h5 class="text-xl font-bold text-heading p-1">Location Details</h5>
@@ -33,7 +33,7 @@
 
                                 <div class="mb-5  px-1">
                                     <label for="site_location" class="block mb-2.5 text-sm font-medium text-heading">Site Location</label>
-                                    <input type="text" id="site_location" class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" placeholder="Enter your site location" required />
+                                    <input type="text" id="site_location" class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body focus:outline-none focus:ring-2 focus:ring-gray-600" placeholder="Enter your site location" required />
                                 </div>
                             </div>
                         </div>

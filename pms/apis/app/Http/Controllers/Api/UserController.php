@@ -9,6 +9,40 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
+
+      public function index(Request $request)
+{
+    $query = User::query();
+ 
+    $auth = auth()->user();
+
+        if (!$auth) {
+            return response()->json(['message' => 'Unauthenticated'], 401);
+        }
+
+    // Search filter
+    if ($request->search) {
+        $query->where('name', 'like', '%' . $request->search . '%');
+    }
+
+    // Per page value (default 5)
+    $perPage = $request->per_page ?? 5;
+    
+     if ($request->has('role')) {
+            $query->where('role', $request->role);
+        }
+
+    $users = $query->
+        orderBy('id', 'desc')
+        ->paginate($perPage);
+
+    return response()->json([
+        'message' => 'Users fetched successfully',
+        'total'   => $users->count(),
+        'data' => $users
+    ]);
+}
+
     public function createLeader(Request $request)
     {
         $request->validate([
@@ -44,79 +78,77 @@ class UserController extends Controller
         };
     }
 
-    /**
-     * Create Leader / Adviser / Customer
-     */
     public function store(Request $request)
-{
-    $auth = auth()->user();
+    {
+        $auth = auth()->user();
 
-    if (!$auth) {
-        return response()->json(['message' => 'Unauthenticated'], 401);
-    }
+        if (!$auth) {
+            return response()->json(['message' => 'Unauthenticated'], 401);
+        }
 
-    $rules = [
-        'first_name' => 'required|string|max:100',
-        'last_name'  => 'required|string|max:100',
-        'email'      => 'required|email|unique:users,email',
-        'password'   => 'required|min:6',
-        'role'       => 'required|in:leader,adviser,customer',
-    ];
-
-    // Extra validation ONLY for leader
-    if ($request->role === 'leader') {
-        $rules += [
-            'age'        => 'required|integer|min:18',
-            'gender'     => 'required|in:male,female,other',
-            'contact_no' => 'required|string|max:15',
-            'city'       => 'required|string',
-            'state'      => 'required|string',
-            'address'    => 'required|string',
-            'pin_code'   => 'required|string|max:10',
-            'image'      => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+        $rules = [
+            'name' => 'required|string|max:200',
+            'email'      => 'required|email|unique:users,email',
+            'password'   => 'required|min:6',
+            'role'       => 'required|in:leader,adviser,customer',
         ];
+
+        // Extra validation ONLY for leader
+        if ($request->role === 'leader') {
+            $rules += [
+                'age'        => 'required|integer|min:18',
+                'gender'     => 'required|in:male,female,others',
+                'contact_no' => 'required|string|max:15',
+                'city'       => 'required|string',
+                'state'      => 'required|string',
+                'address'    => 'required|string',
+                'pin_code'   => 'required|string|max:10',
+                'image'      => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+                'bank_name'  => 'required|string',
+                'bank_branch'  => 'required|string',
+                'bank_account_no'  => 'required|string',
+                'bank_ifsc_code'  => 'required|string',
+            ];
+        }
+
+        $validated = $request->validate($rules);
+
+        if (!$this->canCreate($auth->role, $validated['role'])) {
+            return response()->json(['message' => 'Unauthorized'], 403);
+        }
+
+        // Image upload
+        $imagePath = null;
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('leaders', 'public');
+        }
+
+        $user = User::create([
+            'name'    => $validated['name'],
+            'email'        => $validated['email'],
+            'password'     => Hash::make($validated['password']),
+            'role'         => $validated['role'],
+            'age'          => $validated['age'] ?? null,
+            'gender'       => $validated['gender'] ?? null,
+            'contact_no'   => $validated['contact_no'] ?? null,
+            'city'         => $validated['city'] ?? null,
+            'state'        => $validated['state'] ?? null,
+            'address'      => $validated['address'] ?? null,
+            'pin_code'     => $validated['pin_code'] ?? null,
+            'profile_image' => $imagePath,
+            'bank_name'  => $validated['bank_name'] ?? null,
+            'bank_branch'  => $validated['bank_branch'] ?? null,
+            'bank_account_no'  => $validated['bank_account_no'] ?? null,
+            'bank_ifsc_code'  => $validated['bank_ifsc_code'] ?? null,
+            'created_by'   => $auth->id,
+        ]);
+
+        return response()->json([
+            'message' => ucfirst($validated['role']) . ' created successfully',
+            'user' => $user
+        ], 201);
     }
 
-    $validated = $request->validate($rules);
-
-    if (!$this->canCreate($auth->role, $validated['role'])) {
-        return response()->json(['message' => 'Unauthorized'], 403);
-    }
-
-    // Image upload
-    $imagePath = null;
-    if ($request->hasFile('image')) {
-        $imagePath = $request->file('image')->store('leaders', 'public');
-    }
-
-    $user = User::create([
-        'first_name'   => $validated['first_name'],
-        'last_name'    => $validated['last_name'],
-        'name'         => $validated['first_name'].' '.$validated['last_name'],
-        'email'        => $validated['email'],
-        'password'     => Hash::make($validated['password']),
-        'role'         => $validated['role'],
-        'age'          => $validated['age'] ?? null,
-        'gender'       => $validated['gender'] ?? null,
-        'contact_no'   => $validated['contact_no'] ?? null,
-        'city'         => $validated['city'] ?? null,
-        'state'        => $validated['state'] ?? null,
-        'address'      => $validated['address'] ?? null,
-        'pin_code'     => $validated['pin_code'] ?? null,
-        'profile_image'=> $imagePath,
-        'created_by'   => $auth->id,
-    ]);
-
-    return response()->json([
-        'message' => ucfirst($validated['role']).' created successfully',
-        'user' => $user
-    ], 201);
-}
-
-
-    /**
-     * Get direct downline (1-level)
-     */
     public function myNetwork()
     {
         $auth = auth()->user();
