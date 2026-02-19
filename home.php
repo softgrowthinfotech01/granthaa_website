@@ -716,7 +716,7 @@ $projects = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         </div>
       </div>
-    
+
     </div>
   </section>
 
@@ -748,28 +748,27 @@ $projects = $stmt->fetchAll(PDO::FETCH_ASSOC);
           <form method="post" class="space-y-6">
 
             <input
-          type="text"
-          placeholder="Name" required
-          name="name"
-          class="w-full px-4 py-2.5 sm:py-3
+              type="text"
+              placeholder="Name" required
+              name="name"
+              class="w-full px-4 py-2.5 sm:py-3
                rounded-lg border border-blue-300
                focus:ring-2 focus:ring-blue-500 outline-none" />
 
-       <input
-  type="email"
-  name="email"
-  placeholder="Email"
-  required
-  pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
-  title="Enter valid email address"
-  class="w-full bg-white border-2 border-blue-200 rounded-lg px-5 py-4
-         focus:outline-none focus:border-green-500"
-/>
-                  <?php if (!empty($errors['email'])): ?>
-<small style="color:red;"><?php echo $errors['email']; ?></small>
-<?php endif; ?>
+            <input
+              type="email"
+              name="email"
+              placeholder="Email"
+              required
+              pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+              title="Enter valid email address"
+              class="w-full bg-white border-2 border-blue-200 rounded-lg px-5 py-4
+         focus:outline-none focus:border-green-500" />
+            <?php if (!empty($errors['email'])): ?>
+              <small style="color:red;"><?php echo $errors['email']; ?></small>
+            <?php endif; ?>
 
-        <div class="flex items-center border-2 border-blue-200 rounded-lg px-4 py-3">
+            <div class="flex items-center border-2 border-blue-200 rounded-lg px-4 py-3">
               <span class="mr-3">🇮🇳</span>
               <input
                 type="tel"
@@ -779,11 +778,10 @@ $projects = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 pattern="[0-9]{10}"
                 oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,10)"
                 required
-                class="bg-transparent w-full focus:outline-none"
-              />
-                <?php if (!empty($errors['phone'])): ?>
-<small style="color:red;"><?php echo $errors['phone']; ?></small>
-<?php endif; ?>
+                class="bg-transparent w-full focus:outline-none" />
+              <?php if (!empty($errors['phone'])): ?>
+                <small style="color:red;"><?php echo $errors['phone']; ?></small>
+              <?php endif; ?>
 
             </div>
 
@@ -902,79 +900,82 @@ $projects = $stmt->fetchAll(PDO::FETCH_ASSOC);
   </a>
 
   <?php
-include "website/conn.php";
+  include "website/conn.php";
 
-$errors = [];
+  $errors = [];
 
-if (isset($_POST['submit'])) {
+  if (isset($_POST['submit'])) {
 
-  // Trim inputs
-  $name  = trim($_POST['name'] ?? '');
-  $email = trim($_POST['email'] ?? '');
-  $phone = trim($_POST['number'] ?? '');
+    // Trim inputs
+    $name  = trim($_POST['name'] ?? '');
+    $email = trim($_POST['email'] ?? '');
+    $phone = trim($_POST['number'] ?? '');
 
-  /* ======================
+    /* ======================
      BASIC VALIDATIONS
   =======================*/
 
-  if (empty($name)) {
-    $errors['name'] = "Name is required";
-  }
+    if (empty($name)) {
+      $errors['name'] = "Name is required";
+    } elseif (!preg_match("/^[A-Za-z ]+$/", $name)) {
+      $errors['name'] = "Only letters and spaces allowed";
+    }
 
-  if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-    $errors['email'] = "Enter valid email";
-  }
 
-  if (!preg_match('/^[0-9]{10}$/', $phone)) {
-    $errors['phone'] = "Enter valid 10 digit mobile";
-  }
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+      $errors['email'] = "Enter valid email";
+    }
 
-  /* ======================
+    if (!preg_match('/^[0-9]{10}$/', $phone)) {
+      $errors['phone'] = "Enter valid 10 digit mobile";
+    }
+
+    /* ======================
      CAPTCHA CHECK
   =======================*/
 
-  $secretKey = "6Lf45GcsAAAAAP8NfLwWSmj14LTXgSqQuuZ6-tTM";
-  $response = $_POST['g-recaptcha-response'] ?? '';
+    $secretKey = "6Lf45GcsAAAAAP8NfLwWSmj14LTXgSqQuuZ6-tTM";
+    $response = $_POST['g-recaptcha-response'] ?? '';
 
-  if (!$response) {
-    $errors['captcha'] = "Captcha required";
-  }
-
-  if (empty($errors)) {
-
-    $verify = file_get_contents(
-      "https://www.google.com/recaptcha/api/siteverify?secret=$secretKey&response=$response"
-    );
-
-    $captcha = json_decode($verify);
-
-    if (!$captcha->success) {
-      $errors['captcha'] = "Captcha failed";
+    if (!$response) {
+      $errors['captcha'] = "Captcha required";
     }
-  }
 
-  /* ======================
+    if (empty($errors)) {
+
+      $verify = file_get_contents(
+        "https://www.google.com/recaptcha/api/siteverify?secret=$secretKey&response=$response"
+      );
+
+      $captcha = json_decode($verify);
+
+      if (!$captcha->success) {
+        $errors['captcha'] = "Captcha failed";
+      }
+    }
+
+    /* ======================
      INSERT IF NO ERRORS
   =======================*/
 
-  if (empty($errors)) {
+    if (empty($errors)) {
 
-    $stmt = $conn->prepare("
+      $stmt = $conn->prepare("
       INSERT INTO contact(name,email,phone)
       VALUES(:name,:email,:phone)
     ");
 
-    $stmt->execute([
-      ':name' => htmlspecialchars($name),
-      ':email' => htmlspecialchars($email),
-      ':phone' => htmlspecialchars($phone)
-    ]);
+      $stmt->execute([
+        ':name' => htmlspecialchars($name),
+        ':email' => htmlspecialchars($email),
+        ':phone' => htmlspecialchars($phone)
+      ]);
 
-    header("Location: home.php");
-    exit;
+      header("Location: home.php");
+      exit;
+    }
   }
-}
-?>
+  ?>
 
   <div
     id="modalBackdrop"
@@ -1030,33 +1031,37 @@ if (isset($_POST['submit'])) {
           class="w-full px-4 py-2.5 sm:py-3
                rounded-lg border border-blue-300
                focus:ring-2 focus:ring-blue-500 outline-none" />
+               <?php if (!empty($errors['name'])): ?>
+                            <small style="color:red;">
+                              <?php echo $errors['name']; ?>
+                            </small>
+                          <?php endif; ?>
 
         <input
-              type="email"
-              placeholder="Email" name="email" required
-              class="w-full bg-white border-2 border-blue-200 rounded-lg px-5 py-4
+          type="email"
+          placeholder="Email" name="email" required
+          class="w-full bg-white border-2 border-blue-200 rounded-lg px-5 py-4
                    focus:outline-none focus:border-green-500" />
-                  <?php if (!empty($errors['email'])): ?>
-<small style="color:red;"><?php echo $errors['email']; ?></small>
-<?php endif; ?>
+        <?php if (!empty($errors['email'])): ?>
+          <small style="color:red;"><?php echo $errors['email']; ?></small>
+        <?php endif; ?>
 
         <div class="flex items-center border-2 border-blue-200 rounded-lg px-4 py-3">
-              <span class="mr-3">🇮🇳</span>
-              <input
-                type="tel"
-                name="number"
-                placeholder="Phone"
-                maxlength="10"
-                pattern="[0-9]{10}"
-                oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,10)"
-                required
-                class="bg-transparent w-full focus:outline-none"
-              />
-                <?php if (!empty($errors['phone'])): ?>
-<small style="color:red;"><?php echo $errors['phone']; ?></small>
-<?php endif; ?>
+          <span class="mr-3">🇮🇳</span>
+          <input
+            type="tel"
+            name="number"
+            placeholder="Phone"
+            maxlength="10"
+            pattern="[0-9]{10}"
+            oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,10)"
+            required
+            class="bg-transparent w-full focus:outline-none" />
+          <?php if (!empty($errors['phone'])): ?>
+            <small style="color:red;"><?php echo $errors['phone']; ?></small>
+          <?php endif; ?>
 
-            </div>
+        </div>
 
 
         <label class="flex gap-2 text-xs sm:text-sm text-gray-600">
