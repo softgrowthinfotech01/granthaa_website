@@ -965,7 +965,7 @@ $projects = $stmt->fetchAll(PDO::FETCH_ASSOC);
     if (empty($errors)) {
 
       $stmt = $conn->prepare("
-      INSERT INTO contact(name,email,phone)
+      INSERT INTO enquiries(name,email,phone)
       VALUES(:name,:email,:phone)
     ");
 
