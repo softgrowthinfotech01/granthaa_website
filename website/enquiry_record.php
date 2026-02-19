@@ -120,7 +120,7 @@ $enquiries = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                                             <div class="flex gap-2">
                                                             <!-- <a href="view_message.php?id=<?php echo $row['id']; ?>" class="btn btn-md btn-info">Edit</a> -->
 
-                                                            <a href="delete_message.php?id=<?php echo $row['id']; ?>"
+                                                            <a href="delete_enquiry.php?id=<?php echo $row['id']; ?>"
                                                                 class="btn btn-md btn-danger"
                                                                 onclick="return confirm('Delete this enquiry record?');">
                                                                 Delete

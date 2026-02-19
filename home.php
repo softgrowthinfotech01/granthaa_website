@@ -922,11 +922,15 @@ $projects = $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
 
-    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    if (empty($email)) {
+      $errors['email'] = "Email is required";
+    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
       $errors['email'] = "Enter valid email";
     }
 
-    if (!preg_match('/^[0-9]{10}$/', $phone)) {
+    if (empty($phone)) {
+      $errors['phone'] = "Phone number is required";
+    } elseif (!preg_match('/^[0-9]{10}$/', $phone)) {
       $errors['phone'] = "Enter valid 10 digit mobile";
     }
 
@@ -1031,11 +1035,11 @@ $projects = $stmt->fetchAll(PDO::FETCH_ASSOC);
           class="w-full px-4 py-2.5 sm:py-3
                rounded-lg border border-blue-300
                focus:ring-2 focus:ring-blue-500 outline-none" />
-               <?php if (!empty($errors['name'])): ?>
-                            <small style="color:red;">
-                              <?php echo $errors['name']; ?>
-                            </small>
-                          <?php endif; ?>
+        <?php if (!empty($errors['name'])): ?>
+          <small style="color:red;">
+            <?php echo $errors['name']; ?>
+          </small>
+        <?php endif; ?>
 
         <input
           type="email"
