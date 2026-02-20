@@ -14,7 +14,7 @@ class UserLocationCommission extends Model
     'created_by'
 ];
 
-public function user()
+public function user() 
 {
     return $this->belongsTo(\App\Models\User::class);
 }
