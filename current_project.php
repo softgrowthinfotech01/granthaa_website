@@ -119,7 +119,10 @@ $projects = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 </h3>
 
                 <p class="text-gray-600 text-sm mb-4">
-                  <?php echo substr($row['project_details1'], 0, 120); ?>...
+                  <?php
+                  $cleanText = str_replace('/*/*/', '', $row['project_details1']);
+                  echo substr($cleanText, 0, 120) . '...';
+                  ?>
                 </p>
 
                 <a href="project_details.php?id=<?php echo $row['id']; ?>"

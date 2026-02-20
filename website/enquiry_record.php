@@ -1,6 +1,8 @@
 <?php
 session_start();
 
+include "conn.php";
+
 $timeout = 1800; // 30 minutes
 
 // If not logged in
@@ -26,7 +28,9 @@ $_SESSION['LAST_ACTIVITY'] = time();
 header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
 header("Cache-Control: post-check=0, pre-check=0", false);
 header("Pragma: no-cache");
-header("Expires: 0");include "conn.php";
+header("Expires: 0");
+
+
 
 $stmt = $conn->prepare("SELECT * FROM enquiries ORDER BY id ASC");
 $stmt->execute();
