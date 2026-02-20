@@ -120,8 +120,14 @@ $projects = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
                 <p class="text-gray-600 text-sm mb-4">
                   <?php
-                  $cleanText = str_replace('/*/*/', '', $row['project_details1']);
-                  echo substr($cleanText, 0, 120) . '...';
+                  $text = $row['project_details1'] ?? '';
+                  $cleanText = str_replace('/*/*/', '', $text);
+
+                  if (strlen($cleanText) > 120) {
+                    echo substr($cleanText, 0, 120) . '...';
+                  } else {
+                    echo $cleanText;
+                  }
                   ?>
                 </p>
 
