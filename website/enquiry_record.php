@@ -1,6 +1,8 @@
 <?php
 session_start();
 
+include "conn.php";
+
 $timeout = 1800; // 30 minutes
 
 // If not logged in
@@ -26,7 +28,9 @@ $_SESSION['LAST_ACTIVITY'] = time();
 header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
 header("Cache-Control: post-check=0, pre-check=0", false);
 header("Pragma: no-cache");
-header("Expires: 0");include "conn.php";
+header("Expires: 0");
+
+
 
 $stmt = $conn->prepare("SELECT * FROM enquiries ORDER BY id ASC");
 $stmt->execute();
@@ -120,7 +124,7 @@ $enquiries = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                                             <div class="flex gap-2">
                                                             <!-- <a href="view_message.php?id=<?php echo $row['id']; ?>" class="btn btn-md btn-info">Edit</a> -->
 
-                                                            <a href="delete_message.php?id=<?php echo $row['id']; ?>"
+                                                            <a href="delete_enquiry.php?id=<?php echo $row['id']; ?>"
                                                                 class="btn btn-md btn-danger"
                                                                 onclick="return confirm('Delete this enquiry record?');">
                                                                 Delete

@@ -37,7 +37,7 @@ $stmt = $conn->prepare("
     SELECT 
         SUM(project_status = 'current') AS current_count,
         SUM(project_status = 'upcoming') AS upcoming_count,
-        SUM(project_status = 'completed') AS completed_count
+        SUM(project_status = 'complete') AS completed_count
     FROM project
 ");
 $stmt->execute();

@@ -722,7 +722,85 @@ $projects = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 
   <!-- Contact Sections-->
+<?php
+include "website/conn.php";
 
+$errors = [];
+
+if (isset($_POST['submit'])) {
+
+  // Trim inputs
+  $name  = trim($_POST['name'] ?? '');
+  $email = trim($_POST['email'] ?? '');
+  $phone = trim($_POST['number'] ?? '');
+  $agree = $_POST['agree'] ?? '';
+  $response = $_POST['g-recaptcha-response'] ?? '';
+
+  /* ======================
+     BASIC VALIDATIONS
+  =======================*/
+
+  if (empty($name)) {
+    $errors['name'] = "Name is required";
+  }
+
+  if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    $errors['email'] = "Enter valid email";
+  }
+
+  if (!preg_match('/^[0-9]{10}$/', $phone)) {
+    $errors['phone'] = "Enter valid 10 digit mobile";
+  }
+
+  if (!$agree) {
+    $errors['agree'] = "You must agree before submitting";
+  }
+
+  if (!$response) {
+    $errors['captcha'] = "Captcha required";
+  }
+
+  /* ======================
+     CAPTCHA VERIFY
+  =======================*/
+
+  if (empty($errors)) {
+
+    $secretKey = "6Lf45GcsAAAAAP8NfLwWSmj14LTXgSqQuuZ6-tTM";
+
+    $verify = file_get_contents(
+      "https://www.google.com/recaptcha/api/siteverify?secret=$secretKey&response=$response"
+    );
+
+    $captcha = json_decode($verify);
+
+    if (!$captcha->success) {
+      $errors['captcha'] = "Captcha failed";
+    }
+  }
+
+  /* ======================
+     INSERT IF NO ERRORS
+  =======================*/
+
+  if (empty($errors)) {
+
+    $stmt = $conn->prepare("
+      INSERT INTO contact(name,email,phone)
+      VALUES(:name,:email,:phone)
+    ");
+
+    $stmt->execute([
+      ':name' => htmlspecialchars($name),
+      ':email' => htmlspecialchars($email),
+      ':phone' => htmlspecialchars($phone)
+    ]);
+
+    header("Location: home.php");
+    exit;
+  }
+}
+?>
   <section class="bg-white px-6 py-20">
     <!-- Section Heading -->
     <div class="max-w-7xl mx-auto mb-12">
@@ -788,11 +866,20 @@ $projects = $stmt->fetchAll(PDO::FETCH_ASSOC);
             </div>
 
 
+<label class="flex items-start gap-3 text-sm text-gray-700">
+  <input
+    type="checkbox"
+    name="agree"
+    value="1"
+    class="mt-1 accent-green-600"
+    <?php if (!empty($_POST['agree'])) echo 'checked'; ?>
+  />
+  I agree and authorize team to contact me. This will override the register with us.
+</label>
 
-            <label class="flex items-start gap-3 text-sm text-gray-700">
-              <input type="checkbox" checked class="mt-1 accent-green-600" />
-              I agree and authorize team to contact me. This will override the register with us.
-            </label>
+<?php if (!empty($errors['agree'])): ?>
+  <small style="color:red;"><?php echo $errors['agree']; ?></small>
+<?php endif; ?>
 
             <div class="g-recaptcha" data-sitekey="6Lf45GcsAAAAAIDRQ-udUFSe_D_KMi4a1vmwEfnd"></div>
 
@@ -912,6 +999,8 @@ if (isset($_POST['submit'])) {
   $name  = trim($_POST['name'] ?? '');
   $email = trim($_POST['email'] ?? '');
   $phone = trim($_POST['number'] ?? '');
+  $agree = $_POST['agree'] ?? '';
+  $response = $_POST['g-recaptcha-response'] ?? '';
 
   /* ======================
      BASIC VALIDATIONS
@@ -929,18 +1018,21 @@ if (isset($_POST['submit'])) {
     $errors['phone'] = "Enter valid 10 digit mobile";
   }
 
-  /* ======================
-     CAPTCHA CHECK
-  =======================*/
-
-  $secretKey = "6Lf45GcsAAAAAP8NfLwWSmj14LTXgSqQuuZ6-tTM";
-  $response = $_POST['g-recaptcha-response'] ?? '';
+  if (!$agree) {
+    $errors['agree'] = "You must agree before submitting";
+  }
 
   if (!$response) {
     $errors['captcha'] = "Captcha required";
   }
 
+  /* ======================
+     CAPTCHA VERIFY
+  =======================*/
+
   if (empty($errors)) {
+
+    $secretKey = "6Lf45GcsAAAAAP8NfLwWSmj14LTXgSqQuuZ6-tTM";
 
     $verify = file_get_contents(
       "https://www.google.com/recaptcha/api/siteverify?secret=$secretKey&response=$response"
@@ -960,7 +1052,7 @@ if (isset($_POST['submit'])) {
   if (empty($errors)) {
 
     $stmt = $conn->prepare("
-      INSERT INTO contact(name,email,phone)
+      INSERT INTO enquiries(name,email,phone)
       VALUES(:name,:email,:phone)
     ");
 
@@ -1059,11 +1151,20 @@ if (isset($_POST['submit'])) {
             </div>
 
 
-        <label class="flex gap-2 text-xs sm:text-sm text-gray-600">
-          <input type="checkbox" checked class="mt-1 accent-green-600">
-          I agree and authorize the team to contact me. This will override the register with us.
+       <label class="flex items-start gap-3 text-sm text-gray-700">
+  <input
+    type="checkbox"
+    name="agree"
+    value="1"
+    class="mt-1 accent-green-600"
+    <?php if (!empty($_POST['agree'])) echo 'checked'; ?>
+  />
+  I agree and authorize team to contact me. This will override the register with us.
+</label>
 
-        </label>
+<?php if (!empty($errors['agree'])): ?>
+  <small style="color:red;"><?php echo $errors['agree']; ?></small>
+<?php endif; ?>
 
         <!-- CAPTCHA MOCK -->
         <div class="g-recaptcha" data-sitekey="6Lf45GcsAAAAAIDRQ-udUFSe_D_KMi4a1vmwEfnd"></div>
