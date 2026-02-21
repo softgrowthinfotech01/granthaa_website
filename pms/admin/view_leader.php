@@ -62,6 +62,7 @@
                                 <th class="px-4 py-3">Age</th>
                                 <th class="px-4 py-3">Contact</th>
                                 <th class="px-4 py-3">Created At</th>
+                                <th class="px-4 py-3">Actions</th>
                             </tr>
                         </thead>
                         <tbody id="locationTableBody">
@@ -142,6 +143,13 @@
                         <td class="px-4 py-2">${loc.contact_no}</td>
                         <td class="px-4 py-2">
                             ${new Date(loc.created_at).toLocaleDateString()}
+                        </td>
+                        <td class="px-4 py-2 flex gap-2">
+                        <a href="update_leader.php?id=${loc.id}" class="px-3 py-1.5 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-500 focus:ring-2 focus:ring-blue-300">Edit</a>
+
+                        <button onclick="deleteLeader(${loc.id})" class="px-3 py-1.5 text-sm font-medium text-white bg-red-600 rounded-md hover:bg-red-500 focus:ring-2 focus:ring-red-300">
+                            Delete
+                        </button>
                         </td>
                     </tr>
                 `;
