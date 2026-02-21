@@ -54,24 +54,25 @@
                                     <label class="block mb-2.5 text-sm font-medium text-heading">Commission Type</label>
                                     <div class="flex gap-4">
                                         <div class="flex items-center">
-                                            <input  name="commission_type" value="percent"  type="radio" id="percentage" name="commissionType" value="percentage" class="w-4 h-4" checked />
+                                            <input name="commission_type" value="percent" type="radio" id="percentage" name="commissionType" value="percentage" class="w-4 h-4" checked />
                                             <label for="percentage" class="ml-2 text-sm font-medium text-heading">Percentage</label>
                                         </div>
                                         <div class="flex items-center">
                                             <input name="commission_type" value="amount" type="radio" id="amount" name="commissionType" value="amount" class="w-4 h-4" />
-                                            <label  for="amount" class="ml-2 text-sm font-medium text-heading">Amount</label>
+                                            <label for="amount" class="ml-2 text-sm font-medium text-heading">Amount</label>
                                         </div>
-                                    </div></div>
-                                
+                                    </div>
+                                </div>
+
                             </div>
                             <div class="">
                                 <div class="mb-5 px-1">
-                                   <label for="commission" class="block mb-2.5 text-sm font-medium text-heading">Commission Value</label>
+                                    <label for="commission" class="block mb-2.5 text-sm font-medium text-heading">Commission Value</label>
                                     <input name="commission_value" type="text" id="commission_value" class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body focus:outline-none focus:ring-2 focus:ring-gray-600" placeholder="Enter commission value" required />
                                 </div>
                             </div>
                         </div>
-                   
+
                         <hr class="border-white-300 mb-3">
                         <div class="flex justify-center gap-2">
                             <button type="submit" class="w-[15%] text-white bg-blue-600 box-border border border-transparent hover:bg-blue-400 rounded-lg focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none">Save</button>
@@ -94,17 +95,17 @@
     </div>
 
     <script>
-function confirmReset() {
-    if (confirm("Clear all entered data?")) {
-        document.querySelector("form").reset();
-    }
-}
-</script>
+        function confirmReset() {
+            if (confirm("Clear all entered data?")) {
+                document.querySelector("form").reset();
+            }
+        }
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.js"></script>
 
 
 
-        <script src="../url.js"></script>
+    <script src="../url.js"></script>
 
     <script>
         document.getElementById('commissionForm').addEventListener('submit', async function(e) {
@@ -124,11 +125,11 @@ function confirmReset() {
                 return;
             }
 
-           let form = document.getElementById('commissionForm');
-           let formData = new FormData(form);
-// alert(formData.get('user_id') + ' ' + formData.get('location_id') + ' ' + formData.get('commission_type') + ' ' + formData.get('commission_value'))
+            let form = document.getElementById('commissionForm');
+            let formData = new FormData(form);
+            // alert(formData.get('user_id') + ' ' + formData.get('location_id') + ' ' + formData.get('commission_type') + ' ' + formData.get('commission_value'))
 
-            
+
 
             try {
                 const response = await fetch(url + 'admin/set-commission', {

@@ -20,6 +20,7 @@ class User extends Authenticatable
      */
     protected $fillable = [
     'name',
+    'user_code',
     'first_name',
     'last_name',
     'age',
@@ -71,5 +72,10 @@ class User extends Authenticatable
     public function children()
     {
         return $this->hasMany(User::class, 'created_by');
+    }
+
+    public function bookings()
+    {
+        return $this->hasMany(Booking::class, 'user_code');
     }
 }
