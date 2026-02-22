@@ -222,6 +222,44 @@
 
         // Initial Load
         fetchLocations();
+
+
+
+        async function deleteLeader(id) {
+
+    if (!confirm("Are you sure you want to delete this leader?")) {
+        return;
+    }
+
+    try {
+
+        const response = await fetch(
+            url + `users/${id}`,   // 🔥 IMPORTANT
+            {
+                method: "DELETE",
+                headers: {
+                    "Accept": "application/json",
+                    "Authorization": "Bearer " + token
+                }
+            }
+        );
+
+        const result = await response.json();
+
+        if (!response.ok) {
+            alert(result.message || "Delete failed");
+            return;
+        }
+
+        alert(result.message || "Deleted successfully");
+
+        fetchLocations(currentPage); // reload table
+
+    } catch (error) {
+        console.error("Delete error:", error);
+        alert("Server error");
+    }
+}
     </script>
 </body>
 

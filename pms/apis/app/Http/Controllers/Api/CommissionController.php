@@ -141,48 +141,61 @@ class CommissionController extends Controller
     /**
      * Update Commission (Admin Only)
      */
-    public function updateCommission(Request $request, $id)
-    {
-        $auth = auth()->user();
+public function updateCommission(Request $request, $id)
+{
+    $auth = auth()->user();
 
-        if (!$auth || $auth->role !== 'admin') {
-            return response()->json([
-                'message' => 'Only admin can update commission'
-            ], 403);
-        }
-
-        $commission = UserLocationCommission::find($id);
-
-        if (!$commission) {
-            return response()->json([
-                'message' => 'Commission not found'
-            ], 404);
-        }
-
-        $validated = $request->validate([
-            'commission_type' => 'required|in:percent,amount',
-            'commission_value' => 'required|numeric|min:0'
-        ]);
-
-        // Extra validation for percent
-        if ($validated['commission_type'] === 'percent' && $validated['commission_value'] > 100) {
-            return response()->json([
-                'message' => 'Percentage cannot be more than 100'
-            ], 422);
-        }
-
-        $commission->update([
-            'commission_type' => $validated['commission_type'],
-            'commission_value' => $validated['commission_value'],
-            'updated_by' => $auth->id ?? null
-        ]);
-
+    if (!$auth || $auth->role !== 'admin') {
         return response()->json([
-            'message' => 'Commission updated successfully',
-            'data' => $commission
-        ], 200);
+            'message' => 'Only admin can update commission'
+        ], 403);
     }
 
+    $commission = UserLocationCommission::find($id);
+
+    if (!$commission) {
+        return response()->json([
+            'message' => 'Commission not found'
+        ], 404);
+    }
+
+    $validated = $request->validate([
+        'user_id' => 'required|exists:users,id',
+        'location_id' => 'required|exists:location_master,id',
+        'commission_type' => 'required|in:percent,amount',
+        'commission_value' => 'required|numeric|min:0'
+    ]);
+
+    // 🔥 Check user role
+    $user = User::find($validated['user_id']);
+
+    if (!in_array($user->role, ['leader', 'adviser'])) {
+        return response()->json([
+            'message' => 'Commission can only be set for Leader or Adviser'
+        ], 422);
+    }
+
+    // Extra validation for percent
+    if ($validated['commission_type'] === 'percent' 
+        && $validated['commission_value'] > 100) {
+        return response()->json([
+            'message' => 'Percentage cannot be more than 100'
+        ], 422);
+    }
+
+    $commission->update([
+        'user_id' => $validated['user_id'],
+        'location_id' => $validated['location_id'],
+        'commission_type' => $validated['commission_type'],
+        'commission_value' => $validated['commission_value'],
+        'updated_by' => $auth->id
+    ]);
+
+    return response()->json([
+        'message' => 'Commission updated successfully',
+        'data' => $commission
+    ], 200);
+}
     /**
      * Delete Commission (Admin Only)
      */
@@ -210,4 +223,29 @@ class CommissionController extends Controller
             'message' => 'Commission deleted successfully'
         ], 200);
     }
+
+    public function show($id)
+{
+    $auth = auth()->user();
+
+    if (!$auth || $auth->role !== 'admin') {
+        return response()->json([
+            'message' => 'Only admin can view commission'
+        ], 403);
+    }
+
+    $commission = UserLocationCommission::with(['user', 'location'])
+        ->find($id);
+
+    if (!$commission) {
+        return response()->json([
+            'message' => 'Commission not found'
+        ], 404);
+    }
+
+    return response()->json([
+        'message' => 'Commission fetched successfully',
+        'data' => $commission
+    ], 200);
+}
 }

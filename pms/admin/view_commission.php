@@ -117,7 +117,7 @@
                 pagination.innerHTML = '';
 
                 const response = await fetch(
-                   url + `admin/commissions?page=${page}&search=${currentSearch}&per_page=${currentPerPage}`
+                   url + `commissions?page=${page}&search=${currentSearch}&per_page=${currentPerPage}`
 , {
                         method: "GET",
                         headers: {
@@ -245,7 +245,47 @@ Total records: ${paginationData.total_records}
 
         // Initial Load
         fetchLocations();
-    </script>
+
+
+        // DELETE FUNCTION
+async function deleteCommission(id) {
+
+    if (!confirm("Are you sure you want to delete this commission?")) {
+        return;
+    }
+
+    try {
+
+        const response = await fetch(
+            url + `commission/${id}`,
+            {
+                method: "DELETE",
+                headers: {
+                    "Authorization": "Bearer " + token,
+                    "Accept": "application/json"
+                }
+            }
+        );
+
+        const result = await response.json();
+
+        if (!response.ok) {
+            alert(result.message);
+            return;
+        }
+
+        alert("Deleted successfully");
+        fetchLocations(currentPage);   // 🔥 CORRECT FUNCTION
+
+    } catch (error) {
+        console.error(error);
+        alert("Server error");
+    }
+}
+
+
+
+</script>
 </body>
 
 

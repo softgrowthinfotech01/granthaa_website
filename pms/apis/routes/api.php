@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\LocationMasterController;
 use App\Http\Controllers\Api\UserController;
 use Illuminate\Support\Facades\Route;
 
+
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 
@@ -49,6 +50,7 @@ Route::middleware(['auth:sanctum', 'role:admin,leader'])->group(function () {
     Route::get('/commissions', [CommissionController::class, 'index']);
     Route::get('/commissions/user/{userId}', [CommissionController::class, 'getByUser']);
     Route::get('/my-commissions', [CommissionController::class, 'myCommissions']);
+    Route::get('/commission/{id}', [CommissionController::class, 'show']);
 });
 
 Route::middleware(['auth:sanctum', 'role:leader'])->group(function () {
