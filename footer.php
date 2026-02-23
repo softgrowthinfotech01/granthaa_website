@@ -61,14 +61,14 @@
           <div class="text-center">
             <img src="./images/qr.JPG" alt="EC QR"
               class="w-32 h-32 border-4 border-white rounded-lg mx-auto">
-            <p class="mt-2 text-sm">EC</p>
-           
+            <!-- <p class="mt-2 text-sm">EC</p>
+            -->
           </div>
 
           <div class="text-center">
             <img src="./images/qr.JPG" alt="SMC QR"
               class="w-32 h-32 border-4 border-white rounded-lg mx-auto">
-            <p class="mt-2 text-sm">SMC</p>
+            <!-- <p class="mt-2 text-sm">SMC</p> -->
           
           </div>
         </div>
