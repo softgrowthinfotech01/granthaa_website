@@ -66,32 +66,59 @@ class UserController extends Controller
 
     public function index(Request $request)
     {
-        $query = User::query();
-
         $auth = auth()->user();
 
         if (!$auth) {
             return response()->json(['message' => 'Unauthenticated'], 401);
         }
 
-        // Search filter
-        if ($request->search) {
-            $query->where('name', 'like', '%' . $request->search . '%');
+        $query = User::query();
+
+        // 🔐 Role-based visibility
+        if ($auth->role !== 'admin') {
+            $query->where('created_by', $auth->id);
         }
 
-        // Per page value (default 5)
-        $perPage = $request->per_page ?? 5;
+        // 🔎 Global Search
+        if ($request->filled('search')) {
+            $search = $request->search;
 
-        if ($request->has('role')) {
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%")
+                    ->orWhere('user_code', 'like', "%{$search}%")
+                    ->orWhere('email', 'like', "%{$search}%")
+                    ->orWhere('contact_no', 'like', "%{$search}%")
+                    ->orWhere('pancard_number', 'like', "%{$search}%");
+            });
+        }
+
+        // 🎯 Role Filter
+        if ($request->filled('role')) {
             $query->where('role', $request->role);
         }
 
+        // 🏙 City Filter
+        if ($request->filled('city')) {
+            $query->where('city', $request->city);
+        }
+
+        // 📅 Date Range Filter
+        if ($request->filled('from_date') && $request->filled('to_date')) {
+            $query->whereBetween('created_at', [
+                $request->from_date,
+                $request->to_date
+            ]);
+        }
+
+        // 📄 Pagination (default 10)
+        $perPage = $request->per_page ?? 10;
+
         $users = $query->orderBy('id', 'desc')
-            ->paginate($perPage);
+            ->paginate($perPage)
+            ->withQueryString(); // keeps filters in pagination links
 
         return response()->json([
             'message' => 'Users fetched successfully',
-            'total'   => $users->count(),
             'data' => $users
         ]);
     }
@@ -200,29 +227,46 @@ class UserController extends Controller
         ]);
     }
 
-    public function myNetwork()
-    {
-        $auth = auth()->user();
+    public function myNetwork(Request $request)
+{
+    $auth = auth()->user();
 
-        if (!$auth) {
-            return response()->json(['message' => 'Unauthenticated'], 401);
-        }
-
-        $network = User::where('created_by', $auth->id)
-            ->select('id', 'name', 'email', 'role', 'created_by', 'created_at')
-            ->paginate(10);
-
-        return response()->json([
-            'message' => 'My network fetched successfully',
-            'data'    => $network
-        ]);
+    if (!$auth) {
+        return response()->json(['message' => 'Unauthenticated'], 401);
     }
+
+    $query = User::where('created_by', $auth->id);
+
+    // 🔎 Search
+    if ($request->filled('search')) {
+        $search = $request->search;
+
+        $query->where(function ($q) use ($search) {
+            $q->where('name', 'like', "%{$search}%")
+              ->orWhere('email', 'like', "%{$search}%")
+              ->orWhere('role', 'like', "%{$search}%");
+        });
+    }
+
+    // 📄 Pagination
+    $perPage = $request->per_page ?? 10;
+
+    $users = $query->orderBy('id', 'desc')
+                   ->paginate($perPage)
+                   ->withQueryString();
+
+    return response()->json([
+        'message' => 'My network fetched successfully',
+        'data' => $users
+    ]);
+}
 
     /**
      * Update User
      */
     public function update(Request $request, $id)
     {
+
         $auth = auth()->user();
 
         if (!$auth) {
@@ -234,6 +278,7 @@ class UserController extends Controller
         if (!$user) {
             return response()->json(['message' => 'User not found'], 404);
         }
+        // dd($auth->id, $user->created_by);
 
         // Admin can update anyone
         // Others can update only their created users
@@ -257,6 +302,7 @@ class UserController extends Controller
             'bank_branch' => 'nullable|string',
             'bank_account_no' => 'nullable|string',
             'bank_ifsc_code' => 'nullable|string',
+            'pancard_number' => 'nullable|string',
         ];
 
         $validated = $request->validate($rules);
@@ -279,6 +325,30 @@ class UserController extends Controller
         return response()->json([
             'message' => 'User updated successfully',
             'data' => $user
+        ]);
+    }
+
+    public function createCustomer(array $data, $createdBy)
+    {
+        // Check if customer already exists by email or contact_no
+        $existing = User::where('email', $data['email'])
+            ->orWhere('contact_no', $data['contact_no'])
+            ->first();
+
+        if ($existing) {
+            return $existing;
+        }
+
+        $userCode = $this->generateUserCode('customer');
+
+        return User::create([
+            'user_code' => $userCode,
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'password' => Hash::make('123456'), // default password
+            'role' => 'customer',
+            'contact_no' => $data['contact_no'],
+            'created_by' => $createdBy,
         ]);
     }
 

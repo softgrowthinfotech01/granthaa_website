@@ -36,9 +36,14 @@ class Booking extends Model
         'total_booking_amount',
         'payment_mode',
         'remark',
+        'created_by',
     ];
 
     public function leader()
+    {
+        return $this->belongsTo(User::class, 'user_code');
+    }
+    public function adviser()
     {
         return $this->belongsTo(User::class, 'user_code');
     }

@@ -139,7 +139,7 @@ document.getElementById("loginForm").addEventListener("submit", function (e) {
                 window.location.href = "adviser";
                 break;
             case "customer":
-                window.location.href = "dashboard";
+                window.location.href = "customer";
                 break;
             default:
                 alert("Unknown role");

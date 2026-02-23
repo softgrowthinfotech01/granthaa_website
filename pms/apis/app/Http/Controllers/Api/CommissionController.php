@@ -65,137 +65,194 @@ class CommissionController extends Controller
     /**
      * View all commissions (Admin)
      */
-    public function index()
-    {
-        $auth = auth()->user();
+public function index(Request $request)
+{
+    $auth = auth()->user();
 
-        if (!$auth || $auth->role !== 'admin') {
-            return response()->json([
-                'message' => 'Only admin can view commissions'
-            ], 403);
-        }
-
-        $commissions = UserLocationCommission::with(['user', 'location'])
-            ->latest()
-            ->paginate(10);
-
+    if (!$auth || !in_array($auth->role, ['admin', 'leader'])) {
         return response()->json([
-            'message' => 'Fetched successfully',
-            'current_page' => $commissions->currentPage(),
-            'total_pages' => $commissions->lastPage(),
-            'total_records' => $commissions->total(),
-            'data' => $commissions->items()
+            'message' => 'Only admin or leader can view commissions'
+        ], 403);
+    }
+
+    $query = UserLocationCommission::with(['user', 'location']);
+
+    // 🔐 Leader can only see commissions of users created by them
+    if ($auth->role === 'leader') {
+        $userIds = User::where('created_by', $auth->id)->pluck('id');
+        $query->whereIn('user_id', $userIds);
+    }
+
+    // 🔎 Search (by user name or location name)
+    if ($request->filled('search')) {
+        $search = $request->search;
+
+        $query->where(function ($q) use ($search) {
+            $q->whereHas('user', function ($u) use ($search) {
+                $u->where('name', 'like', "%{$search}%");
+            })
+            ->orWhereHas('location', function ($l) use ($search) {
+                $l->where('location_name', 'like', "%{$search}%");
+            });
+        });
+    }
+
+    // 🎯 Filter by user
+    if ($request->filled('user_id')) {
+        $query->where('user_id', $request->user_id);
+    }
+
+    // 📍 Filter by location
+    if ($request->filled('location_id')) {
+        $query->where('location_id', $request->location_id);
+    }
+
+    // 💰 Filter by commission type
+    if ($request->filled('commission_type')) {
+        $query->where('commission_type', $request->commission_type);
+    }
+
+    // 📅 Date range filter
+    if ($request->filled('from_date') && $request->filled('to_date')) {
+        $query->whereBetween('created_at', [
+            $request->from_date,
+            $request->to_date
         ]);
     }
+
+    $perPage = $request->per_page ?? 10;
+
+    $commissions = $query->latest()
+                         ->paginate($perPage)
+                         ->withQueryString();
+
+    return response()->json([
+        'message' => 'Fetched successfully',
+        'data' => $commissions
+    ]);
+}
 
     public function getByUser(Request $request, $userId)
-    {
-        $auth = auth()->user();
-
-        if (!$auth || $auth->role !== 'admin') {
-            return response()->json([
-                'message' => 'Only admin allowed'
-            ], 403);
-        }
-
-        $perPage = $request->get('per_page', 10);
-
-        $commissions = UserLocationCommission::with('location')
-            ->where('user_id', $userId)
-            ->paginate($perPage);
-
-        return response()->json([
-            'message' => 'Fetched successfully',
-            'current_page' => $commissions->currentPage(),
-            'total_pages' => $commissions->lastPage(),
-            'total_records' => $commissions->total(),
-            'data' => $commissions->items()
-        ]);
-    }
-
-    public function myCommissions(Request $request)
-    {
-        $auth = auth()->user();
-
-        if (!$auth) {
-            return response()->json([
-                'message' => 'Unauthenticated'
-            ], 401);
-        }
-
-        $perPage = $request->get('per_page', 10);
-
-        $commissions = UserLocationCommission::with('location')
-            ->where('user_id', $auth->id)
-            ->paginate($perPage);
-
-        return response()->json([
-            'message' => 'Fetched successfully',
-            'current_page' => $commissions->currentPage(),
-            'total_pages' => $commissions->lastPage(),
-            'total_records' => $commissions->total(),
-            'data' => $commissions->items()
-        ]);
-    }
-
-    /**
-     * Update Commission (Admin Only)
-     */
-public function updateCommission(Request $request, $id)
 {
     $auth = auth()->user();
 
     if (!$auth || $auth->role !== 'admin') {
         return response()->json([
-            'message' => 'Only admin can update commission'
+            'message' => 'Only admin allowed'
         ], 403);
     }
 
-    $commission = UserLocationCommission::find($id);
+    $query = UserLocationCommission::with('location')
+        ->where('user_id', $userId);
 
-    if (!$commission) {
-        return response()->json([
-            'message' => 'Commission not found'
-        ], 404);
+    // Filter by commission type
+    if ($request->filled('commission_type')) {
+        $query->where('commission_type', $request->commission_type);
     }
 
-    $validated = $request->validate([
-        'user_id' => 'required|exists:users,id',
-        'location_id' => 'required|exists:location_master,id',
-        'commission_type' => 'required|in:percent,amount',
-        'commission_value' => 'required|numeric|min:0'
-    ]);
-
-    // 🔥 Check user role
-    $user = User::find($validated['user_id']);
-
-    if (!in_array($user->role, ['leader', 'adviser'])) {
-        return response()->json([
-            'message' => 'Commission can only be set for Leader or Adviser'
-        ], 422);
+    // Date filter
+    if ($request->filled('from_date') && $request->filled('to_date')) {
+        $query->whereBetween('created_at', [
+            $request->from_date,
+            $request->to_date
+        ]);
     }
 
-    // Extra validation for percent
-    if ($validated['commission_type'] === 'percent' 
-        && $validated['commission_value'] > 100) {
-        return response()->json([
-            'message' => 'Percentage cannot be more than 100'
-        ], 422);
-    }
+    $perPage = $request->per_page ?? 10;
 
-    $commission->update([
-        'user_id' => $validated['user_id'],
-        'location_id' => $validated['location_id'],
-        'commission_type' => $validated['commission_type'],
-        'commission_value' => $validated['commission_value'],
-        'updated_by' => $auth->id
-    ]);
+    $commissions = $query->latest()
+                         ->paginate($perPage)
+                         ->withQueryString();
 
     return response()->json([
-        'message' => 'Commission updated successfully',
-        'data' => $commission
-    ], 200);
+        'message' => 'Fetched successfully',
+        'data' => $commissions
+    ]);
 }
+
+    public function myCommissions(Request $request)
+{
+    $auth = auth()->user();
+
+    if (!$auth) {
+        return response()->json([
+            'message' => 'Unauthenticated'
+        ], 401);
+    }
+
+    $query = UserLocationCommission::with('location')
+        ->where('user_id', $auth->id);
+
+    // Filter by commission type
+    if ($request->filled('commission_type')) {
+        $query->where('commission_type', $request->commission_type);
+    }
+
+    // Date filter
+    if ($request->filled('from_date') && $request->filled('to_date')) {
+        $query->whereBetween('created_at', [
+            $request->from_date,
+            $request->to_date
+        ]);
+    }
+
+    $perPage = $request->per_page ?? 10;
+
+    $commissions = $query->latest()
+                         ->paginate($perPage)
+                         ->withQueryString();
+
+    return response()->json([
+        'message' => 'Fetched successfully',
+        'data' => $commissions
+    ]);
+}
+
+    /**
+     * Update Commission (Admin Only)
+     */
+    public function updateCommission(Request $request, $id)
+    {
+        $auth = auth()->user();
+
+        if (!$auth || $auth->role !== 'admin') {
+            return response()->json([
+                'message' => 'Only admin can update commission'
+            ], 403);
+        }
+
+        $commission = UserLocationCommission::find($id);
+
+        if (!$commission) {
+            return response()->json([
+                'message' => 'Commission not found'
+            ], 404);
+        }
+
+        $validated = $request->validate([
+            'commission_type' => 'required|in:percent,amount',
+            'commission_value' => 'required|numeric|min:0'
+        ]);
+
+        // Extra validation for percent
+        if ($validated['commission_type'] === 'percent' && $validated['commission_value'] > 100) {
+            return response()->json([
+                'message' => 'Percentage cannot be more than 100'
+            ], 422);
+        }
+
+        $commission->update([
+            'commission_type' => $validated['commission_type'],
+            'commission_value' => $validated['commission_value'],
+            'updated_by' => $auth->id ?? null
+        ]);
+
+        return response()->json([
+            'message' => 'Commission updated successfully',
+            'data' => $commission
+        ], 200);
+    }
+
     /**
      * Delete Commission (Admin Only)
      */
@@ -223,29 +280,4 @@ public function updateCommission(Request $request, $id)
             'message' => 'Commission deleted successfully'
         ], 200);
     }
-
-    public function show($id)
-{
-    $auth = auth()->user();
-
-    if (!$auth || $auth->role !== 'admin') {
-        return response()->json([
-            'message' => 'Only admin can view commission'
-        ], 403);
-    }
-
-    $commission = UserLocationCommission::with(['user', 'location'])
-        ->find($id);
-
-    if (!$commission) {
-        return response()->json([
-            'message' => 'Commission not found'
-        ], 404);
-    }
-
-    return response()->json([
-        'message' => 'Commission fetched successfully',
-        'data' => $commission
-    ], 200);
-}
 }
