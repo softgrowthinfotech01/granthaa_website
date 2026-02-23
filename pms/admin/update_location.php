@@ -40,11 +40,10 @@
                         <hr class="border-white-300 mb-3">
                         <div class="flex justify-center gap-2">
                             <button type="button" onclick="updateLocation()" class="w-[15%] text-white bg-blue-600 box-border border border-transparent hover:bg-blue-400 rounded-lg focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none">Update</button>
-                            <button type="button"
-                                href="view_location"
-                                class="w-[15%] text-gray-700 bg-white hover:bg-gray-200 rounded-lg text-sm px-5 py-2.5">
-                                Back
-                            </button>
+                            <a href="view_location.php"
+   class="w-[15%] text-center text-gray-700 bg-white hover:bg-gray-200 rounded-lg text-sm px-5 py-2.5 inline-block">
+   Back
+</a>
                         </div>
                     </form>
                 </div>
@@ -60,35 +59,46 @@
     <script src="../url.js"></script>
 
     <script>
+       
         const token = localStorage.getItem("auth_token");
 
         // ✅ Get ID from URL
         const params = new URLSearchParams(window.location.search);
         const id = params.get("id");
+        if (!id) {
+    alert("Invalid location ID");
+    window.location.href = "view_location.php";
+}
 
         // Load single data
         async function loadLocation() {
-            try {
 
-                const response = await fetch(
-                    url + `site-location/${id}`, {
-                        method: "GET",
-                        headers: {
-                            "Accept": "application/json",
-                            "Authorization": "Bearer " + token
-                        }
-                    }
-                );
+    try {
 
-                const result = await response.json();
-console.log(result);
-                document.getElementById("location_id").value = result.data.id;
-                document.getElementById("site_location").value = result.data.site_location;
-
-            } catch (error) {
-                console.error("Error loading location:", error);
+        const response = await fetch(
+            url + `site-location/${id}`, {
+                method: "GET",
+                headers: {
+                    "Accept": "application/json",
+                    "Authorization": "Bearer " + token
+                }
             }
+        );
+
+        const result = await response.json();
+
+        if (!response.ok) {
+            alert(result.message || "Failed to load location");
+            return;
         }
+
+        document.getElementById("location_id").value = result.data.id;
+        document.getElementById("site_location").value = result.data.site_location;
+
+    } catch (error) {
+        console.error("Error loading location:", error);
+    }
+}
 
         // Update function
         async function updateLocation() {
@@ -117,7 +127,7 @@ console.log(result);
 
                 if (response.ok) {
                     alert(result.message || "Updated successfully");
-                    window.location.href = "view_location";
+                    window.location.href = "view_location.php";
                 } else {
                     alert(result.message || "Something went wrong");
                 }

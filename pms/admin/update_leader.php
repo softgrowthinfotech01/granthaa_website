@@ -48,9 +48,9 @@
                                     <label for="gender" class="block mb-2.5 text-sm font-medium text-heading">Gender</label>
                                     <select id="gender" class="block w-full px-3 py-2.5 rounded-lg bg-white border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand shadow-xs placeholder:text-body">
                                         <option selected>Choose a gender</option>
-                                        <option value="Male">Male</option>
-                                        <option value="Female">Female</option>
-                                        <option value="Others">Others</option>
+                                        <option value="male">Male</option>
+                                        <option value="female">Female</option>
+                                        <option value="others">Others</option>
                                     </select>
                                 </div>
                             </div>
@@ -127,12 +127,15 @@
                         </div>
                         <hr class="border-white-300 mb-3">
                         <div class="flex justify-center gap-2">
-                            <button type="submit" class="w-[15%] text-white bg-blue-600 box-border border border-transparent hover:bg-blue-400 rounded-lg focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none">Update</button>
-                            <button type="button"
-                                onclick=""
-                                class="w-[15%] text-gray-700 bg-white hover:bg-gray-200 rounded-lg text-sm px-5 py-2.5">
-                                Back
-                            </button>
+                           <button type="button" onclick="updateLeader()"
+class="w-[15%] text-white bg-blue-600 hover:bg-blue-400 rounded-lg text-sm px-4 py-2.5">
+Update
+</button>
+                           <button type="button"
+onclick="window.location.href='view_leader.php'"
+class="w-[15%] text-gray-700 bg-white hover:bg-gray-200 rounded-lg text-sm px-5 py-2.5">
+Back
+</button>
                         </div>
                     </form>
                 </div>
@@ -150,6 +153,107 @@
 
 </script>
     <script src="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.js"></script>
+
+    <script src="../url.js"></script>
+
+<script>
+const token = localStorage.getItem("auth_token");
+
+// Get leader ID from URL
+const params = new URLSearchParams(window.location.search);
+const id = params.get("id");
+
+if (!id) {
+    alert("Invalid Leader ID");
+    window.location.href = "view_leader.php";
+}
+
+// 🔹 Load Leader Data
+async function loadLeader() {
+    try {
+        const response = await fetch(url + `users/${id}`, {
+            headers: {
+                "Authorization": "Bearer " + token,
+                "Accept": "application/json"
+            }
+        });
+
+        const result = await response.json();
+
+        if (!response.ok) {
+            alert(result.message);
+            return;
+        }
+
+        const user = result.data;
+
+        document.getElementById("leader_code").value = user.leader_code ?? "";
+        document.getElementById("name").value = user.name ?? "";
+        document.getElementById("age").value = user.age ?? "";
+        document.getElementById("gender").value = user.gender ?? "";
+        document.getElementById("mobile").value = user.contact_no ?? "";
+        document.getElementById("email").value = user.email ?? "";
+        document.getElementById("city").value = user.city ?? "";
+        document.getElementById("state").value = user.state ?? "";
+        document.getElementById("address").value = user.address ?? "";
+        document.getElementById("pincode").value = user.pin_code ?? "";
+        document.getElementById("bank_name").value = user.bank_name ?? "";
+        document.getElementById("branch").value = user.bank_branch ?? "";
+        document.getElementById("account_number").value = user.bank_account_no ?? "";
+        document.getElementById("ifsc_code").value = user.bank_ifsc_code ?? "";
+
+    } catch (error) {
+        console.error("Load error:", error);
+    }
+}
+
+// 🔹 Update Leader
+async function updateLeader() {
+
+    const data = {
+        name: document.getElementById("name").value,
+        email: document.getElementById("email").value,
+        age: document.getElementById("age").value,
+        gender: document.getElementById("gender").value,
+        contact_no: document.getElementById("mobile").value,
+        city: document.getElementById("city").value,
+        state: document.getElementById("state").value,
+        address: document.getElementById("address").value,
+        pin_code: document.getElementById("pincode").value,
+        bank_name: document.getElementById("bank_name").value,
+        bank_branch: document.getElementById("branch").value,
+        bank_account_no: document.getElementById("account_number").value,
+        bank_ifsc_code: document.getElementById("ifsc_code").value
+    };
+
+    try {
+        const response = await fetch(url + `users/${id}`, {
+            method: "PUT",
+            headers: {
+                "Authorization": "Bearer " + token,
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            },
+            body: JSON.stringify(data)
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+            alert("Leader updated successfully");
+            window.location.href = "view_leader.php";
+        } else {
+            alert(result.message || "Update failed");
+        }
+
+    } catch (error) {
+        console.error("Update error:", error);
+    }
+}
+
+// Load data when page loads
+loadLeader();
+</script>
 
 </body>
 

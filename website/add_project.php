@@ -9,91 +9,121 @@ if (!isset($_SESSION['user'])) {
   exit();
 }
 
-// If session expired due to inactivity
+// If session expired
 if (
   isset($_SESSION['LAST_ACTIVITY']) &&
   (time() - $_SESSION['LAST_ACTIVITY']) > $timeout
 ) {
-
   session_unset();
   session_destroy();
   header("Location: login.php?error=timeout");
   exit();
 }
 
-// Update last activity time
 $_SESSION['LAST_ACTIVITY'] = time();
 
 // Disable browser cache
 header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
-header("Cache-Control: post-check=0, pre-check=0", false);
 header("Pragma: no-cache");
 header("Expires: 0");
+
 include "conn.php";
 
+$errors = [];
 
-if (isset($_POST['submit'])) {
-  $errors = [];
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-  $name     = $_POST['project_name'];
-  $location = $_POST['project_location'];
-  $status   = $_POST['project_status'];
-  $details1 = $_POST['project_details1'];
-  $details2 = $_POST['project_details2'];
-  $details3 = $_POST['project_details3'];
+  // ----------- GET FORM DATA -----------
+  $name     = trim($_POST['project_name'] ?? '');
+  $location = trim($_POST['project_location'] ?? '');
+  $status   = $_POST['project_status'] ?? '';
+  $details1 = $_POST['project_details1'] ?? '';
+  $details2 = $_POST['project_details2'] ?? '';
+  $details3 = $_POST['project_details3'] ?? '';
 
-  // ---------- IMAGE UPLOAD ----------
-  $uploadDir = "uploads/";
+  // ----------- BASIC VALIDATION -----------
 
-  $image1 = "";
-  $image2 = "";
-  $image3 = "";
-
-  // Image 1
-  if (!empty($_FILES['project_image1']['name'])) {
-    $image1 = time() . "_1_" . $_FILES['project_image1']['name'];
-    move_uploaded_file($_FILES['project_image1']['tmp_name'], $uploadDir . $image1);
-  }
-
-  // Image 2
-  if (!empty($_FILES['project_image2']['name'])) {
-    $image2 = time() . "_2_" . $_FILES['project_image2']['name'];
-    move_uploaded_file($_FILES['project_image2']['tmp_name'], $uploadDir . $image2);
-  }
-
-  // Image 3
-  if (!empty($_FILES['project_image3']['name'])) {
-    $image3 = time() . "_3_" . $_FILES['project_image3']['name'];
-    move_uploaded_file($_FILES['project_image3']['tmp_name'], $uploadDir . $image3);
-  }
-
-  // Validation for Project name field
   if (empty($name)) {
-    $errors['project_name'] = "Project name is required";
+    $errors['project_name'] = "Project name is required.";
   }
 
-  // Validation for Project name field
   if (empty($location)) {
-    $errors['project_location'] = "Project location is required";
+    $errors['project_location'] = "Project location is required.";
   }
 
-  // validation for select field status
-  $status = $_POST['project_status'] ?? '';
-
-  if (empty($status) || $status == "Select One") {
-    $errors['project_status'] = "Please select project status";
+  if (empty($status) || $status === "Select One") {
+    $errors['project_status'] = "Please select project status.";
   }
 
+  // ----------- IMAGE SETTINGS -----------
+  $uploadDir    = "uploads/";
+  $maxSize      = 2 * 1024 * 1024; // 2MB
+  $allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
+
+  // ----------- IMAGE VALIDATION FUNCTION -----------
+  function validateImage($inputName, $allowedTypes, $maxSize, &$errors)
+  {
+    if (isset($_FILES[$inputName]) && $_FILES[$inputName]['error'] === 0) {
+
+      $tmpName = $_FILES[$inputName]['tmp_name'];
+      $fileSize = $_FILES[$inputName]['size'];
+
+      if (!file_exists($tmpName)) {
+        $errors[$inputName] = "File upload failed.";
+        return false;
+      }
+
+      $fileType = mime_content_type($tmpName);
+
+      if (!in_array($fileType, $allowedTypes)) {
+        $errors[$inputName] = "Only JPG, PNG, WEBP images allowed.";
+        return false;
+      }
+
+      if ($fileSize > $maxSize) {
+        $errors[$inputName] = "Image must be less than 2MB.";
+        return false;
+      }
+
+      return true;
+    }
+
+    return false;
+  }
+
+  // ----------- VALIDATE IMAGES -----------
+  $validImg1 = validateImage('project_image1', $allowedTypes, $maxSize, $errors);
+  $validImg2 = validateImage('project_image2', $allowedTypes, $maxSize, $errors);
+  $validImg3 = validateImage('project_image3', $allowedTypes, $maxSize, $errors);
+
+  // ----------- IF NO ERRORS -----------
   if (empty($errors)) {
-    // ---------- INSERT QUERY ----------
+
+    // Upload images
+    function uploadImage($inputName, $prefix, $uploadDir)
+    {
+      if (isset($_FILES[$inputName]) && $_FILES[$inputName]['error'] === 0) {
+
+        $newName = time() . "_" . $prefix . "_" . basename($_FILES[$inputName]['name']);
+        move_uploaded_file($_FILES[$inputName]['tmp_name'], $uploadDir . $newName);
+        return $newName;
+      }
+      return "";
+    }
+
+    $image1 = uploadImage('project_image1', '1', $uploadDir);
+    $image2 = uploadImage('project_image2', '2', $uploadDir);
+    $image3 = uploadImage('project_image3', '3', $uploadDir);
+
+    // ----------- INSERT INTO DATABASE -----------
     $sql = "INSERT INTO project 
-        (project_name, project_location, project_status, 
-         project_image1, project_image2, project_image3, 
-         project_details1, project_details2, project_details3)
-        VALUES 
-        (:name, :location, :status, 
-         :img1, :img2, :img3, 
-         :details1, :details2, :details3)";
+                (project_name, project_location, project_status, 
+                 project_image1, project_image2, project_image3, 
+                 project_details1, project_details2, project_details3)
+                VALUES 
+                (:name, :location, :status, 
+                 :img1, :img2, :img3, 
+                 :details1, :details2, :details3)";
 
     $stmt = $conn->prepare($sql);
     $stmt->execute([
@@ -201,7 +231,7 @@ if (isset($_POST['submit'])) {
                             class="form-control"
                             id="studentname"
                             placeholder="Enter location" />
-                            <!-- Error Message -->
+                          <!-- Error Message -->
                           <?php if (!empty($errors['project_location'])): ?>
                             <small style="color:red;">
                               <?php echo $errors['project_location']; ?>
@@ -234,17 +264,52 @@ if (isset($_POST['submit'])) {
 
                         <div class="col-md-4">
                           <label>Project Image 1</label>
-                          <input type="file" name="project_image1" class="form-control">
+                          <span class="mb-2 text-danger text-center mx-1">
+                            (Max. image size should be 2mb.)
+                          </span>
+
+                          <input type="file"
+                            name="project_image1"
+                            class="form-control">
+                          <?php if (!empty($errors['project_image1'])): ?>
+                            <small class="text-danger">
+                              <?php echo $errors['project_image1']; ?>
+                            </small>
+                          <?php endif; ?>
                         </div>
 
-                        <div class="col-md-4">
-                          <label>Project Image 2</label>
-                          <input type="file" name="project_image2" class="form-control">
-                        </div>
 
                         <div class="col-md-4">
-                          <label>Project Image 3</label>
-                          <input type="file" name="project_image3" class="form-control">
+                          <label>Project Image 1</label>
+                          <span class="mb-2 text-danger text-center mx-1">
+                            (Max. image size should be 2mb.)
+                          </span>
+
+
+                          <input type="file"
+                            name="project_image2"
+                            class="form-control">
+                        </div>
+                        <?php if (!empty($errors['project_image2'])): ?>
+                          <small class="text-danger">
+                            <?php echo $errors['project_image2']; ?>
+                          </small>
+                        <?php endif; ?>
+
+                        <div class="col-md-4">
+                          <label>Project Image 1</label>
+                          <span class="mb-2 text-danger text-center mx-1">
+                            (Max. image size should be 2mb.)
+                          </span>
+
+                          <input type="file"
+                            name="project_image3"
+                            class="form-control">
+                          <?php if (!empty($errors['project_image3'])): ?>
+                            <small class="text-danger">
+                              <?php echo $errors['project_image3']; ?>
+                            </small>
+                          <?php endif; ?>
                         </div>
 
                       </div>
@@ -286,8 +351,10 @@ if (isset($_POST['submit'])) {
                           </div>
                         </div>
                         <div class="col-md-6">
-                          <button class="btn btn-primary" name="submit">Save</button>
+                          <button class="btn btn-primary" type="submit" name="submit">Save</button>
                         </div>
+                      </div>
+                    </div>
                   </form>
 
                 </div>
@@ -301,6 +368,7 @@ if (isset($_POST['submit'])) {
 
   </div>
   <?php include "footer.php"; ?>
+
 
   <!--   Core JS Files   -->
   <script src="assets/js/core/jquery-3.7.1.min.js"></script>
@@ -340,6 +408,8 @@ if (isset($_POST['submit'])) {
 
   <!-- Kaiadmin DEMO methods, don't include it in your project! -->
   <script src="assets/js/setting-demo2.js"></script>
+
+
 </body>
 
 </html>

@@ -234,6 +234,56 @@ if (isset($_POST['submit'])) {
         </div>
       </div>
 
+    <!-- RIGHT CONTENT -->
+      <div class="border-2 border-blue-900 rounded-2xl p-10  relative transition-transform duration-500 ease-in-out
+                hover:scale-105 shadow-sm">
+        <h2 class="text-4xl font-serif text-blue-900 mb-4">
+          Unlock Your Dream Home!
+        </h2>
+
+        <p class="text-gray-800 font-semibold mb-12">
+          Unlock a world of comfort and luxury in your dream home.
+        </p>
+
+        <div class="space-y-10">
+
+          <div class="flex gap-5 items-start">
+            <div class="w-12 h-12 rounded-full bg-[#73bc01] flex items-center justify-center text-white">
+              ✉
+            </div>
+            <div>
+              <h4 class="text-xl font-serif text-blue-900">Send An Email</h4>
+              <p class="text-blue-700">email id : info@granthaadeveloperpvtltd.com</p>
+            </div>
+          </div>
+
+          <div class="flex gap-5 items-start">
+            <div class="w-12 h-12 rounded-full bg-[#73bc01] flex items-center justify-center text-white">
+              ☎
+            </div>
+            <div>
+              <h4 class="text-xl font-serif text-blue-900">Give Us A Call</h4>
+              <p class="text-blue-700">+91 9975086229 , 8975280850</p>
+            </div>
+          </div>
+
+          <div class="flex gap-5 items-start">
+            <div class="w-12 h-12 rounded-full bg-[#73bc01] flex items-center justify-center text-white">
+              📍
+            </div>
+            <div>
+              <h4 class="text-xl font-serif text-blue-900">Site Address</h4>
+              <p class="text-blue-700 max-w-sm">
+                Near ram setu bridge, devki complex, Chandrapur.
+              </p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
   </div>
   
 </section>
