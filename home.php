@@ -4,6 +4,9 @@ include "website/conn.php";
 $stmt = $conn->prepare("SELECT * FROM project WHERE project_status='Current'");
 $stmt->execute();
 $projects = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+
+// print_r($_POST['send']);exit;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -988,86 +991,7 @@ if (isset($_POST['submit'])) {
     </svg>
   </a>
 
-  <?php
-include "website/conn.php";
-
-$errors = [];
-
-if (isset($_POST['submit'])) {
-
-  // Trim inputs
-  $name  = trim($_POST['name'] ?? '');
-  $email = trim($_POST['email'] ?? '');
-  $phone = trim($_POST['number'] ?? '');
-  $agree = $_POST['agree'] ?? '';
-  $response = $_POST['g-recaptcha-response'] ?? '';
-
-  /* ======================
-     BASIC VALIDATIONS
-  =======================*/
-
-  if (empty($name)) {
-    $errors['name'] = "Name is required";
-  }
-
-  if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-    $errors['email'] = "Enter valid email";
-  }
-
-  if (!preg_match('/^[0-9]{10}$/', $phone)) {
-    $errors['phone'] = "Enter valid 10 digit mobile";
-  }
-
-  if (!$agree) {
-    $errors['agree'] = "You must agree before submitting";
-  }
-
-  if (!$response) {
-    $errors['captcha'] = "Captcha required";
-  }
-
-  /* ======================
-     CAPTCHA VERIFY
-  =======================*/
-
-  if (empty($errors)) {
-
-    $secretKey = "6Lf45GcsAAAAAP8NfLwWSmj14LTXgSqQuuZ6-tTM";
-
-    $verify = file_get_contents(
-      "https://www.google.com/recaptcha/api/siteverify?secret=$secretKey&response=$response"
-    );
-
-    $captcha = json_decode($verify);
-
-    if (!$captcha->success) {
-      $errors['captcha'] = "Captcha failed";
-    }
-  }
-
-  /* ======================
-     INSERT IF NO ERRORS
-  =======================*/
-
-  if (empty($errors)) {
-
-    $stmt = $conn->prepare("
-      INSERT INTO enquiries(name,email,phone)
-      VALUES(:name,:email,:phone)
-    ");
-
-    $stmt->execute([
-      ':name' => htmlspecialchars($name),
-      ':email' => htmlspecialchars($email),
-      ':phone' => htmlspecialchars($phone)
-    ]);
-
-    header("Location: home.php");
-    exit;
-  }
-}
-?>
-
+<!-- Enquiry Form -->
   <div
     id="modalBackdrop"
     class="fixed inset-0 z-50 flex items-center justify-center
@@ -1113,7 +1037,7 @@ if (isset($_POST['submit'])) {
       </div>
 
       <!-- FORM -->
-      <form method="post" class="space-y-3 sm:space-y-4">
+      <form method="post" action="modal.php" class="space-y-3 sm:space-y-4">
 
         <input
           type="text"
@@ -1172,7 +1096,7 @@ if (isset($_POST['submit'])) {
 
         <button
           type="submit"
-          name="submit"
+          name="send"
           class="w-full bg-[#73bc01] hover:bg-green-700
                text-white  py-2.5 sm:py-3
                rounded-lg font-semibold tracking-wide
