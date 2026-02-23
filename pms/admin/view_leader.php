@@ -62,6 +62,7 @@
                                 <th class="px-4 py-3">Age</th>
                                 <th class="px-4 py-3">Contact</th>
                                 <th class="px-4 py-3">Created At</th>
+                                <th class="px-4 py-3">Actions</th>
                             </tr>
                         </thead>
                         <tbody id="locationTableBody">
@@ -143,6 +144,13 @@
                         <td class="px-4 py-2">
                             ${new Date(loc.created_at).toLocaleDateString()}
                         </td>
+                        <td class="px-4 py-2 flex gap-2">
+                        <a href="update_leader.php?id=${loc.id}" class="px-3 py-1.5 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-500 focus:ring-2 focus:ring-blue-300">Edit</a>
+
+                        <button onclick="deleteLeader(${loc.id})" class="px-3 py-1.5 text-sm font-medium text-white bg-red-600 rounded-md hover:bg-red-500 focus:ring-2 focus:ring-red-300">
+                            Delete
+                        </button>
+                        </td>
                     </tr>
                 `;
                     });
@@ -214,6 +222,44 @@
 
         // Initial Load
         fetchLocations();
+
+
+
+        async function deleteLeader(id) {
+
+    if (!confirm("Are you sure you want to delete this leader?")) {
+        return;
+    }
+
+    try {
+
+        const response = await fetch(
+            url + `users/${id}`,   // 🔥 IMPORTANT
+            {
+                method: "DELETE",
+                headers: {
+                    "Accept": "application/json",
+                    "Authorization": "Bearer " + token
+                }
+            }
+        );
+
+        const result = await response.json();
+
+        if (!response.ok) {
+            alert(result.message || "Delete failed");
+            return;
+        }
+
+        alert(result.message || "Deleted successfully");
+
+        fetchLocations(currentPage); // reload table
+
+    } catch (error) {
+        console.error("Delete error:", error);
+        alert("Server error");
+    }
+}
     </script>
 </body>
 
