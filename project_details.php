@@ -78,7 +78,7 @@ $desc3  = $project_details3[1] ?? '';
         <div class="transition-transform duration-500 hover:scale-105 rounded-2xl overflow-hidden shadow-2xl">
           <img
             src="website/uploads/<?= htmlspecialchars($project['project_image1']); ?>"
-            class="w-full h-[450px] object-contain"
+            class="w-full h-[450px] object-cover"
             alt="">
         </div>
         <?php endif; ?>
@@ -93,7 +93,7 @@ $desc3  = $project_details3[1] ?? '';
         <div class="transition-transform duration-500 hover:scale-105 rounded-2xl overflow-hidden shadow-2xl">
           <img
             src="website/uploads/<?= htmlspecialchars($project['project_image2']); ?>"
-            class="w-full h-[450px] object-contain"
+            class="w-full h-[430px] object-cover"
             alt="">
         </div>
         <?php endif; ?>

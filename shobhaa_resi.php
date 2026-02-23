@@ -35,7 +35,7 @@
             <img
               src="images/Shobha residency plan.jpeg"
               alt="Project Layout Plan"
-              class="w-full h-[490px]  object-contain " />
+              class="w-full h-[400px] object-cover" />
             <span class="absolute top-0 right-0 w-80 h-[7px] bg-[#73bc01] "></span>
             <span class="absolute top-0 right-0 w-[7px] h-80 bg-[#73bc01] "></span>
 

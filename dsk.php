@@ -35,7 +35,7 @@
             <img
               src="images/facilities.png"
               alt="Project Layout Plan"
-              class="w-full h-[380px] rounded-2xl " />
+              class="w-full h-[400px] object-cover rounded-2xl " />
             <span class="absolute top-0 right-0 w-80 h-[6px] bg-[#73bc01] "></span>
             <span class="absolute top-0 right-0 w-[6px] h-80 bg-[#73bc01] "></span>
 
@@ -92,7 +92,7 @@
             <img
               src="images/specialities img.png"
               alt="Infinity Park Grantha"
-              class="w-full h-[380px] object-cover " />
+              class="w-full h-[450px] object-contain" />
             <span class="absolute top-0 right-0 w-80 h-[6px] bg-[#73bc01] "></span>
             <span class="absolute top-0 right-0 w-[6px] h-80 bg-[#73bc01] "></span>
 
@@ -103,37 +103,38 @@
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
-          <div class="relative group rounded-2xl transition-transform duration-500 ease-in-out
-                    hover:scale-105 overflow-hidden shadow-lg">
-            <img
-              src="images/layout 1.jpeg"
-              alt="Project Layout Plan"
-              class="w-full h-[380px]  object-cover " />
-            <span class="absolute top-0 right-0 w-80 h-[7px] bg-[#73bc01] "></span>
-            <span class="absolute top-0 right-0 w-[7px] h-80 bg-[#73bc01] "></span>
 
-            <!-- Bottom Left Blue -->
-            <span class="absolute bottom-0 left-0 w-80 h-[7px] bg-blue-800"></span>
-            <span class="absolute bottom-0 left-0 w-[7px] h-80 bg-blue-800"></span>
-          </div>
+  <div class="relative group rounded-2xl transition-transform duration-500 ease-in-out
+              hover:scale-105 overflow-hidden shadow-lg">
 
-          <div>
-            <h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
-              Well-Planned Facilities for Better Living
-            </h2>
-            <p class="text-gray-700 leading-relaxed mb-4 text-base sm:text-lg md:text-lg text-justify">
-              D.S.K. RadhaKrishna Nagari offers thoughtfully planned amenities designed
-              to give you comfort, convenience, and long-term value. The project features
-              well-developed WPM internal roads, proper drainage systems, bright street
-              lighting, and open green spaces that create a peaceful living environment.</p>
-            <p class="text-gray-700 leading-relaxed mb-4 text-base sm:text-lg md:text-lg text-justify">
-              Residents enjoy landscaped open areas for relaxation, safe internal roads for
-              smooth connectivity, and modern infrastructure that supports everyday needs.
-              Every plot is carefully developed to ensure easy access, cleanliness, and
-              future-ready living — making it an ideal choice for families and smart investors alike.
-            </p>
-          </div>
-        </div>
+    <img
+      src="images/layout 1.jpeg"
+      alt="Project Layout Plan"
+      class="w-full h-[450px] object-cover" />
+
+  </div>
+
+  <div>
+    <h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
+      Well-Planned Facilities for Better Living
+    </h2>
+
+    <p class="text-gray-700 leading-relaxed mb-4 text-base sm:text-lg md:text-lg text-justify">
+      D.S.K. RadhaKrishna Nagari offers thoughtfully planned amenities designed
+      to give you comfort, convenience, and long-term value. The project features
+      well-developed WPM internal roads, proper drainage systems, bright street
+      lighting, and open green spaces that create a peaceful living environment.
+    </p>
+
+    <p class="text-gray-700 leading-relaxed mb-4 text-base sm:text-lg md:text-lg text-justify">
+      Residents enjoy landscaped open areas for relaxation, safe internal roads for
+      smooth connectivity, and modern infrastructure that supports everyday needs.
+      Every plot is carefully developed to ensure easy access, cleanliness, and
+      future-ready living — making it an ideal choice for families and smart investors alike.
+    </p>
+  </div>
+
+</div>
 
       </div>
     </div>
