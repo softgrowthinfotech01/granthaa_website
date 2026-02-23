@@ -96,21 +96,7 @@
 
   </div>
 
-  <!-- WHATSAPP BUTTON -->
-  <a href="https://wa.me/919999999999"
-    target="_blank"
-    class="fixed bottom-5 right-5 z-50
-          bg-green-500 p-4 rounded-full shadow-lg
-          hover:scale-110 hover:shadow-2xl
-          transition-all duration-300">
 
-    <svg xmlns="http://www.w3.org/2000/svg"
-      class="w-7 h-7 fill-white"
-      viewBox="0 0 32 32">
-      <path d="M19.11 17.2c-.28-.14-1.65-.81-1.91-.9-.26-.09-.45-.14-.64.14-.19.28-.73.9-.9 1.08-.17.19-.34.21-.62.07-.28-.14-1.19-.44-2.27-1.4-.84-.75-1.4-1.67-1.57-1.95-.17-.28-.02-.43.13-.57z" />
-      <path d="M16 2.67C8.64 2.67 2.67 8.64 2.67 16c0 7.36 5.97 13.33 13.33 13.33S29.33 23.36 29.33 16 23.36 2.67 16 2.67z" />
-    </svg>
-  </a>
 
   <!-- SCROLL SCRIPT -->
   <script>
