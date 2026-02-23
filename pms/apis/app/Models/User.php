@@ -34,6 +34,7 @@ class User extends Authenticatable
     'pin_code',
     'password',
     'role',
+    'pancard_number',
     'bank_name',
     'bank_branch',
     'bank_account_no',
@@ -77,5 +78,10 @@ class User extends Authenticatable
     public function bookings()
     {
         return $this->hasMany(Booking::class, 'user_code');
+    }
+
+    public function advisers()
+    {
+        return $this->hasMany(User::class, 'user_code');
     }
 }

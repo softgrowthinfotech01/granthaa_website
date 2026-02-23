@@ -8,7 +8,6 @@ use App\Http\Controllers\Api\LocationMasterController;
 use App\Http\Controllers\Api\UserController;
 use Illuminate\Support\Facades\Route;
 
-
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 
@@ -21,6 +20,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/bookings/{id}', [BookingController::class, 'show']);
     Route::patch('/bookings/{id}', [BookingController::class, 'update']);
     Route::delete('/bookings/{id}', [BookingController::class, 'destroy']);
+    Route::get('/dashboard', [BookingController::class, 'dashboard']);
+    Route::get('/adviserPerformance', [BookingController::class, 'adviserPerformance']);
 });
 
 Route::middleware(['auth:sanctum', 'role:admin,leader'])->group(function () {
@@ -30,7 +31,7 @@ Route::middleware(['auth:sanctum', 'role:admin,leader'])->group(function () {
     Route::post('/users', [UserController::class, 'store']);
     Route::get('/users', [UserController::class, 'index']);
     Route::get('/users/{id}', [UserController::class, 'show']);
-    Route::put('/users/{id}', [UserController::class, 'update']);
+    Route::patch('/users/{id}', [UserController::class, 'update']);
     Route::delete('/users/{id}', [UserController::class, 'destroy']);
     Route::get('/my-network', [UserController::class, 'myNetwork']);
     // get users by role 
@@ -50,7 +51,6 @@ Route::middleware(['auth:sanctum', 'role:admin,leader'])->group(function () {
     Route::get('/commissions', [CommissionController::class, 'index']);
     Route::get('/commissions/user/{userId}', [CommissionController::class, 'getByUser']);
     Route::get('/my-commissions', [CommissionController::class, 'myCommissions']);
-    Route::get('/commission/{id}', [CommissionController::class, 'show']);
 });
 
 Route::middleware(['auth:sanctum', 'role:leader'])->group(function () {
