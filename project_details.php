@@ -1,3 +1,4 @@
+```php
 <?php
 include "website/conn.php";
 
@@ -17,18 +18,18 @@ if (!$project) {
   die("Invalid Project");
 }
 
-/* ---------- SAFE EXPLODE FUNCTION ---------- */
-function splitDetails($text) {
-  $parts = explode("/*/*/", $text ?? '');
-  return [
-    'title' => $parts[0] ?? '',
-    'desc'  => $parts[1] ?? ''
-  ];
-}
+/* ---------- KEEPING EXPLODE (SAFE) ---------- */
+$project_details1 = explode("/*/*/", $project['project_details1'] ?? '');
+$title1 = $project_details1[0] ?? '';
+$desc1  = $project_details1[1] ?? '';
 
-$d1 = splitDetails($project['project_details1']);
-$d2 = splitDetails($project['project_details2']);
-$d3 = splitDetails($project['project_details3']);
+$project_details2 = explode("/*/*/", $project['project_details2'] ?? '');
+$title2 = $project_details2[0] ?? '';
+$desc2  = $project_details2[1] ?? '';
+
+$project_details3 = explode("/*/*/", $project['project_details3'] ?? '');
+$title3 = $project_details3[0] ?? '';
+$desc3  = $project_details3[1] ?? '';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -65,11 +66,11 @@ $d3 = splitDetails($project['project_details3']);
 
         <div>
           <h2 class="text-2xl font-bold py-2">
-            <?= htmlspecialchars($d1['title']); ?>
+            <?= htmlspecialchars($title1); ?>
           </h2>
 
           <p class="text-gray-700 leading-relaxed text-base sm:text-lg md:text-lg">
-            <?= htmlspecialchars($d1['desc']); ?>
+            <?= htmlspecialchars($desc1); ?>
           </p>
         </div>
 
@@ -85,7 +86,7 @@ $d3 = splitDetails($project['project_details3']);
       </div>
 
       <!-- SECTION 2 -->
-      <?php if (!empty($project['project_image2']) || !empty($d2['title']) || !empty($d2['desc'])): ?>
+      <?php if (!empty($project['project_image2']) || !empty($title2) || !empty($desc2)): ?>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
 
         <?php if (!empty($project['project_image2'])): ?>
@@ -99,11 +100,11 @@ $d3 = splitDetails($project['project_details3']);
 
         <div>
           <h2 class="text-2xl font-bold py-2">
-            <?= htmlspecialchars($d2['title']); ?>
+            <?= htmlspecialchars($title2); ?>
           </h2>
 
           <p class="text-gray-700 leading-relaxed text-base sm:text-lg md:text-lg">
-            <?= htmlspecialchars($d2['desc']); ?>
+            <?= htmlspecialchars($desc2); ?>
           </p>
         </div>
 
@@ -111,16 +112,16 @@ $d3 = splitDetails($project['project_details3']);
       <?php endif; ?>
 
       <!-- SECTION 3 -->
-      <?php if (!empty($project['project_image3']) || !empty($d3['title']) || !empty($d3['desc'])): ?>
+      <?php if (!empty($project['project_image3']) || !empty($title3) || !empty($desc3)): ?>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
 
         <div>
           <h2 class="text-2xl font-bold py-2">
-            <?= htmlspecialchars($d3['title']); ?>
+            <?= htmlspecialchars($title3); ?>
           </h2>
 
           <p class="text-gray-700 leading-relaxed text-base sm:text-lg md:text-lg">
-            <?= htmlspecialchars($d3['desc']); ?>
+            <?= htmlspecialchars($desc3); ?>
           </p>
         </div>
 
@@ -162,7 +163,6 @@ $d3 = splitDetails($project['project_details3']);
   </a>
 </div>
 
-<!-- SCROLL SCRIPT -->
 <script>
 const brochureBtn = document.getElementById("brochureBtn");
 
@@ -174,3 +174,4 @@ window.addEventListener("scroll", () => {
 
 </body>
 </html>
+```
