@@ -44,7 +44,7 @@
         <div class="flex flex-col text-sm text-gray-300 gap-[30px]">
          
                 <div class="flex items-center ">
-                      ☎ <span> Phone: +91 9975086229 , 8975280650</span>
+                      ☎ <span> Phone: +91 9975086229 , +91 8975280650</span>
                 </div>
 
                 <div class="flex items-center">

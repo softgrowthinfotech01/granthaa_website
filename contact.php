@@ -215,7 +215,7 @@ if (isset($_POST['submit'])) {
             </div>
             <div>
               <h4 class="text-xl font-serif text-blue-900">Give Us A Call</h4>
-              <p class="text-blue-700">+91 9975086229 , +918975280850</p>
+              <p class="text-blue-700">+91 9975086229 , +91 8975280850</p>
             </div>
           </div>
 
