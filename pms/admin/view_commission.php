@@ -129,8 +129,8 @@
 
                 const result = await response.json();
 
-              const paginationData = result;
-                const locations = result.data;
+              const paginationData = result.data;
+                const locations = result.data.data;
                 if (!locations || locations.length === 0) {
                     tbody.innerHTML = `
                 <tr>
@@ -178,7 +178,7 @@ locations.forEach((loc, index) => {
 
                 // Result info
                 document.getElementById('resultInfo').innerHTML =
-                    `Showing page ${paginationData.current_page} of ${paginationData.total_pages}
+                    `Showing page ${paginationData.current_page} of ${paginationData.total}
 Total records: ${paginationData.total_records}
  entries`;
 
@@ -191,7 +191,7 @@ Total records: ${paginationData.total_records}
                 </button>`;
                 }
 
-               for (let i = 1; i <= paginationData.total_pages; i++)
+               for (let i = 1; i <= paginationData.last_page; i++)
  {
                     pagination.innerHTML += `
                 <button onclick="fetchLocations(${i})"
@@ -275,7 +275,7 @@ async function deleteCommission(id) {
         }
 
         alert("Deleted successfully");
-        fetchLocations(currentPage);   // 🔥 CORRECT FUNCTION
+        fetchLocations(currentPage);   
 
     } catch (error) {
         console.error(error);

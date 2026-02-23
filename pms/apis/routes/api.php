@@ -36,6 +36,7 @@ Route::middleware(['auth:sanctum', 'role:admin,leader'])->group(function () {
     Route::get('/my-network', [UserController::class, 'myNetwork']);
     // get users by role 
     Route::get('/users-by-role', [UserController::class, 'usersByRole']);
+    Route::get('/by-role', [UserController::class, 'getUsersByRole']);
 
     // location 
     Route::post('/site-location', [LocationMasterController::class, 'store']);
@@ -55,8 +56,6 @@ Route::middleware(['auth:sanctum', 'role:admin,leader'])->group(function () {
 
 Route::middleware(['auth:sanctum', 'role:leader'])->group(function () {
 //    resource route for the advisor 
- Route::apiResource('create-advisor', AdvisorController::class);
-
 });
 
 Route::middleware('auth:sanctum')->get('/test-auth', function () {
