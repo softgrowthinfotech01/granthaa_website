@@ -1,12 +1,9 @@
-<?php
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-
+  <?php
 include "website/conn.php";
 
 $errors = [];
 
-if (isset($_POST['submit'])) {
+if (isset($_POST['send'])) {
 
   // Trim inputs
   $name  = trim($_POST['name'] ?? '');
@@ -14,9 +11,6 @@ if (isset($_POST['submit'])) {
   $phone = trim($_POST['number'] ?? '');
   $agree = $_POST['agree'] ?? '';
   $response = $_POST['g-recaptcha-response'] ?? '';
-
-
-
 
   /* ======================
      BASIC VALIDATIONS
@@ -26,11 +20,9 @@ if (isset($_POST['submit'])) {
     $errors['name'] = "Name is required";
   }
 
-if (empty($email)) {
-  $errors['email'] = "Email is required";
-} elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-  $errors['email'] = "Enter valid email address";
-}
+  if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    $errors['email'] = "Enter valid email";
+  }
 
   if (!preg_match('/^[0-9]{10}$/', $phone)) {
     $errors['phone'] = "Enter valid 10 digit mobile";
@@ -66,28 +58,21 @@ if (empty($email)) {
   /* ======================
      INSERT IF NO ERRORS
   =======================*/
-if (empty($errors)) {
-  try {
+  if (empty($errors)) {
 
     $stmt = $conn->prepare("
-      INSERT INTO enquiries(name,email,phone,checkbox)
-      VALUES(:name,:email,:phone,:checkbox)
+      INSERT INTO enquiries(name,email,phone)
+      VALUES(:name,:email,:phone)
     ");
 
     $stmt->execute([
-      ':name' => $name,
-      ':email' => $email,
-      ':phone' => $phone,
-      ':checkbox' => $agree ? 'yes' : 'no'
+      ':name' => htmlspecialchars($name),
+      ':email' => htmlspecialchars($email),
+      ':phone' => htmlspecialchars($phone)
     ]);
 
     header("Location: home.php");
-    exit();
-
-  } catch (PDOException $e) {
-    echo "Database Error: " . $e->getMessage();
     exit;
   }
-}
 }
 ?>
