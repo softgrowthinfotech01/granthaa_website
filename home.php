@@ -739,6 +739,9 @@ if (isset($_POST['submit'])) {
   $agree = $_POST['agree'] ?? '';
   $response = $_POST['g-recaptcha-response'] ?? '';
 
+
+
+
   /* ======================
      BASIC VALIDATIONS
   =======================*/
@@ -747,7 +750,7 @@ if (isset($_POST['submit'])) {
     $errors['name'] = "Name is required";
   }
 
-   if (!preg_match('/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/', $email)) {
+ if (!preg_match('/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/', $email)) {
   $errors['email'] = "Enter valid email address";
 }
 
@@ -786,7 +789,9 @@ if (isset($_POST['submit'])) {
      INSERT IF NO ERRORS
   =======================*/
 
-$stmt = $conn->prepare("
+  if (empty($errors)) {
+
+  $stmt = $conn->prepare("
   INSERT INTO contact(name,email,phone,checkbox)
   VALUES(:name,:email,:phone,:checkbox)
 ");
@@ -801,41 +806,47 @@ $stmt->execute([
     header("Location: home.php");
     exit;
   }
-
+}
 ?>
-  <section class="bg-white px-6 py-20">
-    <!-- Section Heading -->
-    <div class="max-w-7xl mx-auto mb-12">
-      <h1 class="family text-3xl font-bold text-[#73bc01] flex justify-center">
+
+
+<section class="bg-white mt-[50px] px-6 py-24">
+
+  <div class="max-w-7xl mx-auto mb-12">
+    <h1 class="family text-3xl font-bold text-[#73bc01] flex justify-center">
         CONTACT US
       </h1>
-    </div>
+  </div>
 
-    <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-14 items-stretch">
+  <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-14 items-stretch">
 
-      <!-- LEFT FORM -->
-      <div class="border-2 border-blue-900 rounded-2xl p-10 flex flex-col justify-between bg-white transition-transform duration-500 ease-in-out
-                hover:scale-105 shadow-sm">
-        <div>
-          <h2 class="text-4xl font-serif text-blue-900 mb-4">
-            Book Site Visit <span class="uppercase text-green-600">Now !</span>
-          </h2>
+    <!-- LEFT FORM -->
+    <div class="border-2 border-blue-900 rounded-2xl p-10 bg-white shadow-sm">
 
-          <p class="text-gray-800 font-semibold mb-10">
-            Take The First Step Towards Your Dream Home – Book Today!
-          </p>
+      <h2 class="text-4xl font-serif text-blue-900 mb-4">
+        Book Site Visit <span class="uppercase text-green-600">Now !</span>
+      </h2>
 
-          <form method="post" class="space-y-6">
+      <p class="text-gray-800 font-semibold mb-10">
+        Take The First Step Towards Your Dream Home – Book Today!
+      </p>
 
-            <input
+      <form method="post" action="" class="space-y-6">
+
+        <!-- NAME -->
+        <input
           type="text"
-          placeholder="Name" required
           name="name"
-          class="w-full px-4 py-2.5 sm:py-3
-               rounded-lg border border-blue-300
-               focus:ring-2 focus:ring-blue-500 outline-none" />
+          placeholder="Name"
+          value="<?php echo htmlspecialchars($_POST['name'] ?? ''); ?>"
+          class="w-full border-2 border-blue-200 rounded-lg px-5 py-4"
+        />
+        <?php if (!empty($errors['name'])): ?>
+          <small style="color:red;"><?php echo $errors['name']; ?></small>
+        <?php endif; ?>
 
-       <input
+        <!-- EMAIL -->
+        <input
   type="email"
   name="email"
   required
@@ -844,60 +855,59 @@ $stmt->execute([
   value="<?php echo htmlspecialchars($_POST['email'] ?? ''); ?>"
   class="w-full border-2 border-blue-200 rounded-lg px-5 py-4"
 />
-                  <?php if (!empty($errors['email'])): ?>
-<small style="color:red;"><?php echo $errors['email']; ?></small>
-<?php endif; ?>
+        <?php if (!empty($errors['email'])): ?>
+          <small style="color:red;"><?php echo $errors['email']; ?></small>
+        <?php endif; ?>
 
+        <!-- PHONE -->
         <div class="flex items-center border-2 border-blue-200 rounded-lg px-4 py-3">
-              <span class="mr-3">🇮🇳</span>
-              <input
-                type="tel"
-                name="number"
-                placeholder="Phone"
-                maxlength="10"
-                pattern="[0-9]{10}"
-                oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,10)"
-                required
-                class="bg-transparent w-full focus:outline-none"
-              />
-                <?php if (!empty($errors['phone'])): ?>
-<small style="color:red;"><?php echo $errors['phone']; ?></small>
-<?php endif; ?>
+          <span class="mr-3">🇮🇳</span>
+          <input
+            type="tel"
+            name="number"
+            placeholder="Phone"
+            maxlength="10"
+            value="<?php echo htmlspecialchars($_POST['number'] ?? ''); ?>"
+            oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,10)"
+            class="bg-transparent w-full focus:outline-none"
+          />
+        </div>
+        <?php if (!empty($errors['phone'])): ?>
+          <small style="color:red;"><?php echo $errors['phone']; ?></small>
+        <?php endif; ?>
 
-            </div>
+        <!-- CHECKBOX -->
+        <label class="flex items-start gap-3 text-sm text-gray-700">
+          <input
+            type="checkbox"
+            name="agree"
+            value="1"
+            class="mt-1 accent-green-600"
+            <?php if (!empty($_POST['agree'])) echo 'checked'; ?>
+          />
+          I agree and authorize team to contact me. This will override the register with us.
+        </label>
+        <?php if (!empty($errors['agree'])): ?>
+          <small style="color:red;"><?php echo $errors['agree']; ?></small>
+        <?php endif; ?>
 
+        <!-- CAPTCHA -->
+       <div class="g-recaptcha" data-sitekey="6Lf45GcsAAAAAIDRQ-udUFSe_D_KMi4a1vmwEfnd"></div>
+        <?php if (!empty($errors['captcha'])): ?>
+          <small style="color:red;"><?php echo $errors['captcha']; ?></small>
+        <?php endif; ?>
 
-<label class="flex items-start gap-3 text-sm text-gray-700">
-  <input
-    type="checkbox"
-    name="agree"
-    value="1"
-    class="mt-1 accent-green-600"
-    <?php if (!empty($_POST['agree'])) echo 'checked'; ?>
-  />
-  I agree and authorize team to contact me. This will override the register with us.
-</label>
-
-<?php if (!empty($errors['agree'])): ?>
-  <small style="color:red;"><?php echo $errors['agree']; ?></small>
-<?php endif; ?>
-
-            <div class="g-recaptcha" data-sitekey="6Lf45GcsAAAAAIDRQ-udUFSe_D_KMi4a1vmwEfnd"></div>
-
-            <div class="pt-10">
-              <button name="submit"
-                class="font-semibold bg-[#73bc01] text-white
-                 hover:bg-green-500
-                 px-14 py-3 rounded-md tracking-wide transition">
-                SUBMIT
-              </button>
-            </div>
-          </form>
+        <!-- SUBMIT -->
+        <div class="pt-6">
+          <button type="submit" name="submit"
+            class="font-semibold bg-[#73bc01] text-white px-14 py-3 rounded-md">
+            SUBMIT
+          </button>
         </div>
 
-
-      </div>
-
+      </form>
+    </div>
+    
       <!-- RIGHT CONTENT -->
       <div class="border-2 border-blue-900 rounded-2xl p-10  relative transition-transform duration-500 ease-in-out
                 hover:scale-105 shadow-sm">
