@@ -12,6 +12,9 @@ if (isset($_POST['submit'])) {
   $agree = $_POST['agree'] ?? '';
   $response = $_POST['g-recaptcha-response'] ?? '';
 
+
+
+
   /* ======================
      BASIC VALIDATIONS
   =======================*/
@@ -61,16 +64,17 @@ if (isset($_POST['submit'])) {
 
   if (empty($errors)) {
 
-    $stmt = $conn->prepare("
-      INSERT INTO contact(name,email,phone)
-      VALUES(:name,:email,:phone)
-    ");
+  $stmt = $conn->prepare("
+  INSERT INTO contact(name,email,phone,checkbox)
+  VALUES(:name,:email,:phone,:checkbox)
+");
 
-    $stmt->execute([
-      ':name' => htmlspecialchars($name),
-      ':email' => htmlspecialchars($email),
-      ':phone' => htmlspecialchars($phone)
-    ]);
+$stmt->execute([
+  ':name' => $name,
+  ':email' => $email,
+  ':phone' => $phone,
+  ':checkbox' => $agree ? 'yes' : 'no'
+]);
 
     header("Location: home.php");
     exit;
@@ -113,7 +117,7 @@ if (isset($_POST['submit'])) {
         Take The First Step Towards Your Dream Home – Book Today!
       </p>
 
-      <form method="post" class="space-y-6">
+      <form method="post" action="" class="space-y-6">
 
         <!-- NAME -->
         <input
@@ -172,14 +176,14 @@ if (isset($_POST['submit'])) {
         <?php endif; ?>
 
         <!-- CAPTCHA -->
-        <div class="g-recaptcha" data-sitekey="6Lf45GcsAAAAAIDRQ-udUFSe_D_KMi4a1vmwEfnd"></div>
+       <div class="g-recaptcha" data-sitekey="6Lf45GcsAAAAAIDRQ-udUFSe_D_KMi4a1vmwEfnd"></div>
         <?php if (!empty($errors['captcha'])): ?>
           <small style="color:red;"><?php echo $errors['captcha']; ?></small>
         <?php endif; ?>
 
         <!-- SUBMIT -->
         <div class="pt-6">
-          <button name="submit"
+          <button type="submit" name="submit"
             class="font-semibold bg-[#73bc01] text-white px-14 py-3 rounded-md">
             SUBMIT
           </button>

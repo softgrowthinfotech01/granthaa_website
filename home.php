@@ -786,23 +786,22 @@ if (isset($_POST['submit'])) {
      INSERT IF NO ERRORS
   =======================*/
 
-  if (empty($errors)) {
+$stmt = $conn->prepare("
+  INSERT INTO contact(name,email,phone,checkbox)
+  VALUES(:name,:email,:phone,:checkbox)
+");
 
-    $stmt = $conn->prepare("
-      INSERT INTO contact(name,email,phone)
-      VALUES(:name,:email,:phone)
-    ");
-
-    $stmt->execute([
-      ':name' => htmlspecialchars($name),
-      ':email' => htmlspecialchars($email),
-      ':phone' => htmlspecialchars($phone)
-    ]);
+$stmt->execute([
+  ':name' => $name,
+  ':email' => $email,
+  ':phone' => $phone,
+  ':checkbox' => $agree ? 'yes' : 'no'
+]);
 
     header("Location: home.php");
     exit;
   }
-}
+
 ?>
   <section class="bg-white px-6 py-20">
     <!-- Section Heading -->
