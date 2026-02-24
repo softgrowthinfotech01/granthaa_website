@@ -7,12 +7,7 @@
   <form id="advisorForm"
     class="grid grid-cols-1 md:grid-cols-2 gap-6">
 
-    <!-- Advisor Code -->
-    <div>
-      <label class="block text-gray-900 font-semibold mb-1">Advisor Code</label>
-      <input type="text" name="advisor_code" placeholder="ADV001" required
-        class="w-full border border-gray-300 p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400">
-    </div>
+ 
 
     <!-- Full Name -->
     <div>
@@ -31,7 +26,7 @@
     <!-- Phone -->
     <div>
       <label class="block text-gray-900 font-semibold mb-1">Phone Number</label>
-      <input type="text" name="contact_no" placeholder="Enter phone number" required
+      <input type="number" name="contact_no" placeholder="Enter phone number" required
         class="w-full border border-gray-300 p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400">
     </div>
 
@@ -43,13 +38,21 @@
     </div>
     <div>
       <label class="block text-gray-900 font-semibold mb-1">Age</label>
-      <input type="text" name="age" placeholder="00" required
-        class="w-full border border-gray-300 p-2 rounded-lg uppercase focus:outline-none focus:ring-2 focus:ring-yellow-400">
+      <input type="number" 
+       name="age" 
+       min="18"
+       required
+       class="w-full border border-gray-300 p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400">
     </div>
     <div>
       <label class="block text-gray-900 font-semibold mb-1">Gender</label>
-      <input type="text" name="gender" placeholder="00" required
-        class="w-full border border-gray-300 p-2 rounded-lg uppercase focus:outline-none focus:ring-2 focus:ring-yellow-400">
+      <select name="gender" required
+        class="w-full border border-gray-300 p-2 rounded-lg focus:ring-2 focus:ring-yellow-400">
+  <option value="">-- Select Gender --</option>
+  <option value="male">Male</option>
+  <option value="female">Female</option>
+  <option value="others">Others</option>
+</select>
     </div>
 
     <!-- Address -->
@@ -78,7 +81,7 @@
     <!-- Account Number -->
     <div>
       <label class="block text-gray-900 font-semibold mb-1">Account Number</label>
-      <input type="text" name="bank_account_no" placeholder="Enter account number" required
+      <input type="number" name="bank_account_no" placeholder="Enter account number" required
         class="w-full border border-gray-300 p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400">
     </div>
 
