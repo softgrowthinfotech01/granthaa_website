@@ -136,7 +136,7 @@ document.getElementById("loginForm").addEventListener("submit", function (e) {
                 window.location.href = "leader";
                 break;
             case "adviser":
-                window.location.href = "adviser";
+                window.location.href = "advisor";
                 break;
             case "customer":
                 window.location.href = "customer";

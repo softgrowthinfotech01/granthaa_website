@@ -149,15 +149,15 @@ class UserController extends Controller
         ];
 
         // Extra validation ONLY for leader
-        if ($request->role === 'leader') {
+        if (in_array($request->role, ['leader', 'adviser'])) {
             $rules += [
                 'age'        => 'required|integer|min:18',
                 'gender'     => 'required|in:male,female,others',
                 'contact_no' => 'required|string|max:15',
-                'city'       => 'required|string',
-                'state'      => 'required|string',
+                'city'       => 'nullable|string',
+                'state'      => 'nullable|string',
                 'address'    => 'required|string',
-                'pin_code'   => 'required|string|max:10',
+                'pin_code'   => 'nullable|string|max:10',
                 'image'      => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
                 'bank_name'  => 'required|string',
                 'bank_branch'  => 'required|string',
