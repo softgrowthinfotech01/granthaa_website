@@ -11,24 +11,19 @@
   <!-- Location Dropdown -->
   <div>
     <label class="block text-gray-900 font-semibold mb-1">Select Location</label>
-    <select  name="location_id" class="w-full border border-gray-300 p-2 rounded-lg focus:ring-2 focus:ring-yellow-400">
-      <option value="">-- Select Location --</option>
-      <option value="3">Pune</option>
-      <option value="1">Mumbai</option>
-      <option value="1">Nagpur</option>
-      <option value="1">Nashik</option>
-    </select>
+   <select id="locationDropdown" name="location_id"
+  class="w-full border border-gray-300 p-2 rounded-lg focus:ring-2 focus:ring-yellow-400">
+  <option value="">-- Select Location --</option>
+</select>
   </div>
 
   <!-- Advisor Dropdown -->
   <div>
     <label class="block text-gray-900 font-semibold mb-1">Select Advisor</label>
-    <select name="user_id"  class="w-full border border-gray-300 p-2 rounded-lg focus:ring-2 focus:ring-yellow-400">
-      <option value="">-- Select Advisor --</option>
-      <option value="17">ADV001 - Prateek Raj</option>
-      <option value="20">ADV002 - Rahul Sharma</option>
-      <option value="19">ADV003 - Shaktiman</option>
-    </select>
+    <select id="advisorDropdown" name="user_id"
+  class="w-full border border-gray-300 p-2 rounded-lg focus:ring-2 focus:ring-yellow-400">
+  <option value="">-- Select Advisor --</option>
+</select>
   </div>
 
   <!-- Commission Type -->
@@ -73,6 +68,68 @@
     <script src="../url.js"></script>
 
     <script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const token = localStorage.getItem('auth_token');
+    if (!token) return;
+
+   fetch(url + "site-location", {
+    headers: {
+        "Authorization": "Bearer " + token,
+        "Accept": "application/json"
+    }
+})
+.then(res => res.json())
+.then(response => {
+
+    console.log(response); // optional debug
+
+    let dropdown = document.getElementById("locationDropdown");
+
+    // 🔥 CLEAR previous options except first
+    dropdown.innerHTML = '<option value="">-- Select Location --</option>';
+
+    if (response.data && response.data.data.length > 0) {
+
+        response.data.data.forEach(function(location) {
+            dropdown.innerHTML += `
+                <option value="${location.id}">
+                    ${location.site_location}
+                </option>
+            `;
+        });
+
+    }
+});
+
+
+    // 🔥 Fetch Advisers
+    fetch(url + "by-role?role=adviser", {
+        headers: {
+            "Authorization": "Bearer " + token,
+            "Accept": "application/json"
+        }
+    })
+    .then(res => res.json())
+    .then(response => {
+
+        let dropdown = document.getElementById("advisorDropdown");
+
+        if (response.data && response.data.data.length > 0) {
+            response.data.data.forEach(function(user) {
+                dropdown.innerHTML += `
+                    <option value="${user.id}">
+                        ${user.user_code} - ${user.name}
+                    </option>
+                `;
+            });
+        }
+    });
+
+});
+</script>
+
+    <script>
         document.getElementById('commissionForm').addEventListener('submit', async function(e) {
             e.preventDefault();
 
@@ -92,7 +149,6 @@
 
             let form = document.getElementById('commissionForm');
             let formData = new FormData(form);
-            alert(formData.get('user_id') + ' ' + formData.get('location_id') + ' ' + formData.get('commission_type') + ' ' + formData.get('commission_value'))
 
 
 
@@ -129,6 +185,8 @@
             }
         }
     </script>
+
+
 
 <?php include 'footer.php'; ?>
 

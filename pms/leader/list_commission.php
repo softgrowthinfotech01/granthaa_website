@@ -24,7 +24,7 @@
 
       <thead class="bg-gradient-to-r from-gray-100 to-gray-300 text-gray-700">
         <tr>
-          <th data-priority="1" class="p-3 text-center font-semibold">Advisor Code</th>
+          <th data-priority="1" class="p-3 text-center font-semibold">Site Location</th>
           <th data-priority="2" class="p-3 text-center font-semibold">Advisor Name</th>
           <th data-priority="3" class="p-3 text-center font-semibold">Commission</th>
           <th data-priority="4" class="p-3 text-center font-semibold">Action</th>
@@ -90,36 +90,39 @@ $(document).ready(function() {
                     `);
                 }
 
-                commissions.forEach(function(item) {
+               commissions.forEach(function(item) {
 
-                    tbody.append(`
-                        <tr class="border-b">
-                            <td class="p-3 text-center">
-                                ${item.user?.user_code ?? ''}
-                            </td>
-                            <td class="p-3 text-center">
-                                ${item.user?.name ?? ''}
-                            </td>
-                            <td class="p-3 text-center">
-                                ${item.commission_type === 'percent'
-                                    ? item.commission_value + '%'
-                                    : '₹ ' + item.commission_value}
-                            </td>
-                            <td class="p-3 text-center">
-                                <div class="flex flex-col sm:flex-row gap-2 justify-center">
-                                    <a href="update_commission.php?id=${item.id}"
-                                       class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-1.5 rounded-lg shadow-sm transition">
-                                       Update
-                                    </a>
-                                    <button onclick="deleteCommission(${item.id})"
-                                       class="bg-red-500 hover:bg-red-600 text-white px-4 py-1.5 rounded-lg shadow-sm transition">
-                                       Delete
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-                    `);
-                });
+    tbody.append(`
+        <tr class="border-b">
+            <td class="p-3 text-center">
+                ${item.location?.site_location ?? ''}
+            </td>
+
+            <td class="p-3 text-center">
+                ${item.user?.name ?? ''}
+            </td>
+
+            <td class="p-3 text-center">
+                ${item.commission_type === 'percent'
+                    ? item.commission_value + '%'
+                    : '₹ ' + item.commission_value}
+            </td>
+
+            <td class="p-3 text-center">
+                <div class="flex flex-col sm:flex-row gap-2 justify-center">
+                    <a href="update_commission.php?id=${item.id}"
+                       class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-1.5 rounded-lg shadow-sm transition">
+                       Update
+                    </a>
+                    <button onclick="deleteCommission(${item.id})"
+                       class="bg-red-500 hover:bg-red-600 text-white px-4 py-1.5 rounded-lg shadow-sm transition">
+                       Delete
+                    </button>
+                </div>
+            </td>
+        </tr>
+    `);
+});
 
                 // 🔥 Pagination
                 let pagination = response.data;
