@@ -381,4 +381,56 @@ class UserController extends Controller
             'message' => 'User deleted successfully'
         ]);
     }
+
+    /**
+ * Get Users By Role (Dynamic)
+ */
+public function getUsersByRole(Request $request)
+{
+    $auth = auth()->user();
+
+    if (!$auth) {
+        return response()->json([
+            'message' => 'Unauthenticated'
+        ], 401);
+    }
+
+    // Validate role parameter
+    $request->validate([
+        'role' => 'required|in:admin,leader,adviser,customer'
+    ]);
+
+    $role = $request->role;
+
+    $query = User::where('role', $role);
+
+    // 🔐 Role-based restriction
+    if ($auth->role !== 'admin') {
+        $query->where('created_by', $auth->id);
+    }
+
+    // 🔎 Optional Search
+    if ($request->filled('search')) {
+        $search = $request->search;
+
+        $query->where(function ($q) use ($search) {
+            $q->where('name', 'like', "%{$search}%")
+              ->orWhere('email', 'like', "%{$search}%")
+              ->orWhere('user_code', 'like', "%{$search}%")
+              ->orWhere('contact_no', 'like', "%{$search}%");
+        });
+    }
+
+    // 📄 Pagination
+    $perPage = $request->per_page ?? 10;
+
+    $users = $query->orderBy('id', 'desc')
+                   ->paginate($perPage)
+                   ->withQueryString();
+
+    return response()->json([
+        'message' => ucfirst($role) . ' users fetched successfully',
+        'data' => $users
+    ]);
+}
 }

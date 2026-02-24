@@ -92,7 +92,7 @@ public function index(Request $request)
                 $u->where('name', 'like', "%{$search}%");
             })
             ->orWhereHas('location', function ($l) use ($search) {
-                $l->where('location_name', 'like', "%{$search}%");
+                $l->where('site_location', 'like', "%{$search}%");
             });
         });
     }

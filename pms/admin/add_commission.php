@@ -134,7 +134,7 @@ async function loadDropdowns() {
 
 
         // 🔹 Load Leaders
-        const leaderRes = await fetch(url + 'leader_list', {
+        const leaderRes = await fetch(url + 'by-role?role=leader', {
             headers: {
                 "Authorization": "Bearer " + token,
                 "Accept": "application/json"
@@ -190,7 +190,7 @@ loadDropdowns();
 
 
             try {
-                const response = await fetch(url + 'admin/set-commission', {
+                const response = await fetch(url + 'commission', {
                     method: 'POST',
                     headers: {
                         'Accept': 'application/json',

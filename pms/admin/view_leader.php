@@ -95,7 +95,7 @@
         let searchTimeout;
 
         const token = localStorage.getItem("auth_token");
-
+        
         async function fetchLocations(page = 1) {
 
             const loader = document.getElementById('tableLoader');
@@ -110,7 +110,7 @@
                 pagination.innerHTML = '';
 
                 const response = await fetch(
-                    url + `leader_list?page=${page}&search=${currentSearch}&per_page=${currentPerPage}`, {
+                    url + `by-role?role=leader&page=${page}&search=${currentSearch}&per_page=${currentPerPage}`, {
                         method: "GET",
                         headers: {
                             "Accept": "application/json",

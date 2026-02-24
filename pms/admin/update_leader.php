@@ -31,8 +31,8 @@
                             <h5 class="text-xl font-bold text-heading p-1">Update Leader Details</h5>
                             <div class="grid grid-cols-2">
                                 <div class="mb-5 col-span-1 px-1">
-                                    <label for="leader_code" class="block mb-2.5 text-sm font-medium text-heading">Leader Code</label>
-                                    <input type="text" id="leader_code" class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" placeholder="Enter leader code" required />
+                                    <label for="user_code" class="block mb-2.5 text-sm font-medium text-heading">Leader Code</label>
+                                    <input type="text" id="user_code" class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" placeholder="Enter leader code" readonly />
                                 </div>
                                 <div class="mb-5 col-span-1 px-1">
                                     <label for="name" class="block mb-2.5 text-sm font-medium text-heading">Full Name</label>
@@ -187,7 +187,7 @@ async function loadLeader() {
 
         const user = result.data;
 
-        document.getElementById("leader_code").value = user.leader_code ?? "";
+        document.getElementById("user_code").value = user.user_code ?? "";
         document.getElementById("name").value = user.name ?? "";
         document.getElementById("age").value = user.age ?? "";
         document.getElementById("gender").value = user.gender ?? "";
@@ -228,7 +228,7 @@ async function updateLeader() {
 
     try {
         const response = await fetch(url + `users/${id}`, {
-            method: "PUT",
+            method: "PATCH",
             headers: {
                 "Authorization": "Bearer " + token,
                 "Content-Type": "application/json",
