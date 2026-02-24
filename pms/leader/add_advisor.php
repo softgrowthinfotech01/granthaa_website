@@ -31,7 +31,7 @@
     <!-- Phone -->
     <div>
       <label class="block text-gray-900 font-semibold mb-1">Phone Number</label>
-      <input type="text" name="advisor_phone" placeholder="Enter phone number" required
+      <input type="text" name="contact_no" placeholder="Enter phone number" required
         class="w-full border border-gray-300 p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400">
     </div>
 
@@ -39,6 +39,16 @@
     <div>
       <label class="block text-gray-900 font-semibold mb-1">PAN Card Number</label>
       <input type="text" name="pan" placeholder="ABCDE1234F" required
+        class="w-full border border-gray-300 p-2 rounded-lg uppercase focus:outline-none focus:ring-2 focus:ring-yellow-400">
+    </div>
+    <div>
+      <label class="block text-gray-900 font-semibold mb-1">Age</label>
+      <input type="text" name="age" placeholder="00" required
+        class="w-full border border-gray-300 p-2 rounded-lg uppercase focus:outline-none focus:ring-2 focus:ring-yellow-400">
+    </div>
+    <div>
+      <label class="block text-gray-900 font-semibold mb-1">Gender</label>
+      <input type="text" name="gender" placeholder="00" required
         class="w-full border border-gray-300 p-2 rounded-lg uppercase focus:outline-none focus:ring-2 focus:ring-yellow-400">
     </div>
 
@@ -61,21 +71,21 @@
     <!-- Branch Name -->
     <div>
       <label class="block text-gray-900 font-semibold mb-1">Branch Name</label>
-      <input type="text" name="branch_name" placeholder="Enter branch name"
+      <input type="text" name="bank_branch" placeholder="Enter branch name"
         class="w-full border border-gray-300 p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400">
     </div>
 
     <!-- Account Number -->
     <div>
       <label class="block text-gray-900 font-semibold mb-1">Account Number</label>
-      <input type="text" name="account_no" placeholder="Enter account number" required
+      <input type="text" name="bank_account_no" placeholder="Enter account number" required
         class="w-full border border-gray-300 p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400">
     </div>
 
     <!-- IFSC Code -->
     <div>
       <label class="block text-gray-900 font-semibold mb-1">IFSC Code</label>
-      <input type="text" name="ifsc" placeholder="Enter IFSC code" required
+      <input type="text" name="bank_ifsc_code" placeholder="Enter IFSC code" required
         class="w-full border border-gray-300 p-2 rounded-lg uppercase focus:outline-none focus:ring-2 focus:ring-yellow-400">
     </div>
 
@@ -117,7 +127,7 @@
 
     let form = document.getElementById('advisorForm');
     let formData = new FormData(form);
-    //  console.log(formData);
+     console.log(formData);
     // 🔥 FORCE VALUES
     formData.set("role", "adviser");
     formData.set("password", "password"); // static password

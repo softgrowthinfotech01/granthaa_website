@@ -206,32 +206,81 @@ class BookingController extends Controller
         ]);
     }
 
-    public function dashboard()
-    {
-        $user = auth()->user();
+  public function dashboard()
+{
+    $user = auth()->user();
+ $query = Booking::query();
+    // 🔹 If Admin → all advisers
+    if ($user->role === 'admin') {
 
-        $query = Booking::query();
+        $totalAdvisors = User::where('role', 'advisor')
+    ->where('created_by', $user->id)
+    ->count();
+        $totalBookingAmount = Booking::sum('total_booking_amount');
+        $totalCommissionAmount = 0;
 
-        if ($user->role !== 'admin') {
-            $query->where('user_code', $user->user_code);
-        }
+$bookings = $query->get();
 
-        $totalAdvisors = $query->distinct('user_code')->count('user_code');
-        $totalBookingAmount = $query->sum('advance_amount');
-        $totalCommissionAmount = $query->sum('commission_amt');
-
+foreach ($bookings as $booking) {
+    if ($booking->commission_type == 'amount') {
+        $totalCommissionAmount += $booking->total_booking_amount;
+    } else if ($booking->commission_type == 'percent') {
+        $totalCommissionAmount += ($booking->advance_amount * $booking->total_booking_amount) / 100;
+    }
+}
         $topAdvisor = Booking::select('user_code', DB::raw('SUM(advance_amount) as total'))
             ->groupBy('user_code')
             ->orderByDesc('total')
             ->first();
-
-        return response()->json([
-            'total_advisors' => $totalAdvisors,
-            'total_booking_amount' => $totalBookingAmount,
-            'total_commission_amount' => $totalCommissionAmount,
-            'top_advisor' => $topAdvisor?->user_code
-        ]);
     }
+
+    // 🔹 If Leader → advisers created by this leader
+    elseif ($user->role === 'leader') {
+
+        // Get adviser user_codes created by leader
+        $adviserCodes = User::where('created_by', $user->id)
+                            ->where('role', 'adviser')
+                            ->pluck('user_code');
+
+        $totalAdvisors = $adviserCodes->count();
+
+        $totalBookingAmount = Booking::whereIn('user_code', $adviserCodes)
+            ->sum('advance_amount');
+
+        $totalCommissionAmount = Booking::whereIn('user_code', $adviserCodes)
+            ->sum('total_booking_amount');
+
+        $topAdvisor = Booking::whereIn('user_code', $adviserCodes)
+            ->select('user_code', DB::raw('SUM(total_booking_amount) as total'))
+            ->groupBy('user_code')
+            ->orderByDesc('total')
+            ->first();
+    }
+
+    // 🔹 If Adviser → only his own
+    else {
+
+        $totalAdvisors = 1;
+
+        $totalBookingAmount = Booking::where('user_code', $user->user_code)
+            ->sum('advance_amount');
+
+        $totalCommissionAmount = Booking::where('user_code', $user->user_code)
+            ->sum('commission_amt');
+
+        $topAdvisor = Booking::where('user_code', $user->user_code)
+            ->select('user_code', DB::raw('SUM(advance_amount) as total'))
+            ->groupBy('user_code')
+            ->first();
+    }
+
+    return response()->json([
+        'total_advisors' => $totalAdvisors,
+        'total_booking_amount' => $totalBookingAmount,
+        'total_commission_amount' => $totalCommissionAmount,
+        'top_advisor' => $topAdvisor?->user_code
+    ]);
+}
 
     public function adviserPerformance(Request $request)
     {
