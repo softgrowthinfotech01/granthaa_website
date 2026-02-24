@@ -808,12 +808,14 @@ $stmt->execute([
   }
 }
 ?>
-  <section class="bg-white px-6 py-20">
-    <!-- Section Heading -->
-    <div class="max-w-7xl mx-auto mb-12">
-    <h1 class="text-3xl font-bold text-blue-900 border-l-4 border-green-500 pl-4">
-      CONTACT US :
-    </h1>
+
+
+<section class="bg-white mt-[50px] px-6 py-24">
+
+  <div class="max-w-7xl mx-auto mb-12">
+    <h1 class="family text-3xl font-bold text-[#73bc01] flex justify-center">
+        CONTACT US
+      </h1>
   </div>
 
   <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-14 items-stretch">
@@ -905,6 +907,7 @@ $stmt->execute([
 
       </form>
     </div>
+    
       <!-- RIGHT CONTENT -->
       <div class="border-2 border-blue-900 rounded-2xl p-10  relative transition-transform duration-500 ease-in-out
                 hover:scale-105 shadow-sm">

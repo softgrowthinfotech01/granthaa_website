@@ -14,9 +14,9 @@ if (isset($_POST['send'])) {
     $errors['name'] = "Name is required";
   }
 
- if (!preg_match('/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/', $email)) {
-  $errors['email'] = "Enter valid email address";
-}
+  if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    $errors['email'] = "Enter valid email";
+  }
 
   if (!preg_match('/^[0-9]{10}$/', $phone)) {
     $errors['phone'] = "Enter valid 10 digit mobile";
