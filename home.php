@@ -747,9 +747,9 @@ if (isset($_POST['submit'])) {
     $errors['name'] = "Name is required";
   }
 
-  if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-    $errors['email'] = "Enter valid email";
-  }
+   if (!preg_match('/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/', $email)) {
+  $errors['email'] = "Enter valid email address";
+}
 
   if (!preg_match('/^[0-9]{10}$/', $phone)) {
     $errors['phone'] = "Enter valid 10 digit mobile";
@@ -838,12 +838,11 @@ $stmt->execute([
        <input
   type="email"
   name="email"
-  placeholder="Email"
   required
-  pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
-  title="Enter valid email address"
-  class="w-full bg-white border-2 border-blue-200 rounded-lg px-5 py-4
-         focus:outline-none focus:border-green-500"
+  pattern="^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$"
+  placeholder="Email"
+  value="<?php echo htmlspecialchars($_POST['email'] ?? ''); ?>"
+  class="w-full border-2 border-blue-200 rounded-lg px-5 py-4"
 />
                   <?php if (!empty($errors['email'])): ?>
 <small style="color:red;"><?php echo $errors['email']; ?></small>
@@ -1048,10 +1047,14 @@ $stmt->execute([
                focus:ring-2 focus:ring-blue-500 outline-none" />
 
         <input
-              type="email"
-              placeholder="Email" name="email" required
-              class="w-full bg-white border-2 border-blue-200 rounded-lg px-5 py-4
-                   focus:outline-none focus:border-green-500" />
+  type="email"
+  name="email"
+  required
+  pattern="^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$"
+  placeholder="Email"
+  value="<?php echo htmlspecialchars($_POST['email'] ?? ''); ?>"
+  class="w-full border-2 border-blue-200 rounded-lg px-5 py-4"
+/>
                   <?php if (!empty($errors['email'])): ?>
 <small style="color:red;"><?php echo $errors['email']; ?></small>
 <?php endif; ?>
