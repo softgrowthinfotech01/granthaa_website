@@ -155,7 +155,7 @@
         // 2️⃣ Load Commission AFTER dropdowns loaded
         async function loadCommission() {
 
-            const response = await fetch(url + `commissions/user/${commissionId}`, {
+            const response = await fetch(url + `commission/${commissionId}`, {
                 headers: {
                     "Authorization": "Bearer " + token,
                     "Accept": "application/json"
