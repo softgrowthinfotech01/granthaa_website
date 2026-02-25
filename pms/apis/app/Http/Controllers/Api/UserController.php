@@ -372,7 +372,7 @@ class UserController extends Controller
 
         // Admin can delete anyone
         // Others can delete only their created users
-        if ($auth->role !== 'admin' && $user->created_by !== $auth->id) {
+        if ($auth->role !== 'admin' && (int)$user->created_by !== (int)$auth->id) {
             return response()->json(['message' => 'Unauthorized'], 403);
         }
 
