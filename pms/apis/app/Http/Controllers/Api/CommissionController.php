@@ -253,6 +253,31 @@ public function index(Request $request)
         ], 200);
     }
 
+    
+public function show($id){
+    $auth = auth()->user();
+
+        if (!$auth || !in_array($auth->role, ['admin', 'leader'])) {
+            return response()->json([
+                'message' => 'Only admin and leader can view the commission of all users'
+            ], 403);
+        }
+
+        $commission = UserLocationCommission::find($id);
+
+        if (!$commission) {
+            return response()->json([
+                'message' => 'Commission not found'
+            ], 404);
+        }
+ 
+        return response()->json([
+        'message' => 'Fetched successfully',
+        'data' => $commission
+    ]);
+
+}
+
     /**
      * Delete Commission (Admin Only)
      */

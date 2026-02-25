@@ -49,6 +49,7 @@ Route::middleware(['auth:sanctum', 'role:admin,leader'])->group(function () {
     Route::post('/commission', [CommissionController::class, 'setCommission']);
     Route::put('/commission/{id}', [CommissionController::class, 'updateCommission']);
     Route::delete('/commission/{id}', [CommissionController::class, 'deleteCommission']);
+    Route::get('/commission/{id}', [CommissionController::class, 'show']);
     Route::get('/commissions', [CommissionController::class, 'index']);
     Route::get('/commissions/user/{userId}', [CommissionController::class, 'getByUser']);
     Route::get('/my-commissions', [CommissionController::class, 'myCommissions']);
