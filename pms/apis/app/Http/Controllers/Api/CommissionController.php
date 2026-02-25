@@ -260,9 +260,9 @@ public function index(Request $request)
     {
         $auth = auth()->user();
 
-        if (!$auth || $auth->role !== 'admin') {
+        if (!$auth || !in_array($auth->role, ['admin', 'leader'])) {
             return response()->json([
-                'message' => 'Only admin can delete commission'
+                'message' => 'Only admin and leader can delete commission'
             ], 403);
         }
 
