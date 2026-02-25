@@ -170,7 +170,7 @@
             }
 
             // 🔥 Correct path based on your API response
-            const commission = result.data.data[0];
+            const commission = result.data;
 
             console.log("Commission:", commission);
 
@@ -181,6 +181,8 @@
             const radio = document.querySelector(
                 `input[name="commission_type"][value="${commission.commission_type}"]`
             );
+
+            console.log(commission.commission_type);
 
             if (radio) radio.checked = true;
         }
