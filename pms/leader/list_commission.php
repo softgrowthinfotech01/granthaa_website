@@ -34,7 +34,9 @@
       <tbody class="divide-y divide-gray-200">
       </tbody>
     </table>
-<div id="pagination" class="mt-4"></div>
+<div id="pagination" class="mt-4"></div>    
+
+    
   </div>
 
 </div>

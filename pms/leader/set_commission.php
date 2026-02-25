@@ -22,7 +22,9 @@
     <label class="block text-gray-900 font-semibold mb-1">Select Advisor</label>
     <select id="advisorDropdown" name="user_id"
   class="w-full border border-gray-300 p-2 rounded-lg focus:ring-2 focus:ring-yellow-400">
-  <option value="">-- Select Advisor --</option>
+  <option value="">-- Select Advisor --</option>        
+    
+  
 </select>
   </div>
 
