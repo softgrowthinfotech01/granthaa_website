@@ -21,6 +21,6 @@ public function user()
 
 public function location()
 {
-    return $this->belongsTo(\App\Models\LocationMaster::class, 'id');
+    return $this->belongsTo(\App\Models\LocationMaster::class, 'location_id');
 }
 }
