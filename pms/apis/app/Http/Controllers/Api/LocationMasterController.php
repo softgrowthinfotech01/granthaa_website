@@ -9,27 +9,33 @@ use Illuminate\Http\Request;
 class LocationMasterController extends Controller
 {
 
-    public function index(Request $request)
-    {
-        $query = LocationMaster::query();
+   public function index(Request $request)
+{
+    $query = LocationMaster::query();
 
-        // Search filter
-        if ($request->search) {
-            $query->where('site_location', 'like', '%' . $request->search . '%');
-        }
+    // Search filter
+    if ($request->search) {
+        $query->where('site_location', 'like', '%' . $request->search . '%');
+    }
 
-        // Per page value (default 5)
-        $perPage = $request->per_page ?? 5;
+    $query->orderBy('id', 'desc');
 
-        $locations = $query
-            ->orderBy('id', 'desc')
-            ->paginate($perPage);
+    // ✅ If per_page exists → paginate
+    if ($request->has('per_page')) {
+        $locations = $query->paginate($request->per_page);
 
         return response()->json([
             'data' => $locations
         ]);
     }
 
+    // ✅ Otherwise return ALL
+    $locations = $query->get();
+
+    return response()->json([
+        'data' => $locations
+    ]);
+}
     /**
      * Get single site location (ADMIN only)
      */

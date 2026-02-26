@@ -121,7 +121,7 @@ class BookingController extends Controller
     {
         $user = auth()->user();
 
-        $query = Booking::with('leader');
+        $query = Booking::with(['leader', 'location']);
 
         // 🔐 Role Based Filter
         if ($user->role !== 'admin') {

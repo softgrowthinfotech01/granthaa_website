@@ -18,11 +18,11 @@
             <div class="grid md:grid-cols-3 gap-2">
 
                 <!-- Agent -->
-                <div class="space-y-2">
+                <!-- <div class="space-y-2">
                     <label class="text-sm font-semibold text-gray-700">Leader Name</label>
                     <input type="text" value="LEAD001 - Prateek Raj" readonly
                         class="w-full border border-gray-300 px-5 py-3 rounded-xl bg-gray-100 outline-none ">
-                </div>
+                </div> -->
 
                 <!-- Buyer -->
                 <div class="space-y-2">
@@ -115,19 +115,16 @@
 
                 <div class="space-y-2">
                     <label class="text-sm font-semibold text-gray-700">Site Location</label>
-                    <select name="site_location" id="site_location" class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-yellow-400 outline-none">
-                        <option>Select Site</option>
-                        <option>Datala</option>
-                        <option>Kosara</option>
-                        <option>Chandrapur</option>
-                    </select>
+                    <select name="site_location" id="site_location" class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-yellow-400 outline-none ">
+    <option>Loading....</option>
+</select>
                 </div>
 
 
 
                 <div class="space-y-2">
-                    <label class="text-sm font-semibold text-gray-700">Commission Type</label>
-                    <input name="commission_type" id="commission_type" type="text" value="Percent (%) or Amount (₹)" readonly
+                    <label class="text-sm font-semibold text-gray-700">Commission Value</label>
+                    <input name="commission_type" id="commission_type" type="text" placeholder="commission..."  readonly
                         class="w-full border border-gray-300 px-5 py-3 rounded-xl bg-gray-100 outline-none ">
                 </div>
 
@@ -197,11 +194,11 @@
                 <div class="space-y-2">
                     <label class="text-sm font-semibold text-gray-700">Payment Mode</label>
                     <select name="payment_mode" id="payment_mode" class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-yellow-400 outline-none">
-                        <option>Select Payment</option>
-                        <option>Cash</option>
-                        <option>Cheque</option>
-                        <option>Online Transfer</option>
-                        <option>UPI</option>
+                        <option>Select Payment Mode</option>
+                        <option value="cash">Cash</option>
+                        <option value="cheque">Cheque</option>
+                        <option value="online_transfer">Online Transfer</option>
+                        <option value="upi">UPI</option>
                     </select>
                 </div>
 
@@ -240,16 +237,79 @@ transition transform hover:scale-[1.02]">
 
 <script src="../url.js"></script>
 <script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const token = localStorage.getItem('auth_token');
+    const user = JSON.parse(localStorage.getItem('auth_user'));
+
+    if (!token || !user) {
+        alert("Please login first");
+        window.location.href = "../login";
+        return;
+    }
+
+    // ================= LOAD SITE LOCATIONS =================
+    function loadSiteLocations() {
+
+    fetch(url + "my-commissions", {
+        method: "GET",
+        headers: {
+            "Authorization": "Bearer " + token,
+            "Accept": "application/json"
+        }
+    })
+    .then(res => res.json())
+    .then(response => {
+
+        console.log("MY COMMISSIONS:", response);
+
+        const commissions = response.data?.data ?? [];
+        const select = document.getElementById("site_location");
+
+        select.innerHTML = `<option value="">Select Site Location</option>`;
+
+        commissions.forEach(commission => {
+
+            if (commission.location) {
+                select.innerHTML += `
+                    <option 
+                        value="${commission.location.id}"
+                        data-type="${commission.commission_type}"
+                        data-value="${commission.commission_value}"
+                    >
+                        ${commission.location.site_location}
+                    </option>
+                `;
+            }
+
+        });
+    });
+}
+    loadSiteLocations();
+
+    // ================= AUTO FETCH COMMISSION =================
+    document.getElementById("site_location").addEventListener("change", function () {
+
+    const selectedOption = this.options[this.selectedIndex];
+
+    const type = selectedOption.getAttribute("data-type");
+    const value = selectedOption.getAttribute("data-value");
+
+    if (!type || !value) {
+        document.getElementById("commission_type").value =
+            "No commission assigned";
+        return;
+    }
+
+    if (type === "percent") {
+        document.getElementById("commission_type").value = value + " %";
+    } else {
+        document.getElementById("commission_type").value = "₹ " + value;
+    }
+});
+    // ================= FORM SUBMIT =================
     document.getElementById("bookingForm").addEventListener("submit", async function(e) {
         e.preventDefault();
-
-        const token = localStorage.getItem('auth_token');
-        const user = JSON.parse(localStorage.getItem('auth_user'));
-        if (!token || !user) {
-            alert("Please login first");
-            window.location.href = "../login";
-            return;
-        }
 
         if (user.role !== "leader") {
             alert("You are not allowed to create Booking");
@@ -258,11 +318,11 @@ transition transform hover:scale-[1.02]">
 
         let form = document.getElementById("bookingForm");
         let formData = new FormData(form);
-        // alert(formData);
-        // 🔥 FORCE VALUES
+
         formData.set("role", "customer");
-        formData.set("password", "password"); // static password
-        formData.set("created_by", user.id); // user id
+        formData.set("password", "password");
+        formData.set("created_by", user.id);
+
         try {
             const response = await fetch(url + "bookings", {
                 method: "POST",
@@ -276,7 +336,6 @@ transition transform hover:scale-[1.02]">
             const data = await response.json();
 
             if (!response.ok) {
-                // Laravel validation errors
                 if (data.errors) {
                     let errorMessages = "";
                     for (let field in data.errors) {
@@ -289,10 +348,7 @@ transition transform hover:scale-[1.02]">
                 return;
             }
 
-            // ✅ SUCCESS ALERT
             alert("✅ " + data.message);
-
-            // Optional: reset form after success
             form.reset();
 
         } catch (error) {
@@ -301,12 +357,6 @@ transition transform hover:scale-[1.02]">
         }
     });
 
-    // Reset confirmation
-    function confirmReset() {
-        if (confirm('Are you sure you want to reset the form?')) {
-            document.getElementById('bookingForm').reset();
-        }
-    }
+});
 </script>
-
 <?php include 'footer.php'; ?>

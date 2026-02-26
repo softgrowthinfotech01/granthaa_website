@@ -124,7 +124,9 @@ async function loadDropdowns() {
 
         locationSelect.innerHTML = `<option value="">Choose a site location</option>`;
 
-        locationData.data.data.forEach(loc => {
+       const locations = locationData.data.data || locationData.data;
+
+locations.forEach(loc => {
             locationSelect.innerHTML += `
                 <option value="${loc.id}">
                     ${loc.site_location}

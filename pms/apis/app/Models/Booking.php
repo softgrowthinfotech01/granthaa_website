@@ -47,4 +47,9 @@ class Booking extends Model
     {
         return $this->belongsTo(User::class, 'user_code');
     }
+
+    public function location()
+{
+    return $this->belongsTo(LocationMaster::class, 'site_location', 'id');
+}
 }
