@@ -43,9 +43,10 @@
 
 <?php include 'footer.php'; ?>
 
-
 <!-- jQuery -->
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="../url.js"></script>
+
 
 <script>
 $(document).ready(function() {
@@ -126,7 +127,7 @@ $(document).ready(function() {
     `);
 });
 
-                // 🔥 Pagination
+                //  Pagination
                 let pagination = response.data;
 
                 $("#pagination").html(`
@@ -180,7 +181,7 @@ $(document).ready(function() {
 });
 
 
-// 🔥 Delete Commission
+// Delete Commission
 function deleteCommission(id) {
 
     const token = localStorage.getItem('auth_token');
@@ -188,7 +189,7 @@ function deleteCommission(id) {
     if (!confirm("Are you sure you want to delete this commission?")) return;
 
     $.ajax({
-        url: url + "commissions/" + id,
+        url: url + "commission/" + id,
         type: "DELETE",
         headers: {
             "Authorization": "Bearer " + token,

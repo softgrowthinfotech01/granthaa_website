@@ -25,7 +25,7 @@
     <!-- Phone -->
     <div>
       <label class="block text-gray-900 font-semibold mb-1">Phone Number</label>
-      <input type="text" name="phone" value=""
+      <input type="text" name="phone" value="" id="contact_no"
         class="w-full border border-gray-300 p-2 rounded-lg focus:ring-2 focus:ring-yellow-400">
     </div>
 
