@@ -90,10 +90,18 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     let currentPage = 1;
+function loadBookings(page = 1) {
 
- function loadBookings() {
+    const searchValue = document.getElementById("searchInput").value;
+    const perPage = document.getElementById("perPage").value;
 
-    fetch(`${url}bookings?per_page=1000`, {
+    let query = `?page=${page}&per_page=${perPage}`;
+
+    if (searchValue) {
+        query += `&search=${encodeURIComponent(searchValue)}`;
+    }
+
+    fetch(`${url}bookings${query}`, {
         method: "GET",
         headers: {
             "Authorization": "Bearer " + token,
@@ -103,7 +111,7 @@ document.addEventListener("DOMContentLoaded", function () {
     .then(res => res.json())
     .then(response => {
 
-        const bookings = response.data?.data ?? response.data ?? [];
+        const bookings = response.data?.data ?? [];
         const tbody = document.getElementById("customerData");
         tbody.innerHTML = "";
 
@@ -192,9 +200,9 @@ document.addEventListener("DOMContentLoaded", function () {
         loadBookings(page);
     }
 
-    document.getElementById("searchBtn").addEventListener("click", function() {
-        loadBookings(1);
-    });
+  document.getElementById("searchBtn").addEventListener("click", function() {
+    loadBookings(1);
+});
 
     document.getElementById("perPage").addEventListener("change", function() {
         loadBookings(1);
