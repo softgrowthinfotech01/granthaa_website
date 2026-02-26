@@ -163,7 +163,7 @@ class UserController extends Controller
                 'bank_branch'  => 'required|string',
                 'bank_account_no'  => 'required|string',
                 'bank_ifsc_code'  => 'required|string',
-                'pancard_number'  => 'string',
+                'pancard_number'  => 'nullable|string',
             ];
         }
 
