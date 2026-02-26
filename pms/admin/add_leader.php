@@ -29,11 +29,11 @@
                     <form class="w-full" method="post" id="userForm" enctype="multipart/form-data">
                         <div class="personal-details">
                             <h5 class="text-xl font-bold text-heading p-1">Add Leader Details</h5>
-                            <div class="grid grid-cols-2">
-                                <div class="mb-5 col-span-1 px-1">
+                            <div class="">
+                                <!-- <div class="mb-5 col-span-1 px-1">
                                     <label for="leader_code" class="block mb-2.5 text-sm font-medium text-heading">Leader Code</label>
                                     <input type="text" id="leader_code" class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body focus:outline-none focus:ring-2 focus:ring-gray-600" placeholder="Enter leader code"  />
-                                </div>
+                                </div> -->
                                 <div class="mb-5 col-span-1 px-1">
                                     <label for="name" class="block mb-2.5 text-sm font-medium text-heading">Full Name</label>
                                     <input name="name" type="text" id="name" class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" placeholder="Enter your name" required />

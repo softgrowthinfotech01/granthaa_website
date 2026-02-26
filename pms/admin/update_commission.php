@@ -25,24 +25,29 @@
                 <!--/Sidebar-->
 
                 <!--Main-->
-                <div class="w-[60%] mx-auto my-4 self-start rounded-lg bg-gray-200 p-6 border border-default rounded-base shadow-xs hover:bg-neutral-secondary-medium">
+                <div
+                    class="w-[60%] mx-auto my-4 self-start rounded-lg bg-gray-200 p-6 border border-default rounded-base shadow-xs hover:bg-neutral-secondary-medium">
                     <form class="w-full" id="updateCommissionForm">
                         <div class="personal-details">
 
                             <h5 class="text-xl font-bold text-heading p-1">Update Leader Commission</h5>
                             <div class="grid grid-cols-2">
                                 <div class="mb-5 col-span-1 px-1">
-                                    <label for="site" class="block mb-2.5 text-sm font-medium text-heading">Site Location</label>
-                                    <select id="location_id" class="block w-full px-3 py-2.5 rounded-lg bg-white border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand shadow-xs placeholder:text-body">
-                                        <option selected>Choose a site location</option>
-
+                                    <label for="site" class="block mb-2.5 text-sm font-medium text-heading">Site
+                                        Location</label>
+                                    <select id="location_id"
+                                        class="block w-full px-3 py-2.5 rounded-lg bg-gray-50 border border-default-medium text-heading text-sm focus:ring-0 focus:border-default-medium shadow-xs"
+                                        disabled>
+                                        <option selected>Loading...</option>
                                     </select>
                                 </div>
                                 <div class="mb-5 col-span-1 px-1">
-                                    <label for="leader" class="block mb-2.5 text-sm font-medium text-heading">Select Leader</label>
-                                    <select id="user_id" class="block w-full px-3 py-2.5 rounded-lg bg-white border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand shadow-xs placeholder:text-body">
-                                        <option selected>Choose a leader</option>
-
+                                    <label for="leader" class="block mb-2.5 text-sm font-medium text-heading">Select
+                                        Leader</label>
+                                    <select id="user_id"
+                                        class="block w-full px-3 py-2.5 rounded-lg bg-gray-50 border border-default-medium text-heading text-sm focus:ring-0 focus:border-default-medium shadow-xs"
+                                        disabled>
+                                        <option selected>Loading...</option>
                                     </select>
                                 </div>
                             </div>
@@ -51,12 +56,15 @@
                                     <label class="block mb-2.5 text-sm font-medium text-heading">Commission Type</label>
                                     <div class="flex gap-4">
                                         <div class="flex items-center">
-                                            <input type="radio" name="commission_type" value="percent" class="w-4 h-4" checked />
-                                            <label for="percentage" class="ml-2 text-sm font-medium text-heading">Percentage</label>
+                                            <input type="radio" name="commission_type" value="percent" class="w-4 h-4"
+                                                checked />
+                                            <label for="percentage"
+                                                class="ml-2 text-sm font-medium text-heading">Percentage</label>
                                         </div>
                                         <div class="flex items-center">
                                             <input type="radio" name="commission_type" value="amount" class="w-4 h-4" />
-                                            <label for="amount" class="ml-2 text-sm font-medium text-heading">Amount</label>
+                                            <label for="amount"
+                                                class="ml-2 text-sm font-medium text-heading">Amount</label>
                                         </div>
                                     </div>
                                 </div>
@@ -64,8 +72,11 @@
                             </div>
                             <div class="">
                                 <div class="mb-5 px-1">
-                                    <label for="commission" class="block mb-2.5 text-sm font-medium text-heading">Commission Value</label>
-                                    <input type="text" id="commission_value" class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" placeholder="Enter commission value" required />
+                                    <label for="commission"
+                                        class="block mb-2.5 text-sm font-medium text-heading">Commission Value</label>
+                                    <input type="text" id="commission_value"
+                                        class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
+                                        placeholder="Enter commission value" required />
                                 </div>
                             </div>
                         </div>
@@ -189,7 +200,7 @@
 
         // 3️⃣ Submit Update
         document.getElementById("updateCommissionForm")
-            .addEventListener("submit", async function(e) {
+            .addEventListener("submit", async function (e) {
 
                 e.preventDefault();
 
