@@ -29,7 +29,7 @@
             </tbody>
 
         </table>
-<div id="pagination"></div>
+        <div id="pagination"></div>
     </div>
 
 </div>
@@ -57,7 +57,13 @@
         function loadAdvisors(page = 1, search = '') {
 
             $.ajax({
-                url: url + "users?page=" + page + "&per_page=" + perPage + "&search=" + search,
+                url: url + "users",
+                data: {
+                    page: page,
+                    per_page: perPage,
+                    search: search,
+                    role: "adviser"
+                },
                 type: "GET",
                 headers: {
                     "Authorization": "Bearer " + token,
