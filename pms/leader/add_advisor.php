@@ -33,7 +33,7 @@
     <!-- PAN Card -->
     <div>
       <label class="block text-gray-900 font-semibold mb-1">PAN Card Number</label>
-      <input type="text" name="pan" placeholder="ABCDE1234F" required
+      <input type="text" name="pancard_number" placeholder="ABCDE1234F" required
         class="w-full border border-gray-300 p-2 rounded-lg uppercase focus:outline-none focus:ring-2 focus:ring-yellow-400">
     </div>
     <div>
