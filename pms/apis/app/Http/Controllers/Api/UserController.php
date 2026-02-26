@@ -163,7 +163,7 @@ class UserController extends Controller
                 'bank_branch'  => 'required|string',
                 'bank_account_no'  => 'required|string',
                 'bank_ifsc_code'  => 'required|string',
-                'pancard_number'  => 'string',
+                'pancard_number'  => 'nullable|string',
             ];
         }
 
@@ -199,6 +199,7 @@ class UserController extends Controller
             'bank_branch'  => $validated['bank_branch'] ?? null,
             'bank_account_no'  => $validated['bank_account_no'] ?? null,
             'bank_ifsc_code'  => $validated['bank_ifsc_code'] ?? null,
+            'pancard_number'  => $validated['pancard_number'] ?? null,
             'created_by'   => $auth->id,
         ]);
 
@@ -283,9 +284,9 @@ class UserController extends Controller
 
         // Admin can update anyone
         // Others can update only their created users
-        if ($auth->role !== 'admin' && $user->created_by !== $auth->id) {
-            return response()->json(['message' => 'Unauthorized'], 403);
-        }
+        if (!in_array($auth->role, ['admin', 'leader'])) {
+    return response()->json(['message' => 'Unauthorized'], 403);
+}
 
         $rules = [
             'name' => 'sometimes|required|string|max:200',

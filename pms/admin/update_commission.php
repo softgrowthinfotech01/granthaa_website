@@ -34,7 +34,7 @@
                             <div class="grid grid-cols-2">
                                 <div class="mb-5 col-span-1 px-1">
                                     <label for="site" class="block mb-2.5 text-sm font-medium text-heading">Site
-                                        Location</label>
+                                        Location <span style="color: red;">(readonly)</span></label>
                                     <select id="location_id"
                                         class="block w-full px-3 py-2.5 rounded-lg bg-gray-50 border border-default-medium text-heading text-sm focus:ring-0 focus:border-default-medium shadow-xs"
                                         disabled>
@@ -43,7 +43,7 @@
                                 </div>
                                 <div class="mb-5 col-span-1 px-1">
                                     <label for="leader" class="block mb-2.5 text-sm font-medium text-heading">Select
-                                        Leader</label>
+                                        Leader <span style="color: red;">(readonly)</span></label>
                                     <select id="user_id"
                                         class="block w-full px-3 py-2.5 rounded-lg bg-gray-50 border border-default-medium text-heading text-sm focus:ring-0 focus:border-default-medium shadow-xs"
                                         disabled>
