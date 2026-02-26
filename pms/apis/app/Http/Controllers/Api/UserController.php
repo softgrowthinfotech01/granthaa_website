@@ -199,6 +199,7 @@ class UserController extends Controller
             'bank_branch'  => $validated['bank_branch'] ?? null,
             'bank_account_no'  => $validated['bank_account_no'] ?? null,
             'bank_ifsc_code'  => $validated['bank_ifsc_code'] ?? null,
+            'pancard_number'  => $validated['pancard_number'] ?? null,
             'created_by'   => $auth->id,
         ]);
 

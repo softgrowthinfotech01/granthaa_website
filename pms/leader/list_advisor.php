@@ -113,7 +113,7 @@
                     `);
                     });
 
-                    // 🔥 Pagination Controls
+                    // Pagination Controls
                     $("#pagination").html(`
                     <div class="flex justify-between items-center mt-4">
                         <button ${pagination.current_page == 1 ? 'disabled' : ''}

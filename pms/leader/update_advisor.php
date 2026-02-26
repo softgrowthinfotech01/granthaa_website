@@ -17,14 +17,14 @@
 
     <!-- Email -->
     <div>
-      <label class="block text-gray-900 font-semibold mb-1">Email</label>
+      <label class="block text-gray-900 font-semibold mb-1">Email <span style="color: red;">(readonly)</span></label>
       <input type="email" name="email" value="" id="email"
         class="w-full border border-gray-300 p-2 rounded-lg focus:ring-2 focus:ring-yellow-400" readonly>
     </div>
 
     <!-- Full Name -->
     <div>
-      <label class="block text-gray-900 font-semibold mb-1">Full Name</label>
+      <label class="block text-gray-900 font-semibold mb-1">Full Name <span style="color: red;">(readonly)</span></label>
       <input type="text" name="name" value="" id="name"
         class="w-full border border-gray-300 p-2 rounded-lg focus:ring-2 focus:ring-yellow-400" readonly>
     </div>
