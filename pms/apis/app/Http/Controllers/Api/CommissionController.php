@@ -170,40 +170,33 @@ public function index(Request $request)
     ]);
 }
 
-    public function myCommissions(Request $request)
+    public function myCommissions()
 {
-    $auth = auth()->user();
+    $user = auth()->user();
 
-    if (!$auth) {
-        return response()->json([
-            'message' => 'Unauthenticated'
-        ], 401);
+    // ✅ Leader → commissions assigned by him
+    if ($user->role === 'leader') {
+
+        $commissions = \App\Models\Commission::with('location')
+            ->where('created_by', $user->id)
+            ->get();
     }
 
-    $query = UserLocationCommission::with('location')
-        ->where('user_id', $auth->id);
+    // ✅ Adviser → commissions assigned TO him
+    elseif ($user->role === 'adviser') {
 
-    // Filter by commission type
-    if ($request->filled('commission_type')) {
-        $query->where('commission_type', $request->commission_type);
+        $commissions = \App\Models\Commission::with('location')
+            ->where('user_id', $user->id)
+            ->get();
     }
 
-    // Date filter
-    if ($request->filled('from_date') && $request->filled('to_date')) {
-        $query->whereBetween('created_at', [
-            $request->from_date,
-            $request->to_date
-        ]);
+    // ✅ Admin → optional
+    else {
+        $commissions = \App\Models\Commission::with('location')->get();
     }
-
-    $perPage = $request->per_page ?? 10;
-
-    $commissions = $query->latest()
-                         ->paginate($perPage)
-                         ->withQueryString();
 
     return response()->json([
-        'message' => 'Fetched successfully',
+        'status' => true,
         'data' => $commissions
     ]);
 }
