@@ -38,85 +38,89 @@ class BookingController extends Controller
     }
 
     public function store(Request $request)
-    {
-        $request->validate([
-            'buyer_name' => 'required',
-            'mobile' => 'required',
-            'email' => 'required|email|unique:users,email',
-            'pan_number' => 'required',
-            'aadhar_number' => 'required',
-            'address' => 'required',
-            'plot_number' => 'required',
+{
+    $request->validate([
+        'buyer_name' => 'required',
+        'mobile' => 'required',
+        'email' => 'required|email|unique:users,email',
+        'pan_number' => 'required',
+        'aadhar_number' => 'required',
+        'address' => 'required',
+        'plot_number' => 'required',
+    ]);
+
+    $authUser = auth()->user(); // ✅ leader OR advisor
+
+    $userCode = $this->generateUserCode('customer');
+
+    try {
+
+        $booking = DB::transaction(function () use ($request, $authUser, $userCode) {
+
+            // ✅ Create Customer
+            $newUser = User::create([
+                'user_code' => $userCode,
+                'name' => $request->buyer_name,
+                'email' => $request->email,
+                'password' => Hash::make('password'),
+                'role' => 'customer',
+                'contact_no' => $request->mobile,
+                'city' => $request->city,
+                'state' => $request->state,
+                'address' => $request->address,
+                'pin_code' => $request->pincode,
+                'created_by' => $authUser->id
+            ]);
+
+            // ✅ Booking created by whoever logged in
+            return Booking::create([
+                'user_id' => $newUser->id,
+                'user_code' => $authUser->user_code,
+                'created_by' => $authUser->id,
+
+                'buyer_name' => $request->buyer_name,
+                'mobile' => $request->mobile,
+                'dob' => $request->dob,
+                'email' => $request->email,
+                'city' => $request->city,
+                'state' => $request->state,
+                'pincode' => $request->pincode,
+                'pan_number' => $request->pan_number,
+                'aadhar_number' => $request->aadhar_number,
+                'address' => $request->address,
+
+                'advance_amount' => $request->advance_amount,
+                'site_location' => $request->site_location,
+                'commission_type' => $request->commission_type,
+                'project_name' => $request->project_name,
+                'plot_number' => $request->plot_number,
+                'khasara_number' => $request->khasara_number,
+                'ph_number' => $request->ph_number,
+                'mouza' => $request->mouza,
+                'tahsil' => $request->tahsil,
+                'district' => $request->district,
+                'square_feet' => $request->square_feet,
+                'square_meter' => $request->square_meter,
+                'total_booking_amount' => $request->total_booking_amount,
+                'payment_mode' => $request->payment_mode,
+                'remark' => $request->remark
+            ]);
+        });
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Booking created successfully',
+            'data' => $booking
         ]);
 
-        $leader = auth()->user();
-        $userCode = $this->generateUserCode('customer');
-        // print_r($userCode);exit;
-        try {
+    } catch (\Exception $e) {
 
-            $booking = DB::transaction(function () use ($request, $leader, $userCode) {
-
-                // 1️⃣ Create Customer
-                $newUser = User::create([
-                    'user_code' => $userCode,
-                    'name' => $request->buyer_name,
-                    'email' => $request->email,
-                    'password' => Hash::make($request->password ?? 'password'),
-                    'role' => 'customer',
-                    'contact_no' => $request->mobile,
-                    'city' => $request->city,
-                    'state' => $request->state,
-                    'address' => $request->address,
-                    'pin_code' => $request->pincode,
-                    'created_by' => $leader->id
-                ]);
-
-                // 2️⃣ Create Booking
-                return Booking::create([
-                    'user_id' => $newUser->id,
-                    'user_code' => $leader->user_code,
-                    'buyer_name' => $request->buyer_name,
-                    'mobile' => $request->mobile,
-                    'dob' => $request->dob,
-                    'email' => $request->email,
-                    'city' => $request->city,
-                    'state' => $request->state,
-                    'pincode' => $request->pincode,
-                    'pan_number' => $request->pan_number,
-                    'aadhar_number' => $request->aadhar_number,
-                    'address' => $request->address,
-                    'created_by' => $leader->id,
-                    'advance_amount' => $request->advance_amount,
-                    'site_location' => $request->site_location,
-                    'commission_type' => $request->commission_type,
-                    'project_name' => $request->project_name,
-                    'plot_number' => $request->plot_number,
-                    'khasara_number' => $request->khasara_number,
-                    'ph_number' => $request->ph_number,
-                    'mouza' => $request->mouza,
-                    'tahsil' => $request->tahsil,
-                    'district' => $request->district,
-                    'square_feet' => $request->square_feet,
-                    'square_meter' => $request->square_meter,
-                    'total_booking_amount' => $request->total_booking_amount,
-                    'payment_mode' => $request->payment_mode,
-                    'remark' => $request->remark
-                ]);
-            });
-
-            return response()->json([
-                'status' => true,
-                'message' => 'Customer and Booking created successfully',
-                'data' => $booking
-            ]);
-        } catch (\Exception $e) {
-
-            return response()->json([
-                'status' => false,
-                'error' => $e->getMessage()
-            ], 500);
-        }
+        return response()->json([
+            'status' => false,
+            'error' => $e->getMessage()
+        ], 500);
     }
+}
     public function index(Request $request)
     {
         $user = auth()->user();
