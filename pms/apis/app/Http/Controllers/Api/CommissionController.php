@@ -14,12 +14,12 @@ class CommissionController extends Controller
     public function setCommission(Request $request)
     {
         $auth = auth()->user();
-            if (!$auth || !in_array($auth->role, ['admin', 'leader'])) {
-                return response()->json([
-                    'message' => 'Only admin or leader can set commission'
-                ], 403);
-            }
-            
+        if (!$auth || !in_array($auth->role, ['admin', 'leader'])) {
+            return response()->json([
+                'message' => 'Only admin or leader can set commission'
+            ], 403);
+        }
+
         $validated = $request->validate([
             'user_id' => 'required|exists:users,id',
             'location_id' => 'required|exists:location_master,id',
@@ -65,72 +65,72 @@ class CommissionController extends Controller
     /**
      * View all commissions (Admin)
      */
-public function index(Request $request)
-{
-    $auth = auth()->user();
+    public function index(Request $request)
+    {
+        $auth = auth()->user();
 
-    if (!$auth || !in_array($auth->role, ['admin', 'leader'])) {
-        return response()->json([
-            'message' => 'Only admin or leader can view commissions'
-        ], 403);
-    }
+        if (!$auth || !in_array($auth->role, ['admin', 'leader'])) {
+            return response()->json([
+                'message' => 'Only admin or leader can view commissions'
+            ], 403);
+        }
 
-    $query = UserLocationCommission::with(['user', 'location']);
+        $query = UserLocationCommission::with(['user', 'location']);
 
-    // 🔐 Leader can only see commissions of users created by them
-    if ($auth->role === 'leader') {
-        $userIds = User::where('created_by', $auth->id)->pluck('id');
-        $query->whereIn('user_id', $userIds);
-    }
+        // 🔐 Leader can only see commissions of users created by them
+        if ($auth->role === 'leader') {
+            $userIds = User::where('created_by', $auth->id)->pluck('id');
+            $query->whereIn('user_id', $userIds);
+        }
 
-    // 🔎 Search (by user name or location name)
-    if ($request->filled('search')) {
-        $search = $request->search;
+        // 🔎 Search (by user name or location name)
+        if ($request->filled('search')) {
+            $search = $request->search;
 
-        $query->where(function ($q) use ($search) {
-            $q->whereHas('user', function ($u) use ($search) {
-                $u->where('name', 'like', "%{$search}%");
-            })
-            ->orWhereHas('location', function ($l) use ($search) {
-                $l->where('site_location', 'like', "%{$search}%");
+            $query->where(function ($q) use ($search) {
+                $q->whereHas('user', function ($u) use ($search) {
+                    $u->where('name', 'like', "%{$search}%");
+                })
+                    ->orWhereHas('location', function ($l) use ($search) {
+                        $l->where('site_location', 'like', "%{$search}%");
+                    });
             });
-        });
-    }
+        }
 
-    // 🎯 Filter by user
-    if ($request->filled('user_id')) {
-        $query->where('user_id', $request->user_id);
-    }
+        // 🎯 Filter by user
+        if ($request->filled('user_id')) {
+            $query->where('user_id', $request->user_id);
+        }
 
-    // 📍 Filter by location
-    if ($request->filled('location_id')) {
-        $query->where('location_id', $request->location_id);
-    }
+        // 📍 Filter by location
+        if ($request->filled('location_id')) {
+            $query->where('location_id', $request->location_id);
+        }
 
-    // 💰 Filter by commission type
-    if ($request->filled('commission_type')) {
-        $query->where('commission_type', $request->commission_type);
-    }
+        // 💰 Filter by commission type
+        if ($request->filled('commission_type')) {
+            $query->where('commission_type', $request->commission_type);
+        }
 
-    // 📅 Date range filter
-    if ($request->filled('from_date') && $request->filled('to_date')) {
-        $query->whereBetween('created_at', [
-            $request->from_date,
-            $request->to_date
+        // 📅 Date range filter
+        if ($request->filled('from_date') && $request->filled('to_date')) {
+            $query->whereBetween('created_at', [
+                $request->from_date,
+                $request->to_date
+            ]);
+        }
+
+        $perPage = $request->per_page ?? 10;
+
+        $commissions = $query->latest()
+            ->paginate($perPage)
+            ->withQueryString();
+
+        return response()->json([
+            'message' => 'Fetched successfully',
+            'data' => $commissions
         ]);
     }
-
-    $perPage = $request->per_page ?? 10;
-
-    $commissions = $query->latest()
-                         ->paginate($perPage)
-                         ->withQueryString();
-
-    return response()->json([
-        'message' => 'Fetched successfully',
-        'data' => $commissions
-    ]);
-}
 
     public function getByUser(Request $request, $userId)
 {
@@ -210,7 +210,86 @@ public function index(Request $request)
 
         if (!$auth || $auth->role !== 'admin') {
             return response()->json([
-                'message' => 'Only admin can update commission'
+                'message' => 'Only admin allowed'
+            ], 403);
+        }
+
+        $query = UserLocationCommission::with('location')
+            ->where('user_id', $userId);
+
+        // Filter by commission type
+        if ($request->filled('commission_type')) {
+            $query->where('commission_type', $request->commission_type);
+        }
+
+        // Date filter
+        if ($request->filled('from_date') && $request->filled('to_date')) {
+            $query->whereBetween('created_at', [
+                $request->from_date,
+                $request->to_date
+            ]);
+        }
+
+        $perPage = $request->per_page ?? 10;
+
+        $commissions = $query->latest()
+            ->paginate($perPage)
+            ->withQueryString();
+
+        return response()->json([
+            'message' => 'Fetched successfully',
+            'data' => $commissions
+        ]);
+    }
+
+    public function myCommissions(Request $request)
+    {
+        $auth = auth()->user();
+
+        if (!$auth) {
+            return response()->json([
+                'message' => 'Unauthenticated'
+            ], 401);
+        }
+
+        $query = UserLocationCommission::with('location')
+            ->where('user_id', $auth->id);
+
+        // Filter by commission type
+        if ($request->filled('commission_type')) {
+            $query->where('commission_type', $request->commission_type);
+        }
+
+        // Date filter
+        if ($request->filled('from_date') && $request->filled('to_date')) {
+            $query->whereBetween('created_at', [
+                $request->from_date,
+                $request->to_date
+            ]);
+        }
+
+        $perPage = $request->per_page ?? 10;
+
+        $commissions = $query->latest()
+            ->paginate($perPage)
+            ->withQueryString();
+
+        return response()->json([
+            'message' => 'Fetched successfully',
+            'data' => $commissions
+        ]);
+    }
+
+    /**
+     * Update Commission (Admin and Leader Only)
+     */
+    public function updateCommission(Request $request, $id)
+    {
+        $auth = auth()->user();
+
+        if (!$auth || !in_array($auth->role, ['admin', 'leader'])) {
+            return response()->json([
+                'message' => 'Only admin or leader can update commission'
             ], 403);
         }
 
@@ -246,9 +325,10 @@ public function index(Request $request)
         ], 200);
     }
 
-    
-public function show($id){
-    $auth = auth()->user();
+
+    public function show($id)
+    {
+        $auth = auth()->user();
 
         if (!$auth || !in_array($auth->role, ['admin', 'leader'])) {
             return response()->json([
@@ -263,13 +343,12 @@ public function show($id){
                 'message' => 'Commission not found'
             ], 404);
         }
- 
-        return response()->json([
-        'message' => 'Fetched successfully',
-        'data' => $commission
-    ]);
 
-}
+        return response()->json([
+            'message' => 'Fetched successfully',
+            'data' => $commission
+        ]);
+    }
 
     /**
      * Delete Commission (Admin Only)
