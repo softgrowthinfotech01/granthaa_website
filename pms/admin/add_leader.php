@@ -50,14 +50,13 @@
                                         <option selected>Choose a gender</option>
                                         <option value="male">Male</option>
                                         <option value="female">Female</option>
-                                        <option value="others">Others</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="">
                                 <div class="mb-5 px-1">
                                     <label class="block mb-2.5 text-sm font-medium text-heading" for="file_input">Upload Image</label>
-                                    <input name="image" class="rounded-lg cursor-pointer bg-white border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full shadow-xs placeholder:text-body" id="file_input" type="file">
+                                    <input name="image" accept=".jpg,.jpeg,.png" class="rounded-lg cursor-pointer bg-white border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full shadow-xs placeholder:text-body" id="file_input" type="file">
                                 </div>
                             </div>
                         </div>
@@ -147,7 +146,7 @@
     <script>
         document.addEventListener("DOMContentLoaded", function() {
 
-            const form = document.querySelector("form");
+            const form = document.querySelector("userform");
             const emailInput = document.getElementById("email");
 
             form.addEventListener("submit", function(e) {
@@ -171,6 +170,8 @@
     </script>
 
 
+
+
     <script>
         function confirmReset() {
             if (confirm("Clear all entered data?")) {
@@ -183,6 +184,28 @@
     <script src="../url.js"></script>
     <script>
         document.getElementById("userForm").addEventListener("submit", async function(e) {
+
+            // ✅ Image Validation (JPG, JPEG, PNG, Max 5MB)
+            const fileInput = document.getElementById("file_input");
+            const file = fileInput.files[0];
+
+            if (file) {
+
+                const allowedTypes = ["image/jpeg", "image/png"];
+
+                if (!allowedTypes.includes(file.type)) {
+                    alert("Only JPG, JPEG and PNG files are allowed.");
+                    return;
+                }
+
+                const maxSize = 2 * 1024 * 1024; // 2MB
+
+                if (file.size > maxSize) {
+                    alert("Image size must be less than 2MB.");
+                    return;
+                }
+            }
+
             e.preventDefault();
 
             const token = localStorage.getItem('auth_token');
