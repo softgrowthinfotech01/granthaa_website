@@ -42,10 +42,10 @@
                             <div class="grid grid-cols-2">
                                 <div class="mb-5 col-span-1 px-1">
                                     <label for="age" class="block mb-2.5 text-sm font-medium text-heading">Age</label>
-                                    <input name="age" type="number" id="age" class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" placeholder="Enter your age" required />
+                                    <input name="age" type="number" maxlength="2" pattern="[0-9]{2}" inputmode="numeric" id="age" class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" placeholder="Enter your age" required />
                                 </div>
                                 <div class="mb-5 col-span-1 px-1">
-                                    <label  for="gender" class="block mb-2.5 text-sm font-medium text-heading">Gender</label>
+                                    <label for="gender" class="block mb-2.5 text-sm font-medium text-heading">Gender</label>
                                     <select name="gender" id="gender" class="block w-full px-3 py-2.5 rounded-lg bg-white border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand shadow-xs placeholder:text-body">
                                         <option selected>Choose a gender</option>
                                         <option value="male">Male</option>
@@ -64,12 +64,12 @@
                         <hr class="border-white-300 mb-3">
                         <div class="contact-details">
                             <h5 class="text-xl font-bold text-heading p-1">Contact Details</h5>
-                        
-                                                        <div class="grid grid-cols-2">
+
+                            <div class="grid grid-cols-2">
                                 <div class="mb-5 col-span-1 px-1">
                                     <label for="mobile" class="block mb-2.5 text-sm font-medium text-heading">Mobile Number</label>
-                                    <input name="contact_no"  type="tel" maxlength="10" pattern="[0-9]{10}" inputmode="numeric" id="mobile" 
-                                    class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" placeholder="Enter your mobile number" required />
+                                    <input name="contact_no" type="tel" maxlength="10" pattern="[0-9]{10}" inputmode="numeric" id="mobile"
+                                        class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" placeholder="Enter your mobile number" required />
                                 </div>
                                 <div class="mb-5 col-span-1 px-1">
                                     <label for="email" class="block mb-2.5 text-sm font-medium text-heading">Email</label>
@@ -90,42 +90,42 @@
                                 <div class="grid grid-cols-2">
                                     <div class="mb-5 col-span-1 px-1">
                                         <label for="address" class="block mb-2.5 text-sm font-medium text-heading">Address</label>
-                                        <input name="address"  type="textarea" id="address" class="rounded-lg bg-white border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" placeholder="Enter your address" required />
+                                        <input name="address" type="textarea" id="address" class="rounded-lg bg-white border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" placeholder="Enter your address" required />
                                     </div>
                                     <div class="mb-5 col-span-1 px-1">
                                         <label for="pincode" class="block mb-2.5 text-sm font-medium text-heading">Pincode</label>
-                                        <input name="pin_code"  type="text" maxlength="6" inputmode="numeric" pattern="[0-9]{6}" id="pincode"
-                                         class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" placeholder="Enter your pincode" required />
+                                        <input name="pin_code" type="number" maxlength="6" inputmode="numeric" pattern="[0-9]{6}" id="pincode"
+                                            class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" placeholder="Enter your pincode" required />
                                     </div>
                                 </div>
                             </div>
                         </div>
-                         <hr class="border-white-300 mb-3">
+                        <hr class="border-white-300 mb-3">
                         <div class="contact-details">
                             <h5 class="text-xl font-bold text-heading p-1">Bank Details</h5>
                             <div class="grid grid-cols-2">
                                 <div class="mb-5 col-span-1 px-1">
                                     <label for="bank_name" class="block mb-2.5 text-sm font-medium text-heading">Bank Name</label>
-                                    <input name="bank_name"  type="text" id="bank_name" class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" placeholder="Enter your bank name" required />
+                                    <input name="bank_name" type="text" id="bank_name" class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" placeholder="Enter your bank name" required />
                                 </div>
                                 <div class="mb-5 col-span-1 px-1">
                                     <label for="branch" class="block mb-2.5 text-sm font-medium text-heading">Branch</label>
-                                    <input name="bank_branch"  type="text" id="branch" class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" placeholder="Enter your branch name" required />
+                                    <input name="bank_branch" type="text" id="branch" class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" placeholder="Enter your branch name" required />
                                 </div>
-                               
+
                             </div>
                             <div class="grid grid-cols-2">
-                                 <div class="mb-5 col-span-1 px-1">
+                                <div class="mb-5 col-span-1 px-1">
                                     <label for="account_number" class="block mb-2.5 text-sm font-medium text-heading">Account Number</label>
-                                    <input name="bank_account_no"  type="number" id="account_number" class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" placeholder="Enter your account number" required />
+                                    <input name="bank_account_no" type="number" id="account_number" class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" placeholder="Enter your account number" required />
                                 </div>
                                 <div class="mb-5 col-span-1 px-1">
                                     <label for="ifsc_code" class="block mb-2.5 text-sm font-medium text-heading">IFSC Code</label>
                                     <input name="bank_ifsc_code" type="text" id="ifsc_code" class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" placeholder="Enter your IFSC code" required />
                                 </div>
-                              
+
                             </div>
-                            
+
                         </div>
                         <hr class="border-white-300 mb-3">
                         <div class="flex justify-center gap-2">
@@ -143,85 +143,112 @@
 
     </div>
 
+    <!-- Email Validation -->
     <script>
-function confirmReset() {
-    if (confirm("Clear all entered data?")) {
-        document.querySelector("form").reset();
-    }
-}
+        document.addEventListener("DOMContentLoaded", function() {
 
-console.log("Add Leader page loaded");
-</script>
-<script src="../url.js"></script>
-<script>
-document.getElementById("userForm").addEventListener("submit", async function(e) {
-    e.preventDefault();
+            const form = document.querySelector("form");
+            const emailInput = document.getElementById("email");
 
-    const token = localStorage.getItem('auth_token');
-    const user = JSON.parse(localStorage.getItem('auth_user'));
-    if (!token || !user) {
-        alert("Please login first");
-        window.location.href = "../login";
-        return;
-    }
+            form.addEventListener("submit", function(e) {
 
-    if (user.role !== "admin") {
-        alert("You are not allowed to create leader");
-        return;
-    }
+                const email = emailInput.value.trim();
 
-    let form = document.getElementById("userForm");
-    let formData = new FormData(form);
-// alert(formData);
-// 🔥 FORCE VALUES
-    formData.set("role", "leader");
-    formData.set("password", "password123"); // static password
-    formData.set("created_by", user.id);     // admin id
-    try {
-        const response = await fetch(url + "users", {
-            method: "POST",
-            headers: {
-                "Authorization": "Bearer " + token,
-                "Accept": "application/json"
-            },
-            body: formData
-        });
+                // Simple email regex
+                const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-        const data = await response.json();
-
-        if (!response.ok) {
-            // Laravel validation errors
-            if (data.errors) {
-                let errorMessages = "";
-                for (let field in data.errors) {
-                    errorMessages += data.errors[field][0] + "\n";
+                if (!emailPattern.test(email)) {
+                    e.preventDefault();
+                    emailInput.setCustomValidity("Enter a valid email (must contain @ and .)");
+                    emailInput.reportValidity();
+                } else {
+                    emailInput.setCustomValidity("");
                 }
-                alert("Validation Errors:\n\n" + errorMessages);
-            } else {
-                alert(data.message || "Something went wrong");
+
+            });
+
+        });
+    </script>
+
+
+    <script>
+        function confirmReset() {
+            if (confirm("Clear all entered data?")) {
+                document.querySelector("form").reset();
             }
-            return;
         }
 
-        // ✅ SUCCESS ALERT
-        alert("✅ " + data.message);
+        console.log("Add Leader page loaded");
+    </script>
+    <script src="../url.js"></script>
+    <script>
+        document.getElementById("userForm").addEventListener("submit", async function(e) {
+            e.preventDefault();
 
-        // Optional: reset form after success
-        form.reset();
+            const token = localStorage.getItem('auth_token');
+            const user = JSON.parse(localStorage.getItem('auth_user'));
+            if (!token || !user) {
+                alert("Please login first");
+                window.location.href = "../login";
+                return;
+            }
 
-    } catch (error) {
-        console.error(error);
-        alert("Server error occurred");
-    }
-});
+            if (user.role !== "admin") {
+                alert("You are not allowed to create leader");
+                return;
+            }
 
-</script>
+            let form = document.getElementById("userForm");
+            let formData = new FormData(form);
+            // alert(formData);
+            // 🔥 FORCE VALUES
+            formData.set("role", "leader");
+            formData.set("password", "password123"); // static password
+            formData.set("created_by", user.id); // admin id
+            try {
+                const response = await fetch(url + "users", {
+                    method: "POST",
+                    headers: {
+                        "Authorization": "Bearer " + token,
+                        "Accept": "application/json"
+                    },
+                    body: formData
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    // Laravel validation errors
+                    if (data.errors) {
+                        let errorMessages = "";
+                        for (let field in data.errors) {
+                            errorMessages += data.errors[field][0] + "\n";
+                        }
+                        alert("Validation Errors:\n\n" + errorMessages);
+                    } else {
+                        alert(data.message || "Something went wrong");
+                    }
+                    return;
+                }
+
+                // ✅ SUCCESS ALERT
+                alert("✅ " + data.message);
+
+                // Optional: reset form after success
+                form.reset();
+
+            } catch (error) {
+                console.error(error);
+                alert("Server error occurred");
+            }
+        });
+    </script>
 
     <script src="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.js"></script>
 
 
 
-       <script src="../url.js"></script>
+    <script src="../url.js"></script>
 
     <script>
         document.getElementById('leaderForm').addEventListener('submit', async function(e) {
@@ -243,24 +270,24 @@ document.getElementById("userForm").addEventListener("submit", async function(e)
             }
 
             const name = document.getElementById('name').value.trim();
-            const password = 'password'; 
+            const password = 'password';
             const leader_code = document.getElementById('leader_code').value.trim();
             const age = document.getElementById('age').value.trim();
             const gender = document.getElementById('gender').value.trim();
             const mobile = document.getElementById('mobile').value.trim();
             const email = document.getElementById('email').value.trim();
             const city = document.getElementById('city').value.trim();
-            const state = document.getElementById('state').value.trim();    
-                const address = document.getElementById('address').value.trim();
-                const pincode = document.getElementById('pincode').value.trim();
-                const fileInput = document.getElementById('file_input');
-                // const bankName = document.getElementById('bank_name').value.trim();
-                // const branch = document.getElementById('branch').value.trim();
-                // const accountNumber = document.getElementById('account_number').value.trim();
-                // const ifscCode = document.getElementById('ifsc_code').value.trim();
-     
+            const state = document.getElementById('state').value.trim();
+            const address = document.getElementById('address').value.trim();
+            const pincode = document.getElementById('pincode').value.trim();
+            const fileInput = document.getElementById('file_input');
+            // const bankName = document.getElementById('bank_name').value.trim();
+            // const branch = document.getElementById('branch').value.trim();
+            // const accountNumber = document.getElementById('account_number').value.trim();
+            // const ifscCode = document.getElementById('ifsc_code').value.trim();
 
-           
+
+
 
             try {
                 const response = await fetch(url + 'users', {
@@ -270,18 +297,18 @@ document.getElementById("userForm").addEventListener("submit", async function(e)
                         'Authorization': 'Bearer ' + token
                     },
                     body: JSON.stringify({
-                        first_name:name,
-                        last_name:"aryan",
-                        email:email,
-                        password:password,
-                        role:"leader",
-                        age:age,
-                        gender:gender,
-                        contact_no:mobile,
-                        city:city,
-                        state:state,
-                        address:address,
-                        pin_code:pincode
+                        first_name: name,
+                        last_name: "aryan",
+                        email: email,
+                        password: password,
+                        role: "leader",
+                        age: age,
+                        gender: gender,
+                        contact_no: mobile,
+                        city: city,
+                        state: state,
+                        address: address,
+                        pin_code: pincode
                     })
                 });
 
@@ -301,6 +328,7 @@ document.getElementById("userForm").addEventListener("submit", async function(e)
             }
         });
     </script>
+
 
 </body>
 
