@@ -76,17 +76,15 @@
         advisors.forEach(function(advisor) {
 
           table.row.add([
-            advisor.user_code ?? '',
-            advisor.name ?? '',
-            advisor.contact_no ?? '',
-            advisor.address ?? '',
+            advisor.user_code ?? '-',
+            advisor.name ?? '-',
+            advisor.address ?? '-',
+            advisor.total_deals ?? '-',
             `<span class="px-3 py-1 rounded-full bg-gray-100 text-gray-700 text-xs font-semibold">
-                        ${advisor.pancard_number ?? ''}
+                        ${advisor.total_booking_amount ?? '00.0'}
                     </span>`,
-            advisor.bank_name ?? '',
-            advisor.bank_account_no ?? '',
             `<span class="px-3 py-1 rounded-full bg-blue-50 text-blue-600 text-xs font-semibold">
-                        ${advisor.bank_ifsc_code ?? ''}
+                        ${advisor.bank_ifsc_code ?? '-'}
                     </span>`,
             `
                     <div class="flex flex-col sm:flex-row gap-2 justify-center">
