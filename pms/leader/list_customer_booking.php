@@ -2,47 +2,47 @@
 
 <div class="max-w-7xl mx-auto bg-white p-4 rounded-2xl shadow-xl">
 
-  <h2 class="text-2xl font-bold mb-4 text-center">Customer and Plot Details</h2>
+    <h2 class="text-2xl font-bold mb-4 text-center">Customer and Plot Details</h2>
 
-  <!-- Horizontal scroll wrapper -->
-  <div class="w-full overflow-x-auto">
-<div class="flex flex-wrap gap-3 mb-4">
+    <!-- Horizontal scroll wrapper -->
+    <div class="w-full overflow-x-auto">
+        <div class="flex flex-wrap gap-3 mb-4">
 
-    <input type="text" id="searchInput" 
-           placeholder="Search buyer / project / mobile"
-           class="border p-2 rounded w-64">
+            <input type="text" id="searchInput"
+                placeholder="Search buyer / project / mobile"
+                class="border p-2 rounded w-64">
 
-    <button id="searchBtn"
-            class="bg-blue-500 text-white px-4 rounded">
-        Search
-    </button>
+            <button id="searchBtn"
+                class="bg-blue-500 text-white px-4 rounded">
+                Search
+            </button>
 
-    <select id="perPage" class="border p-2 rounded">
-        <option value="10">10</option>
-        <option value="25">25</option>
-        <option value="50">50</option>
-    </select>
+            <select id="perPage" class="border p-2 rounded">
+                <option value="10">10</option>
+                <option value="25">25</option>
+                <option value="50">50</option>
+            </select>
 
-</div>
+        </div>
 
-    <table id="example" class="" style="width:100%; padding-top: 1em;  padding-bottom: 1em;">
+        <table id="example" class="" style="width:100%; padding-top: 1em;  padding-bottom: 1em;">
 
-      <thead class="bg-gradient-to-r from-gray-100 to-gray-200 text-gray-700">
-        <tr>
-          <!-- <th class="p-3 font-semibold text-left">ID</th> -->
-          <th data-priority="1" class="p-3 font-semibold text-left"></th>
-          <th data-priority="2" class="p-3 font-semibold text-left">Buyer Name</th>
-          <th data-priority="3" class="p-3 font-semibold text-left">Phone</th>
-          <th data-priority="4" class="p-3 font-semibold text-left">DOB</th>
-          <th data-priority="5" class="p-3 font-semibold text-left">Email</th>
-          <th data-priority="6" class="p-3 font-semibold text-left">PAN No.</th>
-          <th data-priority="7" class="p-3 font-semibold text-left">Aadhar No.</th>
-          <th data-priority="8" class="p-3 font-semibold text-left">Address</th>
-          <th data-priority="9" class="p-3 font-semibold text-left">City</th>
-          <th data-priority="10" class="p-3 font-semibold text-left">State</th>
-          <th data-priority="11" class="p-3 font-semibold text-left">Pin code</th>
-          <th data-priority="12" class="p-3 font-semibold text-left">Action</th>
-          <!-- <th data-priority="13" class="p-3 font-semibold text-left">Site Location</th>
+            <thead class="bg-gradient-to-r from-gray-100 to-gray-200 text-gray-700">
+                <tr>
+                    <!-- <th class="p-3 font-semibold text-left">ID</th> -->
+                    <th data-priority="1" class="p-3 font-semibold text-left"></th>
+                    <th data-priority="2" class="p-3 font-semibold text-left">Buyer Name</th>
+                    <th data-priority="3" class="p-3 font-semibold text-left">Phone</th>
+                    <th data-priority="4" class="p-3 font-semibold text-left">DOB</th>
+                    <th data-priority="5" class="p-3 font-semibold text-left">Email</th>
+                    <th data-priority="6" class="p-3 font-semibold text-left">PAN No.</th>
+                    <th data-priority="7" class="p-3 font-semibold text-left">Aadhar No.</th>
+                    <th data-priority="8" class="p-3 font-semibold text-left">Address</th>
+                    <th data-priority="9" class="p-3 font-semibold text-left">City</th>
+                    <th data-priority="10" class="p-3 font-semibold text-left">State</th>
+                    <th data-priority="11" class="p-3 font-semibold text-left">Pin code</th>
+                    <th data-priority="12" class="p-3 font-semibold text-left">Action</th>
+                    <!-- <th data-priority="13" class="p-3 font-semibold text-left">Site Location</th>
           <th data-priority="14" class="p-3 font-semibold text-left">Commission Type</th>
           <th data-priority="15" class="p-3 font-semibold text-left">Project Name</th>
           <th data-priority="16" class="p-3 font-semibold text-left">Plot / Flat No.</th>
@@ -57,17 +57,17 @@
           <th data-priority="25" class="p-3 font-semibold text-left">Payment Mode</th>
           <th data-priority="26" class="p-3 font-semibold text-left">Remark</th>
           <th data-priority="27" class="p-3 font-semibold text-center">Action</th> -->
-        </tr>
-      </thead>
+                </tr>
+            </thead>
 
-      <tbody id="customerData" class="divide-y divide-gray-200">
-        <!-- Data will be populated here via Fetch API -->
-      </tbody>
+            <tbody id="customerData" class="divide-y divide-gray-200">
+                <!-- Data will be populated here via Fetch API -->
+            </tbody>
 
-    </table>
-<div id="pagination" class="mt-4 flex justify-center items-center gap-2"></div>
+        </table>
+        <div id="pagination" class="mt-4 flex justify-center items-center gap-2"></div>
 
-  </div>
+    </div>
 
 </div>
 
@@ -79,37 +79,44 @@
 
 
 <script src="../url.js"></script>
+
 <script>
-document.addEventListener("DOMContentLoaded", function () {
+function viewBooking(id) {
+    window.location.href = "update_customer_booking.php?id=" + id;
+}
+</script>
 
-    const token = localStorage.getItem('auth_token');
-    if (!token) {
-        alert("Please login first");
-        window.location.href = "../login";
-        return;
-    }
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
 
-    let currentPage = 1;
-
- function loadBookings() {
-
-    fetch(`${url}bookings?per_page=1000`, {
-        method: "GET",
-        headers: {
-            "Authorization": "Bearer " + token,
-            "Accept": "application/json"
+        const token = localStorage.getItem('auth_token');
+        if (!token) {
+            alert("Please login first");
+            window.location.href = "../login";
+            return;
         }
-    })
-    .then(res => res.json())
-    .then(response => {
 
-        const bookings = response.data?.data ?? response.data ?? [];
-        const tbody = document.getElementById("customerData");
-        tbody.innerHTML = "";
+        let currentPage = 1;
 
-        bookings.forEach((row) => {
+        function loadBookings() {
 
-    tbody.innerHTML += `
+            fetch(`${url}bookings?per_page=1000`, {
+                    method: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token,
+                        "Accept": "application/json"
+                    }
+                })
+                .then(res => res.json())
+                .then(response => {
+
+                    const bookings = response.data?.data ?? response.data ?? [];
+                    const tbody = document.getElementById("customerData");
+                    tbody.innerHTML = "";
+
+                    bookings.forEach((row) => {
+
+                        tbody.innerHTML += `
         <tr class="border-b bg-white">
             <td class="p-2 text-center">
                 <button onclick="toggleRow(${row.id})"
@@ -129,7 +136,9 @@ document.addEventListener("DOMContentLoaded", function () {
             <td class="p-2">${row.state ?? ''}</td>
             <td class="p-2">${row.pincode ?? ''}</td>
            
-            <td class="p-2"><button class="mb-2 bg-blue-500 hover:bg-blue-600 text-white px-4 py-1 rounded"
+            <td class="p-2">
+            <div class="flex gap-2">
+            <button class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-1 rounded"
                         onclick="viewBooking(${row.id})">
                         Update
                     </button>
@@ -137,7 +146,9 @@ document.addEventListener("DOMContentLoaded", function () {
                     <button class="bg-red-500 hover:bg-red-600 text-white px-4 py-1 rounded"
                         onclick="deleteBooking(${row.id})">
                         Delete
-                    </button></td>
+                    </button>
+                    </div>
+                    </td>
         </tr>
 
         <tr id="expand-${row.id}" class="hidden bg-gray-50">
@@ -167,39 +178,79 @@ document.addEventListener("DOMContentLoaded", function () {
             </td>
         </tr>
     `;
-});
- });
-}
-    window.toggleRow = function(id) {
+                    });
+                });
+        }
+        window.toggleRow = function(id) {
 
-    const row = document.getElementById("expand-" + id);
-    const button = event.target;
+            const row = document.getElementById("expand-" + id);
+            const button = event.target;
 
-    if (row.classList.contains("hidden")) {
-        row.classList.remove("hidden");
-        button.innerHTML = "−";
-        button.classList.remove("bg-green-500");
-        button.classList.add("bg-red-500");
-    } else {
-        row.classList.add("hidden");
-        button.innerHTML = "+";
-        button.classList.remove("bg-red-500");
-        button.classList.add("bg-green-500");
+            if (row.classList.contains("hidden")) {
+                row.classList.remove("hidden");
+                button.innerHTML = "−";
+                button.classList.remove("bg-green-500");
+                button.classList.add("bg-red-500");
+            } else {
+                row.classList.add("hidden");
+                button.innerHTML = "+";
+                button.classList.remove("bg-red-500");
+                button.classList.add("bg-green-500");
+            }
+        }
+
+        window.changePage = function(page) {
+            loadBookings(page);
+        }
+
+        document.getElementById("searchBtn").addEventListener("click", function() {
+            loadBookings(1);
+        });
+
+        document.getElementById("perPage").addEventListener("change", function() {
+            loadBookings(1);
+        });
+
+        loadBookings();
+    });
+</script>
+
+<script src="../url.js"></script>
+
+<script>
+function deleteBooking(id) {
+
+    const token = localStorage.getItem('auth_token');
+
+    if (!token) {
+        alert("Please login first");
+        window.location.href = "../login";
+        return;
     }
-}
 
-    window.changePage = function(page) {
-        loadBookings(page);
+    if (!confirm("Are you sure you want to delete this booking?")) {
+        return;
     }
 
-    document.getElementById("searchBtn").addEventListener("click", function() {
-        loadBookings(1);
+    fetch(url + "bookings/" + id, {
+        method: "POST", // safer for Laravel
+        headers: {
+            "Authorization": "Bearer " + token,
+            "Accept": "application/json"
+        },
+        body: new URLSearchParams({
+            _method: "DELETE"
+        })
+    })
+    .then(res => res.json())
+    .then(data => {
+        alert("Booking Deleted Successfully");
+        location.reload();
+    })
+    .catch(error => {
+        console.error(error);
+        alert("Delete failed");
     });
 
-    document.getElementById("perPage").addEventListener("change", function() {
-        loadBookings(1);
-    });
-
-    loadBookings();
-});
+}
 </script>

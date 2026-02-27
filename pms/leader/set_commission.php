@@ -75,37 +75,36 @@ document.addEventListener("DOMContentLoaded", function () {
     const token = localStorage.getItem('auth_token');
     if (!token) return;
 
-   fetch(url + "site-location", {
-    headers: {
-        "Authorization": "Bearer " + token,
-        "Accept": "application/json"
-    }
-})
-.then(res => res.json())
-.then(response => {
+    // ================= LOCATION FETCH =================
+    fetch(url + "site-location", {
+        headers: {
+            "Authorization": "Bearer " + token,
+            "Accept": "application/json"
+        }
+    })
+    .then(res => res.json())
+    .then(response => {
 
-    console.log(response); // optional debug
+        console.log("Locations:", response);
 
-    let dropdown = document.getElementById("locationDropdown");
+        const dropdown = document.getElementById("locationDropdown");
 
-    // 🔥 CLEAR previous options except first
-    dropdown.innerHTML = '<option value="">-- Select Location --</option>';
+        dropdown.innerHTML =
+            '<option value="">-- Select Location --</option>';
 
-    if (response.data && response.data.data.length > 0) {
+        const locations = response.data ?? [];
 
-        response.data.data.forEach(function(location) {
+        locations.forEach(location => {
             dropdown.innerHTML += `
                 <option value="${location.id}">
                     ${location.site_location}
                 </option>
             `;
         });
-
-    }
-});
+    });
 
 
-    // 🔥 Fetch Advisers
+    // ================= ADVISOR FETCH =================
     fetch(url + "by-role?role=adviser", {
         headers: {
             "Authorization": "Bearer " + token,
@@ -115,21 +114,26 @@ document.addEventListener("DOMContentLoaded", function () {
     .then(res => res.json())
     .then(response => {
 
-        let dropdown = document.getElementById("advisorDropdown");
+        console.log("Advisors:", response);
 
-        if (response.data && response.data.data.length > 0) {
-            response.data.data.forEach(function(user) {
-                dropdown.innerHTML += `
-                    <option value="${user.id}">
-                        ${user.user_code} - ${user.name}
-                    </option>
-                `;
-            });
-        }
+        const dropdown =
+            document.getElementById("advisorDropdown");
+
+        dropdown.innerHTML =
+            '<option value="">-- Select Advisor --</option>';
+
+        const advisors = response.data?.data ?? [];
+
+        advisors.forEach(user => {
+            dropdown.innerHTML += `
+                <option value="${user.id}">
+                    ${user.user_code} - ${user.name}
+                </option>
+            `;
+        });
     });
 
-});
-</script>
+});</script>
 
     <script>
         document.getElementById('commissionForm').addEventListener('submit', async function(e) {

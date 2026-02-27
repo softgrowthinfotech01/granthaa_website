@@ -45,104 +45,88 @@
 <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
 <script src="../url.js"></script>
 <script>
-  $(document).ready(function() {
+$(document).ready(function() {
 
-    // Get token from localStorage
     const token = localStorage.getItem('auth_token');
+
     if (!token) {
-      alert("Please login first");
-      window.location.href = "../login";
-      return;
+        alert("Please login first");
+        window.location.href = "../login";
+        return;
     }
 
+    // Initialize DataTable
     var table = $('#example').DataTable({
-      responsive: true
+        responsive: true,
+        ordering: false
     });
 
-    // 🔥 AJAX call with Bearer token
+    // Fetch Adviser Performance
     $.ajax({
-      url: url + "adviserPerformance", // make sure 'url' is defined in url.js
-      type: "GET",
-      headers: {
-        "Authorization": "Bearer " + token,
-        "Accept": "application/json"
-      },
-      success: function(response) {
+        url: url + "adviserPerformance",
+        type: "GET",
+        headers: {
+            "Authorization": "Bearer " + token,
+            "Accept": "application/json"
+        },
+        success: function(response) {
 
-        var advisors = response.data && response.data.data ? response.data.data : [];
+            let advisors = response?.data?.data ?? [];
 
-        table.clear();
+            table.clear();
 
-        advisors.forEach(function(advisor) {
+            // 🔥 Sort advisors by booking amount (extra safety)
+            advisors.sort((a, b) => 
+                (b.total_booking_amount ?? 0) - (a.total_booking_amount ?? 0)
+            );
 
-          table.row.add([
-            advisor.user_code ?? '-',
-            advisor.name ?? '-',
-            advisor.address ?? '-',
-            advisor.total_deals ?? '-',
-            `<span class="px-3 py-1 rounded-full bg-gray-100 text-gray-700 text-xs font-semibold">
-                        ${advisor.total_booking_amount ?? '00.0'}
-                    </span>`,
-            `<span class="px-3 py-1 rounded-full bg-blue-50 text-blue-600 text-xs font-semibold">
-                        ${advisor.bank_ifsc_code ?? '-'}
-                    </span>`,
-            `
-                    <div class="flex flex-col sm:flex-row gap-2 justify-center">
-                        <a href="update_advisor.php?id=${advisor.id}"
-                           class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-1.5 rounded-lg shadow-sm transition">
-                           Update
-                        </a>
-                        <button onclick="deleteAdvisor(${advisor.id})"
-                           class="bg-red-500 hover:bg-red-600 text-white px-4 py-1.5 rounded-lg shadow-sm transition">
-                           Delete
-                        </button>
-                    </div>
-                    `
-          ]);
-        });
+            let rank = 1;
 
-        table.draw();
-      },
-      error: function(error) {
-        console.log("Error fetching advisors:", error);
-        if (error.status === 401 || error.status === 403) {
-          alert("Unauthorized. Please login again.");
-          window.location.href = "../login";
+            advisors.forEach(function(advisor) {
+
+                let bookingAmount = parseFloat(advisor.total_booking_amount ?? 0);
+                let totalDeals = advisor.total_deals ?? 0;
+
+                // Example commission 5%
+                let commission = bookingAmount * 0.05;
+
+                // Rank badge
+                let rankBadge = '';
+
+                if (rank === 1) {
+                    rankBadge = `<span class="bg-yellow-400 text-gray-800 px-3 py-1 rounded-full">🥇 1</span>`;
+                } else if (rank === 2) {
+                    rankBadge = `<span class="bg-gray-400 text-gray-800 px-3 py-1 rounded-full">🥈 2</span>`;
+                } else if (rank === 3) {
+                    rankBadge = `<span class="bg-purple-500 text-gray-800 px-3 py-1 rounded-full">🥉 3</span>`;
+                } else {
+                    rankBadge = `<span class="bg-gray-200 text-gray-800 px-3 py-1 rounded-full">#${rank}</span>`;
+                }
+
+                table.row.add([
+                    advisor.user_code ?? '',
+                    advisor.name ?? '',
+                    advisor.city ?? '-', 
+                    totalDeals,
+                    "₹ " + bookingAmount.toLocaleString(),
+                    "₹ " + commission.toLocaleString(undefined, {minimumFractionDigits: 2}),
+                    rankBadge
+                ]);
+
+                rank++;
+            });
+
+            table.draw();
+        },
+        error: function(error) {
+            console.log("Error fetching advisors:", error);
+
+            if (error.status === 401 || error.status === 403) {
+                alert("Unauthorized. Please login again.");
+                window.location.href = "../login";
+            }
         }
-      }
     });
 
-  });
-
-  // 🔥 Delete Function with Bearer token
-  function deleteAdvisor(id) {
-    const token = localStorage.getItem('auth_token');
-    if (!token) {
-      alert("Please login first");
-      window.location.href = "../login";
-      return;
-    }
-
-    if (!confirm("Are you sure you want to delete this advisor?")) return;
-
-    $.ajax({
-      url: url + "users/" + id,
-      type: "DELETE",
-      headers: {
-        "Authorization": "Bearer " + token,
-        "Accept": "application/json"
-      },
-      success: function(response) {
-        alert("Deleted Successfully");
-        location.reload();
-      },
-      error: function(error) {
-        console.log("Delete error:", error);
-        if (error.status === 401 || error.status === 403) {
-          alert("Unauthorized. Please login again.");
-          window.location.href = "../login";
-        }
-      }
-    });
-  }
+});
 </script>

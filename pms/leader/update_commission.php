@@ -11,16 +11,16 @@
   <!-- Site Location -->
   <div>
     <label class="block text-gray-900 font-semibold mb-1">
-      Site Location
+      Site Location <span style="color: red;">(readonly)</span>
     </label>
     <input type="text" id="site_location"
-      class="w-full border border-gray-300 p-2 rounded-lg">
+      class="w-full border border-gray-300 p-2 rounded-lg" readonly>
   </div>
 
   <!-- Advisor Name -->
   <div>
     <label class="block text-gray-900 font-semibold mb-1">
-      Advisor Name
+      Advisor Name <span style="color: red;">(readonly)</span>
     </label>
     <input type="text" id="advisor_name"
       class="w-full border border-gray-300 p-2 rounded-lg" readonly>
