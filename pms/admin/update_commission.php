@@ -143,7 +143,7 @@
             const locData = await locRes.json();
 
             locationSelect.innerHTML = "";
-            locData.data.data.forEach(loc => {
+            locData.data.forEach(loc => {
                 locationSelect.innerHTML +=
                     `<option value="${loc.id}">${loc.site_location}</option>`;
             });
