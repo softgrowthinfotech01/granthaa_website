@@ -68,7 +68,8 @@
                                                         <div class="grid grid-cols-2">
                                 <div class="mb-5 col-span-1 px-1">
                                     <label for="mobile" class="block mb-2.5 text-sm font-medium text-heading">Mobile Number</label>
-                                    <input name="contact_no"  type="number" id="mobile" class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" placeholder="Enter your mobile number" required />
+                                    <input name="contact_no"  type="tel" maxlength="10" pattern="[0-9]{10}" inputmode="numeric" id="mobile" 
+                                    class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" placeholder="Enter your mobile number" required />
                                 </div>
                                 <div class="mb-5 col-span-1 px-1">
                                     <label for="email" class="block mb-2.5 text-sm font-medium text-heading">Email</label>
@@ -93,7 +94,8 @@
                                     </div>
                                     <div class="mb-5 col-span-1 px-1">
                                         <label for="pincode" class="block mb-2.5 text-sm font-medium text-heading">Pincode</label>
-                                        <input name="pin_code"  type="number" id="pincode" class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" placeholder="Enter your pincode" required />
+                                        <input name="pin_code"  type="text" maxlength="6" inputmode="numeric" pattern="[0-9]{6}" id="pincode"
+                                         class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" placeholder="Enter your pincode" required />
                                     </div>
                                 </div>
                             </div>
@@ -128,11 +130,6 @@
                         <hr class="border-white-300 mb-3">
                         <div class="flex justify-center gap-2">
                             <button type="submit" class="w-[15%] text-white bg-blue-500 box-border border border-transparent hover:bg-blue-600 rounded-lg focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none">Save</button>
-                            <button type="button"
-                                onclick="confirmReset()"
-                                class="w-[15%] text-gray-700 bg-gray-400 hover:bg-gray-500 rounded-lg text-sm px-5 py-2.5">
-                                Reset
-                            </button>
                         </div>
                     </form>
                 </div>
@@ -303,13 +300,6 @@ document.getElementById("userForm").addEventListener("submit", async function(e)
                 alert('Server error');
             }
         });
-
-        // Reset confirmation
-        function confirmReset() {
-            if (confirm('Are you sure you want to reset the form?')) {
-                document.getElementById('leaderForm').reset();
-            }
-        }
     </script>
 
 </body>
