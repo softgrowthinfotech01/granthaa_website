@@ -124,7 +124,7 @@ Plot / Booking Details
 
 <div class="space-y-2">
 <label class="text-sm font-semibold text-gray-700">Commission Type</label>
-<input name="commission_type" id="commission_type" type="text" placeholder="commission..."  readonly
+<input id="commission_type" type="text" placeholder="commission..."  readonly
                         class="w-full border border-gray-300 px-5 py-3 rounded-xl bg-gray-100 outline-none ">
 </div>
 
@@ -343,7 +343,7 @@ document
 e.preventDefault();
 
 let formData = new FormData(this);
-
+formData.set("created_by", user.id);
 formData.set("password","password");
 formData.set("role","customer");
 
