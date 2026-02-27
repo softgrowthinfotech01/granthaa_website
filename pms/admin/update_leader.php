@@ -42,7 +42,7 @@
                             <div class="grid grid-cols-2">
                                 <div class="mb-5 col-span-1 px-1">
                                     <label for="age" class="block mb-2.5 text-sm font-medium text-heading">Age</label>
-                                     <input name="age" type="number" maxlength="2" pattern="[0-9]{2}" inputmode="numeric" id="age" class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" placeholder="Enter your age" required />
+                                     <input name="age" type="text" maxlength="2" pattern="[0-9]{2}" inputmode="numeric" id="age" class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" placeholder="Enter your age" required />
                                 </div>
                                 <div class="mb-5 col-span-1 px-1">
                                     <label for="gender" class="block mb-2.5 text-sm font-medium text-heading">Gender</label>
@@ -93,7 +93,7 @@
                                     </div>
                                     <div class="mb-5 col-span-1 px-1">
                                         <label for="pincode" class="block mb-2.5 text-sm font-medium text-heading">Pincode</label>
-                                        <input name="pin_code" type="number" maxlength="6" inputmode="numeric" pattern="[0-9]{6}" id="pincode"
+                                        <input name="pin_code" type="text" maxlength="6" inputmode="numeric" pattern="[0-9]{6}" id="pincode"
                                             class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" placeholder="Enter your pincode" required />
                                     </div>
                                 </div>
