@@ -24,6 +24,8 @@ class Booking extends Model
         'advance_amount',
         'site_location',
         'commission_type',
+        'commission_value',
+        'commission_amount',
         'project_name',
         'plot_number',
         'khasara_number',

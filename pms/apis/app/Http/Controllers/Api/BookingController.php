@@ -56,6 +56,17 @@ class BookingController extends Controller
     try {
 
         $booking = DB::transaction(function () use ($request, $authUser, $userCode) {
+        
+            $commissionAmount = 0;
+
+            if ($request->commission_type === "percent") {
+                $commissionAmount =  ($request->total_booking_amount * $request->commission_value) /100 ;
+                
+            }elseif ($request->commission_type === "amount") {
+                $commissionAmount = $request->commission_value;
+            }
+
+        $commission_amount = round($commissionAmount, 2);
 
             // ✅ Create Customer
             $newUser = User::create([
@@ -92,6 +103,7 @@ class BookingController extends Controller
                 'advance_amount' => $request->advance_amount,
                 'site_location' => $request->site_location,
                 'commission_type' => $request->commission_type,
+                'commission_amount' => $commission_amount,
                 'project_name' => $request->project_name,
                 'plot_number' => $request->plot_number,
                 'khasara_number' => $request->khasara_number,
