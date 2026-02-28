@@ -125,7 +125,7 @@
       <p class="text-lg font-semibold text-gray-500">Ravi Shasti</p>
     </div>
 
-    <a href=""
+    <a onclick="logout()"
        class="block px-4 py-2 text-red-500 hover:bg-gray-100 transition text-center">
       Logout
     </a>
@@ -136,7 +136,31 @@
 
 
 </div>
+<script src="../url.js"></script>
+<script>
+    function logout() {
+    const token = localStorage.getItem("auth_token");
 
+    fetch(url + "logout", {
+        method: "POST",
+        headers: {
+            "Authorization": "Bearer " + token,
+            "Accept": "application/json"
+        }
+    }).finally(() => {
+        localStorage.clear();
+        window.location.href = "../login.php";
+    });
+}
+
+const user = JSON.parse(localStorage.getItem("auth_user"));
+
+if (!user || user.role !== "adviser") {
+    alert("Unauthorized access");
+    window.location.href = "../login.php";
+}
+
+</script>
 
 </header>
 
