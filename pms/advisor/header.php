@@ -136,7 +136,31 @@
 
 
 </div>
+<script src="../url.js"></script>
+<script>
+    function logout() {
+    const token = localStorage.getItem("auth_token");
 
+    fetch(url + "logout", {
+        method: "POST",
+        headers: {
+            "Authorization": "Bearer " + token,
+            "Accept": "application/json"
+        }
+    }).finally(() => {
+        localStorage.clear();
+        window.location.href = "../login.php";
+    });
+}
+
+const user = JSON.parse(localStorage.getItem("auth_user"));
+
+if (!user || user.role !== "adviser") {
+    alert("Unauthorized access");
+    window.location.href = "../login.php";
+}
+
+</script>
 
 </header>
 
