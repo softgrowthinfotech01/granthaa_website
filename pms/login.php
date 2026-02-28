@@ -62,7 +62,7 @@
       </div>
 
       <!-- Login Button -->
-      <button
+      <button type="submit"
         class="w-full mt-4 bg-yellow-400 text-black py-2.5 rounded-md
                font-semibold tracking-widest hover:bg-yellow-500 transition">
         LOGIN
@@ -89,65 +89,78 @@ function togglePassword(){
 }
 </script>
 
-<!-- login API -->
-<script src="url.js"></script>
 <script>
+const API_URL = url + "login";
 
-  // const url ="https://granthaadeveloperpvtltd.com/pms/apis/api/";
-const API_URL =url+"login";
-console.log(API_URL);
-document.getElementById("loginForm").addEventListener("submit", function (e) {
+document.getElementById("loginForm").addEventListener("submit", async function (e) {
     e.preventDefault();
 
     const email = document.getElementById("email").value.trim();
     const password = document.getElementById("password").value.trim();
     const errorBox = document.getElementById("error");
+    const loginBtn = this.querySelector("button");
 
     errorBox.innerText = "";
 
-    fetch(API_URL, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            "Accept": "application/json"
-        },
-        body: JSON.stringify({ email, password })
-    })
-    .then(async response => {
-        const data = await response.json();
+    // ✅ Basic Validation
+    if (!email || !password) {
+        errorBox.innerText = "Please enter username and password";
+        return;
+    }
+
+    // ✅ Disable button while loading
+    loginBtn.disabled = true;
+    loginBtn.innerText = "Logging in...";
+
+    try {
+        const response = await fetch(API_URL, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            },
+            body: JSON.stringify({ email, password })
+        });
+
+        let data;
+        try {
+            data = await response.json();
+        } catch {
+            throw { message: "Invalid server response" };
+        }
 
         if (!response.ok) {
             throw data;
         }
 
-        return data;
-    })
-    .then(data => {
         // ✅ Save token & user
         localStorage.setItem("auth_token", data.token);
         localStorage.setItem("auth_user", JSON.stringify(data.user));
 
-        // 🔁 Redirect based on role
+        // ✅ Redirect based on role
         switch (data.user.role) {
             case "admin":
-                window.location.href = "admin";
+                window.location.href = "admin/";
                 break;
             case "leader":
-                window.location.href = "leader";
+                window.location.href = "leader/";
                 break;
             case "adviser":
-                window.location.href = "advisor";
+                window.location.href = "advisor/";
                 break;
             case "customer":
-                window.location.href = "customer";
+                window.location.href = "customer/";
                 break;
             default:
-                alert("Unknown role");
+                errorBox.innerText = "Unknown user role";
         }
-    })
-    .catch(err => {
+
+    } catch (err) {
         errorBox.innerText = err?.message || "Login failed";
-    });
+    } finally {
+        loginBtn.disabled = false;
+        loginBtn.innerText = "LOGIN";
+    }
 });
 </script>
 
