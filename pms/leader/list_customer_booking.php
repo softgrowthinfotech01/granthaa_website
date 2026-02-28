@@ -134,7 +134,7 @@ function viewBooking(id) {
             <td class="p-1">${row.address ?? ''}</td>
             <td class="p-1">${row.project_name ?? ''}</td>
             <td class="p-1">${row.commission_type ?? ''}</td> 
-            <td class="p-1">  </td>
+            <td class="p-1">${row.commission_value ?? ''}  </td>
            
             <td class="p-1">
             <div class="flex gap-2">
