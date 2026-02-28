@@ -24,7 +24,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/adviserPerformance', [BookingController::class, 'adviserPerformance']);
 });
 
-Route::middleware(['auth:sanctum', 'role:admin,leader,adviser'])->group(function () {
+Route::middleware(['auth:sanctum', 'role:admin,leader'])->group(function () {
     
     // user 
     Route::post('/admin/create-leader', [UserController::class, 'createLeader']);
@@ -55,8 +55,8 @@ Route::middleware(['auth:sanctum', 'role:admin,leader,adviser'])->group(function
     Route::get('/my-commissions', [CommissionController::class, 'myCommissions']);
 });
 
-Route::middleware(['auth:sanctum', 'role:leader'])->group(function () {
-//    resource route for the advisor 
+Route::middleware(['auth:sanctum', 'role:adviser'])->group(function () {
+    Route::get('/my-commissions', [CommissionController::class, 'myCommissions']); 
 });
 
 Route::middleware('auth:sanctum')->get('/test-auth', function () {
