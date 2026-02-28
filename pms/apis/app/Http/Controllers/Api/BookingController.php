@@ -59,7 +59,7 @@ class BookingController extends Controller
 
             $booking = DB::transaction(function () use ($request, $leader, $userCode) {
 
-                $commissionValue = (float) str_replace(['₹', ',', ' '], '', $request->commission_value);
+                $commissionValue = (float) str_replace(['₹', ',', '%', ' '], '', $request->commission_value);
                 $totalBookingAmount = (float) str_replace(['₹', ',', ' '], '', $request->total_booking_amount);
 
                 $commissionAmount = 0;
