@@ -38,109 +38,108 @@ class BookingController extends Controller
     }
 
     public function store(Request $request)
-{
-    $request->validate([
-        'buyer_name' => 'required',
-        'mobile' => 'required',
-        'email' => 'required|email|unique:users,email',
-        'pan_number' => 'required',
-        'aadhar_number' => 'required',
-        'address' => 'required',
-        'plot_number' => 'required',
-        'site_location' => 'required',
-        'commission_type' => 'required',
-        'commission_value' => 'required',
-    ]);
-
-    $authUser = auth()->user(); // ✅ leader OR advisor
-
-    $userCode = $this->generateUserCode('customer');
-
-    try {
-
-        $booking = DB::transaction(function () use ($request, $authUser, $userCode) {
-        
-            $commissionAmount = 0;
-
-            if ($request->commission_type === "percent") {
-                $commissionAmount =  ($request->total_booking_amount * $request->commission_value) /100 ;
-                
-            }elseif ($request->commission_type === "amount") {
-                $commissionAmount = $request->commission_value;
-            }
-
-        $commission_amount = round($commissionAmount, 2);
-
-            // ✅ Create Customer
-            $newUser = User::create([
-                'user_code' => $userCode,
-                'name' => $request->buyer_name,
-                'email' => $request->email,
-                'password' => Hash::make('password'),
-                'role' => 'customer',
-                'contact_no' => $request->mobile,
-                'city' => $request->city,
-                'state' => $request->state,
-                'address' => $request->address,
-                'pin_code' => $request->pincode,
-                'created_by' => $authUser->id
-            ]);
-
-            // ✅ Booking created by whoever logged in
-            return Booking::create([
-                'user_id' => $newUser->id,
-                'user_code' => $authUser->user_code,
-                'created_by' => $authUser->id,
-
-                'buyer_name' => $request->buyer_name,
-                'mobile' => $request->mobile,
-                'dob' => $request->dob,
-                'email' => $request->email,
-                'city' => $request->city,
-                'state' => $request->state,
-                'pincode' => $request->pincode,
-                'pan_number' => $request->pan_number,
-                'aadhar_number' => $request->aadhar_number,
-                'address' => $request->address,
-
-                'advance_amount' => $request->advance_amount,
-                'site_location' => $request->site_location,
-                'commission_type' => $request->commission_type,
-                'commission_amount' => $commission_amount,
-                'project_name' => $request->project_name,
-                'plot_number' => $request->plot_number,
-                'khasara_number' => $request->khasara_number,
-                'ph_number' => $request->ph_number,
-                'mouza' => $request->mouza,
-                'tahsil' => $request->tahsil,
-                'district' => $request->district,
-                'square_feet' => $request->square_feet,
-                'square_meter' => $request->square_meter,
-                'total_booking_amount' => $request->total_booking_amount,
-                'payment_mode' => $request->payment_mode,
-                'remark' => $request->remark
-            ]);
-        });
-
-        return response()->json([
-            'status' => true,
-            'message' => 'Booking created successfully',
-            'data' => $booking
+    {
+        $request->validate([
+            'buyer_name' => 'required',
+            'mobile' => 'required',
+            'email' => 'required|email|unique:users,email',
+            'pan_number' => 'required',
+            'aadhar_number' => 'required',
+            'address' => 'required',
+            'plot_number' => 'required',
+            'site_location' => 'required',
+            'commission_type' => 'required',
+            'commission_value' => 'required',
         ]);
 
-    } catch (\Exception $e) {
+        $leader = auth()->user();
+        $userCode = $this->generateUserCode('customer');
+        // print_r($userCode);exit;
+        try {
 
-        return response()->json([
-            'status' => false,
-            'error' => $e->getMessage()
-        ], 500);
+            $booking = DB::transaction(function () use ($request, $leader, $userCode) {
+
+                $commissionValue = (float) str_replace(['₹', ',', ' '], '', $request->commission_value);
+                $totalBookingAmount = (float) str_replace(['₹', ',', ' '], '', $request->total_booking_amount);
+
+                $commissionAmount = 0;
+
+                if ($request->commission_type === "percent") {
+                    $commissionAmount = ($totalBookingAmount * $commissionValue) / 100;
+                } elseif ($request->commission_type === "amount") {
+                    $commissionAmount = $commissionValue;
+                }
+
+                $commission_amount = round($commissionAmount, 2);
+
+                // 1️⃣ Create Customer
+                $newUser = User::create([
+                    'user_code' => $userCode,
+                    'name' => $request->buyer_name,
+                    'email' => $request->email,
+                    'password' => Hash::make($request->password ?? 'password'),
+                    'role' => 'customer',
+                    'contact_no' => $request->mobile,
+                    'city' => $request->city,
+                    'state' => $request->state,
+                    'address' => $request->address,
+                    'pin_code' => $request->pincode,
+                    'created_by' => $leader->id
+                ]);
+
+                // 2️⃣ Create Booking
+                return Booking::create([
+                    'user_id' => $newUser->id,
+                    'user_code' => $leader->user_code,
+                    'buyer_name' => $request->buyer_name,
+                    'mobile' => $request->mobile,
+                    'dob' => $request->dob,
+                    'email' => $request->email,
+                    'city' => $request->city,
+                    'state' => $request->state,
+                    'pincode' => $request->pincode,
+                    'pan_number' => $request->pan_number,
+                    'aadhar_number' => $request->aadhar_number,
+                    'address' => $request->address,
+                    'created_by' => $leader->id,
+                    'advance_amount' => $request->advance_amount,
+                    'site_location' => $request->site_location,
+                    'commission_type' => $request->commission_type,
+                    'commission_value' => $commissionValue,
+                    'commission_amount' => $commission_amount,
+                    'project_name' => $request->project_name,
+                    'plot_number' => $request->plot_number,
+                    'khasara_number' => $request->khasara_number,
+                    'ph_number' => $request->ph_number,
+                    'mouza' => $request->mouza,
+                    'tahsil' => $request->tahsil,
+                    'district' => $request->district,
+                    'square_feet' => $request->square_feet,
+                    'square_meter' => $request->square_meter,
+                    'total_booking_amount' => $totalBookingAmount,
+                    'payment_mode' => $request->payment_mode,
+                    'remark' => $request->remark,
+                ]);
+            });
+
+            return response()->json([
+                'status' => true,
+                'message' => 'Customer and Booking created successfully',
+                'data' => $booking
+            ]);
+        } catch (\Exception $e) {
+
+            return response()->json([
+                'status' => false,
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
-}
     public function index(Request $request)
     {
         $user = auth()->user();
 
-        $query = Booking::with(['leader', 'location']);
+        $query = Booking::with('leader');
 
         // 🔐 Role Based Filter
         if ($user->role !== 'admin') {
@@ -171,7 +170,7 @@ class BookingController extends Controller
         $perPage = $request->per_page ?? 10;
 
         $bookings = $query->latest()->paginate($perPage);
-
+        
         return response()->json([
             'status' => true,
             'data' => $bookings
@@ -191,29 +190,10 @@ class BookingController extends Controller
         $request->validate([
             'buyer_name' => 'sometimes|required|string',
             'mobile' => 'sometimes|required|string',
-            'dob' => 'nullable|date',
-            'email' => 'nullable|email',
-            'pan_number' => 'nullable|string',
-            'aadhar_number' => 'nullable|string',
-            'address' => 'nullable|string',
-            'city' => 'nullable|string',
-            'state' => 'nullable|string',
-            'pincode' => 'nullable|string',
-
-            'advance_amount' => 'nullable|numeric',
-            'commission_type' => 'nullable|string',
-            'project_name' => 'nullable|string',
-            'plot_number' => 'nullable|string',
-            'khasara_number' => 'nullable|string',
-            'ph_number' => 'nullable|string',
-            'mouza' => 'nullable|string',
-            'tahsil' => 'nullable|string',
-            'district' => 'nullable|string',
-            'square_feet' => 'nullable|string',
-            'square_meter' => 'nullable|string',
-            'total_booking_amount' => 'nullable|numeric',
-            'payment_mode' => 'nullable|string',
-            'remark' => 'nullable|string',
+            'pan_number' => 'sometimes|required|string',
+            'aadhar_number' => 'sometimes|required|string',
+            'address' => 'sometimes|required|string',
+            'plot_number' => 'sometimes|required|string',
         ]);
 
         $booking = Booking::findOrFail($id);
@@ -221,28 +201,10 @@ class BookingController extends Controller
         $booking->update($request->only([
             'buyer_name',
             'mobile',
-            'dob',
-            'email',
             'pan_number',
             'aadhar_number',
             'address',
-            'city',
-            'state',
-            'pincode',
-            'advance_amount',
-            'commission_type',
-            'project_name',
-            'plot_number',
-            'khasara_number',
-            'ph_number',
-            'mouza',
-            'tahsil',
-            'district',
-            'square_feet',
-            'square_meter',
-            'total_booking_amount',
-            'payment_mode',
-            'remark'
+            'plot_number'
         ]));
 
         return response()->json([
@@ -279,7 +241,7 @@ class BookingController extends Controller
 
             foreach ($bookings as $booking) {
                 if ($booking->commission_type == 'amount') {
-                    $totalCommissionAmount += $booking->total_booking_amount;
+                    $totalCommissionAmount += $booking->commission_value;
                 } else if ($booking->commission_type == 'percent') {
                     $totalCommissionAmount += ($booking->advance_amount * $booking->total_booking_amount) / 100;
                 }
@@ -322,7 +284,7 @@ class BookingController extends Controller
                 ->sum('advance_amount');
 
             $totalCommissionAmount = Booking::where('user_code', $user->user_code)
-                ->sum('commission_amt');
+                ->sum('commission_amount');
 
             $topAdvisor = Booking::where('user_code', $user->user_code)
                 ->select('user_code', DB::raw('SUM(advance_amount) as total'))
@@ -355,6 +317,19 @@ class BookingController extends Controller
             ->where('role', 'adviser')
             ->withCount(['bookings as total_deals'])
             ->withSum('bookings as total_booking_amount', 'advance_amount')
+            ->withSum(['bookings as total_commission' => function ($query) {
+                $query->select(DB::raw("
+                SUM(
+                    CASE
+                        WHEN commission_type = 'percent'
+                            THEN (total_booking_amount * commission_value) / 100
+                        WHEN commission_type = 'amount'
+                            THEN commission_value
+                        ELSE 0
+                    END
+                )
+            "));
+            }], 'commission_value')
             ->orderByDesc('total_booking_amount')
             ->paginate($perPage);
 

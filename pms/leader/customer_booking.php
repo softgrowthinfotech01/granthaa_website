@@ -330,7 +330,7 @@ transition transform hover:scale-[1.02]">
             formData.set("role", "customer");
             formData.set("password", "password");
             formData.set("created_by", user.id);
-
+console.log(formData);
             try {
                 const response = await fetch(url + "bookings", {
                     method: "POST",
