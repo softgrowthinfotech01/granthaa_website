@@ -90,7 +90,7 @@ function togglePassword(){
 </script>
 
 <!-- login API -->
-<script src="../url.js"></script>
+<script src="url.js"></script>
 <script>
 
   // const url ="https://granthaadeveloperpvtltd.com/pms/apis/api/";
