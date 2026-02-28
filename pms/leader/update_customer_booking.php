@@ -114,8 +114,8 @@
             <div class="grid md:grid-cols-3 gap-2">
 
                 <div class="space-y-2">
-                    <label class="text-sm font-semibold text-gray-700">Site Name</label>
-                    <select id="site_location" name="site_location"
+                    <label class="text-sm font-semibold text-gray-700">Site Location <span style="color:red">(readonly)</span></label>
+                    <select id="site_location" name="site_location" disabled
                         class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-yellow-400 outline-none">
                         <option value="">Select Site</option>
                     </select>
@@ -232,6 +232,48 @@
         const token = localStorage.getItem("auth_token");
         const id = new URLSearchParams(window.location.search).get("id");
 
+        function loadSiteLocations(selectedId = null) {
+
+            fetch(url + "my-commissions", {
+                    method: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token,
+                        "Accept": "application/json"
+                    }
+                })
+                .then(res => res.json())
+                .then(response => {
+
+                    const commissions = response.data?.data ?? [];
+                    const select = document.getElementById("site_location");
+
+                    select.innerHTML = `<option value="">Select Site Location</option>`;
+
+                    commissions.forEach(commission => {
+
+                        if (commission.location) {
+
+                            const isSelected =
+                                selectedId == commission.location.id ?
+                                "selected" :
+                                "";
+
+                            select.innerHTML += `
+                    <option 
+                        value="${commission.location.id}"
+                        data-type="${commission.commission_type}"
+                        data-value="${commission.commission_value}"
+                        ${isSelected}
+                    >
+                        ${commission.location.site_location}
+                    </option>
+                `;
+                        }
+                    });
+
+                });
+        }
+
         if (!token) {
             alert("Please login first");
             window.location.href = "../login";
@@ -246,6 +288,7 @@
                     "Accept": "application/json"
                 }
             })
+
             .then(res => res.json())
             .then(response => {
                 let booking = response;
@@ -274,6 +317,8 @@
                 document.getElementById("total_booking_amount").value = booking.total_booking_amount;
                 document.getElementById("payment_mode").value = booking.payment_mode;
                 document.getElementById("remark").value = booking.remark;
+
+                loadSiteLocations(booking.site_location);
             });
 
         // ================= UPDATE =================
@@ -308,51 +353,5 @@
 
     });
 </script>
-
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-
-        const token = localStorage.getItem("auth_token");
-        const id = new URLSearchParams(window.location.search).get("id");
-
-        if (!token) {
-            alert("Please login first");
-            window.location.href = "../login";
-            return;
-        }
-
-        document.getElementById("updateBookingForm")
-            .addEventListener("submit", async function(e) {
-
-                e.preventDefault();
-
-                let formData = new FormData(this);
-
-                formData.append("_method", "PATCH"); // VERY IMPORTANT for Laravel
-
-                const response = await fetch(url + "bookings/" + id, {
-                    method: "POST", // Laravel requires POST + _method
-                    headers: {
-                        "Authorization": "Bearer " + token,
-                        "Accept": "application/json"
-                    },
-                    body: formData
-                });
-
-                const data = await response.json();
-
-                if (!response.ok) {
-                    alert(data.message || "Update failed");
-                    return;
-                }
-
-                alert("Booking Updated Successfully");
-                window.location.href = "list_customer_booking.php";
-            });
-
-    });
-</script>
-
-
 
 <?php include 'footer.php'; ?>

@@ -36,11 +36,11 @@
                     <th data-priority="4" class="p-3 font-semibold text-left">DOB</th>
                     <th data-priority="5" class="p-3 font-semibold text-left">Email</th>
                     <th data-priority="6" class="p-3 font-semibold text-left">PAN No.</th>
-                    <th data-priority="7" class="p-3 font-semibold text-left">Aadhar No.</th>
+                    <th data-priority="7" class="p-3 font-semibold text-left">Site Location</th>
                     <th data-priority="8" class="p-3 font-semibold text-left">Address</th>
-                    <th data-priority="9" class="p-3 font-semibold text-left">City</th>
-                    <th data-priority="10" class="p-3 font-semibold text-left">State</th>
-                    <th data-priority="11" class="p-3 font-semibold text-left">Pin code</th>
+                    <th data-priority="9" class="p-3 font-semibold text-left">Project Name</th>
+                    <th data-priority="10" class="p-3 font-semibold text-left">Commission Type</th>
+                    <th data-priority="11" class="p-3 font-semibold text-left">Commission Value</th>
                     <th data-priority="12" class="p-3 font-semibold text-left">Action</th>
                     <!-- <th data-priority="13" class="p-3 font-semibold text-left">Site Location</th>
           <th data-priority="14" class="p-3 font-semibold text-left">Commission Type</th>
@@ -125,18 +125,18 @@ function viewBooking(id) {
                 </button>
             </td>
 
-            <td class="p-2">${row.buyer_name ?? ''}</td>
-            <td class="p-2">${row.mobile ?? ''}</td>
-            <td class="p-2">${row.dob ?? ''}</td>
-            <td class="p-2">${row.email ?? ''}</td>
-            <td class="p-2">${row.pan_number ?? ''}</td>
-            <td class="p-2">${row.aadhar_number ?? ''}</td>
-            <td class="p-2">${row.address ?? ''}</td>
-            <td class="p-2">${row.city ?? ''}</td>
-            <td class="p-2">${row.state ?? ''}</td>
-            <td class="p-2">${row.pincode ?? ''}</td>
+            <td class="p-1">${row.buyer_name ?? ''}</td>
+            <td class="p-1">${row.mobile ?? ''}</td>
+            <td class="p-1">${row.dob ?? ''}</td>
+            <td class="p-1">${row.email ?? ''}</td>
+            <td class="p-1">${row.pan_number ?? ''}</td>
+            <td class="p-1">${row.location?.site_location ?? row.location_id ?? ''}</td>
+            <td class="p-1">${row.address ?? ''}</td>
+            <td class="p-1">${row.project_name ?? ''}</td>
+            <td class="p-1">${row.commission_type ?? ''}</td> 
+            <td class="p-1">  </td>
            
-            <td class="p-2">
+            <td class="p-1">
             <div class="flex gap-2">
             <button class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-1 rounded"
                         onclick="viewBooking(${row.id})">
@@ -156,9 +156,9 @@ function viewBooking(id) {
 
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
                      <div><strong>Advance Booking AMT:</strong> ${row.advance_amount ?? ''}</div>
-                    <div><strong>Site Location:</strong> ${row.location?.site_location ?? row.location_id ?? ''}</div>
-                    <div><strong>Commission Type:</strong> ${row.commission_type ?? ''}</div>
-                    <div><strong>Project Name:</strong> ${row.project_name ?? ''}</div>
+                    <div><strong>Aadhar Number:</strong> ${row.aadhar_number ?? ''} </div>
+                    <div><strong>State:</strong>${row.state ?? ''} </div>
+                    <div><strong>City:</strong>${row.city ?? ''} </div>
                     <div><strong>Plot No:</strong> ${row.plot_number ?? ''}</div>
                     <div><strong>Khasara:</strong> ${row.khasara_number ?? ''}</div>
                     <div><strong>P.H. No:</strong> ${row.ph_number ?? ''}</div>
@@ -170,6 +170,7 @@ function viewBooking(id) {
                     <div><strong>Total Booking:</strong> ${row.total_booking_amount ?? ''}</div>
                     <div><strong>Payment Mode:</strong> ${row.payment_mode ?? ''}</div>
                     <div><strong>Remark:</strong> ${row.remark ?? ''}</div>
+                    <div><strong>Pincode:</strong> ${row.pincode ?? ''}</div>
 
                 </div>
 
