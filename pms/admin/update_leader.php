@@ -55,8 +55,24 @@
                             </div>
                             <div class="">
                                 <div class="mb-5 px-1">
-                                    <label class="block mb-2.5 text-sm font-medium text-heading" for="file_input">Upload Image</label>
-                                    <input name="image" accept=".jpg,.jpeg,.png" class="rounded-lg cursor-pointer bg-white border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full shadow-xs placeholder:text-body" id="file_input" type="file">
+                                    <label class="block mb-2.5 text-sm font-medium text-heading">
+                                        Current Image
+                                    </label>
+
+                                    <!-- Existing Image Preview -->
+                                    <img id="current_image"
+                                        src=""
+                                        class="w-32 h-32 object-cover rounded-lg border mb-3"
+                                        alt="Leader Image">
+
+                                    <!-- Upload New Image -->
+                                    <label class="block mb-2.5 text-sm font-medium text-heading">
+                                        Upload New Image
+                                    </label>
+                                    <input accept=".jpg,.jpeg,.png"
+                                        class="rounded-lg cursor-pointer bg-white border border-default-medium text-heading text-sm block w-full shadow-xs"
+                                        id="file_input"
+                                        type="file">
                                 </div>
                             </div>
                         </div>
@@ -179,6 +195,8 @@
                     }
                 });
 
+
+
                 const result = await response.json();
 
                 if (!response.ok) {
@@ -203,6 +221,16 @@
                 document.getElementById("account_number").value = user.bank_account_no ?? "";
                 document.getElementById("ifsc_code").value = user.bank_ifsc_code ?? "";
 
+                // ✅ Show current image
+                if (user.profile_image) {
+
+                    document.getElementById("current_image").src =
+                        url + "storage/" + user.profile_image;
+
+                } else {
+                    document.getElementById("current_image").style.display = "none";
+                }
+
             } catch (error) {
                 console.error("Load error:", error);
             }
@@ -215,11 +243,13 @@
             const ageInput = document.getElementById("age");
             const mobileInput = document.getElementById("mobile");
             const pincodeInput = document.getElementById("pincode");
+            const fileInput = document.getElementById("file_input");
 
             const email = emailInput.value.trim();
             const age = ageInput.value.trim();
             const mobile = mobileInput.value.trim();
             const pincode = pincodeInput.value.trim();
+            const file = fileInput.files[0];
 
             // Clear previous errors
             emailInput.setCustomValidity("");
@@ -227,7 +257,7 @@
             mobileInput.setCustomValidity("");
             pincodeInput.setCustomValidity("");
 
-            // Email validation
+            // ✅ Email validation
             const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (!emailPattern.test(email)) {
                 emailInput.setCustomValidity("Enter a valid email address");
@@ -235,21 +265,21 @@
                 return;
             }
 
-            // Age validation (1–150)
+            // ✅ Age validation
             if (isNaN(age) || age < 1 || age > 150) {
                 ageInput.setCustomValidity("Age must be between 1 and 150");
                 ageInput.reportValidity();
                 return;
             }
 
-            // Mobile validation (exactly 10 digits)
+            // ✅ Mobile validation
             if (!/^[0-9]{10}$/.test(mobile)) {
                 mobileInput.setCustomValidity("Mobile number must be exactly 10 digits");
                 mobileInput.reportValidity();
                 return;
             }
 
-            // Pincode validation (exactly 6 digits)
+            // ✅ Pincode validation
             if (!/^[0-9]{6}$/.test(pincode)) {
                 pincodeInput.setCustomValidity("Pincode must be exactly 6 digits");
                 pincodeInput.reportValidity();
@@ -257,11 +287,9 @@
             }
 
             // ✅ Image Validation (JPG, JPEG, PNG - Max 5MB)
-            const fileInput = document.getElementById("file_input");
-            const file = fileInput.files[0];
-
             if (file) {
                 const allowedTypes = ["image/jpeg", "image/png"];
+
                 if (!allowedTypes.includes(file.type)) {
                     alert("Only JPG, JPEG and PNG files are allowed.");
                     return;
@@ -274,25 +302,11 @@
                 }
             }
 
-            // If everything valid → send request
-            const data = {
-                name: document.getElementById("name").value,
-                email: email,
-                age: age,
-                gender: document.getElementById("gender").value,
-                contact_no: mobile,
-                city: document.getElementById("city").value,
-                state: document.getElementById("state").value,
-                address: document.getElementById("address").value,
-                pin_code: pincode,
-                bank_name: document.getElementById("bank_name").value,
-                bank_branch: document.getElementById("branch").value,
-                bank_account_no: document.getElementById("account_number").value,
-                bank_ifsc_code: document.getElementById("ifsc_code").value
-            };
-
             try {
                 const formData = new FormData();
+
+                // Laravel PATCH with file requires this
+                formData.append("_method", "PATCH");
 
                 formData.append("name", document.getElementById("name").value);
                 formData.append("email", email);
@@ -308,13 +322,12 @@
                 formData.append("bank_account_no", document.getElementById("account_number").value);
                 formData.append("bank_ifsc_code", document.getElementById("ifsc_code").value);
 
-                // If image selected → send it
                 if (file) {
                     formData.append("image", file);
                 }
 
                 const response = await fetch(url + `users/${id}`, {
-                    method: "POST", // Laravel file update safer with POST
+                    method: "POST", // Important for file + PATCH
                     headers: {
                         "Authorization": "Bearer " + token,
                         "Accept": "application/json"
@@ -326,7 +339,12 @@
 
                 if (response.ok) {
                     alert("Leader updated successfully");
-                    window.location.href = "view_leader.php";
+
+                    if (result.data?.profile_image) {
+                        document.getElementById("current_image").src =
+                            url + "storage/" + result.data.image + "?t=" + new Date().getTime();
+                    }
+
                 } else {
                     alert(result.message || "Update failed");
                 }
