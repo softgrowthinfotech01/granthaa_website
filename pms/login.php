@@ -90,7 +90,7 @@ function togglePassword(){
 </script>
 
 <script>
-const API_URL = url + "login";
+const API_URL = "https://granthaadeveloperpvtltd.com/pms/apis/api/login";
 
 document.getElementById("loginForm").addEventListener("submit", async function (e) {
     e.preventDefault();
