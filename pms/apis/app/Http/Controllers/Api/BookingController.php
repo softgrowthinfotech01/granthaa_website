@@ -47,6 +47,10 @@ class BookingController extends Controller
         'aadhar_number' => 'required',
         'address' => 'required',
         'plot_number' => 'required',
+        'site_location' => 'required',
+        'commission_type' => 'required',
+        'commission_value' => 'required',
+        'commission_amount' => 'required'
     ]);
 
     $authUser = auth()->user(); // ✅ leader OR advisor
