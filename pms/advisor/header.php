@@ -125,7 +125,7 @@
       <p class="text-lg font-semibold text-gray-500">Ravi Shasti</p>
     </div>
 
-    <a href=""
+    <a onclick="logout()"
        class="block px-4 py-2 text-red-500 hover:bg-gray-100 transition text-center">
       Logout
     </a>
