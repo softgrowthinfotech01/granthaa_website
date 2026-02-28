@@ -27,7 +27,6 @@
           <th data-priority="1" class="p-3 text-center font-semibold">Site Location</th>
           <th data-priority="2" class="p-3 text-center font-semibold">Advisor Name</th>
           <th data-priority="3" class="p-3 text-center font-semibold">Commission</th>
-          <th data-priority="4" class="p-3 text-center font-semibold">Action</th>
         </tr>
       </thead>
 
@@ -67,7 +66,7 @@ $(document).ready(function() {
         let commissionType = $("#commissionTypeFilter").val();
 
         $.ajax({
-            url: url + "commission/1?page=" + page +
+            url: url + "my-commissions?page=" + page +
                  "&per_page=" + perPage +
                  "&search=" + search +
                  "&commission_type=" + commissionType,
@@ -102,7 +101,7 @@ $(document).ready(function() {
             </td>
 
             <td class="p-3 text-center">
-                ${item.user?.name ?? ''}
+                ${item.commission_type?? ''}
             </td>
 
             <td class="p-3 text-center">
@@ -111,18 +110,6 @@ $(document).ready(function() {
                     : '₹ ' + item.commission_value}
             </td>
 
-            <td class="p-3 text-center">
-                <div class="flex flex-col sm:flex-row gap-2 justify-center">
-                    <a href="update_commission.php?id=${item.id}"
-                       class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-1.5 rounded-lg shadow-sm transition">
-                       Update
-                    </a>
-                    <button onclick="deleteCommission(${item.id})"
-                       class="bg-red-500 hover:bg-red-600 text-white px-4 py-1.5 rounded-lg shadow-sm transition">
-                       Delete
-                    </button>
-                </div>
-            </td>
         </tr>
     `);
 });

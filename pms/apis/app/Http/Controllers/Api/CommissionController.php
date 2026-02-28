@@ -75,7 +75,7 @@ public function index(Request $request)
         ], 403);
     }
 
-    $query = UserLocationCommission::with(['user', 'location', 'adviser']);
+    $query = UserLocationCommission::with(['user', 'location']);
 
     // 🔐 Leader can only see commissions of users created by them
     if ($auth->role === 'leader') {
