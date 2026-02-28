@@ -124,7 +124,14 @@ Plot / Booking Details
 
 <div class="space-y-2">
 <label class="text-sm font-semibold text-gray-700">Commission Type</label>
-<input id="commission_type" type="text" placeholder="commission..."  readonly
+<input id="commission_type" name="commission_type" type="text" placeholder="commission type..."  readonly
+                        class="w-full border border-gray-300 px-5 py-3 rounded-xl bg-gray-100 outline-none ">
+</div>
+
+
+<div class="space-y-2">
+<label class="text-sm font-semibold text-gray-700">Commission Type</label>
+<input id="commission_value" name="commission_value" type="text" placeholder="commission value..."  readonly
                         class="w-full border border-gray-300 px-5 py-3 rounded-xl bg-gray-100 outline-none ">
 </div>
 
@@ -315,19 +322,27 @@ const value =
 
 const commissionField =
     document.getElementById("commission_type");
+const commission_value =
+    document.getElementById("commission_value");
 
 if (!type || !value) {
     commissionField.value =
+        "No Commission Assigned";
+    commission_value.value =
         "No Commission Assigned";
     return;
 }
 
 if (type === "percent") {
     commissionField.value =
-        value + " %";
+        type;
+    commission_value.value =
+        value;
 } else {
     commissionField.value =
-        "₹ " + value;
+        type;
+    commission_value.value =
+        value;
 }
 
 });

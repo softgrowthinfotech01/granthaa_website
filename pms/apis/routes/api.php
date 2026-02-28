@@ -57,6 +57,8 @@ Route::middleware(['auth:sanctum', 'role:admin,leader'])->group(function () {
 
 Route::middleware(['auth:sanctum', 'role:adviser'])->group(function () {
     Route::get('/my-commissions', [CommissionController::class, 'myCommissions']); 
+    Route::get('/commission/{id}', [CommissionController::class, 'show']);
+
 });
 
 Route::middleware('auth:sanctum')->get('/test-auth', function () {
