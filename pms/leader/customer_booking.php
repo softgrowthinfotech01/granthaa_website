@@ -311,7 +311,7 @@ transition transform hover:scale-[1.02]">
                 typeInput.value = "Percentage";
                 valueInput.value = value + " %";
             } else {
-                typeInput.value = "Fixed";
+                typeInput.value = "Amount";
                 valueInput.value = "₹ " + value;
             }
         });
