@@ -308,11 +308,11 @@ transition transform hover:scale-[1.02]">
             }
 
             if (type === "percent") {
-                typeInput.value = "Percentage";
-                valueInput.value = value + " %";
+                typeInput.value = "percent";
+                valueInput.value = value;
             } else {
-                typeInput.value = "Amount";
-                valueInput.value = "₹ " + value;
+                typeInput.value = "amount";
+                valueInput.value = value;
             }
         });
         // ================= FORM SUBMIT =================
