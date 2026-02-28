@@ -1,1 +1,1 @@
-const url = window.location.origin + "/pms/apis/api/";
+const url = window.location.origin + "/pms/apis/api/"; 
