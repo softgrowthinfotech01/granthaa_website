@@ -116,18 +116,21 @@
                 <div class="space-y-2">
                     <label class="text-sm font-semibold text-gray-700">Site Location</label>
                     <select name="site_location" id="site_location" class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-yellow-400 outline-none ">
-    <option>Loading....</option>
-</select>
+                        <option>Loading....</option>
+                    </select>
                 </div>
 
-
-
                 <div class="space-y-2">
-                    <label class="text-sm font-semibold text-gray-700">Commission Value</label>
-                    <input name="commission_type" id="commission_type" type="text" placeholder="commission..."  readonly
+                    <label class="text-sm font-semibold text-gray-700">Commission Type</label>
+                    <input name="commission_type" id="commission_type" type="text" placeholder="commission type" readonly
                         class="w-full border border-gray-300 px-5 py-3 rounded-xl bg-gray-100 outline-none ">
                 </div>
 
+                <div class="space-y-2">
+                    <label class="text-sm font-semibold text-gray-700">Commission Value</label>
+                    <input name="commission_value" id="commission_value" type="text" placeholder="commission value" readonly
+                        class="w-full border border-gray-300 px-5 py-3 rounded-xl bg-gray-100 outline-none ">
+                </div>
 
                 <div class="space-y-2">
                     <label class="text-sm font-semibold text-gray-700">Project Name</label>
@@ -237,41 +240,41 @@ transition transform hover:scale-[1.02]">
 
 <script src="../url.js"></script>
 <script>
-document.addEventListener("DOMContentLoaded", function () {
+    document.addEventListener("DOMContentLoaded", function() {
 
-    const token = localStorage.getItem('auth_token');
-    const user = JSON.parse(localStorage.getItem('auth_user'));
+        const token = localStorage.getItem('auth_token');
+        const user = JSON.parse(localStorage.getItem('auth_user'));
 
-    if (!token || !user) {
-        alert("Please login first");
-        window.location.href = "../login";
-        return;
-    }
-
-    // ================= LOAD SITE LOCATIONS =================
-    function loadSiteLocations() {
-
-    fetch(url + "my-commissions", {
-        method: "GET",
-        headers: {
-            "Authorization": "Bearer " + token,
-            "Accept": "application/json"
+        if (!token || !user) {
+            alert("Please login first");
+            window.location.href = "../login";
+            return;
         }
-    })
-    .then(res => res.json())
-    .then(response => {
 
-        console.log("MY COMMISSIONS:", response);
+        // ================= LOAD SITE LOCATIONS =================
+        function loadSiteLocations() {
 
-        const commissions = response.data?.data ?? [];
-        const select = document.getElementById("site_location");
+            fetch(url + "my-commissions", {
+                    method: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token,
+                        "Accept": "application/json"
+                    }
+                })
+                .then(res => res.json())
+                .then(response => {
 
-        select.innerHTML = `<option value="">Select Site Location</option>`;
+                    console.log("MY COMMISSIONS:", response);
 
-        commissions.forEach(commission => {
+                    const commissions = response.data?.data ?? [];
+                    const select = document.getElementById("site_location");
 
-            if (commission.location) {
-                select.innerHTML += `
+                    select.innerHTML = `<option value="">Select Site Location</option>`;
+
+                    commissions.forEach(commission => {
+
+                        if (commission.location) {
+                            select.innerHTML += `
                     <option 
                         value="${commission.location.id}"
                         data-type="${commission.commission_type}"
@@ -280,83 +283,88 @@ document.addEventListener("DOMContentLoaded", function () {
                         ${commission.location.site_location}
                     </option>
                 `;
-            }
+                        }
 
-        });
-    });
-}
-    loadSiteLocations();
-
-    // ================= AUTO FETCH COMMISSION =================
-    document.getElementById("site_location").addEventListener("change", function () {
-
-    const selectedOption = this.options[this.selectedIndex];
-
-    const type = selectedOption.getAttribute("data-type");
-    const value = selectedOption.getAttribute("data-value");
-
-    if (!type || !value) {
-        document.getElementById("commission_type").value =
-            "No commission assigned";
-        return;
-    }
-
-    if (type === "percent") {
-        document.getElementById("commission_type").value = value + " %";
-    } else {
-        document.getElementById("commission_type").value = "₹ " + value;
-    }
-});
-    // ================= FORM SUBMIT =================
-    document.getElementById("bookingForm").addEventListener("submit", async function(e) {
-        e.preventDefault();
-
-        if (user.role !== "leader") {
-            alert("You are not allowed to create Booking");
-            return;
+                    });
+                });
         }
+        loadSiteLocations();
 
-        let form = document.getElementById("bookingForm");
-        let formData = new FormData(form);
+        // ================= AUTO FETCH COMMISSION =================
+        document.getElementById("site_location").addEventListener("change", function() {
 
-        formData.set("role", "customer");
-        formData.set("password", "password");
-        formData.set("created_by", user.id);
+            const selectedOption = this.options[this.selectedIndex];
 
-        try {
-            const response = await fetch(url + "bookings", {
-                method: "POST",
-                headers: {
-                    "Authorization": "Bearer " + token,
-                    "Accept": "application/json"
-                },
-                body: formData
-            });
+            const type = selectedOption.getAttribute("data-type");
+            const value = selectedOption.getAttribute("data-value");
 
-            const data = await response.json();
+            const typeInput = document.getElementById("commission_type");
+            const valueInput = document.getElementById("commission_value");
 
-            if (!response.ok) {
-                if (data.errors) {
-                    let errorMessages = "";
-                    for (let field in data.errors) {
-                        errorMessages += data.errors[field][0] + "\n";
-                    }
-                    alert("Validation Errors:\n\n" + errorMessages);
-                } else {
-                    alert(data.message || "Something went wrong");
-                }
+            if (!type || !value) {
+                typeInput.value = "No commission assigned";
+                valueInput.value = "";
                 return;
             }
 
-            alert("✅ " + data.message);
-            form.reset();
+            if (type === "percent") {
+                typeInput.value = "Percentage";
+                valueInput.value = value + " %";
+            } else {
+                typeInput.value = "Fixed";
+                valueInput.value = "₹ " + value;
+            }
+        });
+        // ================= FORM SUBMIT =================
+        document.getElementById("bookingForm").addEventListener("submit", async function(e) {
+            e.preventDefault();
 
-        } catch (error) {
-            console.error(error);
-            alert("Server error occurred");
-        }
+            if (user.role !== "leader") {
+                alert("You are not allowed to create Booking");
+                return;
+            }
+
+            let form = document.getElementById("bookingForm");
+            let formData = new FormData(form);
+
+            formData.set("role", "customer");
+            formData.set("password", "password");
+            formData.set("created_by", user.id);
+
+            try {
+                const response = await fetch(url + "bookings", {
+                    method: "POST",
+                    headers: {
+                        "Authorization": "Bearer " + token,
+                        "Accept": "application/json"
+                    },
+                    body: formData
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    if (data.errors) {
+                        let errorMessages = "";
+                        for (let field in data.errors) {
+                            errorMessages += data.errors[field][0] + "\n";
+                        }
+                        alert("Validation Errors:\n\n" + errorMessages);
+                    } else {
+                        alert(data.message || "Something went wrong");
+                    }
+                    return;
+                }
+
+                alert("✅ " + data.message);
+                form.reset();
+
+            } catch (error) {
+                console.error(error);
+                alert("Server error occurred");
+            }
+        });
+
     });
-
-});
 </script>
 <?php include 'footer.php'; ?>
