@@ -257,7 +257,7 @@ public function index(Request $request)
 public function show($id){
     $auth = auth()->user();
 
-        if (!$auth || !in_array($auth->role, ['admin', 'leader'])) {
+        if (!$auth || !in_array($auth->role, ['admin', 'leader', 'adviser'])) {
             return response()->json([
                 'message' => 'Only admin and leader can view the commission of all users'
             ], 403);
