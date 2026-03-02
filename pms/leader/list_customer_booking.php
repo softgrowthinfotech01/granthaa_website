@@ -34,6 +34,7 @@
                     <th data-priority="2" class="p-3 font-semibold text-left">Buyer Name</th>
                     <th data-priority="7" class="p-3 font-semibold text-left">Site Location</th>
                     <th data-priority="9" class="p-3 font-semibold text-left">Project Name</th>
+                    <th data-priority="9" class="p-3 font-semibold text-left">Total Booking Amount</th>
                     <th data-priority="10" class="p-3 font-semibold text-left">Commission Type</th>
                     <th data-priority="11" class="p-3 font-semibold text-left">Commission Value</th>
                     <th data-priority="5" class="p-3 font-semibold text-left">Commission Amount</th>
@@ -159,6 +160,7 @@
             <td class="p-1">${row.buyer_name ?? ''}</td>
             <td class="p-1">${locationsMap[row.site_location] ?? locationsMap[row.location_id] ?? ''}</td>
             <td class="p-1">${row.project_name ?? ''}</td>
+            <td class="p-1">${row.total_booking_amount ?? ''}</td>
             <td class="p-1">${row.commission_type ?? ''}</td> 
             <td class="p-1">${row.commission_value ?? ''}  </td>
             <td class="p-1">${commission_Amount}</td>
@@ -195,7 +197,6 @@
                     <div><strong>District:</strong> ${row.district ?? ''}</div>
                     <div><strong>Sq. Feet:</strong> ${row.square_feet ?? ''}</div>
                     <div><strong>Sq. Meter:</strong> ${row.square_meter ?? ''}</div>
-                    <div><strong>Total Booking Amount:</strong> ${row.total_booking_amount ?? ''}</div>
                     <div><strong>Payment Mode:</strong> ${row.payment_mode ?? ''}</div>
                     <div><strong>Remark:</strong> ${row.remark ?? ''}</div>
                     <div><strong>Pincode:</strong> ${row.pincode ?? ''}</div>
