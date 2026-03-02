@@ -188,24 +188,54 @@ class BookingController extends Controller
     {
         // dd($request->all());
         $request->validate([
-            'buyer_name' => 'sometimes|required|string',
-            'mobile' => 'sometimes|required|string',
-            'pan_number' => 'sometimes|required|string',
-            'aadhar_number' => 'sometimes|required|string',
-            'address' => 'sometimes|required|string',
-            'plot_number' => 'sometimes|required|string',
-        ]);
+    'buyer_name'            => 'required|string|max:255',
+    'mobile'                => 'required|digits:10',
+    'dob'                   => 'nullable|date',
+    'email'                 => 'nullable|email|max:255',
+    'pan_number'            => 'required|string|max:20',
+    'aadhar_number'         => 'required|digits:12',
+    'address'               => 'required|string|max:500',
+    'city'                  => 'nullable|string|max:100',
+    'state'                 => 'nullable|string|max:100',
+    'pincode'               => 'nullable|digits:6',
+    'advance_amount'        => 'nullable|numeric|min:0',
+
+    'project_name'          => 'nullable|string|max:255',
+    'plot_number'           => 'required|string|max:100',
+    'khasara_number'        => 'nullable|string|max:100',
+    'ph_number'             => 'nullable|string|max:100',
+    'mouza'                 => 'nullable|string|max:100',
+    'tahsil'                => 'nullable|string|max:100',
+    'district'              => 'nullable|string|max:100',
+
+    'square_feet'           => 'nullable|numeric|min:0',
+    'square_meter'          => 'nullable|numeric|min:0',
+    'total_booking_amount'  => 'nullable|numeric|min:0',
+
+    'payment_mode'          => 'nullable|in:cash,cheque,online_transfer,upi',
+    'remark'                => 'nullable|string|max:1000',
+]);
 
         $booking = Booking::findOrFail($id);
 
         $booking->update($request->only([
-            'buyer_name',
-            'mobile',
-            'pan_number',
-            'aadhar_number',
-            'address',
-            'plot_number'
-        ]));
+    'buyer_name',
+    'mobile',
+    'pan_number',
+    'aadhar_number',
+    'address',
+    'plot_number',
+    'total_booking_amount',   // 👈 ADD THIS
+    'project_name',
+    'city',
+    'state',
+    'pincode',
+    'advance_amount',
+    'square_feet',
+    'square_meter',
+    'payment_mode',
+    'remark'
+]));
 
         return response()->json([
             'status' => true,
