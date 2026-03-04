@@ -43,7 +43,7 @@ class LocationMasterController extends Controller
     {
         $auth = auth()->user();
 
-        if (!$auth || !in_array($auth->role, ['admin', 'leader'])) {
+        if (!$auth || !in_array($auth->role, ['admin', 'leader', 'advisor'])) {
             return response()->json(['message' => 'Unauthorized'], 403);
         }
 

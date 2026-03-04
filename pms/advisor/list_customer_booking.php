@@ -32,15 +32,13 @@
                     <!-- <th class="p-3 font-semibold text-left">ID</th> -->
                     <th data-priority="1" class="p-3 font-semibold text-left"></th>
                     <th data-priority="2" class="p-3 font-semibold text-left">Buyer Name</th>
+                    <th data-priority="9" class="p-3 font-semibold text-left">Project Name</th>
+                    <th data-priority="7" class="p-3 font-semibold text-left">Site Location</th>
+                    <th data-priority="10" class="p-3 font-semibold text-left">Commission Type</th>
+                    <th data-priority="11" class="p-3 font-semibold text-left">Commission Value</th>
                     <th data-priority="3" class="p-3 font-semibold text-left">Phone</th>
                     <th data-priority="4" class="p-3 font-semibold text-left">DOB</th>
                     <th data-priority="5" class="p-3 font-semibold text-left">Email</th>
-                    <th data-priority="6" class="p-3 font-semibold text-left">PAN No.</th>
-                    <th data-priority="7" class="p-3 font-semibold text-left">Site Location</th>
-                    <th data-priority="8" class="p-3 font-semibold text-left">Address</th>
-                    <th data-priority="9" class="p-3 font-semibold text-left">Project Name</th>
-                    <th data-priority="10" class="p-3 font-semibold text-left">Commission Type</th>
-                    <th data-priority="11" class="p-3 font-semibold text-left">Commission Value</th>
                     <th data-priority="12" class="p-3 font-semibold text-left">Action</th>
                     <!-- <th data-priority="13" class="p-3 font-semibold text-left">Site Location</th>
           <th data-priority="14" class="p-3 font-semibold text-left">Commission Type</th>
@@ -98,7 +96,29 @@ function viewBooking(id) {
 
         let currentPage = 1;
 
-        function loadBookings() {
+        let locationsMap = {};
+
+        function loadLocations() {
+            return fetch(url + "site-location", {
+                    headers: {
+                        "Authorization": "Bearer " + token,
+                        "Accept": "application/json"
+                    }
+                })
+                .then(res => res.json())
+                .then(response => {
+
+                    const locations = response.data ?? [];
+
+                    locations.forEach(loc => {
+                        locationsMap[loc.id] = loc.site_location;
+                    });
+                });
+        }
+
+        async function loadBookings() {
+
+        await loadLocations();
 
             fetch(`${url}bookings?per_page=1000`, {
                     method: "GET",
@@ -126,15 +146,14 @@ function viewBooking(id) {
             </td>
 
             <td class="p-1">${row.buyer_name ?? ''}</td>
+            <td class="p-1">${row.project_name ?? ''}</td>
+            <td class="p-1">${locationsMap[row.site_location] ?? locationsMap[row.location_id] ?? ''}</td>
+            <td class="p-1">${row.commission_type ?? ''}</td> 
+            <td class="p-1">${row.commission_value ?? ''}  </td>
             <td class="p-1">${row.mobile ?? ''}</td>
             <td class="p-1">${row.dob ?? ''}</td>
             <td class="p-1">${row.email ?? ''}</td>
-            <td class="p-1">${row.pan_number ?? ''}</td>
-            <td class="p-1">${row.location?.site_location ?? row.location_id ?? ''}</td>
-            <td class="p-1">${row.address ?? ''}</td>
-            <td class="p-1">${row.project_name ?? ''}</td>
-            <td class="p-1">${row.commission_type ?? ''}</td> 
-            <td class="p-1">${row.commission_value ?? ''}  </td>
+
            
             <td class="p-1">
             <div class="flex gap-2">
