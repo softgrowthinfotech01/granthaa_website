@@ -34,10 +34,10 @@
                     <th data-priority="2" class="p-3 font-semibold text-left">Buyer Name</th>
                     <th data-priority="9" class="p-3 font-semibold text-left">Project Name</th>
                     <th data-priority="7" class="p-3 font-semibold text-left">Site Location</th>
+                    <th data-priority="9" class="p-3 font-semibold text-left">Total Booking Amount</th>
                     <th data-priority="10" class="p-3 font-semibold text-left">Commission Type</th>
                     <th data-priority="11" class="p-3 font-semibold text-left">Commission Value</th>
-                    <th data-priority="3" class="p-3 font-semibold text-left">Phone</th>
-                    <th data-priority="4" class="p-3 font-semibold text-left">DOB</th>
+                    <th data-priority="11" class="p-3 font-semibold text-left">Commission Amount</th>
                     <th data-priority="5" class="p-3 font-semibold text-left">Email</th>
                     <th data-priority="12" class="p-3 font-semibold text-left">Action</th>
                     <!-- <th data-priority="13" class="p-3 font-semibold text-left">Site Location</th>
@@ -136,6 +136,18 @@ function viewBooking(id) {
 
                     bookings.forEach((row) => {
 
+                    let commission_Amount = 0;
+
+                        // If percent → calculate from total_booking_amount
+                        if (row.commission_type === "percent") {
+                            commission_Amount = (row.total_booking_amount * row.commission_value) / 100;
+                        }
+
+                        // If fixed → directly use commission_value
+                        else if (row.commission_type === "amount") {
+                            commission_Amount = row.commission_value;
+                        }
+
                         tbody.innerHTML += `
         <tr class="border-b bg-white">
             <td class="p-2 text-center">
@@ -148,10 +160,10 @@ function viewBooking(id) {
             <td class="p-1">${row.buyer_name ?? ''}</td>
             <td class="p-1">${row.project_name ?? ''}</td>
             <td class="p-1">${locationsMap[row.site_location] ?? locationsMap[row.location_id] ?? ''}</td>
+            <td class="p-1">${row.total_booking_amount ?? ''}</td>
             <td class="p-1">${row.commission_type ?? ''}</td> 
             <td class="p-1">${row.commission_value ?? ''}  </td>
-            <td class="p-1">${row.mobile ?? ''}</td>
-            <td class="p-1">${row.dob ?? ''}</td>
+            <td class="p-1">${commission_Amount}</td>
             <td class="p-1">${row.email ?? ''}</td>
 
            
@@ -190,6 +202,8 @@ function viewBooking(id) {
                     <div><strong>Payment Mode:</strong> ${row.payment_mode ?? ''}</div>
                     <div><strong>Remark:</strong> ${row.remark ?? ''}</div>
                     <div><strong>Pincode:</strong> ${row.pincode ?? ''}</div>
+                    <div><strong>Mobile Number:</strong> ${row.mobile ?? ''}</div>
+                    <div><strong>DOB:</strong> ${row.dob ?? ''}</div>
 
                 </div>
 
