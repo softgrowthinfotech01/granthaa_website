@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Booking;
+use App\Models\Referral;
 use App\Models\User;
+use App\Models\WalletTransaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -50,6 +52,7 @@ class BookingController extends Controller
             'site_location' => 'required',
             'commission_type' => 'required',
             'commission_value' => 'required',
+            'referral_id' => 'nullable|exists:referrals,id',
         ]);
 
         $leader = auth()->user();
@@ -71,6 +74,46 @@ class BookingController extends Controller
                 }
 
                 $commission_amount = round($commissionAmount, 2);
+
+                // 3️⃣ Handle Referral If Exists
+if ($request->filled('referral_id')) {
+
+    $referral = Referral::where('referrer_id', $request->referral_id)
+        ->where('status', 'pending')
+        ->first();
+        // print_r($leader->id);die;
+
+    if ($referral) {
+
+        // 🔐 Security check:
+        // Only assigned leader/adviser can convert
+        if ($referral->assigned_to != $leader->id) {
+            throw new \Exception("You are not authorized to convert this referral.");
+        }
+
+        // 💰 Incentive calculation (Example: 5%)
+        $incentive = ($totalBookingAmount * 5) / 100;
+
+        $referrer = User::find($referral->referrer_id);
+
+        // Add to wallet
+        $referrer->increment('wallet_balance', $incentive);
+
+        WalletTransaction::create([
+            'user_id' => $referrer->id,
+            'amount' => $incentive,
+            'type' => 'credit',
+            'remark' => 'Referral Booking Incentive'
+        ]);
+
+        // Update referral
+        $referral->update([
+            'status' => 'converted',
+            'booking_id' => $referrer->id,
+            'incentive_amount' => $incentive
+        ]);
+    }
+}
 
                 // 1️⃣ Create Customer
                 $newUser = User::create([
@@ -181,6 +224,14 @@ class BookingController extends Controller
     {
         $booking = Booking::with('leader')->findOrFail($id);
 
+        return response()->json($booking);
+    }
+
+    public function mybookings(){
+        $user = auth()->user();
+        // print_r($user);exit;
+      $booking = Booking::with('booking', $user->user_code);
+// print_r($booking);exit;
         return response()->json($booking);
     }
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Referral;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -434,5 +435,43 @@ public function getUsersByRole(Request $request)
         'message' => ucfirst($role) . ' users fetched successfully',
         'data' => $users
     ]);
+}
+
+public function submitReferral(Request $request)
+{
+    $request->validate([
+        'referrer_id' => 'required|exists:users,id',
+        'referred_name' => 'required',
+        'referred_contact' => 'required',
+        'referred_email' => 'nullable|email'
+    ]);
+
+    $customer = User::where('id', $request->referrer_id)
+                    ->where('role','customer')
+                    ->firstOrFail();
+
+    Referral::create([
+        'referrer_id' => $customer->id,
+        'referred_name' => $request->referred_name,
+        'referred_contact' => $request->referred_contact,
+        'referred_email' => $request->referred_email,
+        'assigned_to' => $customer->created_by, // 👈 IMPORTANT
+        'status' => 'pending'
+    ]);
+
+    return response()->json([
+        'message' => 'Referral submitted successfully'
+    ]);
+}
+
+public function myReferrals()
+{
+    $user = auth()->user();
+
+    $referrals = Referral::where('assigned_to', $user->id)
+                        ->where('status','pending')
+                        ->get();
+
+    return response()->json($referrals);
 }
 }

@@ -39,7 +39,8 @@ class User extends Authenticatable
     'bank_branch',
     'bank_account_no',
     'bank_ifsc_code',
-    'created_by'
+    'created_by',
+    'wallet_balance'
     ];
 
     /**
