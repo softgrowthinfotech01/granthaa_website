@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\BookingController;
 use App\Http\Controllers\Api\CommissionController;
 use App\Http\Controllers\Api\LocationMasterController;
+use App\Http\Controllers\api\ReferralController;
 use App\Http\Controllers\Api\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -14,12 +15,22 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
 
+    // Customer submits referral
+    Route::post('/referrals', [ReferralController::class, 'store']);
+
+    // Leader/Adviser views assigned referrals
+    Route::get('/referrals', [ReferralController::class, 'myReferrals']);
+
+    // View single referral
+    Route::get('/referrals/{id}', [ReferralController::class, 'show']);
+
     // booking
     Route::get('/bookings', [BookingController::class, 'index']);
     Route::post('/bookings', [BookingController::class, 'store']);
     Route::get('/bookings/{id}', [BookingController::class, 'show']);
     Route::patch('/bookings/{id}', [BookingController::class, 'update']);
     Route::delete('/bookings/{id}', [BookingController::class, 'destroy']);
+    Route::get('/mybookings', [BookingController::class, 'mybookings']);
     Route::get('/dashboard', [BookingController::class, 'dashboard']);
     Route::get('/adviserPerformance', [BookingController::class, 'adviserPerformance']);
 });
