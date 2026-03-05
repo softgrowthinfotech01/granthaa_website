@@ -77,13 +77,6 @@
 href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
 <script>
-    function sidebarToggle() {
-
-    const sidebar = document.getElementById("sidebar");
-
-    sidebar.classList.toggle("-translate-x-full");
-
-}
 function profileToggle(){
 
     const dropdown = document.getElementById("ProfileDropDown");

@@ -14,22 +14,25 @@
     <!--Container -->
     <div class="mx-auto">
         <!--Screen-->
-        <div class="flex flex-col">
+        <div class="min-h-screen flex flex-col">
             <!--Header Section Starts Here-->
             <?php include "header.php"; ?>
             <!--/Header-->
 
-            <div class="flex">
+            <div class="flex flex-1">
                 <!--Sidebar-->
                 <?php include 'sidebar.php'; ?>
                 <!--/Sidebar-->
 
                 <!--Main-->
-                <div class="w-[60%] mx-auto my-4 self-start rounded-lg bg-gray-200 p-6 border border-default rounded-base shadow-xl hover:bg-neutral-secondary-medium">
-                    <form id="commissionForm" class="w-full">
+                <div id="mainContent"
+                    class="w-full md:w-[80%] lg:w-[60%] mx-3 md:mx-auto my-4
+transition-all duration-300
+rounded-lg bg-gray-200 p-6 border shadow-xl">
+                    <form id="commissionForm" class="w-full px-4">
                         <div class="personal-details">
                             <h5 class="text-xl font-bold text-heading p-1">Set Leader Commission</h5>
-                            <div class="grid grid-cols-2">
+                            <div class="grid grid-cols-1 md:grid-cols-2 mx-1 md:mx-0">
                                 <div class="mb-5 col-span-1 px-1">
                                     <label for="site" class="block mb-2.5 text-sm font-medium text-heading">Site Location</label>
                                     <select name="location_id" id="location_id" class="block w-full px-3 py-2.5 rounded-lg bg-white border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand shadow-xs placeholder:text-body focus:outline-none focus:ring-2 focus:ring-gray-600">
@@ -46,23 +49,23 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="">
+                            <div class="grid grid-cols-1 md:grid-cols-2 mx-1 md:mx-0">
                                 <div class="mb-5  px-1">
                                     <label class="block mb-2.5 text-sm font-medium text-heading">Commission Type</label>
                                     <div class="flex gap-4">
                                         <div class="flex items-center">
-                                            <input  name="commission_type" value="percent"  type="radio" id="percentage"  class="w-4 h-4" checked />
+                                            <input name="commission_type" value="percent" type="radio" id="percentage" class="w-4 h-4" checked />
                                             <label for="percentage" class="ml-2 text-sm font-medium text-heading">Percentage</label>
                                         </div>
                                         <div class="flex items-center">
                                             <input name="commission_type" value="amount" type="radio" id="amount" class="w-4 h-4" />
-                                            <label  for="amount" class="ml-2 text-sm font-medium text-heading">Amount</label>
+                                            <label for="amount" class="ml-2 text-sm font-medium text-heading">Amount</label>
                                         </div>
                                     </div>
                                 </div>
 
                             </div>
-                            <div class="">
+                            <div class="grid grid-cols-1 md:grid-cols-2 mx-1 md:mx-0">
                                 <div class="mb-5 px-1">
                                     <label for="commission" class="block mb-2.5 text-sm font-medium text-heading">Commission Value</label>
                                     <input name="commission_value" type="text" id="commission_value" class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body focus:outline-none focus:ring-2 focus:ring-gray-600" placeholder="Enter commission value" required />
@@ -72,10 +75,10 @@
 
                         <hr class="border-white-300 mb-3">
                         <div class="flex justify-center gap-2">
-                            <button type="submit" class="w-[15%] text-white bg-blue-600 box-border border border-transparent hover:bg-blue-400 rounded-lg focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none">Save</button>
+                            <button type="submit" class="w-full md:w-[20%] text-white bg-blue-600 box-border border border-transparent hover:bg-blue-400 rounded-lg focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none">Save</button>
                             <button type="button"
                                 onclick="confirmReset()"
-                                class="w-[15%] text-gray-700 bg-white hover:bg-gray-200 rounded-lg text-sm px-5 py-2.5">
+                                class="w-full md:w-[20%] text-gray-700 bg-white hover:bg-gray-200 rounded-lg text-sm px-5 py-2.5">
                                 Reset
                             </button>
                         </div>
@@ -101,69 +104,69 @@
     <script src="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.js"></script>
 
 
-        <script src="../url.js"></script>
+    <script src="../url.js"></script>
 
 
-<script>
-async function loadDropdowns() {
+    <script>
+        async function loadDropdowns() {
 
-    const token = localStorage.getItem('auth_token');
+            const token = localStorage.getItem('auth_token');
 
-    try {
+            try {
 
-        // 🔹 Load Site Locations
-        const locRes = await fetch(url + 'site-location', {
-            headers: {
-                "Authorization": "Bearer " + token,
-                "Accept": "application/json"
-            }
-        });
+                // 🔹 Load Site Locations
+                const locRes = await fetch(url + 'site-location', {
+                    headers: {
+                        "Authorization": "Bearer " + token,
+                        "Accept": "application/json"
+                    }
+                });
 
-        const locationData = await locRes.json();
-        const locationSelect = document.getElementById('location_id');
+                const locationData = await locRes.json();
+                const locationSelect = document.getElementById('location_id');
 
-        locationSelect.innerHTML = `<option value="">Choose a site location</option>`;
+                locationSelect.innerHTML = `<option value="">Choose a site location</option>`;
 
-       const locations = locationData.data.data || locationData.data;
+                const locations = locationData.data.data || locationData.data;
 
-locations.forEach(loc => {
-            locationSelect.innerHTML += `
+                locations.forEach(loc => {
+                    locationSelect.innerHTML += `
                 <option value="${loc.id}">
                     ${loc.site_location}
                 </option>
             `;
-        });
+                });
 
 
-        // 🔹 Load Leaders
-        const leaderRes = await fetch(url + 'by-role?role=leader', {
-            headers: {
-                "Authorization": "Bearer " + token,
-                "Accept": "application/json"
-            }
-        });
+                // 🔹 Load Leaders
+                const leaderRes = await fetch(url + 'by-role?role=leader', {
+                    headers: {
+                        "Authorization": "Bearer " + token,
+                        "Accept": "application/json"
+                    }
+                });
 
-        const leaderData = await leaderRes.json();
-        const leaderSelect = document.getElementById('user_id');
+                const leaderData = await leaderRes.json();
+                const leaderSelect = document.getElementById('user_id');
 
-        leaderSelect.innerHTML = `<option value="">Choose a leader</option>`;
+                leaderSelect.innerHTML = `<option value="">Choose a leader</option>`;
 
-        leaderData.data.data.forEach(user => {
-    leaderSelect.innerHTML += `
+                leaderData.data.data.forEach(user => {
+                    leaderSelect.innerHTML += `
         <option value="${user.id}">
             ${user.name}
         </option>
     `;
-});
+                });
 
-    } catch (error) {
-        console.error("Dropdown loading error:", error);
-    }
-}
+            } catch (error) {
+                console.error("Dropdown loading error:", error);
+            }
+        }
 
-// Call when page loads
-loadDropdowns();
-</script>
+        // Call when page loads
+        loadDropdowns();
+    </script>
 
 
 
