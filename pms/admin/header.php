@@ -75,13 +75,34 @@
 <script src="https://cdn.tailwindcss.com"></script>
 <link rel="stylesheet"
 href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
+<script src="../url.js"></script>
 <script>
 function profileToggle(){
 
     const dropdown = document.getElementById("ProfileDropDown");
 
     dropdown.classList.toggle("hidden");
+}
+function logout() {
 
+    const token = localStorage.getItem("auth_token");
+
+    fetch(url + "logout", {
+        method: "POST",
+        headers: {
+            "Authorization": "Bearer " + token,
+            "Accept": "application/json"
+        }
+    }).finally(() => {
+        localStorage.clear();
+        window.location.href = "../login.php";
+    });
+}
+
+const user = JSON.parse(localStorage.getItem("auth_user"));
+
+if (!user || user.role !== "admin") {
+    alert("Unauthorized access");
+    window.location.href = "../login.php";
 }
 </script>
