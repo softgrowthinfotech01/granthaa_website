@@ -116,7 +116,7 @@
                             <div class="grid grid-cols-2">
                                 <div class="mb-5 col-span-1 px-1">
                                     <label for="account_number" class="block mb-2.5 text-sm font-medium text-heading">Account Number</label>
-                                    <input name="bank_account_no" type="number" id="account_number" class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" placeholder="Enter your account number" required />
+                                    <input name="bank_account_no" type="text" id="account_number" class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" placeholder="Enter your account number" required />
                                 </div>
                                 <div class="mb-5 col-span-1 px-1">
                                     <label for="ifsc_code" class="block mb-2.5 text-sm font-medium text-heading">IFSC Code</label>
@@ -350,6 +350,45 @@
                 alert('Server error');
             }
         });
+    </script>
+
+
+<script>
+        // Account number max 18 digits
+document.getElementById("account_number").addEventListener("input", function () {
+    if (this.value.length > 18) {
+        this.value = this.value.slice(0, 18);
+    }
+});
+
+// IFSC validation (uppercase + alphanumeric + max 11)
+document.getElementById("ifsc_code").addEventListener("input", function () {
+
+    // convert to uppercase
+    this.value = this.value.toUpperCase();
+
+    // allow only alphanumeric
+    this.value = this.value.replace(/[^A-Z0-9]/g, '');
+
+    // limit to 11 characters
+    if (this.value.length > 10) {
+        this.value = this.value.slice(0, 10);
+    }
+});
+
+// for branch and bank name allow only letters and spaces
+
+function allowOnlyLetters(input) {
+    input.value = input.value.replace(/[^a-zA-Z0-9\s]/g, '');
+}
+
+document.getElementById("bank_name").addEventListener("input", function () {
+    allowOnlyLetters(this);
+});
+
+document.getElementById("branch").addEventListener("input", function () {
+    allowOnlyLetters(this);
+});
     </script>
 
 
