@@ -81,7 +81,7 @@ flex flex-col justify-between flex-shrink-0">
 
 <!-- Bottom Logout -->
 <div class="p-3 border-t border-gray-700">
-  <a href=""
+  <a onclick="logout()" style="cursor: pointer;"
    class="menu-item text-red-400 hover:bg-red-500 hover:text-white transition">
     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path d="M17 16l4-4m0 0l-4-4m4 4H7"/>
@@ -91,3 +91,28 @@ flex flex-col justify-between flex-shrink-0">
 </div>
 
 </aside>
+
+<script>
+    function logout() {
+    const token = localStorage.getItem("auth_token");
+
+    fetch(url + "logout", {
+        method: "POST",
+        headers: {
+            "Authorization": "Bearer " + token,
+            "Accept": "application/json"
+        }
+    }).finally(() => {
+        localStorage.clear();
+        window.location.href = "../login.php";
+    });
+}
+
+const user = JSON.parse(localStorage.getItem("auth_user"));
+
+if (!user || user.role !== "adviser") {
+    alert("Unauthorized access");
+    window.location.href = "../login.php";
+}
+
+</script>

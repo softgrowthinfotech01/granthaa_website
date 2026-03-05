@@ -24,7 +24,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/adviserPerformance', [BookingController::class, 'adviserPerformance']);
 });
 
-Route::middleware(['auth:sanctum', 'role:admin,leader'])->group(function () {
+Route::middleware(['auth:sanctum', 'role:admin,leader,adviser'])->group(function () {
     
     // user 
     Route::post('/admin/create-leader', [UserController::class, 'createLeader']);
