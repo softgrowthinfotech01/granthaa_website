@@ -30,54 +30,55 @@
                 <!--/Sidebar-->
 
                 <!--Main-->
-                <div class="w-[80%] mx-auto my-6">
+                <!--Main-->
+<div class="w-full md:w-[90%] lg:w-[80%] mx-auto my-6 px-3 md:px-0">
 
-                    <!-- GRID WRAPPER -->
-                    <div class="grid grid-cols-3 gap-4">
+    <!-- GRID WRAPPER -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
 
+        <a href="#" class="rounded-lg bg-red-500 hover:bg-red-400
+        p-6 border border-default rounded-base shadow-xs h-full flex flex-col">
+            <h5 class="mb-3 text-xl md:text-2xl font-semibold tracking-tight text-heading leading-8">
+                Total Leaders
+            </h5>
+            <p class="text-body mt-auto text-lg font-semibold">25</p>
+        </a>
 
+        <a href="#" class="rounded-lg bg-green-500 hover:bg-green-400
+        p-6 border border-default rounded-base shadow-xs h-full flex flex-col">
+            <h5 class="mb-3 text-xl md:text-2xl font-semibold tracking-tight text-heading leading-8">
+                Total Sites
+            </h5>
+            <p class="text-body mt-auto text-lg font-semibold">12</p>
+        </a>
 
+        <a href="#" class="rounded-lg bg-blue-500 hover:bg-blue-400
+        p-6 border border-default rounded-base shadow-xs h-full flex flex-col">
+            <h5 class="mb-3 text-xl md:text-2xl font-semibold tracking-tight text-heading leading-8">
+                Total Bookings
+            </h5>
+            <p class="text-body mt-auto text-lg font-semibold">150</p>
+        </a>
 
-                        <a href="#" class="rounded-lg bg-red-500 hover:bg-red-400
+        <a href="#" class="rounded-lg bg-gray-500 hover:bg-gray-400
+        p-6 border border-default rounded-base shadow-xs h-full flex flex-col">
+            <h5 class="mb-3 text-xl md:text-2xl font-semibold tracking-tight text-heading leading-8">
+                Total Sales Value
+            </h5>
+            <p class="text-body mt-auto text-lg font-semibold">₹ 25,00,000</p>
+        </a>
 
- p-6 border border-default rounded-base shadow-xs h-full flex flex-col">
-                            <h5 class="mb-3 text-2xl font-semibold tracking-tight text-heading leading-8">Total Leaders</h5>
-                            <p class="text-body mt-auto text-lg font-semibold">25</p>
-                        </a>
+        <a href="#" class="rounded-lg bg-purple-500 hover:bg-purple-400
+        p-6 border border-default rounded-base shadow-xs h-full flex flex-col">
+            <h5 class="mb-3 text-xl md:text-2xl font-semibold tracking-tight text-heading leading-8">
+                Pending Commissions
+            </h5>
+            <p class="text-body mt-auto text-lg font-semibold">₹ 5,00,000</p>
+        </a>
 
-                        <a href="#" class="rounded-lg bg-green-500 hover:bg-green-400
- p-6 border border-default rounded-base shadow-xs h-full flex flex-col">
-                            <h5 class="mb-3 text-2xl font-semibold tracking-tight text-heading leading-8">Total Sites</h5>
-                            <p class="text-body mt-auto text-lg font-semibold">12</p>
-                        </a>
-
-                        <a href="#" class="rounded-lg bg-blue-500 hover:bg-blue-400
- p-6 border border-default rounded-base shadow-xs  h-full flex flex-col">
-                            <h5 class="mb-3 text-2xl font-semibold tracking-tight text-heading leading-8">Total Bookings</h5>
-                            <p class="text-body mt-auto text-lg font-semibold">150</p>
-                        </a>
-
-                        <a href="#" class="rounded-lg bg-gray-500 hover:bg-gray-400
- p-6 border border-default rounded-base shadow-xs h-full flex flex-col">
-                            <h5 class="mb-3 text-2xl font-semibold tracking-tight text-heading leading-8">Total Sales Value</h5>
-                            <p class="text-body mt-auto text-lg font-semibold">₹ 25,00,000</p>
-                        </a>
-
-                        <a href="#" class="rounded-lg bg-purple-500 hover:bg-purple-400
- p-6 border border-default rounded-base shadow-xs h-full flex flex-col">
-                            <h5 class="mb-3 text-2xl font-semibold tracking-tight text-heading leading-8">Pending Commissions</h5>
-                            <p class="text-body mt-auto text-lg font-semibold">₹ 5,00,000</p>
-                        </a>
-
-                        <!-- <a href="#" class="rounded-lg bg-gray-200
- p-6 border border-default rounded-base shadow-xs hover:bg-gray-100 h-full flex flex-col">
-                            <h5 class="mb-3 text-2xl font-semibold tracking-tight text-heading leading-8">MLM Network</h5>
-                            <p class="text-body mt-auto text-lg font-semibold">250</p>
-                        </a> -->
-
-                    </div>
-                </div>
-
+    </div>
+</div>
+<!--/Main-->
                 <!--/Main-->
             </div>
             <!--Footer-->
