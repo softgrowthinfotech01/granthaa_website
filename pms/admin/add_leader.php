@@ -31,57 +31,7 @@ class="w-full md:w-[80%] lg:w-[60%] mx-3 md:mx-auto my-4
 transition-all duration-300
 rounded-lg bg-gray-200 p-6 border shadow-xl">
 
-<<<<<<< HEAD
-                            <div class="grid grid-cols-2">
-                                <div class="mb-5 col-span-1 px-1">
-                                    <label for="mobile" class="block mb-2.5 text-sm font-medium text-heading">Mobile Number</label>
-                                    <input name="contact_no" type="tel" maxlength="10" pattern="[0-9]{10}" inputmode="numeric" id="mobile"
-                                        class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" placeholder="Enter your mobile number" required />
-                                </div>
-                                <div class="mb-5 col-span-1 px-1">
-                                    <label for="email" class="block mb-2.5 text-sm font-medium text-heading">Email</label>
-                                    <input type="email" name="email" id="email" class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" placeholder="Enter your email"  required />
-                                </div>
-                            </div>
-                            <div class="grid grid-cols-2">
-                                <div class="mb-5 col-span-1 px-1">
-                                    <label for="city" class="block mb-2.5 text-sm font-medium text-heading">City</label>
-                                    <input type="text" name="city" id="city" class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" placeholder="Enter your city" required pattern="[A-Za-z\s]+"/>
-                                </div>
-                                <div class="mb-5 col-span-1 px-1">
-                                    <label for="state" class="block mb-2.5 text-sm font-medium text-heading">State</label>
-                                    <input name="state" type="text" id="state" class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" placeholder="Enter your state" required />
-                                </div>
-                            </div>
-                            <div class="">
-                                <div class="grid grid-cols-2">
-                                    <div class="mb-5 col-span-1 px-1">
-                                        <label for="address" class="block mb-2.5 text-sm font-medium text-heading">Address</label>
-                                        <input name="address" type="textarea" id="address" class="rounded-lg bg-white border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" placeholder="Enter your address" required />
-                                    </div>
-                                    <div class="mb-5 col-span-1 px-1">
-                                        <label for="pincode" class="block mb-2.5 text-sm font-medium text-heading">Pincode</label>
-                                        <input name="pin_code" type="text" maxlength="6" inputmode="numeric" pattern="[0-9]{6}" id="pincode"
-                                            class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" placeholder="Enter your pincode" required />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <hr class="border-white-300 mb-3">
-                        <div class="contact-details">
-                            <h5 class="text-xl font-bold text-heading p-1">Bank Details</h5>
-                            <div class="grid grid-cols-2">
-                                <div class="mb-5 col-span-1 px-1">
-                                    <label for="bank_name" class="block mb-2.5 text-sm font-medium text-heading">Bank Name</label>
-                                    <input name="bank_name" type="text" id="bank_name" class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" placeholder="Enter your bank name" required />
-                                </div>
-                                <div class="mb-5 col-span-1 px-1">
-                                    <label for="branch" class="block mb-2.5 text-sm font-medium text-heading">Branch</label>
-                                    <input name="bank_branch" type="text" id="branch" class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" placeholder="Enter your branch name" required />
-                                </div>
-=======
 <form class="w-full px-4" method="post" id="userForm" enctype="multipart/form-data">
->>>>>>> 0387047b8019042fc4138e0be8df77f49675a6ce
 
 <div class="personal-details">
 <h5 class="text-xl font-bold text-heading p-1">Add Leader Details</h5>
@@ -248,95 +198,32 @@ Reset
 
     </div>
 
-
+    <!-- Email Validation -->
     <script>
-        // Email Validation
-        document.addEventListener("DOMContentLoaded", function () {
+        document.addEventListener("DOMContentLoaded", function() {
 
-            const form = document.getElementById("userForm");
+            const form = document.querySelector("userform");
             const emailInput = document.getElementById("email");
 
-            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            form.addEventListener("submit", function(e) {
 
-            function validateEmail() {
                 const email = emailInput.value.trim();
 
-                if (email === "") {
-                    emailInput.setCustomValidity("Email is required");
-                }
-                else if (!emailPattern.test(email)) {
-                    emailInput.setCustomValidity("Enter a valid email like example@gmail.com");
-                }
-                else {
-                    emailInput.setCustomValidity("");
-                }
-            }
+                // Simple email regex
+                const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-            // Validate while typing
-            emailInput.addEventListener("input", validateEmail);
-
-            // Show error when user leaves field
-            emailInput.addEventListener("blur", function () {
-                emailInput.reportValidity();
-            });
-
-            // Prevent form submission if invalid
-            form.addEventListener("submit", function (e) {
-                validateEmail();
-
-                if (!emailInput.checkValidity()) {
+                if (!emailPattern.test(email)) {
                     e.preventDefault();
+                    emailInput.setCustomValidity("Enter a valid email (must contain @ and .)");
                     emailInput.reportValidity();
-                }
-            });
-
-        });
-
-        // City Validation
-        document.addEventListener("DOMContentLoaded", function () {
-
-            const form = document.getElementById("userForm");
-            const cityInput = document.getElementById("city");
-
-            const cityPattern = /^[A-Za-z\s]+$/;
-
-            function validateCity() {
-                const city = cityInput.value.trim();
-
-                if (city === "") {
-                    cityInput.setCustomValidity("City is required");
-                }
-                else if (!cityPattern.test(city)) {
-                    cityInput.setCustomValidity("City should contain only letters");
-                }
-                else {
-                    cityInput.setCustomValidity("");
-                }
-            }
-
-            // Validate while typing
-            cityInput.addEventListener("input", validateCity);
-
-            // Show error when leaving the field
-            cityInput.addEventListener("blur", function () {
-                cityInput.reportValidity();
-            });
-
-            // Prevent form submission if invalid
-            form.addEventListener("submit", function (e) {
-
-                validateCity();
-
-                if (!cityInput.checkValidity()) {
-                    e.preventDefault();
-                    cityInput.reportValidity();
+                } else {
+                    emailInput.setCustomValidity("");
                 }
 
             });
 
         });
     </script>
-
 
 
 
@@ -354,7 +241,7 @@ Reset
     <script>
         document.getElementById("userForm").addEventListener("submit", async function(e) {
 
-            // ✅ Image Validation (JPG, JPEG, PNG, Max 5MB)
+            // âœ… Image Validation (JPG, JPEG, PNG, Max 5MB)
             const fileInput = document.getElementById("file_input");
             const file = fileInput.files[0];
 
@@ -393,7 +280,7 @@ Reset
             let form = document.getElementById("userForm");
             let formData = new FormData(form);
             // alert(formData);
-            // 🔥 FORCE VALUES
+            // ðŸ”¥ FORCE VALUES
             formData.set("role", "leader");
             formData.set("password", "password123"); // static password
             formData.set("created_by", user.id); // admin id
@@ -423,8 +310,8 @@ Reset
                     return;
                 }
 
-                // ✅ SUCCESS ALERT
-                alert("✅ " + data.message);
+                // âœ… SUCCESS ALERT
+                alert("âœ… " + data.message);
 
                 // Optional: reset form after success
                 form.reset();
