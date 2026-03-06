@@ -72,13 +72,13 @@
                                 </div>
                                 <div class="mb-5 col-span-1 px-1">
                                     <label for="email" class="block mb-2.5 text-sm font-medium text-heading">Email</label>
-                                    <input name="email" type="email" id="email" class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" placeholder="Enter your email" required />
+                                    <input type="email" name="email" id="email" class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" placeholder="Enter your email"  required />
                                 </div>
                             </div>
                             <div class="grid grid-cols-2">
                                 <div class="mb-5 col-span-1 px-1">
                                     <label for="city" class="block mb-2.5 text-sm font-medium text-heading">City</label>
-                                    <input name="city" type="text" id="city" class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" placeholder="Enter your city" required />
+                                    <input type="text" name="city" id="city" class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" placeholder="Enter your city" required pattern="[A-Za-z\s]+"/>
                                 </div>
                                 <div class="mb-5 col-span-1 px-1">
                                     <label for="state" class="block mb-2.5 text-sm font-medium text-heading">State</label>
@@ -142,32 +142,95 @@
 
     </div>
 
-    <!-- Email Validation -->
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
 
-            const form = document.querySelector("userform");
+    <script>
+        // Email Validation
+        document.addEventListener("DOMContentLoaded", function () {
+
+            const form = document.getElementById("userForm");
             const emailInput = document.getElementById("email");
 
-            form.addEventListener("submit", function(e) {
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+            function validateEmail() {
                 const email = emailInput.value.trim();
 
-                // Simple email regex
-                const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-                if (!emailPattern.test(email)) {
-                    e.preventDefault();
-                    emailInput.setCustomValidity("Enter a valid email (must contain @ and .)");
-                    emailInput.reportValidity();
-                } else {
+                if (email === "") {
+                    emailInput.setCustomValidity("Email is required");
+                }
+                else if (!emailPattern.test(email)) {
+                    emailInput.setCustomValidity("Enter a valid email like example@gmail.com");
+                }
+                else {
                     emailInput.setCustomValidity("");
+                }
+            }
+
+            // Validate while typing
+            emailInput.addEventListener("input", validateEmail);
+
+            // Show error when user leaves field
+            emailInput.addEventListener("blur", function () {
+                emailInput.reportValidity();
+            });
+
+            // Prevent form submission if invalid
+            form.addEventListener("submit", function (e) {
+                validateEmail();
+
+                if (!emailInput.checkValidity()) {
+                    e.preventDefault();
+                    emailInput.reportValidity();
+                }
+            });
+
+        });
+
+        // City Validation
+        document.addEventListener("DOMContentLoaded", function () {
+
+            const form = document.getElementById("userForm");
+            const cityInput = document.getElementById("city");
+
+            const cityPattern = /^[A-Za-z\s]+$/;
+
+            function validateCity() {
+                const city = cityInput.value.trim();
+
+                if (city === "") {
+                    cityInput.setCustomValidity("City is required");
+                }
+                else if (!cityPattern.test(city)) {
+                    cityInput.setCustomValidity("City should contain only letters");
+                }
+                else {
+                    cityInput.setCustomValidity("");
+                }
+            }
+
+            // Validate while typing
+            cityInput.addEventListener("input", validateCity);
+
+            // Show error when leaving the field
+            cityInput.addEventListener("blur", function () {
+                cityInput.reportValidity();
+            });
+
+            // Prevent form submission if invalid
+            form.addEventListener("submit", function (e) {
+
+                validateCity();
+
+                if (!cityInput.checkValidity()) {
+                    e.preventDefault();
+                    cityInput.reportValidity();
                 }
 
             });
 
         });
     </script>
+
 
 
 
