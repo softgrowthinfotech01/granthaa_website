@@ -54,4 +54,15 @@ class Booking extends Model
 {
     return $this->belongsTo(LocationMaster::class, 'site_location', 'id');
 }
+
+public function booking()
+    {
+        return $this->belongsTo(User::class, 'user_code');
+    }
+
+    // If booking is from referral
+    public function referral()
+    {
+        return $this->hasOne(Referral::class, 'booking_id');
+    }
 }

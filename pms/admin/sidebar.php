@@ -1,8 +1,10 @@
 <link rel="stylesheet" href="../style.css">
 
 <!-- Sidebar -->
-<aside id="sidebar" class="w-64 min-h-screen bg-gray-400 border-r border-gray-200 flex flex-col
-                            transition-all duration-500 ease-in-out transform">
+<aside id="sidebar"
+class="w-64 min-h-screen bg-gray-400 border-r border-gray-200
+flex flex-col transition-all duration-500 ease-in-out transform
+fixed md:relative z-40">
     <!-- Menu -->
     <nav class="flex-1">
         <ul class="text-sm text-gray-700">
@@ -236,7 +238,19 @@
     }
 
     function sidebarToggle() {
-        const sidebar = document.getElementById('sidebar');
-        sidebar.classList.toggle('-translate-x-full');
+
+    const sidebar = document.getElementById("sidebar");
+    const mainContent = document.getElementById("mainContent");
+
+    sidebar.classList.toggle("-translate-x-full");
+
+    // Only move content on desktop
+    if (window.innerWidth >= 768) {
+
+        mainContent.classList.toggle("ml-0");
+        mainContent.classList.toggle("ml-10");
+
     }
+
+}
 </script>
