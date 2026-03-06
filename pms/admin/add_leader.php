@@ -160,10 +160,10 @@ rounded-lg bg-gray-200 p-6 border shadow-xl">
                                 </div>
 
                                 <div class="mb-5 px-1">
-                                    <label for="ifsc_code" class="block mb-2.5 text-sm font-medium text-heading">IFSC Code</label>
+                                    <label for="ifsc_code" class="block mb-2.5 text-sm font-medium text-heading">IFSC Code <span>(Ex. ABCD0001234)</span></label>
                                     <input name="bank_ifsc_code" type="text" id="ifsc_code"
                                         class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm block w-full px-3 py-2.5 shadow-xs"
-                                        placeholder="Enter IFSC code" pattern="[0-9]{0,11}" maxlength="11" required />
+                                        placeholder="Enter IFSC code" maxlength="11" required />
                                 </div>
 
                             </div>
@@ -235,6 +235,15 @@ rounded-lg bg-gray-200 p-6 border shadow-xl">
 
             if (accountNumber.length !== 18) {
                 alert("Account number must be exactly 18 digits");
+                return;
+            }
+
+            // IFSC Validation
+            const ifscCode = document.getElementById("ifsc_code").value.trim();
+            const ifscPattern = /^[A-Z]{4}[0-9]{7}$/;
+
+            if (!ifscPattern.test(ifscCode)) {
+                alert("Invalid IFSC code format. Example: SBIN0001234");
                 return;
             }
 
@@ -348,18 +357,26 @@ rounded-lg bg-gray-200 p-6 border shadow-xl">
         });
 
         // IFSC validation (uppercase + alphanumeric + max 11)
-        document.getElementById("ifsc_code").addEventListener("input", function() {
+        const ifscInput = document.getElementById("ifsc_code");
+
+        ifscInput.addEventListener("input", function() {
 
             // convert to uppercase
             this.value = this.value.toUpperCase();
 
-            // allow only alphanumeric
+            // remove invalid characters
             this.value = this.value.replace(/[^A-Z0-9]/g, '');
 
             // limit to 11 characters
             if (this.value.length > 11) {
                 this.value = this.value.slice(0, 11);
             }
+
+            // enforce first 4 letters
+            if (this.value.length <= 4) {
+                this.value = this.value.replace(/[^A-Z]/g, '');
+            }
+
         });
 
         // for branch and bank name allow only letters and spaces
