@@ -230,7 +230,7 @@ if ($request->filled('referral_id')) {
     public function mybookings(){
         $user = auth()->user();
         // print_r($user);exit;
-      $booking = Booking::with('booking', $user->user_code);
+           $booking = Booking::where('user_code', $user->user_code)->get();
 // print_r($booking);exit;
         return response()->json($booking);
     }
