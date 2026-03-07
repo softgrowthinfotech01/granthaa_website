@@ -7,7 +7,7 @@
 
   <link rel="stylesheet" href="../style.css">
   <script src="script.js"></script>
-  
+
    <!-- <link rel="stylesheet" href="a.css"> -->
       <link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet">
 	 <!--Responsive Extension Datatables CSS-->
@@ -84,7 +84,7 @@
 
     <!-- Project Name -->
 <div class="absolute left-1/2 transform -translate-x-1/2 text-center">
- <img src="../images/logo_icon.png" 
+ <img src="../images/logo_icon.png"
        alt="Granthaa Land Developer Pvt Ltd"
        class="h-23 w-70 sidebar-logo transition-all duration-300 ">
 </div>
@@ -127,11 +127,12 @@
       <img src="../images/profile.png"
            class="w-16 h-16 mx-auto rounded-full object-cover border-2 border-blue-500 mb-2">
 
-      <p class="font-semibold text-gray-800">CUST001</p>
-      <p class="text-lg font-semibold text-gray-500">Pravin Kumar</p>
+      <p id="userCode" class="font-semibold text-gray-800"></p>
+      <p id="userName" class="text-lg font-semibold text-gray-500"></p>
     </div>
 
-    <a href=""
+    <a href="#"
+       onclick="logout()"
        class="block px-4 py-2 text-red-500 hover:bg-gray-100 transition text-center">
       Logout
     </a>
@@ -144,27 +145,48 @@
 </div>
 <script src="../url.js"></script>
 <script>
-    function logout() {
-    const token = localStorage.getItem("auth_token");
+    //  Customer Data
+    document.addEventListener("DOMContentLoaded", function () {
 
-    fetch(url + "logout", {
-        method: "POST",
-        headers: {
-            "Authorization": "Bearer " + token,
-            "Accept": "application/json"
-        }
-    }).finally(() => {
-        localStorage.clear();
-        window.location.href = "../login.php";
+        // get user object from localStorage
+        console.log(localStorage.getItem("auth_user"));  //debug
+        const userData = JSON.parse(localStorage.getItem("auth_user") || "{}");
+
+        document.getElementById("userCode").textContent = userData.user_code || "";
+        document.getElementById("userName").textContent = userData.name || "";
     });
-}
 
-const user = JSON.parse(localStorage.getItem("auth_user"));
+    function logout() {
 
-if (!user || user.role !== "customer") {
-    alert("Unauthorized access");
-    window.location.href = "../login.php";
-}
+      const token = localStorage.getItem("auth_token");
+      fetch(url + "logout", {
+          method: "POST",
+          headers: {
+              "Authorization": "Bearer " + token,
+              "Accept": "application/json"
+          }
+      })
+      .then(() => {
+          // remove only auth data
+          localStorage.removeItem("auth_token");
+          localStorage.removeItem("auth_user");
+          window.location.href = "../login.php";
+      })
+      .catch(() => {
+          // logout even if API fails
+          localStorage.removeItem("auth_token");
+          localStorage.removeItem("auth_user");
+          window.location.href = "../login.php";
+      });
+
+    }
+
+// const user = JSON.parse(localStorage.getItem("auth_user"));
+
+// if (!user || user.role !== "customer") {
+//     alert("Unauthorized access");
+//     window.location.href = "../login.php";
+// }
 
 </script>
 
