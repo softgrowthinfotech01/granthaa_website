@@ -39,6 +39,15 @@ class Booking extends Model
         'payment_mode',
         'remark',
         'created_by',
+        'created_by_role',
+        'leader_id',
+        'adviser_id',
+        'leader_commission_type',
+        'leader_commission_value',
+        'leader_commission_amount',
+        'adviser_commission_type',
+        'adviser_commission_value',
+        'adviser_commission_amount',
     ];
 
     public function leader()
@@ -50,12 +59,7 @@ class Booking extends Model
         return $this->belongsTo(User::class, 'user_code');
     }
 
-    public function location()
-{
-    return $this->belongsTo(LocationMaster::class, 'site_location', 'id');
-}
-
-public function booking()
+    public function booking()
     {
         return $this->belongsTo(User::class, 'user_code');
     }

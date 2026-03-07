@@ -116,8 +116,6 @@ class BookingController extends Controller
                     }
                 }
 
-                // 1️⃣ Create Customer
-                // 1️⃣ Check if user already exists
                 $newUser = User::where('email', $request->email)->first();
                 if (!$newUser) {
                     $newUser = User::create([
@@ -135,10 +133,58 @@ class BookingController extends Controller
                     ]);
                 }
 
+                $creator = auth()->user();
+// print_r($creator->role);exit;             
+                $leaderId = null;
+                $adviserId = null;
+
+                $leaderCommissionType = null;
+                $leaderCommissionValue = 0;
+                $leaderCommissionAmount = 0;
+
+                $adviserCommissionType = null;
+                $adviserCommissionValue = 0;
+                $adviserCommissionAmount = 0;
+
+                if ($creator->role == 'leader') {
+
+                    $leaderId = $creator->id;
+                    // print_r($leaderId);exit;
+                    $leaderCommissionType = $request->commission_type;
+                    $leaderCommissionValue = $commissionValue;
+                    $leaderCommissionAmount = $commission_amount;
+                    // print_r($leaderCommissionAmount);exit;
+                    
+                }
+
+                if ($creator->role == 'adviser') {
+
+                    $adviserId = $creator->id;
+                    $leaderId = $creator->created_by; // leader of adviser
+
+                    $adviserCommissionType = $request->commission_type;
+                    $adviserCommissionValue = $commissionValue;
+
+                    if ($request->commission_type == "percent") {
+
+                        $adviserCommissionAmount = ($totalBookingAmount * $commissionValue) / 100;
+                    } else {
+
+                        $adviserCommissionAmount = $commissionValue;
+                    }
+
+                    // Remaining commission goes to leader
+                    $leaderCommissionAmount = $commission_amount - $adviserCommissionAmount;
+
+                    $leaderCommissionType = $request->commission_type;
+                    $leaderCommissionValue = $commissionValue;
+                }
+
                 // 2️⃣ Create Booking
                 return Booking::create([
                     'user_id' => $newUser->id,
                     'user_code' => $leader->user_code,
+
                     'buyer_name' => $request->buyer_name,
                     'mobile' => $request->mobile,
                     'dob' => $request->dob,
@@ -149,11 +195,27 @@ class BookingController extends Controller
                     'pan_number' => $request->pan_number,
                     'aadhar_number' => $request->aadhar_number,
                     'address' => $request->address,
-                    'created_by' => $leader->id,
+
+                    'created_by' => $creator->id,
+                    'created_by_role' => $creator->role,
+
+                    'leader_id' => $leaderId,
+                    'adviser_id' => $adviserId,
+
+                    'leader_commission_type' => $leaderCommissionType,
+                    'leader_commission_value' => $leaderCommissionValue,
+                    'leader_commission_amount' => $leaderCommissionAmount,
+
+                    'adviser_commission_type' => $adviserCommissionType,
+                    'adviser_commission_value' => $adviserCommissionValue,
+                    'adviser_commission_amount' => $adviserCommissionAmount,
+
                     'advance_amount' => $request->advance_amount,
                     'site_location' => $request->site_location,
                     'commission_value' => $commissionValue,
                     'commission_amount' => $commission_amount,
+                    'commission_type' => $request->commission_type,
+
                     'project_name' => $request->project_name,
                     'plot_number' => $request->plot_number,
                     'khasara_number' => $request->khasara_number,
@@ -161,8 +223,10 @@ class BookingController extends Controller
                     'mouza' => $request->mouza,
                     'tahsil' => $request->tahsil,
                     'district' => $request->district,
+
                     'square_feet' => $request->square_feet,
                     'square_meter' => $request->square_meter,
+
                     'total_booking_amount' => $totalBookingAmount,
                     'payment_mode' => $request->payment_mode,
                     'remark' => $request->remark,
