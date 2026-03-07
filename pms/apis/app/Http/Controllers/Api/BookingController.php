@@ -44,7 +44,7 @@ class BookingController extends Controller
         $request->validate([
             'buyer_name' => 'required',
             'mobile' => 'required',
-            'email' => 'required|email|unique:users,email',
+            'email' => 'required|email',
             'pan_number' => 'required',
             'aadhar_number' => 'required',
             'address' => 'required',
@@ -55,6 +55,7 @@ class BookingController extends Controller
             'referral_id' => 'nullable|exists:referrals,id',
         ]);
 
+
         $leader = auth()->user();
         $userCode = $this->generateUserCode('customer');
         // print_r($userCode);exit;
@@ -62,7 +63,7 @@ class BookingController extends Controller
 
             $booking = DB::transaction(function () use ($request, $leader, $userCode) {
 
-                $commissionValue = (float) str_replace(['₹', ',', '%', ' '], '', $request->commission_value);
+                $commissionValue = (float) str_replace(['₹', ',', ' '], '', $request->commission_value);
                 $totalBookingAmount = (float) str_replace(['₹', ',', ' '], '', $request->total_booking_amount);
 
                 $commissionAmount = 0;
@@ -76,59 +77,63 @@ class BookingController extends Controller
                 $commission_amount = round($commissionAmount, 2);
 
                 // 3️⃣ Handle Referral If Exists
-if ($request->filled('referral_id')) {
+                if ($request->filled('referral_id')) {
 
-    $referral = Referral::where('referrer_id', $request->referral_id)
-        ->where('status', 'pending')
-        ->first();
-        // print_r($leader->id);die;
+                    $referral = Referral::where('referrer_id', $request->referral_id)
+                        ->where('status', 'pending')
+                        ->first();
+                    // print_r($leader->id);die;
 
-    if ($referral) {
+                    if ($referral) {
 
-        // 🔐 Security check:
-        // Only assigned leader/adviser can convert
-        if ($referral->assigned_to != $leader->id) {
-            throw new \Exception("You are not authorized to convert this referral.");
-        }
+                        // 🔐 Security check:
+                        // Only assigned leader/adviser can convert
+                        if ($referral->assigned_to != $leader->id) {
+                            throw new \Exception("You are not authorized to convert this referral.");
+                        }
 
-        // 💰 Incentive calculation (Example: 5%)
-        $incentive = ($totalBookingAmount * 5) / 100;
+                        // 💰 Incentive calculation (Example: 5%)
+                        $incentive = ($totalBookingAmount * 5) / 100;
 
-        $referrer = User::find($referral->referrer_id);
+                        $referrer = User::find($referral->referrer_id);
 
-        // Add to wallet
-        $referrer->increment('wallet_balance', $incentive);
+                        // Add to wallet
+                        $referrer->increment('wallet_balance', $incentive);
 
-        WalletTransaction::create([
-            'user_id' => $referrer->id,
-            'amount' => $incentive,
-            'type' => 'credit',
-            'remark' => 'Referral Booking Incentive'
-        ]);
+                        WalletTransaction::create([
+                            'user_id' => $referrer->id,
+                            'amount' => $incentive,
+                            'type' => 'credit',
+                            'remark' => 'Referral Booking Incentive'
+                        ]);
 
-        // Update referral
-        $referral->update([
-            'status' => 'converted',
-            'booking_id' => $referrer->id,
-            'incentive_amount' => $incentive
-        ]);
-    }
-}
+                        // Update referral
+                        $referral->update([
+                            'status' => 'converted',
+                            'booking_id' => $referrer->id,
+                            'incentive_amount' => $incentive
+                        ]);
+                    }
+                }
 
                 // 1️⃣ Create Customer
-                $newUser = User::create([
-                    'user_code' => $userCode,
-                    'name' => $request->buyer_name,
-                    'email' => $request->email,
-                    'password' => Hash::make($request->password ?? 'password'),
-                    'role' => 'customer',
-                    'contact_no' => $request->mobile,
-                    'city' => $request->city,
-                    'state' => $request->state,
-                    'address' => $request->address,
-                    'pin_code' => $request->pincode,
-                    'created_by' => $leader->id
-                ]);
+                // 1️⃣ Check if user already exists
+                $newUser = User::where('email', $request->email)->first();
+                if (!$newUser) {
+                    $newUser = User::create([
+                        'user_code' => $userCode,
+                        'name' => $request->buyer_name,
+                        'email' => $request->email,
+                        'password' => Hash::make($request->password ?? 'password'),
+                        'role' => 'customer',
+                        'contact_no' => $request->mobile,
+                        'city' => $request->city,
+                        'state' => $request->state,
+                        'address' => $request->address,
+                        'pin_code' => $request->pincode,
+                        'created_by' => $leader->id
+                    ]);
+                }
 
                 // 2️⃣ Create Booking
                 return Booking::create([
@@ -147,7 +152,6 @@ if ($request->filled('referral_id')) {
                     'created_by' => $leader->id,
                     'advance_amount' => $request->advance_amount,
                     'site_location' => $request->site_location,
-                    'commission_type' => $request->commission_type,
                     'commission_value' => $commissionValue,
                     'commission_amount' => $commission_amount,
                     'project_name' => $request->project_name,
@@ -178,6 +182,7 @@ if ($request->filled('referral_id')) {
             ], 500);
         }
     }
+
     public function index(Request $request)
     {
         $user = auth()->user();
@@ -213,12 +218,14 @@ if ($request->filled('referral_id')) {
         $perPage = $request->per_page ?? 10;
 
         $bookings = $query->latest()->paginate($perPage);
-        
+
         return response()->json([
             'status' => true,
             'data' => $bookings
         ]);
     }
+
+
 
     public function show($id)
     {
@@ -227,11 +234,13 @@ if ($request->filled('referral_id')) {
         return response()->json($booking);
     }
 
-    public function mybookings(){
+
+    public function mybookings()
+    {
         $user = auth()->user();
-        // print_r($user);exit;
-           $booking = Booking::where('user_code', $user->user_code)->get();
-// print_r($booking);exit;
+        //  print_r($user);exit;
+        $booking = Booking::where('email', $user->email)->get();
+        // print_r($booking);exit;
         return response()->json($booking);
     }
 
@@ -239,54 +248,24 @@ if ($request->filled('referral_id')) {
     {
         // dd($request->all());
         $request->validate([
-    'buyer_name'            => 'required|string|max:255',
-    'mobile'                => 'required|digits:10',
-    'dob'                   => 'nullable|date',
-    'email'                 => 'nullable|email|max:255',
-    'pan_number'            => 'required|string|max:20',
-    'aadhar_number'         => 'required|digits:12',
-    'address'               => 'required|string|max:500',
-    'city'                  => 'nullable|string|max:100',
-    'state'                 => 'nullable|string|max:100',
-    'pincode'               => 'nullable|digits:6',
-    'advance_amount'        => 'nullable|numeric|min:0',
-
-    'project_name'          => 'nullable|string|max:255',
-    'plot_number'           => 'required|string|max:100',
-    'khasara_number'        => 'nullable|string|max:100',
-    'ph_number'             => 'nullable|string|max:100',
-    'mouza'                 => 'nullable|string|max:100',
-    'tahsil'                => 'nullable|string|max:100',
-    'district'              => 'nullable|string|max:100',
-
-    'square_feet'           => 'nullable|numeric|min:0',
-    'square_meter'          => 'nullable|numeric|min:0',
-    'total_booking_amount'  => 'nullable|numeric|min:0',
-
-    'payment_mode'          => 'nullable|in:cash,cheque,online_transfer,upi',
-    'remark'                => 'nullable|string|max:1000',
-]);
+            'buyer_name' => 'sometimes|required|string',
+            'mobile' => 'sometimes|required|string',
+            'pan_number' => 'sometimes|required|string',
+            'aadhar_number' => 'sometimes|required|string',
+            'address' => 'sometimes|required|string',
+            'plot_number' => 'sometimes|required|string',
+        ]);
 
         $booking = Booking::findOrFail($id);
 
         $booking->update($request->only([
-    'buyer_name',
-    'mobile',
-    'pan_number',
-    'aadhar_number',
-    'address',
-    'plot_number',
-    'total_booking_amount',   // 👈 ADD THIS
-    'project_name',
-    'city',
-    'state',
-    'pincode',
-    'advance_amount',
-    'square_feet',
-    'square_meter',
-    'payment_mode',
-    'remark'
-]));
+            'buyer_name',
+            'mobile',
+            'pan_number',
+            'aadhar_number',
+            'address',
+            'plot_number'
+        ]));
 
         return response()->json([
             'status' => true,
