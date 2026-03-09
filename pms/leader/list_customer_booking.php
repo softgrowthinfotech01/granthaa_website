@@ -136,17 +136,7 @@
 
                     bookings.forEach((row) => {
 
-                        let commission_Amount = 0;
-
-                        // If percent → calculate from total_booking_amount
-                        if (row.commission_type === "Percentage") {
-                            commission_Amount = (row.total_booking_amount * row.commission_value) / 100;
-                        }
-
-                        // If fixed → directly use commission_value
-                        else if (row.commission_type === "amount") {
-                            commission_Amount = row.commission_value;
-                        }
+                       let commission_Amount = row.commission_amount ?? 0;
 
                         tbody.innerHTML += `
         <tr class="border-b bg-white">
