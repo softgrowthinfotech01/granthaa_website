@@ -39,6 +39,14 @@ flex flex-col justify-between shrink-0">
       <span class="sidebar-text">Add Advisor</span>
     </a>
 
+    <a href="payment"
+     class="menu-item <?php if($current=='payment') echo 'active'; ?>">
+     <svg class="w-6 h-6 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path d="M12 4v16m8-8H4"/>
+      </svg>
+      <span class="sidebar-text">Add Payment</span>
+    </a>
+
     <a href="set_commission"
      class="menu-item <?php if($current=='set_commission') echo 'active'; ?>">
      <svg class="w-6 h-6 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -81,6 +89,15 @@ flex flex-col justify-between shrink-0">
         <path d="M3 7h18M3 12h18M3 17h18"/>
       </svg>
       <span class="sidebar-text">Customer Booking List</span>
+    </a>
+
+    <a href="list_payment"
+     class="menu-item <?php if($current=='payment_list') echo 'active'; ?>">
+     <svg class="w-6 h-6 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+d="M9 14h6m-6-4h6m2 10l-3-2-3 2-3-2-3 2V4h12v16z"/>
+</svg>
+      <span class="sidebar-text">Payment List</span>
     </a>
 
     <a href="team_performance"

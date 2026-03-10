@@ -2,7 +2,7 @@
 
 <!-- Sidebar -->
 <aside id="sidebar"
-class="w-64 min-h-screen bg-gray-400 border-r border-gray-200
+    class="w-64 min-h-screen bg-gray-400 border-r border-gray-200
 flex flex-col transition-all duration-500 ease-in-out transform
 fixed md:relative z-40">
     <!-- Menu -->
@@ -54,7 +54,7 @@ fixed md:relative z-40">
                     onclick="toggleMenu('location', this)"
                     class="flex items-center justify-between px-4 py-4 hover:bg-gray-300">
                     <span class="flex items-center gap-3 text-base font-semibold">
-                       <i class="fa-solid fa-location-dot"></i>
+                        <i class="fa-solid fa-location-dot"></i>
                         Location
                     </span>
                     <i class="fas fa-angle-right transition-transform"></i>
@@ -84,7 +84,7 @@ fixed md:relative z-40">
                     class="flex items-center justify-between px-4 py-4 hover:bg-gray-300">
                     <span class="flex items-center gap-3 text-base font-semibold">
                         <i class="fa-solid fa-users"></i>
-                       Set Commission
+                        Set Commission
                     </span>
                     <i class="fas fa-angle-right transition-transform"></i>
                 </a>
@@ -173,18 +173,51 @@ fixed md:relative z-40">
                     <li class="border-t">
                         <a href="add_leader"
                             class="block px-10 py-3 bg-gray-500 text-white">
-                            
+
                         </a>
                     </li>
                     <li class="border-t">
                         <a href="view_leader"
                             class="block px-10 py-3 bg-gray-500 text-white">
-                            
+
                         </a>
                     </li>
-                    
+
                 </ul>
             </li>
+
+            <li class="border-t">
+                <a href="javascript:void(0)"
+                    onclick="toggleMenu('payment', this)"
+                    class="flex items-center justify-between px-4 py-4 hover:bg-gray-300">
+
+                    <span class="flex items-center gap-3 text-base font-semibold">
+                        <i class="fas fa-money-bill-wave"></i>
+                        Payment
+                    </span>
+
+                    <i class="fas fa-angle-right transition-transform"></i>
+                </a>
+
+                <ul id="payment" class="hidden bg-gray-100">
+
+                    <li class="border-t">
+                        <a href="payment"
+                            class="block px-10 py-3 bg-gray-500 text-white">
+                            Add Payment
+                        </a>
+                    </li>
+
+                    <li class="border-t">
+                        <a href="view_payment"
+                            class="block px-10 py-3 bg-gray-500 text-white">
+                            Payment Reocrds
+                        </a>
+                    </li>
+
+                </ul>
+            </li>
+
 
             <!-- <li class="border-t">
                 <a href="javascript:void(0)"
@@ -239,18 +272,18 @@ fixed md:relative z-40">
 
     function sidebarToggle() {
 
-    const sidebar = document.getElementById("sidebar");
-    const mainContent = document.getElementById("mainContent");
+        const sidebar = document.getElementById("sidebar");
+        const mainContent = document.getElementById("mainContent");
 
-    sidebar.classList.toggle("-translate-x-full");
+        sidebar.classList.toggle("-translate-x-full");
 
-    // Only move content on desktop
-    if (window.innerWidth >= 768) {
+        // Only move content on desktop
+        if (window.innerWidth >= 768) {
 
-        mainContent.classList.toggle("ml-0");
-        mainContent.classList.toggle("ml-10");
+            mainContent.classList.toggle("ml-0");
+            mainContent.classList.toggle("ml-10");
+
+        }
 
     }
-
-}
 </script>

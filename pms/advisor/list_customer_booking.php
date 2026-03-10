@@ -6,24 +6,26 @@
 
     <!-- Horizontal scroll wrapper -->
     <div class="w-full overflow-x-auto">
-        <div class="flex flex-wrap gap-3 mb-4">
+        <div class="flex justify-between flex-wrap mb-4 mr-4">
+            <div class="">
+                <input type="text" id="searchInput"
+                    placeholder="Search buyer / project / mobile"
+                    class="border p-2 rounded w-64">
 
-            <input type="text" id="searchInput"
-                placeholder="Search buyer / project / mobile"
-                class="border p-2 rounded w-64">
-
-            <button id="searchBtn"
-                class="bg-blue-500 text-white px-4 rounded">
-                Search
-            </button>
-
-            <select id="perPage" class="border p-2 rounded">
-                <option value="10">10</option>
-                <option value="25">25</option>
-                <option value="50">50</option>
-            </select>
-
+                <button id="searchBtn"
+                    class="bg-blue-500 text-white px-4 py-2 rounded">
+                    Search
+                </button>
+            </div>
+            <div class="">
+                <select id="perPage" class="border p-2 rounded">
+                    <option value="10">10</option>
+                    <option value="25">25</option>
+                    <option value="50">50</option>
+                </select>
+            </div>
         </div>
+
 
         <table id="example" class="" style="width:100%; padding-top: 1em;  padding-bottom: 1em;">
 
@@ -79,9 +81,9 @@
 <script src="../url.js"></script>
 
 <script>
-function viewBooking(id) {
-    window.location.href = "update_customer_booking.php?id=" + id;
-}
+    function viewBooking(id) {
+        window.location.href = "update_customer_booking.php?id=" + id;
+    }
 </script>
 
 <script>
@@ -118,7 +120,7 @@ function viewBooking(id) {
 
         async function loadBookings() {
 
-        await loadLocations();
+            await loadLocations();
 
             fetch(`${url}bookings?per_page=1000`, {
                     method: "GET",
@@ -136,7 +138,7 @@ function viewBooking(id) {
 
                     bookings.forEach((row) => {
 
-                    let commission_Amount = 0;
+                        let commission_Amount = 0;
 
                         // If percent → calculate from total_booking_amount
                         if (row.commission_type === "percent") {
@@ -252,39 +254,39 @@ function viewBooking(id) {
 <script src="../url.js"></script>
 
 <script>
-function deleteBooking(id) {
+    function deleteBooking(id) {
 
-    const token = localStorage.getItem('auth_token');
+        const token = localStorage.getItem('auth_token');
 
-    if (!token) {
-        alert("Please login first");
-        window.location.href = "../login";
-        return;
+        if (!token) {
+            alert("Please login first");
+            window.location.href = "../login";
+            return;
+        }
+
+        if (!confirm("Are you sure you want to delete this booking?")) {
+            return;
+        }
+
+        fetch(url + "bookings/" + id, {
+                method: "POST", // safer for Laravel
+                headers: {
+                    "Authorization": "Bearer " + token,
+                    "Accept": "application/json"
+                },
+                body: new URLSearchParams({
+                    _method: "DELETE"
+                })
+            })
+            .then(res => res.json())
+            .then(data => {
+                alert("Booking Deleted Successfully");
+                location.reload();
+            })
+            .catch(error => {
+                console.error(error);
+                alert("Delete failed");
+            });
+
     }
-
-    if (!confirm("Are you sure you want to delete this booking?")) {
-        return;
-    }
-
-    fetch(url + "bookings/" + id, {
-        method: "POST", // safer for Laravel
-        headers: {
-            "Authorization": "Bearer " + token,
-            "Accept": "application/json"
-        },
-        body: new URLSearchParams({
-            _method: "DELETE"
-        })
-    })
-    .then(res => res.json())
-    .then(data => {
-        alert("Booking Deleted Successfully");
-        location.reload();
-    })
-    .catch(error => {
-        console.error(error);
-        alert("Delete failed");
-    });
-
-}
 </script>
