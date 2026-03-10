@@ -2,65 +2,173 @@
 
 <div class="max-w-7xl mx-auto bg-white p-4 rounded-2xl shadow-xl">
 
-<h2 class="text-2xl font-bold mb-4 text-center">
-  My Bookings Record
-</h2>
+  <h2 class="text-2xl font-bold mb-4 text-center">
+    My Bookings Record
+  </h2>
 
+  <div class="flex justify-between mb-4">
+  <!-- Search  -->
+  <input
+  id="searchInput"
+  type="text"
+  placeholder="Search bookings..."
+  class="border rounded-lg px-3 py-2 w-60"
+  />
+  </div>
 <!-- Table Wrapper -->
-<div class="w-full overflow-x-auto">
+  <div class="w-full overflow-x-auto">
 
-<table id="example2" class="" style="width:100%; padding-top: 1em;  padding-bottom: 1em;">
+    <table class="w-full border border-gray-200" >
 
-<thead class="bg-gradient-to-r from-gray-100 to-gray-200 text-gray-700">
-<tr>
-  <th data-priority="1" class="p-3 font-semibold">Leader / Adviser</th>
-  <th data-priority="2" class="p-3 font-semibold">Site Location</th>
-  <th data-priority="3" class="p-3 font-semibold">Plot / Flat No.</th>
-  <th data-priority="4" class="p-3 font-semibold">Khasa No.</th>
-  <th data-priority="5" class="p-3 font-semibold">Sq. Feet</th>
-  <th data-priority="6" class="p-3 font-semibold">Total Booking Amt</th>
-</tr>
-</thead>
+    <thead class="bg-gradient-to-right from-gray-100 to-gray-200 text-gray-700">
+    <tr>
+      <th data-priority="1" class="p-3 font-semibold border">Project Name</th>
+      <th data-priority="2" class="p-3 font-semibold border">Site Location</th>
+      <th data-priority="3" class="p-3 font-semibold border">Sq Feet</th>
+      <th data-priority="4" class="p-3 font-semibold border">Sq Meter</th>
+      <th data-priority="5" class="p-3 font-semibold border">Plot Number</th>
+      <th data-priority="6" class="p-3 font-semibold border">Total Booking Amt</th>
+    </tr>
+    </thead>
 
-<tbody class="divide-y divide-gray-200 text-center">
+    <tbody id="bookingTable" class="divide-y divide-gray-200 text-center">
+    </tbody>
+    </table>
+  </div>
+  <div class="flex justify-between items-center mt-4">
+    <button id="prevBtn" class="bg-gray-200 px-4 py-2 rounded">
+    Prev
+    </button>
+    <span id="pageInfo"></span>
 
-<tr class="odd:bg-white even:bg-gray-50 hover:bg-yellow-50 transition">
-  <td class="p-3 font-medium">ADV001 - AMAN</td>
-  <td class="p-3">DSK</td>
-  <td class="p-3">02</td>
-  <td class="p-3">05</td>
-  <td class="p-3 font-semibold">1500</td>
-  <td class="p-3 text-green-600 font-semibold">₹ 25,00,000</td>
-</tr>
-
-
-</tbody>
-
-</table>
-
-</div>
-
+    <button id="nextBtn" class="bg-gray-200 px-4 py-2 rounded">
+    Next
+    </button>
+  </div>
 </div>
 
 <?php include 'footer.php'; ?>
 
+<script>
+  let bookings = [];
+  let filteredBookings = [];
+  let currentPage = 1;
+  const rowsPerPage = 5;
+
+  document.addEventListener("DOMContentLoaded", () => {
+    fetchBookings();
+
+   document.getElementById("searchInput").addEventListener("input", function(){
+   let term = this.value.toLowerCase().trim();
+   if(term === ""){
+     filteredBookings = bookings;
+   }else{
+     filteredBookings = bookings.filter(b => {
+       const searchableText = [
+         b.project_name,
+         b.site_location,
+         b.square_feet,
+         b.square_meter,
+         b.plot_number,
+         b.total_booking_amount
+       ]
+       .join(" ")
+       .toLowerCase();
+       // prefix match + normal match
+       return searchableText.includes(term) ||
+              searchableText.startsWith(term);
+     });
+   }
+   currentPage = 1;
+   renderTable();
+   });
 
 
+    document.getElementById("prevBtn").onclick = () => {
+     if(currentPage > 1){
+      currentPage--;
+      renderTable();
+     }
+    };
 
-<!-- jQuery -->
-	<script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-		
-	<!--Datatables -->
-	<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-  <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
-	<script>
-		$(document).ready(function() {
-			
-			var table = $('#example2').DataTable( {
-					responsive: true
-				} )
-				.columns.adjust()
-				.responsive.recalc();
-		} );
-	
-	</script>
+    document.getElementById("nextBtn").onclick = () => {
+     if(currentPage < Math.ceil(filteredBookings.length / rowsPerPage)){
+      currentPage++;
+      renderTable();
+     }
+    };
+
+
+  });
+
+  async function fetchBookings(){
+
+      try {
+
+          const token = localStorage.getItem("auth_token");
+
+          const response = await fetch(url + "bookings", {
+              method: "GET",
+              headers: {
+                  "Authorization": "Bearer " + token,
+                  "Accept": "application/json"
+              }
+          });
+
+          const result = await response.json();
+          bookings = result.data?.data || result.data || [];
+          console.log("API Result:", result.data.data);
+          console.log("Bookings:", bookings);
+
+          if (!Array.isArray(bookings)) {
+           bookings = [];
+          }
+          filteredBookings = bookings;
+
+          renderTable();
+
+          console.log("result", result);
+      } catch (error) {
+
+          console.error("Error fetching bookings:", error);
+
+      }
+  }
+
+function renderTable(){
+
+ const tbody = document.getElementById("bookingTable");
+ tbody.innerHTML = "";
+
+ const start = (currentPage-1) * rowsPerPage;
+ const end = start + rowsPerPage;
+
+ const pageData = filteredBookings.slice(start,end);
+
+ if(pageData.length === 0){
+  tbody.innerHTML = `<tr><td colspan="6" class="p-4 text-center">No bookings found</td></tr>`;
+  return;
+ }
+
+ pageData.forEach(b => {
+
+  const row = `
+   <tr>
+    <td class="border p-2">${b.project_name ?? "-"}</td>
+    <td class="border p-2">${b.site_location ?? "-"}</td>
+    <td class="border p-2">${b.square_feet ?? "-"}</td>
+    <td class="border p-2">${b.square_meter ?? "-"}</td>
+    <td class="border p-2">${b.plot_number ?? "-"}</td>
+    <td class="border p-2 text-green-600 font-semibold">₹ ${b.total_booking_amount ?? "-"}</td>
+   </tr>
+  `;
+
+  tbody.insertAdjacentHTML("beforeend",row);
+
+ });
+
+ document.getElementById("pageInfo").innerText =
+  `Page ${currentPage} of ${Math.ceil(filteredBookings.length / rowsPerPage)}`;
+
+}
+</script>
