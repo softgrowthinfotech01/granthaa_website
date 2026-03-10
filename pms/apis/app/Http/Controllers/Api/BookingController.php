@@ -323,13 +323,31 @@ class BookingController extends Controller
         $booking = Booking::findOrFail($id);
 
         $booking->update($request->only([
-            'buyer_name',
-            'mobile',
-            'pan_number',
-            'aadhar_number',
-            'address',
-            'plot_number'
-        ]));
+    'buyer_name',
+    'mobile',
+    'dob',
+    'pan_number',
+    'aadhar_number',
+    'address',
+    'city',
+    'state',
+    'pincode',
+    'advance_amount',
+
+    'site_location',
+    'project_name',
+    'plot_number',
+    'khasara_number',
+    'ph_number',
+    'mouza',
+    'tahsil',
+    'district',
+    'square_feet',
+    'square_meter',
+    'total_booking_amount',
+    'payment_mode',
+    'remark'
+]));
 
         return response()->json([
             'status' => true,
