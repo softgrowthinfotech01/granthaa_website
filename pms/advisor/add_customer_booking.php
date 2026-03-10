@@ -219,7 +219,7 @@ class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:rin
 </div>
 
 <!-- BUTTON -->
-<div class="flex justify-center mt-2">
+<div class="flex justify-center gap-2 mt-2">
 <button
 class="bg-green-500 hover:bg-green-600 px-4 py-4 rounded-xl
 text-black font-semibold text-lg shadow-md hover:shadow-xl

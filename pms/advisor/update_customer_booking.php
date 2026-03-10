@@ -236,7 +236,6 @@ class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:rin
 
 </div>
 
-<script src="../url.js"></script>
 
 <script>
 document.addEventListener("DOMContentLoaded", function () {
