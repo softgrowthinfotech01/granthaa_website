@@ -2,9 +2,9 @@
 
 <!-- Sidebar -->
 <aside id="sidebar"
-    class="w-64 min-h-screen bg-gray-400 border-r border-gray-200
-flex flex-col transition-all duration-500 ease-in-out transform
-fixed md:relative z-40">
+class="w-64 md:w-64 min-h-screen bg-gray-400 border-r border-gray-200
+flex flex-col transition-all duration-300 ease-in-out
+fixed md:relative transform md:translate-x-0 -translate-x-full z-40 overflow-hidden">
     <!-- Menu -->
     <nav class="flex-1">
         <ul class="text-sm text-gray-700">
@@ -272,18 +272,16 @@ fixed md:relative z-40">
 
     function sidebarToggle() {
 
-        const sidebar = document.getElementById("sidebar");
-        const mainContent = document.getElementById("mainContent");
+    const sidebar = document.getElementById("sidebar");
 
+    if (window.innerWidth >= 768) {
+        // desktop
+        sidebar.classList.toggle("md:w-64");
+        sidebar.classList.toggle("md:w-0");
+    } else {
+        // mobile
         sidebar.classList.toggle("-translate-x-full");
-
-        // Only move content on desktop
-        if (window.innerWidth >= 768) {
-
-            mainContent.classList.toggle("ml-0");
-            mainContent.classList.toggle("ml-10");
-
-        }
-
     }
+
+}
 </script>
