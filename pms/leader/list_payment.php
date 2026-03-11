@@ -158,6 +158,12 @@ return;
 
 const user = JSON.parse(localStorage.getItem("auth_user"));
 
+if(!user){
+alert("User data missing. Please login again.");
+window.location.href = "../login";
+return;
+}
+
 fetch(url + "commission/ledger/" + user.id,{
 method:"DELETE",
 headers:{
