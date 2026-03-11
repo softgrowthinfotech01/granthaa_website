@@ -267,7 +267,7 @@ class CommissionPaymentController extends Controller
             $query->whereDate('created_at', '<=', $request->to_date);
         }
 
-        $payments = $query->latest()->paginate($perPage);
+        $payments = $query->with('user')->latest()->paginate($perPage);
 
         return response()->json([
             'status' => true,
