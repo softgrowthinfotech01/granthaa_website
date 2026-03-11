@@ -173,7 +173,7 @@
 
             try {
 
-                const response = await fetch(url + "payments", {
+                const response = await fetch(url + "commission/payment", {
 
                     method: "POST",
 

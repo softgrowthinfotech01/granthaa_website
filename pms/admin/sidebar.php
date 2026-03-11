@@ -148,43 +148,9 @@ fixed md:relative transform md:translate-x-0 -translate-x-full z-40 overflow-hid
                             Advisor-wise Business Report
                         </a>
                     </li>
-                    <li class="border-t">
-                        <a href="product_add"
-                            class="block px-10 py-3 bg-gray-500 text-white  text-sm font-semibold">
-                            <i class="fas fa-angle-right transition-transform mx-1"></i>
-                            Project-wise Sales Report
-                        </a>
-                    </li>
                 </ul>
             </li>
 
-            <li class="border-t">
-                <a href="javascript:void(0)"
-                    onclick="toggleMenu('commissionReport', this)"
-                    class="flex items-center justify-between px-4 py-4 hover:bg-gray-300">
-                    <span class="flex items-center gap-3 text-base font-semibold">
-                        <i class="fas fa-receipt"></i>
-                        Commission Records
-                    </span>
-                    <i class="fas fa-angle-right transition-transform"></i>
-                </a>
-
-                <ul id="commissionReport" class="hidden bg-gray-100">
-                    <li class="border-t">
-                        <a href="add_leader"
-                            class="block px-10 py-3 bg-gray-500 text-white">
-
-                        </a>
-                    </li>
-                    <li class="border-t">
-                        <a href="view_leader"
-                            class="block px-10 py-3 bg-gray-500 text-white">
-
-                        </a>
-                    </li>
-
-                </ul>
-            </li>
 
             <li class="border-t">
                 <a href="javascript:void(0)"
