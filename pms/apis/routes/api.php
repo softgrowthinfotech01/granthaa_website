@@ -7,7 +7,7 @@ use App\Http\Controllers\Api\CommissionController;
 use App\Http\Controllers\Api\LocationMasterController;
 use App\Http\Controllers\api\ReferralController;
 use App\Http\Controllers\Api\UserController;
-use App\Http\Controllers\CommissionPaymentController;
+use App\Http\Controllers\Api\CommissionPaymentController;
 use Illuminate\Support\Facades\Route;
 
 Route::post('/register', [AuthController::class, 'register']);

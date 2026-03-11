@@ -142,7 +142,7 @@ tbody.innerHTML='';
 pagination.innerHTML='';
 
 const response = await fetch(
-url + `payments?page=${page}&search=${currentSearch}&per_page=${currentPerPage}`,
+url + `commission/payments?page=${page}&search=${currentSearch}&per_page=${currentPerPage}`,
 {
 method:"GET",
 headers:{
@@ -303,7 +303,7 @@ return;
 try{
 
 const response = await fetch(
-url + `payments/${id}`,
+url + `commission/payments/${id}`,
 {
 method:"DELETE",
 headers:{
