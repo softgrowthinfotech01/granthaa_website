@@ -93,3 +93,44 @@ transition transform hover:scale-[1.02]">
 
 <?php include 'footer.php'; ?>
 <script src="../url.js"></script>
+
+<script>
+        document.addEventListener("DOMContentLoaded", loadUsers);
+
+        async function loadUsers() {
+
+            const dropdown = document.getElementById("user_id");
+            const token = localStorage.getItem("auth_token");
+
+            try {
+
+                const response = await fetch(url + "users", {
+                    method: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token,
+                        "Accept": "application/json"
+                    }
+                });
+
+                const result = await response.json();
+
+                dropdown.innerHTML = '<option value="">Select User</option>';
+
+                result.data.data.forEach(user => {
+
+                    dropdown.innerHTML += `
+                <option value="${user.id}">
+                    ${user.user_code} - ${user.name}
+                </option>
+            `;
+
+                });
+
+            } catch (error) {
+
+                console.error(error);
+                dropdown.innerHTML = '<option value="">Failed to load users</option>';
+
+            }
+        }
+    </script>

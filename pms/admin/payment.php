@@ -44,7 +44,7 @@ rounded-lg bg-gray-200 p-6 border shadow-xl">
                                 </label>
 
                                 <select name="user_id" id="user_id"
-                                    class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm block w-full px-3 py-2.5 shadow-xs"
+                                    class="block w-full px-3 py-2.5 rounded-lg bg-white border border-default-medium text-heading text-sm shadow-xs"
                                     required>
 
                                     <option value="">Loading...</option>
@@ -220,6 +220,47 @@ rounded-lg bg-gray-200 p-6 border shadow-xl">
             }
 
         });
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", loadUsers);
+
+        async function loadUsers() {
+
+            const dropdown = document.getElementById("user_id");
+            const token = localStorage.getItem("auth_token");
+
+            try {
+
+                const response = await fetch(url + "users", {
+                    method: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token,
+                        "Accept": "application/json"
+                    }
+                });
+
+                const result = await response.json();
+
+                dropdown.innerHTML = '<option value="">Select User</option>';
+
+                result.data.data.forEach(user => {
+
+                    dropdown.innerHTML += `
+                <option value="${user.id}">
+                    ${user.user_code} - ${user.name}
+                </option>
+            `;
+
+                });
+
+            } catch (error) {
+
+                console.error(error);
+                dropdown.innerHTML = '<option value="">Failed to load users</option>';
+
+            }
+        }
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.js"></script>
