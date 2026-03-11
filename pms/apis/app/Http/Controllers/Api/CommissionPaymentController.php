@@ -55,17 +55,35 @@ class CommissionPaymentController extends Controller
     /**
      * Ledger List
      */
-    public function ledger($userId)
-    {
-        $data = CommissionLedger::where('user_id', $userId)
-            ->latest()
-            ->paginate(50);
+    public function ledger($userId, Request $request)
+{
+    $perPage = min($request->get('per_page', 10), 100);
 
-        return response()->json([
-            'status' => true,
-            'data' => $data
-        ]);
+    $query = CommissionLedger::where('user_id', $userId);
+
+    if ($request->type) {
+        $query->where('type', $request->type);
     }
+
+    if ($request->search) {
+        $query->where('remark', 'like', '%' . $request->search . '%');
+    }
+
+    if ($request->from_date) {
+        $query->whereDate('created_at', '>=', $request->from_date);
+    }
+
+    if ($request->to_date) {
+        $query->whereDate('created_at', '<=', $request->to_date);
+    }
+
+    $data = $query->latest()->paginate($perPage);
+
+    return response()->json([
+        'status' => true,
+        'data' => $data
+    ]);
+}
 
 
     /**
@@ -85,104 +103,156 @@ class CommissionPaymentController extends Controller
     /**
      * Advisers Commission
      */
-    public function advisersCommission()
-    {
-        $leader = auth()->user();
+    public function advisersCommission(Request $request)
+{
+    $leader = auth()->user();
 
-        if ($leader->role !== 'leader') {
-            return response()->json([
-                'status' => false,
-                'message' => 'Unauthorized'
-            ]);
-        }
-
-        $advisers = User::where('created_by', $leader->id)
-            ->where('role', 'adviser')
-            ->get();
-
-        $data = $advisers->map(function ($adv) {
-
-            $summary = $this->calculateSummary($adv->id);
-
-            return [
-                'id' => $adv->id,
-                'name' => $adv->name,
-                'total_commission' => $summary['total_commission'],
-                'total_paid' => $summary['total_paid'],
-                'balance' => $summary['balance']
-            ];
-        });
-
+    if ($leader->role !== 'leader') {
         return response()->json([
-            'status' => true,
-            'data' => $data
+            'status' => false,
+            'message' => 'Unauthorized'
         ]);
     }
+
+    $perPage = min($request->get('per_page', 10), 100);
+
+    $query = User::where('created_by', $leader->id)
+        ->where('role', 'adviser');
+
+    if ($request->search) {
+        $query->where('name', 'like', '%' . $request->search . '%');
+    }
+
+    $advisers = $query->paginate($perPage);
+
+    $data = $advisers->getCollection()->map(function ($adv) {
+
+        $summary = $this->calculateSummary($adv->id);
+
+        return [
+            'id' => $adv->id,
+            'name' => $adv->name,
+            'total_commission' => $summary['total_commission'],
+            'total_paid' => $summary['total_paid'],
+            'balance' => $summary['balance']
+        ];
+    });
+
+    $advisers->setCollection($data);
+
+    return response()->json([
+        'status' => true,
+        'data' => $advisers
+    ]);
+}
 
 
     /**
      * Team Commission
      */
-    public function teamCommission()
-    {
-        $leader = auth()->user();
+   public function teamCommission(Request $request)
+{
+    $leader = auth()->user();
 
-        $users = User::where('id', $leader->id)
-            ->orWhere('created_by', $leader->id)
-            ->get();
+    $perPage = min($request->get('per_page', 10), 100);
 
-        $data = $users->map(function ($user) {
+    $query = User::where('id', $leader->id)
+        ->orWhere('created_by', $leader->id);
 
-            $summary = $this->calculateSummary($user->id);
-
-            return [
-                'id' => $user->id,
-                'name' => $user->name,
-                'role' => $user->role,
-                'total_commission' => $summary['total_commission'],
-                'total_paid' => $summary['total_paid'],
-                'balance' => $summary['balance']
-            ];
-        });
-
-        return response()->json([
-            'status' => true,
-            'data' => $data
-        ]);
+    if ($request->search) {
+        $query->where('name', 'like', '%' . $request->search . '%');
     }
+
+    $users = $query->paginate($perPage);
+
+    $data = $users->getCollection()->map(function ($user) {
+
+        $summary = $this->calculateSummary($user->id);
+
+        return [
+            'id' => $user->id,
+            'name' => $user->name,
+            'role' => $user->role,
+            'total_commission' => $summary['total_commission'],
+            'total_paid' => $summary['total_paid'],
+            'balance' => $summary['balance']
+        ];
+    });
+
+    $users->setCollection($data);
+
+    return response()->json([
+        'status' => true,
+        'data' => $users
+    ]);
+}
 
 
     /**
      * Payments created by particular admin/user
      */
-    public function paymentsCreatedBy($userId)
-    {
-        $payments = CommissionLedger::where('created_by', $userId)
-            ->where('type', 'payment')
-            ->latest()
-            ->paginate(50);
+    public function paymentsCreatedBy($userId, Request $request)
+{
+    $perPage = min($request->get('per_page', 10), 100);
 
-        return response()->json([
-            'status' => true,
-            'data' => $payments
-        ]);
+    $query = CommissionLedger::where('created_by', $userId)
+        ->where('type', 'payment');
+
+    if ($request->search) {
+        $query->where('reference_no', 'like', '%' . $request->search . '%');
     }
 
+    $payments = $query->latest()->paginate($perPage);
+
+    return response()->json([
+        'status' => true,
+        'data' => $payments
+    ]);
+}
 
     /**
      * All Payments List
      */
-    public function payments()
-    {
-        $payments = CommissionLedger::where('type', 'payment')
-            ->latest()
-            ->paginate(50);
+    public function payments(Request $request)
+{
+    $perPage = min($request->get('per_page', 10), 100);
 
-        return response()->json([
-            'status' => true,
-            'data' => $payments
-        ]);
+    $query = CommissionLedger::where('type', 'payment');
+
+    // search by reference or remark
+    if ($request->search) {
+        $query->where(function ($q) use ($request) {
+            $q->where('reference_no', 'like', '%' . $request->search . '%')
+              ->orWhere('remark', 'like', '%' . $request->search . '%');
+        });
     }
+
+    // filter by user
+    if ($request->user_id) {
+        $query->where('user_id', $request->user_id);
+    }
+
+    // filter by payment mode
+    if ($request->payment_mode) {
+        $query->where('payment_mode', $request->payment_mode);
+    }
+
+    // date filters
+    if ($request->from_date) {
+        $query->whereDate('created_at', '>=', $request->from_date);
+    }
+
+    if ($request->to_date) {
+        $query->whereDate('created_at', '<=', $request->to_date);
+    }
+
+    $payments = $query->latest()->paginate($perPage);
+
+    return response()->json([
+        'status' => true,
+        'data' => $payments
+    ]);
+}
 
 
     /**
