@@ -85,4 +85,79 @@ class User extends Authenticatable
     {
         return $this->hasMany(User::class, 'user_code');
     }
+    public function leader()
+    {
+        return $this->hasMany(User::class, 'user_code');
+    }
+    public function locationCommissions()
+    {
+        return $this->hasMany(UserLocationCommission::class, 'user_id', 'id');
+    }
+
+     // Referrals made by this customer
+    public function referralsMade()
+    {
+        return $this->hasMany(Referral::class, 'referrer_id');
+    }
+
+    // Referrals assigned to this leader/adviser
+    public function referralsAssigned()
+    {
+        return $this->hasMany(Referral::class, 'assigned_to');
+    }
+
+    // Wallet transactions
+    public function walletTransactions()
+    {
+        return $this->hasMany(WalletTransaction::class, 'user_id');
+    }
+
+    // commission payments 
+
+    public function commissionPayments()
+    {
+        return $this->hasMany(CommissionPayment::class);
+    }
+
+    public function totalCommission()
+    {
+        return Booking::where('leader_id', $this->id)
+            ->sum('leader_commission_amount');
+    }
+
+    public function totalPaid()
+    {
+        return $this->commissionPayments()->sum('amount');
+    }
+
+    public function commissionBalance()
+    {
+        return $this->totalCommission() - $this->totalPaid();
+    }
+
+    public function ledger()
+    {
+        return $this->hasMany(CommissionLedger::class);
+    }
+
+    public function commissionSummary()
+{
+
+$totalCommission = $this->ledger()
+->where('type','commission')
+->sum('amount');
+
+$totalPaid = $this->ledger()
+->where('type','payment')
+->sum('amount');
+
+$balance = $totalCommission + $totalPaid;
+
+return [
+'total_commission'=>$totalCommission,
+'total_paid'=>abs($totalPaid),
+'balance'=>$balance
+];
+
+}
 }

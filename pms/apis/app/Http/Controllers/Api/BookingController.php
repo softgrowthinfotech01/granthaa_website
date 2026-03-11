@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Booking;
+use App\Models\CommissionLedger;
 use App\Models\Referral;
 use App\Models\User;
 use App\Models\WalletTransaction;
@@ -231,6 +232,29 @@ class BookingController extends Controller
                     'payment_mode' => $request->payment_mode,
                     'remark' => $request->remark,
                 ]);
+            
+
+            if($booking->leader_id && $booking->leader_commission_amount > 0){
+
+                    CommissionLedger::create([
+                        'user_id' => $booking->leader_id,
+                        'booking_id' => $booking->id,
+                        'type' => 'commission',
+                        'amount' => $booking->leader_commission_amount,
+                        'remark' => 'Leader commission from booking '.$booking->id
+                    ]);
+                }
+
+                if($booking->adviser_id && $booking->adviser_commission_amount > 0){
+
+                    CommissionLedger::create([
+                        'user_id' => $booking->adviser_id,
+                        'booking_id' => $booking->id,
+                        'type' => 'commission',
+                        'amount' => $booking->adviser_commission_amount,
+                        'remark' => 'Adviser commission from booking '.$booking->id
+                    ]);
+                }
             });
 
             return response()->json([

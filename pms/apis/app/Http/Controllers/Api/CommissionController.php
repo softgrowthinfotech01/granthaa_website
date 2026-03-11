@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\CommissionLedger;
 use App\Models\UserLocationCommission;
 use Illuminate\Http\Request;
 use App\Models\User;
@@ -304,5 +305,124 @@ public function show($id){
         return response()->json([
             'message' => 'Commission deleted successfully'
         ], 200);
+    }
+
+    // LOGGED USER COMMISSION
+    public function myCommission()
+    {
+
+        $user = auth()->user();
+
+        $totalCommission = CommissionLedger::where('user_id',$user->id)
+        ->where('type','commission')
+        ->sum('amount');
+
+        $totalPaid = CommissionLedger::where('user_id',$user->id)
+        ->where('type','payment')
+        ->sum('amount');
+
+        $balance = $totalCommission + $totalPaid;
+
+        return response()->json([
+            'status'=>true,
+            'data'=>[
+                'user_id'=>$user->id,
+                'name'=>$user->name,
+                'total_commission'=>$totalCommission,
+                'total_paid'=>abs($totalPaid),
+                'balance'=>$balance
+            ]
+        ]);
+
+    }
+
+
+    // LEADER SEE ADVISERS COMMISSION
+    public function advisersCommission()
+    {
+
+        $leader = auth()->user();
+
+        if($leader->role != 'leader'){
+            return response()->json([
+                'status'=>false,
+                'message'=>'Unauthorized'
+            ],403);
+        }
+
+        $advisers = User::where('created_by',$leader->id)
+        ->where('role','adviser')
+        ->get();
+
+        $data = [];
+
+        foreach($advisers as $adv){
+
+            $totalCommission = CommissionLedger::where('user_id',$adv->id)
+            ->where('type','commission')
+            ->sum('amount');
+
+            $totalPaid = CommissionLedger::where('user_id',$adv->id)
+            ->where('type','payment')
+            ->sum('amount');
+
+            $balance = $totalCommission + $totalPaid;
+
+            $data[]=[
+                'id'=>$adv->id,
+                'name'=>$adv->name,
+                'total_commission'=>$totalCommission,
+                'total_paid'=>abs($totalPaid),
+                'balance'=>$balance
+            ];
+        }
+
+        return response()->json([
+            'status'=>true,
+            'data'=>$data
+        ]);
+
+    }
+
+
+    // LEADER TEAM COMMISSION (LEADER + ADVISERS)
+    public function teamCommission()
+    {
+
+        $leader = auth()->user();
+
+        $users = User::where('id',$leader->id)
+        ->orWhere('created_by',$leader->id)
+        ->get();
+
+        $data=[];
+
+        foreach($users as $user){
+
+            $totalCommission = CommissionLedger::where('user_id',$user->id)
+            ->where('type','commission')
+            ->sum('amount');
+
+            $totalPaid = CommissionLedger::where('user_id',$user->id)
+            ->where('type','payment')
+            ->sum('amount');
+
+            $balance = $totalCommission + $totalPaid;
+
+            $data[]=[
+                'id'=>$user->id,
+                'name'=>$user->name,
+                'role'=>$user->role,
+                'total_commission'=>$totalCommission,
+                'total_paid'=>abs($totalPaid),
+                'balance'=>$balance
+            ];
+        }
+
+        return response()->json([
+            'status'=>true,
+            'data'=>$data
+        ]);
+
     }
 }

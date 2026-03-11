@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\CommissionController;
 use App\Http\Controllers\Api\LocationMasterController;
 use App\Http\Controllers\api\ReferralController;
 use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\CommissionPaymentController;
 use Illuminate\Support\Facades\Route;
 
 Route::post('/register', [AuthController::class, 'register']);
@@ -15,13 +16,10 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
 
-    // Customer submits referral
     Route::post('/referrals', [ReferralController::class, 'store']);
 
-    // Leader/Adviser views assigned referrals
     Route::get('/referrals', [ReferralController::class, 'myReferrals']);
 
-    // View single referral
     Route::get('/referrals/{id}', [ReferralController::class, 'show']);
 
     // booking
@@ -64,11 +62,22 @@ Route::middleware(['auth:sanctum', 'role:admin,leader,adviser'])->group(function
     Route::get('/commissions', [CommissionController::class, 'index']);
     Route::get('/commissions/user/{userId}', [CommissionController::class, 'getByUser']);
     Route::get('/my-commissions', [CommissionController::class, 'myCommissions']);
+
+    Route::post('/commission/payment',[CommissionPaymentController::class,'store']);
+
+    Route::get('/commission/summary/{id}',[CommissionPaymentController::class,'summary']);
+
+    Route::get('/commission/ledger/{id}',[CommissionPaymentController::class,'ledger']);
+
+    Route::get('/my-commission',[CommissionController::class,'myCommission']);
+
+    Route::get('/leader/advisers-commission',[CommissionController::class,'advisersCommission']);
+
+    Route::get('/team-commission', [CommissionController::class, 'teamCommission']);
 });
 
-Route::middleware(['auth:sanctum', 'role:adviser,leader'])->group(function () {
-    Route::get('/my-commissions', [CommissionController::class, 'myCommissions']); 
-    
+Route::middleware(['auth:sanctum', 'role:leader'])->group(function () {
+//    resource route for the advisor 
 });
 
 Route::middleware('auth:sanctum')->get('/test-auth', function () {
