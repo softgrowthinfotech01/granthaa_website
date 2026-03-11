@@ -72,7 +72,7 @@
         document.querySelector('#totalAdvisors').textContent = data.total_advisors;
         document.querySelector('#totalBooking').textContent = "₹ " + data.total_booking_amount.toLocaleString();
         document.querySelector('#totalCommission').textContent = "₹ " + data.total_commission_amount.toLocaleString();
-        document.querySelector('#topAdvisor').textContent = "<b>"+data.top_advisorname+"</b>"+(data.top_advisor);
+        document.querySelector('#topAdvisor').textContent = data.top_advisorname+(data.top_advisor);
       })
       .catch(error => console.error('Error fetching dashboard data:', error));
   });
