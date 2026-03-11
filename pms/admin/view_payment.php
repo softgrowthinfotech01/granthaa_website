@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Payment Records</title>
@@ -22,8 +23,9 @@
 
 <?php include "sidebar.php"; ?>
 
-<div class="w-full sm:w-[95%] md:w-[80%] lg:w-[70%] mx-3 md:mx-auto my-4 self-start rounded-lg bg-slate-100 p-4 md:p-6 border border-default rounded-base shadow-xs">
+<div class="w-full sm:w-[95%] md:w-[80%] lg:w-[70%] mx-3 md:mx-auto my-4 self-start rounded-lg bg-slate-100 p-4 md:p-6 border border-default shadow-xs">
 
+<!-- Search + Per Page -->
 <div class="mb-4 flex flex-col md:flex-row justify-between items-start md:items-center gap-3">
 
 <input
@@ -33,6 +35,7 @@ placeholder="Search by reference / remark"
 class="px-3 py-2 border rounded w-full md:w-1/3">
 
 <div class="flex items-center gap-2">
+
 <label>Show:</label>
 
 <select id="perPageSelect"
@@ -46,13 +49,18 @@ class="px-2 py-1 border rounded">
 </select>
 
 <span>entries</span>
-</div>
 
 </div>
 
+</div>
+
+<!-- Loader -->
 <div id="tableLoader" class="hidden text-center py-6">
+
 <div class="inline-block animate-spin rounded-full h-8 w-8 border-4 border-blue-500 border-t-transparent"></div>
+
 <p class="mt-2 text-gray-600">Loading...</p>
+
 </div>
 
 <div class="overflow-x-auto">
@@ -88,6 +96,7 @@ class="px-2 py-1 border rounded">
 
 </div>
 
+<!-- Pagination -->
 <div id="paginationControls" class="flex flex-wrap justify-center gap-2 mt-4"></div>
 
 <div id="resultInfo" class="text-sm text-gray-600 mt-2 text-center"></div>
@@ -113,7 +122,14 @@ let searchTimeout;
 
 const token = localStorage.getItem("auth_token");
 
+if(!token){
+alert("Please login first");
+window.location.href = "../login";
+}
+
 async function fetchPayments(page = 1){
+
+currentPage = page;
 
 const loader = document.getElementById('tableLoader');
 const tbody = document.getElementById('paymentTableBody');
@@ -138,10 +154,15 @@ headers:{
 
 const result = await response.json();
 
-const paginationData = result.data;
-const payments = result.data.data;
+if(!response.ok){
+alert(result.message || "Failed to fetch payments");
+return;
+}
 
-if(!payments || payments.length === 0){
+const paginationData = result.data;
+const payments = result?.data?.data ?? [];
+
+if(payments.length === 0){
 
 tbody.innerHTML = `
 <tr>
@@ -150,22 +171,26 @@ tbody.innerHTML = `
 
 }else{
 
+let rows = "";
+
 payments.forEach((pay,index)=>{
 
-tbody.innerHTML += `
+rows += `
 <tr class="border-b">
 
 <td class="px-4 py-2">
 ${(paginationData.current_page - 1) * paginationData.per_page + index + 1}
 </td>
 
-<td class="px-4 py-2">${pay.user_id}</td>
+<td class="px-4 py-2">
+${pay.user?.name ?? pay.user_id}
+</td>
 
 <td class="px-4 py-2 text-green-600 font-semibold">
 ₹ ${Math.abs(pay.amount)}
 </td>
 
-<td class="px-4 py-2">${pay.payment_mode}</td>
+<td class="px-4 py-2">${pay.payment_mode ?? ''}</td>
 
 <td class="px-4 py-2">${pay.reference_no ?? ''}</td>
 
@@ -177,7 +202,8 @@ ${new Date(pay.created_at).toLocaleDateString()}
 
 <td class="px-4 py-2 flex gap-2">
 
-<button onclick="deletePayment(${pay.id})"
+<button
+onclick="deletePayment(${pay.id})"
 class="px-3 py-1.5 text-sm font-medium text-white bg-red-600 rounded-md hover:bg-red-500">
 
 Delete
@@ -188,7 +214,10 @@ Delete
 
 </tr>
 `;
+
 });
+
+tbody.innerHTML = rows;
 
 }
 
@@ -233,6 +262,7 @@ Next
 }catch(error){
 
 console.error("Error fetching payments:",error);
+alert("Server error");
 
 }finally{
 
@@ -263,8 +293,6 @@ currentPerPage = this.value;
 fetchPayments(1);
 
 });
-
-fetchPayments();
 
 async function deletePayment(id){
 
@@ -304,6 +332,8 @@ alert("Server error");
 }
 
 }
+
+fetchPayments();
 
 </script>
 
