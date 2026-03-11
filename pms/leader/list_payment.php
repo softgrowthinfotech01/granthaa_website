@@ -65,12 +65,11 @@ Search
 <script src="../url.js"></script>
 
 <script>
-
-document.addEventListener("DOMContentLoaded", function(){
+document.addEventListener("DOMContentLoaded", function () {
 
 const token = localStorage.getItem('auth_token');
 
-if(!token){
+if (!token) {
 alert("Please login first");
 window.location.href = "../login";
 return;
@@ -78,36 +77,51 @@ return;
 
 function loadPayments(){
 
-fetch(url + "payments",{
+const user = JSON.parse(localStorage.getItem("auth_user"));
+
+fetch(url + "commission/ledger/" + user.id,{
 method:"GET",
 headers:{
 "Authorization":"Bearer " + token,
 "Accept":"application/json"
 }
 })
-.then(res=>res.json())
-.then(response=>{
+.then(res => res.json())
+.then(response => {
 
-const payments = response.data ?? [];
+const payments = response.data?.data ?? [];
 const tbody = document.getElementById("paymentData");
 
 tbody.innerHTML = "";
 
-payments.forEach((row)=>{
+if(payments.length === 0){
+tbody.innerHTML = `
+<tr>
+<td colspan="8" class="text-center p-4 text-gray-500">
+No payment records found
+</td>
+</tr>`;
+return;
+}
 
-tbody.innerHTML += `
+let rows = "";
 
+payments.forEach(row => {
+
+rows += `
 <tr class="border-b bg-white">
 
 <td class="p-2">${row.id}</td>
 
-<td class="p-2">${row.user_id}</td>
+<td class="p-2">
+${row.user?.name ?? row.user_id}
+</td>
 
 <td class="p-2 text-green-600 font-semibold">
 ₹ ${Math.abs(row.amount)}
 </td>
 
-<td class="p-2">${row.payment_mode}</td>
+<td class="p-2">${row.payment_mode ?? ''}</td>
 
 <td class="p-2">${row.reference_no ?? ''}</td>
 
@@ -117,55 +131,54 @@ tbody.innerHTML += `
 ${new Date(row.created_at).toLocaleDateString()}
 </td>
 
-<td class="p-2">
-
-<div class="flex gap-2">
-
-<button class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded"
-onclick="deletePayment(${row.id})">
-Delete
-</button>
-
-</div>
-
+<td class="p-2 text-gray-400">
+No action
 </td>
 
 </tr>
-
 `;
 
 });
 
+tbody.innerHTML = rows;
+
+})
+.catch(error => {
+console.error(error);
+alert("Failed to load payments");
 });
 
 }
 
 window.deletePayment = function(id){
 
-const token = localStorage.getItem('auth_token');
-
 if(!confirm("Delete this payment record?")){
 return;
 }
 
-fetch(url + "payments/" + id,{
-method:"POST",
+const user = JSON.parse(localStorage.getItem("auth_user"));
+
+if(!user){
+alert("User data missing. Please login again.");
+window.location.href = "../login";
+return;
+}
+
+fetch(url + "commission/ledger/" + user.id,{
+method:"DELETE",
 headers:{
 "Authorization":"Bearer " + token,
 "Accept":"application/json"
-},
-body:new URLSearchParams({
-_method:"DELETE"
+}
 })
-})
-.then(res=>res.json())
-.then(data=>{
+.then(res => res.json())
+.then(data => {
 
-alert("Payment deleted successfully");
+alert(data.message ?? "Payment deleted successfully");
 loadPayments();
 
 })
-.catch(error=>{
+.catch(error => {
 console.error(error);
 alert("Delete failed");
 });
