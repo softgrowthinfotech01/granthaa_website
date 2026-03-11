@@ -24,6 +24,7 @@ class AuthController extends Controller
         ]);
 
         $user = User::create([
+            'user_code' => 'ADM001',
             'name'      => $validated['name'],
             'email'     => $validated['email'],
             'password'  => Hash::make($validated['password']),
