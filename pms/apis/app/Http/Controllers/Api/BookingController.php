@@ -460,14 +460,18 @@ class BookingController extends Controller
                 ->select('user_code', DB::raw('SUM(advance_amount) as total'))
                 ->groupBy('user_code')
                 ->first();
-        }
 
-        return response()->json([
-            'total_advisors' => $totalAdvisors,
-            'total_booking_amount' => $totalBookingAmount,
-            'total_commission_amount' => $totalCommissionAmount,
-            'top_advisor' => $topAdvisor?->name
-        ]);
+        }
+        
+$top_advisorname = User::where('user_code', $topAdvisor?->user_code)->first();
+
+return response()->json([
+    'total_advisors' => $totalAdvisors,
+    'total_booking_amount' => $totalBookingAmount,
+    'total_commission_amount' => $totalCommissionAmount,
+    'top_advisor' => $topAdvisor?->user_code,
+    'top_advisorname' => $top_advisorname?->name
+]);
     }
 
     public function adviserPerformance(Request $request)
