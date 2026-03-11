@@ -182,7 +182,7 @@ class BookingController extends Controller
                 }
 
                 // 2️⃣ Create Booking
-                return Booking::create([
+                $booking = Booking::create([
                     'user_id' => $newUser->id,
                     'user_code' => $leader->user_code,
 
@@ -256,6 +256,8 @@ class BookingController extends Controller
                         'remark' => 'Adviser commission from booking '.$booking->id
                     ]);
                 }
+
+                return $booking;
             });
 
 
@@ -464,7 +466,7 @@ class BookingController extends Controller
             'total_advisors' => $totalAdvisors,
             'total_booking_amount' => $totalBookingAmount,
             'total_commission_amount' => $totalCommissionAmount,
-            'top_advisor' => $topAdvisor?->user_code
+            'top_advisor' => $topAdvisor?->name
         ]);
     }
 

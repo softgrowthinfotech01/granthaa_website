@@ -1,155 +1,207 @@
 <?php
+
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\Booking;
 use App\Models\CommissionLedger;
-use App\Models\CommissionPayment;
 use App\Models\User;
 use Illuminate\Http\Request;
 
 class CommissionPaymentController extends Controller
 {
-   public function store(Request $request)
-{
-$request->validate([
-'user_id'=>'required',
-'amount'=>'required|numeric'
-]);
 
-$payment = CommissionLedger::create([
-'user_id'=>$request->user_id,
-'type'=>'payment',
-'amount'=> -abs($request->amount),
-'payment_mode'=>$request->payment_mode,
-'reference_no'=>$request->reference_no,
-'remark'=>$request->remark,
-'created_by'=>auth()->id()
-]);
+    /**
+     * Create Payment Entry
+     */
+    public function store(Request $request)
+    {
+        $request->validate([
+            'user_id' => 'required|exists:users,id',
+            'amount' => 'required|numeric|min:1'
+        ]);
 
-return response()->json([
-'status'=>true,
-'message'=>'Payment recorded',
-'data'=>$payment
-]);
+        $payment = CommissionLedger::create([
+            'user_id' => $request->user_id,
+            'type' => 'payment',
+            'amount' => -abs($request->amount),
+            'payment_mode' => $request->payment_mode,
+            'reference_no' => $request->reference_no,
+            'remark' => $request->remark,
+            'created_by' => auth()->id()
+        ]);
 
-}
-public function summary($userId)
-{
+        return response()->json([
+            'status' => true,
+            'message' => 'Payment recorded successfully',
+            'data' => $payment
+        ]);
+    }
 
-$totalCommission = CommissionLedger::where('user_id',$userId)
-->where('type','commission')
-->sum('amount');
 
-$totalPaid = CommissionLedger::where('user_id',$userId)
-->where('type','payment')
-->sum('amount');
+    /**
+     * User Commission Summary
+     */
+    public function summary($userId)
+    {
+        $summary = $this->calculateSummary($userId);
 
-$balance = $totalCommission + $totalPaid;
+        return response()->json([
+            'status' => true,
+            'data' => $summary
+        ]);
+    }
 
-return response()->json([
-'status'=>true,
-'data'=>[
-'total_commission'=>$totalCommission,
-'total_paid'=>abs($totalPaid),
-'balance'=>$balance
-]
-]);
 
-}
+    /**
+     * Ledger List
+     */
+    public function ledger($userId)
+    {
+        $data = CommissionLedger::where('user_id', $userId)
+            ->latest()
+            ->paginate(50);
 
-public function ledger($userId)
-{
+        return response()->json([
+            'status' => true,
+            'data' => $data
+        ]);
+    }
 
-$data = CommissionLedger::where('user_id',$userId)
-->latest()
-->paginate(50);
 
-return response()->json([
-'status'=>true,
-'data'=>$data
-]);
+    /**
+     * Logged in user commission
+     */
+    public function myCommission()
+    {
+        $userId = auth()->id();
 
-}
+        return response()->json([
+            'status' => true,
+            'data' => $this->calculateSummary($userId)
+        ]);
+    }
 
-public function myCommission()
-{
 
-$user = auth()->user();
+    /**
+     * Advisers Commission
+     */
+    public function advisersCommission()
+    {
+        $leader = auth()->user();
 
-return response()->json([
-'status'=>true,
-'data'=>$user->commissionSummary()
-]);
+        if ($leader->role !== 'leader') {
+            return response()->json([
+                'status' => false,
+                'message' => 'Unauthorized'
+            ]);
+        }
 
-}
+        $advisers = User::where('created_by', $leader->id)
+            ->where('role', 'adviser')
+            ->get();
 
-public function advisersCommission()
-{
+        $data = $advisers->map(function ($adv) {
 
-$leader = auth()->user();
+            $summary = $this->calculateSummary($adv->id);
 
-if($leader->role != 'leader'){
-return response()->json(['status'=>false,'message'=>'Unauthorized']);
-}
+            return [
+                'id' => $adv->id,
+                'name' => $adv->name,
+                'total_commission' => $summary['total_commission'],
+                'total_paid' => $summary['total_paid'],
+                'balance' => $summary['balance']
+            ];
+        });
 
-$advisers = User::where('created_by',$leader->id)
-->where('role','adviser')
-->get();
+        return response()->json([
+            'status' => true,
+            'data' => $data
+        ]);
+    }
 
-$result = [];
 
-foreach($advisers as $adv){
+    /**
+     * Team Commission
+     */
+    public function teamCommission()
+    {
+        $leader = auth()->user();
 
-$summary = $adv->commissionSummary();
+        $users = User::where('id', $leader->id)
+            ->orWhere('created_by', $leader->id)
+            ->get();
 
-$result[] = [
-'id'=>$adv->id,
-'name'=>$adv->name,
-'total_commission'=>$summary['total_commission'],
-'total_paid'=>$summary['total_paid'],
-'balance'=>$summary['balance']
-];
+        $data = $users->map(function ($user) {
 
-}
+            $summary = $this->calculateSummary($user->id);
 
-return response()->json([
-'status'=>true,
-'data'=>$result
-]);
+            return [
+                'id' => $user->id,
+                'name' => $user->name,
+                'role' => $user->role,
+                'total_commission' => $summary['total_commission'],
+                'total_paid' => $summary['total_paid'],
+                'balance' => $summary['balance']
+            ];
+        });
 
-}
+        return response()->json([
+            'status' => true,
+            'data' => $data
+        ]);
+    }
 
-public function teamCommission()
-{
 
-$leader = auth()->user();
+    /**
+     * Payments created by particular admin/user
+     */
+    public function paymentsCreatedBy($userId)
+    {
+        $payments = CommissionLedger::where('created_by', $userId)
+            ->where('type', 'payment')
+            ->latest()
+            ->paginate(50);
 
-$users = User::where('id',$leader->id)
-->orWhere('created_by',$leader->id)
-->get();
+        return response()->json([
+            'status' => true,
+            'data' => $payments
+        ]);
+    }
 
-$data=[];
 
-foreach($users as $user){
+    /**
+     * All Payments List
+     */
+    public function payments()
+    {
+        $payments = CommissionLedger::where('type', 'payment')
+            ->latest()
+            ->paginate(50);
 
-$summary=$user->commissionSummary();
+        return response()->json([
+            'status' => true,
+            'data' => $payments
+        ]);
+    }
 
-$data[]=[
-'id'=>$user->id,
-'name'=>$user->name,
-'role'=>$user->role,
-'total_commission'=>$summary['total_commission'],
-'total_paid'=>$summary['total_paid'],
-'balance'=>$summary['balance']
-];
 
-}
+    /**
+     * Helper function for summary
+     */
+    private function calculateSummary($userId)
+    {
+        $totalCommission = CommissionLedger::where('user_id', $userId)
+            ->where('type', 'commission')
+            ->sum('amount');
 
-return response()->json([
-'status'=>true,
-'data'=>$data
-]);
+        $totalPaid = CommissionLedger::where('user_id', $userId)
+            ->where('type', 'payment')
+            ->sum('amount');
 
-}
+        return [
+            'total_commission' => $totalCommission,
+            'total_paid' => abs($totalPaid),
+            'balance' => $totalCommission + $totalPaid
+        ];
+    }
 }
