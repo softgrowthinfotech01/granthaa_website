@@ -29,6 +29,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('/bookings/{id}', [BookingController::class, 'destroy']);
     Route::get('/mybookings', [BookingController::class, 'mybookings']);
     Route::get('/dashboard', [BookingController::class, 'dashboard']);
+    Route::get('/admdashboard', [BookingController::class, 'admdashboard']);
     Route::get('/adviserPerformance', [BookingController::class, 'adviserPerformance']);
 });
 

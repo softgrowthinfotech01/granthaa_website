@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Booking;
 use App\Models\CommissionLedger;
+use App\Models\LocationMaster;
 use App\Models\Referral;
 use App\Models\User;
 use App\Models\WalletTransaction;
@@ -135,7 +136,7 @@ class BookingController extends Controller
                 }
 
                 $creator = auth()->user();
-// print_r($creator->role);exit;             
+                // print_r($creator->role);exit;             
                 $leaderId = null;
                 $adviserId = null;
 
@@ -155,7 +156,7 @@ class BookingController extends Controller
                     $leaderCommissionValue = $commissionValue;
                     $leaderCommissionAmount = $commission_amount;
                     // print_r($leaderCommissionAmount);exit;
-                    
+
                 }
 
                 if ($creator->role == 'adviser') {
@@ -233,27 +234,27 @@ class BookingController extends Controller
                     'remark' => $request->remark,
                 ]);
 
-                
-            
-                if($booking->leader_id && $booking->leader_commission_amount > 0){
+
+
+                if ($booking->leader_id && $booking->leader_commission_amount > 0) {
 
                     CommissionLedger::create([
                         'user_id' => $booking->leader_id,
                         'booking_id' => $booking->id,
                         'type' => 'commission',
                         'amount' => $booking->leader_commission_amount,
-                        'remark' => 'Leader commission from booking '.$booking->id
+                        'remark' => 'Leader commission from booking ' . $booking->id
                     ]);
                 }
 
-                if($booking->adviser_id && $booking->adviser_commission_amount > 0){
+                if ($booking->adviser_id && $booking->adviser_commission_amount > 0) {
 
                     CommissionLedger::create([
                         'user_id' => $booking->adviser_id,
                         'booking_id' => $booking->id,
                         'type' => 'commission',
                         'amount' => $booking->adviser_commission_amount,
-                        'remark' => 'Adviser commission from booking '.$booking->id
+                        'remark' => 'Adviser commission from booking ' . $booking->id
                     ]);
                 }
 
@@ -352,29 +353,29 @@ class BookingController extends Controller
 
         $booking->update($request->only([
             'buyer_name',
-    'mobile',
-    'dob',
-    'pan_number',
-    'aadhar_number',
-    'address',
-    'city',
-    'state',
-    'pincode',
-    'advance_amount',
+            'mobile',
+            'dob',
+            'pan_number',
+            'aadhar_number',
+            'address',
+            'city',
+            'state',
+            'pincode',
+            'advance_amount',
 
-    'site_location',
-    'project_name',
-    'plot_number',
-    'khasara_number',
-    'ph_number',
-    'mouza',
-    'tahsil',
-    'district',
-    'square_feet',
-    'square_meter',
-    'total_booking_amount',
-    'payment_mode',
-    'remark'
+            'site_location',
+            'project_name',
+            'plot_number',
+            'khasara_number',
+            'ph_number',
+            'mouza',
+            'tahsil',
+            'district',
+            'square_feet',
+            'square_meter',
+            'total_booking_amount',
+            'payment_mode',
+            'remark'
         ]));
 
         return response()->json([
@@ -460,18 +461,43 @@ class BookingController extends Controller
                 ->select('user_code', DB::raw('SUM(advance_amount) as total'))
                 ->groupBy('user_code')
                 ->first();
-
         }
-        
-$top_advisorname = User::where('user_code', $topAdvisor?->user_code)->first();
 
-return response()->json([
-    'total_advisors' => $totalAdvisors,
-    'total_booking_amount' => $totalBookingAmount,
-    'total_commission_amount' => $totalCommissionAmount,
-    'top_advisor' => $topAdvisor?->user_code,
-    'top_advisorname' => $top_advisorname?->name
-]);
+        $top_advisorname = User::where('user_code', $topAdvisor?->user_code)->first();
+
+        return response()->json([
+            'total_advisors' => $totalAdvisors,
+            'total_booking_amount' => $totalBookingAmount,
+            'total_commission_amount' => $totalCommissionAmount,
+            'top_advisor' => $topAdvisor?->user_code,
+            'top_advisorname' => $top_advisorname?->name
+        ]);
+    }
+
+    public function admdashboard()
+{
+    $totalLeaders = User::where('role', 'leader')->count();
+
+    $totalSites = LocationMaster::count();
+
+    $totalBookings = Booking::count();
+
+    $totalSalesValue = Booking::sum('commission_amount'); // replace with your price column
+
+    $pendingCommissions = CommissionLedger::where('type', 'commission')
+        ->sum('amount') - CommissionLedger::where('type', 'payment')->sum('amount');
+
+    return response()->json([
+        'status' => true,
+        'data' => [
+            'total_leaders' => $totalLeaders,
+            'total_sites' => $totalSites,
+            'total_bookings' => $totalBookings,
+            'total_sales_value' => $totalSalesValue,
+            'pending_commissions' => $pendingCommissions
+        ]
+    ]);
+
     }
 
     public function adviserPerformance(Request $request)
