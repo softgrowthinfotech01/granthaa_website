@@ -232,9 +232,10 @@ class BookingController extends Controller
                     'payment_mode' => $request->payment_mode,
                     'remark' => $request->remark,
                 ]);
-            
 
-            if($booking->leader_id && $booking->leader_commission_amount > 0){
+                
+            
+                if($booking->leader_id && $booking->leader_commission_amount > 0){
 
                     CommissionLedger::create([
                         'user_id' => $booking->leader_id,
@@ -256,6 +257,7 @@ class BookingController extends Controller
                     ]);
                 }
             });
+
 
             return response()->json([
                 'status' => true,
@@ -347,7 +349,7 @@ class BookingController extends Controller
         $booking = Booking::findOrFail($id);
 
         $booking->update($request->only([
-    'buyer_name',
+            'buyer_name',
     'mobile',
     'dob',
     'pan_number',
@@ -371,7 +373,7 @@ class BookingController extends Controller
     'total_booking_amount',
     'payment_mode',
     'remark'
-]));
+        ]));
 
         return response()->json([
             'status' => true,
@@ -409,7 +411,7 @@ class BookingController extends Controller
                 if ($booking->commission_type == 'amount') {
                     $totalCommissionAmount += $booking->commission_value;
                 } else if ($booking->commission_type == 'percent') {
-                    $totalCommissionAmount += ($booking->advance_amount * $booking->total_booking_amount) / 100;
+                    $totalCommissionAmount += ($booking->commission_amount * $booking->total_booking_amount) / 100;
                 }
             }
             $topAdvisor = Booking::select('user_code', DB::raw('SUM(advance_amount) as total'))
@@ -429,10 +431,10 @@ class BookingController extends Controller
             $totalAdvisors = $adviserCodes->count();
 
             $totalBookingAmount = Booking::whereIn('user_code', $adviserCodes)
-                ->sum('advance_amount');
+                ->sum('total_booking_amount');
 
             $totalCommissionAmount = Booking::whereIn('user_code', $adviserCodes)
-                ->sum('total_booking_amount');
+                ->sum('commission_amount');
 
             $topAdvisor = Booking::whereIn('user_code', $adviserCodes)
                 ->select('user_code', DB::raw('SUM(total_booking_amount) as total'))
@@ -447,7 +449,7 @@ class BookingController extends Controller
             $totalAdvisors = 1;
 
             $totalBookingAmount = Booking::where('user_code', $user->user_code)
-                ->sum('advance_amount');
+                ->sum('total_booking_amount');
 
             $totalCommissionAmount = Booking::where('user_code', $user->user_code)
                 ->sum('commission_amount');
