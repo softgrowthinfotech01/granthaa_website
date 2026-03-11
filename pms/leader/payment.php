@@ -95,42 +95,42 @@ transition transform hover:scale-[1.02]">
 <script src="../url.js"></script>
 
 <script>
-        document.addEventListener("DOMContentLoaded", loadUsers);
+document.addEventListener("DOMContentLoaded", loadLeaders);
 
-        async function loadUsers() {
+async function loadLeaders() {
 
-            const dropdown = document.getElementById("user_id");
-            const token = localStorage.getItem("auth_token");
+    const dropdown = document.getElementById("user_id");
+    const token = localStorage.getItem("auth_token");
 
-            try {
+    try {
 
-                const response = await fetch(url + "users", {
-                    method: "GET",
-                    headers: {
-                        "Authorization": "Bearer " + token,
-                        "Accept": "application/json"
-                    }
-                });
+        const response = await fetch(url + "leader/advisers", {
+            method: "GET",
+            headers: {
+                "Authorization": "Bearer " + token,
+                "Accept": "application/json"
+            }
+        });
 
-                const result = await response.json();
+        const result = await response.json();
 
-                dropdown.innerHTML = '<option value="">Select User</option>';
+        dropdown.innerHTML = '<option value="">Select Leader</option>';
 
-                result.data.data.forEach(user => {
+        result.data.forEach(user => {
 
-                    dropdown.innerHTML += `
+            dropdown.innerHTML += `
                 <option value="${user.id}">
                     ${user.user_code} - ${user.name}
                 </option>
             `;
 
-                });
+        });
 
-            } catch (error) {
+    } catch (error) {
 
-                console.error(error);
-                dropdown.innerHTML = '<option value="">Failed to load users</option>';
+        console.error(error);
+        dropdown.innerHTML = '<option value="">Failed to load leaders</option>';
 
-            }
-        }
-    </script>
+    }
+}
+</script>

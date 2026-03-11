@@ -28,10 +28,9 @@
                 <!--Main-->
                 <div id="mainContent"
                     class="w-full md:w-[80%] lg:w-[60%] mx-3 md:mx-auto my-4
-transition-all duration-300
-rounded-lg bg-gray-200 p-6 border shadow-xl">
+transition-all duration-300">
 
-                    <form class="w-full px-4" method="post" id="userForm" enctype="multipart/form-data">
+                    <form class="w-full px-4 rounded-lg bg-gray-200 p-6 border shadow-xl" method="post" id="userForm" enctype="multipart/form-data">
 
                         <div class="personal-details">
                             <h5 class="text-xl font-bold text-heading p-1">Add Leader Details</h5>

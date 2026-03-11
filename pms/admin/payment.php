@@ -26,10 +26,9 @@
                 <!-- Main Content -->
                 <div id="mainContent"
                     class="w-full md:w-[80%] lg:w-[60%] mx-3 md:mx-auto my-4
-transition-all duration-300
-rounded-lg bg-gray-200 p-6 border shadow-xl">
+                            transition-all duration-300">
 
-                    <form class="w-full px-4" method="post" id="paymentForm">
+                    <form class="w-full px-4 rounded-lg bg-gray-200 p-6 border shadow-xl" method="post" id="paymentForm">
 
                         <h5 class="text-xl font-bold text-heading p-1 mb-4">
                             Add Payment
