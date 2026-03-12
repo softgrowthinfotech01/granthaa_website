@@ -116,7 +116,7 @@
         document.querySelector('#total_leaders').textContent = data.data.total_leaders;
         document.querySelector('#total_sites').textContent = data.data.total_sites;
         document.querySelector('#total_bookings').textContent = data.data.total_bookings;
-        document.querySelector('#total_sales_value').textContent = "₹ " + data.data.total_sales_value.toLocaleString("en-IN");
+        document.querySelector('#total_sales_value').textContent = "₹ " + Number(data.data.total_sales_value).toLocaleString("en-IN");
         document.querySelector('#pending_commissions').textContent = "₹ " +  data.data.pending_commissions.toLocaleString("en-IN");
       })
       .catch(error => console.error('Error fetching dashboard data:', error));
