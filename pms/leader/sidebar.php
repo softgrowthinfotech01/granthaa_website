@@ -164,7 +164,7 @@ flex flex-col justify-between shrink-0">
 
             <!-- Add Booking -->
             <li>
-              <a href="Booking_booking"
+              <a href="customer_booking"
                 class="menu-item flex items-center gap-3 <?php if ($current == 'add_commission') echo 'active'; ?>">
 
                 <svg class="w-4 h-4 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -177,7 +177,7 @@ flex flex-col justify-between shrink-0">
 
             <!-- View Booking -->
             <li>
-              <a href="list_Booking_booking"
+              <a href="list_customer_booking"
                 class="menu-item flex items-center gap-3 <?php if ($current == 'view_commission') echo 'active'; ?>">
 
                 <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">

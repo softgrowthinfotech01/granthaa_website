@@ -95,42 +95,90 @@ transition transform hover:scale-[1.02]">
 <script src="../url.js"></script>
 
 <script>
-document.addEventListener("DOMContentLoaded", loadLeaders);
+    document.addEventListener("DOMContentLoaded", loadLeaders);
 
-async function loadLeaders() {
+    async function loadLeaders() {
 
-    const dropdown = document.getElementById("user_id");
-    const token = localStorage.getItem("auth_token");
+        const dropdown = document.getElementById("user_id");
+        const token = localStorage.getItem("auth_token");
 
-    try {
+        try {
 
-        const response = await fetch(url + "commission/leader/advisers-commission", {
-            method: "GET",
-            headers: {
-                "Authorization": "Bearer " + token,
-                "Accept": "application/json"
-            }
-        });
+            const response = await fetch(url + "commission/leader/advisers-commission", {
+                method: "GET",
+                headers: {
+                    "Authorization": "Bearer " + token,
+                    "Accept": "application/json"
+                }
+            });
 
-        const result = await response.json();
+            const result = await response.json();
 
-        dropdown.innerHTML = '<option value="">Select User</option>';
+            dropdown.innerHTML = '<option value="">Select User</option>';
 
-        result.data.data.forEach(user => {
+            result.data.data.forEach(user => {
 
-            dropdown.innerHTML += `
+                dropdown.innerHTML += `
                 <option value="${user.id}">
                     ${user.name}
                 </option>
             `;
 
-        });
+            });
 
-    } catch (error) {
+        } catch (error) {
 
-        console.error(error);
-        dropdown.innerHTML = '<option value="">Failed to load leaders</option>';
+            console.error(error);
+            dropdown.innerHTML = '<option value="">Failed to load leaders</option>';
 
+        }
     }
-}
+
+    // Submit
+    document.getElementById('paymentForm').addEventListener('submit', async function(e) {
+
+        e.preventDefault();
+
+        const token = localStorage.getItem('auth_token');
+        const user = JSON.parse(localStorage.getItem('auth_user'));
+
+        if (!token || !user) {
+            alert('Please login first');
+            window.location.href = '../login';
+            return;
+        }
+
+        let form = document.getElementById('paymentForm');
+        let formData = new FormData(form);
+
+        try {
+
+            const response = await fetch(url + "commission/payment", {
+                method: "POST",
+                headers: {
+                    "Authorization": "Bearer " + token,
+                    "Accept": "application/json"
+                },
+                body: formData
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                alert(data.message || "Payment failed");
+                return;
+            }
+
+            alert("Payment recorded successfully");
+
+            document.getElementById("paymentForm").reset();
+
+        } catch (error) {
+
+            console.error(error);
+            alert("Server error");
+
+        }
+
+    });
 </script>
