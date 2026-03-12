@@ -5,7 +5,7 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\BookingController;
 use App\Http\Controllers\Api\CommissionController;
 use App\Http\Controllers\Api\LocationMasterController;
-use App\Http\Controllers\api\ReferralController;
+use App\Http\Controllers\Api\ReferralController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\CommissionPaymentController;
 use Illuminate\Support\Facades\Route;
