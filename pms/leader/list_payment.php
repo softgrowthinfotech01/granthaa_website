@@ -35,14 +35,12 @@
 
                 <tr>
 
-                    <th class="p-3 text-left">ID</th>
-                    <th class="p-3 text-left">User ID</th>
+                    <th class="p-3 text-left">User</th>
                     <th class="p-3 text-left">Amount</th>
                     <th class="p-3 text-left">Payment Mode</th>
                     <th class="p-3 text-left">Reference No</th>
                     <th class="p-3 text-left">Remark</th>
                     <th class="p-3 text-left">Date</th>
-                    <th class="p-3 text-left">Action</th>
 
                 </tr>
 
@@ -79,7 +77,7 @@
 
             const user = JSON.parse(localStorage.getItem("auth_user"));
 
-            fetch(url + "commission/ledger/" + user.id, {
+            fetch(url + "commission/payments/created-by/" + user.id, {
                     method: "GET",
                     headers: {
                         "Authorization": "Bearer " + token,
@@ -111,7 +109,6 @@ No payment records found
                         rows += `
 <tr class="border-b bg-white">
 
-<td class="p-2">${row.id}</td>
 
 <td class="p-2">
 ${row.user?.name ?? row.user_id}
@@ -131,9 +128,7 @@ ${row.user?.name ?? row.user_id}
 ${new Date(row.created_at).toLocaleDateString()}
 </td>
 
-<td class="p-2 text-gray-400">
-No action
-</td>
+
 
 </tr>
 `;

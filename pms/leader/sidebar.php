@@ -139,10 +139,10 @@ flex flex-col justify-between shrink-0">
           </ul>
         </li>
 
-        <!-- Customer -->
+        <!-- Booking -->
         <li>
           <a href="javascript:void(0)"
-            onclick="toggleMenu('customer', this)"
+            onclick="toggleMenu('Booking', this)"
             class="menu-item flex justify-between items-center">
 
             <span class="flex items-center gap-3">
@@ -152,7 +152,7 @@ flex flex-col justify-between shrink-0">
                 <circle cx="9" cy="8" r="3" />
                 <circle cx="17" cy="9" r="2" />
               </svg>
-              <span class="sidebar-text">Customer</span>
+              <span class="sidebar-text">Booking</span>
             </span>
 
             <svg class="menu-arrow w-4 h-4 transition-transform transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -160,9 +160,9 @@ flex flex-col justify-between shrink-0">
             </svg>
           </a>
 
-          <ul id="customer" class="hidden">
+          <ul id="Booking" class="hidden">
 
-            <!-- Add Customer -->
+            <!-- Add Booking -->
             <li>
               <a href="customer_booking"
                 class="menu-item flex items-center gap-3 <?php if ($current == 'add_commission') echo 'active'; ?>">
@@ -171,11 +171,11 @@ flex flex-col justify-between shrink-0">
                   <path d="M4 12h16" />
                 </svg>
 
-                <span class="sidebar-text">Add Customer</span>
+                <span class="sidebar-text">Add Booking</span>
               </a>
             </li>
 
-            <!-- View Customer -->
+            <!-- View Booking -->
             <li>
               <a href="list_customer_booking"
                 class="menu-item flex items-center gap-3 <?php if ($current == 'view_commission') echo 'active'; ?>">
@@ -184,7 +184,7 @@ flex flex-col justify-between shrink-0">
                   <path d="M4 12h16" />
                 </svg>
 
-                <span class="sidebar-text">View Customer</span>
+                <span class="sidebar-text">View Booking</span>
               </a>
             </li>
 
@@ -252,7 +252,7 @@ flex flex-col justify-between shrink-0">
         </a>
 
       </ul>
-      
+
     </nav>
   </div>
 

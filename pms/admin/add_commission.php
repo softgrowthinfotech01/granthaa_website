@@ -27,7 +27,7 @@
                 <!--Main-->
                 <div id="mainContent"
                     class="w-full md:w-[80%] lg:w-[60%] mx-3 md:mx-auto my-4
-transition-all duration-300">
+                        transition-all duration-300">
                     <form id="commissionForm" class="w-full px-4 rounded-lg bg-gray-200 p-6 border shadow-xl">
                         <div class="personal-details">
                             <h5 class="text-xl font-bold text-heading p-1">Set Leader Commission</h5>

@@ -12,12 +12,12 @@
     <!--Container -->
     <div class="mx-auto">
         <!--Screen-->
-        <div class="flex flex-col">
+        <div class="flex flex-col min-h-screen">
             <!--Header Section Starts Here-->
             <?php include "header.php"; ?>
             <!--/Header-->
 
-            <div class="flex">
+            <div class="flex flex-1">
                 <!--Sidebar-->
                 <?php include "sidebar.php"; ?>
                 <!--/Sidebar-->
