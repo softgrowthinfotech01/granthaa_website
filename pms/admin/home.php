@@ -44,8 +44,8 @@
                                 <p id="total_leaders" lass="text-body mt-auto text-lg font-semibold">25</p>
                             </a>
 
-                            <a href="#" class="rounded-lg bg-green-500 hover:bg-green-400
-        p-6 border border-default rounded-base shadow-xs h-full flex flex-col">
+                            <a href="#" class="rounded-lg hover:bg-green-400
+        p-6 border border-default rounded-base shadow-xs h-full flex flex-col text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-base text-sm px-4 py-2.5 text-center leading-5">
                                 <h5 class="mb-3 text-xl md:text-2xl font-semibold tracking-tight text-heading leading-8">
                                     Total Sites
                                 </h5>
