@@ -104,7 +104,7 @@ async function loadLeaders() {
 
     try {
 
-        const response = await fetch(url + "leader/advisers", {
+        const response = await fetch(url + "commission/leader/advisers-commission", {
             method: "GET",
             headers: {
                 "Authorization": "Bearer " + token,
@@ -114,13 +114,13 @@ async function loadLeaders() {
 
         const result = await response.json();
 
-        dropdown.innerHTML = '<option value="">Select Leader</option>';
+        dropdown.innerHTML = '<option value="">Select User</option>';
 
-        result.data.forEach(user => {
+        result.data.data.forEach(user => {
 
             dropdown.innerHTML += `
                 <option value="${user.id}">
-                    ${user.user_code} - ${user.name}
+                    ${user.name}
                 </option>
             `;
 
