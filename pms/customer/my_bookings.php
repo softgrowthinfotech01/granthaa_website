@@ -107,7 +107,7 @@
 
           const token = localStorage.getItem("auth_token");
 
-          const response = await fetch(url + "bookings", {
+          const response = await fetch(url + "mybookings", {
               method: "GET",
               headers: {
                   "Authorization": "Bearer " + token,
