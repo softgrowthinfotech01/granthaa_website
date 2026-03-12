@@ -36,8 +36,8 @@
                         <!-- GRID WRAPPER -->
                         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
 
-                            <a href="#" class="rounded-lg bg-red-500 hover:bg-red-400
-        p-6 border border-default rounded-base shadow-xs h-full flex flex-col">
+                            <a href="#" class="rounded-lg hover:bg-red-400
+        p-6 border border-default rounded-base shadow-xs h-full flex flex-col text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-base text-sm px-4 py-2.5 text-center leading-5">
                                 <h5 class="mb-3 text-xl md:text-2xl font-semibold tracking-tight text-heading leading-8">
                                     Total Leaders
                                 </h5>
