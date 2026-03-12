@@ -79,7 +79,7 @@ public function index(Request $request)
     $query = UserLocationCommission::with(['user', 'location']);
 
     // 🔐 Leader can only see commissions of users created by them
-    if ($auth->role === 'leader') {
+    if ($auth->role === 'leader' || $auth->role === 'admin') {
         $userIds = User::where('created_by', $auth->id)->pluck('id');
         $query->whereIn('user_id', $userIds);
     }
