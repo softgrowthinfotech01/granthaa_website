@@ -52,12 +52,12 @@
                                 <p id="total_sites" class="text-body mt-auto text-lg font-semibold">12</p>
                             </a>
 
-                            <a href="#" class="rounded-lg bg-blue-500 hover:bg-blue-400
-        p-6 border border-default rounded-base shadow-xs h-full flex flex-col">
+                            <a href="#" class="rounded-lg hover:bg-blue-400
+        p-6 border border-default rounded-base shadow-xs h-full flex flex-col text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-base text-sm px-4 py-2.5 text-center leading-5">
                                 <h5 class="mb-3 text-xl md:text-2xl font-semibold tracking-tight text-heading leading-8">
                                     Total Bookings
                                 </h5>
-                                <p id="total_bookings"  class="text-body mt-auto text-lg font-semibold">150</p>
+                                <p id="total_bookings"  class="text-2xl font-bold text-body mt-auto text-lg font-semibold">150</p>
                             </a>
 
                             <a href="#" class="rounded-lg bg-gray-500 hover:bg-gray-400
