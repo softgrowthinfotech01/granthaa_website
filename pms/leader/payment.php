@@ -3,7 +3,7 @@
 <div class="max-w-7xl mx-auto bg-white p-6  rounded-2xl shadow-xl">
 
     <h2 class="text-2xl font-semibold text-center mb-6">
-        Record Payment
+        Add Payment
     </h2>
 
     <form id="paymentForm" class="space-y-2">
