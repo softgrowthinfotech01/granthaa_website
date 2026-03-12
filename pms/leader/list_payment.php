@@ -2,61 +2,61 @@
 
 <div class="max-w-7xl mx-auto bg-white p-4 rounded-2xl shadow-xl">
 
-<h2 class="text-2xl font-bold mb-4 text-center">Payment Records</h2>
+    <h2 class="text-2xl font-bold mb-4 text-center">Payment Records</h2>
 
-<div class="w-full overflow-x-auto">
+    <div class="w-full overflow-x-auto">
 
-<div class="flex justify-between flex-wrap mb-4 mr-4">
+        <div class="flex justify-between flex-wrap mb-4 mr-4">
 
-<div>
-<input type="text" id="searchInput"
-placeholder="Search reference / remark"
-class="border p-2 rounded w-64">
+            <div>
+                <input type="text" id="searchInput"
+                    placeholder="Search reference / remark"
+                    class="border p-2 rounded w-64">
 
-<button id="searchBtn"
-class="bg-blue-500 text-white px-4 py-2 rounded">
-Search
-</button>
-</div>
+                <button id="searchBtn"
+                    class="bg-blue-500 text-white px-4 py-2 rounded">
+                    Search
+                </button>
+            </div>
 
-<div>
-<select id="perPage" class="border p-2 rounded">
-<option value="10">10</option>
-<option value="25">25</option>
-<option value="50">50</option>
-</select>
-</div>
+            <div>
+                <select id="perPage" class="border p-2 rounded">
+                    <option value="10">10</option>
+                    <option value="25">25</option>
+                    <option value="50">50</option>
+                </select>
+            </div>
 
-</div>
+        </div>
 
-<table class="min-w-full">
+        <table class="w-full">
 
-<thead class="bg-gradient-to-r from-gray-100 to-gray-200 text-gray-700">
+            <thead class="bg-gradient-to-r from-gray-100 to-gray-200 text-gray-700">
 
-<tr>
+                <tr>
 
-<th class="p-3 text-left">ID</th>
-<th class="p-3 text-left">User ID</th>
-<th class="p-3 text-left">Amount</th>
-<th class="p-3 text-left">Payment Mode</th>
-<th class="p-3 text-left">Reference No</th>
-<th class="p-3 text-left">Remark</th>
-<th class="p-3 text-left">Date</th>
-<th class="p-3 text-left">Action</th>
+                    <th class="p-3 text-left">ID</th>
+                    <th class="p-3 text-left">User ID</th>
+                    <th class="p-3 text-left">Amount</th>
+                    <th class="p-3 text-left">Payment Mode</th>
+                    <th class="p-3 text-left">Reference No</th>
+                    <th class="p-3 text-left">Remark</th>
+                    <th class="p-3 text-left">Date</th>
+                    <th class="p-3 text-left">Action</th>
 
-</tr>
+                </tr>
 
-</thead>
+            </thead>
 
-<tbody id="paymentData" class="divide-y divide-gray-200">
+            <tbody id="paymentData" class="divide-y divide-gray-200">
 
-</tbody>
+            </tbody>
 
-</table>
+        </table>
 
-<div id="pagination" class="mt-4 flex justify-center items-center gap-2"></div>
+        <div id="pagination" class="mt-4 flex justify-center items-center gap-2"></div>
 
-</div>
+    </div>
 
 </div>
 
@@ -65,50 +65,50 @@ Search
 <script src="../url.js"></script>
 
 <script>
-document.addEventListener("DOMContentLoaded", function () {
+    document.addEventListener("DOMContentLoaded", function() {
 
-const token = localStorage.getItem('auth_token');
+        const token = localStorage.getItem('auth_token');
 
-if (!token) {
-alert("Please login first");
-window.location.href = "../login";
-return;
-}
+        if (!token) {
+            alert("Please login first");
+            window.location.href = "../login";
+            return;
+        }
 
-function loadPayments(){
+        function loadPayments() {
 
-const user = JSON.parse(localStorage.getItem("auth_user"));
+            const user = JSON.parse(localStorage.getItem("auth_user"));
 
-fetch(url + "commission/ledger/" + user.id,{
-method:"GET",
-headers:{
-"Authorization":"Bearer " + token,
-"Accept":"application/json"
-}
-})
-.then(res => res.json())
-.then(response => {
+            fetch(url + "commission/ledger/" + user.id, {
+                    method: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token,
+                        "Accept": "application/json"
+                    }
+                })
+                .then(res => res.json())
+                .then(response => {
 
-const payments = response.data?.data ?? [];
-const tbody = document.getElementById("paymentData");
+                    const payments = response.data?.data ?? [];
+                    const tbody = document.getElementById("paymentData");
 
-tbody.innerHTML = "";
+                    tbody.innerHTML = "";
 
-if(payments.length === 0){
-tbody.innerHTML = `
+                    if (payments.length === 0) {
+                        tbody.innerHTML = `
 <tr>
 <td colspan="8" class="text-center p-4 text-gray-500">
 No payment records found
 </td>
 </tr>`;
-return;
-}
+                        return;
+                    }
 
-let rows = "";
+                    let rows = "";
 
-payments.forEach(row => {
+                    payments.forEach(row => {
 
-rows += `
+                        rows += `
 <tr class="border-b bg-white">
 
 <td class="p-2">${row.id}</td>
@@ -138,54 +138,54 @@ No action
 </tr>
 `;
 
-});
+                    });
 
-tbody.innerHTML = rows;
+                    tbody.innerHTML = rows;
 
-})
-.catch(error => {
-console.error(error);
-alert("Failed to load payments");
-});
+                })
+                .catch(error => {
+                    console.error(error);
+                    alert("Failed to load payments");
+                });
 
-}
+        }
 
-window.deletePayment = function(id){
+        window.deletePayment = function(id) {
 
-if(!confirm("Delete this payment record?")){
-return;
-}
+            if (!confirm("Delete this payment record?")) {
+                return;
+            }
 
-const user = JSON.parse(localStorage.getItem("auth_user"));
+            const user = JSON.parse(localStorage.getItem("auth_user"));
 
-if(!user){
-alert("User data missing. Please login again.");
-window.location.href = "../login";
-return;
-}
+            if (!user) {
+                alert("User data missing. Please login again.");
+                window.location.href = "../login";
+                return;
+            }
 
-fetch(url + "commission/ledger/" + user.id,{
-method:"DELETE",
-headers:{
-"Authorization":"Bearer " + token,
-"Accept":"application/json"
-}
-})
-.then(res => res.json())
-.then(data => {
+            fetch(url + "commission/ledger/" + user.id, {
+                    method: "DELETE",
+                    headers: {
+                        "Authorization": "Bearer " + token,
+                        "Accept": "application/json"
+                    }
+                })
+                .then(res => res.json())
+                .then(data => {
 
-alert(data.message ?? "Payment deleted successfully");
-loadPayments();
+                    alert(data.message ?? "Payment deleted successfully");
+                    loadPayments();
 
-})
-.catch(error => {
-console.error(error);
-alert("Delete failed");
-});
+                })
+                .catch(error => {
+                    console.error(error);
+                    alert("Delete failed");
+                });
 
-}
+        }
 
-loadPayments();
+        loadPayments();
 
-});
+    });
 </script>
