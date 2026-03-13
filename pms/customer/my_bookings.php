@@ -20,18 +20,30 @@
 
     <table class="w-full border border-gray-200" >
 
-    <thead class="bg-gradient-to-right from-gray-100 to-gray-200 text-gray-700">
+    <thead class="bg-gradient-to-r from-gray-100 to-gray-200 text-gray-700">
     <tr>
-      <th data-priority="1" class="p-3 font-semibold border">Project Name</th>
-      <th data-priority="2" class="p-3 font-semibold border">Site Location</th>
-      <th data-priority="3" class="p-3 font-semibold border">Sq Feet</th>
-      <th data-priority="4" class="p-3 font-semibold border">Sq Meter</th>
-      <th data-priority="5" class="p-3 font-semibold border">Plot Number</th>
-      <th data-priority="6" class="p-3 font-semibold border">Total Booking Amt</th>
+      <th data-priority="1" class="p-3 font-semibold text-center">Project Name</th>
+      <th data-priority="2" class="p-3 font-semibold text-center">Site Location</th>
+      <th data-priority="3" class="p-3 font-semibold text-center">Sq Feet</th>
+      <th data-priority="4" class="p-3 font-semibold text-center">Sq Meter</th>
+      <th data-priority="5" class="p-3 font-semibold text-center">Plot Number</th>
+      <th data-priority="6" class="p-3 font-semibold text-center">Total Booking Amt</th>
     </tr>
     </thead>
 
     <tbody id="bookingTable" class="divide-y divide-gray-200 text-center">
+
+    
+<tr class="odd:bg-white even:bg-gray-50 hover:bg-yellow-50 transition text-center">
+
+  <td class="p-3 whitespace-nowrap font-medium">Granthaa</td>
+  <td class="p-3 whitespace-nowrap">Datala</td>
+  <td class="p-3 whitespace-nowrap">10000 Sq Ft</td>
+  <td class="p-3 whitespace-nowrap">929 Sq M</td>
+    <td class="p-3 whitespace-nowrap">PLOT-001</td>
+    <td class="p-3 whitespace-nowrap">₹ 1000000</td>
+</tr>
+
     </tbody>
     </table>
   </div>
