@@ -8,6 +8,7 @@ use App\Models\CommissionLedger;
 use App\Models\LocationMaster;
 use App\Models\Referral;
 use App\Models\User;
+use App\Models\UserLocationCommission;
 use App\Models\WalletTransaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -406,6 +407,9 @@ class BookingController extends Controller
                 ->where('created_by', $user->id)
                 ->count();
             $totalBookingAmount = Booking::sum('total_booking_amount');
+            $totalBooking = Booking::count('total_booking_amount');
+            
+            $totalsite = UserLocationCommission::count('id');
             $totalCommissionAmount = 0;
 
             $bookings = $query->get();
@@ -421,6 +425,16 @@ class BookingController extends Controller
                 ->groupBy('user_code')
                 ->orderByDesc('total')
                 ->first();
+
+            // $totalCommissionAmount = CommissionLedger::where('type', 'commission')
+            // ->sum('amount');
+
+            $totalpaidamt = abs(
+                CommissionLedger::where('type', 'payment')
+                    ->sum('amount')
+            );
+
+            $totalbalanceamt = $totalCommissionAmount - $totalpaidamt;
         }
 
         // 🔹 If Leader → advisers created by this leader
@@ -436,6 +450,12 @@ class BookingController extends Controller
             $totalBookingAmount = Booking::whereIn('user_code', $adviserCodes)
                 ->sum('total_booking_amount');
 
+            $totalBooking = Booking::whereIn('user_code', $adviserCodes)
+                ->count('total_booking_amount');
+
+            $totalsite = UserLocationCommission::where('user_id', $user->id)
+                ->count('id');
+
             $totalCommissionAmount = Booking::whereIn('user_code', $adviserCodes)
                 ->sum('commission_amount');
 
@@ -444,15 +464,43 @@ class BookingController extends Controller
                 ->groupBy('user_code')
                 ->orderByDesc('total')
                 ->first();
+
+            $teamIds = User::where('created_by', $user->id)
+                ->pluck('id')
+                ->push($user->id);
+
+            // $totalCommissionAmount = CommissionLedger::whereIn('user_id', $teamIds)
+            //     ->where('type', 'commission')
+            //     ->sum('amount');
+
+            $totalpaidamt = abs(
+                CommissionLedger::whereIn('user_id', $teamIds)
+                    ->where('type', 'payment')
+                    ->sum('amount')
+            );
+
+            $totalbalanceamt = $totalCommissionAmount - $totalpaidamt;
         }
 
         // 🔹 If Adviser → only his own
-        else {
+        elseif ($user->role === 'adviser') {
 
+        //  customer, booking amount, commission amount, site assinged, references
             $totalAdvisors = 1;
 
             $totalBookingAmount = Booking::where('user_code', $user->user_code)
                 ->sum('total_booking_amount');
+
+            $totalBooking = Booking::where('user_code', $user->user_code)
+                ->count('total_booking_amount');
+
+            $totalsite = UserLocationCommission::where('user_id', $user->id)
+                ->count('id');
+
+            $totalreferences = Referral::where('assigned_to', $user->id)
+                ->count('id');
+
+            $totalcustomer = User::where('created_by', $user->id)->count();
 
             $totalCommissionAmount = Booking::where('user_code', $user->user_code)
                 ->sum('commission_amount');
@@ -461,14 +509,35 @@ class BookingController extends Controller
                 ->select('user_code', DB::raw('SUM(advance_amount) as total'))
                 ->groupBy('user_code')
                 ->first();
+
+            // $totalCommissionAmount = CommissionLedger::where('user_id', $user->id)
+            //     ->where('type', 'commission')
+            //     ->sum('amount');
+
+            $totalpaidamt = abs(
+                CommissionLedger::where('user_id', $user->id)
+                    ->where('type', 'payment')
+                    ->sum('amount')
+            );
+
+            $totalbalanceamt = $totalCommissionAmount - $totalpaidamt;
+        }
+        elseif ($user->role === 'customer') {
+            //   total booking, total bookind amount, total paid amount, total balance amount, my reference users(booked).
         }
 
         $top_advisorname = User::where('user_code', $topAdvisor?->user_code)->first();
 
         return response()->json([
-            'total_advisors' => $totalAdvisors,
-            'total_booking_amount' => $totalBookingAmount,
+            'total_advisors' => $totalAdvisors, // done
+            'total_booking_amount' => $totalBookingAmount, // done
+            'total_booking' => $totalBooking ?? 0, // done
+            'total_site' => $totalsite ?? 0, // done
+            'total_customer' => $totalcustomer ?? 0,
+            'total_references' => $totalreferences ?? 0, // for adviser reference of childs or for customer reference wgich are booked/completed
             'total_commission_amount' => $totalCommissionAmount,
+            'total_balanceamt' => $totalbalanceamt ?? 0,
+            'total_paidamt' => $totalpaidamt ?? 0,
             'top_advisor' => $topAdvisor?->user_code,
             'top_advisorname' => $top_advisorname?->name
         ]);
@@ -482,7 +551,7 @@ class BookingController extends Controller
 
     $totalBookings = Booking::count();
 
-    $totalSalesValue = Booking::sum('commission_amount'); // replace with your price column
+    $totalSalesValue = Booking::sum('commission_amount'); 
 
     $pendingCommissions = CommissionLedger::where('type', 'commission')
         ->sum('amount') - CommissionLedger::where('type', 'payment')->sum('amount');
