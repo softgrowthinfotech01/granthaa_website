@@ -61,19 +61,19 @@
                             </a>
 
                             <a href="#" class="rounded-lg bg-gray-500 hover:bg-gray-400
-        p-6 border border-default rounded-base shadow-xs h-full flex flex-col">
+        p-6 border border-default rounded-base shadow-xs h-full flex flex-col text-white bg-gradient-to-r from-gray-500 to-pink-500 hover:bg-gradient-to-l focus:ring-4 focus:outline-none focus:ring-gray-200 dark:focus:ring-gray-800 font-medium rounded-base text-sm px-4 py-2.5 text-center leading-5">
                                 <h5 class="mb-3 text-xl md:text-2xl font-semibold tracking-tight text-heading leading-8">
                                     Total Sales Value
                                 </h5>
-                                <p id="total_sales_value" class="text-body mt-auto text-lg font-semibold">₹ 25,00,000</p>
+                                <p id="total_sales_value" class="text-body mt-auto text-lg font-semibold">₹ 00.00</p>
                             </a>
 
-                            <a href="#" class="rounded-lg bg-purple-500 hover:bg-purple-400
-        p-6 border border-default rounded-base shadow-xs h-full flex flex-col">
+                            <a href="#" class="rounded-lg hover:bg-purple-400
+        p-6 border border-default rounded-base shadow-xs h-full flex flex-col text-white bg-gradient-to-r from-purple-500 to-pink-500 hover:bg-gradient-to-l focus:ring-4 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800 font-medium rounded-base text-sm px-4 py-2.5 text-center leading-5">
                                 <h5  class="mb-3 text-xl md:text-2xl font-semibold tracking-tight text-heading leading-8">
                                     Pending Commissions
                                 </h5>
-                                <p id="pending_commissions" class="text-body mt-auto text-lg font-semibold">₹ 5,00,000</p>
+                                <p id="pending_commissions" class="text-body mt-auto text-lg font-semibold">₹ 00.00</p>
                             </a>
 
                         </div>
