@@ -31,7 +31,7 @@
     <p class="text-center text-md text-gray-300 mt-1">
       Granthaa Land Developer Pvt Ltd
     </p>
-<p id="error"></p>
+<p id="error" class="text-center text-red-600 mt-2"></p>
     <!-- Divider -->
     <div class="my-6 h-px bg-yellow-400/40"></div>
 

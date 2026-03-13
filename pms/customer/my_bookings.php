@@ -10,7 +10,11 @@ background:white;
 th,td{
 padding:10px;
 border:1px solid #ddd;
-text-align:left;
+text-align:center;
+}
+
+td{
+text-align:center;
 }
 
 th{
@@ -28,14 +32,31 @@ background:#f2f2f2;
     My Bookings Record
   </h2>
 
-  <div class="flex justify-between mb-4">
-    <!-- Search  -->
+  <div class="flex justify-between items-center mb-4">
+
+    <!-- Search (left side) -->
     <input
-      id="searchInput"
-      type="text"
-      placeholder="Search bookings..."
-      class="border rounded-lg px-3 py-2 w-60" />
-  </div>
+        id="searchInput"
+        type="text"
+        placeholder="Search..."
+        class="border rounded-lg px-3 py-2 w-60"
+    />
+
+    <!-- Per Page (right side) -->
+    <div class="flex items-center gap-2">
+        <label for="perPage">Show</label>
+
+        <select id="perPage" class="border p-2 rounded">
+            <option value="10">10</option>
+            <option value="25">25</option>
+            <option value="50">50</option>
+        </select>
+
+        <span>entries</span>
+    </div>
+
+</div>
+
   <!-- Table Wrapper -->
   <div class="w-full overflow-x-auto">
 
@@ -77,7 +98,7 @@ background:#f2f2f2;
   let bookings = [];
   let filteredBookings = [];
   let currentPage = 1;
-  const rowsPerPage = 5;
+ let rowsPerPage = 10;
 
   document.addEventListener("DOMContentLoaded", () => {
     fetchBookings();
@@ -109,6 +130,15 @@ background:#f2f2f2;
       renderTable();
     });
 
+    document.getElementById("perPage").addEventListener("change", function(){
+
+rowsPerPage = parseInt(this.value);
+
+currentPage = 1;
+
+renderTable();
+
+});
 
     document.getElementById("prevBtn").onclick = () => {
       if (currentPage > 1) {
