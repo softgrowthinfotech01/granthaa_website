@@ -1,34 +1,81 @@
 <?php include 'header.php'; ?>
 
+<style>
+table{
+width:100%;
+border-collapse:collapse;
+background:white;
+}
+
+th,td{
+padding:10px;
+border:1px solid #ddd;
+text-align:center;
+}
+
+td{
+text-align:center;
+}
+
+th{
+background:#2c3e50;
+color:white;
+}
+
+tr:nth-child(even){
+background:#f2f2f2;
+}
+</style>
+
 <div class="max-w-7xl mx-auto bg-white p-4 rounded-2xl shadow-xl">
 
-<h2 class="text-2xl font-bold mb-4 text-center">Referred Customer Records</h2>
+<h2 class="text-2xl font-bold mb-4 text-center">
+My Referral Records
+</h2>
 
-<!-- Horizontal scroll wrapper -->
+<div class="flex justify-between items-center mb-4">
+
+    <!-- Search (left side) -->
+    <input
+        id="searchInput"
+        type="text"
+        placeholder="Search..."
+        class="border rounded-lg px-3 py-2 w-60"
+    />
+
+    <!-- Per Page (right side) -->
+    <div class="flex items-center gap-2">
+        <label for="perPage">Show</label>
+
+        <select id="perPage" class="border p-2 rounded">
+            <option value="10">10</option>
+            <option value="25">25</option>
+            <option value="50">50</option>
+        </select>
+
+        <span>entries</span>
+    </div>
+
+</div>
+
 <div class="w-full overflow-x-auto">
 
-<table id="example" class="" style="width:100%; padding-top: 1em;  padding-bottom: 1em;">
+<table>
 
-<thead class="bg-gradient-to-r from-gray-100 to-gray-200 text-gray-700">
-<tr>                
-  <th data-priority="1" class="p-3 font-semibold text-center">Customer Name</th>
-  <th data-priority="2" class="p-3 font-bold text-center">Phone No.</th>
-  <th data-priority="3" class="p-3 font-semibold text-center">Email</th>
-  <th data-priority="4" class="p-3 font-semibold text-center">Date</th>
-  <th data-priority="5" class="p-3 font-semibold text-center">Status</th>
+<thead>
+<tr>
+
+
+<th>Customer Name</th>
+<th>Phone</th>
+<th>Email</th>
+<th>Status</th>
+<th>Date</th>
+
 </tr>
 </thead>
 
-<tbody class="divide-y divide-gray-200">
-
-<tr class="odd:bg-white even:bg-gray-50 hover:bg-yellow-50 transition text-center">
-
-  <td class="p-3 whitespace-nowrap font-medium">Kailash</td>
-  <td class="p-3 whitespace-nowrap">9876543210</td>
-  <td class="p-3 whitespace-nowrap">kailash@example.com</td>
-  <td class="p-3 whitespace-nowrap">2023-10-01</td>
-    <td class="p-3 whitespace-nowrap">Success</td>
-</tr>
+<tbody id="referralBody">
 
 </tbody>
 
@@ -36,26 +83,196 @@
 
 </div>
 
+<div class="flex justify-between items-center mt-4">
+
+<button id="prevBtn" class="bg-gray-200 px-4 py-2 rounded">
+Prev
+</button>
+
+<span id="pageInfo"></span>
+
+<button id="nextBtn" class="bg-gray-200 px-4 py-2 rounded">
+Next
+</button>
+
+</div>
+
 </div>
 
 <?php include 'footer.php'; ?>
 
+<script src="../url.js"></script>
 
-<!-- jQuery -->
-	<script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-		
-	<!--Datatables -->
-	<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-  <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
-	<script>
-		$(document).ready(function() {
-			
-			var table = $('#example').DataTable( {
-					responsive: true
-				} )
-				.columns.adjust()
-				.responsive.recalc();
-		} );
-	
-	</script>
-  
+<script>
+
+let referrals = [];
+let filteredReferrals = [];
+let currentPage = 1;
+let rowsPerPage = 10;
+
+document.addEventListener("DOMContentLoaded", () => {
+
+fetchReferrals();
+
+document.getElementById("searchInput")
+.addEventListener("input", function(){
+
+let term = this.value.toLowerCase().trim();
+
+if(term === ""){
+filteredReferrals = referrals;
+}
+else{
+
+filteredReferrals = referrals.filter(r => {
+
+const searchableText = [
+r.referred_name,
+r.referred_contact,
+r.referred_email,
+r.status
+].join(" ").toLowerCase();
+
+return searchableText.includes(term) ||
+searchableText.startsWith(term);
+
+});
+
+}
+
+currentPage = 1;
+renderTable();
+
+});
+
+
+document.getElementById("perPage").addEventListener("change", function(){
+
+rowsPerPage = parseInt(this.value);
+
+currentPage = 1;
+
+renderTable();
+
+});
+
+
+document.getElementById("prevBtn").onclick = () => {
+
+if(currentPage > 1){
+currentPage--;
+renderTable();
+}
+
+};
+
+document.getElementById("nextBtn").onclick = () => {
+
+if(currentPage < Math.ceil(filteredReferrals.length / rowsPerPage)){
+currentPage++;
+renderTable();
+}
+
+};
+
+});
+
+async function fetchReferrals(){
+
+try{
+
+const token = localStorage.getItem("auth_token");
+
+const response = await fetch(url + "refered",{
+
+method:"POST",
+
+headers:{
+"Authorization":"Bearer " + token,
+"Accept":"application/json"
+}
+
+});
+
+const result = await response.json();
+
+referrals = result.data?.data || [];
+
+if(!Array.isArray(referrals)){
+referrals = [];
+}
+
+filteredReferrals = referrals;
+
+renderTable();
+
+}catch(error){
+
+console.error("Error fetching referrals:", error);
+
+}
+
+}
+
+function renderTable(){
+
+const tbody = document.getElementById("referralBody");
+
+tbody.innerHTML = "";
+
+const start = (currentPage - 1) * rowsPerPage;
+const end = start + rowsPerPage;
+
+const pageData = filteredReferrals.slice(start,end);
+
+if(pageData.length === 0){
+
+tbody.innerHTML = `
+<tr style="text-align:center;">
+<td colspan="6">No referrals found</td>
+</tr>
+`;
+
+return;
+
+}
+
+pageData.forEach(r => {
+
+const row = `
+
+<tr>
+
+
+<td>${r.referred_name ?? "-"}</td>
+
+<td>${r.referred_contact ?? "-"}</td>
+
+<td>${r.referred_email ?? "-"}</td>
+
+<td>
+<span style="
+padding:4px 8px;
+border-radius:6px;
+background:${r.status === 'pending' ? '#ffeeba' : '#c3e6cb'};
+">
+${r.status}
+</span>
+</td>
+
+<td>${new Date(r.created_at).toLocaleDateString()}</td>
+
+</tr>
+
+`;
+
+tbody.insertAdjacentHTML("beforeend", row);
+
+});
+
+document.getElementById("pageInfo").innerText =
+`Page ${currentPage} of ${Math.ceil(filteredReferrals.length / rowsPerPage)}`;
+
+}
+
+</script>
