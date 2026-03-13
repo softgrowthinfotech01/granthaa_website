@@ -36,7 +36,7 @@
                         <!-- GRID WRAPPER -->
                         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
 
-                            <a href="#" class="rounded-lg hover:bg-red-400
+                            <a href="#" class="rounded-lg hover:bg-red-400 shadow-lg shadow-red-500/50 dark:shadow-lg dark:shadow-red-800/80
         p-6 border border-default rounded-base shadow-xs h-full flex flex-col text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-base text-sm px-4 py-2.5 text-center leading-5">
                                 <h5 class="mb-3 text-xl md:text-2xl font-semibold tracking-tight text-heading leading-8">
                                     Total Leaders
@@ -44,15 +44,15 @@
                                 <p id="total_leaders" lass="text-body mt-auto text-lg font-semibold">25</p>
                             </a>
 
-                            <a href="#" class="rounded-lg hover:bg-green-400
+                            <a href="#" class="rounded-lg hover:bg-green-400 shadow-lg shadow-green-500/50 dark:shadow-lg dark:shadow-green-800/80
         p-6 border border-default rounded-base shadow-xs h-full flex flex-col text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-base text-sm px-4 py-2.5 text-center leading-5">
                                 <h5 class="mb-3 text-xl md:text-2xl font-semibold tracking-tight text-heading leading-8">
                                     Total Sites
                                 </h5>
                                 <p id="total_sites" class="text-body mt-auto text-lg font-semibold">12</p>
                             </a>
-
-                            <a href="#" class="rounded-lg hover:bg-blue-400
+ 
+                            <a href="#" class="rounded-lg hover:bg-blue-400 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80
         p-6 border border-default rounded-base shadow-xs h-full flex flex-col text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-base text-sm px-4 py-2.5 text-center leading-5">
                                 <h5 class="mb-3 text-xl md:text-2xl font-semibold tracking-tight text-heading leading-8">
                                     Total Bookings
@@ -60,7 +60,7 @@
                                 <p id="total_bookings"  class="text-2xl font-bold text-body mt-auto text-lg font-semibold">150</p>
                             </a>
 
-                            <a href="#" class="rounded-lg hover:bg-gray-400
+                            <a href="#" class="rounded-lg hover:bg-gray-400 shadow-lg shadow-gray-500/50 dark:shadow-lg dark:shadow-gray-800/80
         p-6 border border-default rounded-base shadow-xs h-full flex flex-col text-white bg-gradient-to-r from-gray-500 via-gray-600 to-gray-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-gray-300 dark:focus:ring-gray-800 font-medium rounded-base text-sm px-4 py-2.5 text-center leading-5">
                                 <h5 class="mb-3 text-xl md:text-2xl font-semibold tracking-tight text-heading leading-8">
                                     Total Sales Value
@@ -68,7 +68,7 @@
                                 <p id="total_sales_value" class="text-body mt-auto text-lg font-semibold">₹ 00.00</p>
                             </a>
 
-                            <a href="#" class="rounded-lg hover:bg-purple-400
+                            <a href="#" class="rounded-lg hover:bg-purple-400 shadow-lg shadow-purple-500/50 dark:shadow-lg dark:shadow-purple-800/80
         p-6 border border-default rounded-base shadow-xs h-full flex flex-col text-white bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 font-medium rounded-base text-sm px-4 py-2.5 text-center leading-5">
                                 <h5  class="mb-3 text-xl md:text-2xl font-semibold tracking-tight text-heading leading-8">
                                     Pending Commissions
