@@ -231,7 +231,7 @@
 
             try {
 
-                const response = await fetch(url + "users", {
+                const response = await fetch(url + "by-role?role=leader&per_page=100", {
                     method: "GET",
                     headers: {
                         "Authorization": "Bearer " + token,
