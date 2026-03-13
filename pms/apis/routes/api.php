@@ -18,6 +18,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
 
     Route::post('/referrals', [ReferralController::class, 'store']);
+    Route::post('/refered', [ReferralController::class, 'index']);
     Route::get('/referrals', [ReferralController::class, 'myReferrals']);
     Route::get('/referrals/{id}', [ReferralController::class, 'show']);
 
