@@ -12,7 +12,13 @@
 
 
     <link href="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.css" rel="stylesheet" />
-
+<style>
+    .admin-b{
+        background-image: url("../images/admin.jpg");
+        background-repeat: no-repeat;
+        background-position: bottom;
+    }
+</style>
 </head>
 
 <body>
@@ -30,51 +36,78 @@
                 <!--/Sidebar-->
 
                 <!--Main-->
-                <div class="flex-1">
+                <div class="flex-1 admin-b">
                     <div class="w-full md:w-[90%] lg:w-[80%] mx-auto my-6 px-3 md:px-0">
 
                         <!-- GRID WRAPPER -->
-                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
 
-                            <a href="#" class="rounded-lg hover:bg-red-400 shadow-lg shadow-red-500/50 dark:shadow-lg dark:shadow-red-800/80
-        p-6 border border-default rounded-base shadow-xs h-full flex flex-col text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-base text-sm px-4 py-2.5 text-center leading-5">
-                                <h5 class="mb-3 text-xl md:text-2xl font-semibold tracking-tight text-heading leading-8">
-                                    Total Leaders
-                                </h5>
-                                <p id="total_leaders" lass="text-body mt-auto text-lg font-semibold">25</p>
-                            </a>
+                            <div class="pl-1 h-20 bg-green-400 rounded-lg shadow-md">
+                                <div class="flex w-full h-full py-2 px-4 bg-white rounded-lg justify-between">
+                                    <div class="my-auto">
+                                        <p class="font-bold"> Total Leaders</p>
+                                        <p id="total_leaders" class="text-lg">00.00</p>
+                                    </div>
+                                    <div class="my-auto">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="pl-1 h-20 bg-green-400 rounded-lg shadow-md">
+                                <div class="flex w-full h-full py-2 px-4 bg-white rounded-lg justify-between">
+                                    <div class="my-auto">
+                                        <p class="font-bold">Total Sites</p>
+                                        <p id="total_sites"  class="text-lg">00.00</p>
+                                    </div>
+                                    <div class="my-auto">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="pl-1 h-20 bg-green-400 rounded-lg shadow-md">
+                                <div class="flex w-full h-full py-2 px-4 bg-white rounded-lg justify-between">
+                                    <div class="my-auto">
+                                        <p class="font-bold">Total Bookings</p>
+                                        <p id="total_bookings" class="text-lg">00.00</p>
+                                    </div>
+                                    <div class="my-auto">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="pl-1 h-20 bg-green-400 rounded-lg shadow-md">
+                                <div class="flex w-full h-full py-2 px-4 bg-white rounded-lg justify-between">
+                                    <div class="my-auto">
+                                        <p class="font-bold">Total Sales Value</p>
+                                        <p id="total_sales_value"  class="text-lg">00.00</p>
+                                    </div>
+                                    <div class="my-auto">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="pl-1 h-20 bg-green-400 rounded-lg shadow-md">
+                                <div class="flex w-full h-full py-2 px-4 bg-white rounded-lg justify-between">
+                                    <div class="my-auto">
+                                        <p class="font-bold">Pending Commissions</p>
+                                        <p id="pending_commissions" class="text-lg">00.00</p>
+                                    </div>
+                                    <div class="my-auto">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
 
-                            <a href="#" class="rounded-lg hover:bg-green-400 shadow-lg shadow-green-500/50 dark:shadow-lg dark:shadow-green-800/80
-        p-6 border border-default rounded-base shadow-xs h-full flex flex-col text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-base text-sm px-4 py-2.5 text-center leading-5">
-                                <h5 class="mb-3 text-xl md:text-2xl font-semibold tracking-tight text-heading leading-8">
-                                    Total Sites
-                                </h5>
-                                <p id="total_sites" class="text-body mt-auto text-lg font-semibold">12</p>
-                            </a>
- 
-                            <a href="#" class="rounded-lg hover:bg-blue-400 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80
-        p-6 border border-default rounded-base shadow-xs h-full flex flex-col text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-base text-sm px-4 py-2.5 text-center leading-5">
-                                <h5 class="mb-3 text-xl md:text-2xl font-semibold tracking-tight text-heading leading-8">
-                                    Total Bookings
-                                </h5>
-                                <p id="total_bookings"  class="text-2xl font-bold text-body mt-auto text-lg font-semibold">150</p>
-                            </a>
-
-                            <a href="#" class="rounded-lg hover:bg-gray-400 shadow-lg shadow-gray-500/50 dark:shadow-lg dark:shadow-gray-800/80
-        p-6 border border-default rounded-base shadow-xs h-full flex flex-col text-white bg-gradient-to-r from-gray-500 via-gray-600 to-gray-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-gray-300 dark:focus:ring-gray-800 font-medium rounded-base text-sm px-4 py-2.5 text-center leading-5">
-                                <h5 class="mb-3 text-xl md:text-2xl font-semibold tracking-tight text-heading leading-8">
-                                    Total Sales Value
-                                </h5>
-                                <p id="total_sales_value" class="text-body mt-auto text-lg font-semibold">₹ 00.00</p>
-                            </a>
-
-                            <a href="#" class="rounded-lg hover:bg-purple-400 shadow-lg shadow-purple-500/50 dark:shadow-lg dark:shadow-purple-800/80
-        p-6 border border-default rounded-base shadow-xs h-full flex flex-col text-white bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 font-medium rounded-base text-sm px-4 py-2.5 text-center leading-5">
-                                <h5  class="mb-3 text-xl md:text-2xl font-semibold tracking-tight text-heading leading-8">
-                                    Pending Commissions
-                                </h5>
-                                <p id="pending_commissions" class="text-body mt-auto text-lg font-semibold">₹ 00.00</p>
-                            </a>
 
                         </div>
                     </div>
@@ -90,38 +123,38 @@
     </div>
 
     <script>
-  document.addEventListener("DOMContentLoaded", function() {
-    const token = localStorage.getItem('auth_token');
-    if (!token) {
-      alert("Please login first");
-      window.location.href = "../login";
-      return;
-    }
-    const apiUrl = url + 'admdashboard';
+        document.addEventListener("DOMContentLoaded", function() {
+            const token = localStorage.getItem('auth_token');
+            if (!token) {
+                alert("Please login first");
+                window.location.href = "../login";
+                return;
+            }
+            const apiUrl = url + 'admdashboard';
 
-    fetch(apiUrl, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": "Bearer " + token
-        }
-      })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok: " + response.statusText);
-        }
-        return response.json();
-      })
-      .then(data => {
-        document.querySelector('#total_leaders').textContent = data.data.total_leaders;
-        document.querySelector('#total_sites').textContent = data.data.total_sites;
-        document.querySelector('#total_bookings').textContent = data.data.total_bookings;
-        document.querySelector('#total_sales_value').textContent = "₹ " + Number(data.data.total_sales_value).toLocaleString("en-IN");
-        document.querySelector('#pending_commissions').textContent = "₹ " +  data.data.pending_commissions.toLocaleString("en-IN");
-      })
-      .catch(error => console.error('Error fetching dashboard data:', error));
-  });
-</script>
+            fetch(apiUrl, {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": "Bearer " + token
+                    }
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error("Network response was not ok: " + response.statusText);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    document.querySelector('#total_leaders').textContent = data.data.total_leaders;
+                    document.querySelector('#total_sites').textContent = data.data.total_sites;
+                    document.querySelector('#total_bookings').textContent = data.data.total_bookings;
+                    document.querySelector('#total_sales_value').textContent = "₹ " + Number(data.data.total_sales_value).toLocaleString("en-IN");
+                    document.querySelector('#pending_commissions').textContent = "₹ " + data.data.pending_commissions.toLocaleString("en-IN");
+                })
+                .catch(error => console.error('Error fetching dashboard data:', error));
+        });
+    </script>
 
     <script src="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.js"></script>
 
