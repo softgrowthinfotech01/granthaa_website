@@ -2,15 +2,15 @@
 
 <!-- Sidebar -->
 <aside id="sidebar"
-class="w-64 md:w-64 min-h-screen bg-gray-400 border-r border-gray-200
+class="w-64 md:w-64 min-h-screen bg-gray-50 border-r border-gray-200
 flex flex-col transition-all duration-300 ease-in-out
 fixed md:relative transform md:translate-x-0 -translate-x-full z-40 overflow-hidden">
     <!-- Menu -->
     <nav class="flex-1">
-        <ul class="text-sm text-gray-700">
+        <ul class="text-sm text-gray-950">
 
             <!-- Active Item -->
-            <li class="bg-gray-300">
+            <li class="bg-gray-200">
                 <a href="home"
                     class="flex items-center justify-between px-4 py-4">
                     <span class="flex items-center gap-3 text-base font-semibold text-base font-semibold">
