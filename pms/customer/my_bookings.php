@@ -1,10 +1,5 @@
 <?php include 'header.php'; ?>
 <style>
-body{
-font-family: Arial;
-background:#f4f6f9;
-padding:20px;
-}
 
 table{
 width:100%;
@@ -99,7 +94,9 @@ background:#f2f2f2;
           b.square_feet,
           b.square_meter,
           b.plot_number,
-          b.total_booking_amount
+          b.total_booking_amount,
+          b.buyer_name,
+          b.email
         ]
             .join(" ")
             .toLowerCase();
