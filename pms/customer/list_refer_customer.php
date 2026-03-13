@@ -11,12 +11,11 @@
 
 <thead class="bg-gradient-to-r from-gray-100 to-gray-200 text-gray-700">
 <tr>                
-  <th data-priority="1" class="p-3 font-semibold text-left">Refferal Code</th>
-  <th data-priority="2" class="p-3 font-bold text-left">Leader / Adviser</th>
-  <th data-priority="3" class="p-3 font-semibold text-left">Site Location</th>
-  <th data-priority="4" class="p-3 font-semibold text-left">Customer Name</th>
-  <th data-priority="5" class="p-3 font-semibold text-left">Phone No.</th>
-  <th data-priority="6" class="p-3 font-semibold text-left">Customer Location</th>
+  <th data-priority="1" class="p-3 font-semibold text-center">Customer Name</th>
+  <th data-priority="2" class="p-3 font-bold text-center">Phone No.</th>
+  <th data-priority="3" class="p-3 font-semibold text-center">Email</th>
+  <th data-priority="4" class="p-3 font-semibold text-center">Date</th>
+  <th data-priority="5" class="p-3 font-semibold text-center">Status</th>
 </tr>
 </thead>
 
@@ -24,12 +23,11 @@
 
 <tr class="odd:bg-white even:bg-gray-50 hover:bg-yellow-50 transition text-center">
 
-  <td class="p-3 whitespace-nowrap font-medium">REF001</td>
-  <td class="p-3 whitespace-nowrap">ADV001</td>
-  <td class="p-3 whitespace-nowrap">Datala</td>
-  <td class="p-3 whitespace-nowrap">Kailash</td>
-    <td class="p-3 whitespace-nowrap">9876543210</td>
-    <td class="p-3 whitespace-nowrap">Chandrapur</td>
+  <td class="p-3 whitespace-nowrap font-medium">Kailash</td>
+  <td class="p-3 whitespace-nowrap">9876543210</td>
+  <td class="p-3 whitespace-nowrap">kailash@example.com</td>
+  <td class="p-3 whitespace-nowrap">2023-10-01</td>
+    <td class="p-3 whitespace-nowrap">Success</td>
 </tr>
 
 </tbody>
