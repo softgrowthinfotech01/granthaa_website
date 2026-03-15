@@ -1,47 +1,115 @@
 <?php include 'header.php'; ?>
 <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-4">
 
-<!-- Total Customer-->
-<div class="relative bg-gradient-to-br from-yellow-200 to-yellow-300 
-            text-black p-6 rounded-2xl shadow-lg overflow-hidden">
+<!-- TOTAL SITES-->
+<div class="relative bg-gradient-to-r from-gray-800 via-emerald-750 to-green-700
+            text-white p-6 rounded-2xl shadow-lg overflow-hidden">
 
-  <div class="absolute top-5 right-5 opacity-20 text-6xl font-bold">👥</div>
+  <div class="absolute top-5 right-5 opacity-90 text-6xl font-bold">🏠</div>
+
+  <h3 class="text-sm tracking-widest font-semibold">TOTAL SITES</h3>
+  <p class="text-3xl font-bold mt-2" id="totalSites"></p>
+</div>
+
+<!-- TOTAL CUSTOMERS -->
+<div class="relative bg-gradient-to-r from-gray-800 via-emerald-750 to-green-700
+            text-white p-6 rounded-2xl shadow-lg overflow-hidden">
+
+  <div class="absolute top-5 right-5 opacity-90 text-6xl font-bold">👥</div>
 
   <h3 class="text-sm tracking-widest font-semibold">TOTAL CUSTOMERS</h3>
-  <p class="text-3xl font-bold mt-2">12</p>
+  <p class="text-3xl font-bold mt-2" id="totalCustomers"></p>
 </div>
 
-<!-- Booking Amount -->
-<div class="relative bg-gradient-to-br from-yellow-200 to-yellow-300 
-            text-black p-6 rounded-2xl shadow-lg overflow-hidden">
+<!-- TOTAL BOOKINGS -->
+<div class="relative bg-gradient-to-r from-gray-800 via-emerald-750 to-green-700
+            text-white p-6 rounded-2xl shadow-lg overflow-hidden">
 
-  <div class="absolute top-5 right-5 opacity-20 text-6xl font-bold">₹</div>
+  <div class="absolute top-5 right-5 opacity-90 text-6xl font-bold ">🧾</div>
+
+  <h3 class="text-sm tracking-widest font-semibold">TOTAL BOOKINGS</h3>
+  <p class="text-3xl font-bold mt-2" id="totalBookings"></p>
+</div>
+
+<!-- TOTAL BOOKING AMOUNT -->
+<div class="relative bg-gradient-to-r from-gray-800 via-emerald-750 to-green-700
+            text-white p-6 rounded-2xl shadow-lg overflow-hidden">
+
+  <div class="absolute top-5 right-5 opacity-90 text-6xl font-bold text-gray-300"> ₹ </div>
 
   <h3 class="text-sm tracking-widest font-semibold">TOTAL BOOKING AMOUNT</h3>
-  <p class="text-3xl font-bold mt-2">₹ 11,34,510</p>
+  <p class="text-2xl font-bold mt-3" id="totalBookingAmount"></p>
 </div>
 
-<!-- Commission Amount -->
-<div class="relative bg-gradient-to-br from-yellow-200 to-yellow-300 
-            text-black p-6 rounded-2xl shadow-lg overflow-hidden">
+<!-- TOTAL COMMISSION AMOUNT -->
+<div class="relative bg-gradient-to-r from-gray-800 via-emerald-750 to-green-700
+            text-white p-6 rounded-2xl shadow-lg overflow-hidden">
 
-  <div class="absolute top-5 right-5 opacity-20 text-6xl font-bold">%</div>
+  <div class="absolute top-5 right-5 opacity-90 text-6xl font-bold text-gray-300">%</div>
 
   <h3 class="text-sm tracking-widest font-semibold">TOTAL COMMISSION AMOUNT</h3>
-  <p class="text-3xl font-bold mt-2">₹ 20,510</p>
+  <p class="text-2xl font-bold mt-3" id="totalCommissionAmount"></p>
 </div>
 
-<!-- Highest Sale -->
-<div class="relative bg-gradient-to-br from-yellow-200 to-yellow-300 
-            text-black p-6 rounded-2xl shadow-lg overflow-hidden">
+<!-- BALANCE COMMISSION AMOUNT -->
+<div class="relative bg-gradient-to-r from-gray-800 via-emerald-750 to-green-700
+            text-white p-6 rounded-2xl shadow-lg overflow-hidden">
 
-  <div class="absolute top-5 right-5 opacity-20 text-6xl font-bold">🏆</div>
+  <div class="absolute top-5 right-5 opacity-90 text-6xl font-bold text-gray-300">%</div>
 
-  <h3 class="text-sm tracking-widest font-semibold">HIGHEST SALE</h3>
-  <p class="text-2xl font-bold mt-3">₹ 5,15,200</p>
+  <h3 class="text-sm tracking-widest font-semibold">BALANCE COMMISSION  AMOUNT</h3>
+  <p class="text-2xl font-bold mt-3" id="balanceCommissionAmount"></p>
 </div>
 
+<!-- RECEIVED COMMISSION AMOUNT -->
+<div class="relative bg-gradient-to-r from-gray-800 via-emerald-750 to-green-700
+            text-white p-6 rounded-2xl shadow-lg overflow-hidden">
+
+  <div class="absolute top-5 right-5 opacity-90 text-6xl font-bold text-gray-300">%</div>
+
+  <h3 class="text-sm tracking-widest font-semibold">RECEIVED COMMISSION AMOUNT</h3>
+  <p class="text-2xl font-bold mt-3" id="receivedCommissionAmount"></p>
 </div>
 
 
+
+
+</div>
+
+<script src="../url.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const token = localStorage.getItem('auth_token');
+    if (!token) {
+      alert("Please login first");
+      window.location.href = "../login";
+      return;
+    }
+    const apiUrl = url + 'dashboard';
+
+    fetch(apiUrl, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer " + token
+        }
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok: " + response.statusText);
+        }
+        return response.json();
+      })
+      .then(data => {
+        document.querySelector('#totalSites').textContent = data.total_site;
+        document.querySelector('#totalCustomers').textContent = data.total_customer;
+        document.querySelector('#totalBookings').textContent = data.total_booking;
+        document.querySelector('#totalBookingAmount').textContent = "₹ " + data.total_booking_amount.toLocaleString();
+        document.querySelector('#totalCommissionAmount').textContent = "₹ " + data.total_commission_amount.toLocaleString();
+        document.querySelector('#balanceCommissionAmount').textContent = "₹ " + data.total_balanceamt.toLocaleString();
+        document.querySelector('#receivedCommissionAmount').textContent = "₹ " + data.total_paidamt.toLocaleString();
+      })
+      .catch(error => console.error('Error fetching dashboard data:', error));
+  });
+</script>
 <?php include 'footer.php'; ?>
