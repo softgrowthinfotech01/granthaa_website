@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\CommissionLedger;
 use App\Models\User;
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CommissionPaymentController extends Controller
 {
@@ -17,14 +19,17 @@ class CommissionPaymentController extends Controller
     {
         $request->validate([
             'user_id' => 'required|exists:users,id',
-            'amount' => 'required|numeric|min:1'
+            'amount' => 'required|numeric|min:1',
+            'payment_mode' => 'nullable|string|max:50',
+            'reference_no' => 'nullable|string|max:100',
+            'remark' => 'nullable|string|max:255'
         ]);
 
         $userId = $request->user_id;
         $amount = $request->amount;
 
         // calculate balance
-        $balance = CommissionLedger::where('user_id', $userId)->sum('amount');
+        $balance = $this->calculateSummary($userId)['balance'];
 
         if ($balance <= 0) {
             return response()->json([
@@ -41,6 +46,9 @@ class CommissionPaymentController extends Controller
             ], 400);
         }
 
+        DB::beginTransaction();
+        try{
+
         $payment = CommissionLedger::create([
             'user_id' => $userId,
             'type' => 'payment',
@@ -48,14 +56,24 @@ class CommissionPaymentController extends Controller
             'payment_mode' => $request->payment_mode,
             'reference_no' => $request->reference_no,
             'remark' => $request->remark,
-            'created_by' => auth()->id()
+            'created_by' => auth()->user()->id
         ]);
+
+        DB::commit();
 
         return response()->json([
             'status' => true,
             'message' => 'Payment recorded successfully',
             'data' => $payment
         ]);
+        } catch (\Exception $e){
+            DB::rollBack();
+
+            return response()->json([
+                'status' => false,
+                'message' => 'Payment failed' 
+            ], 500);
+        }
     }
 
 
@@ -64,6 +82,14 @@ class CommissionPaymentController extends Controller
      */
     public function summary($userId)
     {
+        $user = User::find($userId);
+
+        if (!$user) {
+            return response()->json([
+                'status' => false,
+                'message' => 'User not found'
+            ], 404);
+        }
         $summary = $this->calculateSummary($userId);
 
         return response()->json([
@@ -78,7 +104,17 @@ class CommissionPaymentController extends Controller
      */
     public function ledger($userId, Request $request)
     {
-        $perPage = min($request->get('per_page', 10), 100);
+
+        $user = User::find($userId);
+
+        if (!$user) {
+            return response()->json([
+                'status' => false,
+                'message' => 'User not found'
+            ], 404);
+        }
+
+        $perPage = min(max((int)$request->get('per_page', 10), 1), 100);
 
         $query = CommissionLedger::where('user_id', $userId);
 
@@ -98,7 +134,7 @@ class CommissionPaymentController extends Controller
             $query->whereDate('created_at', '<=', $request->to_date);
         }
 
-        $data = $query->latest()->paginate($perPage);
+        $data = $query->with('user')->latest()->paginate($perPage);
 
         return response()->json([
             'status' => true,
@@ -128,14 +164,14 @@ class CommissionPaymentController extends Controller
     {
         $leader = auth()->user();
 
-        if ($leader->role !== 'leader') {
+        if (!in_array($leader->role, ['leader', 'admin'])) {
             return response()->json([
                 'status' => false,
                 'message' => 'Unauthorized'
             ]);
         }
 
-        $perPage = min($request->get('per_page', 10), 100);
+        $perPage = min(max((int)$request->get('per_page', 10), 1), 100);
 
         $query = User::where('created_by', $leader->id)
             ->where('role', 'adviser');
@@ -175,7 +211,7 @@ class CommissionPaymentController extends Controller
     {
         $leader = auth()->user();
 
-        $perPage = min($request->get('per_page', 10), 100);
+        $perPage = min(max((int)$request->get('per_page', 10), 1), 100);
 
         $query = User::where('id', $leader->id)
             ->orWhere('created_by', $leader->id);
@@ -214,7 +250,7 @@ class CommissionPaymentController extends Controller
      */
     public function paymentsCreatedBy($userId, Request $request)
     {
-        $perPage = min($request->get('per_page', 10), 100);
+        $perPage = min(max((int)$request->get('per_page', 10), 1), 100);
 
         $query = CommissionLedger::where('created_by', $userId)
             ->where('type', 'payment');
@@ -236,7 +272,7 @@ class CommissionPaymentController extends Controller
      */
     public function payments(Request $request)
     {
-        $perPage = min($request->get('per_page', 10), 100);
+        $perPage = min(max((int)$request->get('per_page', 10), 1), 100);
 
         $query = CommissionLedger::where('type', 'payment');
 

@@ -69,8 +69,14 @@ class Booking extends Model
     {
         return $this->hasOne(Referral::class, 'booking_id');
     }
+
     public function ledgerEntries()
     {
         return $this->hasMany(CommissionLedger::class);
+    }
+
+    public function location()
+    {
+        return $this->belongsTo(LocationMaster::class, 'site_location');
     }
 }

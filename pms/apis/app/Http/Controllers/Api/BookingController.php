@@ -52,7 +52,7 @@ class BookingController extends Controller
             'aadhar_number' => 'required',
             'address' => 'required',
             'plot_number' => 'required',
-            'site_location' => 'required',
+            'site_location' => 'required|exists:location_master,id',
             'commission_type' => 'required',
             'commission_value' => 'required',
             'referral_id' => 'nullable|exists:referrals,id',
@@ -78,46 +78,6 @@ class BookingController extends Controller
                 }
 
                 $commission_amount = round($commissionAmount, 2);
-
-                // 3️⃣ Handle Referral If Exists
-                if ($request->filled('referral_id')) {
-
-                    $referral = Referral::where('referrer_id', $request->referral_id)
-                        ->where('status', 'pending')
-                        ->first();
-                    // print_r($leader->id);die;
-
-                    if ($referral) {
-
-                        // 🔐 Security check:
-                        // Only assigned leader/adviser can convert
-                        if ($referral->assigned_to != $leader->id) {
-                            throw new \Exception("You are not authorized to convert this referral.");
-                        }
-
-                        // 💰 Incentive calculation (Example: 5%)
-                        $incentive = ($totalBookingAmount * 5) / 100;
-
-                        $referrer = User::find($referral->referrer_id);
-
-                        // Add to wallet
-                        $referrer->increment('wallet_balance', $incentive);
-
-                        WalletTransaction::create([
-                            'user_id' => $referrer->id,
-                            'amount' => $incentive,
-                            'type' => 'credit',
-                            'remark' => 'Referral Booking Incentive'
-                        ]);
-
-                        // Update referral
-                        $referral->update([
-                            'status' => 'converted',
-                            'booking_id' => $referrer->id,
-                            'incentive_amount' => $incentive
-                        ]);
-                    }
-                }
 
                 $newUser = User::where('email', $request->email)->first();
                 if (!$newUser) {
@@ -163,24 +123,53 @@ class BookingController extends Controller
                 if ($creator->role == 'adviser') {
 
                     $adviserId = $creator->id;
-                    $leaderId = $creator->created_by; // leader of adviser
+                    $leaderId = $creator->created_by;
 
-                    $adviserCommissionType = $request->commission_type;
-                    $adviserCommissionValue = $commissionValue;
+                    // Admin -> Leader commission
+                    $leaderCommission = UserLocationCommission::where('user_id', $leaderId)
+                        ->where('location_id', $request->site_location)
+                        ->first();
 
-                    if ($request->commission_type == "percent") {
-
-                        $adviserCommissionAmount = ($totalBookingAmount * $commissionValue) / 100;
-                    } else {
-
-                        $adviserCommissionAmount = $commissionValue;
+                    if (!$leaderCommission) {
+                        throw new \Exception("Leader commission not configured for this location.");
                     }
 
-                    // Remaining commission goes to leader
-                    $leaderCommissionAmount = $commission_amount - $adviserCommissionAmount;
+                    // Leader -> Adviser commission
+                    $adviserCommission = UserLocationCommission::where('user_id', $adviserId)
+                        ->where('location_id', $request->site_location)
+                        ->first();
 
-                    $leaderCommissionType = $request->commission_type;
-                    $leaderCommissionValue = $commissionValue;
+                    if (!$adviserCommission) {
+                        throw new \Exception("Adviser commission not configured for this location.");
+                    }
+
+                    // Leader commission calculation
+                    if ($leaderCommission->commission_type == 'percent') {
+                        $leaderAmount = ($totalBookingAmount * $leaderCommission->commission_value) / 100;
+                    } else {
+                        $leaderAmount = $leaderCommission->commission_value;
+                    }
+
+                    // Adviser commission calculation
+                    if ($adviserCommission->commission_type == 'percent') {
+                        $adviserAmount = ($totalBookingAmount * $adviserCommission->commission_value) / 100;
+                    } else {
+                        $adviserAmount = $adviserCommission->commission_value;
+                    }
+
+                    // Validation
+                    if ($adviserAmount > $leaderAmount) {
+                        throw new \Exception("Adviser commission cannot exceed leader commission.");
+                    }
+
+                    $leaderCommissionAmount = $leaderAmount - $adviserAmount;
+                    $adviserCommissionAmount = $adviserAmount;
+
+                    $leaderCommissionType = $leaderCommission->commission_type;
+                    $leaderCommissionValue = $leaderCommission->commission_value;
+
+                    $adviserCommissionType = $adviserCommission->commission_type;
+                    $adviserCommissionValue = $adviserCommission->commission_value;
                 }
 
                 // 2️⃣ Create Booking
@@ -243,7 +232,7 @@ class BookingController extends Controller
                         'user_id' => $booking->leader_id,
                         'booking_id' => $booking->id,
                         'type' => 'commission',
-                        'amount' => $booking->leader_commission_amount,
+                        'amount' => $leaderCommissionAmount,
                         'remark' => 'Leader commission from booking ' . $booking->id
                     ]);
                 }
@@ -254,8 +243,47 @@ class BookingController extends Controller
                         'user_id' => $booking->adviser_id,
                         'booking_id' => $booking->id,
                         'type' => 'commission',
-                        'amount' => $booking->adviser_commission_amount,
+                        'amount' => $adviserCommissionAmount,
                         'remark' => 'Adviser commission from booking ' . $booking->id
+                    ]);
+                }
+
+                if ($request->referral_id) {
+
+                    $referral = Referral::find($request->referral_id);
+
+                    if (!$referral) {
+                        throw new \Exception("Referral not found.");
+                    }
+
+                    if ($referral->status == 'converted') {
+                        throw new \Exception("This referral is already converted.");
+                    }
+
+                    if ($referral->assigned_to != $creator->id) {
+                        throw new \Exception("You are not authorized to convert this referral.");
+                    }
+
+                    $incentive = ($totalBookingAmount * 5) / 100;
+
+                    $referrer = User::find($referral->referrer_id);
+
+                    if ($referrer) {
+
+                        $referrer->increment('wallet_balance', $incentive);
+
+                        WalletTransaction::create([
+                            'user_id' => $referrer->id,
+                            'amount' => $incentive,
+                            'type' => 'credit',
+                            'remark' => 'Referral Booking Incentive'
+                        ]);
+                    }
+
+                    $referral->update([
+                        'status' => 'converted',
+                        'booking_id' => $booking->id,
+                        'incentive_amount' => $incentive
                     ]);
                 }
 
@@ -287,7 +315,7 @@ class BookingController extends Controller
         if ($user->role !== 'admin') {
             $query->where('user_code', $user->user_code);
         }
-
+        $query = Booking::with(['leader', 'location']);
         // 🔎 Search Filter
         if ($request->filled('search')) {
             $search = $request->search;
@@ -403,24 +431,19 @@ class BookingController extends Controller
         // 🔹 If Admin → all advisers
         if ($user->role === 'admin') {
 
-            $totalAdvisors = User::where('role', 'advisor')
+            $totalAdvisors = User::where('role', 'adviser')
                 ->where('created_by', $user->id)
                 ->count();
             $totalBookingAmount = Booking::sum('total_booking_amount');
-            $totalBooking = Booking::count('total_booking_amount');
-            
+            $totalBooking = Booking::count();
+
             $totalsite = UserLocationCommission::count('id');
-            $totalCommissionAmount = 0;
 
-            $bookings = $query->get();
 
-            foreach ($bookings as $booking) {
-                if ($booking->commission_type == 'amount') {
-                    $totalCommissionAmount += $booking->commission_value;
-                } else if ($booking->commission_type == 'percent') {
-                    $totalCommissionAmount += ($booking->commission_amount * $booking->total_booking_amount) / 100;
-                }
-            }
+            $totalCommissionAmount = Booking::sum(
+                DB::raw('leader_commission_amount + adviser_commission_amount')
+            );
+
             $topAdvisor = Booking::select('user_code', DB::raw('SUM(advance_amount) as total'))
                 ->groupBy('user_code')
                 ->orderByDesc('total')
@@ -456,8 +479,13 @@ class BookingController extends Controller
             $totalsite = UserLocationCommission::where('user_id', $user->id)
                 ->count('id');
 
-            $totalCommissionAmount = Booking::whereIn('user_code', $adviserCodes)
-                ->sum('commission_amount');
+            $leaderCommission = Booking::where('leader_id', $user->id)
+                ->sum('leader_commission_amount');
+
+            $adviserCommission = Booking::where('leader_id', $user->id)
+                ->sum('adviser_commission_amount');
+
+            $totalCommissionAmount = $leaderCommission + $adviserCommission;
 
             $topAdvisor = Booking::whereIn('user_code', $adviserCodes)
                 ->select('user_code', DB::raw('SUM(total_booking_amount) as total'))
@@ -485,7 +513,7 @@ class BookingController extends Controller
         // 🔹 If Adviser → only his own
         elseif ($user->role === 'adviser') {
 
-        //  customer, booking amount, commission amount, site assinged, references
+            //  customer, booking amount, commission amount, site assinged, references
             $totalAdvisors = 1;
 
             $totalBookingAmount = Booking::where('user_code', $user->user_code)
@@ -502,8 +530,8 @@ class BookingController extends Controller
 
             $totalcustomer = User::where('created_by', $user->id)->count();
 
-            $totalCommissionAmount = Booking::where('user_code', $user->user_code)
-                ->sum('commission_amount');
+            $totalCommissionAmount = Booking::where('adviser_id', $user->id)
+                ->sum('adviser_commission_amount');
 
             $topAdvisor = Booking::where('user_code', $user->user_code)
                 ->select('user_code', DB::raw('SUM(advance_amount) as total'))
@@ -521,9 +549,43 @@ class BookingController extends Controller
             );
 
             $totalbalanceamt = $totalCommissionAmount - $totalpaidamt;
-        }
-        elseif ($user->role === 'customer') {
-            //   total booking, total bookind amount, total paid amount, total balance amount, my reference users(booked).
+        } elseif ($user->role === 'customer') {
+
+            // Customer bookings
+            $totalBooking = Booking::where('created_by', $user->id)->count();
+
+            // Total booking amount
+            $totalBookingAmount = Booking::where('created_by', $user->id)
+                ->sum('total_booking_amount');
+
+            // Total advance paid
+            $totalpaidamt = Booking::where('created_by', $user->id)
+                ->sum('advance_amount');
+
+            // Remaining balance
+            $totalbalanceamt = $totalBookingAmount - $totalpaidamt;
+
+            // Sites booked by customer
+            $totalsite = Booking::where('created_by', $user->id)
+                ->distinct('site_location')
+                ->count('site_location');
+
+            // References made by customer
+            $totalreferences = Referral::where('referrer_id', $user->id)->count();
+
+            // Customers created via referral (converted bookings)
+            $totalcustomer = Referral::where('referrer_id', $user->id)
+                ->where('status', 'converted')
+                ->count();
+
+            // Customer has no advisors
+            $totalAdvisors = 0;
+
+            // Customers don't earn commission
+            $totalCommissionAmount = 0;
+
+            // No top advisor for customer
+            $topAdvisor = null;
         }
 
         $top_advisorname = User::where('user_code', $topAdvisor?->user_code)->first();
@@ -544,29 +606,28 @@ class BookingController extends Controller
     }
 
     public function admdashboard()
-{
-    $totalLeaders = User::where('role', 'leader')->count();
+    {
+        $totalLeaders = User::where('role', 'leader')->count();
 
-    $totalSites = LocationMaster::count();
+        $totalSites = LocationMaster::count();
 
-    $totalBookings = Booking::count();
+        $totalBookings = Booking::count();
 
-    $totalSalesValue = Booking::sum('commission_amount'); 
+        $totalSalesValue = Booking::sum('commission_amount');
 
-    $pendingCommissions = CommissionLedger::where('type', 'commission')
-        ->sum('amount') - CommissionLedger::where('type', 'payment')->sum('amount');
+        $pendingCommissions = CommissionLedger::where('type', 'commission')
+            ->sum('amount') - CommissionLedger::where('type', 'payment')->sum('amount');
 
-    return response()->json([
-        'status' => true,
-        'data' => [
-            'total_leaders' => $totalLeaders,
-            'total_sites' => $totalSites,
-            'total_bookings' => $totalBookings,
-            'total_sales_value' => $totalSalesValue,
-            'pending_commissions' => $pendingCommissions
-        ]
-    ]);
-
+        return response()->json([
+            'status' => true,
+            'data' => [
+                'total_leaders' => $totalLeaders,
+                'total_sites' => $totalSites,
+                'total_bookings' => $totalBookings,
+                'total_sales_value' => $totalSalesValue,
+                'pending_commissions' => $pendingCommissions
+            ]
+        ]);
     }
 
     public function adviserPerformance(Request $request)
