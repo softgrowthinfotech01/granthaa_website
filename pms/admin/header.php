@@ -1,108 +1,105 @@
-<header class="bg-white shadow-lg">
-    <div class="flex justify-between items-center px-4 h-22">
+<header class="bg-gray-100 border-b shadow-lg">
+<div class="flex justify-between items-center px-6 h-20">
 
-        <!-- Left -->
-        <div class="flex items-center gap-4">
+<!-- LEFT -->
+<div class="flex items-center gap-4">
 
-            <!-- Sidebar Toggle (Mobile Only) -->
-            <i class="fas fa-bars text-gray-700 cursor-pointer hover:bg-gray-300 p-2 rounded-sm md:hidden"
-                onclick="sidebarToggle()"></i>
+<!-- Sidebar Toggle -->
+<i class="fas fa-bars text-gray-700 text-lg cursor-pointer hover:bg-gray-200 p-2 rounded-md md:hidden"
+onclick="sidebarToggle()"></i>
 
-            <h1 class="text-gray-700 text-sm md:text-lg font-semibold">
-                Granthaa Admin Panel
-            </h1>
-        </div>
+<h1 class="text-gray-800 text-lg font-semibold tracking-wide">
+Granthaa Admin Panel
+</h1>
 
-        <!-- Center Logo -->
-        <div class="hidden sm:block">
-            <img src="../images/logo.png" alt="logo"
-                class="w-24 md:w-32 rounded-sm">
-        </div>
+</div>
 
-        <!-- Right Profile -->
-        <div class="relative flex items-center bg-gray-300 rounded-lg">
 
-            <a href="#"
-                onclick="profileToggle()"
-                class="flex items-center gap-2 px-3 py-2 rounded-sm hover:bg-gray-500 cursor-pointer text-gray-900 hover:text-white">
+<!-- CENTER LOGO -->
+<div class="hidden md:flex items-center">
+<img src="../images/logo_icon.png"
+class="w-40 h-auto">
+</div>
 
-                <img src="../images/profile.png" class="w-8 h-8 rounded-full">
 
-                <!-- Hide username on mobile -->
-                <span class="hidden md:block font-medium">User</span>
+<!-- RIGHT SIDE -->
+<div class="flex items-center gap-4">
 
-            </a>
+<!-- PROFILE -->
+<div class="relative">
 
-            <!-- Dropdown -->
-            <div id="ProfileDropDown"
-                class="hidden absolute right-0 top-14 w-48
-                        bg-white rounded shadow-lg z-50">
+<div onclick="profileToggle()"
+class="flex items-center gap-2 cursor-pointer px-3 py-2 rounded-lg bg-gray-200 hover:bg-gray-300 shadow-sm">
 
-                <ul class="text-sm text-gray-700">
+<img src="../images/profile.png"
+class="w-9 h-9 rounded-full border border-gray-300 shadow-sm">
 
-                    <li>
-                        <a href="#" class="block px-4 py-2 hover:bg-gray-100">
-                            My account
-                        </a>
-                    </li>
+<span class="hidden md:block font-medium text-red-700">
+ADMIN
+</span>
 
-                    <li>
-                        <a href="#" class="block px-4 py-2 hover:bg-gray-100">
-                            Notifications
-                        </a>
-                    </li>
+<i class="fa-solid fa-chevron-down text-xs text-gray-500"></i>
 
-                    <li>
-                        <hr class="my-1 border-gray-200">
-                    </li>
+</div>
 
-                    <li>
-                        <a style="cursor:pointer"
-                           onclick="logout()"
-                           class="block px-4 py-2 hover:bg-gray-100 text-red-600">
-                            Logout
-                        </a>
-                    </li>
 
-                </ul>
+<!-- DROPDOWN -->
+<div id="ProfileDropDown"
+class="hidden absolute right-0 mt-3 w-52 bg-white border rounded-xl shadow-2xl overflow-hidden z-50">
 
-            </div>
-        </div>
 
-    </div>
+<hr>
+
+<a onclick="logout()"
+class="flex items-center gap-2 px-4 py-3 hover:bg-red-50 text-red-600 cursor-pointer">
+<i class="fa-solid fa-right-from-bracket"></i>
+Logout
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
 </header>
 
 <script src="https://cdn.tailwindcss.com"></script>
 <link rel="stylesheet"
 href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <script src="../url.js"></script>
+
 <script>
+
 function profileToggle(){
-
-    const dropdown = document.getElementById("ProfileDropDown");
-
-    dropdown.classList.toggle("hidden");
+const dropdown = document.getElementById("ProfileDropDown");
+dropdown.classList.toggle("hidden");
 }
-function logout() {
 
-    const token = localStorage.getItem("auth_token");
 
-    fetch(url + "logout", {
-        method: "POST",
-        headers: {
-            "Authorization": "Bearer " + token,
-            "Accept": "application/json"
-        }
-    }).finally(() => {
-        localStorage.clear();
-        window.location.href = "../login.php";
-    });
+function logout(){
+
+const token = localStorage.getItem("auth_token");
+
+fetch(url + "logout",{
+method:"POST",
+headers:{
+"Authorization":"Bearer "+token,
+"Accept":"application/json"
 }
+}).finally(()=>{
+localStorage.clear();
+window.location.href="../login.php";
+});
+}
+
 
 const user = JSON.parse(localStorage.getItem("auth_user"));
 
-if (!user || user.role !== "admin") {
-    alert("Unauthorized access");
-    window.location.href = "../login.php";
+if(!user || user.role !== "admin"){
+alert("Unauthorized access");
+window.location.href="../login.php";
 }
+
 </script>

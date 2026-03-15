@@ -19,7 +19,7 @@
 
     <div class="absolute top-5 right-5 opacity-20 text-6xl font-bold">₹</div>
 
-    <h3 class="text-sm tracking-widest font-semibold">TOTAL BOOKING AMOUNT</h3>
+    <h3 class="text-sm tracking-widest font-semibold">TOTAL ADVISOR'S BOOKING AMOUNT</h3>
     <p class="text-3xl font-bold mt-2" id="totalBooking"></p>
   </div>
 
@@ -29,7 +29,7 @@
 
     <div class="absolute top-5 right-5 opacity-20 text-6xl font-bold">%</div>
 
-    <h3 class="text-sm tracking-widest font-semibold">TOTAL COMMISSION AMOUNT</h3>
+    <h3 class="text-sm tracking-widest font-semibold">TOTAL ADVISOR'S COMMISSION AMOUNT</h3>
     <p class="text-3xl font-bold mt-2" id="totalCommission"></p>
   </div>
 
