@@ -38,9 +38,11 @@
     </div>
     <div>
       <label class="block text-gray-900 font-semibold mb-1">Age</label>
-      <input type="number"
+      <input type="text"
         name="age"
         min="18"
+        pattern="[0-9]{1,2}"
+        maxlength="2"
         required
         class="w-full border border-gray-300 p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400">
     </div>
@@ -67,6 +69,8 @@
     <div>
       <label class="block text-gray-900 font-semibold mb-1">Bank Name</label>
       <input type="text" name="bank_name" placeholder="Enter bank name" required
+        pattern="[A-Za-z\s&]+"
+        title="Bank name should contain only letters and spaces"
         class="w-full border border-gray-300 p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400">
     </div>
 
