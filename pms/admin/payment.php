@@ -50,21 +50,38 @@
 
                                 </select>
                             </div>
+
+                            <!-- Total Commission -->
                             <div class="mb-5 px-1">
-                                <div class="col-md-4">
-                                    <label>Total Commission</label>
-                                    <input type="text" id="total_commission" class="form-control" readonly>
-                                </div>
+                                    <label class="block mb-2.5 text-sm font-medium text-heading">
+                                    Total Commission
+                                </label>
 
-                                <div class="col-md-4">
-                                    <label>Total Paid</label>
-                                    <input type="text" id="total_paid" class="form-control" readonly>
-                                </div>
+                                    <input name="total_commission" type="text" id="total_commission"
+                                    class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm block w-full px-3 py-2.5 shadow-xs"
+                                    placeholder="Enter payment amount" readonly />
+                            </div>
 
-                                <div class="col-md-4">
-                                    <label>Balance</label>
-                                    <input type="text" id="balance" class="form-control" readonly>
-                                </div>
+                            <!-- Total Paid -->
+                            <div class="mb-5 px-1">
+                                <label class="block mb-2.5 text-sm font-medium text-heading">
+                                    Total Paid
+                                </label>
+
+                                <input name="total_paid" type="number" id="total_paid"
+                                    class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm block w-full px-3 py-2.5 shadow-xs"
+                                    placeholder="Enter payment amount" readonly />
+                            </div>
+
+                            <!-- Balance -->
+                            <div class="mb-5 px-1">
+                                <label class="block mb-2.5 text-sm font-medium text-heading">
+                                    Balance
+                                </label>
+                                
+                                <input name="balance" type="number" id="balance"
+                                    class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm block w-full px-3 py-2.5 shadow-xs"
+                                    placeholder="Enter payment amount" readonly />
                             </div>
 
                             <!-- AMOUNT -->

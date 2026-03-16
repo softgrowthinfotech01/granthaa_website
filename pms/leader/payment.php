@@ -25,6 +25,27 @@
                         <option value="">Loading...</option>
                     </select>
                 </div>
+                
+                <!-- Total Commission -->
+                <div class="space-y-2">
+                    <label class="text-sm font-semibold text-gray-700">Total Commission</label>
+                    <input type="text" name="total_commission" id="total_commission" readonly
+                        class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-green-400 outline-none">
+                </div>
+
+                <!-- Total Paid -->
+                <div class="space-y-2">
+                    <label class="text-sm font-semibold text-gray-700">Payment Amount</label>
+                    <input type="text" name="total_paid" id="total_paid" readonly
+                        class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-green-400 outline-none">
+                </div>
+
+                <!-- Balance -->
+                <div class="space-y-2">
+                    <label class="text-sm font-semibold text-gray-700">Payment Amount</label>
+                    <input type="text" name="balance" id="balance" readonly
+                        class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-green-400 outline-none">
+                </div>
 
                 <!-- AMOUNT -->
                 <div class="space-y-2">
@@ -182,3 +203,70 @@ transition transform hover:scale-[1.02]">
 
     });
 </script>
+
+<script>
+        document.addEventListener("DOMContentLoaded", loadUsers);
+
+        async function loadUsers() {
+
+            const dropdown = document.getElementById("user_id");
+            const token = localStorage.getItem("auth_token");
+
+            try {
+
+                const response = await fetch(url + "by-role?role=adviser&per_page=100", {
+                    method: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token,
+                        "Accept": "application/json"
+                    }
+                });
+
+                const result = await response.json();
+
+                dropdown.innerHTML = '<option value="">Select User</option>';
+
+                result.data.data.forEach(user => {
+
+                    dropdown.innerHTML += `
+                <option value="${user.id}">
+                    ${user.user_code} - ${user.name}
+                </option>
+            `;
+
+                });
+
+            } catch (error) {
+
+                console.error(error);
+                dropdown.innerHTML = '<option value="">Failed to load users</option>';
+
+            }
+        }
+
+        document.getElementById("user_id").addEventListener("change", async function () {
+
+    let user_id = this.value;
+    const token = localStorage.getItem("auth_token");
+
+    if(user_id != "")
+    {
+        const response = await fetch(url + "commission/summary/" + user_id, {
+
+            method: "GET",
+            headers: {
+                "Authorization": "Bearer " + token,
+                "Accept": "application/json"
+            }
+
+        });
+
+        const result = await response.json();
+
+        document.getElementById("total_commission").value = result.data.total_commission;
+        document.getElementById("total_paid").value = result.data.total_paid;
+        document.getElementById("balance").value = result.data.balance;
+    }
+
+});
+    </script>
