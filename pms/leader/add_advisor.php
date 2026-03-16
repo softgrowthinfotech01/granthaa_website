@@ -84,7 +84,10 @@
     <!-- Account Number -->
     <div>
       <label class="block text-gray-900 font-semibold mb-1">Account Number</label>
-      <input type="number" name="bank_account_no" placeholder="Enter account number" required
+      <input type="text" name="bank_account_no" placeholder="Enter account number" required
+        maxlength="18"
+        pattern="[0-9]{9,18}"
+        title="Account number must be between 9-18 digits"
         class="w-full border border-gray-300 p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400">
     </div>
 
@@ -92,6 +95,9 @@
     <div>
       <label class="block text-gray-900 font-semibold mb-1">IFSC Code</label>
       <input type="text" name="bank_ifsc_code" placeholder="Enter IFSC code" required
+        maxlength="11" id="bank_ifsc_code"
+        pattern="[A-Za-z]{4}0[A-Za-z0-9]{6}"
+        title="Enter valid IFSC code (Example: HDFC0001234)"
         class="w-full border border-gray-300 p-2 rounded-lg uppercase focus:outline-none focus:ring-2 focus:ring-yellow-400">
     </div>
 
@@ -114,10 +120,17 @@
 <script src="../url.js"></script>
 
 <script>
+  // Email Validation
   function validateEmail(email) {
     const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return pattern.test(email);
   }
+  // IFSC Validation
+  document.getElementById("bank_ifsc_code").addEventListener("input", function() {
+    this.value = this.value
+      .toUpperCase()
+      .replace(/[^A-Z0-9]/g, '');
+  });
 
   document.getElementById('advisorForm').addEventListener('submit', async function(e) {
     e.preventDefault();
