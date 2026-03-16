@@ -7,7 +7,7 @@
   <form id="advisorForm"
     class="grid grid-cols-1 md:grid-cols-2 gap-6">
 
- 
+
 
     <!-- Full Name -->
     <div>
@@ -16,17 +16,17 @@
         class="w-full border border-gray-300 p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400">
     </div>
 
-    <!-- email -->
+    <!-- Email -->
     <div>
       <label class="block text-gray-900 font-semibold mb-1">Email</label>
-      <input type="text" name="email" placeholder="Enter email" required
+      <input type="email" name="email" placeholder="Enter email" id="email" required
         class="w-full border border-gray-300 p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400">
     </div>
 
     <!-- Phone -->
     <div>
       <label class="block text-gray-900 font-semibold mb-1">Phone Number</label>
-      <input type="number" name="contact_no" placeholder="Enter phone number" required
+      <input type="text" name="contact_no" placeholder="Enter phone number" id="contact_no" maxlength="10"
         class="w-full border border-gray-300 p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400">
     </div>
 
@@ -38,20 +38,20 @@
     </div>
     <div>
       <label class="block text-gray-900 font-semibold mb-1">Age</label>
-      <input type="number" 
-       name="age" 
-       min="18"
-       required
-       class="w-full border border-gray-300 p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400">
+      <input type="number"
+        name="age"
+        min="18"
+        required
+        class="w-full border border-gray-300 p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400">
     </div>
     <div>
       <label class="block text-gray-900 font-semibold mb-1">Gender</label>
       <select name="gender" required
         class="w-full border border-gray-300 p-2 rounded-lg focus:ring-2 focus:ring-yellow-400">
-  <option value="">-- Select Gender --</option>
-  <option value="male">Male</option>
-  <option value="female">Female</option>
-</select>
+        <option value="">-- Select Gender --</option>
+        <option value="male">Male</option>
+        <option value="female">Female</option>
+      </select>
     </div>
 
     <!-- Address -->
@@ -110,6 +110,11 @@
 <script src="../url.js"></script>
 
 <script>
+  function validateEmail(email) {
+    const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return pattern.test(email);
+  }
+
   document.getElementById('advisorForm').addEventListener('submit', async function(e) {
     e.preventDefault();
 
@@ -129,11 +134,39 @@
 
     let form = document.getElementById('advisorForm');
     let formData = new FormData(form);
-     console.log(formData);
-    // 🔥 FORCE VALUES
+
+    let email = formData.get("email");
+
+    // Email validation
+    if (!validateEmail(email)) {
+      alert("Please enter a valid email address");
+      return;
+    }
+
+    // Phone validation
+    let phone = formData.get("contact_no");
+    const phonePattern = /^[0-9]{10}$/;
+
+    if (!phonePattern.test(phone)) {
+      alert("Phone number must be exactly 10 digits");
+      return;
+    }
+
+    // Pancard validation
+    let pancard = formData.get("pancard_number").trim().toUpperCase();
+    const panPattern = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
+
+    if (!panPattern.test(pancard)) {
+      alert("Invalid PAN card number. Format should be ABCDE1234F");
+      return;
+    }
+
+    console.log(formData);
+
+    // FORCE VALUES
     formData.set("role", "adviser");
-    formData.set("password", "password"); // static password
-    formData.set("created_by", user.id); // admin id
+    formData.set("password", "password");
+    formData.set("created_by", user.id);
 
     try {
       const response = await fetch(url + 'users', {
