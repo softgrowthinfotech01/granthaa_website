@@ -50,6 +50,22 @@
 
                                 </select>
                             </div>
+                            <div class="mb-5 px-1">
+                                <div class="col-md-4">
+                                    <label>Total Commission</label>
+                                    <input type="text" id="total_commission" class="form-control" readonly>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label>Total Paid</label>
+                                    <input type="text" id="total_paid" class="form-control" readonly>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label>Balance</label>
+                                    <input type="text" id="balance" class="form-control" readonly>
+                                </div>
+                            </div>
 
                             <!-- AMOUNT -->
                             <div class="mb-5 px-1">
@@ -260,6 +276,32 @@
 
             }
         }
+
+        document.getElementById("user_id").addEventListener("change", async function () {
+
+    let user_id = this.value;
+    const token = localStorage.getItem("auth_token");
+
+    if(user_id != "")
+    {
+        const response = await fetch(url + "commission/summary/" + user_id, {
+
+            method: "GET",
+            headers: {
+                "Authorization": "Bearer " + token,
+                "Accept": "application/json"
+            }
+
+        });
+
+        const result = await response.json();
+
+        document.getElementById("total_commission").value = result.data.total_commission;
+        document.getElementById("total_paid").value = result.data.total_paid;
+        document.getElementById("balance").value = result.data.balance;
+    }
+
+});
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.js"></script>
