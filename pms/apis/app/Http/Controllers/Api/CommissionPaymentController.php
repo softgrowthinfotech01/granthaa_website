@@ -80,8 +80,10 @@ class CommissionPaymentController extends Controller
     /**
      * User Commission Summary
      */
-    public function summary()
+    public function summary($userId)
     {
+        $user = User::find($userId);
+
         if (!$user) {
             return response()->json([
                 'status' => false,
@@ -100,8 +102,17 @@ class CommissionPaymentController extends Controller
     /**
      * Ledger List
      */
-    public function ledger($ Request $request)
+    public function ledger($userId, Request $request)
     {
+
+        $user = User::find($userId);
+
+        if (!$user) {
+            return response()->json([
+                'status' => false,
+                'message' => 'User not found'
+            ], 404);
+        }
 
         $perPage = min(max((int)$request->get('per_page', 10), 1), 100);
 
@@ -237,7 +248,7 @@ class CommissionPaymentController extends Controller
     /**
      * Payments created by particular admin/user
      */
-    public function paymentsCreatedBy(Request $request)
+    public function paymentsCreatedBy($userId, Request $request)
     {
         $perPage = min(max((int)$request->get('per_page', 10), 1), 100);
 
