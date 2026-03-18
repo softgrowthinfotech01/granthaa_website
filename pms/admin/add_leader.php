@@ -45,6 +45,14 @@ transition-all duration-300">
                                 </div>
 
                                 <div class="mb-5 px-1">
+                                    <label for="aadhar_card" class="block mb-2.5 text-sm font-medium text-heading">Aadhar Card</label>
+                                    <input name="aadhar_card" type="text" maxlength="12" pattern="[0-9]{12}" inputmode="numeric"
+                                        id="aadhar_card"
+                                        class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm block w-full px-3 py-2.5 shadow-xs"
+                                        placeholder="Enter Aadhar card number" required />
+                                </div>
+
+                                <div class="mb-5 px-1">
                                     <label for="age" class="block mb-2.5 text-sm font-medium text-heading">Age</label>
                                     <input name="age" type="text" maxlength="2" pattern="[0-9]{2}" inputmode="numeric"
                                         id="age"
@@ -218,6 +226,14 @@ transition-all duration-300">
             const form = document.getElementById("userForm");
             const emailInput = document.getElementById("email");
             const fileInput = document.getElementById("file_input");
+
+            // AADHAR VALIDATION
+            const aadhar = document.getElementById("aadhar_card").value.trim();
+
+            if (!/^\d{12}$/.test(aadhar)) {
+                alert("Aadhar must be exactly 12 digits");
+                return;
+            }
 
             // EMAIL VALIDATION
             const email = emailInput.value.trim();
