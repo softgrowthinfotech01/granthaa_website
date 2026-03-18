@@ -121,28 +121,28 @@ fixed md:relative transform md:translate-x-0 -translate-x-full z-40 overflow-hid
 
                 <ul id="reportMenu" class="hidden bg-gray-100">
                     <li class="border-t">
-                        <a href="product_add"
+                        <a href="total_sales_report"
                             class="block px-10 py-3 bg-gray-500 text-white text-sm font-semibold">
                             <i class="fas fa-angle-right transition-transform mx-1"></i>
                             Total Sales Report
                         </a>
                     </li>
                     <li class="border-t">
-                        <a href="product_view"
+                        <a href="total_commission_report"
                             class="block px-10 py-3 bg-gray-500 text-white text-sm font-semibold">
                             <i class="fas fa-angle-right transition-transform mx-1"></i>
                             Total Commission Report
                         </a>
                     </li>
                     <li class="border-t">
-                        <a href="product_add"
+                        <a href="leader_business_report"
                             class="block px-10 py-3 bg-gray-500 text-white text-sm font-semibold">
                             <i class="fas fa-angle-right transition-transform mx-1"></i>
                             Leader-wise Business Report
                         </a>
                     </li>
                     <li class="border-t">
-                        <a href="product_add"
+                        <a href="advisor_business_report"
                             class="block px-10 py-3 bg-gray-500 text-white text-sm font-semibold">
                             <i class="fas fa-angle-right transition-transform mx-1"></i>
                             Advisor-wise Business Report

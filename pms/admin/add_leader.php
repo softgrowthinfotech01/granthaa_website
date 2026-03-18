@@ -45,6 +45,14 @@ transition-all duration-300">
                                 </div>
 
                                 <div class="mb-5 px-1">
+                                    <label for="aadhar_card" class="block mb-2.5 text-sm font-medium text-heading">Aadhar Card</label>
+                                    <input name="aadhar_card" type="text" maxlength="12" pattern="[0-9]{12}" inputmode="numeric"
+                                        id="aadhar_card"
+                                        class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm block w-full px-3 py-2.5 shadow-xs"
+                                        placeholder="Enter Aadhar card number" required />
+                                </div>
+
+                                <div class="mb-5 px-1">
                                     <label for="age" class="block mb-2.5 text-sm font-medium text-heading">Age</label>
                                     <input name="age" type="text" maxlength="2" pattern="[0-9]{2}" inputmode="numeric"
                                         id="age"
@@ -155,13 +163,15 @@ transition-all duration-300">
                                     <label for="account_number" class="block mb-2.5 text-sm font-medium text-heading">Account Number</label>
                                     <input name="bank_account_no" type="text" id="account_number"
                                         class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm block w-full px-3 py-2.5 shadow-xs"
-                                        placeholder="Enter account number" pattern="[0-9]{0,18}" maxlength="18" required />
+                                        placeholder="Enter account number" pattern="[0-9]{9,18}" maxlength="18" required />
                                 </div>
 
                                 <div class="mb-5 px-1">
-                                    <label for="ifsc_code" class="block mb-2.5 text-sm font-medium text-heading">IFSC Code <span>(Ex. ABCD0001234)</span></label>
+                                    <label for="ifsc_code" class="block mb-2.5 text-sm font-medium text-heading">IFSC Code</label>
                                     <input name="bank_ifsc_code" type="text" id="ifsc_code"
                                         class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm block w-full px-3 py-2.5 shadow-xs"
+                                        pattern="[A-Za-z]{4}0[A-Za-z0-9]{6}"
+                                        title="Enter valid IFSC code (Example: HDFC0001234)"
                                         placeholder="Enter IFSC code" maxlength="11" required />
                                 </div>
 
@@ -217,6 +227,14 @@ transition-all duration-300">
             const emailInput = document.getElementById("email");
             const fileInput = document.getElementById("file_input");
 
+            // AADHAR VALIDATION
+            const aadhar = document.getElementById("aadhar_card").value.trim();
+
+            if (!/^\d{12}$/.test(aadhar)) {
+                alert("Aadhar must be exactly 12 digits");
+                return;
+            }
+
             // EMAIL VALIDATION
             const email = emailInput.value.trim();
             const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -232,8 +250,8 @@ transition-all duration-300">
             // ACCOUNT NUMBER VALIDATION
             const accountNumber = document.getElementById("account_number").value.trim();
 
-            if (accountNumber.length !== 18) {
-                alert("Account number must be exactly 18 digits");
+            if (accountNumber.length < 9 || accountNumber.length > 18) {
+                alert("Account number must be between 9-18 digits");
                 return;
             }
 

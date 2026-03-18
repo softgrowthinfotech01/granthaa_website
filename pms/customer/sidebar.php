@@ -10,7 +10,7 @@ flex flex-col justify-between shrink-0">
 <!-- Logo -->
 <div class=" sidebar-text p-4 flex justify-center items-center">
  <h1 class="text-2xl md:text-3xl font-serif font-semibold tracking-[0.25em]
-             text-yellow-500 drop-shadow-sm">
+             text-yellow-500 drop-shadow-sm    ">
     GRANTHAA
   </h1>
   <!-- <img src="../images/logo.png" 
@@ -25,7 +25,7 @@ flex flex-col justify-between shrink-0">
     <a href="dashboard"
      class="menu-item <?php if($current=='dashboard') echo 'active'; ?>">
       <!-- home icon -->
-      <svg class="w-6 h-6 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <svg class="w-6 h-6 text-gray-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path d="M3 12l9-9 9 9M4 10v10h16V10"/>
       </svg>
       <span class="sidebar-text">Dashboard</span>
@@ -33,7 +33,7 @@ flex flex-col justify-between shrink-0">
 
     <a href="refer_customer"
      class="menu-item <?php if($current=='refer_customer') echo 'active'; ?>">
-      <svg class="w-6 h-6 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <svg class="w-6 h-6 text-gray-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path d="M12 4v16m8-8H4"/>
       </svg>
       <span class="sidebar-text">Refer Customer</span>
@@ -41,7 +41,7 @@ flex flex-col justify-between shrink-0">
 
      <a href="list_refer_customer"
      class="menu-item <?php if($current=='list_refer_customer') echo 'active'; ?>">
-    <svg class="w-6 h-6 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <svg class="w-6 h-6 text-gray-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path d="M3 7h18M3 12h18M3 17h18"/>
       </svg>
       <span class="sidebar-text"> Refer Customer Records</span>
@@ -49,7 +49,7 @@ flex flex-col justify-between shrink-0">
 
    <a href="my_bookings"
      class="menu-item <?php if($current=='my_bookings') echo 'active'; ?>">
-      <svg class="w-6 h-6 text-yellow-500" fill="currentColor" viewBox="0 0 24 24">
+      <svg class="w-6 h-6 text-gray-200" fill="currentColor" viewBox="0 0 24 24">
     <rect x="3" y="4" width="18" height="16" rx="2"/>
     <rect x="7" y="8" width="10" height="2"/>
     <rect x="7" y="12" width="10" height="2"/>

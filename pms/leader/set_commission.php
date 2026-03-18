@@ -94,7 +94,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         const locations = response.data ?? [];
 
-        locations.data.forEach(location => {
+        locations.forEach(location => {
             dropdown.innerHTML += `
                 <option value="${location.id}">
                     ${location.site_location}
