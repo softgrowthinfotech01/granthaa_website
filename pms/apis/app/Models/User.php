@@ -2,162 +2,81 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\Model;
 
-class User extends Authenticatable
+class Booking extends Model
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasFactory;
 
-    /**
-     * The attributes that are mass assignable.
-     * 
-     * @var list<string>
-     */
     protected $fillable = [
-    'name',
-    'user_code',
-    'first_name',
-    'last_name',
-    'age',
-    'gender',
-    'profile_image',
-    'contact_no',
-    'email',
-    'city',
-    'state',
-    'address',
-    'pin_code',
-    'password',
-    'role',
-    'pancard_number',
-    'bank_name',
-    'bank_branch',
-    'bank_account_no',
-    'bank_ifsc_code',
-    'created_by',
-    'wallet_balance'
+        'user_code',
+        'buyer_name',
+        'mobile',
+        'dob',
+        'email',
+        'pan_number',
+        'aadhar_number',
+        'address',
+        'city',
+        'state',
+        'pincode',
+        'advance_amount',
+        'site_location',
+        'commission_type',
+        'commission_value',
+        'commission_amount',
+        'project_name',
+        'plot_number',
+        'khasara_number',
+        'ph_number',
+        'mouza',
+        'tahsil',
+        'district',
+        'square_feet',
+        'square_meter',
+        'total_booking_amount',
+        'payment_mode',
+        'remark',
+        'created_by',
+        'created_by_role',
+        'leader_id',
+        'adviser_id',
+        'leader_commission_type',
+        'leader_commission_value',
+        'leader_commission_amount',
+        'adviser_commission_type',
+        'adviser_commission_value',
+        'adviser_commission_amount',
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var list<string>
-     */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
-
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
-    protected function casts(): array
-    {
-        return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-        ];
-    }
-
-    public function creator()
-    {
-        return $this->belongsTo(User::class, 'created_by');
-    }
-
-    public function children()
-    {
-        return $this->hasMany(User::class, 'created_by');
-    }
-
-    public function bookings()
-    {
-        return $this->hasMany(Booking::class, 'user_code', 'user_code');
-    }
-
-    public function advisers()
-    {
-        return $this->hasMany(User::class, 'user_code');
-    }
     public function leader()
     {
-        return $this->hasMany(User::class, 'user_code');
+        return $this->belongsTo(User::class, 'user_code');
     }
-    public function locationCommissions()
+    public function adviser()
     {
-        return $this->hasMany(UserLocationCommission::class, 'user_id', 'id');
+        return $this->belongsTo(User::class, 'user_code');
     }
 
-     // Referrals made by this customer
-    public function referralsMade()
+    public function booking()
     {
-        return $this->hasMany(Referral::class, 'referrer_id');
+        return $this->belongsTo(User::class, 'user_code', 'email');
     }
 
-    // Referrals assigned to this leader/adviser
-    public function referralsAssigned()
+    // If booking is from referral
+    public function referral()
     {
-        return $this->hasMany(Referral::class, 'assigned_to');
+        return $this->hasOne(Referral::class, 'booking_id');
     }
 
-    // Wallet transactions
-    public function walletTransactions()
-    {
-        return $this->hasMany(WalletTransaction::class, 'user_id');
-    }
-
-    // commission payments 
-
-    public function commissionPayments()
-    {
-        return $this->hasMany(CommissionPayment::class);
-    }
-
-    public function totalCommission()
-    {
-        return Booking::where('leader_id', $this->id)
-            ->sum('leader_commission_amount');
-    }
-
-    public function totalPaid()
-    {
-        return $this->commissionPayments()->sum('amount');
-    }
-
-    public function commissionBalance()
-    {
-        return $this->totalCommission() - $this->totalPaid();
-    }
-
-    public function ledger()
+    public function ledgerEntries()
     {
         return $this->hasMany(CommissionLedger::class);
     }
 
-    public function commissionSummary()
-{
-
-$totalCommission = $this->ledger()
-->where('type','commission')
-->sum('amount');
-
-$totalPaid = $this->ledger()
-->where('type','payment')
-->sum('amount');
-
-$balance = $totalCommission + $totalPaid;
-
-return [
-'total_commission'=>$totalCommission,
-'total_paid'=>abs($totalPaid),
-'balance'=>$balance
-];
-
-}
+    public function location()
+    {
+        return $this->belongsTo(LocationMaster::class, 'site_location');
+    }
 }
