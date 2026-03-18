@@ -99,7 +99,7 @@
  <div class="relative flex items-center gap-3">
 
   <!-- LEADER badge -->
- <span class="hidden md:block relative px-4 py-1 bg-blue-400  text-black text-xs font-bold tracking-widest
+ <span class="hidden md:block relative px-4 py-1 bg-purple-700 text-white text-xs font-bold tracking-widest
              rounded-md shadow-md">
   CUSTOMER
 </span>
