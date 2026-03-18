@@ -373,29 +373,32 @@ transition-all duration-300">
 
         });
 
-    const ifscInput = document.getElementById("ifsc_code");
+const ifscInput = document.getElementById("ifsc_code");
 
 ifscInput.addEventListener("input", function () {
 
     let value = this.value.toUpperCase();
 
-    // remove invalid characters
+    // allow only A-Z and 0-9
     value = value.replace(/[^A-Z0-9]/g, '');
 
     // limit to 11 characters
     value = value.slice(0, 11);
 
-    // enforce first 4 letters
-    if (value.length >= 1) {
-        value = value.substring(0, 4).replace(/[^A-Z]/g, '') + value.substring(4);
-    }
-
-    // enforce 5th character = 0
-    if (value.length >= 5) {
-        value = value.substring(0, 4) + '0' + value.substring(5);
-    }
-
     this.value = value;
+
+});
+
+ifscInput.addEventListener("blur", function () {
+
+    const value = this.value;
+
+    const ifscRegex = /^[A-Z]{4}0[A-Z0-9]{6}$/;
+
+    if (!ifscRegex.test(value)) {
+        alert("Invalid IFSC code");
+    }
+
 });
 
         // for branch and bank name allow only letters and spaces
