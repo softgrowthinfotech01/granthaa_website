@@ -22,7 +22,7 @@
 </div>
 
 <!-- Commission Amount -->
-<div class="relative bg-gradient-to-br from-blue-900 to-blue-400 
+<div class="relative bg-gradient-to-br from-blue-900 to-blue-400   
             text-white p-6 rounded-2xl shadow-lg overflow-hidden">
 
   <div class="absolute top-5 right-5 opacity-50 text-6xl font-bold">₹</div>
