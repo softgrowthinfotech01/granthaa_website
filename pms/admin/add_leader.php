@@ -373,28 +373,30 @@ transition-all duration-300">
 
         });
 
-        // IFSC validation (uppercase + alphanumeric + max 11)
-        const ifscInput = document.getElementById("ifsc_code");
+    const ifscInput = document.getElementById("ifsc_code");
 
-        ifscInput.addEventListener("input", function() {
+ifscInput.addEventListener("input", function () {
 
-            // convert to uppercase
-            this.value = this.value.toUpperCase();
+    let value = this.value.toUpperCase();
 
-            // remove invalid characters
-            this.value = this.value.replace(/[^A-Z0-9]/g, '');
+    // remove invalid characters
+    value = value.replace(/[^A-Z0-9]/g, '');
 
-            // limit to 11 characters
-            if (this.value.length > 11) {
-                this.value = this.value.slice(0, 11);
-            }
+    // limit to 11 characters
+    value = value.slice(0, 11);
 
-            // enforce first 4 letters
-            if (this.value.length <= 4) {
-                this.value = this.value.replace(/[^A-Z]/g, '');
-            }
+    // enforce first 4 letters
+    if (value.length >= 1) {
+        value = value.substring(0, 4).replace(/[^A-Z]/g, '') + value.substring(4);
+    }
 
-        });
+    // enforce 5th character = 0
+    if (value.length >= 5) {
+        value = value.substring(0, 4) + '0' + value.substring(5);
+    }
+
+    this.value = value;
+});
 
         // for branch and bank name allow only letters and spaces
 
