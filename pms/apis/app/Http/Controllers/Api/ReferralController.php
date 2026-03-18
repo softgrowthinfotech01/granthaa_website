@@ -25,6 +25,9 @@ class ReferralController extends Controller
     public function store(Request $request)
     {
         // print_r($request->referred_name);exit;
+        $request->merge([
+            'referred_email' => strtolower($request->referred_email)
+        ]);
         $request->validate([
             'referred_name'    => 'required|string',
             'referred_contact' => 'required|string',
@@ -40,6 +43,27 @@ class ReferralController extends Controller
                 'message' => 'Only customers can submit referrals'
             ], 403);
         }
+
+$existingReferral = Referral::where(function ($query) use ($request) {
+    $query->where('referred_contact', $request->referred_contact)
+          ->orWhere('referred_email', $request->referred_email);
+})
+->where('status', 'pending')
+->exists();
+
+if ($existingReferral) {
+    return response()->json([
+    'status' => false,
+    'message' => 'This lead is already referred'
+], 422);
+}
+
+if ($request->referred_contact == $customer->contact_no) {
+    return response()->json([
+        'status' => false,
+        'message' => 'You cannot refer yourself'
+    ], 400);
+}
 
         $referral = Referral::create([
             'referrer_id'     => $customer->id,

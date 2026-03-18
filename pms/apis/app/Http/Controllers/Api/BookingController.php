@@ -46,10 +46,10 @@ class BookingController extends Controller
     {
         $request->validate([
             'buyer_name' => 'required',
-            'mobile' => 'required',
+            'mobile' => 'required|digits:10',
             'email' => 'required|email',
             'pan_number' => 'required',
-            'aadhar_number' => 'required',
+            'aadhar_number' => 'required|digits:12',
             'address' => 'required',
             'plot_number' => 'required',
             'site_location' => 'required|exists:location_master,id',
@@ -170,6 +170,12 @@ class BookingController extends Controller
 
                     $adviserCommissionType = $adviserCommission->commission_type;
                     $adviserCommissionValue = $adviserCommission->commission_value;
+
+                    $commission_amount = round($leaderAmount, 2);
+                    $commission_type = $leaderCommission->commission_type;
+                    $commissionValue = $leaderCommission->commission_value;
+                    
+
                 }
 
                 // 2️⃣ Create Booking
@@ -206,7 +212,7 @@ class BookingController extends Controller
                     'site_location' => $request->site_location,
                     'commission_value' => $commissionValue,
                     'commission_amount' => $commission_amount,
-                    'commission_type' => $request->commission_type,
+                    'commission_type' => $request->commission_type ? $request->commission_type : $commission_type,
 
                     'project_name' => $request->project_name,
                     'plot_number' => $request->plot_number,
@@ -646,20 +652,8 @@ class BookingController extends Controller
         $advisers = User::where('created_by', $leader->id)
             ->where('role', 'adviser')
             ->withCount(['bookings as total_deals'])
-            ->withSum('bookings as total_booking_amount', 'advance_amount')
-            ->withSum(['bookings as total_commission' => function ($query) {
-                $query->select(DB::raw("
-                SUM(
-                    CASE
-                        WHEN commission_type = 'percent'
-                            THEN (total_booking_amount * commission_value) / 100
-                        WHEN commission_type = 'amount'
-                            THEN commission_value
-                        ELSE 0
-                    END
-                )
-            "));
-            }], 'commission_value')
+            ->withSum('bookings as total_booking_amount', 'total_booking_amount')
+            ->withSum('bookings as total_commission', 'adviser_commission_amount')
             ->orderByDesc('total_booking_amount')
             ->paginate($perPage);
 

@@ -78,7 +78,6 @@ class="px-2 py-1 border rounded">
 <th class="px-4 py-3">Reference</th>
 <th class="px-4 py-3">Remark</th>
 <th class="px-4 py-3">Created At</th>
-<th class="px-4 py-3">Actions</th>
 
 </tr>
 
@@ -200,18 +199,6 @@ ${pay.user?.name ?? pay.user_id}
 ${new Date(pay.created_at).toLocaleDateString()}
 </td>
 
-<td class="px-4 py-2 flex gap-2">
-
-<button
-onclick="deletePayment(${pay.id})"
-class="px-3 py-1.5 text-sm font-medium text-white bg-red-600 rounded-md hover:bg-red-500">
-
-Delete
-
-</button>
-
-</td>
-
 </tr>
 `;
 
@@ -293,45 +280,6 @@ currentPerPage = this.value;
 fetchPayments(1);
 
 });
-
-async function deletePayment(id){
-
-if(!confirm("Delete this payment record?")){
-return;
-}
-
-try{
-
-const response = await fetch(
-url + `commission/payments/${id}`,
-{
-method:"DELETE",
-headers:{
-"Accept":"application/json",
-"Authorization":"Bearer " + token
-}
-}
-);
-
-const result = await response.json();
-
-if(!response.ok){
-alert(result.message || "Delete failed");
-return;
-}
-
-alert(result.message || "Deleted successfully");
-
-fetchPayments(currentPage);
-
-}catch(error){
-
-console.error(error);
-alert("Server error");
-
-}
-
-}
 
 fetchPayments();
 

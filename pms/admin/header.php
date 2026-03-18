@@ -18,7 +18,7 @@ Granthaa Admin Panel
 <!-- CENTER LOGO -->
 <div class="hidden md:flex items-center">
 <img src="../images/logo_icon.png"
-class="w-40 h-auto">
+class="w-40 h-20">
 </div>
 
 

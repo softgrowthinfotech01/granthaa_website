@@ -51,6 +51,39 @@
                                 </select>
                             </div>
 
+                            <!-- Total Commission -->
+                            <div class="mb-5 px-1">
+                                    <label class="block mb-2.5 text-sm font-medium text-heading">
+                                    Total Commission
+                                </label>
+
+                                    <input name="total_commission" type="text" id="total_commission"
+                                    class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm block w-full px-3 py-2.5 shadow-xs"
+                                    placeholder="Enter payment amount" readonly />
+                            </div>
+
+                            <!-- Total Paid -->
+                            <div class="mb-5 px-1">
+                                <label class="block mb-2.5 text-sm font-medium text-heading">
+                                    Total Paid
+                                </label>
+
+                                <input name="total_paid" type="number" id="total_paid"
+                                    class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm block w-full px-3 py-2.5 shadow-xs"
+                                    placeholder="Enter payment amount" readonly />
+                            </div>
+
+                            <!-- Balance -->
+                            <div class="mb-5 px-1">
+                                <label class="block mb-2.5 text-sm font-medium text-heading">
+                                    Balance
+                                </label>
+                                
+                                <input name="balance" type="number" id="balance"
+                                    class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm block w-full px-3 py-2.5 shadow-xs"
+                                    placeholder="Enter payment amount" readonly />
+                            </div>
+
                             <!-- AMOUNT -->
                             <div class="mb-5 px-1">
                                 <label class="block mb-2.5 text-sm font-medium text-heading">
@@ -260,6 +293,32 @@
 
             }
         }
+
+        document.getElementById("user_id").addEventListener("change", async function () {
+
+    let user_id = this.value;
+    const token = localStorage.getItem("auth_token");
+
+    if(user_id != "")
+    {
+        const response = await fetch(url + "commission/summary/" + user_id, {
+
+            method: "GET",
+            headers: {
+                "Authorization": "Bearer " + token,
+                "Accept": "application/json"
+            }
+
+        });
+
+        const result = await response.json();
+
+        document.getElementById("total_commission").value = result.data.total_commission;
+        document.getElementById("total_paid").value = result.data.total_paid;
+        document.getElementById("balance").value = result.data.balance;
+    }
+
+});
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.js"></script>
