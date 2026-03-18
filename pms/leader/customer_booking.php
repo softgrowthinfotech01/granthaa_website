@@ -34,7 +34,7 @@
                 <!-- Mobile -->
                 <div class="space-y-2">
                     <label class="text-sm font-semibold text-gray-700">Mobile Number</label>
-                    <input type="number" required name="mobile" id="mobile" max=""
+                    <input type="text" required name="mobile" id="mobile" maxlength="10" pattern="[0-9]{10}"
                         class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-yellow-400 outline-none">
                 </div>
 
@@ -329,7 +329,7 @@ transition transform hover:scale-[1.02]">
         document.getElementById("pan_number").addEventListener("input", function() {
             this.value = this.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
         });
-        
+
         // ================= FORM SUBMIT =================
         document.getElementById("bookingForm").addEventListener("submit", async function(e) {
             e.preventDefault();
@@ -364,13 +364,16 @@ transition transform hover:scale-[1.02]">
 
             // DOB Validation
             const dobInput = document.getElementById("dob");
+            const selectedDate = new Date(dobInput.value);
 
             const today = new Date();
-            today.setDate(today.getDate() - 1);
+            today.setHours(0, 0, 0, 0);
 
-            const maxDate = today.toISOString().split("T")[0];
-
-            dobInput.setAttribute("max", maxDate);
+            if (selectedDate >= today) {
+                e.preventDefault();
+                alert("DOB cannot be today or future date");
+                return;
+            }
 
             formData.set("role", "customer");
             formData.set("password", "password");

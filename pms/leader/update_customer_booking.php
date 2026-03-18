@@ -17,13 +17,6 @@
 
             <div class="grid md:grid-cols-3 gap-2">
 
-                <!-- Leader -->
-                <div class="space-y-2">
-                    <label class="text-sm font-semibold text-gray-700">Leader Name</label>
-                    <input type="text" id="leader_name" readonly
-                        class="w-full border border-gray-300 px-5 py-3 rounded-xl bg-gray-100 outline-none">
-                </div>
-
                 <!-- Buyer -->
                 <div class="space-y-2">
                     <label class="text-sm font-semibold text-gray-700">Buyer Name</label>
