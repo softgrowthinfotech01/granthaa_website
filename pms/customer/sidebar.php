@@ -10,7 +10,7 @@ flex flex-col justify-between shrink-0">
 <!-- Logo -->
 <div class=" sidebar-text p-4 flex justify-center items-center">
  <h1 class="text-2xl md:text-3xl font-serif font-semibold tracking-[0.25em]
-             text-yellow-500 drop-shadow-sm">
+             text-yellow-500 drop-shadow-sm    ">
     GRANTHAA
   </h1>
   <!-- <img src="../images/logo.png" 
