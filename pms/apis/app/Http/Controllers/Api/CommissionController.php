@@ -210,15 +210,15 @@ public function index(Request $request)
 }
 
     /**
-     * Update Commission (Admin Only)
+     * Update Commission (Admin and Leader Only)
      */
     public function updateCommission(Request $request, $id)
     {
         $auth = auth()->user();
 
-        if (!$auth || $auth->role !== 'admin') {
+        if (!$auth || !in_array($auth->role, ['admin', 'leader'])) {
             return response()->json([
-                'message' => 'Only admin can update commission'
+                'message' => 'Only admin or leader can update commission'
             ], 403);
         }
 

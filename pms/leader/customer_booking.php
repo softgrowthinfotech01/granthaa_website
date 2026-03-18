@@ -34,7 +34,7 @@
                 <!-- Mobile -->
                 <div class="space-y-2">
                     <label class="text-sm font-semibold text-gray-700">Mobile Number</label>
-                    <input type="number" required name="mobile" id="mobile"
+                    <input type="number" required name="mobile" id="mobile" max=""
                         class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-yellow-400 outline-none">
                 </div>
 
@@ -55,7 +55,13 @@
                 <!-- PAN -->
                 <div class="space-y-2">
                     <label class="text-sm font-semibold text-gray-700">PAN Number</label>
-                    <input type="text" required name="pan_number" id="pan_number"
+                    <input type="text"
+                        name="pan_number"
+                        id="pan_number"
+                        maxlength="10"
+                        pattern="[A-Za-z0-9]{10}"
+                        title="PAN must be exactly 10 alphanumeric characters"
+                        required
                         class="w-full border border-gray-300 px-5 py-3 rounded-xl uppercase focus:ring-2 focus:ring-yellow-400 outline-none">
                 </div>
 
@@ -90,7 +96,11 @@
                 <!-- Pincode -->
                 <div class="space-y-2">
                     <label class="text-sm font-semibold text-gray-700">Pincode</label>
-                    <input type="number" name="pincode" id="pincode"
+                    <input type="text" name="pincode" id="pincode"
+                        maxlength="6"
+                        pattern="[0-9]{6}"
+                        title="Pincode must be exactly 6 numbers"
+                        required
                         class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-yellow-400 outline-none">
                 </div>
 
@@ -315,6 +325,11 @@ transition transform hover:scale-[1.02]">
                 valueInput.value = value;
             }
         });
+
+        document.getElementById("pan_number").addEventListener("input", function() {
+            this.value = this.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
+        });
+        
         // ================= FORM SUBMIT =================
         document.getElementById("bookingForm").addEventListener("submit", async function(e) {
             e.preventDefault();
@@ -327,10 +342,40 @@ transition transform hover:scale-[1.02]">
             let form = document.getElementById("bookingForm");
             let formData = new FormData(form);
 
+            // PAN Validation
+            const pan = document.getElementById("pan_number").value.trim().toUpperCase();
+
+            const panPattern = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
+
+            if (!panPattern.test(pan)) {
+                alert("Invalid PAN format. Example: ABCDE1234F");
+                return;
+            }
+
+            // Pincode Validation
+            const pin = document.getElementById("pincode").value.trim();
+
+            const pinCode = /^[0-9]{6}$/;
+
+            if (!pinCode.test(pin)) {
+                alert("Invalid Pincode. Pincode must be only 6 digits");
+                return;
+            }
+
+            // DOB Validation
+            const dobInput = document.getElementById("dob");
+
+            const today = new Date();
+            today.setDate(today.getDate() - 1);
+
+            const maxDate = today.toISOString().split("T")[0];
+
+            dobInput.setAttribute("max", maxDate);
+
             formData.set("role", "customer");
             formData.set("password", "password");
             formData.set("created_by", user.id);
-console.log(formData);
+            console.log(formData);
             try {
                 const response = await fetch(url + "bookings", {
                     method: "POST",
