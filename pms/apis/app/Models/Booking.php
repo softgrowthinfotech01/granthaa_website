@@ -61,7 +61,7 @@ class Booking extends Model
 
     public function booking()
     {
-        return $this->belongsTo(User::class, 'user_code');
+        return $this->belongsTo(User::class, 'user_code', 'email');
     }
 
     // If booking is from referral
