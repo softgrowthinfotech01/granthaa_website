@@ -69,10 +69,10 @@
         return response.json();
       })
       .then(data => {
-        document.querySelector('#totalAdvisors').textContent = data.total_advisors;
-        document.querySelector('#totalBooking').textContent = "₹ " + data.total_booking_amount.toLocaleString();
-        document.querySelector('#totalCommission').textContent = "₹ " + data.total_commission_amount.toLocaleString();
-        document.querySelector('#topAdvisor').textContent = data.top_advisorname+"("+data.top_advisor+")";
+        document.querySelector('#totalAdvisors').textContent = data.data.total_advisors;
+        document.querySelector('#totalBooking').textContent = "₹ " + data.data.total_booking_amount.toLocaleString();
+        document.querySelector('#totalCommission').textContent = "₹ " + data.data.total_commission_amount.toLocaleString();
+        document.querySelector('#topAdvisor').textContent = data.data.top_advisor_name+"("+data.data.top_advisor.user_code+")";
       })
       .catch(error => console.error('Error fetching dashboard data:', error));
   });
