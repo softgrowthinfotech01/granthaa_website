@@ -255,15 +255,6 @@ transition-all duration-300">
                 return;
             }
 
-            // IFSC Validation
-            const ifscCode = document.getElementById("ifsc_code").value.trim();
-            const ifscPattern = /^[A-Z]{4}[0-9]{7}$/;
-
-            if (!ifscPattern.test(ifscCode)) {
-                alert("Invalid IFSC code format. Example: SBIN0001234");
-                return;
-            }
-
             // IMAGE VALIDATION
             const file = fileInput.files[0];
 
