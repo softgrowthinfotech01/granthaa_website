@@ -3,7 +3,7 @@
 <div class="max-w-7xl mx-auto bg-white p-6  rounded-2xl shadow-xl">
 
     <h2 class="text-2xl font-semibold text-center mb-6">
-        Add Payment
+        Add Advisor Payment
     </h2>
 
     <form id="paymentForm" class="space-y-2">
@@ -19,7 +19,7 @@
 
                 <!-- USER ID -->
                 <div class="space-y-2">
-                    <label class="text-sm font-semibold text-gray-700">User</label>
+                    <label class="text-sm font-semibold text-gray-700">Advisor</label>
                     <select name="user_id" id="user_id" required
                         class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-green-400 outline-none">
                         <option value="">Loading...</option>
@@ -135,7 +135,7 @@ transition transform hover:scale-[1.02]">
 
             const result = await response.json();
 
-            dropdown.innerHTML = '<option value="">Select User</option>';
+            dropdown.innerHTML = '<option value="">Select Advisor</option>';
 
             result.data.data.forEach(user => {
 
@@ -224,7 +224,7 @@ transition transform hover:scale-[1.02]">
 
                 const result = await response.json();
 
-                dropdown.innerHTML = '<option value="">Select User</option>';
+                dropdown.innerHTML = '<option value="">Select Advisor</option>';
 
                 result.data.data.forEach(user => {
 

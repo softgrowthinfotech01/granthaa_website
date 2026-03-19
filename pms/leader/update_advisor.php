@@ -1,6 +1,6 @@
 <?php include 'header.php'; ?>
 
-<div class="max-w-2xl mx-auto bg-white p-8 rounded-2xl shadow">
+<div class="w-full md:w-[80%] mx-auto bg-white p-8 rounded-2xl shadow">
 
   <h2 class="text-2xl font-bold mb-6 text-center">
     Update Advisor Details
@@ -12,19 +12,19 @@
     <div>
       <label class="block text-gray-900 font-semibold mb-1">Advisor Code</label>
       <input type="text" name="advisor_code" value="" id="advisor_code"
-        class="w-full border border-gray-300 p-2 rounded-lg focus:ring-2 focus:ring-yellow-400">
+        class="w-full border border-gray-300 p-2 rounded-lg focus:ring-2 focus:ring-yellow-400" readonly>
     </div>
 
     <!-- Email -->
     <div>
-      <label class="block text-gray-900 font-semibold mb-1">Email <span style="color: red;">(readonly)</span></label>
+      <label class="block text-gray-900 font-semibold mb-1">Email </label>
       <input type="email" name="email" value="" id="email"
         class="w-full border border-gray-300 p-2 rounded-lg focus:ring-2 focus:ring-yellow-400" readonly>
     </div>
 
     <!-- Full Name -->
     <div>
-      <label class="block text-gray-900 font-semibold mb-1">Full Name <span style="color: red;">(readonly)</span></label>
+      <label class="block text-gray-900 font-semibold mb-1">Full Name </label>
       <input type="text" name="name" value="" id="name"
         class="w-full border border-gray-300 p-2 rounded-lg focus:ring-2 focus:ring-yellow-400" readonly>
     </div>
