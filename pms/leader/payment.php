@@ -21,7 +21,7 @@
                 <div class="space-y-2">
                     <label class="text-sm font-semibold text-gray-700">Advisor</label>
                     <select name="user_id" id="user_id" required
-                        class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-green-400 outline-none">
+                        class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-yellow-400 outline-none">
                         <option value="">Loading...</option>
                     </select>
                 </div>
@@ -30,35 +30,35 @@
                 <div class="space-y-2">
                     <label class="text-sm font-semibold text-gray-700">Total Commission</label>
                     <input type="text" name="total_commission" id="total_commission" readonly
-                        class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-green-400 outline-none">
+                        class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-yellow-400 outline-none">
                 </div>
 
                 <!-- Total Paid -->
                 <div class="space-y-2">
                     <label class="text-sm font-semibold text-gray-700">Total Paid</label>
                     <input type="text" name="total_paid" id="total_paid" readonly
-                        class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-green-400 outline-none">
+                        class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-yellow-400 outline-none">
                 </div>
 
                 <!-- Balance -->
                 <div class="space-y-2">
                     <label class="text-sm font-semibold text-gray-700">Balance Amount</label>
                     <input type="text" name="balance" id="balance" readonly
-                        class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-green-400 outline-none">
+                        class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-yellow-400 outline-none">
                 </div>
 
                 <!-- AMOUNT -->
                 <div class="space-y-2">
                     <label class="text-sm font-semibold text-gray-700">Payment Amount</label>
                     <input type="number" name="amount" id="amount" required
-                        class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-green-400 outline-none">
+                        class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-yellow-400 outline-none">
                 </div>
 
                 <!-- PAYMENT MODE -->
                 <div class="space-y-2">
                     <label class="text-sm font-semibold text-gray-700">Payment Mode</label>
                     <select name="payment_mode" id="payment_mode"
-                        class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-green-400 outline-none">
+                        class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-yellow-400 outline-none">
 
                         <option>Select Payment Mode</option>
                         <option value="cash">Cash</option>
@@ -73,14 +73,14 @@
                 <div class="space-y-2">
                     <label class="text-sm font-semibold text-gray-700">Reference Number</label>
                     <input type="text" name="reference_no" id="reference_no"
-                        class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-green-400 outline-none">
+                        class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-yellow-400 outline-none">
                 </div>
 
                 <!-- REMARK -->
                 <div class="space-y-2 md:col-span-2">
                     <label class="text-sm font-semibold text-gray-700">Remark</label>
                     <textarea name="remark" id="remark" rows="2"
-                        class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-green-400 outline-none"></textarea>
+                        class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-yellow-400 outline-none"></textarea>
                 </div>
 
             </div>
@@ -90,7 +90,7 @@
         <div class="flex justify-center gap-2 mt-2">
 
             <button
-                class="bg-green-500 hover:bg-green-600 px-4 py-4 rounded-xl
+                class="bg-yellow-500 hover:bg-yellow-600 px-4 py-4 rounded-xl
 text-black font-semibold text-lg shadow-md hover:shadow-xl
 transition transform hover:scale-[1.02]">
 
