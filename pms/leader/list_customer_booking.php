@@ -120,7 +120,10 @@
 
             await loadLocations();
 
-            fetch(`${url}bookings?per_page=1000`, {
+            const searchValue = document.getElementById("searchInput").value.trim();
+            const perPage = document.getElementById("perPage").value;
+
+            fetch(`${url}bookings?per_page=${perPage}&search=${searchValue}`, {
                     method: "GET",
                     headers: {
                         "Authorization": "Bearer " + token,
@@ -136,40 +139,40 @@
 
                     bookings.forEach((row) => {
 
-                       let commission_Amount = row.commission_amount ?? 0;
+                        let commission_Amount = row.commission_amount ?? 0;
 
                         tbody.innerHTML += `
-        <tr class="border-b bg-white">
-            <td class="p-2 text-center">
-                <button onclick="toggleRow(${row.id})"
-                    class="w-4 h-4 flex items-center justify-center border-1 rounded-full bg-green-500 text-white text-sm">
-                    +
-                </button>
-            </td>
-
-            <td class="p-1">${row.buyer_name ?? ''}</td>
-            <td class="p-1">${locationsMap[row.site_location] ?? locationsMap[row.location_id] ?? ''}</td>
-            <td class="p-1">${row.project_name ?? ''}</td>
-            <td class="p-1">${row.total_booking_amount ?? ''}</td>
-            <td class="p-1">${row.commission_type ?? ''}</td> 
-            <td class="p-1">${row.commission_value ?? ''}  </td>
-            <td class="p-1">${commission_Amount}</td>
-            <td class="p-1">${row.email ?? ''}</td>
-           
-            <td class="p-1">
-            <div class="flex gap-2">
-            <button class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-1 rounded"
-                        onclick="viewBooking(${row.id})">
-                        Update
-                    </button>
-
-                    <button class="bg-red-500 hover:bg-red-600 text-white px-4 py-1 rounded"
-                        onclick="deleteBooking(${row.id})">
-                        Delete
-                    </button>
-                    </div>
+                <tr class="border-b bg-white">
+                    <td class="p-2 text-center">
+                        <button onclick="toggleRow(${row.id})"
+                            class="w-4 h-4 flex items-center justify-center border-1 rounded-full bg-green-500 text-white text-sm">
+                            +
+                        </button>
                     </td>
-        </tr>
+
+                    <td class="p-1">${row.buyer_name ?? ''}</td>
+                    <td class="p-1">${locationsMap[row.site_location] ?? locationsMap[row.location_id] ?? ''}</td>
+                    <td class="p-1">${row.project_name ?? ''}</td>
+                    <td class="p-1">${row.total_booking_amount ?? ''}</td>
+                    <td class="p-1">${row.commission_type ?? ''}</td> 
+                    <td class="p-1">${row.commission_value ?? ''}</td>
+                    <td class="p-1">${commission_Amount}</td>
+                    <td class="p-1">${row.email ?? ''}</td>
+
+                    <td class="p-1">
+                        <div class="flex gap-2">
+                            <button class="bg-blue-500 text-white px-4 py-1 rounded"
+                                onclick="viewBooking(${row.id})">
+                                Update
+                            </button>
+
+                            <button class="bg-red-500 text-white px-4 py-1 rounded"
+                                onclick="deleteBooking(${row.id})">
+                                Delete
+                            </button>
+                        </div>
+                    </td>
+                </tr>
 
         <tr id="expand-${row.id}" class="hidden bg-gray-50">
             <td colspan="15" class="p-4">
@@ -238,8 +241,6 @@
         loadBookings();
     });
 </script>
-
-<script src="../url.js"></script>
 
 <script>
     function deleteBooking(id) {
