@@ -12,7 +12,7 @@
 </div>
 
 <!-- Booking Amount -->
-<div class="relative bg-gradient-to-br from-yellow-200 to-gray-800 
+<div class="relative bg-gradient-to-br from-orange-900 to-orange-400
             text-white p-6 rounded-2xl shadow-lg overflow-hidden">
 
   <div class="absolute top-5 right-5 opacity-50 text-6xl font-bold">₹</div>
