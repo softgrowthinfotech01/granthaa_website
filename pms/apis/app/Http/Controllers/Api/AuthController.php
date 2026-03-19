@@ -18,7 +18,7 @@ class AuthController extends Controller
         $validated = $request->validate([
             'name'      => 'required|string|max:255',
             'email'     => 'required|email|unique:users,email',
-            'aadhaar_number'  => 'required|digit:12',
+            'aadhaar_number'  => 'required|digits:12',
             'password'  => 'required|min:6',
             'role'      => 'nullable|in:admin,leader,adviser,customer',
             'parent_id' => 'nullable|exists:users,id'

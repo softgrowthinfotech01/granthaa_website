@@ -45,9 +45,9 @@ transition-all duration-300">
                                 </div>
 
                                 <div class="mb-5 px-1">
-                                    <label for="aadhar_card" class="block mb-2.5 text-sm font-medium text-heading">Aadhar Card</label>
-                                    <input name="aadhar_card" type="text" maxlength="12" pattern="[0-9]{12}" inputmode="numeric"
-                                        id="aadhar_card"
+                                    <label for="aadhar_number" class="block mb-2.5 text-sm font-medium text-heading">Aadhar Card</label>
+                                    <input name="aadhaar_number" type="text" maxlength="12" pattern="[0-9]{12}" inputmode="numeric"
+                                        id="aadhaar_number"
                                         class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm block w-full px-3 py-2.5 shadow-xs"
                                         placeholder="Enter Aadhar card number" required />
                                 </div>
@@ -228,7 +228,7 @@ transition-all duration-300">
             const fileInput = document.getElementById("file_input");
 
             // AADHAR VALIDATION
-            const aadhar = document.getElementById("aadhar_card").value.trim();
+            const aadhar = document.getElementById("aadhaar_number").value.trim();
 
             if (!/^\d{12}$/.test(aadhar)) {
                 alert("Aadhar must be exactly 12 digits");
