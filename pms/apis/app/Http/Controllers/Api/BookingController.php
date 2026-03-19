@@ -327,13 +327,13 @@ class BookingController extends Controller
     {
         $user = auth()->user();
 
-        $query = Booking::with('leader');
+         $query = Booking::query()->with(['leader', 'location']); // ✅ FIXED
 
-        // 🔐 Role Based Filter
-        if ($user->role !== 'admin') {
-            $query->where('user_code', $user->user_code);
-        }
-        $query = Booking::with(['leader', 'location']);
+    // 🔐 Role Based Filter
+    if ($user->role !== 'admin') {
+        $query->where('user_code', $user->user_code);
+    }
+    
         // 🔎 Search Filter
         if ($request->filled('search')) {
             $search = $request->search;
