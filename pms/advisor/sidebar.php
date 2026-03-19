@@ -47,6 +47,23 @@ flex flex-col justify-between flex-shrink-0">
       <span class="sidebar-text">Customer Booking List</span>
     </a>
 
+      <a href="booking_payments"
+     class="menu-item <?php if($current=='booking_payments') echo 'active'; ?>">
+     <svg class="w-6 h-6 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path d="M3 7h18M3 12h18M3 17h18"/>
+      </svg>
+      <span class="sidebar-text">Booking Payments</span>
+    </a>
+
+      <a href="list_booking_payments"
+     class="menu-item <?php if($current=='list_booking_payments') echo 'active'; ?>">
+     <svg class="w-6 h-6 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path d="M3 7h18M3 12h18M3 17h18"/>
+      </svg>
+      <span class="sidebar-text">Booking Payments List</span>
+    </a>
+
+
     <a href="own_sales"
      class="menu-item <?php if($current=='own_sales') echo 'active'; ?>">
       <svg class="w-6 h-6 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -56,6 +73,7 @@ flex flex-col justify-between flex-shrink-0">
       <span class="sidebar-text">Own Sales & Commission</span>
     </a>
 
+    
     
 
     <!--  <a href="list_commission"
