@@ -25,7 +25,7 @@ flex flex-col justify-between flex-shrink-0">
     <a href="dashboard"
      class="menu-item <?php if($current=='dashboard') echo 'active'; ?>">
       <!-- home icon -->
-      <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <svg class="w-6 h-6 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path d="M3 12l9-9 9 9M4 10v10h16V10"/>
       </svg>
       <span class="sidebar-text">Dashboard</span>
@@ -33,7 +33,7 @@ flex flex-col justify-between flex-shrink-0">
 
     <a href="add_customer_booking"
      class="menu-item <?php if($current=='add_customer_booking') echo 'active'; ?>">
-      <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <svg class="w-6 h-6 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path d="M12 4v16m8-8H4"/>
       </svg>
       <span class="sidebar-text">Add Customer Booking</span>
@@ -41,7 +41,7 @@ flex flex-col justify-between flex-shrink-0">
 
     <a href="list_customer_booking"
      class="menu-item <?php if($current=='list_customer_booking') echo 'active'; ?>">
-     <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+     <svg class="w-6 h-6 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path d="M3 7h18M3 12h18M3 17h18"/>
       </svg>
       <span class="sidebar-text">Customer Booking List</span>
@@ -49,7 +49,7 @@ flex flex-col justify-between flex-shrink-0">
 
     <a href="own_sales"
      class="menu-item <?php if($current=='own_sales') echo 'active'; ?>">
-      <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <svg class="w-6 h-6 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
           d="M3 3v18h18M7 13l3-3 4 4 5-5"/>
   </svg>
