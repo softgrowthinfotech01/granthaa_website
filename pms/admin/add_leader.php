@@ -45,7 +45,7 @@ transition-all duration-300">
                                 </div>
 
                                 <div class="mb-5 px-1">
-                                    <label for="aadhar_number" class="block mb-2.5 text-sm font-medium text-heading">Aadhar Card</label>
+                                    <label for="aadhar_number" class="block mb-2.5 text-sm font-medium text-heading">Aadhaar Card</label>
                                     <input name="aadhaar_number" type="text" maxlength="12" pattern="[0-9]{12}" inputmode="numeric"
                                         id="aadhaar_number"
                                         class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm block w-full px-3 py-2.5 shadow-xs"
