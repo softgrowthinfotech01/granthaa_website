@@ -2,7 +2,7 @@
 <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-4">
 
 <!-- TOTAL SITES-->
-<div class="relative bg-gradient-to-r from-gray-800 via-emerald-750 to-green-700
+<div class="relative bg-gradient-to-br from-red-900 to-red-400
             text-white p-6 rounded-2xl shadow-lg overflow-hidden">
 
   <div class="absolute top-5 right-5 opacity-90 text-6xl font-bold">🏠</div>
@@ -12,7 +12,7 @@
 </div>
 
 <!-- TOTAL CUSTOMERS -->
-<div class="relative bg-gradient-to-r from-gray-800 via-emerald-750 to-green-700
+<div class="relative bg-gradient-to-br from-green-900 to-green-400
             text-white p-6 rounded-2xl shadow-lg overflow-hidden">
 
   <div class="absolute top-5 right-5 opacity-90 text-6xl font-bold">👥</div>
@@ -22,7 +22,7 @@
 </div>
 
 <!-- TOTAL BOOKINGS -->
-<div class="relative bg-gradient-to-r from-gray-800 via-emerald-750 to-green-700
+<div class="relative bg-gradient-to-br from-blue-900 to-blue-400
             text-white p-6 rounded-2xl shadow-lg overflow-hidden">
 
   <div class="absolute top-5 right-5 opacity-90 text-6xl font-bold ">🧾</div>
@@ -32,7 +32,7 @@
 </div>
 
 <!-- TOTAL BOOKING AMOUNT -->
-<div class="relative bg-gradient-to-r from-gray-800 via-emerald-750 to-green-700
+<div class="relative bg-gradient-to-br from-purple-900 to-purple-400
             text-white p-6 rounded-2xl shadow-lg overflow-hidden">
 
   <div class="absolute top-5 right-5 opacity-90 text-6xl font-bold text-gray-300"> ₹ </div>
@@ -42,7 +42,7 @@
 </div>
 
 <!-- TOTAL COMMISSION AMOUNT -->
-<div class="relative bg-gradient-to-r from-gray-800 via-emerald-750 to-green-700
+<div class="relative bg-gradient-to-br from-orange-900 to-orange-400
             text-white p-6 rounded-2xl shadow-lg overflow-hidden">
 
   <div class="absolute top-5 right-5 opacity-90 text-6xl font-bold text-gray-300">%</div>
@@ -52,7 +52,7 @@
 </div>
 
 <!-- BALANCE COMMISSION AMOUNT -->
-<div class="relative bg-gradient-to-r from-gray-800 via-emerald-750 to-green-700
+<div class="relative bg-gradient-to-br from-red-900 to-red-400
             text-white p-6 rounded-2xl shadow-lg overflow-hidden">
 
   <div class="absolute top-5 right-5 opacity-90 text-6xl font-bold text-gray-300">%</div>
@@ -62,7 +62,7 @@
 </div>
 
 <!-- RECEIVED COMMISSION AMOUNT -->
-<div class="relative bg-gradient-to-r from-gray-800 via-emerald-750 to-green-700
+<div class="relative bg-gradient-to-br from-blue-900 via-blue-600 to-blue-400
             text-white p-6 rounded-2xl shadow-lg overflow-hidden">
 
   <div class="absolute top-5 right-5 opacity-90 text-6xl font-bold text-gray-300">%</div>

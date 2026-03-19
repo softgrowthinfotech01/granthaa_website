@@ -43,6 +43,15 @@
         class="w-full border border-gray-300 p-2 rounded-lg uppercase focus:ring-2 focus:ring-yellow-400">
     </div>
 
+    <div>
+      <label class="block text-gray-900 font-semibold mb-1">Aadhaar Card</label>
+      <input type="text" name="aadhaar_number" placeholder="Enter Aadhaar Card number" required
+        maxlength="12" id="aadhaar_number"
+        pattern="[0-9]{12}"
+        title="Aadhar Card number must be exactly 12 digits"
+        class="w-full border border-gray-300 p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400">
+    </div>
+
     <!-- Gender -->
     <div>
       <label class="block text-gray-900 font-semibold mb-1">Gender</label>
@@ -136,6 +145,7 @@
       $("#name").val(advisor.name);
       $("#contact_no").val(advisor.contact_no);
       $("#pancard_number").val(advisor.pancard_number);
+      $("#aadhaar_number").val(advisor.aadhaar_number);
       $("#gender").val(advisor.gender);
       $("#address").val(advisor.address);
       $("#bank_name").val(advisor.bank_name);
@@ -163,6 +173,7 @@
         email: $("#email").val(),
         contact_no: $("#contact_no").val(),
         pancard_number: $("#pancard_number").val(),
+        aadhaar_number: $("#aadhaar_number").val(),
         gender: $("#gender").val(),
         address: $("#address").val(),
         bank_name: $("#bank_name").val(),

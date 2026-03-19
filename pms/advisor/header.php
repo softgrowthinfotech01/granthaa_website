@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Granthaa Land Developer Pvt Ltd</title>
 
-  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="../style.css?v=5">
   <script src="script.js"></script>
 
    <!-- <link rel="stylesheet" href="a.css"> -->
@@ -94,7 +94,7 @@
  <div class="relative flex items-center gap-3">
 
   <!-- LEADER badge -->
- <span class="hidden md:block relative px-4 py-1 bg-green-900 text-white text-xs font-bold tracking-widest
+ <span class="hidden md:block relative px-4 py-1 bg-green-600 text-white text-xs font-bold tracking-widest
              rounded-md shadow-md">
   ADVISOR
 </span>
@@ -105,7 +105,7 @@
 
   <!-- Profile Button -->
   <button onclick="toggleProfile(event)"
-    class="w-14 h-14 rounded-full border-2 border-green-900
+    class="w-14 h-14 rounded-full border-2 border-green-600
            overflow-hidden shadow-md hover:shadow-lg transition">
 
     <img src="../images/profile.png"
@@ -119,7 +119,7 @@
 
     <div class="p-4 border-b text-center">
       <img src="../images/profile.png"
-           class="w-16 h-16 mx-auto rounded-full object-cover border-2 border-green-900 mb-2">
+           class="w-16 h-16 mx-auto rounded-full object-cover border-2 border-green-600 mb-2">
 
       <p id="userCode" class="font-semibold text-gray-800"></p>
       <p id="userName" class="text-lg font-semibold text-gray-500"></p>

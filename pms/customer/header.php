@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Granthaa Land Developer Pvt Ltd</title>
 
-  <link rel="stylesheet" href="../style.css?v=2">
+  <link rel="stylesheet" href="../style.css?v=5">
   <script src="script.js"></script>
 
    <!-- <link rel="stylesheet" href="a.css"> -->
@@ -111,7 +111,7 @@
 
   <!-- Profile Button -->
   <button onclick="toggleProfile(event)"
-    class="w-14 h-14 rounded-full border-2 border-blue-500
+    class="w-14 h-14 rounded-full border-2 border-purple-700
            overflow-hidden shadow-md hover:shadow-lg transition">
 
     <img src="../images/profile.png"
@@ -125,7 +125,7 @@
 
     <div class="p-4 border-b text-center">
       <img src="../images/profile.png"
-           class="w-16 h-16 mx-auto rounded-full object-cover border-2 border-blue-500 mb-2">
+              class="w-16 h-16 mx-auto rounded-full object-cover border-2 border-purple-700 mb-2">
 
       <p id="userCode" class="font-semibold text-gray-800"></p>
       <p id="userName" class="text-lg font-semibold text-gray-500"></p>

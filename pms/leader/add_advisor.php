@@ -39,9 +39,9 @@
 
     <!-- Aadhar Card -->
     <div>
-      <label class="block text-gray-900 font-semibold mb-1">Aadhar Card</label>
-      <input type="text" name="aadhar_card" placeholder="Enter Aadhar Card number" required
-        maxlength="12" id="aadhar_card"
+      <label class="block text-gray-900 font-semibold mb-1">Aadhaar Card</label>
+      <input type="text" name="aadhaar_number" placeholder="Enter Aadhar Card number" required
+        maxlength="12" id="aadhaar_number"
         pattern="[0-9]{12}"
         title="Aadhar Card number must be exactly 12 digits"
         class="w-full border border-gray-300 p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400">
