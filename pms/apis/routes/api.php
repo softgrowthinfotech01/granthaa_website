@@ -31,6 +31,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::patch('/bookings/{id}', [BookingController::class, 'update']);
     Route::delete('/bookings/{id}', [BookingController::class, 'destroy']);
     Route::get('/mybookings', [BookingController::class, 'mybookings']);
+    Route::get('/booking-summary/{id}', [BookingPaymentController::class, 'getBookingSummary']);//to fetch paid, total, balance amount
     Route::get('/dashboard', [BookingController::class, 'dashboard']);
     Route::get('/admdashboard', [BookingController::class, 'admdashboard']);
     Route::get('/adviserPerformance', [BookingController::class, 'adviserPerformance']);

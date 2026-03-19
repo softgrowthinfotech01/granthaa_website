@@ -30,7 +30,7 @@ class BookingPaymentController extends Controller
                 'user_id' => $booking->user_id, // ✅ customer
                 'received_by' => $user->id,     // ✅ adviser/leader
                 'amount' => $request->amount,
-                'payment_type' => 'installment',
+                'payment_type' => $request->payment_type,
                 'payment_mode' => $request->payment_mode,
                 'remark' => $request->remark ?? 'Customer payment'
             ]);
@@ -174,5 +174,21 @@ class BookingPaymentController extends Controller
             'error' => $e->getMessage()
         ]);
     }
+}
+
+
+
+    // booking payment fetch the balance and total and paid amount
+    public function getBookingSummary($id)
+{
+    $booking = Booking::findOrFail($id);
+
+    $totalPaid = BookingPayment::where('booking_id', $id)->sum('amount');
+
+    return response()->json([
+        'total_amount' => $booking->total_booking_amount,
+        'paid_amount' => $totalPaid,
+        'balance' => $booking->total_booking_amount - $totalPaid
+    ]);
 }
 }
