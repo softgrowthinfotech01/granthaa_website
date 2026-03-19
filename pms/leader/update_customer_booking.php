@@ -320,6 +320,19 @@
 
                 e.preventDefault();
 
+                // DOB Validation
+                const dobInput = document.getElementById("dob");
+                const selectedDate = new Date(dobInput.value);
+
+                const today = new Date();
+                today.setHours(0, 0, 0, 0);
+
+                if (selectedDate >= today) {
+                    e.preventDefault();
+                    alert("DOB cannot be today or future date");
+                    return;
+                }
+
                 let formData = new FormData(this);
 
                 formData.append("_method", "PATCH"); // Laravel fix
