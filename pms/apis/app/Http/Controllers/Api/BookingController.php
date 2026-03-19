@@ -331,7 +331,7 @@ class BookingController extends Controller
 
     // 🔐 Role Based Filter
     if ($user->role !== 'admin') {
-        $query->where('user_code', $user->user_code);
+        $query->where('user_id', $user->id);
     }
     
         // 🔎 Search Filter
