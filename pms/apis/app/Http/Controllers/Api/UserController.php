@@ -146,7 +146,7 @@ class UserController extends Controller
         $rules = [
             'name' => 'required|string|max:200',
             'email'      => 'required|email|unique:users,email',
-            'aadhaar_number'   => 'required|digit:12',
+            'aadhaar_number'   => 'required|digits:12',
             'password'   => 'required|min:6',
             'role'       => 'required|in:leader,adviser,customer',
         ];
@@ -294,7 +294,7 @@ class UserController extends Controller
         $rules = [
             'name' => 'sometimes|required|string|max:200',
             'email' => 'sometimes|required|email|unique:users,email,' . $id,
-            'aadhaar_number' => 'sometimes|required|digit:12',
+            'aadhaar_number' => 'sometimes|required|digits:12',
             'password' => 'nullable|min:6',
             'age' => 'nullable|integer|min:18',
             'gender' => 'nullable|in:male,female,others',
