@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\api\AdvisorController;
+// use App\Http\Controllers\api\AdvisorController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\BookingController;
 use App\Http\Controllers\Api\CommissionController;
@@ -8,6 +8,8 @@ use App\Http\Controllers\Api\LocationMasterController;
 use App\Http\Controllers\Api\ReferralController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\CommissionPaymentController;
+use App\Http\Controllers\Api\BookingPaymentController;
+use App\Http\Controllers\BookingPaymentController as ControllersBookingPaymentController;
 use Illuminate\Support\Facades\Route;
 
 Route::post('/register', [AuthController::class, 'register']);
@@ -34,7 +36,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/adviserPerformance', [BookingController::class, 'adviserPerformance']);
 });
 
-Route::middleware(['auth:sanctum', 'role:admin,leader,adviser'])->group(function () {
+Route::middleware(['auth:sanctum', 'role:admin,leader,adviser,customer'])->group(function () {
 
     // user
     Route::post('/admin/create-leader', [UserController::class, 'createLeader']);
@@ -53,12 +55,6 @@ Route::middleware(['auth:sanctum', 'role:admin,leader,adviser'])->group(function
     Route::get('/site-location/{id}', [LocationMasterController::class, 'show']);
     Route::put('/site-location/{id}', [LocationMasterController::class, 'update']);
     Route::delete('/site-location/{id}', [LocationMasterController::class, 'destroy']);
-
-    /*
-    |--------------------------------------------------------------------------
-    | Commission Payments Routes (KEEP BEFORE /commission/{id})
-    |--------------------------------------------------------------------------
-    */
 
     Route::prefix('commission')->group(function () {
 
@@ -79,12 +75,6 @@ Route::middleware(['auth:sanctum', 'role:admin,leader,adviser'])->group(function
         Route::get('/team-commission', [CommissionPaymentController::class, 'teamCommission']);
     });
 
-    /*
-    |--------------------------------------------------------------------------
-    | Commission Management Routes (Dynamic route LAST)
-    |--------------------------------------------------------------------------
-    */
-
     Route::post('/commission', [CommissionController::class, 'setCommission']);
     Route::put('/commission/{id}', [CommissionController::class, 'updateCommission']);
     Route::delete('/commission/{id}', [CommissionController::class, 'deleteCommission']);
@@ -93,12 +83,15 @@ Route::middleware(['auth:sanctum', 'role:admin,leader,adviser'])->group(function
     Route::get('/commissions/user/{userId}', [CommissionController::class, 'getByUser']);
     Route::get('/my-commissions', [CommissionController::class, 'myCommissions']);
 
-    // ⚠️ KEEP THIS LAST
     Route::get('/commission/{id}', [CommissionController::class, 'show']);
-});
 
-Route::middleware(['auth:sanctum', 'role:leader'])->group(function () {
-    // resource route for the advisor
+    Route::post('/book-payments', [BookingPaymentController::class, 'store']);// Store payment
+
+    Route::get('/book-payments/{booking_id}', [BookingPaymentController::class, 'getByBooking']);// Get payments by booking
+
+    Route::get('/all-book-payments', [BookingPaymentController::class, 'index']);// Get all payments (admin)
+    
+    Route::get('/my-book-payments', [BookingPaymentController::class, 'myPayments']);// get users payments
 });
 
 Route::middleware('auth:sanctum')->get('/test-auth', function () {

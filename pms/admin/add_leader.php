@@ -255,15 +255,6 @@ transition-all duration-300">
                 return;
             }
 
-            // IFSC Validation
-            const ifscCode = document.getElementById("ifsc_code").value.trim();
-            const ifscPattern = /^[A-Z]{4}[0-9]{7}$/;
-
-            if (!ifscPattern.test(ifscCode)) {
-                alert("Invalid IFSC code format. Example: SBIN0001234");
-                return;
-            }
-
             // IMAGE VALIDATION
             const file = fileInput.files[0];
 
@@ -373,28 +364,33 @@ transition-all duration-300">
 
         });
 
-        // IFSC validation (uppercase + alphanumeric + max 11)
-        const ifscInput = document.getElementById("ifsc_code");
+const ifscInput = document.getElementById("ifsc_code");
 
-        ifscInput.addEventListener("input", function() {
+ifscInput.addEventListener("input", function () {
 
-            // convert to uppercase
-            this.value = this.value.toUpperCase();
+    let value = this.value.toUpperCase();
 
-            // remove invalid characters
-            this.value = this.value.replace(/[^A-Z0-9]/g, '');
+    // allow only A-Z and 0-9
+    value = value.replace(/[^A-Z0-9]/g, '');
 
-            // limit to 11 characters
-            if (this.value.length > 11) {
-                this.value = this.value.slice(0, 11);
-            }
+    // limit to 11 characters
+    value = value.slice(0, 11);
 
-            // enforce first 4 letters
-            if (this.value.length <= 4) {
-                this.value = this.value.replace(/[^A-Z]/g, '');
-            }
+    this.value = value;
 
-        });
+});
+
+ifscInput.addEventListener("blur", function () {
+
+    const value = this.value;
+
+    const ifscRegex = /^[A-Z]{4}0[A-Z0-9]{6}$/;
+
+    if (!ifscRegex.test(value)) {
+        alert("Invalid IFSC code");
+    }
+
+});
 
         // for branch and bank name allow only letters and spaces
 
