@@ -243,17 +243,70 @@ flex flex-col justify-between shrink-0">
         </li>
 
         <!-- Booking Payment -->
+         <li>
+        <a href="javascript:void(0)"
+          onclick="toggleMenu('payment', this)"
+          class="menu-item flex justify-between items-center">
+
+          <span class="flex items-center gap-3">
+            <svg class="w-6 h-6 text-yellow-500" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+              <rect x="3" y="7" width="18" height="10" rx="2" />
+              <circle cx="16" cy="12" r="1.5" />
+              <path d="M3 10h18" />
+            </svg>
+            <span class="sidebar-text">Booking Payment</span>
+          </span>
+
+          <svg class="menu-arrow w-4 h-4 transition-transform transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+          </svg>
+        </a>
+
+        <ul id="payment" class="hidden">
+
+          <!-- Add Payment -->
+          <li>
+            <a href="booking_payment"
+              class="menu-item flex items-center gap-3 <?php if ($current == 'add_commission') echo 'active'; ?>">
+
+              <svg class="w-4 h-4 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path d="M4 12h16" />
+              </svg>
+
+              <span class="sidebar-text">Add Payment</span>
+            </a>
+          </li>
+
+          <!-- View Payments -->
+          <li>
+            <a href="list_booking_payment"
+              class="menu-item flex items-center gap-3 <?php if ($current == 'view_commission') echo 'active'; ?>">
+
+              <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path d="M4 12h16" />
+              </svg>
+
+              <span class="sidebar-text">View Payment</span>
+            </a>
+          </li>
+
+        </ul>
+        </li>
+
+         <!-- reference -->
+        <li>
           <a href="javascript:void(0)"
-            onclick="toggleMenu('payment', this)"
+            onclick="toggleMenu('Bookingpay', this)"
             class="menu-item flex justify-between items-center">
 
             <span class="flex items-center gap-3">
               <svg class="w-6 h-6 text-yellow-500" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
-                <rect x="3" y="7" width="18" height="10" rx="2" />
-                <circle cx="16" cy="12" r="1.5" />
-                <path d="M3 10h18" />
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M16 14c3 0 5 2 5 4v1H3v-1c0-2 2-4 5-4" />
+                <circle cx="9" cy="8" r="3" />
+                <circle cx="17" cy="9" r="2" />
               </svg>
-              <span class="sidebar-text">Booking Payment</span>
+              <span class="sidebar-text">Reference</span>
             </span>
 
             <svg class="menu-arrow w-4 h-4 transition-transform transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -261,34 +314,20 @@ flex flex-col justify-between shrink-0">
             </svg>
           </a>
 
-          <ul id="payment" class="hidden">
+          <ul id="Bookingpay" class="hidden">
 
-            <!-- Add Payment -->
+            <!-- Add Booking -->
             <li>
-              <a href="booking_payment"
+              <a href="list_reference"
                 class="menu-item flex items-center gap-3 <?php if ($current == 'add_commission') echo 'active'; ?>">
 
                 <svg class="w-4 h-4 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path d="M4 12h16" />
                 </svg>
 
-                <span class="sidebar-text">Add Payment</span>
+                <span class="sidebar-text">List Reference</span>
               </a>
             </li>
-
-            <!-- View Payments -->
-            <li>
-              <a href="list_booking_payment"
-                class="menu-item flex items-center gap-3 <?php if ($current == 'view_commission') echo 'active'; ?>">
-
-                <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path d="M4 12h16" />
-                </svg>
-
-                <span class="sidebar-text">View Payment</span>
-              </a>
-            </li>
-
           </ul>
         </li>
 

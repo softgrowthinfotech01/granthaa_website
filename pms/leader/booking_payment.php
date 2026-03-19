@@ -19,8 +19,17 @@
 
                 <!-- USER ID -->
                 <div class="space-y-2">
-                    <label class="text-sm font-semibold text-gray-700">Customer</label>
-                    <select name="user_id" id="user_id" required
+                    <label class="text-sm font-semibold text-gray-700">Booking Name</label>
+                    <select name="booking_id" id="user_id" required
+                        class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-green-400 outline-none">
+                        <option value="">Loading...</option>
+                    </select>
+                </div>
+
+                <!-- Project Name -->
+                <div class="space-y-2">
+                    <label class="text-sm font-semibold text-gray-700">Project Name</label>
+                    <select name="name" id="name" required
                         class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-green-400 outline-none">
                         <option value="">Loading...</option>
                     </select>
@@ -29,10 +38,31 @@
                 <!-- Plot Number -->
                 <div class="space-y-2">
                     <label class="text-sm font-semibold text-gray-700">Plot/Flat Number</label>
-                    <select name="" id="" required
+                    <select name="" id="plot_no" required
                         class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-green-400 outline-none">
                         <option value="">Loading...</option>
                     </select>
+                </div>
+
+                <!--TOTAL AMOUNT -->
+                <div class="space-y-2">
+                    <label class="text-sm font-semibold text-gray-700">Total Amount</label>
+                    <input type="number" name="total_amount" id="total_amount" required
+                        class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-green-400 outline-none">
+                </div>
+
+                <!-- PAID AMOUNT -->
+                <div class="space-y-2">
+                    <label class="text-sm font-semibold text-gray-700">Paid Amount</label>
+                    <input type="number" name="paid" id="paid" required
+                        class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-green-400 outline-none">
+                </div>
+
+                <!-- BALANCE AMOUNT -->
+                <div class="space-y-2">
+                    <label class="text-sm font-semibold text-gray-700">Balance Amount</label>
+                    <input type="number" name="balance" id="balance" required
+                        class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-green-400 outline-none">
                 </div>
 
                 <!-- AMOUNT -->
@@ -45,7 +75,7 @@
                 <!-- PAYMENT TYPE -->
                 <div class="space-y-2">
                     <label class="text-sm font-semibold text-gray-700">Payment Type</label>
-                    <select name="payment_mode" id="payment_mode"
+                    <select name="payment_type" id="payment_type"
                         class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-green-400 outline-none">
 
                         <option>Select Payment Type</option>
