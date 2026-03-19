@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Granthaa Land Developer Pvt Ltd</title>
 
-  <link rel="stylesheet" href="../style.css?v=2">
+  <link rel="stylesheet" href="../style.css?v=5">
   <script src="script.js"></script>
 
    <!-- <link rel="stylesheet" href="a.css"> -->
