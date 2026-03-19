@@ -35,14 +35,14 @@
 
                 <!-- Total Paid -->
                 <div class="space-y-2">
-                    <label class="text-sm font-semibold text-gray-700">Payment Amount</label>
+                    <label class="text-sm font-semibold text-gray-700">Total Paid</label>
                     <input type="text" name="total_paid" id="total_paid" readonly
                         class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-green-400 outline-none">
                 </div>
 
                 <!-- Balance -->
                 <div class="space-y-2">
-                    <label class="text-sm font-semibold text-gray-700">Payment Amount</label>
+                    <label class="text-sm font-semibold text-gray-700">Balance Amount</label>
                     <input type="text" name="balance" id="balance" readonly
                         class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-green-400 outline-none">
                 </div>

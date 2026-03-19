@@ -54,7 +54,7 @@ class UserController extends Controller
         }
 
         // Admin can view anyone
-        if ($auth->role !== 'admin' && $user->created_by !== $auth->id && $auth->id !== $user->id) {
+        if ($auth->role !== 'admin' || $user->created_by !== $auth->id || $auth->id !== $user->id) {
             return response()->json(['message' => 'Unauthorized'], 403);
         }
 
