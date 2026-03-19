@@ -38,7 +38,7 @@
   <div class="absolute top-5 right-5 opacity-50 text-6xl font-bold">₹</div>
 
   <h3 class="text-sm tracking-widest font-semibold">TOTAL PENDING AMOUNT</h3>
-  <p class="text-2xl font-bold mt-3" id="totalPendingAmount"></p>
+  <p class="text-3xl font-bold mt-3" id="totalPendingAmount"></p>
 </div>
 
 <!-- Reference -->
@@ -48,7 +48,7 @@
   <div class="absolute top-5 right-5 opacity-50 text-6xl font-bold">👥</div>
 
   <h3 class="text-sm tracking-widest font-semibold">TOTAL REFERENCE</h3>
-  <p class="text-2xl font-bold mt-3" id="totalReference"></p>
+  <p class="text-3xl font-bold mt-3" id="totalReference"></p>
 </div>
 
 </div>
@@ -79,11 +79,11 @@
       })
       .then(data => {
        
-        document.querySelector('#totalBookings').textContent = data.total_booking;
-        document.querySelector('#totalBookingAmount').textContent = "₹ " + data.total_booking_amount.toLocaleString();
-        document.querySelector('#totalPaidAmount').textContent = "₹ " + data.total_paidamt.toLocaleString();
-        document.querySelector('#totalPendingAmount').textContent = "₹ " + data.total_balanceamt.toLocaleString();
-        document.querySelector('#totalReference').textContent = data.total_references;
+        document.querySelector('#totalBookings').textContent = data.data.total_booking;
+        document.querySelector('#totalBookingAmount').textContent = "₹ " + data.data.total_booking_amount.toLocaleString();
+        document.querySelector('#totalPaidAmount').textContent = "₹ " + data.data.total_paidamt.toLocaleString();
+        document.querySelector('#totalPendingAmount').textContent = "₹ " + data.data.total_balanceamt.toLocaleString();
+        document.querySelector('#totalReference').textContent = data.data.total_references;
       })
       .catch(error => console.error('Error fetching dashboard data:', error));
   });

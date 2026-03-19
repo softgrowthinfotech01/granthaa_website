@@ -5,7 +5,7 @@
   <div class="relative bg-gradient-to-br from-yellow-200 to-gray-800 
             text-black p-6 rounded-2xl shadow-lg overflow-hidden">
 
-    <div class="absolute top-5 right-5 opacity-20 text-6xl font-bold">👥</div>
+    <div class="absolute top-5 right-5 opacity-30 text-6xl font-bold">👥</div>
 
     <div id="advisoe">
       <h3 class="text-sm tracking-widest font-semibold">TOTAL ADVISORS</h3>
@@ -17,7 +17,7 @@
   <div class="relative bg-gradient-to-br from-yellow-200 to-gray-800  
             text-black p-6 rounded-2xl shadow-lg overflow-hidden">
 
-    <div class="absolute top-5 right-5 opacity-20 text-6xl font-bold">₹</div>
+    <div class="absolute top-5 right-5 opacity-50 text-6xl font-bold">₹</div>
 
     <h3 class="text-sm tracking-widest font-semibold">TOTAL ADVISOR'S BOOKING AMOUNT</h3>
     <p class="text-3xl font-bold mt-2" id="totalBooking"></p>
@@ -27,7 +27,7 @@
   <div class="relative bg-gradient-to-br from-yellow-200 to-gray-800  
             text-black p-6 rounded-2xl shadow-lg overflow-hidden">
 
-    <div class="absolute top-5 right-5 opacity-20 text-6xl font-bold">%</div>
+    <div class="absolute top-5 right-5 opacity-50 text-6xl font-bold">%</div>
 
     <h3 class="text-sm tracking-widest font-semibold">TOTAL ADVISOR'S COMMISSION AMOUNT</h3>
     <p class="text-3xl font-bold mt-2" id="totalCommission"></p>
@@ -37,7 +37,7 @@
   <div class="relative bg-gradient-to-br from-yellow-200 to-gray-800  
             text-black p-6 rounded-2xl shadow-lg overflow-hidden">
 
-    <div class="absolute top-5 right-5 opacity-20 text-6xl font-bold">🏆</div>
+    <div class="absolute top-5 right-5 opacity-50 text-6xl font-bold">🏆</div>
 
     <h3 class="text-sm tracking-widest font-semibold">TOP ADVISOR</h3>
     <p class="text-2xl font-bold mt-3" id="topAdvisor">Harish</p>

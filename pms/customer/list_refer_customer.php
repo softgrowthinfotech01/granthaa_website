@@ -1,81 +1,58 @@
 <?php include 'header.php'; ?>
+<div class="max-w-7xl mx-auto bg-white p-4 rounded-xl shadow">
 
-<style>
-table{
-width:100%;
-border-collapse:collapse;
-background:white;
-}
-
-th,td{
-padding:10px;
-border:1px solid #ddd;
-text-align:center;
-}
-
-td{
-text-align:center;
-}
-
-th{
-background:#2c3e50;
-color:white;
-}
-
-tr:nth-child(even){
-background:#f2f2f2;
-}
-</style>
-
-<div class="max-w-7xl mx-auto bg-white p-4 rounded-2xl shadow-xl">
-
-<h2 class="text-2xl font-bold mb-4 text-center">
+<h2 class="text-lg sm:text-xl font-bold text-center mb-4">
 My Referral Records
 </h2>
 
-<div class="flex justify-between items-center mb-4">
+<!-- Controls -->
+<div class="flex flex-col sm:flex-row justify-between gap-3 mb-4">
 
-    <!-- Search (left side) -->
-    <input
-        id="searchInput"
-        type="text"
-        placeholder="Search..."
-        class="border rounded-lg px-3 py-2 w-60"
-    />
+<input
+id="searchInput"
+type="text"
+placeholder="Search..."
+class="border px-3 py-2 rounded w-full sm:w-60"
+/>
 
-    <!-- Per Page (right side) -->
-    <div class="flex items-center gap-2">
-        <label for="perPage">Show</label>
+<div class="flex items-center gap-2">
+<label>Show</label>
 
-        <select id="perPage" class="border p-2 rounded">
-            <option value="10">10</option>
-            <option value="25">25</option>
-            <option value="50">50</option>
-        </select>
+<select id="perPage" class="border px-2 py-1 rounded">
+<option value="10">10</option>
+<option value="25">25</option>
+<option value="50">50</option>
+</select>
 
-        <span>entries</span>
-    </div>
+<span>entries</span>
+</div>
 
 </div>
 
+<!-- TABLE WRAPPER -->
 <div class="w-full overflow-x-auto">
 
-<table>
+<table class="min-w-[700px] w-full border border-gray-200">
 
-<thead>
+<thead class="bg-gray-800 text-white">
 <tr>
-
-
-<th>Customer Name</th>
-<th>Phone</th>
-<th>Email</th>
-<th>Status</th>
-<th>Date</th>
-
+<th class="px-3 py-2">Customer Name</th>
+<th class="px-3 py-2">Phone</th>
+<th class="px-3 py-2">Email</th>
+<th class="px-3 py-2">Status</th>
+<th class="px-3 py-2">Date</th>
 </tr>
 </thead>
 
 <tbody id="referralBody">
+
+<tr class="border-t">
+<td class="px-3 py-2">Test User</td>
+<td class="px-3 py-2">9999999999</td>
+<td class="px-3 py-2">test@mail.com</td>
+<td class="px-3 py-2">Pending</td>
+<td class="px-3 py-2">2026-03-19</td>
+</tr>
 
 </tbody>
 
@@ -83,22 +60,22 @@ My Referral Records
 
 </div>
 
-<div class="flex justify-between items-center mt-4">
+<!-- Pagination -->
+<div class="flex flex-col sm:flex-row justify-between items-center gap-3 mt-4">
 
-<button id="prevBtn" class="bg-gray-200 px-4 py-2 rounded">
+<button id="prevBtn" class="bg-gray-200 px-4 py-2 rounded w-full sm:w-auto">
 Prev
 </button>
 
-<span id="pageInfo"></span>
+<span id="pageInfo">Page 1</span>
 
-<button id="nextBtn" class="bg-gray-200 px-4 py-2 rounded">
+<button id="nextBtn" class="bg-gray-200 px-4 py-2 rounded w-full sm:w-auto">
 Next
 </button>
 
 </div>
 
 </div>
-
 <?php include 'footer.php'; ?>
 
 <script src="../url.js"></script>

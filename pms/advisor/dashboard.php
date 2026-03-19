@@ -101,13 +101,13 @@
         return response.json();
       })
       .then(data => {
-        document.querySelector('#totalSites').textContent = data.total_site;
-        document.querySelector('#totalCustomers').textContent = data.total_customer;
-        document.querySelector('#totalBookings').textContent = data.total_booking;
-        document.querySelector('#totalBookingAmount').textContent = "₹ " + data.total_booking_amount.toLocaleString();
-        document.querySelector('#totalCommissionAmount').textContent = "₹ " + data.total_commission_amount.toLocaleString();
-        document.querySelector('#balanceCommissionAmount').textContent = "₹ " + data.total_balanceamt.toLocaleString();
-        document.querySelector('#receivedCommissionAmount').textContent = "₹ " + data.total_paidamt.toLocaleString();
+        document.querySelector('#totalSites').textContent = data.data.total_site;
+        document.querySelector('#totalCustomers').textContent = data.data.total_customer;
+        document.querySelector('#totalBookings').textContent = data.data.total_booking;
+        document.querySelector('#totalBookingAmount').textContent = "₹ " + data.data.total_booking_amount.toLocaleString();
+        document.querySelector('#totalCommissionAmount').textContent = "₹ " + data.data.total_commission_amount.toLocaleString();
+        document.querySelector('#balanceCommissionAmount').textContent = "₹ " + data.data.total_balanceamt.toLocaleString();
+        document.querySelector('#receivedCommissionAmount').textContent = "₹ " + data.data.total_paidamt.toLocaleString();
       })
       .catch(error => console.error('Error fetching dashboard data:', error));
   });

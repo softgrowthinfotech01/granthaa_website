@@ -70,7 +70,6 @@ background:#f2f2f2;
           <th>Project</th>
           <th>Plot No</th>
           <th>Total Amount</th>
-          <th>Commission</th>
           <th>City</th>
         </tr>
       </thead>
@@ -217,7 +216,7 @@ const row = `
 <td class="border p-2">${b.project_name ?? "-"}</td>
 <td class="border p-2">${b.plot_number ?? "-"}</td>
 <td class="border p-2 text-green-600 font-semibold">₹ ${b.total_booking_amount ?? "-"}</td>
-<td class="border p-2">₹ ${b.commission_amount ?? "-"}</td>
+
 <td class="border p-2">${b.city ?? "-"}</td>
 </tr>
 `;
