@@ -159,7 +159,7 @@ fixed md:relative transform md:translate-x-0 -translate-x-full z-40 overflow-hid
 
                     <span class="flex items-center gap-3 text-base font-semibold">
                         <i class="fas fa-money-bill-wave"></i>
-                        Payment
+                        Commission Payment
                     </span>
 
                     <i class="fas fa-angle-right transition-transform"></i>
@@ -170,14 +170,14 @@ fixed md:relative transform md:translate-x-0 -translate-x-full z-40 overflow-hid
                     <li class="border-t">
                         <a href="payment"
                             class="block px-10 py-3 bg-gray-500 text-white">
-                            Add Payment
+                            Add Commission Payment
                         </a>
                     </li>
 
                     <li class="border-t">
                         <a href="view_payment"
                             class="block px-10 py-3 bg-gray-500 text-white">
-                            Payment Reocrds
+                           Commission Payment Reocrds
                         </a>
                     </li>
 

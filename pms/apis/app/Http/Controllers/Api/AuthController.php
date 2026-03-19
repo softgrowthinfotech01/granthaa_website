@@ -18,6 +18,7 @@ class AuthController extends Controller
         $validated = $request->validate([
             'name'      => 'required|string|max:255',
             'email'     => 'required|email|unique:users,email',
+            'aadhaar_number'  => 'required|digit:12',
             'password'  => 'required|min:6',
             'role'      => 'nullable|in:admin,leader,adviser,customer',
             'parent_id' => 'nullable|exists:users,id'
@@ -27,6 +28,7 @@ class AuthController extends Controller
             'user_code' => 'ADM001',
             'name'      => $validated['name'],
             'email'     => $validated['email'],
+            'aadhaar_number'     => $validated['aadhaar_number'],
             'password'  => Hash::make($validated['password']),
             'role'      => $validated['role'] ?? 'admin',
             'parent_id' => $validated['parent_id'] ?? null,

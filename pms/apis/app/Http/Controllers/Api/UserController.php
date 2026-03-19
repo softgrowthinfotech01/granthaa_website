@@ -54,7 +54,7 @@ class UserController extends Controller
         }
 
         // Admin can view anyone
-        if ($auth->role !== 'admin' && (int)$user->created_by !== (int)$auth->id && (int)$auth->id !== (int)$user->id) {
+        if ($auth->role !== 'admin' && $user->created_by !== $auth->id && $auth->id !== $user->id) {
             return response()->json(['message' => 'Unauthorized'], 403);
         }
 
@@ -88,6 +88,7 @@ class UserController extends Controller
                 $q->where('name', 'like', "%{$search}%")
                     ->orWhere('user_code', 'like', "%{$search}%")
                     ->orWhere('email', 'like', "%{$search}%")
+                    ->orWhere('aadhaar_number', 'like', "%{$search}%")
                     ->orWhere('contact_no', 'like', "%{$search}%")
                     ->orWhere('pancard_number', 'like', "%{$search}%");
             });
@@ -145,6 +146,7 @@ class UserController extends Controller
         $rules = [
             'name' => 'required|string|max:200',
             'email'      => 'required|email|unique:users,email',
+            'aadhaar_number'   => 'required|digit:12',
             'password'   => 'required|min:6',
             'role'       => 'required|in:leader,adviser,customer',
         ];
@@ -164,7 +166,7 @@ class UserController extends Controller
                 'bank_branch'  => 'required|string',
                 'bank_account_no'  => 'required|string',
                 'bank_ifsc_code'  => 'required|string',
-                'pancard_number'  => 'nullable|string',
+                'pancard_number'  => 'string',
             ];
         }
 
@@ -186,6 +188,7 @@ class UserController extends Controller
             'user_code' => $userCode,
             'name'    => $validated['name'],
             'email'        => $validated['email'],
+            'aadhaar_number'        => $validated['aadhaar_number'],
             'password'     => Hash::make($validated['password']),
             'role'         => $validated['role'],
             'age'          => $validated['age'] ?? null,
@@ -200,7 +203,6 @@ class UserController extends Controller
             'bank_branch'  => $validated['bank_branch'] ?? null,
             'bank_account_no'  => $validated['bank_account_no'] ?? null,
             'bank_ifsc_code'  => $validated['bank_ifsc_code'] ?? null,
-            'pancard_number'  => $validated['pancard_number'] ?? null,
             'created_by'   => $auth->id,
         ]);
 
@@ -285,13 +287,14 @@ class UserController extends Controller
 
         // Admin can update anyone
         // Others can update only their created users
-        if (!in_array($auth->role, ['admin', 'leader'])) {
-    return response()->json(['message' => 'Unauthorized'], 403);
-}
+        if ($auth->role !== 'admin' && $user->created_by !== $auth->id) {
+            return response()->json(['message' => 'Unauthorized'], 403);
+        }
 
         $rules = [
             'name' => 'sometimes|required|string|max:200',
             'email' => 'sometimes|required|email|unique:users,email,' . $id,
+            'aadhaar_number' => 'sometimes|required|digit:12',
             'password' => 'nullable|min:6',
             'age' => 'nullable|integer|min:18',
             'gender' => 'nullable|in:male,female,others',
@@ -348,6 +351,7 @@ class UserController extends Controller
             'user_code' => $userCode,
             'name' => $data['name'],
             'email' => $data['email'],
+            'aadhaar_number' => $data['aadhaar_number'],
             'password' => Hash::make('123456'), // default password
             'role' => 'customer',
             'contact_no' => $data['contact_no'],
@@ -374,7 +378,7 @@ class UserController extends Controller
 
         // Admin can delete anyone
         // Others can delete only their created users
-        if ($auth->role !== 'admin' && (int)$user->created_by !== (int)$auth->id) {
+        if ($auth->role !== 'admin' && $user->created_by !== $auth->id) {
             return response()->json(['message' => 'Unauthorized'], 403);
         }
 

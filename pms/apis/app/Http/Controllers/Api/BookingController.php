@@ -86,6 +86,7 @@ class BookingController extends Controller
                         'user_code' => $userCode,
                         'name' => $request->buyer_name,
                         'email' => $request->email,
+                        'aadhaar_number ' => $request->aadhaar_number,
                         'password' => Hash::make($request->password ?? 'password'),
                         'role' => 'customer',
                         'contact_no' => $request->mobile,

@@ -28,6 +28,7 @@ class User extends Authenticatable
     'profile_image',
     'contact_no',
     'email',
+    'aadhaar_number',
     'city',
     'state',
     'address',
@@ -66,6 +67,7 @@ class User extends Authenticatable
         ];
     }
 
+
     public function creator()
     {
         return $this->belongsTo(User::class, 'created_by');
@@ -85,10 +87,12 @@ class User extends Authenticatable
     {
         return $this->hasMany(User::class, 'user_code');
     }
+
     public function leader()
     {
         return $this->hasMany(User::class, 'user_code');
     }
+
     public function locationCommissions()
     {
         return $this->hasMany(UserLocationCommission::class, 'user_id', 'id');
