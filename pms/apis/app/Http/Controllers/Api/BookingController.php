@@ -530,10 +530,11 @@ public function dashboard()
             );
 
             $topAdvisor = Booking::where('leader_id', $user->id)
-                ->select('user_code', DB::raw('SUM(total_booking_amount) as total'))
-                ->groupBy('user_code')
-                ->orderByDesc('total')
-                ->first();
+            ->whereNotNull('adviser_id') // only adviser bookings
+            ->select('adviser_id', DB::raw('SUM(total_booking_amount) as total'))
+            ->groupBy('adviser_id')
+            ->orderByDesc('total')
+            ->first();
 
             $response['data'] = [
                 'total_advisors' => $totalAdvisors,
@@ -632,11 +633,14 @@ public function dashboard()
         // 👤 ADD TOP ADVISOR NAME
         // ===============================
         if (!empty($response['data']['top_advisor'])) {
-            $advisor = User::where('user_code', $response['data']['top_advisor']->user_code)->first();
-            $response['data']['top_advisor_name'] = $advisor?->name;
-        } else {
-            $response['data']['top_advisor_name'] = null;
-        }
+
+    $advisor = User::find($response['data']['top_advisor']->adviser_id);
+
+    $response['data']['top_advisor_name'] = $advisor?->name;
+
+} else {
+    $response['data']['top_advisor_name'] = null;
+}
 
         return response()->json($response);
 
