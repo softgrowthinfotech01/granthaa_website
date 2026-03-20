@@ -61,11 +61,10 @@ class BookingController extends Controller
 
 
         $leader = auth()->user();
-        $userCode = $this->generateUserCode('customer');
-        // print_r($userCode);exit;
+
         try {
 
-            $booking = DB::transaction(function () use ($request, $leader, $userCode) {
+            $booking = DB::transaction(function () use ($request, $leader) {
 
                 $commissionValue = (float) str_replace(['₹', ',', ' '], '', $request->commission_value);
                 $totalBookingAmount = (float) str_replace(['₹', ',', ' '], '', $request->total_booking_amount);
@@ -80,8 +79,10 @@ class BookingController extends Controller
 
                 $commission_amount = round($commissionAmount, 2);
 
-                $newUser = User::where('email', $request->email)->first();
+                $newUser = User::where('contact_no', $request->mobile)->first();
                 if (!$newUser) {
+                    $userCode = $this->generateUserCode('customer');
+        // print_r($userCode);exit;
                     $newUser = User::create([
                         'user_code' => $userCode,
                         'name' => $request->buyer_name,
@@ -181,7 +182,7 @@ class BookingController extends Controller
                 // 2️⃣ Create Booking
                 $booking = Booking::create([
                     'user_id' => $newUser->id,
-                    'user_code' => $userCode,
+                    'user_code' => $newUser->user_code,
 
                     'buyer_name' => $request->buyer_name,
                     'mobile' => $request->mobile,
@@ -704,5 +705,55 @@ public function dashboard()
             'data' => $advisers
         ]);
     }
+
+
+    public function customers()
+{
+    $user = auth()->user();
+
+    $query = Booking::query();
+
+    // Role filter
+    if ($user->role === 'leader') {
+        $query->where('leader_id', $user->id);
+    } elseif ($user->role === 'adviser') {
+        $query->where('adviser_id', $user->id);
+    }
+
+    $customers = $query
+        ->select('user_id', 'user_code', 'buyer_name')
+        ->distinct('user_id')
+        ->get();
+
+    return response()->json([
+        'status' => true,
+        'data' => $customers
+    ]);
+}
+
+public function projectsByCustomer($userId)
+{
+    $projects = Booking::where('user_id', $userId)
+        ->select('project_name')
+        ->distinct()
+        ->get();
+
+    return response()->json([
+        'status' => true,
+        'data' => $projects
+    ]);
+}
+
+public function plots($userId, $project)
+{
+    $plots = Booking::where('user_id', $userId)
+        ->where('project_name', $project)
+        ->get();
+
+    return response()->json([
+        'status' => true,
+        'data' => $plots
+    ]);
+}
 
    }

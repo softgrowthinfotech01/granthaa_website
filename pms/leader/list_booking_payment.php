@@ -5,7 +5,7 @@
     <h2 class="text-2xl font-bold mb-4 text-center">Booking Payment Records</h2>
 
     <!-- Horizontal scroll wrapper -->
-<div class="w-full overflow-x-auto overflow-y-auto max-h-[500px]">
+<div class="w-full overflow-x-scroll overflow-y-auto max-h-[500px]">
         <div class="flex flex-wrap gap-3 mb-4">
 
             <input type="text" id="searchInput"

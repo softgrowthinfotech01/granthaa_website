@@ -24,6 +24,12 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/referrals', [ReferralController::class, 'myReferrals']);
     Route::get('/referrals/{id}', [ReferralController::class, 'show']);
 
+
+    Route::get('/customers', [BookingController::class, 'customers']);
+
+    Route::get('/projects/{userId}', [BookingController::class, 'projectsByCustomer']);
+
+    Route::get('/plots/{userId}/{project}', [BookingController::class, 'plots']);
     // booking
     Route::get('/bookings', [BookingController::class, 'index']);
     Route::post('/bookings', [BookingController::class, 'store']);
