@@ -123,6 +123,9 @@
 
       <p id="userCode" class="font-semibold text-gray-800"></p>
       <p id="userName" class="text-lg font-semibold text-gray-500"></p>
+        <p id="userEmail"
+   class="text-sm font-semibold text-gray-500 break-all">
+</p>
     </div>
 
     <a onclick="logout()" style="cursor: pointer;"
@@ -147,6 +150,7 @@
       const userData = JSON.parse(localStorage.getItem("auth_user") || "{}")
       document.getElementById("userCode").textContent = userData.user_code || "";
       document.getElementById("userName").textContent = userData.name || "";
+       document.getElementById("userEmail").textContent = userData.email || "";
     });
     function logout() {
 

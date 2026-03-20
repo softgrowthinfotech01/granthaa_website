@@ -867,6 +867,12 @@
   .max-w-7xl {
     max-width: var(--container-7xl);
   }
+  .max-w-\[50px\] {
+    max-width: 50px;
+  }
+  .max-w-\[180px\] {
+    max-width: 180px;
+  }
   .max-w-\[335px\] {
     max-width: 335px;
   }
@@ -1042,6 +1048,11 @@
   }
   .self-start {
     align-self: flex-start;
+  }
+  .truncate {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
   .overflow-hidden {
     overflow: hidden;
@@ -1540,6 +1551,9 @@
   .tracking-widest {
     --tw-tracking: var(--tracking-widest);
     letter-spacing: var(--tracking-widest);
+  }
+  .break-all {
+    word-break: break-all;
   }
   .whitespace-nowrap {
     white-space: nowrap;
