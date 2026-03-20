@@ -129,7 +129,10 @@
 
       <p id="userCode" class="font-semibold text-gray-800"></p>
       <p id="userName" class="text-lg font-semibold text-gray-500"></p>
-      <p id="userEmail" class="text-lg font-semibold text-gray-500"></p>
+      <p id="userEmail"
+   class="text-sm font-semibold text-gray-500 break-all">
+</p>
+</p>
     </div>
 
     <a onclick="logout()" style="cursor: pointer;"
