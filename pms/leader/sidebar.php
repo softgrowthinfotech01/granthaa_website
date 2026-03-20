@@ -203,7 +203,7 @@ flex flex-col justify-between shrink-0">
                 <circle cx="16" cy="12" r="1.5" />
                 <path d="M3 10h18" />
               </svg>
-              <span class="sidebar-text">Commission Payment</span>
+              <span class="sidebar-text">Advisor Commission Payment</span>
             </span>
 
             <svg class="menu-arrow w-4 h-4 transition-transform transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">

@@ -142,75 +142,142 @@ transition transform hover:scale-[1.02]">
 <?php include 'footer.php'; ?>
 <script>
 const token = localStorage.getItem("auth_token");
-let bookingsData = [];
 
-/* ================= LOAD BOOKINGS ================= */
-document.addEventListener("DOMContentLoaded", loadBookings);
+/* ================= LOAD CUSTOMERS ================= */
+document.addEventListener("DOMContentLoaded", () => {
+    loadCustomers();
 
-async function loadBookings() {
+    // disable dependent dropdowns initially
+    document.getElementById("project_name").disabled = true;
+    document.getElementById("plot_number").disabled = true;
+});
+
+async function loadCustomers() {
 
     const dropdown = document.getElementById("user_id");
 
     try {
-        const res = await fetch(url + "bookings", {
-            headers: {
-                "Authorization": "Bearer " + token
-            }
+        const res = await fetch(url + "customers", {
+            headers: { Authorization: "Bearer " + token }
         });
 
         const data = await res.json();
 
-        bookingsData = data.data.data;
+        dropdown.innerHTML = '<option value="">Select Customer</option>';
 
-        dropdown.innerHTML = '<option value="">Select Booking</option>';
-
-        bookingsData.forEach(b => {
-
-            let site = b.location ? b.location.site_location : "N/A";
-
+        data.data.forEach(c => {
             dropdown.innerHTML += `
-                <option value="${b.id}">
-                    ${site} - ${b.user_code} - ${b.buyer_name}
+                <option value="${c.user_id}">
+                    ${c.user_code} - ${c.buyer_name}
                 </option>
             `;
         });
 
     } catch (err) {
         console.error(err);
-        dropdown.innerHTML = '<option>Error loading</option>';
+        dropdown.innerHTML = '<option>Error loading customers</option>';
     }
 }
 
 
-/* ================= ON BOOKING SELECT ================= */
+/* ================= CUSTOMER CHANGE ================= */
 document.getElementById("user_id").addEventListener("change", async function () {
 
-    const bookingId = this.value;
+    let userId = this.value;
+
+    // 🔄 Reset everything
+    document.getElementById("project_name").innerHTML = '<option>Loading...</option>';
+    document.getElementById("plot_number").innerHTML = '<option>Select Plot</option>';
+
+    document.getElementById("project_name").disabled = true;
+    document.getElementById("plot_number").disabled = true;
+
+    clearAmounts();
+
+    if (!userId) return;
+
+    try {
+        const res = await fetch(url + "projects/" + userId, {
+            headers: { Authorization: "Bearer " + token }
+        });
+
+        const data = await res.json();
+
+        let projectDropdown = document.getElementById("project_name");
+        projectDropdown.innerHTML = '<option value="">Select Project</option>';
+
+        data.data.forEach(p => {
+            projectDropdown.innerHTML += `
+                <option value="${p.project_name}">
+                    ${p.project_name}
+                </option>
+            `;
+        });
+
+        projectDropdown.disabled = false;
+
+    } catch (err) {
+        console.error(err);
+        alert("Failed to load projects");
+    }
+});
+
+
+/* ================= PROJECT CHANGE ================= */
+document.getElementById("project_name").addEventListener("change", async function () {
+
+    let userId = document.getElementById("user_id").value;
+    let project = this.value;
+
+    // 🔄 Reset plot + amounts
+    document.getElementById("plot_number").innerHTML = '<option>Loading...</option>';
+    document.getElementById("plot_number").disabled = true;
+
+    clearAmounts();
+
+    if (!project) return;
+
+    try {
+        const res = await fetch(url + `plots/${userId}/${project}`, {
+            headers: { Authorization: "Bearer " + token }
+        });
+
+        const data = await res.json();
+
+        let plotDropdown = document.getElementById("plot_number");
+        plotDropdown.innerHTML = '<option value="">Select Plot</option>';
+
+        data.data.forEach(b => {
+            plotDropdown.innerHTML += `
+                <option value="${b.id}">
+                    ${b.plot_number}
+                </option>
+            `;
+        });
+
+        plotDropdown.disabled = false;
+
+    } catch (err) {
+        console.error(err);
+        alert("Failed to load plots");
+    }
+});
+
+
+/* ================= PLOT CHANGE ================= */
+document.getElementById("plot_number").addEventListener("change", async function () {
+
+    let bookingId = this.value;
+
+    clearAmounts();
+
     if (!bookingId) return;
 
-    const selected = bookingsData.find(b => b.id == bookingId);
-    if (!selected) return;
-
-    // 🔹 Project
-    document.getElementById("project_name").innerHTML = `
-        <option value="${selected.project_name}">
-            ${selected.project_name}
-        </option>
-    `;
-
-    // 🔹 Plot
-    document.getElementById("plot_number").innerHTML = `
-        <option value="${selected.plot_number}">
-            ${selected.plot_number}
-        </option>
-    `;
-
-    // 🔥 FETCH CORRECT SUMMARY FROM SERVER
     try {
         const res = await fetch(url + "booking-summary/" + bookingId, {
             headers: {
-                "Authorization": "Bearer " + token,
-                "Accept": "application/json"
+                Authorization: "Bearer " + token,
+                Accept: "application/json"
             }
         });
 
@@ -224,11 +291,18 @@ document.getElementById("user_id").addEventListener("change", async function () 
         console.error(err);
         alert("Failed to fetch booking summary");
     }
-
 });
 
 
-/* ================= LIVE BALANCE PREVIEW ================= */
+/* ================= CLEAR AMOUNTS ================= */
+function clearAmounts() {
+    document.getElementById("total_amount").value = "";
+    document.getElementById("paid_amount").value = "";
+    document.getElementById("balanced_amount").value = "";
+}
+
+
+/* ================= LIVE BALANCE ================= */
 document.getElementById("amount").addEventListener("input", function () {
 
     let amount = parseFloat(this.value) || 0;
@@ -239,25 +313,23 @@ document.getElementById("amount").addEventListener("input", function () {
     let newBalance = total - newPaid;
 
     document.getElementById("balanced_amount").value = newBalance;
-
 });
 
 
-/* ================= SUBMIT PAYMENT ================= */
+/* ================= FORM SUBMIT ================= */
 document.getElementById("paymentForm").addEventListener("submit", async function(e) {
 
     e.preventDefault();
 
-    const bookingId = document.getElementById("user_id").value;
+    const bookingId = document.getElementById("plot_number").value;
     const amount = parseFloat(document.getElementById("amount").value);
     const balance = parseFloat(document.getElementById("balanced_amount").value);
 
     if (!bookingId) {
-        alert("Select booking first");
+        alert("Select plot first");
         return;
     }
 
-    // ✅ Validation
     if (amount <= 0) {
         alert("Enter valid amount");
         return;
@@ -290,10 +362,9 @@ document.getElementById("paymentForm").addEventListener("submit", async function
 
             alert("✅ Payment Recorded Successfully");
 
-            // 🔥 RELOAD CORRECT DATA FROM SERVER
-            document.getElementById("user_id").dispatchEvent(new Event("change"));
+            // 🔄 reload summary
+            document.getElementById("plot_number").dispatchEvent(new Event("change"));
 
-            // reset inputs
             document.getElementById("amount").value = "";
             document.getElementById("remark").value = "";
 
@@ -312,6 +383,10 @@ document.getElementById("paymentForm").addEventListener("submit", async function
 function confirmReset() {
     if (confirm("Are you sure to reset?")) {
         document.getElementById("paymentForm").reset();
+        clearAmounts();
+
+        document.getElementById("project_name").disabled = true;
+        document.getElementById("plot_number").disabled = true;
     }
 }
 </script>

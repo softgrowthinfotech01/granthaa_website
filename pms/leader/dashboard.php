@@ -40,7 +40,7 @@
     <div class="absolute top-5 right-5 opacity-50 text-6xl font-bold">🏆</div>
 
     <h3 class="text-sm tracking-widest font-semibold">TOP ADVISOR</h3>
-    <p class="text-2xl font-bold mt-3" id="topAdvisor">Harish</p>
+    <p class="text-2xl font-bold mt-3" id="topAdvisor"></p>
   </div>
 
 </div>
@@ -72,7 +72,8 @@
         document.querySelector('#totalAdvisors').textContent = data.data.total_advisors;
         document.querySelector('#totalBooking').textContent = "₹ " + data.data.total_booking_amount.toLocaleString();
         document.querySelector('#totalCommission').textContent = "₹ " + data.data.total_commission_amount.toLocaleString();
-        document.querySelector('#topAdvisor').textContent = data.data.top_advisor_name+"("+data.data.top_advisor.user_code+")";
+        document.querySelector('#topAdvisor').textContent = (data.data.top_advisor_name == null) ? "-" :
+    data.data.top_advisor_name + " (" + data.data.user_code + ")";
       })
       .catch(error => console.error('Error fetching dashboard data:', error));
   });

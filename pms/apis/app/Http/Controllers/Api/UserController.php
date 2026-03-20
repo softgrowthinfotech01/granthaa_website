@@ -146,7 +146,7 @@ class UserController extends Controller
         $rules = [
             'name' => 'required|string|max:200',
             'email'      => 'required|email|unique:users,email',
-            'aadhaar_number'   => 'required|digits:12',
+            'aadhaar_number'   => 'required|digits:12|unique:users,aadhaar_number',
             'password'   => 'required|min:6',
             'role'       => 'required|in:leader,adviser,customer',
         ];
@@ -233,38 +233,38 @@ class UserController extends Controller
     }
 
     public function myNetwork(Request $request)
-    {
-        $auth = auth()->user();
+{
+    $auth = auth()->user();
 
-        if (!$auth) {
-            return response()->json(['message' => 'Unauthenticated'], 401);
-        }
-
-        $query = User::where('created_by', $auth->id);
-
-        // 🔎 Search
-        if ($request->filled('search')) {
-            $search = $request->search;
-
-            $query->where(function ($q) use ($search) {
-                $q->where('name', 'like', "%{$search}%")
-                    ->orWhere('email', 'like', "%{$search}%")
-                    ->orWhere('role', 'like', "%{$search}%");
-            });
-        }
-
-        // 📄 Pagination
-        $perPage = $request->per_page ?? 10;
-
-        $users = $query->orderBy('id', 'desc')
-            ->paginate($perPage)
-            ->withQueryString();
-
-        return response()->json([
-            'message' => 'My network fetched successfully',
-            'data' => $users
-        ]);
+    if (!$auth) {
+        return response()->json(['message' => 'Unauthenticated'], 401);
     }
+
+    $query = User::where('created_by', $auth->id);
+
+    // 🔎 Search
+    if ($request->filled('search')) {
+        $search = $request->search;
+
+        $query->where(function ($q) use ($search) {
+            $q->where('name', 'like', "%{$search}%")
+              ->orWhere('email', 'like', "%{$search}%")
+              ->orWhere('role', 'like', "%{$search}%");
+        });
+    }
+
+    // 📄 Pagination
+    $perPage = $request->per_page ?? 10;
+
+    $users = $query->orderBy('id', 'desc')
+                   ->paginate($perPage)
+                   ->withQueryString();
+
+    return response()->json([
+        'message' => 'My network fetched successfully',
+        'data' => $users
+    ]);
+}
 
     /**
      * Update User
@@ -390,92 +390,92 @@ class UserController extends Controller
     }
 
     /**
-     * Get Users By Role (Dynamic)
-     */
-    public function getUsersByRole(Request $request)
-    {
-        $auth = auth()->user();
+ * Get Users By Role (Dynamic)
+ */
+public function getUsersByRole(Request $request)
+{
+    $auth = auth()->user();
 
-        if (!$auth) {
-            return response()->json([
-                'message' => 'Unauthenticated'
-            ], 401);
-        }
-
-        // Validate role parameter
-        $request->validate([
-            'role' => 'required|in:admin,leader,adviser,customer'
-        ]);
-
-        $role = $request->role;
-
-        $query = User::where('role', $role);
-
-        // 🔐 Role-based restriction
-        if ($auth->role !== 'admin') {
-            $query->where('created_by', $auth->id);
-        }
-
-        // 🔎 Optional Search
-        if ($request->filled('search')) {
-            $search = $request->search;
-
-            $query->where(function ($q) use ($search) {
-                $q->where('name', 'like', "%{$search}%")
-                    ->orWhere('email', 'like', "%{$search}%")
-                    ->orWhere('user_code', 'like', "%{$search}%")
-                    ->orWhere('contact_no', 'like', "%{$search}%");
-            });
-        }
-
-        // 📄 Pagination
-        $perPage = $request->per_page ?? 10;
-
-        $users = $query->orderBy('id', 'desc')
-            ->paginate($perPage)
-            ->withQueryString();
-
+    if (!$auth) {
         return response()->json([
-            'message' => ucfirst($role) . ' users fetched successfully',
-            'data' => $users
-        ]);
+            'message' => 'Unauthenticated'
+        ], 401);
     }
 
-    public function submitReferral(Request $request)
-    {
-        $request->validate([
-            'referrer_id' => 'required|exists:users,id',
-            'referred_name' => 'required',
-            'referred_contact' => 'required',
-            'referred_email' => 'nullable|email'
-        ]);
+    // Validate role parameter
+    $request->validate([
+        'role' => 'required|in:admin,leader,adviser,customer'
+    ]);
 
-        $customer = User::where('id', $request->referrer_id)
-            ->where('role', 'customer')
-            ->firstOrFail();
+    $role = $request->role;
 
-        Referral::create([
-            'referrer_id' => $customer->id,
-            'referred_name' => $request->referred_name,
-            'referred_contact' => $request->referred_contact,
-            'referred_email' => $request->referred_email,
-            'assigned_to' => $customer->created_by, // 👈 IMPORTANT
-            'status' => 'pending'
-        ]);
+    $query = User::where('role', $role);
 
-        return response()->json([
-            'message' => 'Referral submitted successfully'
-        ]);
+    // 🔐 Role-based restriction
+    if ($auth->role !== 'admin') {
+        $query->where('created_by', $auth->id);
     }
 
-    public function myReferrals()
-    {
-        $user = auth()->user();
+    // 🔎 Optional Search
+    if ($request->filled('search')) {
+        $search = $request->search;
 
-        $referrals = Referral::where('assigned_to', $user->id)
-            ->where('status', 'pending')
-            ->get();
-
-        return response()->json($referrals);
+        $query->where(function ($q) use ($search) {
+            $q->where('name', 'like', "%{$search}%")
+              ->orWhere('email', 'like', "%{$search}%")
+              ->orWhere('user_code', 'like', "%{$search}%")
+              ->orWhere('contact_no', 'like', "%{$search}%");
+        });
     }
+
+    // 📄 Pagination
+    $perPage = $request->per_page ?? 10;
+
+    $users = $query->orderBy('id', 'desc')
+                   ->paginate($perPage)
+                   ->withQueryString();
+
+    return response()->json([
+        'message' => ucfirst($role) . ' users fetched successfully',
+        'data' => $users
+    ]);
+}
+
+public function submitReferral(Request $request)
+{
+    $request->validate([
+        'referrer_id' => 'required|exists:users,id',
+        'referred_name' => 'required',
+        'referred_contact' => 'required',
+        'referred_email' => 'nullable|email'
+    ]);
+
+    $customer = User::where('id', $request->referrer_id)
+                    ->where('role','customer')
+                    ->firstOrFail();
+
+    Referral::create([
+        'referrer_id' => $customer->id,
+        'referred_name' => $request->referred_name,
+        'referred_contact' => $request->referred_contact,
+        'referred_email' => $request->referred_email,
+        'assigned_to' => $customer->created_by, // 👈 IMPORTANT
+        'status' => 'pending'
+    ]);
+
+    return response()->json([
+        'message' => 'Referral submitted successfully'
+    ]);
+}
+
+public function myReferrals()
+{
+    $user = auth()->user();
+
+    $referrals = Referral::where('assigned_to', $user->id)
+                        ->where('status','pending')
+                        ->get();
+
+    return response()->json($referrals);
+}
 }

@@ -22,13 +22,38 @@ class BookingPaymentController extends Controller
         try {
 
             $user = auth()->user();
-
             $booking = Booking::findOrFail($request->booking_id);
+
+            // 🔒 SECURITY CHECK
+            if (
+                ($user->role === 'leader' && $booking->leader_id != $user->id) ||
+                ($user->role === 'adviser' && $booking->adviser_id != $user->id)
+            ) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Unauthorized payment attempt'
+                ], 403);
+            }
+
+            if ($user->role === 'customer') {
+    return response()->json([
+        'status' => false,
+        'message' => 'Customers cannot add payments'
+    ], 403);
+}
+
+            // 🔐 IMPORTANT CHECK
+            if ($booking->created_by != $user->id) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Unauthorized payment attempt'
+                ], 403);
+            }
 
             $payment = BookingPayment::create([
                 'booking_id' => $booking->id,
-                'user_id' => $booking->user_id, // ✅ customer
-                'received_by' => $user->id,     // ✅ adviser/leader
+                'user_id' => $booking->user_id,
+                'received_by' => $user->id,
                 'amount' => $request->amount,
                 'payment_type' => $request->payment_type,
                 'payment_mode' => $request->payment_mode,

@@ -137,6 +137,17 @@
                     const tbody = document.getElementById("customerData");
                     tbody.innerHTML = "";
 
+                    if (!bookings || bookings.length === 0) {
+                        tbody.innerHTML = `
+        <tr>
+            <td colspan="10" class="text-center py-6 text-gray-500 font-semibold">
+                No records found
+            </td>
+        </tr>
+    `;
+                        return;
+                    }
+
                     bookings.forEach((row) => {
 
                         let commission_Amount = row.commission_amount ?? 0;

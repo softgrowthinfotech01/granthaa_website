@@ -5,25 +5,32 @@
     <h2 class="text-2xl font-bold mb-4 text-center">Booking Payment Records</h2>
 
     <!-- Horizontal scroll wrapper -->
-<div class="w-full overflow-x-auto overflow-y-auto max-h-[500px]">
-        <div class="flex flex-wrap gap-3 mb-4">
+<div class="w-full overflow-x-scroll overflow-y-auto max-h-[500px]">
+       <div class="flex flex-wrap justify-between items-center gap-3 mb-4">
 
-            <input type="text" id="searchInput"
-                placeholder="Search buyer / project / mobile"
-                class="border p-2 rounded w-64">
+    <!-- LEFT SIDE -->
+    <div class="flex gap-3">
+        <input type="text" id="searchInput"
+            placeholder="Search buyer / project / mobile"
+            class="border p-2 rounded w-64">
 
-            <button id="searchBtn"
-                class="bg-blue-500 text-white px-4 rounded">
-                Search
-            </button>
+        <button id="searchBtn"
+            class="bg-blue-500 text-white px-4 rounded">
+            Search
+        </button>
+    </div>
 
-            <select id="perPage" class="border p-2 rounded">
-                <option value="10">10</option>
-                <option value="25">25</option>
-                <option value="50">50</option>
-            </select>
+    <!-- RIGHT SIDE -->
+    <div class="flex items-center gap-2">
+        <span class="text-sm text-gray-600">Show:</span>
+        <select id="perPage" class="border p-2 rounded">
+            <option value="10">10</option>
+            <option value="25">25</option>
+            <option value="50">50</option>
+        </select>
+    </div>
 
-        </div>
+</div>
 
         <table id="example" class="min-w-[900px] w-full" style="width:100%; padding-top: 1em;  padding-bottom: 1em;">
 
@@ -53,111 +60,201 @@
 
 <?php include 'footer.php'; ?>
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function() {
 
-        const token = localStorage.getItem("auth_token");
+    const token = localStorage.getItem("auth_token");
 
-        if (!token) {
-            alert("Please login first");
-            window.location.href = "../login";
-            return;
-        }
+    if (!token) {
+        alert("Please login first");
+        window.location.href = "../login";
+        return;
+    }
 
-        function loadPayments() {
+    let allBookings = [];
+    let currentPage = 1;
+    let perPage = 10;
 
-            fetch(url + "my-book-payments", {
-                    headers: {
-                        "Authorization": "Bearer " + token,
-                        "Accept": "application/json"
-                    }
-                })
-                .then(res => res.json())
-                .then(response => {
+    /* ================= LOAD DATA ================= */
+    function loadPayments() {
 
-                    const bookings = response.data ?? [];
-                    const tbody = document.getElementById("paymentData");
+        fetch(url + "my-book-payments", {
+            headers: {
+                "Authorization": "Bearer " + token
+            }
+        })
+        .then(res => res.json())
+        .then(response => {
 
-                    let html = "";
+            allBookings = response.data ?? [];
+            renderTable();
 
-                    bookings.forEach((booking) => {
+        })
+        .catch(err => console.error(err));
+    }
 
-                        const groupClass = "group_" + booking.booking_id;
+    /* ================= RENDER TABLE ================= */
+    function renderTable() {
 
-                        // 🔹 BOOKING ROW
-                        html += `
-                <tr class="bg-gray-200 font-bold cursor-pointer"
-                    onclick="togglePayments('${groupClass}')">
+        const tbody = document.getElementById("paymentData");
+        const search = document.getElementById("searchInput").value.toLowerCase();
 
-                    <td class="p-3">${booking.buyer_name}</td>
-                    <td class="p-3">₹ ${booking.total_amount ?? 0}</td>
-                    <td class="p-3 text-green-600">Paid: ₹ ${booking.paid_amount}</td>
-                    <td class="p-3 text-red-600">Balance: ₹ ${booking.balance_amount}</td>
-                    <td class="p-3">${booking.project_name ?? '-'}</td>
-                    <td class="p-3">${booking.plot_number ?? '-'}</td>
-                    <td class="p-3 text-center">▼</td>
-                </tr>
+        // 🔍 SEARCH FILTER
+        let filtered = allBookings.filter(b => {
+
+            return (
+                (b.buyer_name || '').toLowerCase().includes(search) ||
+                (b.project_name || '').toLowerCase().includes(search) ||
+                (b.plot_number || '').toLowerCase().includes(search)
+            );
+        });
+
+        // 📄 PAGINATION
+        let start = (currentPage - 1) * perPage;
+        let paginated = filtered.slice(start, start + perPage);
+
+        let html = "";
+
+        paginated.forEach((booking) => {
+
+            const groupClass = "group_" + booking.booking_id;
+
+            // 🔹 BOOKING ROW
+            html += `
+            <tr class="bg-gray-100 font-semibold cursor-pointer"
+                onclick="togglePayments('${groupClass}')">
+
+                <td class="p-3">
+                    ${booking.buyer_name ?? ''}
+                </td>
+
+                <td class="p-3 text-blue-600">
+                    ₹ ${Number(booking.total_amount || 0).toLocaleString("en-IN")}
+                </td>
+
+                <td class="p-3 text-green-600">
+                    Paid: ₹ ${Number(booking.paid_amount || 0).toLocaleString("en-IN")}
+                </td>
+
+                <td class="p-3 text-red-600">
+                    Balance: ₹ ${Number(booking.balance_amount || 0).toLocaleString("en-IN")}
+                </td>
+
+                <td class="p-3">${booking.project_name ?? '-'}</td>
+                <td class="p-3">${booking.plot_number ?? '-'}</td>
+
+                <td class="p-3 text-center">▼</td>
+            </tr>
             `;
 
-                        // 🔹 PAYMENT ROWS (HIDDEN BY DEFAULT)
-                        if (booking.payments.length > 0) {
+            // 🔹 PAYMENT ROWS
+            if (booking.payments && booking.payments.length > 0) {
 
-                            booking.payments.forEach(payment => {
-                                html += `
-                        <tr class="${groupClass}" style="display:none;">
-                            <td class="p-3 pl-10 text-gray-600">↳ Payment</td>
-                            <td class="p-3">₹ ${payment.amount}</td>
-                            <td class="p-3">${payment.payment_type}</td>
-                            <td class="p-3">${payment.payment_mode}</td>
-                            <td class="p-3">${payment.remark ?? '-'}</td>
-                            <td class="p-3">${formatDate(payment.created_at)}</td>
-                            <td class="p-3">-</td>
-                        </tr>
-                    `;
-                            });
+                booking.payments.forEach(payment => {
 
-                        } else {
-                            html += `
+                    html += `
                     <tr class="${groupClass}" style="display:none;">
-                        <td colspan="7" class="p-3 text-center text-gray-400">
-                            No payments yet
+                        <td class="p-3 pl-10 text-gray-600">↳ Payment</td>
+
+                        <td class="p-3 font-semibold text-indigo-600">
+                            ₹ ${Number(payment.amount || 0).toLocaleString("en-IN")}
                         </td>
+
+                        <td class="p-3">${payment.payment_type}</td>
+                        <td class="p-3">${payment.payment_mode}</td>
+                        <td class="p-3">${payment.remark ?? '-'}</td>
+                        <td class="p-3">${formatDate(payment.created_at)}</td>
+                        <td class="p-3">-</td>
                     </tr>
-                `;
-                        }
-
-                    });
-
-                    tbody.innerHTML = html;
-
-                })
-                .catch(err => {
-                    console.error(err);
-                    alert("Failed to load payments");
+                    `;
                 });
+
+            } else {
+                html += `
+                <tr class="${groupClass}" style="display:none;">
+                    <td colspan="7" class="p-3 text-center text-gray-400">
+                        No payments yet
+                    </td>
+                </tr>
+                `;
+            }
+
+        });
+
+        if (paginated.length === 0) {
+            html = `<tr><td colspan="7" class="text-center p-4">No records found</td></tr>`;
         }
-        // =========================
-        // 🔹 TOGGLE FUNCTION
-        // =========================
-       window.togglePayments = function(groupClass) {
 
-    const rows = document.querySelectorAll("." + groupClass);
+        tbody.innerHTML = html;
 
-    rows.forEach(row => {
-        if (getComputedStyle(row).display === "none") {
-            row.style.display = "table-row";
-        } else {
-            row.style.display = "none";
+        renderPagination(filtered.length);
+    }
+
+    /* ================= PAGINATION ================= */
+    function renderPagination(totalItems) {
+
+        let totalPages = Math.ceil(totalItems / perPage);
+
+        document.getElementById("pagination").innerHTML = `
+            <button 
+                ${currentPage == 1 ? 'disabled' : ''}
+                onclick="changePage(${currentPage - 1})"
+                class="px-3 py-1 bg-gray-200 rounded ${currentPage == 1 ? 'opacity-50' : ''}">
+                Prev
+            </button>
+
+            <span class="px-2">Page ${currentPage} of ${totalPages}</span>
+
+            <button 
+                ${currentPage == totalPages ? 'disabled' : ''}
+                onclick="changePage(${currentPage + 1})"
+                class="px-3 py-1 bg-gray-200 rounded ${currentPage == totalPages ? 'opacity-50' : ''}">
+                Next
+            </button>
+        `;
+    }
+
+    /* ================= EVENTS ================= */
+
+    document.getElementById("searchBtn").addEventListener("click", () => {
+        currentPage = 1;
+        renderTable();
+    });
+
+    document.getElementById("searchInput").addEventListener("keyup", function(e) {
+        if (e.key === "Enter") {
+            currentPage = 1;
+            renderTable();
         }
     });
 
-};
-
-        function formatDate(dateStr) {
-            const date = new Date(dateStr);
-            return date.toLocaleDateString("en-IN");
-        }
-
-        loadPayments();
+    document.getElementById("perPage").addEventListener("change", function() {
+        perPage = parseInt(this.value);
+        currentPage = 1;
+        renderTable();
     });
 
+    window.changePage = function(page) {
+        currentPage = page;
+        renderTable();
+    }
+
+    window.togglePayments = function(groupClass) {
+
+        const rows = document.querySelectorAll("." + groupClass);
+
+        rows.forEach(row => {
+            row.style.display =
+                row.style.display === "none" ? "table-row" : "none";
+        });
+    };
+
+    function formatDate(dateStr) {
+        const date = new Date(dateStr);
+        return date.toLocaleDateString("en-IN");
+    }
+
+    /* ================= INIT ================= */
+    loadPayments();
+
+});
 </script>
