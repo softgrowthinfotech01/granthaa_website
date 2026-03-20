@@ -80,7 +80,7 @@ class User extends Authenticatable
 
     public function bookings()
     {
-        return $this->hasMany(Booking::class, 'id', 'id');
+        return $this->hasMany(Booking::class, 'created_by');
     }
 
     public function advisers()
