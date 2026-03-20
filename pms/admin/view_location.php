@@ -20,7 +20,7 @@
         <?php include "sidebar.php"; ?>
 
         <!-- MAIN -->
-        <div class="w-full md:w-[80%] lg:w-[60%] xl:w-[40%] 
+        <div class="w-full md:w-[80%] lg:w-[75%] xl:w-[75%] 
                     mx-3 md:mx-auto my-4 self-start 
                     rounded-lg bg-slate-100 
                     p-4 md:p-6 
@@ -163,7 +163,7 @@ async function fetchLocations(page = 1) {
 
                     <td class="px-4 py-2 flex flex-col md:flex-row gap-2 md:table-cell">
                         <a href="update_location.php?id=${loc.id}" 
-                           class="w-full md:w-auto text-center px-3 py-1.5 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-500">
+                           class="mr-1 w-full md:w-auto text-center px-3 py-1.5 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-500">
                            Edit
                         </a>
 

@@ -20,7 +20,7 @@
         <?php include "sidebar.php"; ?>
 
         <!-- MAIN -->
-        <div class="w-full sm:w-[95%] md:w-[80%] lg:w-[60%] mx-3 md:mx-auto my-4 self-start rounded-lg bg-slate-100 p-4 md:p-6 border shadow-xs">
+        <div class="w-full sm:w-[95%] md:w-[75%] lg:w-[75%] mx-3 md:mx-auto my-4 self-start rounded-lg bg-slate-100 p-4 md:p-6 border shadow-xs">
 
             <!-- TOP CONTROLS -->
             <div class="mb-4 flex flex-col md:flex-row justify-between items-stretch md:items-center gap-3">
@@ -172,10 +172,9 @@ async function fetchLocations(page = 1) {
 
                     <td class="px-4 py-2 flex flex-col md:flex-row gap-2 md:table-cell">
                         <a href="update_leader.php?id=${loc.id}" 
-                           class="w-full md:w-auto text-center px-3 py-1.5 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-500">
+                           class="mr-1 w-full md:w-auto text-center px-3 py-1.5 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-500">
                            Edit
                         </a>
-
                         <button onclick="deleteLeader(${loc.id})"
                             class="w-full md:w-auto px-3 py-1.5 text-sm font-medium text-white bg-red-600 rounded-md hover:bg-red-500">
                             Delete

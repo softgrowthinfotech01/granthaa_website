@@ -26,7 +26,7 @@
 
                 <!--Main-->
                 <div id="mainContent"
-                    class="w-full sm:w-[90%] md:w-[70%] lg:w-[60%] mx-3 md:mx-auto my-4
+                    class="w-full sm:w-[90%] md:w-[75%] lg:w-[80%] mx-3 md:mx-auto my-4
                             transition-all duration-300">
 
                     <form class="w-full px-4 rounded-lg bg-gray-200 p-6 border shadow-xl" id="loginForm">
@@ -34,7 +34,7 @@
                         <div class="personal-details">
                             <h5 class="text-xl font-bold text-heading p-1">Location Details</h5>
 
-                            <div class="grid grid-cols-1 md:grid-cols-2 mx-1 md:mx-0">
+                            <div class="grid grid-cols-1  mx-1 md:mx-0">
 
                                 <div class="mb-5 col-span-1 px-1">
                                     <label for="site_location" class="block mb-2.5 text-sm font-medium text-heading">

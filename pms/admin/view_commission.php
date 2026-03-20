@@ -24,7 +24,7 @@
 <?php include "sidebar.php"; ?>
 
 <!-- MAIN -->
-<div class="w-full md:w-[90%] lg:w-[75%] xl:w-[60%] mx-3 md:mx-auto my-4 self-start rounded-lg bg-slate-100 p-4 md:p-6 border shadow-xs">
+<div class="w-full md:w-[90%] lg:w-[75%] xl:w-[75%] mx-3 md:mx-auto my-4 self-start rounded-lg bg-slate-100 p-4 md:p-6 border shadow-xs">
 
     <!-- TOP -->
     <div class="mb-4 flex flex-col md:flex-row justify-between items-stretch md:items-center gap-3">
