@@ -166,12 +166,12 @@
         const list = document.getElementById('siteList');
         list.innerHTML = '';
 
-        if (!data || data.length === 0) {
+        if (!data.data || data.data.length === 0) {
             list.innerHTML = '<li class="text-gray-500">No locations found</li>';
             return;
         }
             var sr = 0;
-        data.forEach(site => {
+        data.data.forEach(site => {
             const li = document.createElement('li');
             li.className = "p-3 bg-gray-100 rounded flex justify-between";
             li.innerHTML = `
