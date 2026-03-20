@@ -21,7 +21,7 @@
                 <div class="space-y-2">
                     <label class="text-sm font-semibold text-gray-700">Booking Name</label>
                     <select name="user_id" id="user_id" required
-                        class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-yellow-400 outline-none">
+                        class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-green-400 outline-none">
                         <option value="">Loading...</option>
                     </select>
                 </div>
@@ -30,7 +30,7 @@
                 <div class="space-y-2">
                     <label class="text-sm font-semibold text-gray-700">Project Name</label>
                     <select name="project_id" id="project_name" required
-                        class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-yellow-400 outline-none">
+                        class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-green-400 outline-none">
                         <option value="">Loading...</option>
                     </select>
                 </div>
@@ -39,7 +39,7 @@
                 <div class="space-y-2">
                     <label class="text-sm font-semibold text-gray-700">Plot/Flat Number</label>
                     <select name="plot_id" id="plot_number" required
-                        class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-yellow-400 outline-none">
+                        class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-green-400 outline-none">
                         <option value="">Loading...</option>
                     </select>
                 </div>
@@ -48,21 +48,21 @@
                 <div class="space-y-2">
                     <label class="text-sm font-semibold text-gray-700">Total Amount</label>
                     <input type="number" name="total_amount" id="total_amount" required
-                        class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-yellow-400 outline-none">
+                        class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-green-400 outline-none">
                 </div>
 
                  <!-- AMOUNT -->
                 <div class="space-y-2">
                     <label class="text-sm font-semibold text-gray-700">Paid Amount</label>
                     <input type="number" name="paid_amount" id="paid_amount" required
-                        class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-yellow-400 outline-none">
+                        class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-green-400 outline-none">
                 </div>
 
                  <!-- AMOUNT -->
                 <div class="space-y-2">
                     <label class="text-sm font-semibold text-gray-700">Balanced Amount</label>
                     <input type="number" name="balanced_amount" id="balanced_amount" required
-                        class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-yellow-400 outline-none">
+                        class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-green-400 outline-none">
                 </div>
 
 
@@ -71,14 +71,14 @@
                 <div class="space-y-2">
                     <label class="text-sm font-semibold text-gray-700">Payment Amount</label>
                     <input type="number" name="amount" id="amount" required
-                        class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-yellow-400 outline-none">
+                        class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-green-400 outline-none">
                 </div>
 
                 <!-- PAYMENT TYPE -->
                 <div class="space-y-2">
                     <label class="text-sm font-semibold text-gray-700">Payment Type</label>
                     <select name="payment_type" id="payment_type"
-                        class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-yellow-400 outline-none">
+                        class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-green-400 outline-none">
 
                         <option>Select Payment Type</option>
                         <option value="full">Full</option>
@@ -91,7 +91,7 @@
                 <div class="space-y-2">
                     <label class="text-sm font-semibold text-gray-700">Payment Mode</label>
                     <select name="payment_mode" id="payment_mode"
-                        class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-yellow-400 outline-none">
+                        class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-green-400 outline-none">
 
                         <option>Select Payment Mode</option>
                         <option value="cash">Cash</option>
@@ -107,7 +107,7 @@
                 <div class="space-y-2 md:col-span-2">
                     <label class="text-sm font-semibold text-gray-700">Remark</label>
                     <textarea name="remark" id="remark" rows="2"
-                        class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-yellow-400 outline-none"></textarea>
+                        class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-green-400 outline-none"></textarea>
                 </div>
 
             </div>
@@ -117,7 +117,7 @@
         <div class="flex justify-center gap-2 mt-2">
 
             <button
-                class="bg-yellow-500 hover:bg-yellow-600 px-4 py-4 rounded-xl
+                class="bg-green-500 hover:bg-green-600 px-4 py-4 rounded-xl
 text-black font-semibold text-lg shadow-md hover:shadow-xl
 transition transform hover:scale-[1.02]">
 

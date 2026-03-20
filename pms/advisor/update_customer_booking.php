@@ -18,12 +18,7 @@
             <div class="grid md:grid-cols-3 gap-2">
 
                 <!-- Agent -->
-                <div class="space-y-2">
-                    <label class="text-sm font-semibold text-gray-700">Agent / Advisor Name</label>
-                    <input type="text" value="ADV001 - Ravi Kumar" readonly
-                        class="w-full border border-gray-300 px-5 py-3 rounded-xl bg-gray-100 outline-none ">
-                </div>
-
+           
                 <!-- Buyer -->
                 <div class="space-y-2">
                     <label class="text-sm font-semibold text-gray-700">Buyer Name</label>
