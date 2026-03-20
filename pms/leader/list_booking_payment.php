@@ -5,8 +5,8 @@
     <h2 class="text-2xl font-bold mb-4 text-center">Booking Payment Records</h2>
 
     <!-- Horizontal scroll wrapper -->
-<div class="w-full overflow-x-auto overflow-y-auto max-h-[500px]">
-       <div class="flex flex-wrap justify-between items-center gap-3 mb-4">
+<div class="w-full overflow-x-scroll overflow-y-auto max-h-[500px]">
+        <div class="flex flex-wrap gap-3 mb-4">
 
     <!-- LEFT SIDE -->
     <div class="flex gap-3">
