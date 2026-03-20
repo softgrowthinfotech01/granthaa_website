@@ -1,4 +1,3 @@
-
 <?php include 'header.php'; ?>
 
 <div class="max-w-7xl mx-auto bg-white p-4 rounded-2xl shadow-xl">
@@ -6,41 +5,46 @@
     <h2 class="text-2xl font-bold mb-4 text-center">Booking Payment Records</h2>
 
     <!-- Horizontal scroll wrapper -->
-    <div class="w-full overflow-x-auto">
-        <div class="flex flex-wrap gap-3 mb-4">
+<div class="w-full overflow-x-auto overflow-y-auto max-h-[500px]">
+       <div class="flex flex-wrap justify-between items-center gap-3 mb-4">
 
-            <input type="text" id="searchInput"
-                placeholder="Search buyer / project / mobile"
-                class="border p-2 rounded w-64">
+    <!-- LEFT SIDE -->
+    <div class="flex gap-3">
+        <input type="text" id="searchInput"
+            placeholder="Search buyer / project / mobile"
+            class="border p-2 rounded w-64">
 
-            <button id="searchBtn"
-                class="bg-blue-500 text-white px-4 rounded">
-                Search
-            </button>
+        <button id="searchBtn"
+            class="bg-blue-500 text-white px-4 rounded">
+            Search
+        </button>
+    </div>
 
-            <select id="perPage" class="border p-2 rounded">
-                <option value="10">10</option>
-                <option value="25">25</option>
-                <option value="50">50</option>
-            </select>
+    <!-- RIGHT SIDE -->
+   <div class="flex items-center gap-2">
+    <span class="text-sm text-gray-600">Show:</span>
+    <select id="perPage" class="border p-2 rounded">
+            <option value="10">10</option>
+            <option value="25">25</option>
+            <option value="50">50</option>
+        </select>
+    </div>
 
-        </div>
+</div>
 
-        <table id="example" class="" style="width:100%; padding-top: 1em;  padding-bottom: 1em;">
+        <table id="example" class="min-w-[900px] w-full" style="width:100%; padding-top: 1em;  padding-bottom: 1em;">
 
-            <thead class="bg-gradient-to-r from-gray-100 to-gray-200 text-gray-700">
-                <tr class="text-center">
-                    <th data-priority="1" class="p-3 font-semibold text-left">Booking </th>
-                    <th data-priority="2" class="p-3 font-bold text-left">Project </th>
-                    <th data-priority="3" class="p-3 font-semibold text-left">Plot No.</th>
-                    <th data-priority="4" class="p-3 font-semibold text-left">Total AMT</th>
-                    <th data-priority="5" class="p-3 font-semibold text-left">Paid AMT</th>
-                    <th data-priority="6" class="p-3 font-semibold text-left">Balance AMT</th>
-                    <th data-priority="7" class="p-3 font-semibold text-left">Payment AMT</th>
-                    <th data-priority="8" class="p-3 font-semibold text-left">Type</th>
-                    <th data-priority="9" class="p-3 font-semibold text-center">Mode</th>
-                    <th data-priority="10" class="p-3 font-semibold text-center">Remark</th>
+            <thead class="bg-gradient-to-r from-gray-100 to-gray-200 text-gray-700  sticky top-0 z-10">
+                <tr>
+                    <th class="p-3 text-left">Customer</th>
+                    <th class="p-3 text-left">Amount</th>
+                    <th class="p-3 text-left">Type / Paid</th>
+                    <th class="p-3 text-left">Mode / Balance</th>
+                    <th class="p-3 text-left">Remark / Project</th>
+                    <th class="p-3 text-left">Date / Plot</th>
+                    <th class="p-3 text-left">Extra</th>
                 </tr>
+
             </thead>
 
             <tbody id="paymentData" class="divide-y divide-gray-200">
@@ -55,45 +59,37 @@
 </div>
 
 <?php include 'footer.php'; ?>
-<script src="../url.js"></script>
-
 <script>
-document.addEventListener("DOMContentLoaded", async function () {
+document.addEventListener("DOMContentLoaded", function() {
 
     const token = localStorage.getItem("auth_token");
 
-    let allPayments = [];
+    if (!token) {
+        alert("Please login first");
+        window.location.href = "../login";
+        return;
+    }
+
+    let allBookings = [];
     let currentPage = 1;
     let perPage = 10;
 
-    /* ================= LOAD PAYMENTS ================= */
-    async function loadPayments() {
+    /* ================= LOAD DATA ================= */
+    function loadPayments() {
 
-        const tbody = document.getElementById("paymentData");
-        tbody.innerHTML = `<tr><td colspan="10">Loading...</td></tr>`;
+        fetch(url + "my-book-payments", {
+            headers: {
+                "Authorization": "Bearer " + token
+            }
+        })
+        .then(res => res.json())
+        .then(response => {
 
-        try {
-            const res = await fetch(url + "my-book-payments", {
-                headers: {
-                    "Authorization": "Bearer " + token
-                }
-            });
-
-            const response = await res.json();
-            console.log(response);
-
-            allPayments = response.data || [];
-
+            allBookings = response.data ?? [];
             renderTable();
 
-        } catch (err) {
-            console.error(err);
-        }
-    }
-
-    /* ================= FORMAT MONEY ================= */
-    function money(val) {
-        return "₹ " + parseFloat(val || 0).toLocaleString("en-IN");
+        })
+        .catch(err => console.error(err));
     }
 
     /* ================= RENDER TABLE ================= */
@@ -103,13 +99,10 @@ document.addEventListener("DOMContentLoaded", async function () {
         const search = document.getElementById("searchInput").value.toLowerCase();
 
         // 🔍 SEARCH FILTER
-        let filtered = allPayments.filter(p => {
-
-            let b = p.booking || {};
+        let filtered = allBookings.filter(b => {
 
             return (
                 (b.buyer_name || '').toLowerCase().includes(search) ||
-                (b.user_code || '').toLowerCase().includes(search) ||
                 (b.project_name || '').toLowerCase().includes(search) ||
                 (b.plot_number || '').toLowerCase().includes(search)
             );
@@ -119,67 +112,79 @@ document.addEventListener("DOMContentLoaded", async function () {
         let start = (currentPage - 1) * perPage;
         let paginated = filtered.slice(start, start + perPage);
 
-        tbody.innerHTML = "";
+        let html = "";
+
+        paginated.forEach((booking) => {
+
+            const groupClass = "group_" + booking.booking_id;
+
+            // 🔹 BOOKING ROW
+            html += `
+            <tr class="bg-gray-100 font-semibold cursor-pointer"
+                onclick="togglePayments('${groupClass}')">
+
+                <td class="p-3">
+                    ${booking.buyer_name ?? ''}
+                </td>
+
+                <td class="p-3 text-blue-600">
+                    ₹ ${Number(booking.total_amount || 0).toLocaleString("en-IN")}
+                </td>
+
+                <td class="p-3 text-green-600">
+                    Paid: ₹ ${Number(booking.paid_amount || 0).toLocaleString("en-IN")}
+                </td>
+
+                <td class="p-3 text-red-600">
+                    Balance: ₹ ${Number(booking.balance_amount || 0).toLocaleString("en-IN")}
+                </td>
+
+                <td class="p-3">${booking.project_name ?? '-'}</td>
+                <td class="p-3">${booking.plot_number ?? '-'}</td>
+
+                <td class="p-3 text-center">▼</td>
+            </tr>
+            `;
+
+            // 🔹 PAYMENT ROWS
+            if (booking.payments && booking.payments.length > 0) {
+
+                booking.payments.forEach(payment => {
+
+                    html += `
+                    <tr class="${groupClass}" style="display:none;">
+                        <td class="p-3 pl-10 text-gray-600">↳ Payment</td>
+
+                        <td class="p-3 font-semibold text-indigo-600">
+                            ₹ ${Number(payment.amount || 0).toLocaleString("en-IN")}
+                        </td>
+
+                        <td class="p-3">${payment.payment_type}</td>
+                        <td class="p-3">${payment.payment_mode}</td>
+                        <td class="p-3">${payment.remark ?? '-'}</td>
+                        <td class="p-3">${formatDate(payment.created_at)}</td>
+                        <td class="p-3">-</td>
+                    </tr>
+                    `;
+                });
+
+            } else {
+                html += `
+                <tr class="${groupClass}" style="display:none;">
+                    <td colspan="7" class="p-3 text-center text-gray-400">
+                        No payments yet
+                    </td>
+                </tr>
+                `;
+            }
+
+        });
 
         if (paginated.length === 0) {
-            tbody.innerHTML = `
-                <tr><td colspan="10" class="text-center p-4">No Records Found</td></tr>
-            `;
+            html = `<tr><td colspan="7" class="text-center p-4">No records found</td></tr>`;
         }
 
-        paginated.forEach(p => {
-
-            let b = p.booking || {};
-
-            let total = parseFloat(b.total_booking_amount) || 0;
-            let paid = parseFloat(b.advance_amount) || 0;
-            let balance = total - paid;
-
-            tbody.innerHTML += `
-                <tr class="border-b hover:bg-gray-50 text-center">
-
-                    <!-- Customer -->
-                    <td class="p-3">
-                        <div class="font-semibold">${b.buyer_name ?? ''}</div>
-                        <div class="text-xs text-gray-800">${b.user_code ?? ''}</div>
-                    </td>
-
-                    <!-- Project -->
-                    <td class="p-3">${b.project_name ?? ''}</td>
-
-                    <!-- Plot -->
-                    <td class="p-3">${b.plot_number ?? ''}</td>
-
-                    <!-- Total -->
-                    <td class="p-3 text-blue-600 font-semibold">${money(total)}</td>
-
-                    <!-- Paid -->
-                    <td class="p-3 text-green-600 font-semibold">${money(paid)}</td>
-
-                    <!-- Balance -->
-                    <td class="p-3 font-semibold ${balance > 0 ? 'text-red-500' : 'text-green-600'}">
-                        ${money(balance)}
-                    </td>
-
-                    <!-- Payment -->
-                    <td class="p-3 font-bold text-indigo-600">${money(p.amount)}</td>
-
-                    <!-- Type -->
-                    <td class="p-3">
-                        <span class="px-2 py-1 text-sm rounded bg-yellow-100 text-yellow-700">
-                            ${p.payment_type}
-                        </span>
-                    </td>
-
-                    <!-- Mode -->
-                    <td class="p-3 text-center">${p.payment_mode}</td>
-
-                    <!-- Remark -->
-                    <td class="p-3 text-sm text-gray-600">${p.remark ?? '-'}</td>
-
-                </tr>
-            `;
-        });
+        tbody.innerHTML = html;
 
         renderPagination(filtered.length);
     }
@@ -210,31 +215,42 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     /* ================= EVENTS ================= */
 
-    // Search button
     document.getElementById("searchBtn").addEventListener("click", () => {
         currentPage = 1;
         renderTable();
     });
 
-    // Enter search
-    document.getElementById("searchInput").addEventListener("keyup", function (e) {
+    document.getElementById("searchInput").addEventListener("keyup", function(e) {
         if (e.key === "Enter") {
             currentPage = 1;
             renderTable();
         }
     });
 
-    // Per page
-    document.getElementById("perPage").addEventListener("change", function () {
+    document.getElementById("perPage").addEventListener("change", function() {
         perPage = parseInt(this.value);
         currentPage = 1;
         renderTable();
     });
 
-    // Global pagination
-    window.changePage = function (page) {
+    window.changePage = function(page) {
         currentPage = page;
         renderTable();
+    }
+
+    window.togglePayments = function(groupClass) {
+
+        const rows = document.querySelectorAll("." + groupClass);
+
+        rows.forEach(row => {
+            row.style.display =
+                row.style.display === "none" ? "table-row" : "none";
+        });
+    };
+
+    function formatDate(dateStr) {
+        const date = new Date(dateStr);
+        return date.toLocaleDateString("en-IN");
     }
 
     /* ================= INIT ================= */

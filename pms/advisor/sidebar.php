@@ -64,13 +64,13 @@ flex flex-col justify-between flex-shrink-0">
     </a>
 
 
-    <a href="own_sales"
-     class="menu-item <?php if($current=='own_sales') echo 'active'; ?>">
+    <a href="sites_commission"
+     class="menu-item <?php if($current=='sites_commission') echo 'active'; ?>">
       <svg class="w-6 h-6 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
           d="M3 3v18h18M7 13l3-3 4 4 5-5"/>
   </svg>
-      <span class="sidebar-text">Own Sales & Commission</span>
+      <span class="sidebar-text">Sites & Commission</span>
     </a>
 
     
