@@ -33,9 +33,12 @@ flex flex-col justify-between flex-shrink-0">
 
     <a href="add_customer_booking"
      class="menu-item <?php if($current=='add_customer_booking') echo 'active'; ?>">
-      <svg class="w-6 h-6 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path d="M12 4v16m8-8H4"/>
-      </svg>
+       <svg class="w-6 h-6 text-yellow-500" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M16 14c3 0 5 2 5 4v1H3v-1c0-2 2-4 5-4" />
+                <circle cx="9" cy="8" r="3" />
+                <circle cx="17" cy="9" r="2" />
+              </svg>
       <span class="sidebar-text">Add Customer Booking</span>
     </a>
 
@@ -49,9 +52,11 @@ flex flex-col justify-between flex-shrink-0">
 
       <a href="booking_payments"
      class="menu-item <?php if($current=='booking_payments') echo 'active'; ?>">
-     <svg class="w-6 h-6 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path d="M3 7h18M3 12h18M3 17h18"/>
-      </svg>
+        <svg class="w-6 h-6 text-yellow-500" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+              <rect x="3" y="7" width="18" height="10" rx="2" />
+              <circle cx="16" cy="12" r="1.5" />
+              <path d="M3 10h18" />
+            </svg>
       <span class="sidebar-text">Booking Payments</span>
     </a>
 

@@ -21,7 +21,7 @@
                 <div class="space-y-2">
                     <label class="text-sm font-semibold text-gray-700">Booking Name</label>
                     <select name="user_id" id="user_id" required
-                        class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-green-400 outline-none">
+                        class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-yellow-400 outline-none">
                         <option value="">Loading...</option>
                     </select>
                 </div>
@@ -30,7 +30,7 @@
                 <div class="space-y-2">
                     <label class="text-sm font-semibold text-gray-700">Project Name</label>
                     <select name="project_id" id="project_name" required
-                        class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-green-400 outline-none">
+                        class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-yellow-400 outline-none">
                         <option value="">Loading...</option>
                     </select>
                 </div>
@@ -39,7 +39,7 @@
                 <div class="space-y-2">
                     <label class="text-sm font-semibold text-gray-700">Plot/Flat Number</label>
                     <select name="plot_id" id="plot_number" required
-                        class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-green-400 outline-none">
+                        class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-yellow-400 outline-none">
                         <option value="">Loading...</option>
                     </select>
                 </div>
@@ -47,22 +47,22 @@
                  <!-- AMOUNT -->
                 <div class="space-y-2">
                     <label class="text-sm font-semibold text-gray-700">Total Amount</label>
-                    <input type="number" name="total_amount" id="total_amount" required
-                        class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-green-400 outline-none">
+                    <input readonly type="number" name="total_amount" id="total_amount" required
+                        class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-yellow-400 outline-none">
                 </div>
 
                  <!-- AMOUNT -->
                 <div class="space-y-2">
                     <label class="text-sm font-semibold text-gray-700">Paid Amount</label>
-                    <input type="number" name="paid_amount" id="paid_amount" required
-                        class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-green-400 outline-none">
+                    <input readonly type="number" name="paid_amount" id="paid_amount" required
+                        class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-yellow-400 outline-none">
                 </div>
 
                  <!-- AMOUNT -->
                 <div class="space-y-2">
                     <label class="text-sm font-semibold text-gray-700">Balanced Amount</label>
-                    <input type="number" name="balanced_amount" id="balanced_amount" required
-                        class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-green-400 outline-none">
+                    <input readonly type="number" name="balanced_amount" id="balanced_amount" required
+                        class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-yellow-400 outline-none">
                 </div>
 
 
@@ -71,14 +71,14 @@
                 <div class="space-y-2">
                     <label class="text-sm font-semibold text-gray-700">Payment Amount</label>
                     <input type="number" name="amount" id="amount" required
-                        class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-green-400 outline-none">
+                        class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-yellow-400 outline-none">
                 </div>
 
                 <!-- PAYMENT TYPE -->
                 <div class="space-y-2">
                     <label class="text-sm font-semibold text-gray-700">Payment Type</label>
                     <select name="payment_type" id="payment_type"
-                        class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-green-400 outline-none">
+                        class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-yellow-400 outline-none">
 
                         <option>Select Payment Type</option>
                         <option value="full">Full</option>
@@ -91,7 +91,7 @@
                 <div class="space-y-2">
                     <label class="text-sm font-semibold text-gray-700">Payment Mode</label>
                     <select name="payment_mode" id="payment_mode"
-                        class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-green-400 outline-none">
+                        class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-yellow-400 outline-none">
 
                         <option>Select Payment Mode</option>
                         <option value="cash">Cash</option>
@@ -107,7 +107,7 @@
                 <div class="space-y-2 md:col-span-2">
                     <label class="text-sm font-semibold text-gray-700">Remark</label>
                     <textarea name="remark" id="remark" rows="2"
-                        class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-green-400 outline-none"></textarea>
+                        class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-yellow-400 outline-none"></textarea>
                 </div>
 
             </div>
@@ -117,7 +117,7 @@
         <div class="flex justify-center gap-2 mt-2">
 
             <button
-                class="bg-green-500 hover:bg-green-600 px-4 py-4 rounded-xl
+                class="bg-yellow-500 hover:bg-yellow-600 px-4 py-4 rounded-xl
 text-black font-semibold text-lg shadow-md hover:shadow-xl
 transition transform hover:scale-[1.02]">
 
@@ -140,99 +140,203 @@ transition transform hover:scale-[1.02]">
 </div>
 
 <?php include 'footer.php'; ?>
-<script src="../url.js"></script>
-
 <script>
 const token = localStorage.getItem("auth_token");
-let bookingsData = []; // store full data
 
-/* ================= LOAD BOOKINGS ================= */
-document.addEventListener("DOMContentLoaded", loadBookings);
+/* ================= LOAD CUSTOMERS ================= */
+document.addEventListener("DOMContentLoaded", () => {
+    loadCustomers();
 
-async function loadBookings() {
+    // disable dependent dropdowns initially
+    document.getElementById("project_name").disabled = true;
+    document.getElementById("plot_number").disabled = true;
+});
+
+async function loadCustomers() {
 
     const dropdown = document.getElementById("user_id");
 
     try {
-        const res = await fetch(url + "bookings", {
-            headers: {
-                "Authorization": "Bearer " + token
-            }
+        const res = await fetch(url + "customers", {
+            headers: { Authorization: "Bearer " + token }
         });
 
         const data = await res.json();
 
-        bookingsData = data.data.data; // store full data
+        dropdown.innerHTML = '<option value="">Select Customer</option>';
 
-        dropdown.innerHTML = '<option value="">Select Booking</option>';
-
-        bookingsData.forEach(b => {
-
-            let site = b.location ? b.location.site_location : "N/A";
-
+        data.data.forEach(c => {
             dropdown.innerHTML += `
-                <option value="${b.id}">
-                    ${site} - ${b.user_code} - ${b.buyer_name}
+                <option value="${c.user_id}">
+                    ${c.user_code} - ${c.buyer_name}
                 </option>
             `;
         });
 
     } catch (err) {
         console.error(err);
-        dropdown.innerHTML = '<option>Error loading</option>';
+        dropdown.innerHTML = '<option>Error loading customers</option>';
     }
 }
 
 
-/* ================= ON BOOKING SELECT ================= */
-document.getElementById("user_id").addEventListener("change", function () {
+/* ================= CUSTOMER CHANGE ================= */
+document.getElementById("user_id").addEventListener("change", async function () {
 
-    const bookingId = this.value;
+    let userId = this.value;
 
-    if (!bookingId) return;
+    // 🔄 Reset everything
+    document.getElementById("project_name").innerHTML = '<option>Loading...</option>';
+    document.getElementById("plot_number").innerHTML = '<option>Select Plot</option>';
 
-    const selected = bookingsData.find(b => b.id == bookingId);
+    document.getElementById("project_name").disabled = true;
+    document.getElementById("plot_number").disabled = true;
 
-    if (!selected) return;
+    clearAmounts();
 
-    // 🔹 Project
-    document.getElementById("project_name").innerHTML = `
-        <option value="${selected.project_name}">
-            ${selected.project_name}
-        </option>
-    `;
+    if (!userId) return;
 
-    // 🔹 Plot
-    document.getElementById("plot_number").innerHTML = `
-        <option value="${selected.plot_number}">
-            ${selected.plot_number}
-        </option>
-    `;
+    try {
+        const res = await fetch(url + "projects/" + userId, {
+            headers: { Authorization: "Bearer " + token }
+        });
 
-    // 🔹 Amounts
-    let total = parseFloat(selected.total_booking_amount) || 0;
-    let paid = parseFloat(selected.advance_amount) || 0;
-    let balance = total - paid;
+        const data = await res.json();
 
-    document.getElementById("total_amount").value = total;
-    document.getElementById("paid_amount").value = paid;
-    document.getElementById("balanced_amount").value = balance;
+        let projectDropdown = document.getElementById("project_name");
+        projectDropdown.innerHTML = '<option value="">Select Project</option>';
+
+        data.data.forEach(p => {
+            projectDropdown.innerHTML += `
+                <option value="${p.project_name}">
+                    ${p.project_name}
+                </option>
+            `;
+        });
+
+        projectDropdown.disabled = false;
+
+    } catch (err) {
+        console.error(err);
+        alert("Failed to load projects");
+    }
 });
 
 
-/* ================= SUBMIT PAYMENT ================= */
+/* ================= PROJECT CHANGE ================= */
+document.getElementById("project_name").addEventListener("change", async function () {
+
+    let userId = document.getElementById("user_id").value;
+    let project = this.value;
+
+    // 🔄 Reset plot + amounts
+    document.getElementById("plot_number").innerHTML = '<option>Loading...</option>';
+    document.getElementById("plot_number").disabled = true;
+
+    clearAmounts();
+
+    if (!project) return;
+
+    try {
+        const res = await fetch(url + `plots/${userId}/${project}`, {
+            headers: { Authorization: "Bearer " + token }
+        });
+
+        const data = await res.json();
+
+        let plotDropdown = document.getElementById("plot_number");
+        plotDropdown.innerHTML = '<option value="">Select Plot</option>';
+
+        data.data.forEach(b => {
+            plotDropdown.innerHTML += `
+                <option value="${b.id}">
+                    ${b.plot_number}
+                </option>
+            `;
+        });
+
+        plotDropdown.disabled = false;
+
+    } catch (err) {
+        console.error(err);
+        alert("Failed to load plots");
+    }
+});
+
+
+/* ================= PLOT CHANGE ================= */
+document.getElementById("plot_number").addEventListener("change", async function () {
+
+    let bookingId = this.value;
+
+    clearAmounts();
+
+    if (!bookingId) return;
+
+    try {
+        const res = await fetch(url + "booking-summary/" + bookingId, {
+            headers: {
+                Authorization: "Bearer " + token,
+                Accept: "application/json"
+            }
+        });
+
+        const data = await res.json();
+
+        document.getElementById("total_amount").value = data.total_amount ?? 0;
+        document.getElementById("paid_amount").value = data.paid_amount ?? 0;
+        document.getElementById("balanced_amount").value = data.balance ?? 0;
+
+    } catch (err) {
+        console.error(err);
+        alert("Failed to fetch booking summary");
+    }
+});
+
+
+/* ================= CLEAR AMOUNTS ================= */
+function clearAmounts() {
+    document.getElementById("total_amount").value = "";
+    document.getElementById("paid_amount").value = "";
+    document.getElementById("balanced_amount").value = "";
+}
+
+
+/* ================= LIVE BALANCE ================= */
+document.getElementById("amount").addEventListener("input", function () {
+
+    let amount = parseFloat(this.value) || 0;
+    let paid = parseFloat(document.getElementById("paid_amount").value) || 0;
+    let total = parseFloat(document.getElementById("total_amount").value) || 0;
+
+    let newPaid = paid + amount;
+    let newBalance = total - newPaid;
+
+    document.getElementById("balanced_amount").value = newBalance;
+});
+
+
+/* ================= FORM SUBMIT ================= */
 document.getElementById("paymentForm").addEventListener("submit", async function(e) {
 
     e.preventDefault();
 
-    const bookingId = document.getElementById("user_id").value;
-
+    const bookingId = document.getElementById("plot_number").value;
     const amount = parseFloat(document.getElementById("amount").value);
     const balance = parseFloat(document.getElementById("balanced_amount").value);
 
-    // ✅ Validation
-    if (amount > balance) {
-        alert("Payment cannot exceed balance");
+    if (!bookingId) {
+        alert("Select plot first");
+        return;
+    }
+
+    if (amount <= 0) {
+        alert("Enter valid amount");
+        return;
+    }
+
+    if (balance < 0) {
+        alert("Payment exceeds total amount");
         return;
     }
 
@@ -255,16 +359,12 @@ document.getElementById("paymentForm").addEventListener("submit", async function
         const result = await res.json();
 
         if (result.status) {
-            alert("✅ Payment Recorded");
 
-            // Update balance instantly
-            let newBalance = balance - amount;
-            let newPaid = parseFloat(document.getElementById("paid_amount").value) + amount;
+            alert("✅ Payment Recorded Successfully");
 
-            document.getElementById("paid_amount").value = newPaid;
-            document.getElementById("balanced_amount").value = newBalance;
+            // 🔄 reload summary
+            document.getElementById("plot_number").dispatchEvent(new Event("change"));
 
-            // Reset only input fields
             document.getElementById("amount").value = "";
             document.getElementById("remark").value = "";
 
@@ -279,10 +379,14 @@ document.getElementById("paymentForm").addEventListener("submit", async function
 });
 
 
-/* ================= RESET FUNCTION ================= */
+/* ================= RESET ================= */
 function confirmReset() {
     if (confirm("Are you sure to reset?")) {
         document.getElementById("paymentForm").reset();
+        clearAmounts();
+
+        document.getElementById("project_name").disabled = true;
+        document.getElementById("plot_number").disabled = true;
     }
 }
 </script>
