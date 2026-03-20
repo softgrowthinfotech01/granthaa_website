@@ -60,46 +60,58 @@
 </div>
 
 <script>
-document.addEventListener("DOMContentLoaded", function () {
+    document.addEventListener("DOMContentLoaded", function() {
 
-    const token = localStorage.getItem("auth_token");
+        const token = localStorage.getItem("auth_token");
 
-    if (!token) {
-        alert("Please login first");
-        window.location.href = "../login";
-        return;
-    }
+        if (!token) {
+            alert("Please login first");
+            window.location.href = "../login";
+            return;
+        }
 
-    let currentPageUrl = url + "referrals";
+        let currentPageUrl = url + "referrals";
 
-    // =========================
-    // 🔹 LOAD REFERRALS
-    // =========================
-    function loadReferrals(apiUrl = currentPageUrl) {
+        // =========================
+        // 🔹 LOAD REFERRALS
+        // =========================
+        function loadReferrals(apiUrl = currentPageUrl) {
 
-        const search = document.getElementById("searchInput").value;
-        const perPage = document.getElementById("perPage").value;
+            const search = document.getElementById("searchInput").value;
+            const perPage = document.getElementById("perPage").value;
 
-        fetch(`${apiUrl}&search=${search}&per_page=${perPage}`, {
-            headers: {
-                "Authorization": "Bearer " + token,
-                "Accept": "application/json"
-            }
-        })
-        .then(res => res.json())
-        .then(response => {
+            fetch(`${apiUrl}&search=${search}&per_page=${perPage}`, {
+                    headers: {
+                        "Authorization": "Bearer " + token,
+                        "Accept": "application/json"
+                    }
+                })
+                .then(res => res.json())
+                .then(response => {
 
-            console.log(response); // 🔍 debug
+                    console.log(response); // 🔍 debug
 
-            // ✅ CORRECT DATA ACCESS
-            const referrals = response.data?.data ?? [];
+                    // ✅ CORRECT DATA ACCESS
+                    const referrals = response.data?.data ?? [];
 
-            const tbody = document.getElementById("paymentData");
-            tbody.innerHTML = "";
+                    const tbody = document.getElementById("paymentData");
+                    tbody.innerHTML = "";
 
-            referrals.forEach(row => {
+                    if (!referrals || referrals.length === 0) {
+                        tbody.innerHTML = `
+        <tr>
+            <td colspan="7" class="text-center py-6 text-gray-500 font-semibold">
+                No records found
+            </td>
+        </tr>
+    `;
+                        document.getElementById("pagination").innerHTML = "";
+                        return;
+                    }
 
-                tbody.innerHTML += `
+                    referrals.forEach(row => {
+
+                        tbody.innerHTML += `
                     <tr>
                         <td class="p-3">${row.referred_name}</td>
                         <td class="p-3">${row.referred_contact}</td>
@@ -108,74 +120,74 @@ document.addEventListener("DOMContentLoaded", function () {
                         <td class="p-3">${formatDate(row.created_at)}</td>
                     </tr>
                 `;
+                    });
+
+                    // ✅ Pagination
+                    renderPagination(response.data.links);
+
+                })
+                .catch(err => {
+                    console.error(err);
+                    alert("❌ Failed to load referrals");
+                });
+        }
+
+        // =========================
+        // 🔹 PAGINATION
+        // =========================
+        function renderPagination(links) {
+
+            const pagination = document.getElementById("pagination");
+            pagination.innerHTML = "";
+
+            links.forEach(link => {
+
+                let btn = document.createElement("button");
+
+                btn.innerText = link.label.replace(/&laquo;|&raquo;/g, "");
+                btn.disabled = !link.url;
+
+                btn.className = "px-3 py-1 border rounded";
+
+                if (link.active) {
+                    btn.classList.add("bg-blue-500", "text-white");
+                }
+
+                btn.onclick = () => {
+                    loadReferrals(link.url);
+                };
+
+                pagination.appendChild(btn);
             });
+        }
 
-            // ✅ Pagination
-            renderPagination(response.data.links);
+        // =========================
+        // 🔹 DATE FORMAT
+        // =========================
+        function formatDate(dateStr) {
+            const date = new Date(dateStr);
+            return date.toLocaleDateString("en-IN");
+        }
 
-        })
-        .catch(err => {
-            console.error(err);
-            alert("❌ Failed to load referrals");
+        // =========================
+        // 🔹 SEARCH
+        // =========================
+        document.getElementById("searchBtn").addEventListener("click", function() {
+            loadReferrals();
         });
-    }
 
-    // =========================
-    // 🔹 PAGINATION
-    // =========================
-    function renderPagination(links) {
-
-        const pagination = document.getElementById("pagination");
-        pagination.innerHTML = "";
-
-        links.forEach(link => {
-
-            let btn = document.createElement("button");
-
-            btn.innerText = link.label.replace(/&laquo;|&raquo;/g, "");
-            btn.disabled = !link.url;
-
-            btn.className = "px-3 py-1 border rounded";
-
-            if (link.active) {
-                btn.classList.add("bg-blue-500", "text-white");
-            }
-
-            btn.onclick = () => {
-                loadReferrals(link.url);
-            };
-
-            pagination.appendChild(btn);
+        // =========================
+        // 🔹 PER PAGE
+        // =========================
+        document.getElementById("perPage").addEventListener("change", function() {
+            loadReferrals();
         });
-    }
 
-    // =========================
-    // 🔹 DATE FORMAT
-    // =========================
-    function formatDate(dateStr) {
-        const date = new Date(dateStr);
-        return date.toLocaleDateString("en-IN");
-    }
-
-    // =========================
-    // 🔹 SEARCH
-    // =========================
-    document.getElementById("searchBtn").addEventListener("click", function () {
+        // =========================
+        // 🔹 INITIAL LOAD
+        // =========================
         loadReferrals();
+
     });
-
-    // =========================
-    // 🔹 PER PAGE
-    // =========================
-    document.getElementById("perPage").addEventListener("change", function () {
-        loadReferrals();
-    });
-
-    // =========================
-    // 🔹 INITIAL LOAD
-    // =========================
-    loadReferrals();
-
-});
 </script>
 <?php include 'footer.php'; ?>

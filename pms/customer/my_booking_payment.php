@@ -10,7 +10,7 @@
     <div class="mb-4">
         <div class="flex flex-wrap sm:flex-nowrap items-center gap-3 w-fit">
             <input type="text" id="searchInput"
-                placeholder="Search buyer / project / plot / remark"
+                placeholder="Search by project name / plot no. "
                 class="border p-3 rounded-md w-[60%] sm:w-80 text-sm">
 
             <button id="searchBtn"
@@ -184,7 +184,6 @@
             filteredBookings = allBookings.filter(booking => {
                 const project = String(booking.project_name ?? "").toLowerCase();
                 const plot = String(booking.plot_number ?? "").toLowerCase();
-                const buyer = String(booking.buyer_name ?? "").toLowerCase();
 
                 let paymentRemark = "";
                 if (Array.isArray(booking.payments) && booking.payments.length > 0) {
