@@ -40,7 +40,6 @@ class BookingPaymentController extends Controller
                 'message' => 'Payment added successfully',
                 'data' => $payment
             ]);
-
         } catch (\Exception $e) {
 
             return response()->json([
@@ -63,7 +62,6 @@ class BookingPaymentController extends Controller
                 'status' => true,
                 'data' => $payments
             ]);
-
         } catch (\Exception $e) {
 
             return response()->json([
@@ -76,7 +74,8 @@ class BookingPaymentController extends Controller
     // ✅ Get all payments (for admin)
     public function index()
     {
-        $payments = BookingPayment::latest()->get();
+        $payments = Booking::with(['leader', 'location'])
+            ->withSum('payments as paid_amount', 'amount');
 
         return response()->json([
             'status' => true,
@@ -85,110 +84,152 @@ class BookingPaymentController extends Controller
     }
 
     public function myPayments()
-{
-    $user = auth()->user();
+    {
+        $user = auth()->user();
 
-    try {
+        try {
 
-        // ===============================
-        // 👑 LEADER
-        // ===============================
-        if ($user->role == 'leader') {
+            // ===============================
+            // 👑 LEADER
+            // ===============================
+            if ($user->role == 'leader') {
 
-            $teamIds = \App\Models\User::where('created_by', $user->id)
-                ->pluck('id')
-                ->push($user->id);
+                $teamIds = \App\Models\User::where('created_by', $user->id)
+                    ->pluck('id')
+                    ->push($user->id);
 
-            $payments = \App\Models\BookingPayment::whereIn('received_by', $teamIds)
-                ->with('booking')
-                ->latest()
-                ->get();
+                $bookings = Booking::whereIn('created_by', $teamIds)->get();
 
-            return response()->json([
-                'status' => true,
-                'role' => 'leader',
-                'total_received' => $payments->sum('amount'),
-                'data' => $payments
-            ]);
-        }
+                $result = [];
 
-        // ===============================
-        // 🧑‍💼 ADVISER
-        // ===============================
-        if ($user->role == 'adviser') {
+                foreach ($bookings as $booking) {
 
-            $payments = \App\Models\BookingPayment::where('received_by', $user->id)
-                ->with('booking')
-                ->latest()
-                ->get();
+                    // ✅ ONLY TEAM PAYMENTS
+                    $payments = BookingPayment::where('booking_id', $booking->id)
+                        ->whereIn('received_by', $teamIds)
+                        ->get();
 
-            return response()->json([
-                'status' => true,
-                'role' => 'adviser',
-                'total_received' => $payments->sum('amount'),
-                'data' => $payments
-            ]);
-        }
+                    $totalPaid = $payments->sum('amount');
 
-        // ===============================
-        // 👤 CUSTOMER
-        // ===============================
-        if ($user->role == 'customer') {
+                    $result[] = [
+                        'booking_id' => $booking->id,
+                        'buyer_name' => $booking->buyer_name,
+                        'project_name' => $booking->project_name,
+                        'plot_number' => $booking->plot_number,
+                        'total_amount' => $booking->total_booking_amount,
+                        'paid_amount' => $totalPaid,
+                        'balance_amount' => $booking->total_booking_amount - $totalPaid,
+                        'payments' => $payments
+                    ];
+                }
 
-            $bookings = \App\Models\Booking::where('user_code', $user->user_code)->get();
+                return response()->json([
+                    'status' => true,
+                    'role' => 'leader',
+                    'data' => $result
+                ]);
+            }
 
-            $result = [];
+            // ===============================
+            // 🧑‍💼 ADVISER
+            // ===============================
+            if ($user->role == 'adviser') {
 
-            foreach ($bookings as $booking) {
+                $bookings = Booking::where('created_by', $user->id)->get();
 
-                $payments = \App\Models\BookingPayment::where('booking_id', $booking->id)->get();
+                $result = [];
 
-                $totalPaid = $payments->sum('amount');
+                foreach ($bookings as $booking) {
 
-                $result[] = [
-                    'booking_id' => $booking->id,
-                    'plot_number' => $booking->plot_number,
-                    'total_amount' => $booking->total_booking_amount,
-                    'paid_amount' => $totalPaid,
-                    'balance_amount' => $booking->total_booking_amount - $totalPaid,
-                    'payments' => $payments
-                ];
+                    // ✅ ONLY HIS PAYMENTS
+                    $payments = BookingPayment::where('booking_id', $booking->id)
+                        ->where('received_by', $user->id)
+                        ->get();
+
+                    $totalPaid = $payments->sum('amount');
+
+                    $result[] = [
+                        'booking_id' => $booking->id,
+                        'buyer_name' => $booking->buyer_name,
+                        'project_name' => $booking->project_name,
+                        'plot_number' => $booking->plot_number,
+                        'total_amount' => $booking->total_booking_amount,
+                        'paid_amount' => $totalPaid,
+                        'balance_amount' => $booking->total_booking_amount - $totalPaid,
+                        'payments' => $payments
+                    ];
+                }
+
+                return response()->json([
+                    'status' => true,
+                    'role' => 'adviser',
+                    'data' => $result
+                ]);
+            }
+
+            // ===============================
+            // 👤 CUSTOMER
+            // ===============================
+            if ($user->role == 'customer') {
+
+                $bookings = Booking::where('user_code', $user->user_code)->get();
+
+                $result = [];
+
+                foreach ($bookings as $booking) {
+
+                    // ✅ ONLY HIS PAYMENTS
+                    $payments = BookingPayment::where('booking_id', $booking->id)
+                        ->where('user_id', $user->id)
+                        ->get();
+
+                    $totalPaid = $payments->sum('amount');
+
+                    $result[] = [
+                        'booking_id' => $booking->id,
+                        'buyer_name' => $booking->buyer_name,
+                        'project_name' => $booking->project_name,
+                        'plot_number' => $booking->plot_number,
+                        'total_amount' => $booking->total_booking_amount,
+                        'paid_amount' => $totalPaid,
+                        'balance_amount' => $booking->total_booking_amount - $totalPaid,
+                        'payments' => $payments
+                    ];
+                }
+
+                return response()->json([
+                    'status' => true,
+                    'role' => 'customer',
+                    'data' => $result
+                ]);
             }
 
             return response()->json([
-                'status' => true,
-                'role' => 'customer',
-                'data' => $result
+                'status' => false,
+                'message' => 'Invalid role'
+            ]);
+        } catch (\Exception $e) {
+
+            return response()->json([
+                'status' => false,
+                'error' => $e->getMessage()
             ]);
         }
-
-        return response()->json([
-            'status' => false,
-            'message' => 'Invalid role'
-        ]);
-
-    } catch (\Exception $e) {
-
-        return response()->json([
-            'status' => false,
-            'error' => $e->getMessage()
-        ]);
     }
-}
 
 
 
     // booking payment fetch the balance and total and paid amount
     public function getBookingSummary($id)
-{
-    $booking = Booking::findOrFail($id);
+    {
+        $booking = Booking::findOrFail($id);
 
-    $totalPaid = BookingPayment::where('booking_id', $id)->sum('amount');
+        $totalPaid = BookingPayment::where('booking_id', $id)->sum('amount');
 
-    return response()->json([
-        'total_amount' => $booking->total_booking_amount,
-        'paid_amount' => $totalPaid,
-        'balance' => $booking->total_booking_amount - $totalPaid
-    ]);
-}
+        return response()->json([
+            'total_amount' => $booking->total_booking_amount,
+            'paid_amount' => $totalPaid,
+            'balance' => $booking->total_booking_amount - $totalPaid
+        ]);
+    }
 }

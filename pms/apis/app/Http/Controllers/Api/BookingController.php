@@ -639,7 +639,6 @@ public function dashboard()
     $response['data']['top_advisor_name'] = $advisor?->name;
     $response['data']['user_code'] = $advisor?->user_code;
 
-
 } else {
     $response['data']['top_advisor_name'] = null;
 }

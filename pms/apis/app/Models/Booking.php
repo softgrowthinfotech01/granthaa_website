@@ -80,4 +80,9 @@ class Booking extends Model
     {
         return $this->belongsTo(LocationMaster::class, 'site_location');
     }
+
+    public function payments()
+{
+    return $this->hasMany(BookingPayment::class, 'booking_id');
+}
 }
