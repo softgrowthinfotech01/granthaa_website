@@ -69,6 +69,14 @@
                         </div>
 
                     </form>
+
+                    <div class="mt-6 bg-white p-4 rounded-lg shadow">
+    <h5 class="text-lg font-semibold mb-3">Site Locations List</h5>
+
+    <ul id="siteList" class="space-y-2">
+        <!-- Locations will be added here dynamically -->
+    </ul>
+</div>
                 </div>
                 <!--/Main-->
             </div>
@@ -79,9 +87,6 @@
         </div>
 
     </div>
-
-    <script src="../url.js"></script>
-
     <script>
         document.getElementById('loginForm').addEventListener('submit', async function(e) {
             e.preventDefault();
@@ -129,7 +134,7 @@
 
                 alert('Site location saved successfully');
                 document.getElementById('loginForm').reset();
-
+                loadSites();
             } catch (error) {
                 console.error(error);
                 alert('Server error');
@@ -142,6 +147,47 @@
                 document.getElementById('loginForm').reset();
             }
         }
+    </script>
+
+    <script>
+        async function loadSites() {
+    const token = localStorage.getItem('auth_token');
+
+    try {
+        const response = await fetch(url + 'site-location', {
+            method: 'GET',
+            headers: {
+                'Authorization': 'Bearer ' + token
+            }
+        });
+
+        const data = await response.json();
+
+        const list = document.getElementById('siteList');
+        list.innerHTML = '';
+
+        if (!data.data.data || data.data.data.length === 0) {
+            list.innerHTML = '<li class="text-gray-500">No locations found</li>';
+            return;
+        }
+            var sr = 0;
+        data.data.data.forEach(site => {
+            const li = document.createElement('li');
+            li.className = "p-3 bg-gray-100 rounded flex justify-between";
+            li.innerHTML = `
+                <span>${++sr}. ${site.site_location}</span>
+            `;
+
+            list.appendChild(li);
+        });
+
+    } catch (error) {
+        console.error(error);
+    }
+}
+window.onload = function () {
+    loadSites();
+};
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.js"></script>
