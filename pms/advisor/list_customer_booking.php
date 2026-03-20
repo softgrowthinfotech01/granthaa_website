@@ -8,12 +8,10 @@
     <div class="w-full overflow-x-auto">
         <div class="flex justify-between flex-wrap mb-4 mr-4">
             <div class="">
-                <input type="text" id="searchInput"
-                    placeholder="Search buyer / project / mobile"
+                <input type="text" id="searchInput" placeholder="Search buyer / project / mobile"
                     class="border p-2 rounded w-64">
 
-                <button id="searchBtn"
-                    class="bg-blue-500 text-white px-4 py-2 rounded">
+                <button id="searchBtn" class="bg-blue-500 text-white px-4 py-2 rounded">
                     Search
                 </button>
             </div>
@@ -78,128 +76,131 @@
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 
 
-<script src="../url.js"></script>
-
 <script>
-    function viewBooking(id) {
-        window.location.href = "update_customer_booking.php?id=" + id;
+document.addEventListener("DOMContentLoaded", function() {
+
+    let allBookings = [];
+    let filteredBookings = [];
+    let currentPage = 1;
+    let perPage = 10;
+
+    const token = localStorage.getItem('auth_token');
+    if (!token) {
+        alert("Please login first");
+        window.location.href = "../login";
+        return;
     }
-</script>
 
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
+    let locationsMap = {};
 
-        const token = localStorage.getItem('auth_token');
-        if (!token) {
-            alert("Please login first");
-            window.location.href = "../login";
-            return;
-        }
+    function loadLocations() {
+        return fetch(url + "site-location", {
+            headers: {
+                "Authorization": "Bearer " + token
+            }
+        })
+        .then(res => res.json())
+        .then(response => {
+            const locations = response.data ?? [];
+            locations.forEach(loc => {
+                locationsMap[loc.id] = loc.site_location;
+            });
+        });
+    }
 
-        let currentPage = 1;
+    async function loadBookings() {
 
-        let locationsMap = {};
+        await loadLocations();
 
-        function loadLocations() {
-            return fetch(url + "site-location", {
-                    headers: {
-                        "Authorization": "Bearer " + token,
-                        "Accept": "application/json"
-                    }
-                })
-                .then(res => res.json())
-                .then(response => {
+        fetch(`${url}bookings?per_page=1000`, {
+            headers: {
+                "Authorization": "Bearer " + token
+            }
+        })
+        .then(res => res.json())
+        .then(response => {
 
-                    const locations = response.data ?? [];
+            allBookings = response.data?.data ?? response.data ?? [];
+            applyFilters();
 
-                    locations.forEach(loc => {
-                        locationsMap[loc.id] = loc.site_location;
-                    });
-                });
-        }
+        });
+    }
 
-        async function loadBookings() {
+    /* ================= FILTER ================= */
+    function applyFilters() {
 
-            await loadLocations();
+        let search = document.getElementById("searchInput").value.toLowerCase();
+        perPage = parseInt(document.getElementById("perPage").value);
 
-            fetch(`${url}bookings?per_page=1000`, {
-                    method: "GET",
-                    headers: {
-                        "Authorization": "Bearer " + token,
-                        "Accept": "application/json"
-                    }
-                })
-                .then(res => res.json())
-                .then(response => {
+        filteredBookings = allBookings.filter(row => {
 
-                    const bookings = response.data?.data ?? response.data ?? [];
-                    const tbody = document.getElementById("customerData");
-                    tbody.innerHTML = "";
+            return (
+                (row.buyer_name || '').toLowerCase().includes(search) ||
+                (row.project_name || '').toLowerCase().includes(search) ||
+                (row.mobile || '').toLowerCase().includes(search)
+            );
+        });
 
-                    if (!bookings || bookings.length === 0) {
-                        tbody.innerHTML = `
-        <tr>
-            <td colspan="10" class="text-center py-6 text-gray-500 font-medium">
-                No records found
-            </td>
-        </tr>
-    `;
-                        return;
-                    }
+        currentPage = 1;
+        renderTable();
+    }
 
-                    bookings.forEach((row) => {
+    /* ================= RENDER ================= */
+    function renderTable() {
 
-                        let commission_Amount = 0;
+        const tbody = document.getElementById("customerData");
+        tbody.innerHTML = "";
 
-                        // If percent → calculate from total_booking_amount
-                        if (row.commission_type === "percent") {
-                            commission_Amount = (row.total_booking_amount * row.commission_value) / 100;
-                        }
+        let start = (currentPage - 1) * perPage;
+        let paginated = filteredBookings.slice(start, start + perPage);
 
-                        // If fixed → directly use commission_value
-                        else if (row.commission_type === "amount") {
-                            commission_Amount = row.commission_value;
-                        }
+        paginated.forEach((row) => {
 
-                        tbody.innerHTML += `
-        <tr class="border-b bg-white">
-            <td class="p-2 text-center">
-                <button onclick="toggleRow(${row.id})"
-                    class="w-4 h-4 flex items-center justify-center border-1 rounded-full bg-green-500 text-white text-sm">
-                    +
-                </button>
-            </td>
+            let commission_Amount = 0;
 
-            <td class="p-1">${row.buyer_name ?? ''}</td>
-            <td class="p-1">${row.project_name ?? ''}</td>
-            <td class="p-1">${locationsMap[row.site_location] ?? locationsMap[row.location_id] ?? ''}</td>
-            <td class="p-1">${row.total_booking_amount ?? ''}</td>
-            <td class="p-1">${row.commission_type ?? ''}</td> 
-            <td class="p-1">${row.commission_value ?? ''}  </td>
-            <td class="p-1">${commission_Amount}</td>
-            <td class="p-1">${row.email ?? ''}</td>
+            if (row.commission_type === "percent") {
+                commission_Amount = (row.total_booking_amount * row.commission_value) / 100;
+            } else {
+                commission_Amount = row.commission_value;
+            }
 
-           
-            <td class="p-1">
-            <div class="flex gap-2">
-            <button class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-1 rounded"
-                        onclick="viewBooking(${row.id})">
-                        Update
+            tbody.innerHTML += `
+            <tr class="border-b bg-white">
+                <td class="p-2 text-center">
+                    <button onclick="toggleRow(${row.id})"
+                        class="w-4 h-4 flex items-center justify-center border rounded-full bg-green-500 text-white text-sm">
+                        +
                     </button>
+                </td>
 
-                    <button class="bg-red-500 hover:bg-red-600 text-white px-4 py-1 rounded"
-                        onclick="deleteBooking(${row.id})">
-                        Delete
-                    </button>
+                <td class="p-1">${row.buyer_name ?? ''}</td>
+                <td class="p-1">${row.project_name ?? ''}</td>
+                <td class="p-1">${locationsMap[row.site_location] ?? ''}</td>
+                <td class="p-1">${row.total_booking_amount ?? ''}</td>
+                <td class="p-1">${row.commission_type ?? ''}</td> 
+                <td class="p-1">${row.commission_value ?? ''}</td>
+                <td class="p-1">${commission_Amount}</td>
+                <td class="p-1">${row.email ?? ''}</td>
+
+                <td class="p-1">
+                    <div class="flex gap-2">
+                        <button class="bg-blue-500 text-white px-4 py-1 rounded"
+                            onclick="viewBooking(${row.id})">
+                            Update
+                        </button>
+
+                        <button class="bg-red-500 text-white px-4 py-1 rounded"
+                            onclick="deleteBooking(${row.id})">
+                            Delete
+                        </button>
                     </div>
-                    </td>
-        </tr>
+                </td>
+            </tr>
 
-        <tr id="expand-${row.id}" class="hidden bg-gray-50">
-            <td colspan="15" class="p-4">
-
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
-                     <div><strong>Advance Booking AMT:</strong> ${row.advance_amount ?? ''}</div>
+            <tr id="expand-${row.id}" class="hidden bg-gray-50">
+                <td colspan="15" class="p-4">
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+                        <div><strong>Advance Booking AMT:</strong> ${row.advance_amount ?? ''}</div>
                     <div><strong>Aadhar Number:</strong> ${row.aadhar_number ?? ''} </div>
                     <div><strong>State:</strong>${row.state ?? ''} </div>
                     <div><strong>City:</strong>${row.city ?? ''} </div>
@@ -217,87 +218,70 @@
                     <div><strong>Pincode:</strong> ${row.pincode ?? ''}</div>
                     <div><strong>Mobile Number:</strong> ${row.mobile ?? ''}</div>
                     <div><strong>DOB:</strong> ${row.dob ?? ''}</div>
-
-                </div>
-
-               
-
-            </td>
-        </tr>
-    `;
-                    });
-                });
-        }
-        window.toggleRow = function(id) {
-
-            const row = document.getElementById("expand-" + id);
-            const button = event.target;
-
-            if (row.classList.contains("hidden")) {
-                row.classList.remove("hidden");
-                button.innerHTML = "−";
-                button.classList.remove("bg-green-500");
-                button.classList.add("bg-red-500");
-            } else {
-                row.classList.add("hidden");
-                button.innerHTML = "+";
-                button.classList.remove("bg-red-500");
-                button.classList.add("bg-green-500");
-            }
-        }
-
-        window.changePage = function(page) {
-            loadBookings(page);
-        }
-
-        document.getElementById("searchBtn").addEventListener("click", function() {
-            loadBookings(1);
+                    </div>
+                </td>
+            </tr>
+            `;
         });
 
-        document.getElementById("perPage").addEventListener("change", function() {
-            loadBookings(1);
-        });
-
-        loadBookings();
-    });
-</script>
-
-<script src="../url.js"></script>
-
-<script>
-    function deleteBooking(id) {
-
-        const token = localStorage.getItem('auth_token');
-
-        if (!token) {
-            alert("Please login first");
-            window.location.href = "../login";
-            return;
-        }
-
-        if (!confirm("Are you sure you want to delete this booking?")) {
-            return;
-        }
-
-        fetch(url + "bookings/" + id, {
-                method: "POST", // safer for Laravel
-                headers: {
-                    "Authorization": "Bearer " + token,
-                    "Accept": "application/json"
-                },
-                body: new URLSearchParams({
-                    _method: "DELETE"
-                })
-            })
-            .then(res => res.json())
-            .then(data => {
-                alert("Booking Deleted Successfully");
-                location.reload();
-            })
-            .catch(error => {
-                console.error(error);
-                alert("Delete failed");
-            });
-
+        renderPagination();
     }
+
+    /* ================= PAGINATION ================= */
+    function renderPagination() {
+
+        let totalPages = Math.ceil(filteredBookings.length / perPage);
+
+        document.getElementById("pagination").innerHTML = `
+            <button ${currentPage == 1 ? 'disabled' : ''}
+                onclick="changePage(${currentPage - 1})"
+                class="bg-gray-300 px-4 py-2 rounded">
+                Prev
+            </button>
+
+            <span class="px-2">Page ${currentPage} of ${totalPages}</span>
+
+            <button ${currentPage == totalPages ? 'disabled' : ''}
+                onclick="changePage(${currentPage + 1})"
+                class="bg-gray-300 px-4 py-2 rounded">
+                Next
+            </button>
+        `;
+    }
+
+    /* ================= EVENTS ================= */
+
+    document.getElementById("searchBtn").addEventListener("click", applyFilters);
+
+    document.getElementById("searchInput").addEventListener("keyup", function(e) {
+        if (e.key === "Enter") applyFilters();
+    });
+
+    document.getElementById("perPage").addEventListener("change", applyFilters);
+
+    window.changePage = function(page) {
+        currentPage = page;
+        renderTable();
+    }
+
+    window.toggleRow = function(id) {
+
+        const row = document.getElementById("expand-" + id);
+        const button = event.target;
+
+        if (row.classList.contains("hidden")) {
+            row.classList.remove("hidden");
+            button.innerHTML = "−";
+            button.classList.replace("bg-green-500", "bg-red-500");
+        } else {
+            row.classList.add("hidden");
+            button.innerHTML = "+";
+            button.classList.replace("bg-red-500", "bg-green-500");
+        }
+    }
+
+    /* ================= INIT ================= */
+    loadBookings();
+
+});
 </script>
