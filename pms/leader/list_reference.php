@@ -2,7 +2,7 @@
 
 <div class="max-w-7xl mx-auto bg-white p-4 rounded-2xl shadow-xl">
 
-    <h2 class="text-2xl font-bold mb-4 text-center">Payment Records</h2>
+    <h2 class="text-2xl font-bold mb-4 text-center">Referral Records</h2>
 
     <div class="w-full overflow-x-auto">
 
@@ -30,21 +30,15 @@
         </div>
 
         <table class="w-full">
-
             <thead class="bg-gradient-to-r from-gray-100 to-gray-200 text-gray-700">
-
                 <tr>
-
-                    <th class="p-3 text-left">Customer</th>
-                    <th class="p-3 text-left">Amount</th>
-                    <th class="p-3 text-left">Payment Type</th>
-                    <th class="p-3 text-left">Payment Mode</th>
-                    <th class="p-3 text-left">Reference No</th>
-                    <th class="p-3 text-left">Remark</th>
+                    <th class="p-3 text-left">Sr No</th>
+                    <th class="p-3 text-left">Referred Name</th>
+                    <th class="p-3 text-left">Contact</th>
+                    <th class="p-3 text-left">Email</th>
+                    <th class="p-3 text-left">Status</th>
                     <th class="p-3 text-left">Date</th>
-
                 </tr>
-
             </thead>
 
             <tbody id="paymentData" class="divide-y divide-gray-200">
@@ -80,7 +74,11 @@
             const search = document.getElementById("searchInput").value;
             const perPage = document.getElementById("perPage").value;
 
-            fetch(`${apiUrl}&search=${search}&per_page=${perPage}`, {
+            let separator = apiUrl.includes("?") ? "&" : "?";
+
+            let finalUrl = `${apiUrl}${separator}search=${search}&per_page=${perPage}`;
+
+            fetch(finalUrl, {
                     headers: {
                         "Authorization": "Bearer " + token,
                         "Accept": "application/json"
@@ -89,46 +87,37 @@
                 .then(res => res.json())
                 .then(response => {
 
-                    console.log(response); // 🔍 debug
-
-                    // ✅ CORRECT DATA ACCESS
                     const referrals = response.data?.data ?? [];
+
+                    const currentPage = response.data.current_page;
+                    const perPage = response.data.per_page;
 
                     const tbody = document.getElementById("paymentData");
                     tbody.innerHTML = "";
 
-                    if (!referrals || referrals.length === 0) {
-                        tbody.innerHTML = `
-        <tr>
-            <td colspan="7" class="text-center py-6 text-gray-500 font-semibold">
-                No records found
-            </td>
-        </tr>
-    `;
-                        document.getElementById("pagination").innerHTML = "";
-                        return;
-                    }
+                    referrals.forEach((row, i) => {
 
-                    referrals.forEach(row => {
+                        let srNo = (currentPage - 1) * perPage + (i + 1);
 
                         tbody.innerHTML += `
-                    <tr>
-                        <td class="p-3">${row.referred_name}</td>
-                        <td class="p-3">${row.referred_contact}</td>
-                        <td class="p-3">${row.referred_email}</td>
-                        <td class="p-3">${row.status}</td>
-                        <td class="p-3">${formatDate(row.created_at)}</td>
-                    </tr>
-                `;
+        <tr>
+            <td class="p-3">${srNo}</td>
+            <td class="p-3">${row.referred_name}</td>
+            <td class="p-3">${row.referred_contact}</td>
+            <td class="p-3">${row.referred_email}</td>
+            <td class="p-3">
+                <span class="px-2 py-1 rounded text-white ${
+                    row.status === 'converted' ? 'bg-green-500' : 'bg-yellow-500'
+                }">
+                    ${row.status}
+                </span>
+            </td>
+            <td class="p-3">${formatDate(row.created_at)}</td>
+        </tr>
+    `;
                     });
 
-                    // ✅ Pagination
                     renderPagination(response.data.links);
-
-                })
-                .catch(err => {
-                    console.error(err);
-                    alert("❌ Failed to load referrals");
                 });
         }
 
