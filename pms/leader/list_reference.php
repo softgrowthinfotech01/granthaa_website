@@ -2,7 +2,7 @@
 
 <div class="max-w-7xl mx-auto bg-white p-4 rounded-2xl shadow-xl">
 
-    <h2 class="text-2xl font-bold mb-4 text-center">Payment Records</h2>
+    <h2 class="text-2xl font-bold mb-4 text-center">Referral Records</h2>
 
     <div class="w-full overflow-x-auto">
 
@@ -30,21 +30,15 @@
         </div>
 
         <table class="w-full">
-
             <thead class="bg-gradient-to-r from-gray-100 to-gray-200 text-gray-700">
-
                 <tr>
-
-                    <th class="p-3 text-left">Customer</th>
-                    <th class="p-3 text-left">Amount</th>
-                    <th class="p-3 text-left">Payment Type</th>
-                    <th class="p-3 text-left">Payment Mode</th>
-                    <th class="p-3 text-left">Reference No</th>
-                    <th class="p-3 text-left">Remark</th>
+                    <th class="p-3 text-left">Sr No</th>
+                    <th class="p-3 text-left">Referred Name</th>
+                    <th class="p-3 text-left">Contact</th>
+                    <th class="p-3 text-left">Email</th>
+                    <th class="p-3 text-left">Status</th>
                     <th class="p-3 text-left">Date</th>
-
                 </tr>
-
             </thead>
 
             <tbody id="paymentData" class="divide-y divide-gray-200">
@@ -60,122 +54,129 @@
 </div>
 
 <script>
-document.addEventListener("DOMContentLoaded", function () {
+    document.addEventListener("DOMContentLoaded", function() {
 
-    const token = localStorage.getItem("auth_token");
+        const token = localStorage.getItem("auth_token");
 
-    if (!token) {
-        alert("Please login first");
-        window.location.href = "../login";
-        return;
-    }
+        if (!token) {
+            alert("Please login first");
+            window.location.href = "../login";
+            return;
+        }
 
-    let currentPageUrl = url + "referrals";
+        let currentPageUrl = url + "referrals";
 
-    // =========================
-    // 🔹 LOAD REFERRALS
-    // =========================
-    function loadReferrals(apiUrl = currentPageUrl) {
+        // =========================
+        // 🔹 LOAD REFERRALS
+        // =========================
+        function loadReferrals(apiUrl = currentPageUrl) {
 
-        const search = document.getElementById("searchInput").value;
-        const perPage = document.getElementById("perPage").value;
+            const search = document.getElementById("searchInput").value;
+            const perPage = document.getElementById("perPage").value;
 
-        fetch(`${apiUrl}&search=${search}&per_page=${perPage}`, {
-            headers: {
-                "Authorization": "Bearer " + token,
-                "Accept": "application/json"
-            }
-        })
-        .then(res => res.json())
-        .then(response => {
+            let separator = apiUrl.includes("?") ? "&" : "?";
 
-            console.log(response); // 🔍 debug
+            let finalUrl = `${apiUrl}${separator}search=${search}&per_page=${perPage}`;
 
-            // ✅ CORRECT DATA ACCESS
-            const referrals = response.data?.data ?? [];
+            fetch(finalUrl, {
+                    headers: {
+                        "Authorization": "Bearer " + token,
+                        "Accept": "application/json"
+                    }
+                })
+                .then(res => res.json())
+                .then(response => {
 
-            const tbody = document.getElementById("paymentData");
-            tbody.innerHTML = "";
+                    const referrals = response.data?.data ?? [];
 
-            referrals.forEach(row => {
+                    const currentPage = response.data.current_page;
+                    const perPage = response.data.per_page;
 
-                tbody.innerHTML += `
-                    <tr>
-                        <td class="p-3">${row.referred_name}</td>
-                        <td class="p-3">${row.referred_contact}</td>
-                        <td class="p-3">${row.referred_email}</td>
-                        <td class="p-3">${row.status}</td>
-                        <td class="p-3">${formatDate(row.created_at)}</td>
-                    </tr>
-                `;
+                    const tbody = document.getElementById("paymentData");
+                    tbody.innerHTML = "";
+
+                    referrals.forEach((row, i) => {
+
+                        let srNo = (currentPage - 1) * perPage + (i + 1);
+
+                        tbody.innerHTML += `
+        <tr>
+            <td class="p-3">${srNo}</td>
+            <td class="p-3">${row.referred_name}</td>
+            <td class="p-3">${row.referred_contact}</td>
+            <td class="p-3">${row.referred_email}</td>
+            <td class="p-3">
+                <span class="px-2 py-1 rounded text-white ${
+                    row.status === 'converted' ? 'bg-green-500' : 'bg-yellow-500'
+                }">
+                    ${row.status}
+                </span>
+            </td>
+            <td class="p-3">${formatDate(row.created_at)}</td>
+        </tr>
+    `;
+                    });
+
+                    renderPagination(response.data.links);
+                });
+        }
+
+        // =========================
+        // 🔹 PAGINATION
+        // =========================
+        function renderPagination(links) {
+
+            const pagination = document.getElementById("pagination");
+            pagination.innerHTML = "";
+
+            links.forEach(link => {
+
+                let btn = document.createElement("button");
+
+                btn.innerText = link.label.replace(/&laquo;|&raquo;/g, "");
+                btn.disabled = !link.url;
+
+                btn.className = "px-3 py-1 border rounded";
+
+                if (link.active) {
+                    btn.classList.add("bg-blue-500", "text-white");
+                }
+
+                btn.onclick = () => {
+                    loadReferrals(link.url);
+                };
+
+                pagination.appendChild(btn);
             });
+        }
 
-            // ✅ Pagination
-            renderPagination(response.data.links);
+        // =========================
+        // 🔹 DATE FORMAT
+        // =========================
+        function formatDate(dateStr) {
+            const date = new Date(dateStr);
+            return date.toLocaleDateString("en-IN");
+        }
 
-        })
-        .catch(err => {
-            console.error(err);
-            alert("❌ Failed to load referrals");
+        // =========================
+        // 🔹 SEARCH
+        // =========================
+        document.getElementById("searchBtn").addEventListener("click", function() {
+            loadReferrals();
         });
-    }
 
-    // =========================
-    // 🔹 PAGINATION
-    // =========================
-    function renderPagination(links) {
-
-        const pagination = document.getElementById("pagination");
-        pagination.innerHTML = "";
-
-        links.forEach(link => {
-
-            let btn = document.createElement("button");
-
-            btn.innerText = link.label.replace(/&laquo;|&raquo;/g, "");
-            btn.disabled = !link.url;
-
-            btn.className = "px-3 py-1 border rounded";
-
-            if (link.active) {
-                btn.classList.add("bg-blue-500", "text-white");
-            }
-
-            btn.onclick = () => {
-                loadReferrals(link.url);
-            };
-
-            pagination.appendChild(btn);
+        // =========================
+        // 🔹 PER PAGE
+        // =========================
+        document.getElementById("perPage").addEventListener("change", function() {
+            loadReferrals();
         });
-    }
 
-    // =========================
-    // 🔹 DATE FORMAT
-    // =========================
-    function formatDate(dateStr) {
-        const date = new Date(dateStr);
-        return date.toLocaleDateString("en-IN");
-    }
-
-    // =========================
-    // 🔹 SEARCH
-    // =========================
-    document.getElementById("searchBtn").addEventListener("click", function () {
+        // =========================
+        // 🔹 INITIAL LOAD
+        // =========================
         loadReferrals();
+
     });
-
-    // =========================
-    // 🔹 PER PAGE
-    // =========================
-    document.getElementById("perPage").addEventListener("change", function () {
-        loadReferrals();
-    });
-
-    // =========================
-    // 🔹 INITIAL LOAD
-    // =========================
-    loadReferrals();
-
-});
 </script>
 <?php include 'footer.php'; ?>
