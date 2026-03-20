@@ -637,6 +637,8 @@ public function dashboard()
     $advisor = User::find($response['data']['top_advisor']->adviser_id);
 
     $response['data']['top_advisor_name'] = $advisor?->name;
+    $response['data']['user_code'] = $advisor?->user_code;
+
 
 } else {
     $response['data']['top_advisor_name'] = null;
