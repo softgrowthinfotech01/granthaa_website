@@ -47,21 +47,21 @@
                  <!-- AMOUNT -->
                 <div class="space-y-2">
                     <label class="text-sm font-semibold text-gray-700">Total Amount</label>
-                    <input type="number" name="total_amount" id="total_amount" required
+                    <input readonly type="number" name="total_amount" id="total_amount" required
                         class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-yellow-400 outline-none">
                 </div>
 
                  <!-- AMOUNT -->
                 <div class="space-y-2">
                     <label class="text-sm font-semibold text-gray-700">Paid Amount</label>
-                    <input type="number" name="paid_amount" id="paid_amount" required
+                    <input readonly type="number" name="paid_amount" id="paid_amount" required
                         class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-yellow-400 outline-none">
                 </div>
 
                  <!-- AMOUNT -->
                 <div class="space-y-2">
                     <label class="text-sm font-semibold text-gray-700">Balanced Amount</label>
-                    <input type="number" name="balanced_amount" id="balanced_amount" required
+                    <input readonly type="number" name="balanced_amount" id="balanced_amount" required
                         class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-yellow-400 outline-none">
                 </div>
 
@@ -140,11 +140,9 @@ transition transform hover:scale-[1.02]">
 </div>
 
 <?php include 'footer.php'; ?>
-<script src="../url.js"></script>
-
 <script>
 const token = localStorage.getItem("auth_token");
-let bookingsData = []; // store full data
+let bookingsData = [];
 
 /* ================= LOAD BOOKINGS ================= */
 document.addEventListener("DOMContentLoaded", loadBookings);
@@ -162,7 +160,7 @@ async function loadBookings() {
 
         const data = await res.json();
 
-        bookingsData = data.data.data; // store full data
+        bookingsData = data.data.data;
 
         dropdown.innerHTML = '<option value="">Select Booking</option>';
 
@@ -185,14 +183,12 @@ async function loadBookings() {
 
 
 /* ================= ON BOOKING SELECT ================= */
-document.getElementById("user_id").addEventListener("change", function () {
+document.getElementById("user_id").addEventListener("change", async function () {
 
     const bookingId = this.value;
-
     if (!bookingId) return;
 
     const selected = bookingsData.find(b => b.id == bookingId);
-
     if (!selected) return;
 
     // 🔹 Project
@@ -209,14 +205,41 @@ document.getElementById("user_id").addEventListener("change", function () {
         </option>
     `;
 
-    // 🔹 Amounts
-    let total = parseFloat(selected.total_booking_amount) || 0;
-    let paid = parseFloat(selected.advance_amount) || 0;
-    let balance = total - paid;
+    // 🔥 FETCH CORRECT SUMMARY FROM SERVER
+    try {
+        const res = await fetch(url + "booking-summary/" + bookingId, {
+            headers: {
+                "Authorization": "Bearer " + token,
+                "Accept": "application/json"
+            }
+        });
 
-    document.getElementById("total_amount").value = total;
-    document.getElementById("paid_amount").value = paid;
-    document.getElementById("balanced_amount").value = balance;
+        const data = await res.json();
+
+        document.getElementById("total_amount").value = data.total_amount ?? 0;
+        document.getElementById("paid_amount").value = data.paid_amount ?? 0;
+        document.getElementById("balanced_amount").value = data.balance ?? 0;
+
+    } catch (err) {
+        console.error(err);
+        alert("Failed to fetch booking summary");
+    }
+
+});
+
+
+/* ================= LIVE BALANCE PREVIEW ================= */
+document.getElementById("amount").addEventListener("input", function () {
+
+    let amount = parseFloat(this.value) || 0;
+    let paid = parseFloat(document.getElementById("paid_amount").value) || 0;
+    let total = parseFloat(document.getElementById("total_amount").value) || 0;
+
+    let newPaid = paid + amount;
+    let newBalance = total - newPaid;
+
+    document.getElementById("balanced_amount").value = newBalance;
+
 });
 
 
@@ -226,13 +249,22 @@ document.getElementById("paymentForm").addEventListener("submit", async function
     e.preventDefault();
 
     const bookingId = document.getElementById("user_id").value;
-
     const amount = parseFloat(document.getElementById("amount").value);
     const balance = parseFloat(document.getElementById("balanced_amount").value);
 
+    if (!bookingId) {
+        alert("Select booking first");
+        return;
+    }
+
     // ✅ Validation
-    if (amount > balance) {
-        alert("Payment cannot exceed balance");
+    if (amount <= 0) {
+        alert("Enter valid amount");
+        return;
+    }
+
+    if (balance < 0) {
+        alert("Payment exceeds total amount");
         return;
     }
 
@@ -255,16 +287,13 @@ document.getElementById("paymentForm").addEventListener("submit", async function
         const result = await res.json();
 
         if (result.status) {
-            alert("✅ Payment Recorded");
 
-            // Update balance instantly
-            let newBalance = balance - amount;
-            let newPaid = parseFloat(document.getElementById("paid_amount").value) + amount;
+            alert("✅ Payment Recorded Successfully");
 
-            document.getElementById("paid_amount").value = newPaid;
-            document.getElementById("balanced_amount").value = newBalance;
+            // 🔥 RELOAD CORRECT DATA FROM SERVER
+            document.getElementById("user_id").dispatchEvent(new Event("change"));
 
-            // Reset only input fields
+            // reset inputs
             document.getElementById("amount").value = "";
             document.getElementById("remark").value = "";
 
@@ -279,7 +308,7 @@ document.getElementById("paymentForm").addEventListener("submit", async function
 });
 
 
-/* ================= RESET FUNCTION ================= */
+/* ================= RESET ================= */
 function confirmReset() {
     if (confirm("Are you sure to reset?")) {
         document.getElementById("paymentForm").reset();
