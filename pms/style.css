@@ -816,6 +816,9 @@
   .w-16 {
     width: calc(var(--spacing) * 16);
   }
+  .w-20 {
+    width: calc(var(--spacing) * 20);
+  }
   .w-32 {
     width: calc(var(--spacing) * 32);
   }
@@ -849,6 +852,9 @@
   .w-\[448px\] {
     width: 448px;
   }
+  .w-fit {
+    width: fit-content;
+  }
   .w-full {
     width: 100%;
   }
@@ -875,6 +881,9 @@
   }
   .min-w-\[800px\] {
     min-width: 800px;
+  }
+  .min-w-\[850px\] {
+    min-width: 850px;
   }
   .min-w-\[900px\] {
     min-width: 900px;
@@ -1039,6 +1048,9 @@
   }
   .overflow-x-auto {
     overflow-x: auto;
+  }
+  .overflow-x-scroll {
+    overflow-x: scroll;
   }
   .overflow-y-auto {
     overflow-y: auto;
@@ -1440,6 +1452,9 @@
   .pl-1 {
     padding-left: calc(var(--spacing) * 1);
   }
+  .pl-6 {
+    padding-left: calc(var(--spacing) * 6);
+  }
   .pl-10 {
     padding-left: calc(var(--spacing) * 10);
   }
@@ -1525,6 +1540,9 @@
   .tracking-widest {
     --tw-tracking: var(--tracking-widest);
     letter-spacing: var(--tracking-widest);
+  }
+  .whitespace-nowrap {
+    white-space: nowrap;
   }
   .text-\[\#1b1b18\] {
     color: #1b1b18;
@@ -2029,6 +2047,11 @@
       width: calc(1/4 * 100%);
     }
   }
+  .sm\:w-80 {
+    @media (width >= 40rem) {
+      width: calc(var(--spacing) * 80);
+    }
+  }
   .sm\:w-\[90\%\] {
     @media (width >= 40rem) {
       width: 90%;
@@ -2047,6 +2070,33 @@
   .sm\:flex-row {
     @media (width >= 40rem) {
       flex-direction: row;
+    }
+  }
+  .sm\:flex-nowrap {
+    @media (width >= 40rem) {
+      flex-wrap: nowrap;
+    }
+  }
+  .sm\:p-4 {
+    @media (width >= 40rem) {
+      padding: calc(var(--spacing) * 4);
+    }
+  }
+  .sm\:pl-10 {
+    @media (width >= 40rem) {
+      padding-left: calc(var(--spacing) * 10);
+    }
+  }
+  .sm\:text-2xl {
+    @media (width >= 40rem) {
+      font-size: var(--text-2xl);
+      line-height: var(--tw-leading, var(--text-2xl--line-height));
+    }
+  }
+  .sm\:text-base {
+    @media (width >= 40rem) {
+      font-size: var(--text-base);
+      line-height: var(--tw-leading, var(--text-base--line-height));
     }
   }
   .md\:relative {
@@ -2813,4 +2863,3 @@
     }
   }
 }
-
