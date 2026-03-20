@@ -54,7 +54,7 @@ class UserController extends Controller
         }
 
         // Admin can view anyone
-        if (!in_array($auth->role, ['admin', 'leader'])) {
+        if ($auth->role !== 'admin' && $user->created_by !== $auth->id && $auth->id !== $user->id) {
             return response()->json(['message' => 'Unauthorized'], 403);
         }
 
@@ -162,11 +162,11 @@ class UserController extends Controller
                 'address'    => 'required|string',
                 'pin_code'   => 'nullable|string|max:10',
                 'image'      => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+                'pancard_number'  => 'nullable|string',
                 'bank_name'  => 'required|string',
                 'bank_branch'  => 'required|string',
                 'bank_account_no'  => 'required|string',
                 'bank_ifsc_code'  => 'required|string',
-                'pancard_number'  => 'string',
             ];
         }
 
@@ -199,6 +199,7 @@ class UserController extends Controller
             'address'      => $validated['address'] ?? null,
             'pin_code'     => $validated['pin_code'] ?? null,
             'profile_image' => $imagePath,
+            'pancard_number'  => $validated['pancard_number'] ?? null,
             'bank_name'  => $validated['bank_name'] ?? null,
             'bank_branch'  => $validated['bank_branch'] ?? null,
             'bank_account_no'  => $validated['bank_account_no'] ?? null,
@@ -287,7 +288,7 @@ class UserController extends Controller
 
         // Admin can update anyone
         // Others can update only their created users
-        if (!in_array($auth->role, ['admin', 'leader'])) {
+        if ($auth->role !== 'admin' && $user->created_by !== $auth->id) {
             return response()->json(['message' => 'Unauthorized'], 403);
         }
 
@@ -378,7 +379,7 @@ class UserController extends Controller
 
         // Admin can delete anyone
         // Others can delete only their created users
-        if (!in_array($auth->role, ['admin', 'leader'])) {
+        if ($auth->role !== 'admin' && $user->created_by !== $auth->id) {
             return response()->json(['message' => 'Unauthorized'], 403);
         }
 
