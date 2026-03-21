@@ -75,6 +75,35 @@
 <!-- jQuery -->
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 
+<script>
+function update_customer_booking(id) {
+    window.location.href = "update_customer_booking.php?id=" + id;
+}
+
+function deleteBooking(id) {
+    if (!confirm("Are you sure you want to delete this booking?")) return;
+
+    const token = localStorage.getItem("auth_token");
+
+    fetch(url + "bookings/" + id, {
+        method: "DELETE",
+        headers: {
+            "Authorization": "Bearer " + token,
+            "Accept": "application/json"
+        }
+    })
+    .then(res => res.json())
+    .then(data => {
+        alert(data.message || "Booking deleted successfully");
+        location.reload();
+    })
+    .catch(err => {
+        console.error("Delete error:", err);
+        alert("Delete failed");
+    });
+}
+</script>
+
 
 <script>
 document.addEventListener("DOMContentLoaded", function() {
@@ -185,7 +214,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 <td class="p-1">
                     <div class="flex gap-2">
                         <button class="bg-blue-500 text-white px-4 py-1 rounded"
-                            onclick="viewBooking(${row.id})">
+                            onclick="update_customer_booking(${row.id})">
                             Update
                         </button>
 

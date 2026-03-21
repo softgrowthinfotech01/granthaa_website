@@ -11,19 +11,19 @@
   <!-- Site Location -->
   <div>
     <label class="block text-gray-900 font-semibold mb-1">
-      Site Location <span style="color: red;">(readonly)</span>
+      Site Location 
     </label>
     <input type="text" id="site_location"
-      class="w-full border border-gray-300 p-2 rounded-lg" readonly>
+      class="w-full border border-gray-300 px-5 py-3 rounded-xl bg-gray-100 outline-none cursor-not-allowed" readonly>
   </div>
 
   <!-- Advisor Name -->
   <div>
     <label class="block text-gray-900 font-semibold mb-1">
-      Advisor Name <span style="color: red;">(readonly)</span>
+      Advisor Name
     </label>
     <input type="text" id="advisor_name"
-      class="w-full border border-gray-300 p-2 rounded-lg" readonly>
+      class="w-full border border-gray-300 px-5 py-3 rounded-xl bg-gray-100 outline-none cursor-not-allowed" readonly>
   </div>
 
   <!-- Commission Type -->

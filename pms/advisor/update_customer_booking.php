@@ -22,15 +22,15 @@
                 <!-- Buyer -->
                 <div class="space-y-2">
                     <label class="text-sm font-semibold text-gray-700">Buyer Name</label>
-                    <input type="text" required id="buyer_name" name="buyer_name"
-                        class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-green-400 outline-none">
+                    <input type="text" required id="buyer_name" name="buyer_name" readonly
+                        class="w-full border border-gray-300 px-5 py-3 rounded-xl bg-gray-100 outline-none">
                 </div>
 
                 <!-- Mobile -->
                 <div class="space-y-2">
                     <label class="text-sm font-semibold text-gray-700">Mobile Number</label>
-                    <input type="number" required id="mobile" name="mobile"
-                        class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-green-400 outline-none">
+                    <input type="number" required id="mobile" name="mobile" readonly
+                        class="w-full border border-gray-300 px-5 py-3 rounded-xl bg-gray-100 outline-none">
                 </div>
 
                 <!-- DOB -->
@@ -42,9 +42,9 @@
 
                 <!-- Email -->
                 <div class="space-y-2">
-                    <label class="text-sm font-semibold text-gray-700">Email <span style="color: red;">(readonly)</span></label>
+                    <label class="text-sm font-semibold text-gray-700">Email</label>
                     <input type="email" id="email" name="email" readonly
-                        class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-green-400 outline-none">
+                        class="w-full border border-gray-300 px-5 py-3 rounded-xl bg-gray-100 outline-none">
                 </div>
 
                 <!-- PAN -->
@@ -228,6 +228,7 @@
 
 </div>
 
+<script src="../url.js"></script>
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {

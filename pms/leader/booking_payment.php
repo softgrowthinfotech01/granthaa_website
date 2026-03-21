@@ -29,8 +29,8 @@
                    <!-- Project  -->
                 <div class="space-y-2">
                     <label class="text-sm font-semibold text-gray-700">Project Name</label>
-                    <select name="project_id" id="project_name" required
-                        class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-yellow-400 outline-none">
+                    <select name="project_id" id="project_name" required disabled
+                        class="w-full border border-gray-300 px-5 py-3 rounded-xl bg-gray-100 outline-none cursor-not-allowed">
                         <option value="">Loading...</option>
                     </select>
                 </div>
@@ -38,8 +38,8 @@
                 <!-- Plot Number -->
                 <div class="space-y-2">
                     <label class="text-sm font-semibold text-gray-700">Plot/Flat Number</label>
-                    <select name="plot_id" id="plot_number" required
-                        class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-yellow-400 outline-none">
+                    <select name="plot_id" id="plot_number" required disabled
+                        class="w-full border border-gray-300 px-5 py-3 rounded-xl bg-gray-100 outline-none cursor-not-allowed">
                         <option value="">Loading...</option>
                     </select>
                 </div>
@@ -140,6 +140,49 @@ transition transform hover:scale-[1.02]">
 </div>
 
 <?php include 'footer.php'; ?>
+
+<script>
+    const userSelect = document.getElementById("user_id");
+    const projectSelect = document.getElementById("project_name");
+    const plotSelect = document.getElementById("plot_number");
+
+    function disableSelect(selectElement) {
+        selectElement.disabled = true;
+        selectElement.classList.add("bg-gray-100", "cursor-not-allowed");
+        selectElement.classList.remove("focus:ring-2", "focus:ring-yellow-400");
+        selectElement.value = "";
+    }
+
+    function enableSelect(selectElement) {
+        selectElement.disabled = false;
+        selectElement.classList.remove("bg-gray-100", "cursor-not-allowed");
+        selectElement.classList.add("focus:ring-2", "focus:ring-yellow-400");
+    }
+
+    // Initial state
+    disableSelect(projectSelect);
+    disableSelect(plotSelect);
+
+    // When Booking Name is selected
+    userSelect.addEventListener("change", function () {
+        if (this.value) {
+            enableSelect(projectSelect);
+        } else {
+            disableSelect(projectSelect);
+            disableSelect(plotSelect);
+        }
+    });
+
+    // When Project Name is selected
+    projectSelect.addEventListener("change", function () {
+        if (this.value) {
+            enableSelect(plotSelect);
+        } else {
+            disableSelect(plotSelect);
+        }
+    });
+</script>
+
 <script>
 const token = localStorage.getItem("auth_token");
 

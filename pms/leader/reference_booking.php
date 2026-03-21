@@ -35,7 +35,7 @@
                 <div class="space-y-2">
                     <label class="text-sm font-semibold text-gray-700">Mobile Number</label>
                     <input type="text" required name="mobile" id="mobile" maxlength="10" pattern="[0-9]{10}" readonly
-                        class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-yellow-400 outline-none">
+                        class="w-full border border-gray-300 px-5 py-3 rounded-xl bg-gray-100 outline-none">
                 </div>
 
                 <!-- DOB -->
