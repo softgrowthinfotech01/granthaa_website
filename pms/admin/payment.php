@@ -25,7 +25,7 @@
 
                 <!-- Main Content -->
                 <div id="mainContent"
-                    class="w-full md:w-[80%] lg:w-[60%] mx-3 md:mx-auto my-4
+                    class="w-full md:w-[80%] lg:w-[75%] mx-3 md:mx-auto my-4
                             transition-all duration-300">
 
                     <form class="w-full px-4 rounded-lg bg-gray-200 p-6 border shadow-xl" method="post" id="paymentForm">
@@ -39,7 +39,7 @@
                             <!-- USER ID -->
                             <div class="mb-5 px-1">
                                 <label class="block mb-2.5 text-sm font-medium text-heading">
-                                    User
+                                    Leader Name
                                 </label>
 
                                 <select name="user_id" id="user_id"
@@ -59,7 +59,7 @@
 
                                     <input name="total_commission" type="text" id="total_commission"
                                     class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm block w-full px-3 py-2.5 shadow-xs"
-                                    placeholder="Enter payment amount" readonly />
+                                    placeholder="Enter amount" readonly />
                             </div>
 
                             <!-- Total Paid -->
@@ -70,7 +70,7 @@
 
                                 <input name="total_paid" type="number" id="total_paid"
                                     class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm block w-full px-3 py-2.5 shadow-xs"
-                                    placeholder="Enter payment amount" readonly />
+                                    placeholder="Enter amount" readonly />
                             </div>
 
                             <!-- Balance -->
@@ -81,7 +81,7 @@
                                 
                                 <input name="balance" type="number" id="balance"
                                     class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm block w-full px-3 py-2.5 shadow-xs"
-                                    placeholder="Enter payment amount" readonly />
+                                    placeholder="Enter amount" readonly />
                             </div>
 
                             <!-- AMOUNT -->
@@ -92,7 +92,7 @@
 
                                 <input name="amount" type="number" id="amount"
                                     class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm block w-full px-3 py-2.5 shadow-xs"
-                                    placeholder="Enter payment amount" required />
+                                    placeholder="Enter amount" required />
                             </div>
 
                             <!-- PAYMENT MODE -->
@@ -274,7 +274,7 @@
 
                 const result = await response.json();
 
-                dropdown.innerHTML = '<option value="">Select User</option>';
+                dropdown.innerHTML = '<option value="">Select Leader</option>';
 
                 result.data.data.forEach(user => {
 

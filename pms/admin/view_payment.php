@@ -23,7 +23,7 @@
 
 <?php include "sidebar.php"; ?>
 
-<div class="w-full sm:w-[95%] md:w-[80%] lg:w-[70%] mx-3 md:mx-auto my-4 self-start rounded-lg bg-slate-100 p-4 md:p-6 border border-default shadow-xs">
+<div class="w-full sm:w-[95%] md:w-[80%] lg:w-[75%] mx-3 md:mx-auto my-4 self-start rounded-lg bg-slate-100 p-4 md:p-6 border border-default shadow-xs">
 
 <!-- Search + Per Page -->
 <div class="mb-4 flex flex-col md:flex-row justify-between items-start md:items-center gap-3">
@@ -72,7 +72,7 @@ class="px-2 py-1 border rounded">
 <tr>
 
 <th class="px-4 py-3">#</th>
-<th class="px-4 py-3">User ID</th>
+<th class="px-4 py-3">Leader Name</th>
 <th class="px-4 py-3">Amount</th>
 <th class="px-4 py-3">Mode</th>
 <th class="px-4 py-3">Reference</th>

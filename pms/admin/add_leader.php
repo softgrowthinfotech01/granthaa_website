@@ -27,7 +27,7 @@
                 <!--Main-->
                 <!--Main-->
                 <div id="mainContent"
-                    class="w-full md:w-[80%] lg:w-[60%] mx-3 md:mx-auto my-4
+                    class="w-full md:w-[75%] lg:w-[75%] mx-3 md:mx-auto my-4
 transition-all duration-300">
 
                     <form class="w-full px-4 rounded-lg bg-gray-200 p-6 border shadow-xl" method="post" id="userForm" enctype="multipart/form-data">
@@ -206,8 +206,6 @@ transition-all duration-300">
         </div>
 
     </div>
-
-    <script src="../url.js"></script>
 
     <script>
         function confirmReset() {

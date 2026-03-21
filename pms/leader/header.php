@@ -23,12 +23,21 @@
   display: none;
 }
 
+#sidebar {
+  -ms-overflow-style: none;  /* IE & Edge */
+  scrollbar-width: none;     /* Firefox */
+}
+
+#sidebar::-webkit-scrollbar {
+  display: none;             /* Chrome, Safari */
+}
+
 /* Menu items */
 .menu-item{
   display:flex;
   align-items:center;
   gap:12px;
-  padding:12px;
+  padding:10px;
   border-radius:12px;
   transition:all .3s ease;
 }
@@ -129,7 +138,10 @@
 
       <p id="userCode" class="font-semibold text-gray-800"></p>
       <p id="userName" class="text-lg font-semibold text-gray-500"></p>
-      <p id="userEmail" class="text-lg font-semibold text-gray-500"></p>
+      <p id="userEmail"
+   class="text-sm font-semibold text-gray-500 break-all">
+</p>
+</p>
     </div>
 
     <a onclick="logout()" style="cursor: pointer;"

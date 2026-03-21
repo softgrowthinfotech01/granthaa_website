@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Location Data</title>
     <link rel="stylesheet" href="../style.css">
-
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.js"></script>
 </head>
 
 <body>
@@ -18,36 +18,30 @@
             <?php include "header.php"; ?>
             <!--/Header-->
 
-            <div class="flex flex-1">
+            <div class="flex flex-1 flex-col md:flex-row">
                 <!--Sidebar-->
                 <?php include "sidebar.php"; ?>
                 <!--/Sidebar-->
 
                 <!--Main-->
-                <!--Main-->
                 <div class="w-full md:w-[80%] lg:w-[60%] xl:w-[40%] 
-            mx-auto my-4 self-start 
-            rounded-lg bg-slate-100 
-            p-4 md:p-6 
-            border border-default 
-            shadow-xs hover:bg-neutral-secondary-medium">
+                            mx-auto my-4 self-start 
+                            rounded-lg bg-slate-100 
+                            p-4 md:p-6 
+                            border border-default 
+                            shadow-xs hover:bg-neutral-secondary-medium">
 
-            <h2 class="p-2 text-xl text-gray-600">Total Sales Report</h2>
+                    <h2 class="p-2 text-xl text-gray-600">Total Sales Report</h2>
 
                     <div class="mb-4 flex flex-col md:flex-row justify-between items-start md:items-center gap-3">
-
                         <!-- Search -->
-                        <input
-                            type="text"
-                            id="searchInput"
-                            placeholder="Search location..."
+                        <input type="text" id="searchInput" placeholder="Search location..."
                             class="px-3 py-2 border rounded w-full md:w-1/3">
 
                         <!-- Per Page Select -->
                         <div class="flex items-center gap-2">
                             <label>Show:</label>
-                            <select id="perPageSelect"
-                                class="px-2 py-1 border rounded">
+                            <select id="perPageSelect" class="px-2 py-1 border rounded">
                                 <option value="5">5</option>
                                 <option value="10">10</option>
                                 <option value="25">25</option>
@@ -55,7 +49,6 @@
                             </select>
                             <span>entries</span>
                         </div>
-
                     </div>
 
                     <div id="tableLoader" class="hidden text-center py-6">
@@ -63,9 +56,8 @@
                         <p class="mt-2 text-gray-600">Loading...</p>
                     </div>
 
-                    <!-- Responsive Table Wrapper -->
-                    <div class="w-full overflow-x-auto">
-
+                    <!-- Desktop Table -->
+                    <div class="hidden md:block w-full overflow-x-auto">
                         <table class="w-full text-sm text-left text-gray-600">
                             <thead class="text-xs text-gray-700 uppercase bg-gray-100">
                                 <tr>
@@ -76,35 +68,150 @@
                                     <th class="px-4 py-3">Balance Amount</th>
                                 </tr>
                             </thead>
-
                             <tbody id="locationTableBody">
                                 <tr>
                                     <td colspan="5" class="text-center py-4">Loading...</td>
                                 </tr>
                             </tbody>
                         </table>
-
                     </div>
+
+                    <!-- Mobile Card View -->
+                    <div id="mobileCardContainer" class="md:hidden flex flex-col gap-4"></div>
 
                     <div id="paginationControls" class="flex flex-wrap justify-center gap-2 mt-4"></div>
                     <div id="resultInfo" class="text-sm text-gray-600 mt-2 text-center"></div>
-
                 </div>
                 <!--/Main-->
-                <!--/Main-->
             </div>
+
             <!--Footer-->
             <?php include "footer.php"; ?>
             <!--/footer-->
-
         </div>
-
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.js"></script>
-
     <script src="../url.js"></script>
+    <script>
+        let currentPage = 1;
+        let currentSearch = '';
+        let currentPerPage = 5;
+        let searchTimeout;
 
+        const token = localStorage.getItem("auth_token");
+
+        async function fetchLocations(page = 1) {
+            const loader = document.getElementById('tableLoader');
+            const tbody = document.getElementById('locationTableBody');
+            const pagination = document.getElementById('paginationControls');
+            const resultInfo = document.getElementById('resultInfo');
+            const mobileContainer = document.getElementById('mobileCardContainer');
+
+            try {
+                loader.classList.remove('hidden');
+                tbody.innerHTML = '';
+                pagination.innerHTML = '';
+                mobileContainer.innerHTML = '';
+                resultInfo.innerHTML = '';
+
+                const response = await fetch(
+                    url + `total-sales?page=${page}&search=${currentSearch}&per_page=${currentPerPage}`, {
+                        method: "GET",
+                        headers: {
+                            "Accept": "application/json",
+                            "Authorization": "Bearer " + token
+                        }
+                    }
+                );
+
+                const result = await response.json();
+                const paginationData = result.data;
+                const locations = paginationData.data;
+
+                if (!locations || locations.length === 0) {
+                    tbody.innerHTML = `
+                        <tr>
+                            <td colspan="5" class="text-center py-4">No records found</td>
+                        </tr>`;
+                    mobileContainer.innerHTML = `<p class="text-center text-gray-600 py-4">No records found</p>`;
+                    return;
+                }
+
+                locations.forEach((loc) => {
+                    const siteName = loc.site_name || '-';
+                    const saleDate = new Date(loc.sale_date).toLocaleDateString();
+                    const location = loc.site_location || '-';
+                    const total = loc.total_amount || '-';
+                    const balance = loc.balance_amount || '-';
+
+                    // Desktop Table
+                    tbody.innerHTML += `
+                        <tr class="border-b">
+                            <td class="px-4 py-2">${siteName}</td>
+                            <td class="px-4 py-2">${saleDate}</td>
+                            <td class="px-4 py-2">${location}</td>
+                            <td class="px-4 py-2">${total}</td>
+                            <td class="px-4 py-2">${balance}</td>
+                        </tr>
+                    `;
+
+                    // Mobile Card
+                    mobileContainer.innerHTML += `
+                        <div class="bg-white rounded-xl shadow-sm border p-4">
+                            <div class="flex justify-between items-center mb-2">
+                                <h3 class="font-semibold text-gray-800 text-sm">${siteName}</h3>
+                                <span class="text-xs text-gray-500">${saleDate}</span>
+                            </div>
+                            <div class="text-sm text-gray-600 space-y-1">
+                                <p><span class="font-medium text-gray-700">Location:</span> ${location}</p>
+                                <p><span class="font-medium text-gray-700">Total:</span> ₹${total}</p>
+                                <p><span class="font-medium text-gray-700">Balance:</span> ₹${balance}</p>
+                            </div>
+                        </div>
+                    `;
+                });
+
+                resultInfo.innerHTML = `Showing page ${paginationData.current_page} of ${paginationData.last_page} | Total records: ${paginationData.total}`;
+
+                // Pagination
+                if (paginationData.prev_page_url) {
+                    pagination.innerHTML += `<button onclick="fetchLocations(${paginationData.current_page - 1})"
+                        class="px-3 py-1 bg-gray-300 rounded hover:bg-gray-400">Prev</button>`;
+                }
+
+                for (let i = 1; i <= paginationData.last_page; i++) {
+                    pagination.innerHTML += `<button onclick="fetchLocations(${i})"
+                        class="px-3 py-1 rounded ${i === paginationData.current_page ? 'bg-blue-600 text-white' : 'bg-gray-200 hover:bg-gray-300'}">${i}</button>`;
+                }
+
+                if (paginationData.next_page_url) {
+                    pagination.innerHTML += `<button onclick="fetchLocations(${paginationData.current_page + 1})"
+                        class="px-3 py-1 bg-gray-300 rounded hover:bg-gray-400">Next</button>`;
+                }
+
+            } catch (error) {
+                console.error("Error fetching locations:", error);
+            } finally {
+                loader.classList.add('hidden');
+            }
+        }
+
+        document.getElementById('searchInput').addEventListener('keyup', function () {
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(() => {
+                currentSearch = this.value.trim();
+                fetchLocations(1);
+            }, 400);
+        });
+
+        document.getElementById('perPageSelect').addEventListener('change', function () {
+            currentPerPage = this.value;
+            fetchLocations(1);
+        });
+
+        // Initial load
+        fetchLocations();
+    </script>
 </body>
 
 </html>
