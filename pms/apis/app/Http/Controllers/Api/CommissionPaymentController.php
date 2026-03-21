@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Booking;
 use App\Models\CommissionLedger;
 use App\Models\User;
 use Exception;
@@ -331,4 +332,85 @@ class CommissionPaymentController extends Controller
             'balance' => $totalCommission + $totalPaid
         ];
     }
+
+    public function leaderAdviserDetails(Request $request)
+{
+    $leader = auth()->user();
+
+    if ($leader->role !== 'leader') {
+        return response()->json([
+            'status' => false,
+            'message' => 'Unauthorized'
+        ]);
+    }
+
+    // 📌 1. Get advisers (for dropdown)
+    $advisers = User::where('created_by', $leader->id)
+        ->where('role', 'adviser')
+        ->select('id', 'name')
+        ->get();
+
+    // 📌 2. Selected adviser
+    $adviserId = $request->adviser_id ?? $advisers->first()?->id;
+
+    $summary = null;
+    $logs = [];
+
+    if ($adviserId) {
+
+        // 📊 Summary
+        $totalPlots = Booking::where('adviser_id', $adviserId)->count();
+
+        $totalAmount = Booking::where('adviser_id', $adviserId)
+            ->sum('total_booking_amount');
+
+        $totalCommission = Booking::where('adviser_id', $adviserId)
+            ->sum('adviser_commission_amount');
+
+        $paidAmount = CommissionLedger::where('user_id', $adviserId)
+            ->where('type', 'payment')
+            ->sum('amount');
+
+        $summary = [
+            'total_plots' => $totalPlots,
+            'total_booking_amount' => round($totalAmount, 2),
+            'total_commission' => round($totalCommission, 2),
+            'paid_amount' => round($paidAmount, 2),
+            'balance_amount' => round($totalCommission - $paidAmount, 2),
+        ];
+
+        // 📄 Logs (booking wise)
+        $logs = Booking::where('adviser_id', $adviserId)
+            ->select(
+                'id as booking_id',
+                'buyer_name as customer',
+                'plot_number',
+                'total_booking_amount as amount',
+                'adviser_commission_amount as commission',
+                'created_at'
+            )
+            ->latest()
+            ->get()
+            ->map(function ($row) {
+                return [
+                    'booking_id' => $row->booking_id,
+                    'customer' => $row->customer,
+                    'plot_number' => $row->plot_number,
+                    'amount' => round($row->amount, 2),
+                    'commission' => round($row->commission, 2),
+                    'date' => date('Y-m-d', strtotime($row->created_at)),
+                ];
+            });
+    }
+
+    return response()->json([
+        'status' => true,
+        'data' => [
+            'advisers' => $advisers,
+            'selected_adviser' => $adviserId,
+            'summary' => $summary,
+            'logs' => $logs
+        ]
+    ]);
+}
 }
