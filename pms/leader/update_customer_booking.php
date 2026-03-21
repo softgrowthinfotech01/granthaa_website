@@ -20,15 +20,15 @@
                 <!-- Buyer -->
                 <div class="space-y-2">
                     <label class="text-sm font-semibold text-gray-700">Buyer Name</label>
-                    <input type="text" required id="buyer_name" name="buyer_name"
-                        class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-yellow-400 outline-none">
+                    <input type="text" required id="buyer_name" name="buyer_name" readonly
+                        class="w-full border border-gray-300 px-5 py-3 rounded-xl bg-gray-100 outline-none cursor-not-allowed">
                 </div>
 
                 <!-- Mobile -->
                 <div class="space-y-2">
                     <label class="text-sm font-semibold text-gray-700">Mobile Number</label>
-                    <input type="number" required id="mobile" name="mobile"
-                        class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-yellow-400 outline-none">
+                    <input type="number" required id="mobile" name="mobile" readonly
+                        class="w-full border border-gray-300 px-5 py-3 rounded-xl bg-gray-100 outline-none cursor-not-allowed">
                 </div>
 
                 <!-- DOB -->
@@ -41,8 +41,8 @@
                 <!-- Email -->
                 <div class="space-y-2">
                     <label class="text-sm font-semibold text-gray-700">Email</label>
-                    <input type="email" id="email" name="email"
-                        class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-yellow-400 outline-none">
+                    <input type="email" id="email" name="email" readonly
+                        class="w-full border border-gray-300 px-5 py-3 rounded-xl bg-gray-100 outline-none cursor-not-allowed">
                 </div>
 
                 <!-- PAN -->
@@ -107,9 +107,9 @@
             <div class="grid md:grid-cols-3 gap-2">
 
                 <div class="space-y-2">
-                    <label class="text-sm font-semibold text-gray-700">Site Location <span style="color:red">(readonly)</span></label>
-                    <select id="site_location" name="site_location" disabled
-                        class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-yellow-400 outline-none">
+                    <label class="text-sm font-semibold text-gray-700">Site Location</label>
+                    <select id="site_location" name="site_location" readonly
+                        class="w-full border border-gray-300 px-5 py-3 rounded-xl bg-gray-100 outline-none cursor-not-allowed">
                         <option value="">Select Site</option>
                     </select>
                 </div>
@@ -117,7 +117,7 @@
                 <div class="space-y-2">
                     <label class="text-sm font-semibold text-gray-700">Commission Type</label>
                     <input type="text" id="commission_type" name="commission_type" readonly
-                        class="w-full border border-gray-300 px-5 py-3 rounded-xl bg-gray-100 outline-none">
+                        class="w-full border border-gray-300 px-5 py-3 rounded-xl bg-gray-100 outline-none cursor-not-allowed">
                 </div>
 
                 <div class="space-y-2">

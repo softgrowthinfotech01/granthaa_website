@@ -30,21 +30,21 @@
                 <div class="space-y-2">
                     <label class="text-sm font-semibold text-gray-700">Total Commission</label>
                     <input type="text" name="total_commission" id="total_commission" readonly
-                        class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-yellow-400 outline-none">
+                        class="w-full border border-gray-300 px-5 py-3 rounded-xl bg-gray-100 outline-none cursor-not-allowed">
                 </div>
 
                 <!-- Total Paid -->
                 <div class="space-y-2">
                     <label class="text-sm font-semibold text-gray-700">Total Paid</label>
                     <input type="text" name="total_paid" id="total_paid" readonly
-                        class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-yellow-400 outline-none">
+                        class="w-full border border-gray-300 px-5 py-3 rounded-xl bg-gray-100 outline-none cursor-not-allowed">
                 </div>
 
                 <!-- Balance -->
                 <div class="space-y-2">
                     <label class="text-sm font-semibold text-gray-700">Balance Amount</label>
                     <input type="text" name="balance" id="balance" readonly
-                        class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-yellow-400 outline-none">
+                        class="w-full border border-gray-300 px-5 py-3 rounded-xl bg-gray-100 outline-none cursor-not-allowed">
                 </div>
 
                 <!-- AMOUNT -->
