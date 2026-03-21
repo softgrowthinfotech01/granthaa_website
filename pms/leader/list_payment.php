@@ -57,7 +57,7 @@
 <script src="../url.js"></script>
 
 <script>
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
 
     const token = localStorage.getItem("auth_token");
 
@@ -77,17 +77,15 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     const userCache = {};
+    let currentPage = 1;
 
     async function getUserName(userId) {
         if (!userId) return "-";
 
-        if (userCache[userId]) {
-            return userCache[userId];
-        }
+        if (userCache[userId]) return userCache[userId];
 
         try {
             const response = await fetch(url + "users/" + userId, {
-                method: "GET",
                 headers: {
                     "Authorization": "Bearer " + token,
                     "Accept": "application/json"
@@ -95,8 +93,6 @@ document.addEventListener("DOMContentLoaded", function() {
             });
 
             const result = await response.json();
-            console.log("User API response for user " + userId + ":", result);
-
             const userData = result.data ?? result;
             const userName = userData?.name ?? userId;
 
@@ -104,30 +100,39 @@ document.addEventListener("DOMContentLoaded", function() {
             return userName;
 
         } catch (error) {
-            console.error("Failed to fetch user:", userId, error);
+            console.error("User fetch error:", error);
             return userId;
         }
     }
 
-    async function loadPayments() {
+    async function loadPayments(page = 1) {
+
+        currentPage = page;
+
+        // ✅ FIX: declare BEFORE fetch
+        const searchValue = document.getElementById("searchInput").value.trim();
+        const perPage = document.getElementById("perPage").value;
+
         try {
-            const response = await fetch(url + "commission/payments/created-by/" + loggedInUser.id, {
-                method: "GET",
-                headers: {
-                    "Authorization": "Bearer " + token,
-                    "Accept": "application/json"
+            const response = await fetch(
+                `${url}commission/payments/created-by/${loggedInUser.id}?page=${currentPage}&per_page=${perPage}&search=${searchValue}`,
+                {
+                    method: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token,
+                        "Accept": "application/json"
+                    }
                 }
-            });
+            );
 
             const result = await response.json();
-            console.log("Payments API response:", result);
+            console.log("Payments API:", result);
 
             const payments = result.data?.data ?? result.data ?? [];
             const tbody = document.getElementById("paymentData");
-
             tbody.innerHTML = "";
 
-            if (payments.length === 0) {
+            if (!payments.length) {
                 tbody.innerHTML = `
                     <tr>
                         <td colspan="6" class="text-center p-4 text-gray-500">
@@ -135,6 +140,7 @@ document.addEventListener("DOMContentLoaded", function() {
                         </td>
                     </tr>
                 `;
+                document.getElementById("pagination").innerHTML = "";
                 return;
             }
 
@@ -157,16 +163,45 @@ document.addEventListener("DOMContentLoaded", function() {
 
             tbody.innerHTML = rows;
 
+            // ✅ PAGINATION
+            const pagination = document.getElementById("pagination");
+            pagination.innerHTML = "";
+
+            const meta = result.data || {};
+            const totalPages = meta.last_page || 1;
+            const current = meta.current_page || 1;
+
+            if (totalPages > 1) {
+
+                if (current > 1) {
+                    pagination.innerHTML += `
+                        <button onclick="changePage(${current - 1})"
+                        class="px-3 py-1 bg-gray-200 rounded">Prev</button>`;
+                }
+
+                for (let i = 1; i <= totalPages; i++) {
+                    pagination.innerHTML += `
+                        <button onclick="changePage(${i})"
+                        class="px-3 py-1 rounded ${i === current ? 'bg-blue-500 text-white' : 'bg-gray-200'}">
+                        ${i}</button>`;
+                }
+
+                if (current < totalPages) {
+                    pagination.innerHTML += `
+                        <button onclick="changePage(${current + 1})"
+                        class="px-3 py-1 bg-gray-200 rounded">Next</button>`;
+                }
+            }
+
         } catch (error) {
             console.error(error);
             alert("Failed to load payments");
         }
     }
 
+    // ✅ DELETE
     window.deletePayment = function(id) {
-        if (!confirm("Delete this payment record?")) {
-            return;
-        }
+        if (!confirm("Delete this payment record?")) return;
 
         fetch(url + "commission/ledger/" + loggedInUser.id, {
             method: "DELETE",
@@ -177,15 +212,22 @@ document.addEventListener("DOMContentLoaded", function() {
         })
         .then(res => res.json())
         .then(data => {
-            alert(data.message ?? "Payment deleted successfully");
-            loadPayments();
+            alert(data.message ?? "Payment deleted");
+            loadPayments(currentPage);
         })
-        .catch(error => {
-            console.error(error);
-            alert("Delete failed");
-        });
+        .catch(() => alert("Delete failed"));
     };
 
+    // ✅ PAGINATION CLICK
+    window.changePage = function(page) {
+        loadPayments(page);
+    };
+
+    // ✅ SEARCH + FILTER
+    document.getElementById("searchBtn").addEventListener("click", () => loadPayments(1));
+    document.getElementById("perPage").addEventListener("change", () => loadPayments(1));
+
+    // INITIAL LOAD
     loadPayments();
 
 });
