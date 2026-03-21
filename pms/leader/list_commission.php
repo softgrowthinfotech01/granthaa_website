@@ -1,46 +1,51 @@
 <?php include 'header.php'; ?>
 
-<div class="max-w-7xl mx-auto bg-white p-6 rounded-2xl shadow-xl">
+<div class="max-w-7xl mx-auto bg-white p-4 sm:p-6 rounded-2xl shadow-xl">
 
-  <h2 class="text-2xl font-bold mb-4 text-center">Advisor Commission Records</h2>
+  <h2 class="text-xl sm:text-2xl font-bold mb-4 text-center">
+    Advisor Commission Records
+  </h2>
 
-  <!-- Table wrapper for horizontal scroll -->
-  <div class="w-full overflow-x-auto">
-<div class="flex flex-col sm:flex-row gap-3 mb-4">
+  <!-- 🔹 Controls (FIXED - no scroll) -->
+  <div class="flex flex-col sm:flex-row gap-3 mb-4">
 
-  <input type="text" id="searchInput"
+    <input type="text" id="searchInput"
       placeholder="Search by advisor or location..."
       class="border p-2 rounded w-full sm:w-1/3">
 
-  <select id="commissionTypeFilter"
+    <select id="commissionTypeFilter"
       class="border p-2 rounded w-full sm:w-1/4">
       <option value="">All Types</option>
       <option value="percent">Percent</option>
       <option value="amount">Amount</option>
-  </select>
+    </select>
 
-</div>
-    <table id="example" class="" style="width:100%; padding-top: 1em;  padding-bottom: 1em;">
+  </div>
 
-      <thead class="bg-gradient-to-r from-gray-100 to-gray-300 text-gray-700">
+  <!-- 🔹 Table Scroll Only -->
+  <div class="w-full overflow-x-auto">
+
+    <table id="example"
+      class="min-w-[600px] w-full text-sm border border-gray-200">
+
+      <thead class="bg-gray-100 text-gray-700">
         <tr>
-          <th data-priority="1" class="p-3 text-center font-semibold">Site Location</th>
-          <th data-priority="2" class="p-3 text-center font-semibold">Advisor Name</th>
-          <th data-priority="3" class="p-3 text-center font-semibold">Commission</th>
-          <th data-priority="4" class="p-3 text-center font-semibold">Action</th>
+          <th class="p-3 text-center whitespace-nowrap">Site Location</th>
+          <th class="p-3 text-center whitespace-nowrap">Advisor Name</th>
+          <th class="p-3 text-center whitespace-nowrap">Commission</th>
+          <th class="p-3 text-center whitespace-nowrap">Action</th>
         </tr>
       </thead>
 
-      <tbody class="divide-y divide-gray-200">
-      </tbody>
-    </table>
-<div id="pagination" class="mt-4"></div>    
+      <tbody class="divide-y divide-gray-200"></tbody>
 
-    
+    </table>
+
   </div>
 
-</div>
+  <div id="pagination" class="mt-4"></div>
 
+</div>
 <?php include 'footer.php'; ?>
 
 <!-- jQuery -->

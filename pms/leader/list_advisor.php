@@ -1,27 +1,33 @@
 <?php include 'header.php'; ?>
 
-<div class="max-w-7xl mx-auto bg-white p-4 rounded-2xl shadow-xl">
+<div class="max-w-7xl mx-auto bg-white p-3 sm:p-4 rounded-2xl shadow-xl">
 
-    <h2 class="text-2xl font-bold mb-4 text-center">Advisor Records</h2>
+    <h2 class="text-xl sm:text-2xl font-bold mb-4 text-center">
+        Advisor Records
+    </h2>
 
-    <!-- Horizontal scroll wrapper -->
+    <!-- Search -->
+    <input type="text" id="searchInput"
+        placeholder="Search advisors..."
+        class="border p-2 rounded mb-3 w-full sm:w-1/3">
+
+    <!-- Table wrapper -->
     <div class="w-full overflow-x-auto">
-        <input type="text" id="searchInput"
-            placeholder="Search advisors..."
-            class="border p-2 rounded mb-3 w-full sm:w-1/3">
-        <table id="example" class="" style="width:100%; padding-top: 1em;  padding-bottom: 1em;">
 
-            <thead class="bg-gradient-to-r from-gray-100 to-gray-200 text-gray-700">
+        <table id="example"
+            class="min-w-[900px] w-full text-sm text-left border border-gray-200">
+
+            <thead class="bg-gray-100 text-gray-700">
                 <tr>
-                    <th data-priority="1" class="p-3 font-semibold text-left">Advisor Code</th>
-                    <th data-priority="2" class="p-3 font-bold text-left">Name</th>
-                    <th data-priority="3" class="p-3 font-semibold text-left">Phone</th>
-                    <th data-priority="4" class="p-3 font-semibold text-left">Address</th>
-                    <th data-priority="5" class="p-3 font-semibold text-left">PAN</th>
-                    <th data-priority="6" class="p-3 font-semibold text-left">Bank Name</th>
-                    <th data-priority="7" class="p-3 font-semibold text-left">Account No</th>
-                    <th data-priority="8" class="p-3 font-semibold text-left">IFSC</th>
-                    <th data-priority="9" class="p-3 font-semibold text-center">Action</th>
+                    <th class="p-3 whitespace-nowrap">Advisor Code</th>
+                    <th class="p-3 whitespace-nowrap">Name</th>
+                    <th class="p-3 whitespace-nowrap">Phone</th>
+                    <th class="p-3 whitespace-nowrap">Address</th>
+                    <th class="p-3 whitespace-nowrap">PAN</th>
+                    <th class="p-3 whitespace-nowrap">Bank Name</th>
+                    <th class="p-3 whitespace-nowrap">Account No</th>
+                    <th class="p-3 whitespace-nowrap">IFSC</th>
+                    <th class="p-3 text-center whitespace-nowrap">Action</th>
                 </tr>
             </thead>
 
@@ -29,8 +35,10 @@
             </tbody>
 
         </table>
-        <div id="pagination"></div>
+
     </div>
+
+    <div id="pagination" class="mt-4"></div>
 
 </div>
 
