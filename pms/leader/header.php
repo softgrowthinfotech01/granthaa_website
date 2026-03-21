@@ -23,12 +23,21 @@
   display: none;
 }
 
+#sidebar {
+  -ms-overflow-style: none;  /* IE & Edge */
+  scrollbar-width: none;     /* Firefox */
+}
+
+#sidebar::-webkit-scrollbar {
+  display: none;             /* Chrome, Safari */
+}
+
 /* Menu items */
 .menu-item{
   display:flex;
   align-items:center;
   gap:12px;
-  padding:12px;
+  padding:10px;
   border-radius:12px;
   transition:all .3s ease;
 }

@@ -152,7 +152,7 @@ fixed md:relative transform md:translate-x-0 -translate-x-full z-40 overflow-hid
             <!-- Dashboard -->
             <li class="bg-gray-200">
                 <a href="home" data-name="Dashboard"
-                    class="flex items-center justify-between px-4 py-4">
+                    class="flex items-center justify-between px-4 py-3">
                     <span class="flex items-center gap-3 text-base font-semibold">
                         <span class="text-lg">🏠</span>
                         Dashboard
@@ -164,7 +164,7 @@ fixed md:relative transform md:translate-x-0 -translate-x-full z-40 overflow-hid
             <li class="border-t">
                 <a href="javascript:void(0)" data-name="Leaders"
                     onclick="toggleMenu('categoryMenu', this)"
-                    class="flex items-center justify-between px-4 py-4 hover:bg-gray-300">
+                    class="flex items-center justify-between px-4 py-3 hover:bg-gray-300">
                     <span class="flex items-center gap-3 text-base font-semibold">
                         <span class="text-lg">👥</span>
                         Leaders
@@ -194,7 +194,7 @@ fixed md:relative transform md:translate-x-0 -translate-x-full z-40 overflow-hid
             <li class="border-t">
                 <a href="javascript:void(0)" data-name="Location"
                     onclick="toggleMenu('location', this)"
-                    class="flex items-center justify-between px-4 py-4 hover:bg-gray-300">
+                    class="flex items-center justify-between px-4 py-3 hover:bg-gray-300">
                     <span class="flex items-center gap-3 text-base font-semibold">
                         <span class="text-lg">📍</span>
                         Location
@@ -224,7 +224,7 @@ fixed md:relative transform md:translate-x-0 -translate-x-full z-40 overflow-hid
             <li class="border-t">
                 <a href="javascript:void(0)" data-name="Set Commission"
                     onclick="toggleMenu('commission', this)"
-                    class="flex items-center justify-between px-4 py-4 hover:bg-gray-300">
+                    class="flex items-center justify-between px-4 py-3 hover:bg-gray-300">
                     <span class="flex items-center gap-3 text-base font-semibold">
                         <span class="text-lg">💰</span>
                         Set Commission
@@ -254,7 +254,7 @@ fixed md:relative transform md:translate-x-0 -translate-x-full z-40 overflow-hid
             <li class="border-t">
                 <a href="javascript:void(0)" data-name="Reports"
                     onclick="toggleMenu('reportMenu', this)"
-                    class="flex items-center justify-between px-4 py-4 hover:bg-gray-300">
+                    class="flex items-center justify-between px-4 py-3 hover:bg-gray-300">
                     <span class="flex items-center gap-3 text-base font-semibold">
                         <span class="text-lg">📊</span>
                         Reports
@@ -298,7 +298,7 @@ fixed md:relative transform md:translate-x-0 -translate-x-full z-40 overflow-hid
             <li class="border-t">
                 <a href="javascript:void(0)" data-name="Commission Payment"
                     onclick="toggleMenu('payment', this)"
-                    class="flex items-center justify-between px-4 py-4 hover:bg-gray-300">
+                    class="flex items-center justify-between px-4 py-3 hover:bg-gray-300">
                     <span class="flex items-center gap-3 text-base font-semibold">
                         <span class="text-lg mb-1">💳</span>
                         Commission <br>Payment
