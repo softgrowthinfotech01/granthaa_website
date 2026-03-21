@@ -196,6 +196,24 @@ class BookingController extends Controller
                     $commissionValue = $leaderCommission->commission_value;
                 }
 
+                $referral = null;
+
+                if ($request->referral_id) {
+                    $referral = Referral::find($request->referral_id);
+
+                    if (!$referral) {
+                        throw new \Exception("Referral not found.");
+                    }
+
+                    if ($referral->status == 'converted') {
+                        throw new \Exception("This referral is already converted.");
+                    }
+
+                    if ($referral->assigned_to != $creator->id) {
+                        throw new \Exception("You are not authorized to convert this referral.");
+                    }
+                }
+
                 // 2️⃣ Create Booking
                 $booking = Booking::create([
                     'user_id' => $newUser->id,
@@ -248,6 +266,33 @@ class BookingController extends Controller
                     'remark' => $request->remark,
                 ]);
 
+                // AFTER Booking::create()
+
+                if ($request->referral_id) {
+
+                    $incentive = ($totalBookingAmount * 5) / 100;
+
+                    $referrer = User::find($referral->referrer_id);
+
+                    if ($referrer) {
+
+                        $referrer->increment('wallet_balance', $incentive);
+
+                        WalletTransaction::create([
+                            'user_id' => $referrer->id,
+                            'amount' => $incentive,
+                            'type' => 'credit',
+                            'remark' => 'Referral Booking Incentive'
+                        ]);
+                    }
+
+                    $referral->update([
+                        'status' => 'converted',
+                        'booking_id' => $booking->id, // ✅ now booking exists
+                        'incentive_amount' => $incentive
+                    ]);
+                }
+
                 // ✅ Store advance payment in booking_payments table
                 $advanceAmount = (float) str_replace(['₹', ',', ' '], '', $request->advance_amount);
                 if ($advanceAmount > 0) {
@@ -281,45 +326,6 @@ class BookingController extends Controller
                         'type' => 'commission',
                         'amount' => $adviserCommissionAmount,
                         'remark' => 'Adviser commission from booking ' . $booking->id
-                    ]);
-                }
-
-                if ($request->referral_id) {
-
-                    $referral = Referral::find($request->referral_id);
-
-                    if (!$referral) {
-                        throw new \Exception("Referral not found.");
-                    }
-
-                    if ($referral->status == 'converted') {
-                        throw new \Exception("This referral is already converted.");
-                    }
-
-                    if ($referral->assigned_to != $creator->id) {
-                        throw new \Exception("You are not authorized to convert this referral.");
-                    }
-
-                    $incentive = ($totalBookingAmount * 5) / 100;
-
-                    $referrer = User::find($referral->referrer_id);
-
-                    if ($referrer) {
-
-                        $referrer->increment('wallet_balance', $incentive);
-
-                        WalletTransaction::create([
-                            'user_id' => $referrer->id,
-                            'amount' => $incentive,
-                            'type' => 'credit',
-                            'remark' => 'Referral Booking Incentive'
-                        ]);
-                    }
-
-                    $referral->update([
-                        'status' => 'converted',
-                        'booking_id' => $booking->id,
-                        'incentive_amount' => $incentive
                     ]);
                 }
 
@@ -524,22 +530,22 @@ class BookingController extends Controller
                 $teamIds = User::where('created_by', $user->id)
                     ->pluck('id')
                     ->push($user->id);
-                
-$my_total_booking = Booking::where('leader_id', $user->id)
-    ->whereNull('adviser_id')
-    ->count();
 
-$my_total_booking_amount = Booking::where('leader_id', $user->id)
-    ->whereNull('adviser_id')
-    ->sum('total_booking_amount');
+                $my_total_booking = Booking::where('leader_id', $user->id)
+                    ->whereNull('adviser_id')
+                    ->count();
 
-$team_total_booking = Booking::where('leader_id', $user->id)
-    ->whereNotNull('adviser_id')
-    ->count();
+                $my_total_booking_amount = Booking::where('leader_id', $user->id)
+                    ->whereNull('adviser_id')
+                    ->sum('total_booking_amount');
 
-$team_total_booking_amount = Booking::where('leader_id', $user->id)
-    ->whereNotNull('adviser_id')
-    ->sum('total_booking_amount');
+                $team_total_booking = Booking::where('leader_id', $user->id)
+                    ->whereNotNull('adviser_id')
+                    ->count();
+
+                $team_total_booking_amount = Booking::where('leader_id', $user->id)
+                    ->whereNotNull('adviser_id')
+                    ->sum('total_booking_amount');
 
                 $totalAdvisors = User::where('created_by', $user->id)
                     ->where('role', 'adviser')
@@ -548,16 +554,16 @@ $team_total_booking_amount = Booking::where('leader_id', $user->id)
                 $totalSite = UserLocationCommission::where('user_id', $user->id)->count();
 
                 $my_commission = Booking::where('leader_id', $user->id)
-    ->whereNull('adviser_id') // only leader deals
-    ->sum('leader_commission_amount');
+                    ->whereNull('adviser_id') // only leader deals
+                    ->sum('leader_commission_amount');
 
-    $team_commission = Booking::where('leader_id', $user->id)
-    ->whereNotNull('adviser_id') // adviser deals
-    ->sum('leader_commission_amount');
+                $team_commission = Booking::where('leader_id', $user->id)
+                    ->whereNotNull('adviser_id') // adviser deals
+                    ->sum('leader_commission_amount');
 
-    $team_adviser_commission = Booking::where('leader_id', $user->id)
-    ->whereNotNull('adviser_id')
-    ->sum('adviser_commission_amount');
+                $team_adviser_commission = Booking::where('leader_id', $user->id)
+                    ->whereNotNull('adviser_id')
+                    ->sum('adviser_commission_amount');
 
                 $totalCommissionAmount = Booking::where('leader_id', $user->id)
                     ->sum(DB::raw('leader_commission_amount + adviser_commission_amount'));
@@ -576,23 +582,23 @@ $team_total_booking_amount = Booking::where('leader_id', $user->id)
                     ->first();
 
                 $response['data'] = [
-                            'total_advisors' => $totalAdvisors,
-                            'my_total_booking' => $my_total_booking,
-                            'my_total_booking_amount' => $my_total_booking_amount,
-                            'team_total_booking' => $team_total_booking,
-                            'team_total_booking_amount' => $team_total_booking_amount,
-                            'total_booking' => $my_total_booking + $team_total_booking,
-                            'total_booking_amount' => $my_total_booking_amount + $team_total_booking_amount,
-                            'total_site' => $totalSite,
-                            'total_commission_amount' => $totalCommissionAmount,
-                            'total_paidamt' => $totalPaidAmt,
-                            'total_balanceamt' => $totalCommissionAmount - $totalPaidAmt,
-                            'top_advisor' => $topAdvisor,
+                    'total_advisors' => $totalAdvisors,
+                    'my_total_booking' => $my_total_booking,
+                    'my_total_booking_amount' => $my_total_booking_amount,
+                    'team_total_booking' => $team_total_booking,
+                    'team_total_booking_amount' => $team_total_booking_amount,
+                    'total_booking' => $my_total_booking + $team_total_booking,
+                    'total_booking_amount' => $my_total_booking_amount + $team_total_booking_amount,
+                    'total_site' => $totalSite,
+                    'total_commission_amount' => $totalCommissionAmount,
+                    'total_paidamt' => $totalPaidAmt,
+                    'total_balanceamt' => $totalCommissionAmount - $totalPaidAmt,
+                    'top_advisor' => $topAdvisor,
 
-    'my_commission' => $my_commission,
-    'team_commission' => $team_commission + $team_adviser_commission,
+                    'my_commission' => $my_commission,
+                    'team_commission' => $team_commission + $team_adviser_commission,
 
-    'total_commission_amount' => $my_commission + $team_commission + $team_adviser_commission,
+                    'total_commission_amount' => $my_commission + $team_commission + $team_adviser_commission,
                 ];
             }
 
