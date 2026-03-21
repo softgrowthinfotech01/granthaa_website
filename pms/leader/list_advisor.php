@@ -1,7 +1,6 @@
 <?php include 'header.php'; ?>
 
-<div class="max-w-7xl mx-auto bg-white p-3 sm:p-4 rounded-2xl shadow-xl">
-
+<div class="max-w-7xl mx-auto bg-white p-4 rounded-2xl shadow-xl">
     <h2 class="text-xl sm:text-2xl font-bold mb-4 text-center">
         Advisor Records
     </h2>

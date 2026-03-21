@@ -114,14 +114,15 @@
                 });
         }
 
-        async function loadBookings() {
+        async function loadBookings(page = 1) {
+    currentPage = page;
 
             await loadLocations();
 
             const searchValue = document.getElementById("searchInput").value.trim();
             const perPage = document.getElementById("perPage").value;
 
-            fetch(`${url}bookings?per_page=${perPage}&search=${searchValue}`, {
+            fetch(`${url}bookings?page=${currentPage}&per_page=${perPage}&search=${searchValue}`, {
                     method: "GET",
                     headers: {
                         "Authorization": "Bearer " + token,
@@ -215,6 +216,38 @@
         </tr>
     `;
                     });
+                
+                const pagination = document.getElementById("pagination");
+pagination.innerHTML = "";
+
+const totalPages = response.data?.last_page || 1;
+const current = response.data?.current_page || 1;
+
+// Previous Button
+if (current > 1) {
+    pagination.innerHTML += `
+        <button onclick="changePage(${current - 1})"
+            class="px-3 py-1 bg-gray-200 rounded">Prev</button>
+    `;
+}
+
+// Page Numbers
+for (let i = 1; i <= totalPages; i++) {
+    pagination.innerHTML += `
+        <button onclick="changePage(${i})"
+            class="px-3 py-1 rounded ${i === current ? 'bg-blue-500 text-white' : 'bg-gray-200'}">
+            ${i}
+        </button>
+    `;
+}
+
+// Next Button
+if (current < totalPages) {
+    pagination.innerHTML += `
+        <button onclick="changePage(${current + 1})"
+            class="px-3 py-1 bg-gray-200 rounded">Next</button>
+    `;
+}
                 });
         }
         window.toggleRow = function(id) {
