@@ -58,7 +58,7 @@
     document.addEventListener("DOMContentLoaded", function() {
 
         const token = localStorage.getItem("auth_token");
-        const user = localStorage.getItem("auth_user");
+        const user = JSON.parse(localStorage.getItem("auth_user"));
 
         if (!token) {
             alert("Please login first");
@@ -110,7 +110,7 @@
                             </td>
                             <td class="p-3">${formatDate(row.created_at)}</td>
                             <td class="p-3">          
-    ${
+    ${ 
     Number(row.assigned_to) === Number(user.id)
         ? (
             row.status === "converted"
@@ -130,7 +130,6 @@
                         </tr>
                     `;
                     });
-
                     renderPagination(response.data.links);
                 });
         }
