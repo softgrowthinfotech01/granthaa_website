@@ -72,7 +72,7 @@ class="px-2 py-1 border rounded">
 <tr>
 
 <th class="px-4 py-3">#</th>
-<th class="px-4 py-3">User ID</th>
+<th class="px-4 py-3">Leader Name</th>
 <th class="px-4 py-3">Amount</th>
 <th class="px-4 py-3">Mode</th>
 <th class="px-4 py-3">Reference</th>

@@ -38,6 +38,7 @@
                     <th class="p-3 text-left">Email</th>
                     <th class="p-3 text-left">Status</th>
                     <th class="p-3 text-left">Date</th>
+                    <th class="p-3 text-left">Booking Link</th>
                 </tr>
             </thead>
 
@@ -53,6 +54,8 @@
 
 </div>
 
+<script src="../url.js"></script>
+
 <script>
     document.addEventListener("DOMContentLoaded", function() {
 
@@ -66,16 +69,12 @@
 
         let currentPageUrl = url + "referrals";
 
-        // =========================
-        // 🔹 LOAD REFERRALS
-        // =========================
         function loadReferrals(apiUrl = currentPageUrl) {
 
             const search = document.getElementById("searchInput").value;
             const perPage = document.getElementById("perPage").value;
 
             let separator = apiUrl.includes("?") ? "&" : "?";
-
             let finalUrl = `${apiUrl}${separator}search=${search}&per_page=${perPage}`;
 
             fetch(finalUrl, {
@@ -88,7 +87,6 @@
                 .then(response => {
 
                     const referrals = response.data?.data ?? [];
-
                     const currentPage = response.data.current_page;
                     const perPage = response.data.per_page;
 
@@ -96,46 +94,51 @@
                     tbody.innerHTML = "";
 
                     referrals.forEach((row, i) => {
-
                         let srNo = (currentPage - 1) * perPage + (i + 1);
 
                         tbody.innerHTML += `
-        <tr>
-            <td class="p-3">${srNo}</td>
-            <td class="p-3">${row.referred_name}</td>
-            <td class="p-3">${row.referred_contact}</td>
-            <td class="p-3">${row.referred_email}</td>
-            <td class="p-3">
-                <span class="px-2 py-1 rounded text-white ${
-                    row.status === 'converted' ? 'bg-green-500' : 'bg-yellow-500'
-                }">
-                    ${row.status}
-                </span>
-            </td>
-            <td class="p-3">${formatDate(row.created_at)}</td>
-        </tr>
-    `;
+                        <tr>
+                            <td class="p-3">${srNo}</td>
+                            <td class="p-3">${row.referred_name}</td>
+                            <td class="p-3">${row.referred_contact}</td>
+                            <td class="p-3">${row.referred_email}</td>
+                            <td class="p-3">
+                                <span class="px-2 py-1 rounded text-white ${
+                                    row.status === 'converted' ? 'bg-green-500' : 'bg-yellow-500'
+                                }">
+                                    ${row.status}
+                                </span>
+                            </td>
+                            <td class="p-3">${formatDate(row.created_at)}</td>
+                            <td class="p-3">
+    ${
+        row.status === "converted"
+        ? `<button class="bg-gray-400 text-white px-3 py-2 rounded-lg cursor-not-allowed" disabled>
+                Already Booked
+           </button>`
+        : `<a href="reference_booking.php?reference_id=${row.id}" 
+              class="inline-block bg-blue-600 text-white px-3 py-2 rounded-lg hover:bg-blue-700 transition">
+                Create Booking
+           </a>`
+    }
+</td>
+                        </tr>
+                    `;
                     });
 
                     renderPagination(response.data.links);
                 });
         }
 
-        // =========================
-        // 🔹 PAGINATION
-        // =========================
         function renderPagination(links) {
-
             const pagination = document.getElementById("pagination");
             pagination.innerHTML = "";
 
             links.forEach(link => {
-
                 let btn = document.createElement("button");
 
                 btn.innerText = link.label.replace(/&laquo;|&raquo;/g, "");
                 btn.disabled = !link.url;
-
                 btn.className = "px-3 py-1 border rounded";
 
                 if (link.active) {
@@ -150,33 +153,20 @@
             });
         }
 
-        // =========================
-        // 🔹 DATE FORMAT
-        // =========================
         function formatDate(dateStr) {
             const date = new Date(dateStr);
             return date.toLocaleDateString("en-IN");
         }
 
-        // =========================
-        // 🔹 SEARCH
-        // =========================
         document.getElementById("searchBtn").addEventListener("click", function() {
             loadReferrals();
         });
 
-        // =========================
-        // 🔹 PER PAGE
-        // =========================
         document.getElementById("perPage").addEventListener("change", function() {
             loadReferrals();
         });
 
-        // =========================
-        // 🔹 INITIAL LOAD
-        // =========================
         loadReferrals();
-
     });
 </script>
 <?php include 'footer.php'; ?>

@@ -2,9 +2,8 @@
 
 <aside id="sidebar"
   class="fixed md:static z-30 top-0 left-0 h-full w-55 md:w-64 bg-gray-800 text-white
-transition-all duration-300 ease-in-out -translate-x-full md:translate-x-0
-flex flex-col justify-between shrink-0">
-
+  transition-all duration-300 ease-in-out -translate-x-full md:translate-x-0
+  flex flex-col justify-between shrink-0 overflow-y-auto scroll-smooth">
   <!-- Top -->
   <div>
     <!-- Logo -->
@@ -22,7 +21,7 @@ flex flex-col justify-between shrink-0">
 
     <nav class="mt-6 px-2">
 
-      <ul class="space-y-6">
+      <ul class="space-y-5">
 
         <!-- Dashboard -->
         <li>
@@ -100,7 +99,7 @@ flex flex-col justify-between shrink-0">
                 <path stroke-linecap="round" stroke-linejoin="round"
                   d="M17 20v-2a4 4 0 0 0-3-3.87M7 20v-2a4 4 0 0 1 3-3.87m0 0A4 4 0 1 0 7 6a4 4 0 0 0 3 8zm6-8a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
               </svg>
-              <span class="sidebar-text">Commission</span>
+              <span class="sidebar-text"> Set Commission</span>
             </span>
 
             <svg class="menu-arrow w-4 h-4 transition-transform transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -132,7 +131,7 @@ flex flex-col justify-between shrink-0">
                   <path d="M4 12h16" />
                 </svg>
 
-                <span class="sidebar-text">View Commission</span>
+                <span class="sidebar-text">View Set Commission</span>
               </a>
             </li>
 
@@ -293,6 +292,16 @@ flex flex-col justify-between shrink-0">
         </ul>
         </li>
 
+
+         <a href="team_performance"
+          class="menu-item <?php if ($current == 'team_performance') echo 'active'; ?>">
+          <svg class="w-6 h-6 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M3 3v18h18M7 13l3-3 4 4 5-5" />
+          </svg>
+          <span class="sidebar-text">Team Performance</span>
+        </a>
+
          <!-- reference -->
         <li>
           <a href="javascript:void(0)"
@@ -331,14 +340,7 @@ flex flex-col justify-between shrink-0">
           </ul>
         </li>
 
-        <a href="team_performance"
-          class="menu-item <?php if ($current == 'team_performance') echo 'active'; ?>">
-          <svg class="w-6 h-6 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M3 3v18h18M7 13l3-3 4 4 5-5" />
-          </svg>
-          <span class="sidebar-text">Team Performance</span>
-        </a>
+       
 
       </ul>
 
