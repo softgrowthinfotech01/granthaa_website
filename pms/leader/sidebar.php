@@ -100,7 +100,7 @@ flex flex-col justify-between shrink-0">
                 <path stroke-linecap="round" stroke-linejoin="round"
                   d="M17 20v-2a4 4 0 0 0-3-3.87M7 20v-2a4 4 0 0 1 3-3.87m0 0A4 4 0 1 0 7 6a4 4 0 0 0 3 8zm6-8a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
               </svg>
-              <span class="sidebar-text">Commission</span>
+              <span class="sidebar-text"> Set Commission</span>
             </span>
 
             <svg class="menu-arrow w-4 h-4 transition-transform transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
