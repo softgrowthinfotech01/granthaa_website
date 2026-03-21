@@ -54,9 +54,10 @@ class UserController extends Controller
         }
 
         // Admin can view anyone
-        if ($auth->role !== 'admin' && $user->created_by !== $auth->id && $auth->id !== $user->id) {
-            return response()->json(['message' => 'Unauthorized'], 403);
+        if ($auth->role != 'admin' && $user->created_by != $auth->id && $auth->id != $user->id) {
+            return response()->json(['message' => 'Unauthorized chekc this'], 403);
         }
+
 
         return response()->json([
             'message' => 'User fetched successfully',
@@ -288,7 +289,7 @@ class UserController extends Controller
 
         // Admin can update anyone
         // Others can update only their created users
-        if ($auth->role !== 'admin' && $user->created_by !== $auth->id) {
+        if ($auth->role != 'admin' && $user->created_by != $auth->id) {
             return response()->json(['message' => 'Unauthorized'], 403);
         }
 
@@ -379,7 +380,7 @@ class UserController extends Controller
 
         // Admin can delete anyone
         // Others can delete only their created users
-        if ($auth->role !== 'admin' && $user->created_by !== $auth->id) {
+        if ($auth->role != 'admin' && $user->created_by != $auth->id) {
             return response()->json(['message' => 'Unauthorized'], 403);
         }
 
