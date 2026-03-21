@@ -29,7 +29,7 @@
 
     <div class="absolute top-5 right-5 opacity-50 text-6xl font-bold">₹</div>
 
-    <h3 class="text-sm tracking-widest font-semibold">TOTAL MY BOOKING AMOUNT</h3>
+    <h3 class="text-sm tracking-widest font-semibold">TOTAL TEAM BOOKING AMOUNT</h3>
     <p class="text-3xl font-bold mt-2" id="teamtotalBooking"></p>
   </div>
 
