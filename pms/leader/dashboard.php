@@ -19,8 +19,18 @@
 
     <div class="absolute top-5 right-5 opacity-50 text-6xl font-bold">₹</div>
 
-    <h3 class="text-sm tracking-widest font-semibold">TOTAL ADVISOR'S BOOKING AMOUNT</h3>
+    <h3 class="text-sm tracking-widest font-semibold">TOTAL MY BOOKING AMOUNT</h3>
     <p class="text-3xl font-bold mt-2" id="totalBooking"></p>
+  </div>
+
+  <!-- TEAM Booking Amount -->
+  <div class="relative bg-gradient-to-br from-yellow-200 to-gray-800  
+            text-black p-6 rounded-2xl shadow-lg overflow-hidden">
+
+    <div class="absolute top-5 right-5 opacity-50 text-6xl font-bold">₹</div>
+
+    <h3 class="text-sm tracking-widest font-semibold">TOTAL MY BOOKING AMOUNT</h3>
+    <p class="text-3xl font-bold mt-2" id="teamtotalBooking"></p>
   </div>
 
   <!-- Commission Amount -->
@@ -29,11 +39,61 @@
 
     <div class="absolute top-5 right-5 opacity-50 text-6xl font-bold">%</div>
 
-    <h3 class="text-sm tracking-widest font-semibold">TOTAL ADVISOR'S COMMISSION AMOUNT</h3>
+    <h3 class="text-sm tracking-widest font-semibold">TOTAL MY COMMISSION AMOUNT</h3>
     <p class="text-3xl font-bold mt-2" id="totalCommission"></p>
   </div>
 
-  <!-- Top Leader -->
+  <!-- Commission Amount -->
+  <div class="relative bg-gradient-to-br from-yellow-200 to-gray-800  
+            text-black p-6 rounded-2xl shadow-lg overflow-hidden">
+
+    <div class="absolute top-5 right-5 opacity-50 text-6xl font-bold">%</div>
+
+    <h3 class="text-sm tracking-widest font-semibold">TOTAL TEAM COMMISSION AMOUNT</h3>
+    <p class="text-3xl font-bold mt-2" id="teamtotalCommission"></p>
+  </div>
+
+  <!-- Top Adviser -->
+  <div class="relative bg-gradient-to-br from-yellow-200 to-gray-800  
+            text-black p-6 rounded-2xl shadow-lg overflow-hidden">
+
+    <div class="absolute top-5 right-5 opacity-50 text-6xl font-bold">🏆</div>
+
+    <h3 class="text-sm tracking-widest font-semibold">TOP ADVISOR</h3>
+    <p class="text-2xl font-bold mt-3" id="topAdvisor"></p>
+  </div>
+
+  <!-- My Total bookings  -->
+  <div class="relative bg-gradient-to-br from-yellow-200 to-gray-800  
+            text-black p-6 rounded-2xl shadow-lg overflow-hidden">
+
+    <div class="absolute top-5 right-5 opacity-50 text-6xl font-bold">🏆</div>
+
+    <h3 class="text-sm tracking-widest font-semibold">My Bookings</h3>
+    <p class="text-2xl font-bold mt-3" id="mybooking"></p>
+  </div>
+
+  <!-- Team TOtal bookings -->
+  <div class="relative bg-gradient-to-br from-yellow-200 to-gray-800  
+            text-black p-6 rounded-2xl shadow-lg overflow-hidden">
+
+    <div class="absolute top-5 right-5 opacity-50 text-6xl font-bold">🏆</div>
+
+    <h3 class="text-sm tracking-widest font-semibold">Teams Bookings</h3>
+    <p class="text-2xl font-bold mt-3" id="teambooking"></p>
+  </div>
+
+  <!-- Top Adviser -->
+  <div class="relative bg-gradient-to-br from-yellow-200 to-gray-800  
+            text-black p-6 rounded-2xl shadow-lg overflow-hidden">
+
+    <div class="absolute top-5 right-5 opacity-50 text-6xl font-bold">🏆</div>
+
+    <h3 class="text-sm tracking-widest font-semibold">TOP ADVISOR</h3>
+    <p class="text-2xl font-bold mt-3" id="topAdvisor"></p>
+  </div>
+
+  <!-- Top Adviser -->
   <div class="relative bg-gradient-to-br from-yellow-200 to-gray-800  
             text-black p-6 rounded-2xl shadow-lg overflow-hidden">
 
@@ -70,10 +130,14 @@
       })
       .then(data => {
         document.querySelector('#totalAdvisors').textContent = data.data.total_advisors;
-        document.querySelector('#totalBooking').textContent = "₹ " + data.data.total_booking_amount.toLocaleString();
-        document.querySelector('#totalCommission').textContent = "₹ " + data.data.total_commission_amount.toLocaleString();
-        document.querySelector('#topAdvisor').textContent = (data.data.top_advisor_name == null) ? "-" :
-    data.data.top_advisor_name + " (" + data.data.user_code + ")";
+        document.querySelector('#totalBooking').textContent = "₹ " + data.data.my_total_booking_amount.toLocaleString();
+        document.querySelector('#teamtotalBooking').textContent = "₹ " + data.data.team_total_booking_amount.toLocaleString();
+        document.querySelector('#totalCommission').textContent = "₹ " + data.data.my_commission.toLocaleString();
+        document.querySelector('#teamtotalCommission').textContent = "₹ " + data.data.team_commission.toLocaleString();
+        document.querySelector('#topAdvisor').textContent = (data.data.top_advisor_name == null) ? "-" : data.data.top_advisor_name + " (" + data.data.user_code + ")";
+        document.querySelector('#teambooking').textContent = (data.data.team_total_booking == null) ? "-" : data.data.team_total_booking ;
+        document.querySelector('#mybooking').textContent = (data.data.my_total_booking == null) ? "-" : data.data.my_total_booking  ;
+    
       })
       .catch(error => console.error('Error fetching dashboard data:', error));
   });

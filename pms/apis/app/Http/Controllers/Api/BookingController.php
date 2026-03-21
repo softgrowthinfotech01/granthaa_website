@@ -524,17 +524,40 @@ class BookingController extends Controller
                 $teamIds = User::where('created_by', $user->id)
                     ->pluck('id')
                     ->push($user->id);
+                
+$my_total_booking = Booking::where('leader_id', $user->id)
+    ->whereNull('adviser_id')
+    ->count();
+
+$my_total_booking_amount = Booking::where('leader_id', $user->id)
+    ->whereNull('adviser_id')
+    ->sum('total_booking_amount');
+
+$team_total_booking = Booking::where('leader_id', $user->id)
+    ->whereNotNull('adviser_id')
+    ->count();
+
+$team_total_booking_amount = Booking::where('leader_id', $user->id)
+    ->whereNotNull('adviser_id')
+    ->sum('total_booking_amount');
 
                 $totalAdvisors = User::where('created_by', $user->id)
                     ->where('role', 'adviser')
                     ->count();
 
-                $totalBookingAmount = Booking::where('leader_id', $user->id)
-                    ->sum('total_booking_amount');
-
-                $totalBooking = Booking::where('leader_id', $user->id)->count();
-
                 $totalSite = UserLocationCommission::where('user_id', $user->id)->count();
+
+                $my_commission = Booking::where('leader_id', $user->id)
+    ->whereNull('adviser_id') // only leader deals
+    ->sum('leader_commission_amount');
+
+    $team_commission = Booking::where('leader_id', $user->id)
+    ->whereNotNull('adviser_id') // adviser deals
+    ->sum('leader_commission_amount');
+
+    $team_adviser_commission = Booking::where('leader_id', $user->id)
+    ->whereNotNull('adviser_id')
+    ->sum('adviser_commission_amount');
 
                 $totalCommissionAmount = Booking::where('leader_id', $user->id)
                     ->sum(DB::raw('leader_commission_amount + adviser_commission_amount'));
@@ -553,14 +576,23 @@ class BookingController extends Controller
                     ->first();
 
                 $response['data'] = [
-                    'total_advisors' => $totalAdvisors,
-                    'total_booking_amount' => $totalBookingAmount,
-                    'total_booking' => $totalBooking,
-                    'total_site' => $totalSite,
-                    'total_commission_amount' => $totalCommissionAmount,
-                    'total_paidamt' => $totalPaidAmt,
-                    'total_balanceamt' => $totalCommissionAmount - $totalPaidAmt,
-                    'top_advisor' => $topAdvisor
+                            'total_advisors' => $totalAdvisors,
+                            'my_total_booking' => $my_total_booking,
+                            'my_total_booking_amount' => $my_total_booking_amount,
+                            'team_total_booking' => $team_total_booking,
+                            'team_total_booking_amount' => $team_total_booking_amount,
+                            'total_booking' => $my_total_booking + $team_total_booking,
+                            'total_booking_amount' => $my_total_booking_amount + $team_total_booking_amount,
+                            'total_site' => $totalSite,
+                            'total_commission_amount' => $totalCommissionAmount,
+                            'total_paidamt' => $totalPaidAmt,
+                            'total_balanceamt' => $totalCommissionAmount - $totalPaidAmt,
+                            'top_advisor' => $topAdvisor,
+
+    'my_commission' => $my_commission,
+    'team_commission' => $team_commission + $team_adviser_commission,
+
+    'total_commission_amount' => $my_commission + $team_commission + $team_adviser_commission,
                 ];
             }
 
