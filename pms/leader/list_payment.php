@@ -6,40 +6,35 @@
     </h2>
 
     <!-- 🔹 SEARCH + FILTER -->
-  <div class="mb-4 grid grid-cols-1 sm:grid-cols-2 items-center gap-3">
+    <div class="mb-4 grid grid-cols-1 sm:grid-cols-2 items-center gap-3">
 
     <!-- LEFT SIDE -->
     <div class="flex flex-wrap justify-start sm:justify-center gap-3">
         <input type="text" id="searchInput"
-            placeholder="Search user / reference"
+            placeholder="Name / contact / email"
             class="border p-2 rounded w-64">
 
-        <div class="flex justify-between flex-wrap mb-4 mr-4">
+        <button id="searchBtn"
+            class="bg-blue-500 text-white px-4 py-1 rounded">
+            Search
+        </button>
+    </div>
 
-            <div>
-                <input type="text" id="searchInput"
-                    placeholder="Search reference / remark"
-                    class="border p-2 rounded w-64">
+    <!-- RIGHT SIDE -->
+    <div class="flex justify-end sm:justify-center gap-2">
+        <span class="text-sm text-gray-600">Show:</span>
+        <select id="perPage" class="border p-2 rounded">
+            <option value="10">10</option>
+            <option value="25">25</option>
+            <option value="50">50</option>
+        </select>
+    </div>
 
-                <button id="searchBtn"
-                    class="bg-blue-500 text-white px-4 py-2 rounded">
-                    Search
-                </button>
-            </div>
+</div>
+ <div class="w-full overflow-x-auto">
+        <table class="min-w-[700px] w-full text-sm border border-gray-200">
 
-            <div>
-                <select id="perPage" class="border p-2 rounded">
-                    <option value="10">10</option>
-                    <option value="25">25</option>
-                    <option value="50">50</option>
-                </select>
-            </div>
-
-        </div>
-
-        <table class="w-full">
-
-            <thead class="bg-gradient-to-r from-gray-100 to-gray-200 text-gray-700">
+            <thead class="bg-gray-100 text-gray-700">
                 <tr>
                     <th class="p-3 text-left">Advisor Name</th>
                     <th class="p-3 text-left">Amount</th>
@@ -53,45 +48,8 @@
             <tbody id="paymentData" class="divide-y divide-gray-200"></tbody>
 
         </table>
-
-        <div id="pagination" class="mt-4 flex justify-center items-center gap-2"></div>
-
-    <!-- RIGHT SIDE -->
-    <div class="flex justify-end sm:justify-center gap-2">
-        <span class="text-sm text-gray-600">Show:</span>
-        <select id="perPage" class="border p-2 rounded">
-            <option value="10">10</option>
-            <option value="25">25</option>
-            <option value="50">50</option>
-        </select>
-    </div>
-
 </div>
-
-    <!-- 🔹 TABLE -->
-    <div class="w-full overflow-x-auto">
-
-        <table class="min-w-[700px] w-full text-sm border border-gray-200">
-
-            <thead class="bg-gray-100 text-gray-700">
-                <tr>
-                    <th class="p-3 text-left whitespace-nowrap">User</th>
-                    <th class="p-3 text-left whitespace-nowrap">Amount</th>
-                    <th class="p-3 text-left whitespace-nowrap">Payment Mode</th>
-                    <th class="p-3 text-left whitespace-nowrap">Reference No</th>
-                    <th class="p-3 text-left whitespace-nowrap">Remark</th>
-                    <th class="p-3 text-left whitespace-nowrap">Date</th>
-                </tr>
-            </thead>
-
-            <tbody id="paymentData" class="divide-y divide-gray-200"></tbody>
-
-        </table>
-
-    </div>
-
-    <!-- 🔹 PAGINATION -->
-    <div id="pagination" class="mt-4 flex flex-wrap justify-center items-center gap-2"></div>
+        <div id="pagination" class="mt-4 flex justify-center items-center gap-2"></div>
 
 </div>
 <?php include 'footer.php'; ?>
