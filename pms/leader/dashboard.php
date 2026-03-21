@@ -89,8 +89,8 @@
 
     <div class="absolute top-5 right-5 opacity-50 text-6xl font-bold">🏆</div>
 
-    <h3 class="text-sm tracking-widest font-semibold">TOP ADVISOR</h3>
-    <p class="text-2xl font-bold mt-3" id="topAdvisor"></p>
+    <h3 class="text-sm tracking-widest font-semibold">TOTAL BOOKING AMOUNT</h3>
+    <p class="text-2xl font-bold mt-3" id="total_booking_amount"></p>
   </div>
 
   <!-- Top Adviser -->
@@ -99,8 +99,8 @@
 
     <div class="absolute top-5 right-5 opacity-50 text-6xl font-bold">🏆</div>
 
-    <h3 class="text-sm tracking-widest font-semibold">TOP ADVISOR</h3>
-    <p class="text-2xl font-bold mt-3" id="topAdvisor"></p>
+    <h3 class="text-sm tracking-widest font-semibold">TOTAL COMMISSION AMOUNT</h3>
+    <p class="text-2xl font-bold mt-3" id="total_commission_amount"></p>
   </div>
 
 </div>
@@ -137,6 +137,8 @@
         document.querySelector('#topAdvisor').textContent = (data.data.top_advisor_name == null) ? "-" : data.data.top_advisor_name + " (" + data.data.user_code + ")";
         document.querySelector('#teambooking').textContent = (data.data.team_total_booking == null) ? "-" : data.data.team_total_booking ;
         document.querySelector('#mybooking').textContent = (data.data.my_total_booking == null) ? "-" : data.data.my_total_booking  ;
+        document.querySelector('#total_booking_amount').textContent = (data.data.total_booking_amount == null) ? "-" : data.data.total_booking_amount  ;
+        document.querySelector('#total_commission_amount').textContent = (data.data.total_commission_amount == null) ? "-" : data.data.total_commission_amount  ;
     
       })
       .catch(error => console.error('Error fetching dashboard data:', error));
