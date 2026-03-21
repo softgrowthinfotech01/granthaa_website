@@ -1,33 +1,44 @@
 <?php include 'header.php'; ?>
 
+
 <div class="max-w-7xl mx-auto bg-white p-4 rounded-2xl shadow-xl">
 
-    <h2 class="text-2xl font-bold mb-4 text-center">Customer and Plot Details</h2>
+    <h2 class="text-2xl font-bold mb-4 text-center">
+        Customer and Plot Details
+    </h2>
 
-    <!-- Horizontal scroll wrapper -->
+    <!-- ✅ SEARCH (OUTSIDE SCROLL) -->
+<div class="mb-4 grid grid-cols-1 sm:grid-cols-2 items-center gap-3">
+
+    <!-- LEFT SIDE -->
+    <div class="flex flex-wrap justify-start sm:justify-center gap-3">
+        <input type="text" id="searchInput"
+            placeholder="Search buyer / project / mobile"
+            class="border p-2 rounded w-64">
+
+        <button id="searchBtn"
+            class="bg-blue-500 text-white px-4 py-1 rounded">
+            Search
+        </button>
+    </div>
+
+    <!-- RIGHT SIDE -->
+    <div class="flex justify-end sm:justify-center gap-2">
+        <span class="text-sm text-gray-600">Show:</span>
+        <select id="perPage" class="border p-2 rounded">
+            <option value="10">10</option>
+            <option value="25">25</option>
+            <option value="50">50</option>
+        </select>
+    </div>
+
+</div>
+
+    <!-- ✅ ONLY TABLE SCROLLS -->
     <div class="w-full overflow-x-auto">
-        <div class="flex flex-wrap gap-3 mb-4">
 
-            <input type="text" id="searchInput"
-                placeholder="Search buyer / project / mobile"
-                class="border p-2 rounded w-64">
-
-            <button id="searchBtn"
-                class="bg-blue-500 text-white px-4 rounded">
-                Search
-            </button>
-
-            <select id="perPage" class="border p-2 rounded">
-                <option value="10">10</option>
-                <option value="25">25</option>
-                <option value="50">50</option>
-            </select>
-
-        </div>
-
-        <table id="example" class="" style="width:100%; padding-top: 1em;  padding-bottom: 1em;">
-
-            <thead class="bg-gradient-to-r from-gray-100 to-gray-200 text-gray-700">
+        <table id="example" style="width:100%; padding-top: 1em; padding-bottom: 1em;">
+               <thead class="bg-gradient-to-r from-gray-100 to-gray-200 text-gray-700">
                 <tr>
                     <!-- <th class="p-3 font-semibold text-left">ID</th> -->
                     <th data-priority="1" class="p-3 font-semibold text-left"></th>
@@ -40,21 +51,7 @@
                     <th data-priority="5" class="p-3 font-semibold text-left">Commission Amount</th>
                     <th data-priority="6" class="p-3 font-semibold text-left">Email</th>
                     <th data-priority="12" class="p-3 font-semibold text-left">Action</th>
-                    <!-- <th data-priority="13" class="p-3 font-semibold text-left">Site Location</th>
-          <th data-priority="14" class="p-3 font-semibold text-left">Commission Type</th>
-          <th data-priority="15" class="p-3 font-semibold text-left">Project Name</th>
-          <th data-priority="16" class="p-3 font-semibold text-left">Plot / Flat No.</th>
-          <th data-priority="17" class="p-3 font-semibold text-left">Khasara No.</th>
-          <th data-priority="18" class="p-3 font-semibold text-left">P.H. No.</th>
-          <th data-priority="19" class="p-3 font-semibold text-left">Mouza</th>
-          <th data-priority="20" class="p-3 font-semibold text-left">Tahsil</th>
-          <th data-priority="21" class="p-3 font-semibold text-left">District</th>
-          <th data-priority="22" class="p-3 font-semibold text-left">Sq. Feet</th>
-          <th data-priority="23" class="p-3 font-semibold text-left">Sq. Mtr</th>
-          <th data-priority="24" class="p-3 font-semibold text-left">Total Booking Amt.</th>
-          <th data-priority="25" class="p-3 font-semibold text-left">Payment Mode</th>
-          <th data-priority="26" class="p-3 font-semibold text-left">Remark</th>
-          <th data-priority="27" class="p-3 font-semibold text-center">Action</th> -->
+                  
                 </tr>
             </thead>
 
@@ -63,9 +60,10 @@
             </tbody>
 
         </table>
-        <div id="pagination" class="mt-4 flex justify-center items-center gap-2"></div>
 
     </div>
+
+    <div id="pagination" class="mt-4 flex justify-center items-center gap-2"></div>
 
 </div>
 

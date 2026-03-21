@@ -66,13 +66,11 @@
 
 <?php include 'sidebar.php'; ?>
 
-<div class="flex-1 flex flex-col">
+    <div class="flex-1 flex flex-col overflow-hidden">
 
 <header class="relative bg-gray-200 shadow px-6 py-4 flex justify-between items-center">
 
-  <!-- LEFT SIDE -->
-  <div class="flex items-center gap-4">
-    <!-- Desktop toggle -->
+
     <button onclick="toggleSidebar()" class="hidden md:block text-2xl">
       ☰
     </button>
@@ -91,9 +89,6 @@
 
 
 
-
-
-  </div>
 
   <!-- RIGHT SIDE PROFILE -->
  <div class="relative flex items-center gap-3">

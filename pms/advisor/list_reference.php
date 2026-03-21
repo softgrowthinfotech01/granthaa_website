@@ -38,6 +38,7 @@
                     <th class="p-3 text-left">Email</th>
                     <th class="p-3 text-left">Status</th>
                     <th class="p-3 text-left">Date</th>
+                    <th class="p-3 text-left">Booking Link</th>
                 </tr>
             </thead>
 
@@ -113,6 +114,18 @@
                 </span>
             </td>
             <td class="p-3">${formatDate(row.created_at)}</td>
+            <td class="p-3">
+    ${
+        row.status === "converted"
+        ? `<button class="bg-gray-400 text-white px-3 py-2 rounded-lg cursor-not-allowed" disabled>
+                Already Booked
+           </button>`
+        : `<a href="reference_booking.php?reference_id=${row.id}" 
+              class="inline-block bg-blue-600 text-white px-3 py-2 rounded-lg hover:bg-blue-700 transition">
+                Create Booking
+           </a>`
+    }
+</td>
         </tr>
     `;
                     });
