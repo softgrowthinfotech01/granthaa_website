@@ -69,7 +69,7 @@
 
     <div class="absolute top-5 right-5 opacity-50 text-6xl font-bold">🏆</div>
 
-    <h3 class="text-sm tracking-widest font-semibold">My Bookings</h3>
+    <h3 class="text-sm tracking-widest font-semibold">MY BOOKINGS</h3>
     <p class="text-2xl font-bold mt-3" id="mybooking"></p>
   </div>
 
@@ -79,7 +79,7 @@
 
     <div class="absolute top-5 right-5 opacity-50 text-6xl font-bold">🏆</div>
 
-    <h3 class="text-sm tracking-widest font-semibold">Teams Bookings</h3>
+    <h3 class="text-sm tracking-widest font-semibold">TEAM BOOKINGS</h3>
     <p class="text-2xl font-bold mt-3" id="teambooking"></p>
   </div>
 
