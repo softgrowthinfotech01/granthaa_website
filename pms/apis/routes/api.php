@@ -80,6 +80,12 @@ Route::middleware(['auth:sanctum', 'role:admin,leader,adviser,customer'])->group
         Route::get('/leader/advisers-commission', [CommissionPaymentController::class, 'advisersCommission']);
 
         Route::get('/team-commission', [CommissionPaymentController::class, 'teamCommission']);
+
+
+        Route::get('/leader-adviser-details', [CommissionPaymentController::class, 'leaderAdviserDetails']);
+
+        // for the logs / transactions of each adviser of leader
+        
     });
 
     Route::post('/commission', [CommissionController::class, 'setCommission']);

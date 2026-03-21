@@ -302,6 +302,15 @@
           <span class="sidebar-text">Team Performance</span>
         </a>
 
+         <a href="list_payment_summary"
+          class="menu-item <?php if ($current == 'list_payment_summary') echo 'active'; ?>">
+          <svg class="w-6 h-6 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M3 3v18h18M7 13l3-3 4 4 5-5" />
+          </svg>
+          <span class="sidebar-text">Team Transaction Summary</span>
+        </a>
+
          <!-- reference -->
         <li>
           <a href="javascript:void(0)"
