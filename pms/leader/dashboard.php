@@ -129,16 +129,16 @@
         return response.json();
       })
       .then(data => {
-        document.querySelector('#totalAdvisors').textContent = data.data.total_advisors;
-        document.querySelector('#totalBooking').textContent = "₹ " + data.data.my_total_booking_amount.toLocaleString();
-        document.querySelector('#teamtotalBooking').textContent = "₹ " + data.data.team_total_booking_amount.toLocaleString();
-        document.querySelector('#totalCommission').textContent = "₹ " + data.data.my_commission.toLocaleString();
-        document.querySelector('#teamtotalCommission').textContent = "₹ " + data.data.team_commission.toLocaleString();
+        document.querySelector('#totalAdvisors').textContent = data.data.total_advisors.toLocaleString();
+        document.querySelector('#totalBooking').textContent = "₹ " + parseFloat(data.data.my_total_booking_amount).toLocaleString();
+        document.querySelector('#teamtotalBooking').textContent = "₹ " + parseFloat(data.data.team_total_booking_amount).toLocaleString();
+        document.querySelector('#totalCommission').textContent = "₹ " + parseFloat(data.data.my_commission).toLocaleString();
+        document.querySelector('#teamtotalCommission').textContent = "₹ " + parseFloat(data.data.team_commission).toLocaleString();
         document.querySelector('#topAdvisor').textContent = (data.data.top_advisor_name == null) ? "-" : data.data.top_advisor_name + " (" + data.data.user_code + ")";
         document.querySelector('#teambooking').textContent = (data.data.team_total_booking == null) ? "-" : data.data.team_total_booking ;
         document.querySelector('#mybooking').textContent = (data.data.my_total_booking == null) ? "-" : data.data.my_total_booking  ;
-        document.querySelector('#total_booking_amount').textContent = (data.data.total_booking_amount == null) ? "-" : data.data.total_booking_amount  ;
-        document.querySelector('#total_commission_amount').textContent = (data.data.total_commission_amount == null) ? "-" : data.data.total_commission_amount  ;
+        document.querySelector('#total_booking_amount').textContent = (data.data.total_booking_amount == null) ? "-" : "₹ " + data.data.total_booking_amount.toLocaleString()  ;
+        document.querySelector('#total_commission_amount').textContent = (data.data.total_commission_amount == null) ? "-" : "₹ " + data.data.total_commission_amount.toLocaleString()  ;
     
       })
       .catch(error => console.error('Error fetching dashboard data:', error));
