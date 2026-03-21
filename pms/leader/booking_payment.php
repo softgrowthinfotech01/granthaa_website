@@ -47,22 +47,22 @@
                  <!-- AMOUNT -->
                 <div class="space-y-2">
                     <label class="text-sm font-semibold text-gray-700">Total Amount</label>
-                    <input readonly type="number" name="total_amount" id="total_amount" required
-                        class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-yellow-400 outline-none">
+                    <input readonly type="number" name="total_amount" id="total_amount" readonly
+                        class="w-full border border-gray-300 px-5 py-3 rounded-xl bg-gray-100 outline-none">
                 </div>
 
                  <!-- AMOUNT -->
                 <div class="space-y-2">
                     <label class="text-sm font-semibold text-gray-700">Paid Amount</label>
-                    <input readonly type="number" name="paid_amount" id="paid_amount" required
-                        class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-yellow-400 outline-none">
+                    <input readonly type="number" name="paid_amount" id="paid_amount" readonly
+                        class="w-full border border-gray-300 px-5 py-3 rounded-xl bg-gray-100 outline-none">
                 </div>
 
                  <!-- AMOUNT -->
                 <div class="space-y-2">
                     <label class="text-sm font-semibold text-gray-700">Balanced Amount</label>
-                    <input readonly type="number" name="balanced_amount" id="balanced_amount" required
-                        class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-yellow-400 outline-none">
+                    <input readonly type="number" name="balanced_amount" id="balanced_amount" readonly
+                        class="w-full border border-gray-300 px-5 py-3 rounded-xl bg-gray-100 outline-none">
                 </div>
 
 
