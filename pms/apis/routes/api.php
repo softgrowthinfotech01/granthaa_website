@@ -41,6 +41,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/dashboard', [BookingController::class, 'dashboard']);
     Route::get('/admdashboard', [BookingController::class, 'admdashboard']);
     Route::get('/adviserPerformance', [BookingController::class, 'adviserPerformance']);
+    Route::get('/leader-summary', [BookingController::class, 'leaderSummary']);
+    Route::get('/admin/leader/{leader_id}/details', [BookingController::class, 'leaderDetails']);
 });
 
 Route::middleware(['auth:sanctum', 'role:admin,leader,adviser,customer'])->group(function () {
