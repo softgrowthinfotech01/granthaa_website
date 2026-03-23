@@ -911,10 +911,12 @@ public function leaderDetails($leaderId)
         $role = $b->adviser_id ? 'Adviser' : 'Leader';
         $userId = $b->adviser_id ?? $b->leader_id;
 
-        $paid = CommissionLedger::where('user_id', $userId)
+         $paid = abs(
+            CommissionLedger::where('user_id', $userId)
             ->where('booking_id', $b->id)
             ->where('type', 'payment') // ✅ IMPORTANT FIX
-            ->sum('amount');
+            ->sum('amount')
+        );
 
         $commission = $role === 'Leader'
             ? (float) $b->leader_commission_amount
