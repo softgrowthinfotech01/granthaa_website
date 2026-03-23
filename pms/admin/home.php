@@ -153,6 +153,26 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="pl-2 h-20 bg-sky-500 rounded-lg shadow-md">
+                                <div class="flex w-full h-full py-2 px-4 bg-white rounded-lg justify-between">
+                                    <div class="my-auto">
+                                        <p class="font-bold">Paid Commissions</p>
+                                        <p id="paid_commissions" class="text-lg text-sky-500">00.00</p>
+                                    </div>
+                                    <div class="my-auto">
+                                        <svg viewBox="0 0 24 24" class="h-10 w-10">
+                                            <defs>
+                                                <linearGradient id="clockGrad" x1="0" y1="0" x2="1" y2="1">
+                                                    <stop offset="0%" stop-color="#f59e0b" />
+                                                    <stop offset="100%" stop-color="#f97316" />
+                                                </linearGradient>
+                                            </defs>
+                                            <circle cx="12" cy="12" r="9" fill="url(#clockGrad)" />
+                                            <path d="M12 7v5l3 2" stroke="#fff" stroke-width="2" fill="none" />
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
 
 
                         </div>
@@ -197,6 +217,7 @@
                     document.querySelector('#total_bookings').textContent = data.data.total_bookings;
                     document.querySelector('#total_sales_value').textContent = "₹ " + Number(data.data.total_sales_value).toLocaleString("en-IN");
                     document.querySelector('#pending_commissions').textContent = "₹ " + data.data.pending_commissions.toLocaleString("en-IN");
+                    document.querySelector('#paid_commissions').textContent = "₹ " + data.data.total_paid.toLocaleString("en-IN");
                 })
                 .catch(error => console.error('Error fetching dashboard data:', error));
         });
