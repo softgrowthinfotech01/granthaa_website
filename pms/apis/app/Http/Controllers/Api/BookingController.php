@@ -705,30 +705,72 @@ class BookingController extends Controller
             ], 500);
         }
     }
+
     public function admdashboard()
-    {
-        $totalLeaders = User::where('role', 'leader')->count();
+{
+    $totalLeaders = User::where('role', 'leader')->count();
 
-        $totalSites = LocationMaster::count();
+    $totalAdvisers = User::where('role', 'adviser')->count(); // ✅ NEW
 
-        $totalBookings = Booking::count();
+    $totalCustomers = User::where('role', 'customer')->count(); // ✅ NEW
 
-        $totalSalesValue = Booking::sum('commission_amount');
+    $totalSites = LocationMaster::count();
 
-        $pendingCommissions = CommissionLedger::where('type', 'commission')
-            ->sum('amount') - CommissionLedger::where('type', 'payment')->sum('amount');
+    $totalBookings = Booking::count();
 
-        return response()->json([
-            'status' => true,
-            'data' => [
-                'total_leaders' => $totalLeaders,
-                'total_sites' => $totalSites,
-                'total_bookings' => $totalBookings,
-                'total_sales_value' => $totalSalesValue,
-                'pending_commissions' => $pendingCommissions
-            ]
-        ]);
+    $totalSalesValue = Booking::sum('total_booking_amount'); // ✅ FIXED (better than commission)
+
+    // ✅ Commission totals
+    $totalCommission = CommissionLedger::where('type', 'commission')->sum('amount');
+
+    $totalPaid = abs(
+        CommissionLedger::where('type', 'payment')->sum('amount')
+    );
+
+    $pendingCommissions = $totalCommission - $totalPaid;
+
+    // ✅ Today stats
+    $todayBookings = Booking::whereDate('created_at', today())->count();
+
+    $todaySales = Booking::whereDate('created_at', today())
+        ->sum('total_booking_amount');
+
+    // ✅ Top Leader (by sales)
+    $topLeader = Booking::select('leader_id', DB::raw('SUM(total_booking_amount) as total'))
+        ->groupBy('leader_id')
+        ->orderByDesc('total')
+        ->first();
+
+    $topLeaderName = null;
+
+    if ($topLeader) {
+        $leader = User::find($topLeader->leader_id);
+        $topLeaderName = $leader?->name;
     }
+
+    return response()->json([
+        'status' => true,
+        'data' => [
+            'total_leaders' => $totalLeaders,
+            'total_advisers' => $totalAdvisers, // ✅ NEW
+            'total_customers' => $totalCustomers, // ✅ NEW
+
+            'total_sites' => $totalSites,
+
+            'total_bookings' => $totalBookings,
+            'today_bookings' => $todayBookings, // ✅ NEW
+
+            'total_sales_value' => $totalSalesValue,
+            'today_sales' => $todaySales, // ✅ NEW
+
+            'total_commission' => $totalCommission, // ✅ NEW
+            'total_paid' => $totalPaid, // ✅ NEW
+            'pending_commissions' => $pendingCommissions,
+
+            'top_leader_name' => $topLeaderName // ✅ NEW
+        ]
+    ]);
+}
 
     public function adviserPerformance(Request $request)
     {
@@ -869,10 +911,12 @@ public function leaderDetails($leaderId)
         $role = $b->adviser_id ? 'Adviser' : 'Leader';
         $userId = $b->adviser_id ?? $b->leader_id;
 
-        $paid = CommissionLedger::where('user_id', $userId)
+         $paid = abs(
+            CommissionLedger::where('user_id', $userId)
             ->where('booking_id', $b->id)
             ->where('type', 'payment') // ✅ IMPORTANT FIX
-            ->sum('amount');
+            ->sum('amount')
+        );
 
         $commission = $role === 'Leader'
             ? (float) $b->leader_commission_amount

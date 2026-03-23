@@ -191,8 +191,6 @@
 
     </div>
 
-    <script src="../url.js"></script>
-
     <script>
         function confirmReset() {
             if (confirm("Clear all entered data?")) {
