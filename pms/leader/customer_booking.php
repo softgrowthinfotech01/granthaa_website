@@ -104,13 +104,6 @@
                         class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-yellow-400 outline-none">
                 </div>
 
-                <!-- Advance -->
-                <div class="space-y-2">
-                    <label class="text-sm font-semibold text-gray-700">Advance Booking Amount</label>
-                    <input type="number" name="advance_amount" id="advance_amount"
-                        class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-yellow-400 outline-none">
-                </div>
-
             </div>
         </div>
 
@@ -213,6 +206,13 @@
                         <option value="online_transfer">Online Transfer</option>
                         <option value="upi">UPI</option>
                     </select>
+                </div>
+                
+                <!-- Advance -->
+                <div class="space-y-2">
+                    <label class="text-sm font-semibold text-gray-700">Advance Booking Amount</label>
+                    <input type="number" name="advance_amount" id="advance_amount"
+                        class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-yellow-400 outline-none">
                 </div>
 
                 <div class="space-y-2 md:col-span-2">
