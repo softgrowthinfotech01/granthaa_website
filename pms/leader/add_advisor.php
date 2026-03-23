@@ -67,6 +67,7 @@
         <option value="">-- Select Gender --</option>
         <option value="male">Male</option>
         <option value="female">Female</option>
+        <option value="other">Other</option>
       </select>
     </div>
 
@@ -118,11 +119,15 @@
     <!-- Submit Button -->
     <div class="md:col-span-2 text-right mt-4 gap-2">
       <button type="submit"
-        class="bg-yellow-400 px-6 py-2 rounded-lg font-semibold hover:bg-yellow-500 transition">
+        class="bg-yellow-500 hover:bg-yellow-600 px-4 py-3 rounded-xl
+text-black font-semibold text-lg shadow-md hover:shadow-xl
+transition transform hover:scale-[1.02]">
         Save Advisor
       </button>
       <button type="button" onclick="confirmReset()"
-        class="bg-yellow-400 px-6 py-2 rounded-lg font-semibold hover:bg-yellow-500 transition">
+        class="bg-red-500 hover:bg-red-600 px-4 py-3 rounded-xl
+text-black font-semibold text-lg shadow-md hover:shadow-xl
+transition transform hover:scale-[1.02]">
         Reset
       </button>
     </div>
