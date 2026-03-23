@@ -349,6 +349,58 @@
           </ul>
         </li>
 
+        <!-- visit customer -->
+
+         <li>
+          <a href="javascript:void(0)"
+            onclick="toggleMenu('visit', this)"
+            class="menu-item flex justify-between items-center">
+
+            <span class="flex items-center gap-3">
+              <svg class="w-6 h-6 text-yellow-500" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M12 14c4 0 7 2 7 4v1H5v-1c0-2 3-4 7-4z" />
+                <circle cx="12" cy="8" r="4" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+              <span class="sidebar-text">Customer Visit</span>
+            </span>
+
+            <svg class="menu-arrow w-4 h-4 transition-transform transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+            </svg>
+          </a>
+
+          <ul id="visit" class="hidden">
+
+            <!-- Add customer -->
+            <li>
+              <a href="add_customer_visit"
+                class="menu-item flex items-center gap-3 <?php if ($current == 'add_customer_visit') echo 'active'; ?>">
+
+                <svg class="w-4 h-4 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path d="M4 12h16" />
+                </svg>
+
+                <span class="sidebar-text">Add Customer</span>
+              </a>
+            </li>
+
+            <!-- View leader -->
+            <li>
+              <a href="list_customer_visit"
+                class="menu-item flex items-center gap-3 <?php if ($current == 'list_customers_visit') echo 'active'; ?>">
+
+                <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path d="M4 12h16" />
+                </svg>
+
+                <span class="sidebar-text">View Customers</span>
+              </a>
+            </li>
+
+          </ul>
+        </li>
+
        
 
       </ul>

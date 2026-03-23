@@ -18,100 +18,233 @@ flex flex-col justify-between flex-shrink-0">
        class="h-25 w-60 sidebar-logo transition-all duration-300 border-2 border-yellow-400 rounded-lg "> -->
 
 </div>
+  <nav class="mt-6 px-2">
 
+      <ul class="space-y-5">
 
-  <nav class="mt-6 space-y-2 px-2">
+        <!-- Dashboard -->
+        <li>
+          <a href="dashboard"
+            class="menu-item <?php if ($current == 'dashboard') echo 'active'; ?>">
 
-    <a href="dashboard"
-     class="menu-item <?php if($current=='dashboard') echo 'active'; ?>">
-      <!-- home icon -->
-      <svg class="w-6 h-6 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path d="M3 12l9-9 9 9M4 10v10h16V10"/>
-      </svg>
-      <span class="sidebar-text">Dashboard</span>
-    </a>
-
-    <a href="add_customer_booking"
-     class="menu-item <?php if($current=='add_customer_booking') echo 'active'; ?>">
-       <svg class="w-6 h-6 text-yellow-500" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round"
-                  d="M16 14c3 0 5 2 5 4v1H3v-1c0-2 2-4 5-4" />
-                <circle cx="9" cy="8" r="3" />
-                <circle cx="17" cy="9" r="2" />
-              </svg>
-      <span class="sidebar-text">Add Customer Booking</span>
-    </a>
-
-    <a href="list_customer_booking"
-     class="menu-item <?php if($current=='list_customer_booking') echo 'active'; ?>">
-     <svg class="w-6 h-6 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path d="M3 7h18M3 12h18M3 17h18"/>
-      </svg>
-      <span class="sidebar-text">Customer Booking List</span>
-    </a>
-
-      <a href="booking_payments"
-     class="menu-item <?php if($current=='booking_payments') echo 'active'; ?>">
-        <svg class="w-6 h-6 text-yellow-500" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
-              <rect x="3" y="7" width="18" height="10" rx="2" />
-              <circle cx="16" cy="12" r="1.5" />
-              <path d="M3 10h18" />
+            <svg class="w-6 h-6 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path d="M3 12l9-9 9 9M4 10v10h16V10" />
             </svg>
-      <span class="sidebar-text">Booking Payments</span>
-    </a>
 
-      <a href="list_booking_payments"
-     class="menu-item <?php if($current=='list_booking_payments') echo 'active'; ?>">
-     <svg class="w-6 h-6 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path d="M3 7h18M3 12h18M3 17h18"/>
-      </svg>
-      <span class="sidebar-text">Booking Payments List</span>
-    </a>
+            <span class="sidebar-text">Dashboard</span>
+          </a>
+        </li>
+
+        <!-- Leader -->
+        <li>
+          <a href="javascript:void(0)"
+            onclick="toggleMenu('Customer', this)"
+            class="menu-item flex justify-between items-center">
+
+            <span class="flex items-center gap-3">
+              <svg class="w-6 h-6 text-yellow-500" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M12 14c4 0 7 2 7 4v1H5v-1c0-2 3-4 7-4z" />
+                <circle cx="12" cy="8" r="4" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+              <span class="sidebar-text">Customer Booking</span>
+            </span>
+
+            <svg class="menu-arrow w-4 h-4 transition-transform transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+            </svg>
+          </a>
+
+          <ul id="Customer" class="hidden">
+
+            <!-- Add Leader -->
+            <li>
+              <a href="add_customer_booking"
+                class="menu-item flex items-center gap-3 <?php if ($current == 'add_commission') echo 'active'; ?>">
+
+                <svg class="w-4 h-4 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path d="M4 12h16" />
+                </svg>
+
+                <span class="sidebar-text">Add Customer Bookings</span>
+              </a>
+            </li>
+
+            <!-- View leader -->
+            <li>
+              <a href="list_customer_booking"
+                class="menu-item flex items-center gap-3 <?php if ($current == 'view_commission') echo 'active'; ?>">
+
+                <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path d="M4 12h16" />
+                </svg>
+
+                <span class="sidebar-text">View Customer Bookings</span>
+              </a>
+            </li>
+
+          </ul>
+        </li>
 
 
-    <a href="sites_commission"
-     class="menu-item <?php if($current=='sites_commission') echo 'active'; ?>">
-      <svg class="w-6 h-6 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <!-- Commission -->
+        <li>
+          <a href="javascript:void(0)"
+            onclick="toggleMenu('booking', this)"
+            class="menu-item flex justify-between items-center">
+
+            <span class="flex items-center gap-3">
+              <svg class="w-6 h-6 text-yellow-500" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M17 20v-2a4 4 0 0 0-3-3.87M7 20v-2a4 4 0 0 1 3-3.87m0 0A4 4 0 1 0 7 6a4 4 0 0 0 3 8zm6-8a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+              </svg>
+              <span class="sidebar-text">Booking Payments</span>
+            </span>
+
+            <svg class="menu-arrow w-4 h-4 transition-transform transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+            </svg>
+          </a>
+
+          <ul id="booking" class="hidden">
+
+            <!-- Add Booking -->
+            <li>
+              <a href="booking_payments"
+                class="menu-item flex items-center gap-3 <?php if ($current == 'booking_payments') echo 'active'; ?>">
+
+                <svg class="w-4 h-4 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path d="M4 12h16" />
+                </svg>
+
+                <span class="sidebar-text">Add Booking Payment</span>
+              </a>
+            </li>
+
+            <!-- View Booking Payment -->
+            <li>
+              <a href="list_booking_payments"
+                class="menu-item flex items-center gap-3 <?php if ($current == 'list_booking_payments') echo 'active'; ?>">
+
+                <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path d="M4 12h16" />
+                </svg>
+
+                <span class="sidebar-text">View Booking Payments</span>
+              </a>
+            </li>
+
+          </ul>
+        </li>
+
+         <a href="sites_commission"
+            class="menu-item <?php if ($current == 'sites_commission') echo 'active'; ?>">
+            <svg class="w-6 h-6 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
           d="M3 3v18h18M7 13l3-3 4 4 5-5"/>
   </svg>
-      <span class="sidebar-text">Sites & Commission</span>
-    </a>
+            <span class="sidebar-text">Sites & Commission</span>
+          </a>
+        </li>
 
-     <a href="list_reference"
-     class="menu-item <?php if($current=='list_reference') echo 'active'; ?>">
-     <svg class="w-6 h-6 text-yellow-500" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+        
+         <!-- reference -->
+        <li>
+          <a href="javascript:void(0)"
+            onclick="toggleMenu('reference', this)"
+            class="menu-item flex justify-between items-center">
+
+            <span class="flex items-center gap-3">
+              <svg class="w-6 h-6 text-yellow-500" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round"
                   d="M16 14c3 0 5 2 5 4v1H3v-1c0-2 2-4 5-4" />
                 <circle cx="9" cy="8" r="3" />
                 <circle cx="17" cy="9" r="2" />
               </svg>
-      <span class="sidebar-text">Reference</span>
-    </a>
-    
-    
+              <span class="sidebar-text">Reference</span>
+            </span>
 
-    <!--  <a href="list_commission"
-     class="menu-item <?php if($current=='list_commission') echo 'active'; ?>">
- <svg class="w-6 h-6 text-green-500" fill="currentColor" viewBox="0 0 24 24">
-    <rect x="3" y="4" width="18" height="16" rx="2"/>
-    <rect x="7" y="8" width="10" height="2"/>
-    <rect x="7" y="12" width="10" height="2"/>
-    <rect x="7" y="16" width="10" height="2"/>
-  </svg>
-      <span class="sidebar-text">Commission List</span>
-    </a>
+            <svg class="menu-arrow w-4 h-4 transition-transform transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+            </svg>
+          </a>
 
-    <a href="team_performance"
-     class="menu-item <?php if($current=='team_performance') echo 'active'; ?>">
-      <svg class="w-6 h-6 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-          d="M3 3v18h18M7 13l3-3 4 4 5-5"/>
-  </svg>
-      <span class="sidebar-text">Team Performance</span>
-    </a> -->
+          <ul id="reference" class="hidden">
 
-  </nav>
+            <!-- Sites & Commission -->
+            <li>
+              <a href="list_reference"
+                class="menu-item flex items-center gap-3 <?php if ($current == 'list_reference') echo 'active'; ?>">
+
+                <svg class="w-4 h-4 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path d="M4 12h16" />
+                </svg>
+
+                <span class="sidebar-text">References List</span>
+              </a>
+            </li>
+          </ul>
+        </li>
+
+        <!-- visit customer -->
+
+         <li>
+          <a href="javascript:void(0)"
+            onclick="toggleMenu('visit', this)"
+            class="menu-item flex justify-between items-center">
+
+            <span class="flex items-center gap-3">
+              <svg class="w-6 h-6 text-yellow-500" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M12 14c4 0 7 2 7 4v1H5v-1c0-2 3-4 7-4z" />
+                <circle cx="12" cy="8" r="4" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+              <span class="sidebar-text">Customer Visit</span>
+            </span>
+
+            <svg class="menu-arrow w-4 h-4 transition-transform transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+            </svg>
+          </a>
+
+          <ul id="visit" class="hidden">
+
+            <!-- Add customer -->
+            <li>
+              <a href="add_customer_visit"
+                class="menu-item flex items-center gap-3 <?php if ($current == 'add_customer_visit') echo 'active'; ?>">
+
+                <svg class="w-4 h-4 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path d="M4 12h16" />
+                </svg>
+
+                <span class="sidebar-text">Add Customer</span>
+              </a>
+            </li>
+
+            <!-- View leader -->
+            <li>
+              <a href="list_customer_visit"
+                class="menu-item flex items-center gap-3 <?php if ($current == 'list_customers_visit') echo 'active'; ?>">
+
+                <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path d="M4 12h16" />
+                </svg>
+
+                <span class="sidebar-text">View Customers</span>
+              </a>
+            </li>
+
+          </ul>
+        </li>
+
+       
+
+      </ul>
+
+    </nav>
+
+
 </div>
 
 <!-- Bottom Logout -->
@@ -126,6 +259,35 @@ flex flex-col justify-between flex-shrink-0">
 </div>
 
 </aside>
+
+
+
+<!-- Toggle -->
+
+<script>
+  function profileToggle() {
+    const profileDropdown = document.getElementById('ProfileDropDown');
+    profileDropdown.classList.toggle('hidden');
+  }
+
+  function toggleMenu(menuId, el) {
+
+    const menu = document.getElementById(menuId);
+    const arrow = el.querySelector('.menu-arrow');
+
+    if (!menu) {
+      console.error('Menu not found:', menuId);
+      return;
+    }
+
+    menu.classList.toggle('hidden');
+
+    if (arrow) {
+      arrow.classList.toggle('rotate-90');
+    }
+
+  }
+</script>
 
 <script>
     function logout() {
