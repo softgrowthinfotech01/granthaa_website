@@ -874,9 +874,11 @@ public function leaderSummary()
         });
 
         // Paid amount from ledger
-        $paidAmount = CommissionLedger::where('user_id', $leader->id)
-            ->where('type', 'paid')
-            ->sum('amount');
+        $paidAmount = abs(
+            CommissionLedger::where('user_id', $leader->id)
+            ->where('type', 'payment')
+            ->sum('amount')
+        );
 
         $balance = $totalCommission - $paidAmount;
 
