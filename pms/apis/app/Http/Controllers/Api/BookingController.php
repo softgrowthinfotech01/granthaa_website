@@ -912,7 +912,8 @@ public function leaderDetails($leaderId)
 
         $role = $b->adviser_id ? 'Adviser' : 'Leader';
         $userId = $b->adviser_id ?? $b->leader_id;
-
+        
+        $booking_amount =  (float) $b->total_booking_amount ;
          $paid = abs(
             CommissionLedger::where('user_id', $userId)
             ->where('booking_id', $b->id)
@@ -931,6 +932,7 @@ public function leaderDetails($leaderId)
             'buyer_name' => $b->buyer_name,
             'role' => $role,
             'plot_number' => $b->plot_number,
+            'booking_amount' => $booking_amount,
             'commission' => $commission,
             'paid' => $paid,
             'balance' => $balance
