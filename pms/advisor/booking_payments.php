@@ -21,7 +21,7 @@
                 <div class="space-y-2">
                     <label class="text-sm font-semibold text-gray-700">Booking Name</label>
                     <select name="user_id" id="user_id" required
-                        class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-yellow-400 outline-none">
+                        class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-green-400 outline-none">
                         <option value="">Loading...</option>
                     </select>
                 </div>
@@ -71,14 +71,14 @@
                 <div class="space-y-2">
                     <label class="text-sm font-semibold text-gray-700">Payment Amount</label>
                     <input type="number" name="amount" id="amount" required
-                        class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-yellow-400 outline-none">
+                        class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-green-400 outline-none">
                 </div>
 
                 <!-- PAYMENT TYPE -->
                 <div class="space-y-2">
                     <label class="text-sm font-semibold text-gray-700">Payment Type</label>
                     <select name="payment_type" id="payment_type"
-                        class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-yellow-400 outline-none">
+                        class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-green-400 outline-none">
 
                         <option>Select Payment Type</option>
                         <option value="full">Full</option>
@@ -91,7 +91,7 @@
                 <div class="space-y-2">
                     <label class="text-sm font-semibold text-gray-700">Payment Mode</label>
                     <select name="payment_mode" id="payment_mode"
-                        class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-yellow-400 outline-none">
+                        class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-green-400 outline-none">
 
                         <option>Select Payment Mode</option>
                         <option value="cash">Cash</option>
@@ -107,7 +107,7 @@
                 <div class="space-y-2 md:col-span-2">
                     <label class="text-sm font-semibold text-gray-700">Remark</label>
                     <textarea name="remark" id="remark" rows="2"
-                        class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-yellow-400 outline-none"></textarea>
+                        class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-green-400 outline-none"></textarea>
                 </div>
 
             </div>
@@ -117,7 +117,7 @@
         <div class="flex justify-center gap-2 mt-2">
 
             <button
-                class="bg-yellow-500 hover:bg-yellow-600 px-4 py-4 rounded-xl
+                class="bg-green-500 hover:bg-green-600 px-4 py-4 rounded-xl
 text-black font-semibold text-lg shadow-md hover:shadow-xl
 transition transform hover:scale-[1.02]">
 
@@ -149,14 +149,14 @@ transition transform hover:scale-[1.02]">
     function disableSelect(selectElement) {
         selectElement.disabled = true;
         selectElement.classList.add("bg-gray-100", "cursor-not-allowed");
-        selectElement.classList.remove("focus:ring-2", "focus:ring-yellow-400");
+        selectElement.classList.remove("focus:ring-2", "focus:ring-green-400");
         selectElement.value = "";
     }
 
     function enableSelect(selectElement) {
         selectElement.disabled = false;
         selectElement.classList.remove("bg-gray-100", "cursor-not-allowed");
-        selectElement.classList.add("focus:ring-2", "focus:ring-yellow-400");
+        selectElement.classList.add("focus:ring-2", "focus:ring-green-400");
     }
 
     // Initial state

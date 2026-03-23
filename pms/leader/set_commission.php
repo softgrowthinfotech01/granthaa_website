@@ -9,13 +9,12 @@
 <form id="commissionForm" class="grid grid-cols-1 md:grid-cols-2 gap-6">
 
   <!-- Location Dropdown -->
-  <div>
-    <label class="block text-gray-900 font-semibold mb-1">Select Location</label>
-   <select id="locationDropdown" name="location_id"
-  class="w-full border border-gray-300 p-2 rounded-lg focus:ring-2 focus:ring-yellow-400">
-  <option value="">-- Select Location --</option>
-</select>
-  </div>
+ <div class="space-y-2">
+                    <label class="text-sm font-semibold text-gray-700">Site Location</label>
+                    <select name="site_location" id="site_location" class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-yellow-400 outline-none ">
+                        <option>Loading....</option>
+                    </select>
+                </div>
 
   <!-- Advisor Dropdown -->
   <div>
@@ -66,42 +65,57 @@
 <script src="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.js"></script>
 
 
+<script src="../url.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
 
-    <script src="../url.js"></script>
+        const token = localStorage.getItem('auth_token');
+        const user = JSON.parse(localStorage.getItem('auth_user'));
 
-    <script>
-document.addEventListener("DOMContentLoaded", function () {
-
-    const token = localStorage.getItem('auth_token');
-    if (!token) return;
-
-    // ================= LOCATION FETCH =================
-    fetch(url + "site-location", {
-        headers: {
-            "Authorization": "Bearer " + token,
-            "Accept": "application/json"
+        if (!token || !user) {
+            alert("Please login first");
+            window.location.href = "../login";
+            return;
         }
-    })
-    .then(res => res.json())
-    .then(response => {
 
-        console.log("Locations:", response);
+        // ================= LOAD SITE LOCATIONS =================
+        function loadSiteLocations() {
 
-        const dropdown = document.getElementById("locationDropdown");
+            fetch(url + "my-commissions", {
+                    method: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token,
+                        "Accept": "application/json"
+                    }
+                })
+                .then(res => res.json())
+                .then(response => {
 
-        dropdown.innerHTML =
-            '<option value="">-- Select Location --</option>';
+                    console.log("MY COMMISSIONS:", response);
 
-        const locations = response.data ?? [];
+                    const commissions = response.data?.data ?? [];
+                    const select = document.getElementById("site_location");
 
-        locations.forEach(location => {
-            dropdown.innerHTML += `
-                <option value="${location.id}">
-                    ${location.site_location}
-                </option>
-            `;
-        });
-    });
+                    select.innerHTML = `<option value="">Select Site Location</option>`;
+
+                    commissions.forEach(commission => {
+
+                        if (commission.location) {
+                            select.innerHTML += `
+                    <option 
+                        value="${commission.location.id}"
+                        data-type="${commission.commission_type}"
+                        data-value="${commission.commission_value}"
+                    >
+                        ${commission.location.site_location}
+                    </option>
+                `;
+                        }
+
+                    });
+                });
+        }
+        loadSiteLocations();
 
 
     // ================= ADVISOR FETCH =================
