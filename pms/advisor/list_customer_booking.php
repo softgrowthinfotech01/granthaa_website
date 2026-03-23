@@ -188,9 +188,9 @@ document.addEventListener("DOMContentLoaded", function() {
             let commission_Amount = 0;
 
             if (row.commission_type === "percent") {
-                commission_Amount = (row.total_booking_amount * row.commission_value) / 100;
+                commission_Amount = (row.total_booking_amount * row.adviser_commission_value) / 100;
             } else {
-                commission_Amount = row.commission_value;
+                commission_Amount = row.adviser_commission_value;
             }
 
             tbody.innerHTML += `
@@ -206,8 +206,8 @@ document.addEventListener("DOMContentLoaded", function() {
                 <td class="p-1">${row.project_name ?? ''}</td>
                 <td class="p-1">${locationsMap[row.site_location] ?? ''}</td>
                 <td class="p-1">${row.total_booking_amount ?? ''}</td>
-                <td class="p-1">${row.commission_type ?? ''}</td> 
-                <td class="p-1">${row.commission_value ?? ''}</td>
+                <td class="p-1">${row.adviser_commission_type ?? ''}</td> 
+                <td class="p-1">${row.adviser_commission_value ?? ''}</td>
                 <td class="p-1">${commission_Amount}</td>
                 <td class="p-1">${row.email ?? ''}</td>
 
