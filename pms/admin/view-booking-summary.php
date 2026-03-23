@@ -84,7 +84,6 @@
 <script src="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.js"></script>
 <script>
 
-    
 const token = localStorage.getItem("auth_token");
 
 if(!token){
@@ -135,7 +134,7 @@ function loadLeaderDetails(leaderId) {
 
     container.innerHTML = "Loading...";
 
-    fetch(url + "admin/leader/" + leaderId + "/details", {
+    fetch(url + "leader-details/" + leaderId, {
         headers: {
             "Authorization": "Bearer " + token
         }
