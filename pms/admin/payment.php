@@ -51,6 +51,20 @@
                                 </select>
                             </div>
 
+                            <div class="mb-5 px-1">
+                                <label class="block mb-2.5 text-sm font-medium text-heading">
+                                    Select Booking
+                                </label>
+
+                                <select id="booking_id" name="booking_id"
+                                    class="block w-full px-3 py-2.5 rounded-lg bg-white border border-default-medium text-heading text-sm shadow-xs"
+                                    required>
+
+                                    <option value="">Select Booking</option>
+
+                                </select>
+                            </div>
+
                             <!-- Total Commission -->
                             <div class="mb-5 px-1">
                                     <label class="block mb-2.5 text-sm font-medium text-heading">
@@ -166,6 +180,7 @@
 
                     </form>
 
+                    
                 </div>
 
             </div>
@@ -185,73 +200,61 @@
             }
         }
 
-        document.getElementById("paymentForm").addEventListener("submit", async function(e) {
+document.getElementById("paymentForm").addEventListener("submit", async function(e) {
 
-            e.preventDefault();
+    e.preventDefault();
 
-            const form = document.getElementById("paymentForm");
+    const form = document.getElementById("paymentForm");
 
-            const token = localStorage.getItem('auth_token');
-            const user = JSON.parse(localStorage.getItem('auth_user'));
+    const token = localStorage.getItem('auth_token');
+    const user = JSON.parse(localStorage.getItem('auth_user'));
 
-            if (!token || !user) {
-                alert("Please login first");
-                window.location.href = "../login";
-                return;
-            }
+    if (!token || !user) {
+        alert("Please login first");
+        window.location.href = "../login";
+        return;
+    }
 
-            let formData = new FormData(form);
+    let booking_id = document.getElementById("booking_id").value;
 
-            formData.set("created_by", user.id);
+    if (!booking_id) {
+        alert("Please select a booking");
+        return;
+    }
 
-            try {
+    let formData = new FormData(form);
 
-                const response = await fetch(url + "commission/payment", {
+    formData.set("created_by", user.id);
+    formData.set("booking_id", booking_id);
 
-                    method: "POST",
+    try {
 
-                    headers: {
-                        "Authorization": "Bearer " + token,
-                        "Accept": "application/json"
-                    },
-
-                    body: formData
-
-                });
-
-                const data = await response.json();
-
-                if (!response.ok) {
-
-                    if (data.errors) {
-
-                        let errorMessages = "";
-
-                        for (let field in data.errors) {
-                            errorMessages += data.errors[field][0] + "\n";
-                        }
-
-                        alert("Validation Errors:\n\n" + errorMessages);
-
-                    } else {
-                        alert(data.message || "Something went wrong");
-                    }
-
-                    return;
-                }
-
-                alert("✅ " + data.message);
-
-                form.reset();
-
-            } catch (error) {
-
-                console.error(error);
-                alert("Server error occurred");
-
-            }
-
+        const response = await fetch(url + "commission/payment", {
+            method: "POST",
+            headers: {
+                "Authorization": "Bearer " + token,
+                "Accept": "application/json"
+            },
+            body: formData
         });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            alert(data.message || "Error");
+            return;
+        }
+
+        alert("✅ " + data.message);
+
+        form.reset();
+
+    } catch (error) {
+        console.error(error);
+        alert("Server error");
+    }
+
+});
     </script>
 
     <script>
@@ -294,31 +297,61 @@
             }
         }
 
-        document.getElementById("user_id").addEventListener("change", async function () {
+document.getElementById("user_id").addEventListener("change", async function () {
 
-    let user_id = this.value;
+    let leader_id = this.value;
     const token = localStorage.getItem("auth_token");
 
-    if(user_id != "")
-    {
-        const response = await fetch(url + "commission/summary/" + user_id, {
+    if (!leader_id) return;
 
-            method: "GET",
-            headers: {
-                "Authorization": "Bearer " + token,
-                "Accept": "application/json"
-            }
+    const response = await fetch(url + "leader-details/" + leader_id, {
+        headers: {
+            "Authorization": "Bearer " + token
+        }
+    });
 
-        });
+    const result = await response.json();
 
-        const result = await response.json();
+    let bookings = result.data;
 
-        document.getElementById("total_commission").value = result.data.total_commission;
-        document.getElementById("total_paid").value = result.data.total_paid;
-        document.getElementById("balance").value = result.data.balance;
-    }
+    let bookingDropdown = document.getElementById("booking_id");
+
+    bookingDropdown.innerHTML = `<option value="">Select Booking</option>`;
+
+    bookings.forEach((b) => {
+
+        bookingDropdown.innerHTML += `
+            <option value="${b.booking_id}"
+                data-commission="${b.commission}"
+                data-paid="${b.paid}"
+                data-balance="${b.balance}">
+                
+                ${b.plot_number} - ${b.buyer_name} (${b.role})
+            </option>
+        `;
+    });
 
 });
+
+document.getElementById("booking_id").addEventListener("change", function () {
+
+    let selected = this.options[this.selectedIndex];
+
+    if (!selected.value) return;
+
+    let commission = selected.dataset.commission;
+    let paid = selected.dataset.paid;
+    let balance = selected.dataset.balance;
+
+    document.getElementById("total_commission").value = commission;
+    document.getElementById("total_paid").value = paid;
+    document.getElementById("balance").value = balance;
+
+    // optional: auto-fill payment
+    document.getElementById("amount").value = balance;
+
+});
+
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.js"></script>

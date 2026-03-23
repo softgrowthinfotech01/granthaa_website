@@ -42,7 +42,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/admdashboard', [BookingController::class, 'admdashboard']);
     Route::get('/adviserPerformance', [BookingController::class, 'adviserPerformance']);
     Route::get('/leader-summary', [BookingController::class, 'leaderSummary']);
-    Route::get('/admin/leader/{leader_id}/details', [BookingController::class, 'leaderDetails']);
+    Route::get('leader-details/{id}', [BookingController::class, 'leaderDetails']);
 });
 
 Route::middleware(['auth:sanctum', 'role:admin,leader,adviser,customer'])->group(function () {
@@ -83,10 +83,9 @@ Route::middleware(['auth:sanctum', 'role:admin,leader,adviser,customer'])->group
 
         Route::get('/team-commission', [CommissionPaymentController::class, 'teamCommission']);
 
-
         Route::get('/leader-adviser-details', [CommissionPaymentController::class, 'leaderAdviserDetails']);
 
-        // for the logs / transactions of each adviser of leader
+        Route::get('/booking-summary/{booking_id}', [CommissionPaymentController::class, 'leaderAdviserDetails']);
         
     });
 
@@ -99,6 +98,7 @@ Route::middleware(['auth:sanctum', 'role:admin,leader,adviser,customer'])->group
     Route::get('/my-commissions', [CommissionController::class, 'myCommissions']);
 
     Route::get('/commission/{id}', [CommissionController::class, 'show']);
+    Route::get('leader/{id}/bookings', [CommissionController::class, 'leaderBookings']);
 
     Route::post('/book-payments', [BookingPaymentController::class, 'store']);// Store payment
 

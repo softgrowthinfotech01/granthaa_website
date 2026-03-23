@@ -20,6 +20,7 @@ class CommissionPaymentController extends Controller
     {
         $request->validate([
             'user_id' => 'required|exists:users,id',
+            'booking_id' => 'required|exists:bookings,id',
             'amount' => 'required|numeric|min:1',
             'payment_mode' => 'nullable|string|max:50',
             'reference_no' => 'nullable|string|max:100',
@@ -52,6 +53,7 @@ class CommissionPaymentController extends Controller
 
         $payment = CommissionLedger::create([
             'user_id' => $userId,
+            'booking_id' => $request->booking_id,
             'type' => 'payment',
             'amount' => -abs($amount),
             'payment_mode' => $request->payment_mode,
@@ -381,26 +383,36 @@ class CommissionPaymentController extends Controller
 
         // 📄 Logs (booking wise)
         $logs = Booking::where('adviser_id', $adviserId)
-            ->select(
-                'id as booking_id',
-                'buyer_name as customer',
-                'plot_number',
-                'total_booking_amount as amount',
-                'adviser_commission_amount as commission',
-                'created_at'
-            )
-            ->latest()
-            ->get()
-            ->map(function ($row) {
-                return [
-                    'booking_id' => $row->booking_id,
-                    'customer' => $row->customer,
-                    'plot_number' => $row->plot_number,
-                    'amount' => round($row->amount, 2),
-                    'commission' => round($row->commission, 2),
-                    'date' => date('Y-m-d', strtotime($row->created_at)),
-                ];
-            });
+    ->select(
+        'id as booking_id',
+        'buyer_name as customer',
+        'plot_number',
+        'total_booking_amount as amount',
+        'adviser_commission_amount as commission',
+        'created_at'
+    )
+    ->latest()
+    ->get()
+    ->map(function ($row) use ($adviserId) {
+
+        // ✅ Paid per booking
+        $paid = CommissionLedger::where('user_id', $adviserId)
+            ->where('booking_id', $row->booking_id)
+            ->where('type', 'payment')
+            ->sum('amount');
+
+        return [
+            'booking_id' => $row->booking_id,
+            'customer' => $row->customer,
+            'plot_number' => $row->plot_number,
+            'amount' => round($row->amount, 2),
+            'commission' => round($row->commission, 2),
+            'paid' => round(abs($paid), 2),
+            'balance' => round($row->commission - abs($paid), 2),
+            'date' => date('Y-m-d', strtotime($row->created_at)),
+        ];
+    });
+
     }
 
     return response()->json([

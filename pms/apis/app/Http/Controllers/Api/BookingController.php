@@ -857,7 +857,6 @@ public function leaderSummary()
 
 public function leaderDetails($leaderId)
 {
-    // Get all bookings under leader
     $bookings = Booking::where(function ($q) use ($leaderId) {
         $q->where('leader_id', $leaderId)
           ->orWhere('created_by', $leaderId);
@@ -867,18 +866,14 @@ public function leaderDetails($leaderId)
 
     foreach ($bookings as $b) {
 
-        // Detect role
         $role = $b->adviser_id ? 'Adviser' : 'Leader';
-
         $userId = $b->adviser_id ?? $b->leader_id;
 
-        // Paid from ledger
         $paid = CommissionLedger::where('user_id', $userId)
             ->where('booking_id', $b->id)
-            ->where('type', 'paid')
+            ->where('type', 'payment') // ✅ IMPORTANT FIX
             ->sum('amount');
 
-        // Commission
         $commission = $role === 'Leader'
             ? (float) $b->leader_commission_amount
             : (float) $b->adviser_commission_amount;
@@ -886,10 +881,10 @@ public function leaderDetails($leaderId)
         $balance = $commission - $paid;
 
         $data[] = [
+            'booking_id' => $b->id, // ✅ MUST ADD THIS
             'buyer_name' => $b->buyer_name,
             'role' => $role,
             'plot_number' => $b->plot_number,
-            'booking_amount' => (float) $b->total_booking_amount,
             'commission' => $commission,
             'paid' => $paid,
             'balance' => $balance
@@ -901,4 +896,5 @@ public function leaderDetails($leaderId)
         'data' => $data
     ]);
 }
+
 }

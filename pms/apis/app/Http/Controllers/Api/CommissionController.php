@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Booking;
 use App\Models\CommissionLedger;
 use App\Models\UserLocationCommission;
 use Illuminate\Http\Request;
@@ -78,7 +79,7 @@ public function index(Request $request)
 
     $query = UserLocationCommission::with(['user', 'location']);
 
-    // 🔐 Leader can only see commissions of users created by them
+    // 🔐 Leader & admin can only see commissions of users created by them
     if ($auth->role === 'leader' || $auth->role === 'admin') {
         $userIds = User::where('created_by', $auth->id)->pluck('id');
         $query->whereIn('user_id', $userIds);
@@ -131,6 +132,31 @@ public function index(Request $request)
         'message' => 'Fetched successfully',
         'data' => $commissions
     ]);
+}
+
+
+public function show($id){
+    $auth = auth()->user();
+
+        if (!$auth || !in_array($auth->role, ['admin', 'leader'])) {
+            return response()->json([
+                'message' => 'Only admin and leader can view the commission of all users'
+            ], 403);
+        }
+
+        $commission = UserLocationCommission::find($id);
+
+        if (!$commission) {
+            return response()->json([
+                'message' => 'Commission not found'
+            ], 404);
+        }
+ 
+        return response()->json([
+        'message' => 'Fetched successfully',
+        'data' => $commission
+    ]);
+
 }
 
     public function getByUser(Request $request, $userId)
@@ -210,15 +236,15 @@ public function index(Request $request)
 }
 
     /**
-     * Update Commission (Admin and Leader Only)
+     * Update Commission (Admin Only)
      */
     public function updateCommission(Request $request, $id)
     {
         $auth = auth()->user();
 
-        if (!$auth || !in_array($auth->role, ['admin', 'leader'])) {
+        if (!$auth || $auth->role !== 'admin') {
             return response()->json([
-                'message' => 'Only admin or leader can update commission'
+                'message' => 'Only admin can update commission'
             ], 403);
         }
 
@@ -254,41 +280,17 @@ public function index(Request $request)
         ], 200);
     }
 
-    
-public function show($id){
-    $auth = auth()->user();
-
-        if (!$auth || !in_array($auth->role, ['admin', 'leader', 'adviser'])) {
-            return response()->json([
-                'message' => 'Only admin and leader can view the commission of all users'
-            ], 403);
-        }
-
-        $commission = UserLocationCommission::find($id);
-
-        if (!$commission) {
-            return response()->json([
-                'message' => 'Commission not found'
-            ], 404);
-        }
- 
-        return response()->json([
-        'message' => 'Fetched successfully',
-        'data' => $commission
-    ]);
-
-}
-
     /**
      * Delete Commission (Admin Only)
      */
     public function deleteCommission($id)
     {
         $auth = auth()->user();
+        // echo $auth->role;die;
 
         if (!$auth || !in_array($auth->role, ['admin', 'leader'])) {
             return response()->json([
-                'message' => 'Only admin and leader can delete commission'
+                'message' => 'Only admin can delete commission'
             ], 403);
         }
 
@@ -425,4 +427,44 @@ public function show($id){
         ]);
 
     }
+
+public function leaderBookings($leaderId)
+{
+    $bookings = Booking::where(function ($q) use ($leaderId) {
+        $q->where('leader_id', $leaderId)
+          ->orWhere(function ($q2) use ($leaderId) {
+              $q2->where('created_by', $leaderId)
+                 ->where('created_by_role', 'leader');
+          });
+    })->get();
+
+    $data = [];
+
+    foreach ($bookings as $b) {
+
+        $totalCommission = $this->calculateBookingCommission($b->id, $leaderId);
+
+        $paid = CommissionLedger::where('user_id', $leaderId)
+            ->where('booking_id', $b->id)
+            ->sum('amount');
+
+        $paid = abs($paid); // convert negative to positive
+
+        $balance = $totalCommission - $paid;
+
+        $data[] = [
+            'booking_id' => $b->id,
+            'buyer_name' => $b->buyer_name,
+            'plot_number' => $b->plot_number,
+            'commission' => $totalCommission,
+            'paid' => $paid,
+            'balance' => $balance
+        ];
+    }
+
+    return response()->json([
+        'status' => true,
+        'data' => $data
+    ]);
 }
+    }
