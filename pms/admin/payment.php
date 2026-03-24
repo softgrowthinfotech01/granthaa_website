@@ -67,11 +67,11 @@
 
                             <!-- Total Commission -->
                             <div class="mb-5 px-1">
-                                    <label class="block mb-2.5 text-sm font-medium text-heading">
+                                <label class="block mb-2.5 text-sm font-medium text-heading">
                                     Total Commission
                                 </label>
 
-                                    <input name="total_commission" type="text" id="total_commission"
+                                <input name="total_commission" type="text" id="total_commission"
                                     class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm block w-full px-3 py-2.5 shadow-xs"
                                     placeholder="Enter amount" readonly />
                             </div>
@@ -92,7 +92,7 @@
                                 <label class="block mb-2.5 text-sm font-medium text-heading">
                                     Balance
                                 </label>
-                                
+
                                 <input name="balance" type="number" id="balance"
                                     class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm block w-full px-3 py-2.5 shadow-xs"
                                     placeholder="Enter amount" readonly />
@@ -180,7 +180,7 @@
 
                     </form>
 
-                    
+
                 </div>
 
             </div>
@@ -198,61 +198,61 @@
             }
         }
 
-document.getElementById("paymentForm").addEventListener("submit", async function(e) {
+        document.getElementById("paymentForm").addEventListener("submit", async function(e) {
 
-    e.preventDefault();
+            e.preventDefault();
 
-    const form = document.getElementById("paymentForm");
+            const form = document.getElementById("paymentForm");
 
-    const token = localStorage.getItem('auth_token');
-    const user = JSON.parse(localStorage.getItem('auth_user'));
+            const token = localStorage.getItem('auth_token');
+            const user = JSON.parse(localStorage.getItem('auth_user'));
 
-    if (!token || !user) {
-        alert("Please login first");
-        window.location.href = "../login";
-        return;
-    }
+            if (!token || !user) {
+                alert("Please login first");
+                window.location.href = "../login";
+                return;
+            }
 
-    let booking_id = document.getElementById("booking_id").value;
+            let booking_id = document.getElementById("booking_id").value;
 
-    if (!booking_id) {
-        alert("Please select a booking");
-        return;
-    }
+            if (!booking_id) {
+                alert("Please select a booking");
+                return;
+            }
 
-    let formData = new FormData(form);
+            let formData = new FormData(form);
 
-    formData.set("created_by", user.id);
-    formData.set("booking_id", booking_id);
+            formData.set("created_by", user.id);
+            formData.set("booking_id", booking_id);
 
-    try {
+            try {
 
-        const response = await fetch(url + "commission/payment", {
-            method: "POST",
-            headers: {
-                "Authorization": "Bearer " + token,
-                "Accept": "application/json"
-            },
-            body: formData
+                const response = await fetch(url + "commission/payment", {
+                    method: "POST",
+                    headers: {
+                        "Authorization": "Bearer " + token,
+                        "Accept": "application/json"
+                    },
+                    body: formData
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    alert(data.message || "Error");
+                    return;
+                }
+
+                alert("✅ " + data.message);
+
+                form.reset();
+
+            } catch (error) {
+                console.error(error);
+                alert("Server error");
+            }
+
         });
-
-        const data = await response.json();
-
-        if (!response.ok) {
-            alert(data.message || "Error");
-            return;
-        }
-
-        alert("✅ " + data.message);
-
-        form.reset();
-
-    } catch (error) {
-        console.error(error);
-        alert("Server error");
-    }
-
-});
     </script>
 
     <script>
@@ -295,61 +295,58 @@ document.getElementById("paymentForm").addEventListener("submit", async function
             }
         }
 
-document.getElementById("user_id").addEventListener("change", async function () {
+        document.getElementById("user_id").addEventListener("change", async function() {
 
-    let leader_id = this.value;
-    const token = localStorage.getItem("auth_token");
+            let leader_id = this.value;
+            const token = localStorage.getItem("auth_token");
 
-    if (!leader_id) return;
+            if (!leader_id) return;
 
-    const response = await fetch(url + "leader-details/" + leader_id, {
-        headers: {
-            "Authorization": "Bearer " + token
-        }
-    });
+            const response = await fetch(url + "leader-details/" + leader_id, {
+                headers: {
+                    "Authorization": "Bearer " + token
+                }
+            });
 
-    const result = await response.json();
+            const result = await response.json();
 
-    let bookings = result.data;
+            let bookings = result.data;
+            let bookingDropdown = document.getElementById("booking_id");
 
-    let bookingDropdown = document.getElementById("booking_id");
+            bookingDropdown.innerHTML = `<option value="">Select Booking</option>`;
 
-    bookingDropdown.innerHTML = `<option value="">Select Booking</option>`;
-
-    bookings.forEach((b) => {
-
-        bookingDropdown.innerHTML += `
+            bookings.forEach((b) => {
+                bookingDropdown.innerHTML += `
             <option value="${b.booking_id}"
-                data-commission="${b.commission}"
+                data-total-commission="${b.total_commission}"
                 data-paid="${b.paid}"
                 data-balance="${b.balance}">
-                
                 ${b.plot_number} - ${b.buyer_name} (${b.role})
             </option>
         `;
-    });
+            });
 
-});
+            document.getElementById("total_commission").value = "";
+            document.getElementById("total_paid").value = "";
+            document.getElementById("balance").value = "";
+            document.getElementById("amount").value = "";
+        });
 
-document.getElementById("booking_id").addEventListener("change", function () {
+        document.getElementById("booking_id").addEventListener("change", function() {
 
-    let selected = this.options[this.selectedIndex];
+            let selected = this.options[this.selectedIndex];
 
-    if (!selected.value) return;
+            if (!selected.value) return;
 
-    let commission = selected.dataset.commission;
-    let paid = selected.dataset.paid;
-    let balance = selected.dataset.balance;
+            let totalCommission = selected.dataset.totalCommission;
+            let paid = selected.dataset.paid;
+            let balance = selected.dataset.balance;
 
-    document.getElementById("total_commission").value = commission;
-    document.getElementById("total_paid").value = paid;
-    document.getElementById("balance").value = balance;
-
-    // optional: auto-fill payment
-    document.getElementById("amount").value = balance;
-
-});
-
+            document.getElementById("total_commission").value = totalCommission || "";
+            document.getElementById("total_paid").value = paid || "";
+            document.getElementById("balance").value = balance || "";
+            document.getElementById("amount").value = balance || "";
+        });
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.js"></script>
