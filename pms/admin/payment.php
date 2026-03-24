@@ -341,6 +341,7 @@
             let totalCommission = selected.dataset.totalCommission;
             let paid = selected.dataset.paid;
             let balance = selected.dataset.balance;
+            let total_balance = selected.dataset.total_balance;
 
             document.getElementById("total_commission").value = totalCommission || "";
             document.getElementById("total_paid").value = paid || "";
