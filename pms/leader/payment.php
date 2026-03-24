@@ -25,6 +25,14 @@
                         <option value="">Loading...</option>
                     </select>
                 </div>
+
+                <div class="space-y-2">
+    <label class="text-sm font-semibold text-gray-700">Select Booking</label>
+    <select id="booking_id" name="booking_id" required
+        class="w-full border border-gray-300 px-5 py-3 rounded-xl">
+        <option value="">Select Booking</option>
+    </select>
+</div>
                 
                 <!-- Total Commission -->
                 <div class="space-y-2">
@@ -249,24 +257,45 @@ transition transform hover:scale-[1.02]">
     let user_id = this.value;
     const token = localStorage.getItem("auth_token");
 
-    if(user_id != "")
-    {
-        const response = await fetch(url + "commission/summary/" + user_id, {
+    if (!user_id) return;
 
-            method: "GET",
-            headers: {
-                "Authorization": "Bearer " + token,
-                "Accept": "application/json"
-            }
+    const response = await fetch(url + "adviser-details/" + user_id, {
+        headers: {
+            "Authorization": "Bearer " + token
+        }
+    });
 
-        });
+    const result = await response.json();
 
-        const result = await response.json();
+    let bookingDropdown = document.getElementById("booking_id");
 
-        document.getElementById("total_commission").value = result.data.total_commission;
-        document.getElementById("total_paid").value = result.data.total_paid;
-        document.getElementById("balance").value = result.data.balance;
-    }
+    bookingDropdown.innerHTML = `<option value="">Select Booking</option>`;
+
+    result.data.forEach((b) => {
+
+        bookingDropdown.innerHTML += `
+            <option value="${b.booking_id}"
+                data-commission="${b.commission}"
+                data-paid="${b.paid}"
+                data-balance="${b.balance}">
+                
+                ${b.plot_number} - ${b.buyer_name}
+            </option>
+        `;
+    });
+
+});
+document.getElementById("booking_id").addEventListener("change", function () {
+
+    let selected = this.options[this.selectedIndex];
+
+    if (!selected.value) return;
+
+    document.getElementById("total_commission").value = selected.dataset.commission;
+    document.getElementById("total_paid").value = selected.dataset.paid;
+    document.getElementById("balance").value = selected.dataset.balance;
+
+    document.getElementById("amount").value = selected.dataset.balance;
 
 });
     </script>

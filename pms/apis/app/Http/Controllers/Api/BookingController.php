@@ -948,4 +948,38 @@ public function leaderDetails($leaderId)
     ]);
 }
 
+public function adviserDetails($adviserId)
+{
+    $bookings = Booking::where('adviser_id', $adviserId)->get();
+
+    $data = [];
+
+    foreach ($bookings as $b) {
+
+        $paid = abs(
+            CommissionLedger::where('user_id', $adviserId)
+                ->where('booking_id', $b->id)
+                ->where('type', 'payment')
+                ->sum('amount')
+        );
+
+        $commission = (float) $b->adviser_commission_amount;
+
+        $balance = $commission - $paid;
+
+        $data[] = [
+            'booking_id' => $b->id,
+            'buyer_name' => $b->buyer_name,
+            'plot_number' => $b->plot_number,
+            'commission' => $commission,
+            'paid' => $paid,
+            'balance' => $balance
+        ];
+    }
+
+    return response()->json([
+        'status' => true,
+        'data' => $data
+    ]);
+}
 }

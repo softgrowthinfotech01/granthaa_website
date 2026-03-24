@@ -43,6 +43,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/adviserPerformance', [BookingController::class, 'adviserPerformance']);
     Route::get('/leader-summary', [BookingController::class, 'leaderSummary']);
     Route::get('leader-details/{id}', [BookingController::class, 'leaderDetails']);
+    Route::get('adviser-details/{id}', [BookingController::class, 'adviserDetails']);
 });
 
 Route::middleware(['auth:sanctum', 'role:admin,leader,adviser,customer'])->group(function () {
