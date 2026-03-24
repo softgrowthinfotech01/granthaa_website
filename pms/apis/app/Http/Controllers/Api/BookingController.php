@@ -922,7 +922,7 @@ public function leaderDetails($leaderId)
         $booking_amount =  (float) $b->total_booking_amount ;
 
         $commission = $role === 'Leader'
-            ? (float) $b->leader_commission_amount + (float) $b->leader_commission_amountadviser_commission_amount
+            ? (float) $b->leader_commission_amount + (float) $b->adviser_commission_amount
             : (float) $b->adviser_commission_amount;
 
         $totalcommission = (float) $b->commission_amount;
