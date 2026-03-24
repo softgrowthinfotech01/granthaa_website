@@ -43,6 +43,20 @@
         color: #fff;
     }
 
+    /* Normal single menu item like Transaction Summary */
+    #sidebar ul li.normal-menu a {
+        background: transparent;
+        color: #111827;
+        box-shadow: none;
+    }
+
+    /* Normal single menu item like Transaction Summary Hover */
+    #sidebar ul li.normal-menu a:hover {
+        background: linear-gradient(90deg, #4f46e5, #2563eb);
+        color: #111827;
+        box-shadow: none;
+    }
+
     /* Submenu styling */
     #sidebar ul ul {
         border-left: 2px solid #e5e7eb;
@@ -226,7 +240,7 @@ fixed md:relative transform md:translate-x-0 -translate-x-full z-40 overflow-hid
                     class="flex items-center justify-between px-4 py-3 hover:bg-gray-300">
                     <span class="flex items-center gap-3 text-base font-semibold">
                         <span class="text-lg">💰</span>
-                        Set Commission
+                        Set Leader Commission
                     </span>
                     <i class="fas fa-angle-right dropdown-arrow"></i>
                 </a>
@@ -322,6 +336,24 @@ fixed md:relative transform md:translate-x-0 -translate-x-full z-40 overflow-hid
                     </li>
                 </ul>
             </li>
+
+            <li class="border-t normal-menu">
+                <a href="view-booking-summary" data-name="View Booking Summary"
+                    class="flex items-center justify-between px-4 py-3">
+                    <span class="flex items-center gap-3 text-base font-semibold">
+                        <span class="text-lg">📋</span>
+                        Transaction Summary
+                    </span>
+                </a>
+            </li>
+
+            <a href=""
+                class="flex items-center justify-between px-4 py-3 hover:bg-gray-300">
+                <span class="flex items-center gap-3 text-base font-semibold">
+
+
+                </span>
+            </a>
 
         </ul>
     </nav>

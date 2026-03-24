@@ -54,7 +54,7 @@
 
                         <!-- GRID WRAPPER -->
                         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-
+                          <a href="view-booking-summary">
                             <div class="pl-2 h-20 bg-sky-500 rounded-lg shadow-md">
                                 <div class="flex w-full h-full py-2 px-4 bg-white rounded-lg justify-between">
                                     <div class="my-auto">
@@ -76,6 +76,7 @@
                                     </div>
                                 </div>
                             </div>
+                            </a>
                             <div class="pl-2 h-20 bg-sky-500 rounded-lg shadow-md">
                                 <div class="flex w-full h-full py-2 px-4 bg-white rounded-lg justify-between">
                                     <div class="my-auto">
@@ -162,13 +163,15 @@
                                     <div class="my-auto">
                                         <svg viewBox="0 0 24 24" class="h-10 w-10">
                                             <defs>
-                                                <linearGradient id="clockGrad" x1="0" y1="0" x2="1" y2="1">
-                                                    <stop offset="0%" stop-color="#f59e0b" />
-                                                    <stop offset="100%" stop-color="#f97316" />
+                                                <linearGradient id="walletGrad" x1="0" y1="0" x2="1" y2="1">
+                                                    <stop offset="0%" stop-color="#10b981" />
+                                                    <stop offset="100%" stop-color="#059669" />
                                                 </linearGradient>
                                             </defs>
-                                            <circle cx="12" cy="12" r="9" fill="url(#clockGrad)" />
-                                            <path d="M12 7v5l3 2" stroke="#fff" stroke-width="2" fill="none" />
+
+                                            <rect x="3" y="6" width="18" height="12" rx="3" fill="url(#walletGrad)" />
+                                            <path d="M15 10h4v4h-4a2 2 0 010-4z" fill="#d1fae5" />
+                                            <circle cx="16.5" cy="12" r="0.8" fill="#059669" />
                                         </svg>
                                     </div>
                                 </div>
