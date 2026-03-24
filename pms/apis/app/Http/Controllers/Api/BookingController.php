@@ -705,8 +705,7 @@ class BookingController extends Controller
             ], 500);
         }
     }
-
-    public function admdashboard()
+public function admdashboard()
 {
     $totalLeaders = User::where('role', 'leader')->count();
 
@@ -870,7 +869,7 @@ public function leaderSummary()
         });
 
         $totalCommission = $bookings->sum(function ($b) {
-            return (float) $b->leader_commission_amount;
+            return (float) $b->commission_amount;
         });
 
         // Paid amount from ledger
@@ -912,17 +911,18 @@ public function leaderDetails($leaderId)
 
         $role = $b->adviser_id ? 'Adviser' : 'Leader';
         $userId = $b->adviser_id ?? $b->leader_id;
-        
-        $booking_amount =  (float) $b->total_booking_amount ;
-         $paid = abs(
+
+        $paid = abs(
             CommissionLedger::where('user_id', $userId)
             ->where('booking_id', $b->id)
             ->where('type', 'payment') // ✅ IMPORTANT FIX
             ->sum('amount')
         );
 
+        $booking_amount =  (float) $b->total_booking_amount ;
+
         $commission = $role === 'Leader'
-            ? (float) $b->leader_commission_amount
+            ? (float) $b->leader_commission_amount + (float) $b->leader_commission_amountadviser_commission_amount
             : (float) $b->adviser_commission_amount;
 
         $balance = $commission - $paid;
