@@ -198,9 +198,11 @@
 
             <span class="flex items-center gap-3">
               <svg class="w-6 h-6 text-yellow-500" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
-                <rect x="3" y="7" width="18" height="10" rx="2" />
-                <circle cx="16" cy="12" r="1.5" />
-                <path d="M3 10h18" />
+                <rect x="3" y="4" width="18" height="16" rx="2" stroke-linecap="round" stroke-linejoin="round" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M7 15v-3" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v-6" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M17 15v-4" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5 19h14" />
               </svg>
               <span class="sidebar-text">Advisor Commission Payment</span>
             </span>
@@ -242,58 +244,59 @@
         </li>
 
         <!-- Booking Payment -->
-         <li>
-        <a href="javascript:void(0)"
-          onclick="toggleMenu('payment', this)"
-          class="menu-item flex justify-between items-center">
+        <li>
+          <a href="javascript:void(0)"
+            onclick="toggleMenu('payment', this)"
+            class="menu-item flex justify-between items-center">
 
-          <span class="flex items-center gap-3">
-            <svg class="w-6 h-6 text-yellow-500" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
-              <rect x="3" y="7" width="18" height="10" rx="2" />
-              <circle cx="16" cy="12" r="1.5" />
-              <path d="M3 10h18" />
+            <span class="flex items-center gap-3">
+              <svg class="w-6 h-6 text-yellow-500" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                <rect x="3" y="5" width="18" height="14" rx="2" stroke-linecap="round" stroke-linejoin="round" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3 10h18" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M7 15h3" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M14 15h3" />
+              </svg>
+              <span class="sidebar-text">Booking Payment</span>
+            </span>
+
+            <svg class="menu-arrow w-4 h-4 transition-transform transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
             </svg>
-            <span class="sidebar-text">Booking Payment</span>
-          </span>
+          </a>
 
-          <svg class="menu-arrow w-4 h-4 transition-transform transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
-          </svg>
-        </a>
+          <ul id="payment" class="hidden">
 
-        <ul id="payment" class="hidden">
+            <!-- Add Payment -->
+            <li>
+              <a href="booking_payment"
+                class="menu-item flex items-center gap-3 <?php if ($current == 'add_commission') echo 'active'; ?>">
 
-          <!-- Add Payment -->
-          <li>
-            <a href="booking_payment"
-              class="menu-item flex items-center gap-3 <?php if ($current == 'add_commission') echo 'active'; ?>">
+                <svg class="w-4 h-4 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path d="M4 12h16" />
+                </svg>
 
-              <svg class="w-4 h-4 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path d="M4 12h16" />
-              </svg>
+                <span class="sidebar-text">Add Payment</span>
+              </a>
+            </li>
 
-              <span class="sidebar-text">Add Payment</span>
-            </a>
-          </li>
+            <!-- View Payments -->
+            <li>
+              <a href="list_booking_payment"
+                class="menu-item flex items-center gap-3 <?php if ($current == 'view_commission') echo 'active'; ?>">
 
-          <!-- View Payments -->
-          <li>
-            <a href="list_booking_payment"
-              class="menu-item flex items-center gap-3 <?php if ($current == 'view_commission') echo 'active'; ?>">
+                <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path d="M4 12h16" />
+                </svg>
 
-              <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path d="M4 12h16" />
-              </svg>
+                <span class="sidebar-text">View Payment</span>
+              </a>
+            </li>
 
-              <span class="sidebar-text">View Payment</span>
-            </a>
-          </li>
-
-        </ul>
+          </ul>
         </li>
 
 
-         <a href="team_performance"
+        <a href="team_performance"
           class="menu-item <?php if ($current == 'team_performance') echo 'active'; ?>">
           <svg class="w-6 h-6 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -302,16 +305,55 @@
           <span class="sidebar-text">Team Performance</span>
         </a>
 
-         <a href="list_payment_summary"
-          class="menu-item <?php if ($current == 'list_payment_summary') echo 'active'; ?>">
-          <svg class="w-6 h-6 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M3 3v18h18M7 13l3-3 4 4 5-5" />
-          </svg>
-          <span class="sidebar-text">Team Transaction Summary</span>
-        </a>
+        <!-- Transaction Summary -->
+        <li>
+          <a href="javascript:void(0)"
+            onclick="toggleMenu('Transactionsum', this)"
+            class="menu-item flex justify-between items-center">
 
-         <!-- reference -->
+            <span class="flex items-center gap-3">
+              <svg class="w-6 h-6 text-yellow-500" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                <rect x="3" y="4" width="18" height="16" rx="2" ry="2" stroke-linecap="round" stroke-linejoin="round" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3 9h18" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M7 16v-3" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 16v-5" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M17 16v-2" />
+              </svg>
+              <span class="sidebar-text">Transaction Summary</span>
+            </span>
+
+            <svg class="menu-arrow w-4 h-4 transition-transform transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+            </svg>
+          </a>
+
+          <ul id="Transactionsum" class="hidden">
+            <li>
+              <a href="list_payment_summary"
+                class="menu-item flex items-center gap-3 <?php if ($current == 'add_commission') echo 'active'; ?>">
+
+                <svg class="w-4 h-4 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path d="M4 12h16" />
+                </svg>
+
+                <span class="sidebar-text">Team Transaction Summary</span>
+              </a>
+            </li>
+            <li>
+              <a href="advisor_payment_summary"
+                class="menu-item flex items-center gap-3 <?php if ($current == 'add_commission') echo 'active'; ?>">
+
+                <svg class="w-4 h-4 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path d="M4 12h16" />
+                </svg>
+
+                <span class="sidebar-text">Advisor Transaction Summary</span>
+              </a>
+            </li>
+          </ul>
+        </li>
+
+        <!-- Reference -->
         <li>
           <a href="javascript:void(0)"
             onclick="toggleMenu('Bookingpay', this)"
@@ -351,7 +393,7 @@
 
         <!-- visit customer -->
 
-         <li>
+        <li>
           <a href="javascript:void(0)"
             onclick="toggleMenu('visit', this)"
             class="menu-item flex justify-between items-center">
@@ -401,7 +443,7 @@
           </ul>
         </li>
 
-       
+
 
       </ul>
 

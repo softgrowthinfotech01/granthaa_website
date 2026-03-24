@@ -1,147 +1,226 @@
 <?php include 'header.php'; ?>
 
-<div class="max-w-7xl mx-auto bg-white p-4 rounded-2xl shadow-xl">
+<div class="max-w-7xl mx-auto px-4 py-6">
+    <div class="bg-slate-900 rounded-2xl shadow-2xl border border-slate-700 p-5">
+        <div class="mb-4">
+            <h2 class="text-2xl text-center font-bold text-gray-600">Transaction Records</h2>
+            <p class="text-slate-400 text-center text-sm mt-1">All advisor transaction records</p>
+        </div>
 
-    <h2 class="text-2xl font-bold mb-4 text-center">Payment Records</h2>
-
-    <div class="w-full overflow-x-auto">
-
-<!-- Adviser Dropdown -->
-<div class="mb-4">
-    <label class="font-semibold">Select Adviser</label>
-    <select id="adviserDropdown" class="border p-2 rounded w-64"></select>
+        <div class="overflow-x-auto">
+            <table id="paymentTable" class="w-full table-fixed text-sm text-slate-200">
+                <thead>
+                    <tr class="border-b border-slate-700">
+                        <th class="px-4 py-3 text-left">#</th>
+                        <th class="px-4 py-3 text-left">Advisor</th>
+                        <th class="px-4 py-3 text-left">Customer</th>
+                        <th class="px-4 py-3 text-left">Plot No.</th>
+                        <th class="px-4 py-3 text-right">Booking</th>
+                        <th class="px-4 py-3 text-right">Commission</th>
+                        <th class="px-4 py-3 text-right">Paid</th>
+                        <th class="px-4 py-3 text-right">Balance</th>
+                        <th class="px-4 py-3 text-left">Date</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
 </div>
 
-<!-- Summary Cards -->
-<div class="grid grid-cols-5 gap-4 mb-6">
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.8/css/jquery.dataTables.min.css">
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.8/js/jquery.dataTables.min.js"></script>
 
-    <div class="bg-blue-100 p-3 rounded">
-        <p>Total Plots</p>
-        <h3 id="totalPlots">0</h3>
-    </div>
-
-    <div class="bg-green-100 p-3 rounded">
-        <p>Total Booking</p>
-        <h3 id="totalAmount">0</h3>
-    </div>
-
-    <div class="bg-yellow-100 p-3 rounded">
-        <p>Commission</p>
-        <h3 id="totalCommission">0</h3>
-    </div>
-
-    <div class="bg-purple-100 p-3 rounded">
-        <p>Paid</p>
-        <h3 id="paidAmount">0</h3>
-    </div>
-
-    <div class="bg-red-100 p-3 rounded">
-        <p>Balance</p>
-        <h3 id="balanceAmount">0</h3>
-    </div>
-
-</div>
-
-<!-- Logs Table -->
-<table class="w-full border">
-    <thead>
-        <tr class="bg-gray-200">
-            <th class="p-2">Booking ID</th>
-            <th class="p-2">Customer</th>
-            <th class="p-2">Plot</th>
-            <th class="p-2">Amount</th>
-            <th class="p-2">Commission</th>
-            <th class="p-2">Date</th>
-        </tr>
-    </thead>
-    <tbody id="logsTable"></tbody>
-</table>
-        <div id="pagination" class="mt-4 flex justify-center items-center gap-2"></div>
-
-    </div>
-
-</div>
-
-<?php include 'footer.php'; ?>
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-
-    const token = localStorage.getItem("auth_token");
-
-    if (!token) {
-        alert("Login required");
-        return;
+<style>
+    .dataTables_wrapper {
+        color: #e2e8f0 !important;
     }
 
-    const dropdown = document.getElementById("adviserDropdown");
+    .dataTables_length,
+    .dataTables_filter,
+    .dataTables_info,
+    .dataTables_paginate {
+        color: #e2e8f0 !important;
+    }
 
-    function loadData(adviserId = "") {
+    .dataTables_length select,
+    .dataTables_filter input {
+        background-color: #0f172a !important;
+        color: #f8fafc !important;
+        border: 1px solid #475569 !important;
+        border-radius: 8px !important;
+        padding: 6px 10px !important;
+    }
 
-        let apiUrl = url + "commission/leader-adviser-details";
+    table.dataTable {
+        border-collapse: collapse !important;
+        width: 100% !important;
+        color: #e2e8f0 !important;
+        background-color: transparent !important;
+    }
 
-        if (adviserId) {
-            apiUrl += "?adviser_id=" + adviserId;
-        }
+    table.dataTable thead th {
+        background-color: #111827 !important;
+        color: #f8fafc !important;
+        border-bottom: 1px solid #334155 !important;
+        font-weight: 600 !important;
+    }
 
-        fetch(apiUrl, {
-            headers: {
-                "Authorization": "Bearer " + token,
-                "Accept": "application/json"
+    table.dataTable tbody td {
+        background-color: #0f172a !important;
+        color: #e2e8f0 !important;
+        border-bottom: 1px solid #1e293b !important;
+    }
+
+    table.dataTable tbody tr:hover td {
+        background-color: #1e293b !important;
+    }
+
+    table.dataTable.no-footer {
+        border-bottom: 1px solid #334155 !important;
+    }
+
+    .dataTables_wrapper .dataTables_paginate .paginate_button {
+        color: #e2e8f0 !important;
+        border: 1px solid transparent !important;
+        border-radius: 8px !important;
+        margin: 0 2px;
+    }
+
+    .dataTables_wrapper .dataTables_paginate .paginate_button.current {
+        background: #374151 !important;
+        color: #fff !important;
+        border: 1px solid #4b5563 !important;
+    }
+
+    .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+        background: #1e293b !important;
+        color: #fff !important;
+        border: 1px solid #475569 !important;
+    }
+
+    .dataTables_wrapper .dataTables_paginate .paginate_button.disabled {
+        color: #64748b !important;
+    }
+
+    table.dataTable tbody tr {
+        background-color: transparent !important;
+    }
+
+    .dataTables_wrapper .dataTables_length,
+    .dataTables_wrapper .dataTables_filter {
+        margin-bottom: 16px;
+    }
+
+    .dataTables_wrapper .dataTables_info {
+        padding-top: 16px !important;
+    }
+
+    .dataTables_wrapper .dataTables_paginate {
+        padding-top: 12px !important;
+    }
+</style>
+
+<?php include 'footer.php'; ?>
+
+<script>
+    function formatCurrency(value) {
+        return '₹' + Number(value || 0).toLocaleString('en-IN');
+    }
+
+    function formatDate(dateString) {
+        if (!dateString) return '-';
+        const date = new Date(dateString);
+        return date.toLocaleDateString('en-GB');
+    }
+
+    function normalizeRecords(data) {
+        if (Array.isArray(data)) return data;
+        if (data && Array.isArray(data.data)) return data.data;
+        if (data && Array.isArray(data.records)) return data.records;
+        if (data && typeof data === 'object') return [data];
+        return [];
+    }
+
+    async function loadPaymentRecords() {
+        try {
+            const response = await fetch(url + "commission/leader-adviser-details");
+            const data = await response.json();
+
+            console.log("API response:", data);
+
+            const records = normalizeRecords(data);
+
+            if ($.fn.DataTable.isDataTable('#paymentTable')) {
+                $('#paymentTable').DataTable().destroy();
             }
-        })
-        .then(res => res.json())
-        .then(response => {
 
-            const data = response.data;
+            const tbody = document.querySelector('#paymentTable tbody');
+            tbody.innerHTML = '';
 
-            // 🔽 1. Fill dropdown
-            dropdown.innerHTML = "";
-
-            data.advisers.forEach(user => {
-                dropdown.innerHTML += `
-                    <option value="${user.id}" 
-                        ${user.id == data.selected_adviser ? "selected" : ""}>
-                        ${user.name}
-                    </option>
+            if (!records.length) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="9" class="text-center py-6 text-slate-400">
+                            No payment records found
+                        </td>
+                    </tr>
                 `;
-            });
-
-            // 📊 2. Summary
-            if (data.summary) {
-                document.getElementById("totalPlots").innerText = data.summary.total_plots;
-                document.getElementById("totalAmount").innerText = data.summary.total_booking_amount;
-                document.getElementById("totalCommission").innerText = data.summary.total_commission;
-                document.getElementById("paidAmount").innerText = data.summary.paid_amount;
-                document.getElementById("balanceAmount").innerText = data.summary.balance_amount;
+                return;
             }
 
-            // 📄 3. Logs table
-            const tbody = document.getElementById("logsTable");
-            tbody.innerHTML = "";
-
-            data.logs.forEach(row => {
+            records.forEach((item, index) => {
                 tbody.innerHTML += `
                     <tr>
-                        <td class="p-2">${row.booking_id}</td>
-                        <td class="p-2">${row.customer}</td>
-                        <td class="p-2">${row.plot_number}</td>
-                        <td class="p-2">₹${row.amount}</td>
-                        <td class="p-2">₹${row.commission}</td>
-                        <td class="p-2">${row.date}</td>
+                        <td class="px-4 py-3">${index + 1}</td>
+                        <td class="px-4 py-3">${item.advisor_name ?? item.advisor ?? '-'}</td>
+                        <td class="px-4 py-3">${item.customer ?? '-'}</td>
+                        <td class="px-4 py-3">${item.plot_number ?? '-'}</td>
+                        <td class="px-4 py-3 text-right">${formatCurrency(item.amount)}</td>
+                        <td class="px-4 py-3 text-right">${formatCurrency(item.commission)}</td>
+                        <td class="px-4 py-3 text-right text-emerald-400">${formatCurrency(item.paid)}</td>
+                        <td class="px-4 py-3 text-right text-rose-400">${formatCurrency(item.balance)}</td>
+                        <td class="px-4 py-3">${formatDate(item.date)}</td>
                     </tr>
                 `;
             });
 
-        });
+            $('#paymentTable').DataTable({
+                pageLength: 10,
+                lengthMenu: [10, 25, 50, 100],
+                ordering: true,
+                searching: true,
+                responsive: true,
+                autoWidth: false,
+                language: {
+                    search: "Search:",
+                    lengthMenu: "_MENU_ entries per page",
+                    info: "Showing _START_ to _END_ of _TOTAL_ entries",
+                    paginate: {
+                        previous: "‹",
+                        next: "›"
+                    },
+                    emptyTable: "No payment records found"
+                },
+                columnDefs: [
+                    { targets: [4, 5, 6, 7], className: 'text-right' }
+                ]
+            });
+
+        } catch (error) {
+            console.error('Error loading payment records:', error);
+            document.querySelector('#paymentTable tbody').innerHTML = `
+                <tr>
+                    <td colspan="9" class="text-center py-6 text-red-400">
+                        Failed to load payment records
+                    </td>
+                </tr>
+            `;
+        }
     }
 
-    // 🔁 Dropdown change
-    dropdown.addEventListener("change", function () {
-        loadData(this.value);
+    document.addEventListener('DOMContentLoaded', function () {
+        loadPaymentRecords();
     });
-
-    // 🚀 Initial load
-    loadData();
-
-});
 </script>
