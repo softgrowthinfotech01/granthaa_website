@@ -320,7 +320,7 @@
             <option value="${b.booking_id}"
                 data-total-commission="${b.total_commission}"
                 data-paid="${b.paid}"
-                data-balance="${b.balance}">
+                data-balance="${b.total_balance}">
                 ${b.plot_number} - ${b.buyer_name} (${b.role})
             </option>
         `;
@@ -348,6 +348,14 @@
             document.getElementById("balance").value = total_balance || "";
             document.getElementById("amount").value = total_balance || "";
         });
+
+        let amount = parseFloat(document.getElementById("amount").value);
+let balance = parseFloat(document.getElementById("balance").value);
+
+if (amount > balance) {
+    alert("Amount cannot exceed balance");
+    return;
+}
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.js"></script>
