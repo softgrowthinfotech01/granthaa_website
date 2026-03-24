@@ -54,7 +54,7 @@
 
                         <!-- GRID WRAPPER -->
                         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-
+                          <a href="view-booking-summary">
                             <div class="pl-2 h-20 bg-sky-500 rounded-lg shadow-md">
                                 <div class="flex w-full h-full py-2 px-4 bg-white rounded-lg justify-between">
                                     <div class="my-auto">
@@ -76,6 +76,7 @@
                                     </div>
                                 </div>
                             </div>
+                            </a>
                             <div class="pl-2 h-20 bg-sky-500 rounded-lg shadow-md">
                                 <div class="flex w-full h-full py-2 px-4 bg-white rounded-lg justify-between">
                                     <div class="my-auto">

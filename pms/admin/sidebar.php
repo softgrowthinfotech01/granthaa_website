@@ -240,7 +240,7 @@ fixed md:relative transform md:translate-x-0 -translate-x-full z-40 overflow-hid
                     class="flex items-center justify-between px-4 py-3 hover:bg-gray-300">
                     <span class="flex items-center gap-3 text-base font-semibold">
                         <span class="text-lg">💰</span>
-                        Set Commission
+                        Set Leader Commission
                     </span>
                     <i class="fas fa-angle-right dropdown-arrow"></i>
                 </a>

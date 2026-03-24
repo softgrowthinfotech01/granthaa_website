@@ -141,7 +141,11 @@ tbody.innerHTML += `
 <tr class="hover:bg-gray-50 transition duration-200">
 
     <td class="px-5 py-3 font-medium text-gray-800 flex items-center gap-2">
-        <span id="icon-${row.leader_id}">▶</span>
+        <span id="icon-${row.leader_id}" 
+      onclick="loadLeaderDetails(${row.leader_id})"
+      class="cursor-pointer text-sm select-none">
+    ▶
+</span>
         ${row.leader_name}
     </td>
 
