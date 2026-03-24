@@ -942,7 +942,7 @@ public function leaderDetails($leaderId)
             'balance' => $balance
         ];
     }
-    print_r($data);exit;
+    // print_r($data);exit;
 
     return response()->json([
         'status' => true,
