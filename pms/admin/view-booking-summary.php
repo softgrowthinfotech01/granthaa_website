@@ -45,7 +45,7 @@
                         <!-- HEADER -->
                         <div class="mb-5 flex flex-col md:flex-row justify-between items-center gap-4">
 
-                            <h2 class="text-xl font-semibold text-gray-700">Leader Summary</h2>
+                            <h2 class="text-xl font-semibold text-gray-700">Transaction Summary</h2>
 
                             <div class="flex flex-col md:flex-row gap-3 w-full md:w-auto">
 
@@ -244,7 +244,7 @@ tbody.innerHTML += `
                 <td class="p-2">${formatCurrency(item.booking_amount)}</td>
                 <td class="p-2">${formatCurrency(item.total_commission)}</td>
                 <td class="p-2">${formatCurrency(item.paid)}</td>
-                <td class="p-2 font-semibold text-red-500">${formatCurrency(item.balance)}</td>
+                <td class="p-2 font-semibold text-red-500">${formatCurrency(item.total_balance)}</td>
             </tr>
             `;
         });
