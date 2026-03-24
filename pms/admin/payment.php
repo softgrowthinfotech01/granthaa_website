@@ -344,8 +344,8 @@
 
             document.getElementById("total_commission").value = totalCommission || "";
             document.getElementById("total_paid").value = paid || "";
-            document.getElementById("balance").value = balance || "";
-            document.getElementById("amount").value = balance || "";
+            document.getElementById("balance").value = total_balance || "";
+            document.getElementById("amount").value = total_balance || "";
         });
     </script>
 
