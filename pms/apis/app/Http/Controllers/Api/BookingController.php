@@ -906,16 +906,17 @@ public function leaderDetails($leaderId)
     })->get();
 
     $data = [];
+    // print_r($bookings);exit;
 
     foreach ($bookings as $b) {
 
         $role = $b->adviser_id ? 'Adviser' : 'Leader';
-        $userId = $b->adviser_id ?? $b->leader_id;
+        $userId = $b->leader_id;
 
-          $paid = abs(
+        $paid = abs(
             CommissionLedger::where('user_id', $userId)
             ->where('booking_id', $b->id)
-            ->where('type', 'payment')
+            ->where('type', 'payment') // ✅ IMPORTANT FIX
             ->sum('amount')
         );
 
@@ -928,10 +929,10 @@ public function leaderDetails($leaderId)
         $totalcommission = (float) $b->commission_amount;
 
         $balance = $commission - $paid;
-        $totoalbalance = $totalcommission - $paid;
+        $totalbalance = $totalcommission - $paid;
 
         $data[] = [
-            'booking_id' => $b->id, // ✅ MUST ADD THIS
+            'booking_id' => $b->id,
             'buyer_name' => $b->buyer_name,
             'role' => $role,
             'plot_number' => $b->plot_number,
@@ -940,9 +941,10 @@ public function leaderDetails($leaderId)
             'total_commission' => $totalcommission,
             'paid' => $paid,
             'balance' => $balance,
-            'total_balance' => $totoalbalance
+            'total_balance' => $totalbalance
         ];
     }
+    // print_r($data);exit;
 
     return response()->json([
         'status' => true,

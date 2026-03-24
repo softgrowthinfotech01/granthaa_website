@@ -202,6 +202,14 @@
 
             e.preventDefault();
 
+    let amount = parseFloat(document.getElementById("amount").value);
+    let balance = parseFloat(document.getElementById("balance").value);
+
+    if (amount > balance) {
+        alert("Amount cannot exceed balance");
+        return;
+    }
+
             const form = document.getElementById("paymentForm");
 
             const token = localStorage.getItem('auth_token');
@@ -316,14 +324,14 @@
             bookingDropdown.innerHTML = `<option value="">Select Booking</option>`;
 
             bookings.forEach((b) => {
-                bookingDropdown.innerHTML += `
-            <option value="${b.booking_id}"
-                data-total-commission="${b.total_commission}"
-                data-paid="${b.paid}"
-                data-balance="${b.total_balance}">
-                ${b.plot_number} - ${b.buyer_name} (${b.role})
-            </option>
-        `;
+               bookingDropdown.innerHTML += `
+<option value="${b.booking_id}"
+    data-total-commission="${b.total_commission}"
+    data-paid="${b.paid}"
+    data-balance="${b.total_balance}">
+    ${b.plot_number} - ${b.buyer_name} (${b.role})
+</option>
+`;
             });
 
             document.getElementById("total_commission").value = "";
@@ -332,30 +340,22 @@
             document.getElementById("amount").value = "";
         });
 
-        document.getElementById("booking_id").addEventListener("change", function() {
+document.getElementById("booking_id").addEventListener("change", function() {
 
-            let selected = this.options[this.selectedIndex];
+    let selected = this.options[this.selectedIndex];
 
-            if (!selected.value) return;
+    if (!selected.value) return;
 
-            let totalCommission = selected.dataset.totalCommission;
-            let paid = selected.dataset.paid;
-            let balance = selected.dataset.balance;
-            let total_balance = selected.dataset.total_balance;
+    let totalCommission = selected.dataset.totalCommission;
+    let paid = selected.dataset.paid;
+    let balance = selected.dataset.balance;
 
-            document.getElementById("total_commission").value = totalCommission || "";
-            document.getElementById("total_paid").value = paid || "";
-            document.getElementById("balance").value = total_balance || "";
-            document.getElementById("amount").value = total_balance || "";
-        });
+    document.getElementById("total_commission").value = totalCommission || "";
+    document.getElementById("total_paid").value = paid || "";
+    document.getElementById("balance").value = balance || "";
+    document.getElementById("amount").value = balance || "";
+});
 
-        let amount = parseFloat(document.getElementById("amount").value);
-let balance = parseFloat(document.getElementById("balance").value);
-
-if (amount > balance) {
-    alert("Amount cannot exceed balance");
-    return;
-}
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.js"></script>
