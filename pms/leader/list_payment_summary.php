@@ -3,7 +3,7 @@
 <div class="max-w-7xl mx-auto px-4 py-6">
     <div class="bg-slate-900 rounded-2xl shadow-2xl border border-slate-700 p-5">
         <div class="mb-4">
-            <h2 class="text-2xl text-center font-bold text-gray-600">Transaction Records</h2>
+            <h2 class="text-2xl text-center font-bold text-gray-600">Team Transaction Summary</h2>
             <p class="text-slate-400 text-center text-sm mt-1">All advisor transaction records</p>
         </div>
 
