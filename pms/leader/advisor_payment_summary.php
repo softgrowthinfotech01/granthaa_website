@@ -2,7 +2,7 @@
 
 <div class="max-w-7xl mx-auto bg-white p-4 rounded-2xl shadow-xl">
 
-    <h2 class="text-2xl font-bold mb-4 text-center">Payment Records</h2>
+    <h2 class="text-2xl font-bold mb-4 text-center">Advisor Transaction Summary</h2>
 
     <div class="w-full overflow-x-auto">
 
