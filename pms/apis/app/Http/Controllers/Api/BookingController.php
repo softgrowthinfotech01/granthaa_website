@@ -929,6 +929,7 @@ public function leaderDetails($leaderId)
         $totalcommission = (float) $b->commission_amount;
 
         $balance = $commission - $paid;
+        $totalbalance = $totalcommission - $paid;
 
         $data[] = [
             'booking_id' => $b->id,
@@ -939,7 +940,8 @@ public function leaderDetails($leaderId)
             'commission' => $commission,
             'total_commission' => $totalcommission,
             'paid' => $paid,
-            'balance' => $balance
+            'balance' => $balance,
+            'total_balance' => $totalbalance
         ];
     }
     // print_r($data);exit;
