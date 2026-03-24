@@ -925,6 +925,8 @@ public function leaderDetails($leaderId)
             ? (float) $b->leader_commission_amount + (float) $b->leader_commission_amountadviser_commission_amount
             : (float) $b->adviser_commission_amount;
 
+        $totalcommission = (float) $b->commission_amount;
+
         $balance = $commission - $paid;
 
         $data[] = [
@@ -934,6 +936,7 @@ public function leaderDetails($leaderId)
             'plot_number' => $b->plot_number,
             'booking_amount' => $booking_amount,
             'commission' => $commission,
+            'total_commission' => $totalcommission,
             'paid' => $paid,
             'balance' => $balance
         ];

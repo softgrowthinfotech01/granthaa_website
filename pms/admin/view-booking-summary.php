@@ -242,7 +242,7 @@ tbody.innerHTML += `
                 <td class="p-2">${item.role}</td>
                 <td class="p-2">${item.plot_number}</td>
                 <td class="p-2">${formatCurrency(item.booking_amount)}</td>
-                <td class="p-2">${formatCurrency(item.commission)}</td>
+                <td class="p-2">${formatCurrency(item.total_commission)}</td>
                 <td class="p-2">${formatCurrency(item.paid)}</td>
                 <td class="p-2 font-semibold text-red-500">${formatCurrency(item.balance)}</td>
             </tr>
