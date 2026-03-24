@@ -924,7 +924,6 @@ public function leaderDetails($leaderId)
         $commission = $role === 'Leader'
             ? (float) $b->leader_commission_amount + (float) $b->adviser_commission_amount
             : (float) $b->adviser_commission_amount;
-print_r($b->leader_commission_amount + (float) $b->adviser_commission_amount);exit;
         $totalcommission = (float) $b->commission_amount;
 
         $balance = $commission - $paid;
