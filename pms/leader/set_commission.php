@@ -64,8 +64,6 @@
 </div>
 <script src="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.js"></script>
 
-
-<script src="../url.js"></script>
 <script>
     document.addEventListener("DOMContentLoaded", function() {
 
@@ -94,7 +92,7 @@
                     console.log("MY COMMISSIONS:", response);
 
                     const commissions = response.data?.data ?? [];
-                    const select = document.getElementById("site_location");
+                    const select = document.getElementById("location_id");
 
                     select.innerHTML = `<option value="">Select Site Location</option>`;
 
