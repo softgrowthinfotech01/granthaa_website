@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="keywords" content="tailwind,tailwindcss,tailwind css,css,starter template,free template,admin templates, admin template, admin dashboard, free tailwind templates, tailwind example">
-    
+
     <!-- Css -->
     <link rel="stylesheet" href="../style.css">
 
@@ -292,7 +292,7 @@
 
     </div>
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
@@ -427,7 +427,8 @@
 
             const token = localStorage.getItem("auth_token");
 
-            const res = await fetch(url + "commission-split", {
+            // ✅ Use existing dashboard API
+            const res = await fetch(url + "admdashboard", {
                 headers: {
                     "Authorization": "Bearer " + token
                 }
@@ -436,23 +437,24 @@
             const result = await res.json();
             const d = result.data;
 
-            // ✅ FIX: convert to number
-            const leader = Number(d.leader);
-            const adviser = Number(d.adviser);
-            const total = leader + adviser;
+            // ✅ Use existing fields
+            const paid = Number(d.total_paid);
+            const pending = Number(d.pending_commissions);
+            const total = paid + pending;
 
             const ctx = document.getElementById("commissionChart").getContext("2d");
 
-            // 🎨 Gradients
+            // 🎨 Paid (green)
             const gradient1 = ctx.createLinearGradient(0, 0, 0, 400);
-            gradient1.addColorStop(0, "#36D1DC");
-            gradient1.addColorStop(1, "#5B86E5");
+            gradient1.addColorStop(0, "#34d399");
+            gradient1.addColorStop(1, "#059669");
 
+            // 🎨 Pending (orange)
             const gradient2 = ctx.createLinearGradient(0, 0, 0, 400);
-            gradient2.addColorStop(0, "#FF758C");
-            gradient2.addColorStop(1, "#FF7EB3");
+            gradient2.addColorStop(0, "#fbbf24");
+            gradient2.addColorStop(1, "#f97316");
 
-            // 🔥 Inner Circle Plugin (FIXED)
+            // 🔥 Inner Circle Plugin
             const innerCirclePlugin = {
                 id: 'innerCircle',
                 beforeDraw(chart) {
@@ -460,28 +462,25 @@
                         ctx
                     } = chart;
                     const meta = chart.getDatasetMeta(0);
-                    if (!meta || !meta.data || !meta.data[0]) return;
+                    if (!meta?.data?.[0]) return;
 
                     const x = meta.data[0].x;
                     const y = meta.data[0].y;
+                    const innerRadius = meta.data[0].innerRadius;
 
                     ctx.save();
 
-                    // 🎯 PERFECT INNER RADIUS (no weird shape)
-                    const innerRadius = meta.data[0].innerRadius;
-
-                    // 🧊 Draw inner circle slightly smaller (gap maintained)
+                    // Inner circle
                     ctx.beginPath();
                     ctx.arc(x, y, innerRadius - 10, 0, 2 * Math.PI);
-                    ctx.fillStyle = "#f8fafc"; // clean background
+                    ctx.fillStyle = "#f8fafc";
                     ctx.fill();
 
-                    // subtle border
                     ctx.strokeStyle = "#e5e7eb";
                     ctx.lineWidth = 2;
                     ctx.stroke();
 
-                    // 💰 TEXT (DYNAMIC)
+                    // Dynamic center
                     const centerData = chart.$centerText || {
                         title: "Total Commission",
                         value: total
@@ -491,7 +490,7 @@
 
                     ctx.fillStyle = "#111";
                     ctx.font = "bold 22px sans-serif";
-                    ctx.fillText("₹" + Number(centerData.value).toLocaleString(), x, y - 8);
+                    ctx.fillText("₹" + centerData.value.toLocaleString(), x, y - 8);
 
                     ctx.fillStyle = "#666";
                     ctx.font = "13px sans-serif";
@@ -504,9 +503,9 @@
             const chart = new Chart(ctx, {
                 type: "doughnut",
                 data: {
-                    labels: ["Leader", "Adviser"],
+                    labels: ["Paid", "Pending"], // ✅ changed
                     datasets: [{
-                        data: [leader, adviser],
+                        data: [paid, pending], // ✅ changed
                         backgroundColor: [gradient1, gradient2],
                         borderWidth: 0,
                         hoverOffset: 20
@@ -531,16 +530,12 @@
                         }
                     },
 
-                    // 🔥 Hover center update
                     onHover: (event, elements, chart) => {
                         if (elements.length) {
                             const index = elements[0].index;
-                            const label = chart.data.labels[index];
-                            const value = chart.data.datasets[0].data[index];
-
                             chart.$centerText = {
-                                title: label,
-                                value: value
+                                title: chart.data.labels[index],
+                                value: chart.data.datasets[0].data[index]
                             };
                         } else {
                             chart.$centerText = {
@@ -555,7 +550,6 @@
                 plugins: [innerCirclePlugin]
             });
 
-            // 🔥 Update center dynamically
             chart.$centerText = {
                 title: "Total Commission",
                 value: total
