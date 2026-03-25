@@ -2,23 +2,15 @@
 <div class="flex justify-between items-center px-6 h-20">
 
         <!-- LEFT -->
-        <div class="flex items-center gap-4">
+        <div class="flex items-center gap-5">
 
             <!-- Sidebar Toggle -->
             <i class="fas fa-bars text-gray-700 text-lg cursor-pointer hover:bg-gray-200 p-2 rounded-md md:hidden"
                 onclick="sidebarToggle()"></i>
 
-            <h1 class="text-gray-800 text-lg font-semibold tracking-wide">
-                Granthaa Admin Panel
-            </h1>
-
-        </div>
-
-
-        <!-- CENTER LOGO -->
-        <div class="hidden md:flex items-center">
             <img src="../images/logo_icon.png"
                 class="w-40 h-20">
+
         </div>
 
 
@@ -40,7 +32,7 @@
 
                 <!-- 🔽 ALERT DROPDOWN -->
                 <div id="alertDropdown"
-                    class="hidden absolute right-0 mt-3 w-80 bg-white border border-gray-200 rounded-xl shadow-xl z-50 overflow-hidden">
+                    class="hidden absolute right-0 mt-3 w-72 sm:w-80 max-w-[90vw] bg-white border border-gray-200 rounded-xl shadow-xl z-50 overflow-hidden">
 
                     <!-- HEADER -->
                     <div class="flex items-center gap-2 px-4 py-3 border-b bg-yellow-50">
@@ -113,7 +105,6 @@
         if (!dropdown.classList.contains("hidden")) {
             loadAlerts();
 
-            // ✅ mark as seen
             alertsSeen = true;
             dot.classList.add("hidden");
         }

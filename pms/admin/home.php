@@ -252,7 +252,11 @@
                                     <tbody id="recentBookingsTable"></tbody>
 
                                 </table>
-                                <a href="bookings" class="text-blue-500 text-sm float-right">View All →</a>
+                                <a href="total_sales_report"
+                                    class="inline-block bg-blue-500 text-white text-sm px-4 py-2 rounded-lg shadow
+                                     hover:bg-blue-600 transition float-right m-2">
+                                    View All →
+                                </a>
                             </div>
 
                         </div>
@@ -276,6 +280,11 @@
                                     <tbody id="recentPaymentsTable"></tbody>
 
                                 </table>
+                                <a href="view_payment"
+                                    class="inline-block bg-blue-500 text-white text-sm px-4 py-2 rounded-lg shadow
+                                     hover:bg-blue-600 transition float-right m-2">
+                                    View All →
+                                </a>
                             </div>
 
                         </div>
