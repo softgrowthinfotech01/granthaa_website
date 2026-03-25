@@ -10,202 +10,201 @@
 
 </head>
 
-<body>
+<body class="bg-gray-200">
     <!--Container -->
-    <div class="mx-auto">
-        <!--Screen-->
-        <div class="flex flex-col min-h-screen">
-            <!--Header Section Starts Here-->
-            <?php include "header.php"; ?>
-            <!--/Header-->
+   <!--Container -->
+<div class="mx-auto">
+    <div class="flex flex-col min-h-screen">
 
-            <div class="flex flex-1">
-                <!--Sidebar-->
-                <?php include 'sidebar.php'; ?>
-                <!--/Sidebar-->
+        <?php include "header.php"; ?>
 
-                <!--Main-->
-                <!--Main-->
-                <div id="mainContent"
-                    class="w-full md:w-[75%] lg:w-[75%] mx-3 md:mx-auto my-4
-transition-all duration-300">
+        <div class="flex flex-1">
 
-                    <form class="w-full px-4 rounded-lg bg-gray-200 p-6 border shadow-xl" method="post" id="userForm" enctype="multipart/form-data">
+            <?php include 'sidebar.php'; ?>
 
-                        <div class="personal-details">
-                            <h5 class="text-xl font-bold text-heading p-1">Add Leader Details</h5>
+            <!-- MAIN -->
+            <div id="mainContent"
+                class="w-full md:w-[80%] mx-auto my-6 px-3">
 
-                            <div class="grid grid-cols-1 md:grid-cols-2">
+                <!-- CARD -->
+                <div class="max-w-5xl mx-auto bg-white p-6 md:p-8 rounded-2xl shadow-lg border border-gray-200">
 
-                                <div class="mb-5 px-1">
-                                    <label for="name" class="block mb-2.5 text-sm font-medium text-heading">Full Name</label>
-                                    <input name="name" type="text" id="name"
-                                        class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm block w-full px-3 py-2.5 shadow-xs"
-                                        placeholder="Enter your name" required />
+                    <!-- TITLE -->
+                    <div class="mb-6 text-center">
+                        <h2 class="text-2xl font-bold text-gray-800">Add Leader</h2>
+                        <p class="text-sm text-gray-500">Fill all required details</p>
+                    </div>
+
+                    <form method="post" id="userForm" enctype="multipart/form-data">
+
+                        <!-- PERSONAL DETAILS -->
+                        <div>
+                            <h5 class="text-lg font-semibold text-gray-800 mb-3 border-b pb-2">
+                                Personal Details
+                            </h5>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+                                <div>
+                                    <label class="block mb-1 text-sm font-medium text-gray-700">Full Name</label>
+                                    <input name="name" type="text"
+                                        class="w-full px-3 py-2.5 border border-gray-300 rounded-lg bg-white text-sm focus:ring-2 focus:ring-blue-500 outline-none"
+                                        placeholder="Enter your name" required>
                                 </div>
 
-                                <div class="mb-5 px-1">
-                                    <label for="aadhar_number" class="block mb-2.5 text-sm font-medium text-heading">Aadhaar Card</label>
-                                    <input name="aadhaar_number" type="text" maxlength="12" pattern="[0-9]{12}" inputmode="numeric"
-                                        id="aadhaar_number"
-                                        class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm block w-full px-3 py-2.5 shadow-xs"
-                                        placeholder="Enter Aadhar card number" required />
+                                <div>
+                                    <label class="block mb-1 text-sm font-medium text-gray-700">Aadhaar Card</label>
+                                    <input name="aadhaar_number" type="text" maxlength="12" pattern="[0-9]{12}"
+                                        class="w-full px-3 py-2.5 border border-gray-300 rounded-lg"
+                                        placeholder="Enter Aadhaar number" required>
                                 </div>
 
-                                <div class="mb-5 px-1">
-                                    <label for="age" class="block mb-2.5 text-sm font-medium text-heading">Age</label>
-                                    <input name="age" type="text" maxlength="2" pattern="[0-9]{2}" inputmode="numeric"
-                                        id="age"
-                                        class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm block w-full px-3 py-2.5 shadow-xs"
-                                        placeholder="Enter your age" required />
+                                <div>
+                                    <label class="block mb-1 text-sm font-medium text-gray-700">Age</label>
+                                    <input name="age" type="text" maxlength="2"
+                                        class="w-full px-3 py-2.5 border border-gray-300 rounded-lg"
+                                        placeholder="Enter age" required>
                                 </div>
 
-                                <div class="mb-5 px-1">
-                                    <label for="gender" class="block mb-2.5 text-sm font-medium text-heading">Gender</label>
-                                    <select name="gender" id="gender"
-                                        class="block w-full px-3 py-2.5 rounded-lg bg-white border border-default-medium text-heading text-sm shadow-xs">
-                                        <option selected>Choose a gender</option>
+                                <div>
+                                    <label class="block mb-1 text-sm font-medium text-gray-700">Gender</label>
+                                    <select name="gender"
+                                        class="w-full px-3 py-2.5 border border-gray-300 rounded-lg bg-white">
+                                        <option selected>Choose gender</option>
                                         <option value="male">Male</option>
                                         <option value="female">Female</option>
+                                        <option value="other">Other</option>
                                     </select>
                                 </div>
 
-                                <div class="mb-5 px-1">
-                                    <label class="block mb-2.5 text-sm font-medium text-heading">Upload Image</label>
-                                    <input id="file_input" name="image" accept=".jpg,.jpeg,.png"
-                                        class="rounded-lg cursor-pointer bg-white border border-default-medium text-heading text-sm block w-full shadow-xs"
-                                        type="file">
+                                <div>
+                                    <label class="block mb-1 text-sm font-medium text-gray-700">Upload Image</label>
+                                    <input name="image" type="file"
+                                        class="w-full border border-gray-300 rounded-lg p-2 bg-white">
                                 </div>
 
                             </div>
                         </div>
 
-                        <hr class="border-white-300 mb-3">
+                        <!-- CONTACT DETAILS -->
+                        <div class="mt-6">
+                            <h5 class="text-lg font-semibold text-gray-800 mb-3 border-b pb-2">
+                                Contact Details
+                            </h5>
 
-                        <!-- Contact Details -->
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
 
-                        <div>
-                            <h5 class="text-xl font-bold text-heading p-1">Contact Details</h5>
-
-                            <div class="grid grid-cols-1 md:grid-cols-2">
-
-                                <div class="mb-5 px-1">
-                                    <label for="mobile" class="block mb-2.5 text-sm font-medium text-heading">Mobile Number</label>
-                                    <input name="contact_no" type="tel" maxlength="10" pattern="[0-9]{10}"
-                                        id="mobile"
-                                        class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm block w-full px-3 py-2.5 shadow-xs"
-                                        placeholder="Enter mobile number" required />
+                                <div>
+                                    <label class="block mb-1 text-sm font-medium text-gray-700">Mobile</label>
+                                    <input name="contact_no" type="tel"
+                                        class="w-full px-3 py-2.5 border border-gray-300 rounded-lg"
+                                        placeholder="Enter mobile number" required>
                                 </div>
 
-                                <div class="mb-5 px-1">
-                                    <label for="email" class="block mb-2.5 text-sm font-medium text-heading">Email</label>
-                                    <input name="email" type="email" id="email"
-                                        class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm block w-full px-3 py-2.5 shadow-xs"
-                                        placeholder="Enter email" required />
+                                <div>
+                                    <label class="block mb-1 text-sm font-medium text-gray-700">Email</label>
+                                    <input name="email" type="email"
+                                        class="w-full px-3 py-2.5 border border-gray-300 rounded-lg"
+                                        placeholder="Enter email" required>
                                 </div>
 
-                                <div class="mb-5 px-1">
-                                    <label for="city" class="block mb-2.5 text-sm font-medium text-heading">City</label>
-                                    <input name="city" type="text" id="city"
-                                        class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm block w-full px-3 py-2.5 shadow-xs"
-                                        placeholder="Enter city" required />
+                                <div>
+                                    <label class="block mb-1 text-sm font-medium text-gray-700">City</label>
+                                    <input name="city" type="text"
+                                        class="w-full px-3 py-2.5 border border-gray-300 rounded-lg"
+                                        placeholder="Enter city" required>
                                 </div>
 
-                                <div class="mb-5 px-1">
-                                    <label for="state" class="block mb-2.5 text-sm font-medium text-heading">State</label>
-                                    <input name="state" type="text" id="state"
-                                        class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm block w-full px-3 py-2.5 shadow-xs"
-                                        placeholder="Enter state" required />
+                                <div>
+                                    <label class="block mb-1 text-sm font-medium text-gray-700">State</label>
+                                    <input name="state" type="text"
+                                        class="w-full px-3 py-2.5 border border-gray-300 rounded-lg"
+                                        placeholder="Enter state" required>
                                 </div>
 
-                                <div class="mb-5 px-1">
-                                    <label for="address" class="block mb-2.5 text-sm font-medium text-heading">Address</label>
-                                    <input name="address" type="text" id="address"
-                                        class="rounded-lg bg-white border border-default-medium text-heading text-sm block w-full px-3 py-2.5 shadow-xs"
-                                        placeholder="Enter address" required />
+                                <div class="md:col-span-2">
+                                    <label class="block mb-1 text-sm font-medium text-gray-700">Address</label>
+                                    <input name="address" type="text"
+                                        class="w-full px-3 py-2.5 border border-gray-300 rounded-lg"
+                                        placeholder="Enter address" required>
                                 </div>
 
-                                <div class="mb-5 px-1">
-                                    <label for="pincode" class="block mb-2.5 text-sm font-medium text-heading">Pincode</label>
-                                    <input name="pin_code" type="text" maxlength="6"
-                                        id="pincode"
-                                        class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm block w-full px-3 py-2.5 shadow-xs"
-                                        placeholder="Enter pincode" required />
+                                <div>
+                                    <label class="block mb-1 text-sm font-medium text-gray-700">Pincode</label>
+                                    <input name="pin_code" type="text"
+                                        class="w-full px-3 py-2.5 border border-gray-300 rounded-lg"
+                                        placeholder="Enter pincode" required>
                                 </div>
 
                             </div>
                         </div>
 
-                        <hr class="border-white-300 mb-3">
+                        <!-- BANK DETAILS -->
+                        <div class="mt-6">
+                            <h5 class="text-lg font-semibold text-gray-800 mb-3 border-b pb-2">
+                                Bank Details
+                            </h5>
 
-                        <!-- Bank Details -->
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
 
-                        <div>
-                            <h5 class="text-xl font-bold text-heading p-1">Bank Details</h5>
-
-                            <div class="grid grid-cols-1 md:grid-cols-2">
-
-                                <div class="mb-5 px-1">
-                                    <label for="bank_name" class="block mb-2.5 text-sm font-medium text-heading">Bank Name</label>
-                                    <input name="bank_name" type="text" id="bank_name"
-                                        class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm block w-full px-3 py-2.5 shadow-xs"
-                                        placeholder="Enter bank name" required />
+                                <div>
+                                    <label class="block mb-1 text-sm font-medium text-gray-700">Bank Name</label>
+                                    <input name="bank_name" type="text"
+                                        class="w-full px-3 py-2.5 border border-gray-300 rounded-lg"
+                                        placeholder="Enter bank name" required>
                                 </div>
 
-                                <div class="mb-5 px-1">
-                                    <label for="branch" class="block mb-2.5 text-sm font-medium text-heading">Branch</label>
-                                    <input name="bank_branch" type="text" id="branch"
-                                        class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm block w-full px-3 py-2.5 shadow-xs"
-                                        placeholder="Enter branch name" required />
+                                <div>
+                                    <label class="block mb-1 text-sm font-medium text-gray-700">Branch</label>
+                                    <input name="bank_branch" type="text"
+                                        class="w-full px-3 py-2.5 border border-gray-300 rounded-lg"
+                                        placeholder="Enter branch" required>
                                 </div>
 
-                                <div class="mb-5 px-1">
-                                    <label for="account_number" class="block mb-2.5 text-sm font-medium text-heading">Account Number</label>
-                                    <input name="bank_account_no" type="text" id="account_number"
-                                        class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm block w-full px-3 py-2.5 shadow-xs"
-                                        placeholder="Enter account number" pattern="[0-9]{9,18}" maxlength="18" required />
+                                <div>
+                                    <label class="block mb-1 text-sm font-medium text-gray-700">Account Number</label>
+                                    <input name="bank_account_no" type="text"
+                                        class="w-full px-3 py-2.5 border border-gray-300 rounded-lg"
+                                        placeholder="Enter account number" required>
                                 </div>
 
-                                <div class="mb-5 px-1">
-                                    <label for="ifsc_code" class="block mb-2.5 text-sm font-medium text-heading">IFSC Code</label>
-                                    <input name="bank_ifsc_code" type="text" id="ifsc_code"
-                                        class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm block w-full px-3 py-2.5 shadow-xs"
-                                        pattern="[A-Za-z]{4}0[A-Za-z0-9]{6}"
-                                        title="Enter valid IFSC code (Example: HDFC0001234)"
-                                        placeholder="Enter IFSC code" maxlength="11" required />
+                                <div>
+                                    <label class="block mb-1 text-sm font-medium text-gray-700">IFSC Code</label>
+                                    <input name="bank_ifsc_code" type="text"
+                                        class="w-full px-3 py-2.5 border border-gray-300 rounded-lg"
+                                        placeholder="Enter IFSC code" required>
                                 </div>
 
                             </div>
                         </div>
 
-                        <hr class="border-white-300 mb-3">
-
-                        <div class="flex justify-center gap-3">
+                        <!-- BUTTONS -->
+                        <div class="mt-8 flex flex-col md:flex-row justify-center gap-3">
 
                             <button type="submit"
-                                class="w-full md:w-[20%] text-white bg-blue-600 hover:bg-blue-500 rounded-lg text-sm px-4 py-2.5">
+                                class="w-full md:w-[180px] bg-blue-600 hover:bg-blue-500 text-white rounded-lg px-4 py-2.5 transition shadow">
                                 Save
                             </button>
 
                             <button type="button"
                                 onclick="confirmReset()"
-                                class="w-full md:w-[20%] text-gray-700 bg-white hover:bg-gray-200 rounded-lg text-sm px-4 py-2.5">
+                                class="w-full md:w-[180px] bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-lg px-4 py-2.5 border">
                                 Reset
                             </button>
 
                         </div>
 
                     </form>
+
                 </div>
-                <!--/Main-->
             </div>
-            <!--Footer-->
-            <?php include 'footer.php'; ?>
-            <!--/footer-->
 
         </div>
 
+        <?php include 'footer.php'; ?>
+
     </div>
+</div>
 
     <script>
         function confirmReset() {
