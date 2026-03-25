@@ -11,7 +11,7 @@
   <!-- Location Dropdown -->
  <div class="space-y-2">
                     <label class="text-sm font-semibold text-gray-700">Site Location</label>
-                    <select name="site_location" id="site_location" class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-yellow-400 outline-none ">
+                    <select name="location_id" id="location_id" class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-yellow-400 outline-none ">
                         <option>Loading....</option>
                     </select>
                 </div>
@@ -64,8 +64,6 @@
 </div>
 <script src="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.js"></script>
 
-
-<script src="../url.js"></script>
 <script>
     document.addEventListener("DOMContentLoaded", function() {
 
@@ -94,7 +92,7 @@
                     console.log("MY COMMISSIONS:", response);
 
                     const commissions = response.data?.data ?? [];
-                    const select = document.getElementById("site_location");
+                    const select = document.getElementById("location_id");
 
                     select.innerHTML = `<option value="">Select Site Location</option>`;
 

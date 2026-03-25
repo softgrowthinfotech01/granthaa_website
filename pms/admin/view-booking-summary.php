@@ -83,9 +83,8 @@
                                         <th class="px-5 py-3">Plots</th>
                                         <th class="px-5 py-3">Booking</th>
                                         <th class="px-5 py-3">Commission</th>
-                                        <th class="px-5 py-3">Paid</th>
-                                        <th class="px-5 py-3">Balance</th>
-                                        <th class="px-5 py-3 text-center">Action</th>
+                                        <th class="px-5 py-3">Paid Comm.</th>
+                                        <th class="px-5 py-3">Balance Comm.</th>
                                     </tr>
                                 </thead>
 
@@ -176,13 +175,10 @@
         } else {
             paginatedRows.forEach(row => {
                 tbody.innerHTML += `
-                <tr class="hover:bg-gray-50 transition duration-200">
+                <tr onclick="loadLeaderDetails(${row.leader_id})"
+    class="hover:bg-blue-50 transition duration-200 cursor-pointer">
                     <td class="px-5 py-3 font-medium text-gray-800 flex items-center gap-2">
-                        <span id="icon-${row.leader_id}" 
-      onclick="loadLeaderDetails(${row.leader_id})"
-      class="cursor-pointer text-sm select-none">
-    ▶
-</span>
+                        <span id="icon-${row.leader_id}" class="text-sm mr-1">▶</span>
                         ${row.leader_name ?? ""}
                     </td>
 
@@ -204,13 +200,7 @@
                         ${formatCurrency(row.balance_amount)}
                     </td>
 
-                    <td class="px-5 py-3 text-center">
-                        <button id="btn-${row.leader_id}"
-                            onclick="loadLeaderDetails(${row.leader_id})"
-                            class="px-4 py-1.5 text-sm font-medium bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition">
-                            View Details
-                        </button>
-                    </td>
+                    
                 </tr>
 
                 <tr id="leader-${row.leader_id}" class="hidden">
@@ -306,27 +296,20 @@
         const container = document.getElementById("leader-details-" + leaderId);
         const row = document.getElementById("leader-" + leaderId);
         const icon = document.getElementById("icon-" + leaderId);
-        const btn = document.getElementById("btn-" + leaderId);
+        
+  // CLOSE SAME
+    if (openLeaderId === leaderId) {
+        row.classList.add("hidden");
+        icon.innerHTML = "▶";
+        openLeaderId = null;
+        return;
+    }
 
-        if (!container || !row || !icon || !btn) return;
-
-        if (openLeaderId === leaderId) {
-            row.classList.add("hidden");
-            icon.innerHTML = "▶";
-            btn.innerHTML = "View Details";
-            openLeaderId = null;
-            return;
-        }
-
-        if (openLeaderId) {
-            document.getElementById("leader-" + openLeaderId)?.classList.add("hidden");
-
-            const oldIcon = document.getElementById("icon-" + openLeaderId);
-            const oldBtn = document.getElementById("btn-" + openLeaderId);
-
-            if (oldIcon) oldIcon.innerHTML = "▶";
-            if (oldBtn) oldBtn.innerHTML = "View Details";
-        }
+    // CLOSE PREVIOUS
+    if (openLeaderId) {
+        document.getElementById("leader-" + openLeaderId)?.classList.add("hidden");
+        document.getElementById("icon-" + openLeaderId).innerHTML = "▶";
+    }
 
         container.innerHTML = "Loading...";
 
@@ -382,7 +365,7 @@
             container.innerHTML = html;
             row.classList.remove("hidden");
             icon.innerHTML = "▼";
-            btn.innerHTML = "Hide Details";
+            
             openLeaderId = leaderId;
         })
         .catch(err => {

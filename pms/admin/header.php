@@ -1,5 +1,5 @@
-<header class="bg-gray-100 border-b shadow-lg">
-    <div class="flex justify-between items-center px-6 h-20">
+<header class="bg-gray-50 border-b shadow-lg">
+<div class="flex justify-between items-center px-6 h-20">
 
         <!-- LEFT -->
         <div class="flex items-center gap-4">
