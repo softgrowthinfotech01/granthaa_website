@@ -986,4 +986,18 @@ public function adviserDetails($adviserId)
         'data' => $data
     ]);
 }
+
+public function recentPayments()
+{
+    $payments = CommissionLedger::where('type', 'payment')
+        ->with('user') // relation needed
+        ->latest()
+        ->take(5)
+        ->get();
+
+    return response()->json([
+        'status' => true,
+        'data' => $payments
+    ]);
+}
 }

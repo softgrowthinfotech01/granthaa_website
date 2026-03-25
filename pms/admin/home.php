@@ -137,6 +137,26 @@
                             <div class="pl-2 h-20 bg-sky-500 rounded-lg shadow-md">
                                 <div class="flex w-full h-full py-2 px-4 bg-white rounded-lg justify-between">
                                     <div class="my-auto">
+                                        <p class="font-bold">Total Commissions</p>
+                                        <p id="total_commissions" class="text-lg text-sky-500">00.00</p>
+                                    </div>
+                                    <div class="my-auto">
+                                        <svg viewBox="0 0 24 24" class="h-10 w-10">
+                                            <defs>
+                                                <linearGradient id="clockGrad" x1="0" y1="0" x2="1" y2="1">
+                                                    <stop offset="0%" stop-color="#f59e0b" />
+                                                    <stop offset="100%" stop-color="#f97316" />
+                                                </linearGradient>
+                                            </defs>
+                                            <circle cx="12" cy="12" r="9" fill="url(#clockGrad)" />
+                                            <path d="M12 7v5l3 2" stroke="#fff" stroke-width="2" fill="none" />
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="pl-2 h-20 bg-sky-500 rounded-lg shadow-md">
+                                <div class="flex w-full h-full py-2 px-4 bg-white rounded-lg justify-between">
+                                    <div class="my-auto">
                                         <p class="font-bold">Pending Commissions</p>
                                         <p id="pending_commissions" class="text-lg text-sky-500">00.00</p>
                                     </div>
@@ -179,6 +199,53 @@
 
 
                         </div>
+
+                        <div class="bg-white rounded-xl shadow-md p-4 mt-6">
+
+    <h3 class="text-lg font-semibold mb-3">Recent Bookings</h3>
+
+    <div class="overflow-x-auto">
+        <table class="w-full text-sm text-left border rounded-lg">
+
+            <thead class="bg-gray-100 text-gray-600">
+                <tr>
+                    <th class="p-2">Buyer</th>
+                    <th class="p-2">Plot</th>
+                    <th class="p-2">Amount</th>
+                    <th class="p-2">Date</th>
+                </tr>
+            </thead>
+
+            <tbody id="recentBookingsTable"></tbody>
+
+        </table>
+        <a href="bookings" class="text-blue-500 text-sm float-right">View All →</a>
+    </div>
+
+</div>
+
+<div class="bg-white rounded-xl shadow-md p-4 mt-6">
+
+    <h3 class="text-lg font-semibold mb-3">Recent Payments</h3>
+
+    <div class="overflow-x-auto">
+        <table class="w-full text-sm text-left border rounded-lg">
+
+            <thead class="bg-gray-100 text-gray-600">
+                <tr>
+                    <th class="p-2">User</th>
+                    <th class="p-2">Amount</th>
+                    <th class="p-2">Mode</th>
+                    <th class="p-2">Date</th>
+                </tr>
+            </thead>
+
+            <tbody id="recentPaymentsTable"></tbody>
+
+        </table>
+    </div>
+
+</div>
                     </div>
                     <!--/Main-->
                 </div>
@@ -221,9 +288,80 @@
                     document.querySelector('#total_sales_value').textContent = "₹ " + Number(data.data.total_sales_value).toLocaleString("en-IN");
                     document.querySelector('#pending_commissions').textContent = "₹ " + data.data.pending_commissions.toLocaleString("en-IN");
                     document.querySelector('#paid_commissions').textContent = "₹ " + data.data.total_paid.toLocaleString("en-IN");
+                    document.querySelector('#total_commissions').textContent = "₹ " + data.data.total_commission.toLocaleString("en-IN");
                 })
                 .catch(error => console.error('Error fetching dashboard data:', error));
         });
+
+
+        function loadRecentBookings() {
+
+    const token = localStorage.getItem("auth_token");
+
+    fetch(url + "bookings?per_page=5", {
+        headers: {
+            "Authorization": "Bearer " + token
+        }
+    })
+    .then(res => res.json())
+    .then(res => {
+
+        const bookings = res.data.data; // pagination
+
+        const tbody = document.getElementById("recentBookingsTable");
+        tbody.innerHTML = "";
+
+        bookings.forEach(b => {
+
+            tbody.innerHTML += `
+                <tr class="border-t hover:bg-gray-50">
+                    <td class="p-2">${b.buyer_name}</td>
+                    <td class="p-2">${b.plot_number}</td>
+                    <td class="p-2 text-green-600">₹${b.total_booking_amount}</td>
+                    <td class="p-2">${new Date(b.created_at).toLocaleDateString()}</td>
+                </tr>
+            `;
+        });
+
+    });
+}
+
+function loadRecentPayments() {
+
+    const token = localStorage.getItem("auth_token");
+
+    fetch(url + "recent-payments", {
+        headers: {
+            "Authorization": "Bearer " + token
+        }
+    })
+    .then(res => res.json())
+    .then(res => {
+
+        const payments = res.data;
+
+        const tbody = document.getElementById("recentPaymentsTable");
+        tbody.innerHTML = "";
+
+        payments.forEach(p => {
+
+            tbody.innerHTML += `
+                <tr class="border-t hover:bg-gray-50">
+                    <td class="p-2">${p.user?.name ?? 'N/A'}</td>
+                    <td class="p-2 text-blue-600">₹${Math.abs(p.amount)}</td>
+                    <td class="p-2">${p.payment_mode ?? '-'}</td>
+                    <td class="p-2">${new Date(p.created_at).toLocaleDateString()}</td>
+                </tr>
+            `;
+        });
+
+    });
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+    loadRecentBookings();
+    loadRecentPayments(); // 👈 ADD THIS
+});
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.js"></script>
