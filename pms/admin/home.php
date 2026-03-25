@@ -54,77 +54,176 @@
 
                         <!-- GRID WRAPPER -->
                         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
-                            <div class="pl-2 h-40 bg-sky-500 rounded-lg shadow-md ">
-                                <div class="flex flex flex-col items-center gap-3  w-full h-full px-5 bg-white rounded-lg">
-                                    <div class="flex items-center w-full h-full px-5 bg-white rounded-xl">
-                                        <!-- Title -->
-                                        <p class="text-gray-800 text-sm font-medium">
+
+                            <div class="pl-2 h-40 bg-sky-500 rounded-lg shadow-md">
+                                <div class="flex flex-col justify-between h-full p-2 bg-white rounded-lg">
+                                    <!-- Leaders -->
+                                    <div>
+                                        <p class="text-gray-500 text-xs font-medium">
                                             Total Leaders
                                         </p>
-                                        <!-- Amount -->
-                                        <p id="total_leaders"
-                                            class="text-2xl font-semibold text-sky-500 ml-3">
-                                            00
-                                        </p>
-                                        <!-- Icon -->
-                                        <svg viewBox="0 0 24 24"
-                                            class="h-9 w-9 ml-auto opacity-80">
-                                            <defs>
-                                                <linearGradient id="leaderGrad" x1="0" y1="0" x2="1" y2="1">
-                                                    <stop offset="0%" stop-color="#06b6d4" />
-                                                    <stop offset="100%" stop-color="#3b82f6" />
-                                                </linearGradient>
-                                            </defs>
-                                            <circle cx="9" cy="7" r="3" fill="url(#leaderGrad)" />
-                                            <circle cx="17" cy="9" r="2.5" fill="#60a5fa" />
-                                            <path d="M3 20c0-3.5 3-6 6-6s6 2.5 6 6"
-                                                fill="url(#leaderGrad)" opacity="0.8" />
-                                        </svg>
+                                        <div class="flex items-center justify-between mt-1">
+                                            <p id="total_leaders"
+                                                class="text-lg font-semibold text-sky-500">
+                                                0
+                                            </p>
+                                            <svg viewBox="0 0 24 24"
+                                                class="h-[40%] w-[40%] max-h-8 max-w-8 opacity-80">
+                                                <circle cx="9" cy="7" r="3" fill="#3b82f6" />
+                                                <circle cx="17" cy="9" r="2.5" fill="#60a5fa" />
+                                            </svg>
+                                        </div>
                                     </div>
-                                    <div class="flex items-center w-full h-full px-5 bg-white rounded-xl">
-                                        <!-- Title -->
-                                        <p class="text-gray-800 text-sm font-medium">
+
+                                    <!-- Divider -->
+                                    <div class="border-t"></div>
+
+                                    <!-- Sites -->
+                                    <div>
+                                        <p class="text-gray-500 text-xs font-medium">
                                             Total Sites
                                         </p>
-                                        <!-- Amount -->
-                                        <p id="total_sites"
-                                            class="text-2xl font-semibold text-sky-500 ml-3">
-                                            00
-                                        </p>
-                                        <!-- Icon -->
-                                        <svg viewBox="0 0 24 24" class="h-10 w-10 ml-auto">
-                                            <defs>
-                                                <linearGradient id="siteGrad" x1="0" y1="0" x2="1" y2="1">
-                                                    <stop offset="0%" stop-color="#6366f1" />
-                                                    <stop offset="100%" stop-color="#8b5cf6" />
-                                                </linearGradient>
-                                            </defs>
-                                            <path d="M12 21s6-5.5 6-10a6 6 0 10-12 0c0 4.5 6 10 6 10z" fill="url(#siteGrad)" />
-                                            <circle cx="12" cy="11" r="2.5" fill="#fff" />
-                                        </svg>
+                                        <div class="flex items-center justify-between mt-1">
+                                            <p id="total_sites"
+                                                class="text-lg font-semibold text-sky-500">
+                                                0
+                                            </p>
+                                            <svg viewBox="0 0 24 24"
+                                                class="h-5 w-5 opacity-80 shrink-0">
+                                                <path d="M12 21s6-5.5 6-10a6 6 0 10-12 0c0 4.5 6 10 6 10z"
+                                                    fill="#8b5cf6" />
+                                            </svg>
+                                        </div>
                                     </div>
-                                    <div class="flex items-center w-full h-full px-5 bg-white rounded-xl">
-                                        <!-- Title -->
-                                        <p class="text-gray-800 text-sm font-medium">
+
+                                    <!-- Divider -->
+                                    <div class="border-t"></div>
+
+                                    <!-- Bookings -->
+                                    <div>
+                                        <p class="text-gray-500 text-xs font-medium">
                                             Total Bookings
                                         </p>
-                                        <!-- Amount -->
-                                        <p id="total_bookings"
-                                            class="text-2xl font-semibold text-sky-500 ml-3">
-                                            00
-                                        </p>
-                                        <!-- Icon -->
-                                        <svg viewBox="0 0 24 24" class="h-10 w-10 ml-auto">
-                                            <rect x="3" y="5" width="18" height="16" rx="3" fill="#34d399" />
-                                            <rect x="3" y="9" width="18" height="2" fill="#059669" />
-                                            <circle cx="8" cy="14" r="1.5" fill="#065f46" />
-                                            <circle cx="12" cy="14" r="1.5" fill="#065f46" />
-                                            <circle cx="16" cy="14" r="1.5" fill="#065f46" />
-                                        </svg>
+                                        <div class="flex items-center justify-between mt-1 mb-1">
+                                            <p id="total_bookings"
+                                                class="text-lg font-semibold text-sky-500">
+                                                0
+                                            </p>
+                                            <svg viewBox="0 0 24 24"
+                                                class="h-5 w-5 opacity-80 shrink-0">
+                                                <rect x="3" y="5" width="18" height="16" rx="3"
+                                                    fill="#34d399" />
+                                                <rect x="3" y="9" width="18" height="2"
+                                                    fill="#059669" />
+                                            </svg>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <a href="view-booking-summary">
+
+                            <!--  -->
+                            <div class="pl-2 h-40 bg-sky-500 rounded-lg shadow-md">
+                                <div class="flex flex-col justify-between h-full p-4 bg-white rounded-lg">
+                                    <!-- Top Section -->
+                                    <div>
+                                        <p class="text-gray-500 text-sm font-medium">
+                                            Total Booking Value
+                                        </p>
+                                        <div class="flex items-center justify-between mt-1">
+                                            <p id="total_sales_value"
+                                                class="text-xl font-semibold text-sky-500">
+                                                ₹ 00
+                                            </p>
+                                            <svg viewBox="0 0 24 24"
+                                                class="h-5 w-5 text-green-600">
+                                                <rect x="3" y="6" width="18" height="12" rx="3"
+                                                    fill="currentColor" />
+                                                <circle cx="12" cy="12" r="3" fill="#bbf7d0" />
+                                            </svg>
+                                        </div>
+                                    </div>
+
+                                    <!-- Divider -->
+                                    <div class="border-t"></div>
+
+                                    <!-- Bottom Section -->
+                                    <div>
+                                        <p class="text-gray-500 text-sm font-medium">
+                                            Total Commissions
+                                        </p>
+                                        <div class="flex items-center justify-between mt-1">
+                                            <p id="total_commissions"
+                                                class="text-xl font-semibold text-sky-500">
+                                                ₹ 00
+                                            </p>
+                                            <div class="bg-purple-100 p-1.5 rounded-lg">
+                                                <svg viewBox="0 0 24 24"
+                                                    class="h-5 w-5 text-purple-600">
+                                                    <circle cx="12" cy="12" r="9" fill="currentColor" />
+                                                    <path d="M12 7v5l3 2"
+                                                        stroke="#fff"
+                                                        stroke-width="2"
+                                                        fill="none" />
+                                                </svg>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!--  -->
+                            <div class="pl-2 h-40 bg-sky-500 rounded-lg shadow-md">
+                                <div class="flex flex-col justify-between h-full p-4 bg-white rounded-lg">
+                                    <!-- Pending -->
+                                    <div>
+                                        <p class="text-gray-500 text-sm font-medium">
+                                            Pending Commissions
+                                        </p>
+                                        <div class="flex items-center justify-between mt-1">
+                                            <p id="pending_commissions"
+                                                class="text-xl font-semibold text-sky-500">
+                                                ₹ 00
+                                            </p>
+                                            <svg viewBox="0 0 24 24"
+                                                class="h-5 w-5 text-orange-600">
+                                                <circle cx="12" cy="12" r="9" fill="currentColor" />
+                                                <path d="M12 7v5l3 2"
+                                                    stroke="#fff"
+                                                    stroke-width="2"
+                                                    fill="none" />
+                                            </svg>
+                                        </div>
+                                    </div>
+
+                                    <!-- Divider -->
+                                    <div class="border-t"></div>
+
+                                    <!-- Paid -->
+                                    <div>
+                                        <p class="text-gray-500 text-sm font-medium">
+                                            Paid Commissions
+                                        </p>
+                                        <div class="flex items-center justify-between mt-1">
+                                            <p id="paid_commissions"
+                                                class="text-xl font-semibold text-sky-500">
+                                                ₹ 00
+                                            </p>
+                                            <svg viewBox="0 0 24 24"
+                                                class="h-5 w-5 text-green-600">
+                                                <circle cx="12" cy="12" r="9" fill="currentColor" />
+                                                <path d="M8 12l2.5 2.5L16 9"
+                                                    stroke="#fff"
+                                                    stroke-width="2"
+                                                    fill="none" />
+                                            </svg>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                            <!-- <a href="view-booking-summary">
                                 <div class="pl-2 h-20 bg-sky-500 rounded-lg shadow-md">
                                     <div class="flex w-full h-full py-2 px-4 bg-white rounded-lg justify-between">
                                         <div class="my-auto">
@@ -265,7 +364,7 @@
                                         </svg>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
 
 
                         </div>
