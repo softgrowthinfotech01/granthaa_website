@@ -11,7 +11,7 @@
   <!-- Location Dropdown -->
  <div class="space-y-2">
                     <label class="text-sm font-semibold text-gray-700">Site Location</label>
-                    <select name="site_location" id="site_location" class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-yellow-400 outline-none ">
+                    <select name="location_id" id="location_id" class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-yellow-400 outline-none ">
                         <option>Loading....</option>
                     </select>
                 </div>
