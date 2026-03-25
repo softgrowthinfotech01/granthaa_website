@@ -6,20 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="keywords" content="tailwind,tailwindcss,tailwind css,css,starter template,free template,admin templates, admin template, admin dashboard, free tailwind templates, tailwind example">
+    
     <!-- Css -->
     <link rel="stylesheet" href="../style.css">
+
     <title>Dashboard</title>
 
-
-    <link href="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.css" rel="stylesheet" />
     <style>
         .admin-b {
-            /* background-image: url("../images/admin.jpg"); */
             background-repeat: no-repeat;
             background-position: bottom;
-            background-color: gray;
-
-
         }
 
         svg {
@@ -48,7 +44,7 @@
                 <!--/Sidebar-->
 
                 <!--Main-->
-                <div class="flex-1 admin-b ">
+                <div class="flex-1 admin-b bg-gray-200">
 
                     <div class="w-full md:w-[90%] lg:w-[80%] mx-auto my-6 px-3 md:px-0">
 
@@ -77,6 +73,7 @@
                                 </div>
                             </div>
                             </a>
+                            <a href="view_location">
                             <div class="pl-2 h-20 bg-sky-500 rounded-lg shadow-md">
                                 <div class="flex w-full h-full py-2 px-4 bg-white rounded-lg justify-between">
                                     <div class="my-auto">
@@ -97,6 +94,8 @@
                                     </div>
                                 </div>
                             </div>
+                            </a>
+                             <a href="">
                             <div class="pl-2 h-20 bg-sky-500 rounded-lg shadow-md">
                                 <div class="flex w-full h-full py-2 px-4 bg-white rounded-lg justify-between">
                                     <div class="my-auto">
@@ -114,10 +113,12 @@
                                     </div>
                                 </div>
                             </div>
+                            </a>
+                             <a href="">
                             <div class="pl-2 h-20 bg-sky-500 rounded-lg shadow-md">
                                 <div class="flex w-full h-full py-2 px-4 bg-white rounded-lg justify-between">
                                     <div class="my-auto">
-                                        <p class="font-bold">Total Sales Value</p>
+                                        <p class="font-bold">Total Booking Sales</p>
                                         <p id="total_sales_value" class="text-lg text-sky-500">00.00</p>
                                     </div>
                                     <div class="my-auto">
@@ -134,6 +135,8 @@
                                     </div>
                                 </div>
                             </div>
+                            </a>
+                             <a href="view-booking-summary">
                             <div class="pl-2 h-20 bg-sky-500 rounded-lg shadow-md">
                                 <div class="flex w-full h-full py-2 px-4 bg-white rounded-lg justify-between">
                                     <div class="my-auto">
@@ -154,6 +157,8 @@
                                     </div>
                                 </div>
                             </div>
+                            </a>
+                             <a href="view_payment">
                             <div class="pl-2 h-20 bg-sky-500 rounded-lg shadow-md">
                                 <div class="flex w-full h-full py-2 px-4 bg-white rounded-lg justify-between">
                                     <div class="my-auto">
@@ -176,6 +181,7 @@
                                     </div>
                                 </div>
                             </div>
+                                </a>
 
 
                         </div>
@@ -226,7 +232,7 @@
         });
     </script>
 
-    <script src="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.js"></script>
+
 
 </body>
 
