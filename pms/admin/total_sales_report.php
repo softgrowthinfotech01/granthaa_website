@@ -24,7 +24,7 @@
                 <!--/Sidebar-->
 
                 <!--Main-->
-                <div class="w-full md:w-[80%] lg:w-[60%] xl:w-[40%] 
+                <div class="w-full md:w-[80%] lg:w-[75%] xl:w-[80%] 
                             mx-auto my-4 self-start 
                             rounded-lg bg-slate-100 
                             p-4 md:p-6 
@@ -91,127 +91,162 @@
         </div>
     </div>
 
-    <script src="../url.js"></script>
-    <script>
-        let currentPage = 1;
-        let currentSearch = '';
-        let currentPerPage = 5;
-        let searchTimeout;
+   <script>
+let currentPage = 1;
+let currentSearch = '';
+let currentPerPage = 5;
+let searchTimeout;
 
-        const token = localStorage.getItem("auth_token");
+const token = localStorage.getItem("auth_token");
 
-        async function fetchLocations(page = 1) {
-            const loader = document.getElementById('tableLoader');
-            const tbody = document.getElementById('locationTableBody');
-            const pagination = document.getElementById('paginationControls');
-            const resultInfo = document.getElementById('resultInfo');
-            const mobileContainer = document.getElementById('mobileCardContainer');
+async function fetchLocations(page = 1) {
+    const loader = document.getElementById('tableLoader');
+    const tbody = document.getElementById('locationTableBody');
+    const pagination = document.getElementById('paginationControls');
+    const resultInfo = document.getElementById('resultInfo');
+    const mobileContainer = document.getElementById('mobileCardContainer');
 
-            try {
-                loader.classList.remove('hidden');
-                tbody.innerHTML = '';
-                pagination.innerHTML = '';
-                mobileContainer.innerHTML = '';
-                resultInfo.innerHTML = '';
+    try {
+        loader.classList.remove('hidden');
+        tbody.innerHTML = '';
+        pagination.innerHTML = '';
+        mobileContainer.innerHTML = '';
+        resultInfo.innerHTML = '';
 
-                const response = await fetch(
-                    url + `total-sales?page=${page}&search=${currentSearch}&per_page=${currentPerPage}`, {
-                        method: "GET",
-                        headers: {
-                            "Accept": "application/json",
-                            "Authorization": "Bearer " + token
-                        }
-                    }
-                );
-
-                const result = await response.json();
-                const paginationData = result.data;
-                const locations = paginationData.data;
-
-                if (!locations || locations.length === 0) {
-                    tbody.innerHTML = `
-                        <tr>
-                            <td colspan="5" class="text-center py-4">No records found</td>
-                        </tr>`;
-                    mobileContainer.innerHTML = `<p class="text-center text-gray-600 py-4">No records found</p>`;
-                    return;
+        const response = await fetch(
+            url + `bookings?page=${page}&search=${currentSearch}&per_page=${currentPerPage}`, {
+                method: "GET",
+                headers: {
+                    "Accept": "application/json",
+                    "Authorization": "Bearer " + token
                 }
-
-                locations.forEach((loc) => {
-                    const siteName = loc.site_name || '-';
-                    const saleDate = new Date(loc.sale_date).toLocaleDateString();
-                    const location = loc.site_location || '-';
-                    const total = loc.total_amount || '-';
-                    const balance = loc.balance_amount || '-';
-
-                    // Desktop Table
-                    tbody.innerHTML += `
-                        <tr class="border-b">
-                            <td class="px-4 py-2">${siteName}</td>
-                            <td class="px-4 py-2">${saleDate}</td>
-                            <td class="px-4 py-2">${location}</td>
-                            <td class="px-4 py-2">${total}</td>
-                            <td class="px-4 py-2">${balance}</td>
-                        </tr>
-                    `;
-
-                    // Mobile Card
-                    mobileContainer.innerHTML += `
-                        <div class="bg-white rounded-xl shadow-sm border p-4">
-                            <div class="flex justify-between items-center mb-2">
-                                <h3 class="font-semibold text-gray-800 text-sm">${siteName}</h3>
-                                <span class="text-xs text-gray-500">${saleDate}</span>
-                            </div>
-                            <div class="text-sm text-gray-600 space-y-1">
-                                <p><span class="font-medium text-gray-700">Location:</span> ${location}</p>
-                                <p><span class="font-medium text-gray-700">Total:</span> ₹${total}</p>
-                                <p><span class="font-medium text-gray-700">Balance:</span> ₹${balance}</p>
-                            </div>
-                        </div>
-                    `;
-                });
-
-                resultInfo.innerHTML = `Showing page ${paginationData.current_page} of ${paginationData.last_page} | Total records: ${paginationData.total}`;
-
-                // Pagination
-                if (paginationData.prev_page_url) {
-                    pagination.innerHTML += `<button onclick="fetchLocations(${paginationData.current_page - 1})"
-                        class="px-3 py-1 bg-gray-300 rounded hover:bg-gray-400">Prev</button>`;
-                }
-
-                for (let i = 1; i <= paginationData.last_page; i++) {
-                    pagination.innerHTML += `<button onclick="fetchLocations(${i})"
-                        class="px-3 py-1 rounded ${i === paginationData.current_page ? 'bg-blue-600 text-white' : 'bg-gray-200 hover:bg-gray-300'}">${i}</button>`;
-                }
-
-                if (paginationData.next_page_url) {
-                    pagination.innerHTML += `<button onclick="fetchLocations(${paginationData.current_page + 1})"
-                        class="px-3 py-1 bg-gray-300 rounded hover:bg-gray-400">Next</button>`;
-                }
-
-            } catch (error) {
-                console.error("Error fetching locations:", error);
-            } finally {
-                loader.classList.add('hidden');
             }
+        );
+
+        const result = await response.json();
+        const paginationData = result.data;
+        const bookings = paginationData.data;
+
+        if (!bookings || bookings.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="6" class="text-center py-4">No records found</td></tr>`;
+            return;
         }
 
-        document.getElementById('searchInput').addEventListener('keyup', function () {
-            clearTimeout(searchTimeout);
-            searchTimeout = setTimeout(() => {
-                currentSearch = this.value.trim();
-                fetchLocations(1);
-            }, 400);
+        bookings.forEach((item, index) => {
+
+            // MAIN ROW
+            tbody.innerHTML += `
+                <tr class="border-b">
+                    <td class="px-4 py-2">${item.project_name || '-'}</td>
+                    <td class="px-4 py-2">${new Date(item.created_at).toLocaleDateString()}</td>
+                    <td class="px-4 py-2">${item.location?.site_location || '-'}</td>
+                    <td class="px-4 py-2">₹${item.total_booking_amount}</td>
+                    <td class="px-4 py-2">₹${item.total_booking_amount - item.advance_amount}</td>
+                    <td class="px-4 py-2">
+                        <button onclick="toggleDetails(${index})"
+                        class="bg-blue-600 text-white px-2 py-1 rounded">View</button>
+                    </td>
+                </tr>
+            `;
+
+            // ACCORDION ROW
+            tbody.innerHTML += `
+                <tr id="details-${index}" class="hidden bg-gray-50">
+                    <td colspan="6" class="px-4 py-3 text-sm text-gray-700">
+                        
+                        <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+                            <p><b>Buyer:</b> ${item.buyer_name}</p>
+                            <p><b>Mobile:</b> ${item.mobile}</p>
+                            <p><b>Email:</b> ${item.email}</p>
+
+                            <p><b>Plot:</b> ${item.plot_number}</p>
+                            <p><b>Project:</b> ${item.project_name}</p>
+                            <p><b>Payment:</b> ${item.payment_mode}</p>
+
+                            <p><b>Advance:</b> ₹${item.advance_amount}</p>
+                            <p><b>Total:</b> ₹${item.total_booking_amount}</p>
+                            <p><b>Commission:</b> ${item.commission_value}%</p>
+
+                            <p><b>Leader Comm:</b> ₹${item.leader_commission_amount}</p>
+                            <p><b>Adviser Comm:</b> ₹${item.adviser_commission_amount}</p>
+
+                            <p class="col-span-2"><b>Address:</b> ${item.address}, ${item.city}</p>
+                            <p class="col-span-2"><b>Remark:</b> ${item.remark}</p>
+                        </div>
+
+                    </td>
+                </tr>
+            `;
+
+            // MOBILE CARD
+            mobileContainer.innerHTML += `
+                <div class="bg-white rounded-xl shadow border p-4">
+                    <div class="flex justify-between">
+                        <h3 class="font-semibold">${item.buyer_name}</h3>
+                        <span>${new Date(item.created_at).toLocaleDateString()}</span>
+                    </div>
+
+                    <p class="text-sm text-gray-600">${item.project_name}</p>
+
+                    <p class="text-sm mt-2">₹${item.total_booking_amount}</p>
+
+                    <button onclick="toggleDetails(${index})"
+                        class="mt-2 bg-blue-600 text-white px-2 py-1 rounded w-full">
+                        View Details
+                    </button>
+                </div>
+            `;
         });
 
-        document.getElementById('perPageSelect').addEventListener('change', function () {
-            currentPerPage = this.value;
-            fetchLocations(1);
-        });
+        resultInfo.innerHTML = `Page ${paginationData.current_page} of ${paginationData.last_page}`;
 
-        // Initial load
-        fetchLocations();
-    </script>
+        // PAGINATION
+        if (paginationData.prev_page_url) {
+            pagination.innerHTML += `<button onclick="fetchLocations(${paginationData.current_page - 1})"
+                class="px-3 py-1 bg-gray-300 rounded">Prev</button>`;
+        }
+
+        for (let i = 1; i <= paginationData.last_page; i++) {
+            pagination.innerHTML += `<button onclick="fetchLocations(${i})"
+                class="px-3 py-1 rounded ${i === paginationData.current_page ? 'bg-blue-600 text-white' : 'bg-gray-200'}">${i}</button>`;
+        }
+
+        if (paginationData.next_page_url) {
+            pagination.innerHTML += `<button onclick="fetchLocations(${paginationData.current_page + 1})"
+                class="px-3 py-1 bg-gray-300 rounded">Next</button>`;
+        }
+
+    } catch (error) {
+        console.error("Error:", error);
+    } finally {
+        loader.classList.add('hidden');
+    }
+}
+
+// TOGGLE FUNCTION
+function toggleDetails(index) {
+    const row = document.getElementById("details-" + index);
+    row.classList.toggle("hidden");
+}
+
+// SEARCH
+document.getElementById('searchInput').addEventListener('keyup', function () {
+    clearTimeout(searchTimeout);
+    searchTimeout = setTimeout(() => {
+        currentSearch = this.value.trim();
+        fetchLocations(1);
+    }, 400);
+});
+
+// PER PAGE
+document.getElementById('perPageSelect').addEventListener('change', function () {
+    currentPerPage = this.value;
+    fetchLocations(1);
+});
+
+// LOAD
+fetchLocations();
+</script>
 </body>
 
 </html>

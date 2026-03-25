@@ -25,7 +25,7 @@
 
                 <!--Main-->
                 <!--Main-->
-                <div class="w-full md:w-[80%] lg:w-[60%] xl:w-[40%] 
+                <div class="w-full md:w-[80%] lg:w-[75%] xl:w-[75%] 
             mx-auto my-4 self-start 
             rounded-lg bg-slate-100 
             p-4 md:p-6 
@@ -68,14 +68,16 @@
 
                         <table class="w-full text-sm text-left text-gray-600">
                             <thead class="text-xs text-gray-700 uppercase bg-gray-100">
-                                <tr>
-                                    <th class="px-4 py-3">Site Name</th>
-                                    <th class="px-4 py-3">Sale Date</th>
-                                    <th class="px-4 py-3">Site Location</th>
-                                    <th class="px-4 py-3">Total Commission</th>
-                                </tr>
-                            </thead>
-
+                                <thead class="text-xs text-gray-700 uppercase bg-gray-100">
+    <tr>
+        <th class="px-4 py-3">Leader Name</th>
+        <th class="px-4 py-3">Total Plots</th>
+        <th class="px-4 py-3">Total Booking ₹</th>
+        <th class="px-4 py-3">Total Commission ₹</th>
+        <th class="px-4 py-3">Paid ₹</th>
+        <th class="px-4 py-3">Balance ₹</th>
+    </tr>
+</thead>
                             <tbody id="locationTableBody">
                                 <tr>
                                     <td colspan="5" class="text-center py-4">Loading...</td>
@@ -101,9 +103,81 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.js"></script>
+<script>
+let currentSearch = '';
+let currentPerPage = 5;
 
-    <script src="../url.js"></script>
+const token = localStorage.getItem("auth_token");
 
+async function fetchCommissionReport() {
+    const loader = document.getElementById('tableLoader');
+    const tbody = document.getElementById('locationTableBody');
+    const resultInfo = document.getElementById('resultInfo');
+
+    try {
+        loader.classList.remove('hidden');
+        tbody.innerHTML = '';
+        resultInfo.innerHTML = '';
+
+        const response = await fetch(
+            url + `leader-summary?search=${currentSearch}&per_page=${currentPerPage}`, {
+                method: "GET",
+                headers: {
+                    "Accept": "application/json",
+                    "Authorization": "Bearer " + token
+                }
+            }
+        );
+
+        const result = await response.json();
+        const data = result.data;
+
+        if (!data || data.length === 0) {
+            tbody.innerHTML = `
+                <tr>
+                    <td colspan="6" class="text-center py-4">No records found</td>
+                </tr>`;
+            return;
+        }
+
+        data.forEach(item => {
+
+            tbody.innerHTML += `
+                <tr class="border-b hover:bg-gray-50">
+                    <td class="px-4 py-2 font-medium">${item.leader_name}</td>
+                    <td class="px-4 py-2">${item.total_plots}</td>
+                    <td class="px-4 py-2">₹${item.total_booking_amount}</td>
+                    <td class="px-4 py-2 text-blue-600">₹${item.total_commission}</td>
+                    <td class="px-4 py-2 text-green-600">₹${item.paid_amount}</td>
+                    <td class="px-4 py-2 text-red-600">₹${item.balance_amount}</td>
+                </tr>
+            `;
+        });
+
+        resultInfo.innerHTML = `Total Leaders: ${data.length}`;
+
+    } catch (error) {
+        console.error("Error:", error);
+    } finally {
+        loader.classList.add('hidden');
+    }
+}
+
+// SEARCH
+document.getElementById('searchInput').addEventListener('keyup', function () {
+    currentSearch = this.value.trim();
+    fetchCommissionReport();
+});
+
+// PER PAGE (optional if backend supports it)
+document.getElementById('perPageSelect').addEventListener('change', function () {
+    currentPerPage = this.value;
+    fetchCommissionReport();
+});
+
+// LOAD DATA
+fetchCommissionReport();
+</script>
 </body>
 
 </html>

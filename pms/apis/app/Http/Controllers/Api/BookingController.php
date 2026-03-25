@@ -986,4 +986,102 @@ public function adviserDetails($adviserId)
         'data' => $data
     ]);
 }
+
+public function recentPayments()
+{
+    $payments = CommissionLedger::where('type', 'payment')
+        ->with('user') // relation needed
+        ->latest()
+        ->take(5)
+        ->get();
+
+    return response()->json([
+        'status' => true,
+        'data' => $payments
+    ]);
+}
+
+public function salesTrend()
+{
+    $data = Booking::select(
+            DB::raw('DATE(created_at) as date'),
+            DB::raw('SUM(total_booking_amount) as total')
+        )
+        ->groupBy('date')
+        ->orderBy('date', 'asc')
+        ->get();
+
+    return response()->json([
+        'status' => true,
+        'data' => $data
+    ]);
+}
+
+public function commissionSplit()
+{
+    $leader = Booking::sum('leader_commission_amount');
+    $adviser = Booking::sum('adviser_commission_amount');
+
+    return response()->json([
+        'status' => true,
+        'data' => [
+            'leader' => $leader,
+            'adviser' => $adviser,
+            'company' => 0 // optional if needed
+        ]
+    ]);
+}
+
+
+public function dashboardAlerts()
+{
+    $alerts = [];
+
+    // 🔴 High Pending Commission Leaders
+    $leaders = User::where('role', 'leader')->get();
+
+    foreach ($leaders as $leader) {
+
+        $totalCommission = Booking::where('leader_id', $leader->id)
+            ->sum(DB::raw('leader_commission_amount + adviser_commission_amount'));
+
+        $paid = abs(
+            CommissionLedger::where('user_id', $leader->id)
+                ->where('type', 'payment')
+                ->sum('amount')
+        );
+
+        $balance = $totalCommission - $paid;
+
+        if ($balance > 50000) {
+            $alerts[] = "⚠️ {$leader->name} has pending commission ₹{$balance}";
+        }
+    }
+
+    // 🟡 Advisers with ZERO bookings
+    $advisers = User::where('role', 'adviser')->get();
+
+    foreach ($advisers as $adv) {
+
+        $count = Booking::where('adviser_id', $adv->id)->count();
+
+        if ($count == 0) {
+            $alerts[] = "⚠️ Adviser {$adv->name} has no bookings";
+        }
+    }
+
+    // 🔵 No payments today
+    $todayPayments = CommissionLedger::where('type', 'payment')
+        ->whereDate('created_at', today())
+        ->count();
+
+    if ($todayPayments == 0) {
+        $alerts[] = "⚠️ No payments recorded today";
+    }
+
+    return response()->json([
+        'status' => true,
+        'data' => $alerts
+    ]);
+}
 }
