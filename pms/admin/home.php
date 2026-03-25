@@ -428,8 +428,8 @@ async function loadCommissionChart() {
 document.addEventListener("DOMContentLoaded", function () {
     loadRecentBookings();
     loadRecentPayments(); // 👈 ADD THIS
-
-     loadSalesChart();        // 👈 NEW
+    loadAlerts();
+    loadSalesChart();        // 👈 NEW
     loadCommissionChart();
 });
 

@@ -1031,4 +1031,57 @@ public function commissionSplit()
         ]
     ]);
 }
+
+
+public function dashboardAlerts()
+{
+    $alerts = [];
+
+    // 🔴 High Pending Commission Leaders
+    $leaders = User::where('role', 'leader')->get();
+
+    foreach ($leaders as $leader) {
+
+        $totalCommission = Booking::where('leader_id', $leader->id)
+            ->sum(DB::raw('leader_commission_amount + adviser_commission_amount'));
+
+        $paid = abs(
+            CommissionLedger::where('user_id', $leader->id)
+                ->where('type', 'payment')
+                ->sum('amount')
+        );
+
+        $balance = $totalCommission - $paid;
+
+        if ($balance > 50000) {
+            $alerts[] = "⚠️ {$leader->name} has pending commission ₹{$balance}";
+        }
+    }
+
+    // 🟡 Advisers with ZERO bookings
+    $advisers = User::where('role', 'adviser')->get();
+
+    foreach ($advisers as $adv) {
+
+        $count = Booking::where('adviser_id', $adv->id)->count();
+
+        if ($count == 0) {
+            $alerts[] = "⚠️ Adviser {$adv->name} has no bookings";
+        }
+    }
+
+    // 🔵 No payments today
+    $todayPayments = CommissionLedger::where('type', 'payment')
+        ->whereDate('created_at', today())
+        ->count();
+
+    if ($todayPayments == 0) {
+        $alerts[] = "⚠️ No payments recorded today";
+    }
+
+    return response()->json([
+        'status' => true,
+        'data' => $alerts
+    ]);
+}
 }
