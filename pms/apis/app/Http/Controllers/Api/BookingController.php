@@ -1000,4 +1000,35 @@ public function recentPayments()
         'data' => $payments
     ]);
 }
+
+public function salesTrend()
+{
+    $data = Booking::select(
+            DB::raw('DATE(created_at) as date'),
+            DB::raw('SUM(total_booking_amount) as total')
+        )
+        ->groupBy('date')
+        ->orderBy('date', 'asc')
+        ->get();
+
+    return response()->json([
+        'status' => true,
+        'data' => $data
+    ]);
+}
+
+public function commissionSplit()
+{
+    $leader = Booking::sum('leader_commission_amount');
+    $adviser = Booking::sum('adviser_commission_amount');
+
+    return response()->json([
+        'status' => true,
+        'data' => [
+            'leader' => $leader,
+            'adviser' => $adviser,
+            'company' => 0 // optional if needed
+        ]
+    ]);
+}
 }

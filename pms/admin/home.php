@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="../style.css">
     <title>Dashboard</title>
 
-
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.css" rel="stylesheet" />
     <style>
         .admin-b {
@@ -246,6 +246,22 @@
     </div>
 
 </div>
+
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+
+    <!-- SALES TREND -->
+    <div class="bg-white p-4 rounded-xl shadow">
+        <h3 class="text-lg font-semibold mb-3">📈 Sales Trend</h3>
+        <canvas id="salesChart"></canvas>
+    </div>
+
+    <!-- COMMISSION SPLIT -->
+    <div class="bg-white p-4 rounded-xl shadow">
+        <h3 class="text-lg font-semibold mb-3">💰 Commission Split</h3>
+        <canvas id="commissionChart"></canvas>
+    </div>
+
+</div>
                     </div>
                     <!--/Main-->
                 </div>
@@ -358,10 +374,65 @@ function loadRecentPayments() {
     });
 }
 
+async function loadSalesChart() {
+
+    const token = localStorage.getItem("auth_token");
+
+    const res = await fetch(url + "sales-trend", {
+        headers: { "Authorization": "Bearer " + token }
+    });
+
+    const result = await res.json();
+
+    const labels = result.data.map(d => d.date);
+    const values = result.data.map(d => d.total);
+
+    new Chart(document.getElementById("salesChart"), {
+        type: "line",
+        data: {
+            labels: labels,
+            datasets: [{
+                label: "Sales",
+                data: values,
+                borderWidth: 2,
+                tension: 0.3
+            }]
+        }
+    });
+}
+
+async function loadCommissionChart() {
+
+    const token = localStorage.getItem("auth_token");
+
+    const res = await fetch(url + "commission-split", {
+        headers: { "Authorization": "Bearer " + token }
+    });
+
+    const result = await res.json();
+
+    const d = result.data;
+
+    new Chart(document.getElementById("commissionChart"), {
+        type: "pie",
+        data: {
+            labels: ["Leader", "Adviser"],
+            datasets: [{
+                data: [d.leader, d.adviser]
+            }]
+        }
+    });
+}
+
+
 document.addEventListener("DOMContentLoaded", function () {
     loadRecentBookings();
     loadRecentPayments(); // 👈 ADD THIS
+
+     loadSalesChart();        // 👈 NEW
+    loadCommissionChart();
 });
+
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.js"></script>
