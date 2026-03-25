@@ -720,7 +720,6 @@
         document.addEventListener("DOMContentLoaded", function() {
             loadRecentBookings();
             loadRecentPayments(); // 👈 ADD THIS
-            loadAlerts();
             loadSalesChart(); // 👈 NEW
             loadCommissionChart();
         });

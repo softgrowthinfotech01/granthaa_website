@@ -197,4 +197,7 @@
                 document.getElementById("alertDot").classList.add("hidden");
             });
     }
+    document.addEventListener("DOMContentLoaded", function() {
+            loadAlerts();
+        });
 </script>
