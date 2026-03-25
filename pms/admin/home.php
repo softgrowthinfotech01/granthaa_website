@@ -227,7 +227,7 @@
                             </div>
 
                             <!-- COMMISSION SPLIT -->
-                            <div class="bg-white p-4 rounded-xl shadow flex justify-center">
+                            <div class="bg-white p-4 rounded-xl shadow flex flex-col justify-center items-center">
                                 <h3 class="text-lg font-semibold mb-3">Commission Status</h3>
                                 <canvas id="commissionChart" style="max-width: 280px; max-height: 280px;"></canvas>
                             </div>
