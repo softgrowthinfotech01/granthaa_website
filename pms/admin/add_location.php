@@ -10,7 +10,7 @@
 
 </head>
 
-<body>
+<body class="bg-gray-200">
     <!--Container -->
     <div class="mx-auto">
         <!--Screen-->
@@ -25,59 +25,70 @@
                 <!--/Sidebar-->
 
                 <!--Main-->
-                <div id="mainContent"
-                    class="w-full sm:w-[90%] md:w-[75%] lg:w-[80%] mx-3 md:mx-auto my-4
-                            transition-all duration-300">
+              <div id="mainContent"
+    class="w-full md:w-[80%] mx-auto my-6 px-3 transition-all duration-300">
 
-                    <form class="w-full px-4 rounded-lg bg-gray-200 p-6 border shadow-xl" id="loginForm">
+    <!-- FORM CARD -->
+    <form class="w-full bg-white p-6 md:p-8 rounded-2xl shadow-lg border border-gray-200" id="loginForm">
 
-                        <div class="personal-details">
-                            <h5 class="text-xl font-bold text-heading p-1">Location Details</h5>
+        <!-- TITLE -->
+        <div class="mb-5 text-center">
+            <h2 class="text-xl md:text-2xl font-bold text-gray-800">
+                Location Details
+            </h2>
+            <p class="text-sm text-gray-500">Add new site location</p>
+        </div>
 
-                            <div class="grid grid-cols-1  mx-1 md:mx-0">
+        <!-- INPUT -->
+        <div class="grid grid-cols-1 gap-4">
 
-                                <div class="mb-5 col-span-1 px-1">
-                                    <label for="site_location" class="block mb-2.5 text-sm font-medium text-heading">
-                                        Site Location
-                                    </label>
+            <div>
+                <label for="site_location"
+                    class="block mb-1 text-sm font-medium text-gray-700">
+                    Site Location
+                </label>
 
-                                    <input type="text"
-                                        id="site_location"
-                                        class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body focus:outline-none focus:ring-2 focus:ring-gray-600"
-                                        placeholder="Enter your site location"
-                                        required />
-                                </div>
+                <input type="text"
+                    id="site_location"
+                    class="w-full px-3 py-2.5 border border-gray-300 rounded-lg bg-white text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+                    placeholder="Enter your site location"
+                    required />
+            </div>
 
-                            </div>
-                        </div>
+        </div>
 
-                        <hr class="border-white-300 mb-3">
+        <!-- BUTTONS -->
+        <div class="mt-6 flex flex-col md:flex-row justify-center gap-3">
 
-                        <div class="flex flex-col md:flex-row justify-center gap-2">
+            <button type="submit"
+                class="w-full md:w-[180px] bg-blue-600 hover:bg-blue-500 text-white rounded-lg px-4 py-2.5 transition shadow">
+                Save
+            </button>
 
-                            <button type="submit"
-                                class="w-full md:w-[20%] text-white bg-blue-600 box-border border border-transparent hover:bg-blue-400 rounded-lg focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none">
-                                Save
-                            </button>
+            <button type="button"
+                onclick="confirmReset()"
+                class="w-full md:w-[180px] bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg px-4 py-2.5 border">
+                Reset
+            </button>
 
-                            <button type="button"
-                                onclick="confirmReset()"
-                                class="w-full md:w-[20%] text-gray-700 bg-white hover:bg-gray-200 rounded-lg text-sm px-5 py-2.5">
-                                Reset
-                            </button>
+        </div>
 
-                        </div>
+    </form>
 
-                    </form>
+    <!-- LIST CARD -->
+    <div class="mt-6 bg-white p-5 rounded-2xl shadow-lg border border-gray-200">
 
-                    <div class="mt-6 bg-white p-4 rounded-lg shadow">
-    <h5 class="text-lg font-semibold mb-3">Site Locations List</h5>
+        <h5 class="text-lg font-semibold text-gray-800 mb-4 text-center">
+            Site Locations List
+        </h5>
 
-    <ul id="siteList" class="space-y-2">
-        <!-- Locations will be added here dynamically -->
-    </ul>
+        <ul id="siteList" class="space-y-2">
+            <!-- Dynamic -->
+        </ul>
+
+    </div>
+
 </div>
-                </div>
                 <!--/Main-->
             </div>
             <!--Footer-->
@@ -173,7 +184,7 @@
             var sr = 0;
         data.data.forEach(site => {
             const li = document.createElement('li');
-            li.className = "p-3 bg-gray-100 rounded flex justify-between";
+            li.className = "p-2 mb-2 bg-gray-100 border border-gray-300 rounded flex justify-between";
             li.innerHTML = `
                 <span>${++sr}. ${site.site_location}</span>
             `;
