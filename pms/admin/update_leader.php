@@ -32,7 +32,7 @@
                             <div class="grid grid-cols-2">
                                 <div class="mb-5 col-span-1 px-1">
                                     <label for="user_code" class="block mb-2.5 text-sm font-medium text-heading">Leader Code</label>
-                                    <input type="text" id="user_code" class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" placeholder="Enter leader code" readonly />
+                                    <input type="text" id="user_code" class="block w-full px-3 py-2.5 rounded-lg bg-gray-100 border border-gray-200 text-gray-400 text-sm cursor-not-allowed opacity-90" placeholder="Enter leader code" readonly />
                                 </div>
                                 <div class="mb-5 col-span-1 px-1">
                                     <label for="name" class="block mb-2.5 text-sm font-medium text-heading">Full Name</label>
@@ -83,11 +83,11 @@
                                 <div class="mb-5 col-span-1 px-1">
                                     <label for="mobile" class="block mb-2.5 text-sm font-medium text-heading">Mobile Number</label>
                                     <input name="contact_no" type="tel" maxlength="10" pattern="[0-9]{10}" inputmode="numeric" id="mobile"
-                                        class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" placeholder="Enter your mobile number" required />
+                                        class="block w-full px-3 py-2.5 rounded-lg bg-gray-100 border border-gray-200 text-gray-400 text-sm cursor-not-allowed opacity-90 placeholder:text-body" placeholder="Enter your mobile number" required />
                                 </div>
                                 <div class="mb-5 col-span-1 px-1">
                                     <label for="email" class="block mb-2.5 text-sm font-medium text-heading">Email</label>
-                                    <input type="email" id="email" class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" placeholder="Enter your email" required />
+                                    <input type="email" id="email" class="block w-full px-3 py-2.5 rounded-lg bg-gray-100 border border-gray-200 text-gray-400 text-sm cursor-not-allowed opacity-90 placeholder:text-body" placeholder="Enter your email" required />
                                 </div>
                             </div>
                             <div class="grid grid-cols-2">

@@ -174,12 +174,12 @@ ${new Date(loc.created_at).toLocaleDateString()}
 
 <td class="px-4 py-2 flex flex-col md:flex-row gap-2 md:table-cell">
 <a href="update_commission.php?id=${loc.id}" 
-class="w-full md:w-auto text-center px-3 py-1.5 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-500">
+class="w-full mx-1 md:w-auto text-center px-3 py-1.5 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-500">
 Edit
 </a>
 
 <button onclick="deleteCommission(${loc.id})"
-class="w-full md:w-auto px-3 py-1.5 text-sm font-medium text-white bg-red-600 rounded-md hover:bg-red-500">
+class="w-full mx-1 md:w-auto px-3 py-1.5 text-sm font-medium text-white bg-red-600 rounded-md hover:bg-red-500">
 Delete
 </button>
 </td>
