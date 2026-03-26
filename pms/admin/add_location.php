@@ -50,7 +50,7 @@
 
                 <input type="text"
                     id="site_location"
-                    class="w-full px-3 py-2.5 border border-gray-300 rounded-lg bg-white text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+                    class="w-full px-3 py-2.5 border border-gray-400 rounded-lg bg-white text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
                     placeholder="Enter your site location"
                     required />
             </div>
@@ -67,7 +67,7 @@
 
             <button type="button"
                 onclick="confirmReset()"
-                class="w-full md:w-[180px] bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg px-4 py-2.5 border">
+                class="w-full md:w-[180px] bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-lg px-4 py-2.5 border">
                 Reset
             </button>
 

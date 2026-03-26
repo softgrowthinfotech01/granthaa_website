@@ -48,28 +48,28 @@
                                 <div>
                                     <label class="block mb-1 text-sm font-medium text-gray-700">Full Name</label>
                                     <input name="name" type="text" id="name"
-                                        class="w-full px-3 py-2.5 border border-gray-300 rounded-lg bg-white text-sm focus:ring-2 focus:ring-blue-500 outline-none"
+                                        class="w-full px-3 py-2.5 border border-gray-400 rounded-lg bg-white text-sm focus:ring-2 focus:ring-blue-500 outline-none"
                                         placeholder="Enter your name" required>
                                 </div>
 
                                 <div>
                                     <label class="block mb-1 text-sm font-medium text-gray-700">Aadhaar Card</label>
                                     <input name="aadhaar_number" type="text" maxlength="12" pattern="[0-9]{12}" id="aadhaar_number"
-                                        class="w-full px-3 py-2.5 border border-gray-300 rounded-lg"
+                                        class="w-full px-3 py-2.5 border border-gray-400 rounded-lg bg-white text-sm focus:ring-2 focus:ring-blue-500 outline-none"
                                         placeholder="Enter Aadhaar number" required>
                                 </div>
 
                                 <div>
                                     <label class="block mb-1 text-sm font-medium text-gray-700">Age</label>
                                     <input name="age" type="text" maxlength="2" id="age"
-                                        class="w-full px-3 py-2.5 border border-gray-300 rounded-lg"
+                                        class="w-full px-3 py-2.5 border border-gray-400 rounded-lg bg-white text-sm focus:ring-2 focus:ring-blue-500 outline-none"
                                         placeholder="Enter age" required>
                                 </div>
 
                                 <div>
                                     <label class="block mb-1 text-sm font-medium text-gray-700">Gender</label>
                                     <select name="gender" id="gender"
-                                        class="w-full px-3 py-2.5 border border-gray-300 rounded-lg bg-white">
+                                        class="w-full px-3 py-2.5 border border-gray-400 rounded-lg ">
                                         <option selected>Choose gender</option>
                                         <option value="male">Male</option>
                                         <option value="female">Female</option>
@@ -80,7 +80,7 @@
                                 <div>
                                     <label class="block mb-1 text-sm font-medium text-gray-700">Upload Image</label>
                                     <input name="image" type="file" id="file_input"
-                                        class="w-full border border-gray-300 rounded-lg p-2 bg-white">
+                                        class="w-full border border-gray-400 rounded-lg bg-white text-sm focus:ring-2 focus:ring-blue-500 outline-none p-2 bg-white">
                                 </div>
 
                             </div>
@@ -97,42 +97,42 @@
                                 <div>
                                     <label class="block mb-1 text-sm font-medium text-gray-700">Mobile</label>
                                     <input name="contact_no" type="tel" id="contact_no"
-                                        class="w-full px-3 py-2.5 border border-gray-300 rounded-lg"
+                                        class="w-full px-3 py-2.5 border border-gray-400 rounded-lg bg-white text-sm focus:ring-2 focus:ring-blue-500 outline-none"
                                         placeholder="Enter mobile number" required>
                                 </div>
 
                                 <div>
                                     <label class="block mb-1 text-sm font-medium text-gray-700">Email</label>
                                     <input name="email" type="email" id="email"
-                                        class="w-full px-3 py-2.5 border border-gray-300 rounded-lg"
+                                        class="w-full px-3 py-2.5 border border-gray-400 rounded-lg bg-white text-sm focus:ring-2 focus:ring-blue-500 outline-none"
                                         placeholder="Enter email" required>
                                 </div>
 
                                 <div>
                                     <label class="block mb-1 text-sm font-medium text-gray-700">City</label>
                                     <input name="city" type="text" id="city"
-                                        class="w-full px-3 py-2.5 border border-gray-300 rounded-lg"
+                                        class="w-full px-3 py-2.5 border border-gray-400 rounded-lg bg-white text-sm focus:ring-2 focus:ring-blue-500 outline-none"
                                         placeholder="Enter city" required>
                                 </div>
 
                                 <div>
                                     <label class="block mb-1 text-sm font-medium text-gray-700">State</label>
                                     <input name="state" type="text" id="state"
-                                        class="w-full px-3 py-2.5 border border-gray-300 rounded-lg"
+                                        class="w-full px-3 py-2.5 border border-gray-400 rounded-lg bg-white text-sm focus:ring-2 focus:ring-blue-500 outline-none"
                                         placeholder="Enter state" required>
                                 </div>
 
                                 <div class="md:col-span-2">
                                     <label class="block mb-1 text-sm font-medium text-gray-700">Address</label>
                                     <input name="address" type="text" id="address"
-                                        class="w-full px-3 py-2.5 border border-gray-300 rounded-lg"
+                                        class="w-full px-3 py-2.5 border border-gray-400 rounded-lg bg-white text-sm focus:ring-2 focus:ring-blue-500 outline-none"
                                         placeholder="Enter address" required>
                                 </div>
 
                                 <div>
                                     <label class="block mb-1 text-sm font-medium text-gray-700">Pincode</label>
                                     <input name="pin_code" type="text" id="pin_code"
-                                        class="w-full px-3 py-2.5 border border-gray-300 rounded-lg"
+                                        class="w-full px-3 py-2.5 border border-gray-400 rounded-lg bg-white text-sm focus:ring-2 focus:ring-blue-500 outline-none"
                                         placeholder="Enter pincode" required>
                                 </div>
 
@@ -150,28 +150,28 @@
                                 <div>
                                     <label class="block mb-1 text-sm font-medium text-gray-700">Bank Name</label>
                                     <input name="bank_name" type="text" id="bank_name"
-                                        class="w-full px-3 py-2.5 border border-gray-300 rounded-lg"
+                                        class="w-full px-3 py-2.5 border border-gray-400 rounded-lg bg-white text-sm focus:ring-2 focus:ring-blue-500 outline-none"
                                         placeholder="Enter bank name" required>
                                 </div>
 
                                 <div>
                                     <label class="block mb-1 text-sm font-medium text-gray-700">Branch</label>
                                     <input name="bank_branch" type="text" id="branch"
-                                        class="w-full px-3 py-2.5 border border-gray-300 rounded-lg"
+                                        class="w-full px-3 py-2.5 border border-gray-400 rounded-lg bg-white text-sm focus:ring-2 focus:ring-blue-500 outline-none"
                                         placeholder="Enter branch" required>
                                 </div>
 
                                 <div>
                                     <label class="block mb-1 text-sm font-medium text-gray-700">Account Number</label>
                                     <input name="bank_account_no" type="text" id="account_number"
-                                        class="w-full px-3 py-2.5 border border-gray-300 rounded-lg"
+                                        class="w-full px-3 py-2.5 border border-gray-400 rounded-lg bg-white text-sm focus:ring-2 focus:ring-blue-500 outline-none"
                                         placeholder="Enter account number" required>
                                 </div>
 
                                 <div>
                                     <label class="block mb-1 text-sm font-medium text-gray-700">IFSC Code</label>
                                     <input name="bank_ifsc_code" type="text" id="ifsc_code"
-                                        class="w-full px-3 py-2.5 border border-gray-300 rounded-lg"
+                                        class="w-full px-3 py-2.5 border border-gray-400 rounded-lg bg-white text-sm focus:ring-2 focus:ring-blue-500 outline-none"
                                         placeholder="Enter IFSC code" required>
                                 </div>
 

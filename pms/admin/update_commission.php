@@ -10,7 +10,7 @@
 
 </head>
 
-<body>
+<body class="bg-gray-200">
     <!--Container -->
     <div class="mx-auto">
         <!--Screen-->
@@ -25,78 +25,100 @@
                 <!--/Sidebar-->
 
                 <!--Main-->
-                <div
-                    class="w-[60%] mx-auto my-4 self-start rounded-lg bg-gray-200 p-6 border border-default rounded-base shadow-xs hover:bg-neutral-secondary-medium">
-                    <form class="w-full" id="updateCommissionForm">
-                        <div class="personal-details">
+              <div id="mainContent"
+    class="w-full md:w-[60%] mx-auto my-6 px-3">
 
-                            <h5 class="text-xl font-bold text-heading p-1">Update Leader Commission</h5>
-                            <div class="grid grid-cols-2">
-                                <div class="mb-5 col-span-1 px-1">
-                                    <label for="site" class="block mb-2.5 text-sm font-medium text-heading">Site
-                                        Location </label>
-                                    <select id="location_id"
-                                        class="block w-full px-3 py-2.5 rounded-lg bg-gray-100 border border-gray-200 text-gray-400 text-sm cursor-not-allowed opacity-90"
-                                        readonly>
-                                        <option selected>Loading...</option>
-                                    </select>
-                                </div>
-                                <div class="mb-5 col-span-1 px-1">
-                                    <label for="leader" class="block mb-2.5 text-sm font-medium text-heading">Select
-                                        Leader </label>
-                                    <select id="user_id"
-                                        class="block w-full px-3 py-2.5 rounded-lg bg-gray-100 border border-gray-200 text-gray-400 text-sm cursor-not-allowed opacity-90"
-                                        readonly>
-                                        <option selected>Loading...</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="">
-                                <div class="mb-5  px-1">
-                                    <label class="block mb-2.5 text-sm font-medium text-heading">Commission Type</label>
-                                    <div class="flex gap-4">
-                                        <div class="flex items-center">
-                                            <input type="radio" name="commission_type" value="percent" class="w-4 h-4"
-                                                checked />
-                                            <label for="percentage"
-                                                class="ml-2 text-sm font-medium text-heading">Percentage</label>
-                                        </div>
-                                        <div class="flex items-center">
-                                            <input type="radio" name="commission_type" value="amount" class="w-4 h-4" />
-                                            <label for="amount"
-                                                class="ml-2 text-sm font-medium text-heading">Amount</label>
-                                        </div>
-                                    </div>
-                                </div>
+    <form class="w-full bg-white p-6 md:p-8 rounded-2xl shadow-lg border border-gray-200"
+        id="updateCommissionForm">
 
-                            </div>
-                            <div class="">
-                                <div class="mb-5 px-1">
-                                    <label for="commission"
-                                        class="block mb-2.5 text-sm font-medium text-heading">Commission Value</label>
-                                    <input type="text" id="commission_value"
-                                        class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
-                                        placeholder="Enter commission value" required />
-                                </div>
-                            </div>
-                        </div>
+        <!-- TITLE -->
+        <div class="mb-6 text-center">
+            <h2 class="text-xl md:text-2xl font-bold text-gray-800">
+                Update Leader Commission
+            </h2>
+            <p class="text-sm text-gray-500">Modify commission details</p>
+        </div>
 
-                        <hr class="border-white-300 mb-3">
-                        <div class="flex justify-center gap-2">
-                            <!-- UPDATE BUTTON -->
-                            <button type="submit"
-                                class="w-[15%] text-white bg-blue-600 hover:bg-blue-400 rounded-lg text-sm px-4 py-2.5">
-                                Update
-                            </button>
+        <!-- ROW 1 -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
 
-                            <!-- BACK BUTTON -->
-                            <a href="view_commission.php"
-                                class="w-[15%] text-center text-gray-700 bg-white hover:bg-gray-200 rounded-lg text-sm px-5 py-2.5 inline-block">
-                                Back
-                            </a>
-                        </div>
-                    </form>
-                </div>
+            <!-- Site -->
+            <div>
+                <label class="block text-sm text-gray-700 mb-1">Site Location</label>
+                <select id="location_id"
+                    class="w-full px-3 py-2.5 rounded-lg bg-gray-100 border border-gray-200 text-gray-700 text-sm cursor-not-allowed"
+                    readonly>
+                    <option selected>Loading...</option>
+                </select>
+            </div>
+
+            <!-- Leader -->
+            <div>
+                <label class="block text-sm text-gray-700 mb-1">Leader</label>
+                <select id="user_id"
+                    class="w-full px-3 py-2.5 rounded-lg bg-gray-100 border border-gray-200 text-gray-700 text-sm cursor-not-allowed"
+                    readonly>
+                    <option selected>Loading...</option>
+                </select>
+            </div>
+
+        </div>
+
+        <!-- COMMISSION TYPE -->
+        <div class="mt-5">
+            <label class="block text-sm font-medium text-gray-700 mb-2">
+                Commission Type
+            </label>
+
+            <div class="flex flex-wrap gap-2">
+
+                <label class="flex items-center gap-2 px-3 py-2 border rounded-md cursor-pointer hover:bg-blue-100">
+                    <input type="radio" name="commission_type" value="percent" id="percentage"
+                        class="accent-blue-600" checked>
+                    <span class="text-blue-600 font-bold text-sm">%</span>
+                    <span class="text-sm">Percentage</span>
+                </label>
+
+                <label class="flex items-center gap-2 px-3 py-2 border rounded-md cursor-pointer hover:bg-blue-100">
+                    <input type="radio" name="commission_type" value="amount" id="amount"
+                        class="accent-blue-600">
+                    <span class="text-green-600 font-bold text-sm">₹</span>
+                    <span class="text-sm">Amount</span>
+                </label>
+
+            </div>
+        </div>
+
+        <!-- VALUE -->
+        <div class="mt-5">
+            <label class="block text-sm text-gray-700 mb-1">
+                Commission Value
+            </label>
+
+            <input type="text" id="commission_value"
+                class="w-full px-3 py-2.5 border border-gray-400 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 outline-none"
+                placeholder="Enter commission value" required />
+        </div>
+
+        <hr class="my-6">
+
+        <!-- BUTTONS -->
+        <div class="flex flex-col md:flex-row justify-center gap-3">
+
+            <button type="submit"
+                class="w-full md:w-[180px] bg-blue-600 hover:bg-blue-500 text-white rounded-lg px-4 py-2.5 transition shadow">
+                Update
+            </button>
+
+            <a href="view_commission.php"
+                class="w-full md:w-[180px] text-center bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-lg px-4 py-2.5 border">
+                Back
+            </a>
+
+        </div>
+
+    </form>
+</div>
                 <!--/Main-->
             </div>
             <!--Footer-->
