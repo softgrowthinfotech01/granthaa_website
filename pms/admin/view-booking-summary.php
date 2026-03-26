@@ -66,11 +66,7 @@
                             </div>
                         </div>
 
-                        <!-- LOADER -->
-                        <div id="tableLoader" class="hidden flex flex-col items-center py-10">
-                            <div class="animate-spin rounded-full h-10 w-10 border-4 border-blue-500 border-t-transparent"></div>
-                            <p class="mt-3 text-gray-500">Fetching data...</p>
-                        </div>
+                       
 
                         <!-- TABLE -->
                         <div class="overflow-x-auto rounded-lg border">
@@ -92,6 +88,11 @@
                                 <tbody id="leaderTable" class="divide-y"></tbody>
 
                             </table>
+                             <!-- LOADER -->
+                        <div id="tableLoader" class="hidden flex flex-col items-center py-10">
+                            <div class="animate-spin rounded-full h-10 w-10 border-4 border-blue-500 border-t-transparent"></div>
+                            <p class="mt-3 text-gray-500">Fetching data...</p>
+                        </div>
                         </div>
 
                         <!-- PAGINATION -->

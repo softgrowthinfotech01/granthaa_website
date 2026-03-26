@@ -11,102 +11,114 @@
 
 </head>
 
-<body>
-
+<body class="bg-gray-200">
 <div class="mx-auto">
 
-<div class="flex flex-col">
+    <div class="flex flex-col min-h-screen">
 
-<?php include "header.php"; ?>
+        <?php include "header.php"; ?>
 
-<div class="flex">
+        <div class="flex flex-1 flex-col md:flex-row">
 
-<?php include "sidebar.php"; ?>
+            <?php include "sidebar.php"; ?>
 
-<div class="w-full sm:w-[95%] md:w-[80%] lg:w-[75%] mx-3 md:mx-auto my-4 self-start rounded-lg bg-slate-100 p-4 md:p-6 border border-default shadow-xs">
+            <!-- MAIN -->
+            <div id="mainContent"
+                class="w-full md:w-[85%] lg:w-[75%] xl:w-[70%] 
+                mx-auto my-6 px-3">
 
-<!-- Search + Per Page -->
-<div class="mb-4 flex flex-col md:flex-row justify-between items-start md:items-center gap-3">
+                <!-- CARD -->
+                <div class="bg-white p-5 md:p-6 rounded-2xl shadow-lg border border-gray-200">
 
-<input
-type="text"
-id="searchInput"
-placeholder="Search by reference / remark"
-class="px-3 py-2 border rounded w-full md:w-1/3">
+                    <!-- TITLE -->
+                    <div class="mb-5 text-center">
+                        <h2 class="text-xl md:text-2xl font-bold text-gray-800">
+                            Payment Records
+                        </h2>
+                        <p class="text-sm text-gray-500">Manage and track all payments</p>
+                    </div>
 
-<div class="flex items-center gap-2">
+                    <!-- SEARCH + FILTER -->
+                    <div class="mb-5 flex flex-col md:flex-row justify-between items-stretch md:items-center gap-3">
 
-<label>Show:</label>
+                        <!-- Search -->
+                        <input
+                            type="text"
+                            id="searchInput"
+                            placeholder="Search reference / remark..."
+                            class="px-3 py-2.5 border border-gray-300 rounded-lg w-full md:w-1/2 focus:ring-2 focus:ring-blue-500 outline-none">
 
-<select id="perPageSelect"
-class="px-2 py-1 border rounded">
+                        <!-- Per Page -->
+                        <div class="flex items-center justify-between md:justify-start gap-2 text-sm">
+                            <span class="text-gray-600">Show</span>
 
-<option value="5">5</option>
-<option value="10">10</option>
-<option value="25">25</option>
-<option value="50">50</option>
+                            <select id="perPageSelect"
+                                class="px-2 py-1.5 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 outline-none">
+                                <option value="5">5</option>
+                                <option value="10">10</option>
+                                <option value="25">25</option>
+                                <option value="50">50</option>
+                            </select>
 
-</select>
+                            <span class="text-gray-600">entries</span>
+                        </div>
 
-<span>entries</span>
+                    </div>
 
-</div>
+                 
+                    <!-- TABLE -->
+                    <div class="overflow-x-auto rounded-lg border border-gray-200">
 
-</div>
+                        <table class="w-full text-sm text-left text-gray-600">
 
-<!-- Loader -->
-<div id="tableLoader" class="hidden text-center py-6">
+                            <thead class="text-xs text-gray-700 uppercase bg-gray-100">
+                                <tr>
+                                    <th class="px-4 py-3">#</th>
+                                    <th class="px-4 py-3">Leader Name</th>
+                                    <th class="px-4 py-3">Amount</th>
+                                    <th class="px-4 py-3">Mode</th>
+                                    <th class="px-4 py-3">Reference</th>
+                                    <th class="px-4 py-3">Remark</th>
+                                    <th class="px-4 py-3">Created At</th>
+                                </tr>
+                            </thead>
 
-<div class="inline-block animate-spin rounded-full h-8 w-8 border-4 border-blue-500 border-t-transparent"></div>
+                            <tbody id="paymentTableBody" class="divide-y">
+                                <tr>
+                                    <td colspan="7" class="text-center py-6 text-gray-500">
+                                        Loading...
+                                    </td>
+                                </tr>
+                            </tbody>
 
-<p class="mt-2 text-gray-600">Loading...</p>
+                        </table>
 
-</div>
+                           <!-- LOADER -->
+                    <div id="tableLoader" class="hidden text-center py-6">
+                        <div class="inline-block animate-spin rounded-full h-8 w-8 border-4 border-blue-500 border-t-transparent"></div>
+                        <p class="mt-2 text-gray-500">Loading...</p>
+                    </div>
 
-<div class="overflow-x-auto">
 
-<table class="w-full text-sm md:text-md text-left text-gray-600">
+                    </div>
 
-<thead class="text-xs text-gray-700 uppercase bg-gray-100">
+                    <!-- PAGINATION -->
+                    <div id="paginationControls"
+                        class="flex flex-wrap justify-center gap-2 mt-5"></div>
 
-<tr>
+                    <!-- RESULT -->
+                    <div id="resultInfo"
+                        class="text-sm text-gray-500 mt-2 text-center"></div>
 
-<th class="px-4 py-3">#</th>
-<th class="px-4 py-3">Leader Name</th>
-<th class="px-4 py-3">Amount</th>
-<th class="px-4 py-3">Mode</th>
-<th class="px-4 py-3">Reference</th>
-<th class="px-4 py-3">Remark</th>
-<th class="px-4 py-3">Created At</th>
+                </div>
 
-</tr>
+            </div>
 
-</thead>
+        </div>
 
-<tbody id="paymentTableBody">
+        <?php include "footer.php"; ?>
 
-<tr>
-<td colspan="8" class="text-center py-4">Loading...</td>
-</tr>
-
-</tbody>
-
-</table>
-
-</div>
-
-<!-- Pagination -->
-<div id="paginationControls" class="flex flex-wrap justify-center gap-2 mt-4"></div>
-
-<div id="resultInfo" class="text-sm text-gray-600 mt-2 text-center"></div>
-
-</div>
-
-</div>
-
-<?php include "footer.php"; ?>
-
-</div>
+    </div>
 
 </div>
 
