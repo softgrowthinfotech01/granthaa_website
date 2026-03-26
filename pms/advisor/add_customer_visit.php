@@ -44,7 +44,7 @@
         pattern="[0-9]{12}"
         title="Aadhar Card number must be exactly 12 digits"
         class="w-full border border-gray-300 p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400">
-    </div>
+    </div>   
 
     <!-- Gender -->
     <div>
