@@ -47,7 +47,7 @@
 
                                 <div>
                                     <label class="block mb-1 text-sm font-medium text-gray-700">Full Name</label>
-                                    <input name="name" type="text"
+                                    <input name="name" type="text" id="name"
                                         class="w-full px-3 py-2.5 border border-gray-300 rounded-lg bg-white text-sm focus:ring-2 focus:ring-blue-500 outline-none"
                                         placeholder="Enter your name" required>
                                 </div>
@@ -61,14 +61,14 @@
 
                                 <div>
                                     <label class="block mb-1 text-sm font-medium text-gray-700">Age</label>
-                                    <input name="age" type="text" maxlength="2"
+                                    <input name="age" type="text" maxlength="2" id="age"
                                         class="w-full px-3 py-2.5 border border-gray-300 rounded-lg"
                                         placeholder="Enter age" required>
                                 </div>
 
                                 <div>
                                     <label class="block mb-1 text-sm font-medium text-gray-700">Gender</label>
-                                    <select name="gender"
+                                    <select name="gender" id="gender"
                                         class="w-full px-3 py-2.5 border border-gray-300 rounded-lg bg-white">
                                         <option selected>Choose gender</option>
                                         <option value="male">Male</option>
@@ -96,7 +96,7 @@
 
                                 <div>
                                     <label class="block mb-1 text-sm font-medium text-gray-700">Mobile</label>
-                                    <input name="contact_no" type="tel"
+                                    <input name="contact_no" type="tel" id="contact_no"
                                         class="w-full px-3 py-2.5 border border-gray-300 rounded-lg"
                                         placeholder="Enter mobile number" required>
                                 </div>
@@ -110,28 +110,28 @@
 
                                 <div>
                                     <label class="block mb-1 text-sm font-medium text-gray-700">City</label>
-                                    <input name="city" type="text"
+                                    <input name="city" type="text" id="city"
                                         class="w-full px-3 py-2.5 border border-gray-300 rounded-lg"
                                         placeholder="Enter city" required>
                                 </div>
 
                                 <div>
                                     <label class="block mb-1 text-sm font-medium text-gray-700">State</label>
-                                    <input name="state" type="text"
+                                    <input name="state" type="text" id="state"
                                         class="w-full px-3 py-2.5 border border-gray-300 rounded-lg"
                                         placeholder="Enter state" required>
                                 </div>
 
                                 <div class="md:col-span-2">
                                     <label class="block mb-1 text-sm font-medium text-gray-700">Address</label>
-                                    <input name="address" type="text"
+                                    <input name="address" type="text" id="address"
                                         class="w-full px-3 py-2.5 border border-gray-300 rounded-lg"
                                         placeholder="Enter address" required>
                                 </div>
 
                                 <div>
                                     <label class="block mb-1 text-sm font-medium text-gray-700">Pincode</label>
-                                    <input name="pin_code" type="text"
+                                    <input name="pin_code" type="text" id="pin_code"
                                         class="w-full px-3 py-2.5 border border-gray-300 rounded-lg"
                                         placeholder="Enter pincode" required>
                                 </div>
