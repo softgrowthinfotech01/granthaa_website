@@ -54,7 +54,7 @@
 
                                 <div>
                                     <label class="block mb-1 text-sm font-medium text-gray-700">Aadhaar Card</label>
-                                    <input name="aadhaar_number" type="text" maxlength="12" pattern="[0-9]{12}"
+                                    <input name="aadhaar_number" type="text" maxlength="12" pattern="[0-9]{12}" id="aadhaar_number"
                                         class="w-full px-3 py-2.5 border border-gray-300 rounded-lg"
                                         placeholder="Enter Aadhaar number" required>
                                 </div>
@@ -79,7 +79,7 @@
 
                                 <div>
                                     <label class="block mb-1 text-sm font-medium text-gray-700">Upload Image</label>
-                                    <input name="image" type="file"
+                                    <input name="image" type="file" id="file_input"
                                         class="w-full border border-gray-300 rounded-lg p-2 bg-white">
                                 </div>
 
@@ -103,7 +103,7 @@
 
                                 <div>
                                     <label class="block mb-1 text-sm font-medium text-gray-700">Email</label>
-                                    <input name="email" type="email"
+                                    <input name="email" type="email" id="email"
                                         class="w-full px-3 py-2.5 border border-gray-300 rounded-lg"
                                         placeholder="Enter email" required>
                                 </div>
@@ -149,28 +149,28 @@
 
                                 <div>
                                     <label class="block mb-1 text-sm font-medium text-gray-700">Bank Name</label>
-                                    <input name="bank_name" type="text"
+                                    <input name="bank_name" type="text" id="bank_name"
                                         class="w-full px-3 py-2.5 border border-gray-300 rounded-lg"
                                         placeholder="Enter bank name" required>
                                 </div>
 
                                 <div>
                                     <label class="block mb-1 text-sm font-medium text-gray-700">Branch</label>
-                                    <input name="bank_branch" type="text"
+                                    <input name="bank_branch" type="text" id="branch"
                                         class="w-full px-3 py-2.5 border border-gray-300 rounded-lg"
                                         placeholder="Enter branch" required>
                                 </div>
 
                                 <div>
                                     <label class="block mb-1 text-sm font-medium text-gray-700">Account Number</label>
-                                    <input name="bank_account_no" type="text"
+                                    <input name="bank_account_no" type="text" id="account_number"
                                         class="w-full px-3 py-2.5 border border-gray-300 rounded-lg"
                                         placeholder="Enter account number" required>
                                 </div>
 
                                 <div>
                                     <label class="block mb-1 text-sm font-medium text-gray-700">IFSC Code</label>
-                                    <input name="bank_ifsc_code" type="text"
+                                    <input name="bank_ifsc_code" type="text" id="ifsc_code"
                                         class="w-full px-3 py-2.5 border border-gray-300 rounded-lg"
                                         placeholder="Enter IFSC code" required>
                                 </div>

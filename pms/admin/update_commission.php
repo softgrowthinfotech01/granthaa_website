@@ -34,19 +34,19 @@
                             <div class="grid grid-cols-2">
                                 <div class="mb-5 col-span-1 px-1">
                                     <label for="site" class="block mb-2.5 text-sm font-medium text-heading">Site
-                                        Location <span style="color: red;">(readonly)</span></label>
+                                        Location </label>
                                     <select id="location_id"
-                                        class="block w-full px-3 py-2.5 rounded-lg bg-gray-50 border border-default-medium text-heading text-sm focus:ring-0 focus:border-default-medium shadow-xs"
-                                        disabled>
+                                        class="block w-full px-3 py-2.5 rounded-lg bg-gray-100 border border-gray-200 text-gray-400 text-sm cursor-not-allowed opacity-90"
+                                        readonly>
                                         <option selected>Loading...</option>
                                     </select>
                                 </div>
                                 <div class="mb-5 col-span-1 px-1">
                                     <label for="leader" class="block mb-2.5 text-sm font-medium text-heading">Select
-                                        Leader <span style="color: red;">(readonly)</span></label>
+                                        Leader </label>
                                     <select id="user_id"
-                                        class="block w-full px-3 py-2.5 rounded-lg bg-gray-50 border border-default-medium text-heading text-sm focus:ring-0 focus:border-default-medium shadow-xs"
-                                        disabled>
+                                        class="block w-full px-3 py-2.5 rounded-lg bg-gray-100 border border-gray-200 text-gray-400 text-sm cursor-not-allowed opacity-90"
+                                        readonly>
                                         <option selected>Loading...</option>
                                     </select>
                                 </div>
