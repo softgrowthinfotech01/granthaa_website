@@ -1,141 +1,260 @@
 <?php include 'header.php'; ?>
-<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-4">
 
-  <!-- Combined Compact Card -->
-  <div class="bg-gradient-to-r from-yellow-200 to-gray-800 
-            text-black p-4 rounded-2xl shadow-lg">
+<!-- Css for Cards -->
+<style>
+  /* From Uiverse.io by Prince4fff */
+  .card p {
+    font-size: 19px;
+    font-weight: 500;
+    line-height: 20px;
+    color: gray;
+  }
 
-    <!-- Row 1 -->
-    <div class="flex items-center justify-between py-2 border-b border-black/10">
-      <div class="flex items-center gap-3">
-        <span class="text-xl opacity-60 ">₹</span>
-        <h3 class="text-xs font-semibold  tracking-wide">
-          TOTAL BOOKING
-        </h3>
-      </div>
-      <p id="totalBooking" class="text-sm  text-white"></p>
+  .card p1 {
+    font-size: 21px;
+    font-weight: 600;
+    line-height: 20px;
+    color: black;
+  }
+
+  .card p.small {
+    font-size: 14px;
+  }
+
+  .go-corner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    width: 32px;
+    height: 32px;
+    overflow: hidden;
+    top: 0;
+    right: 0;
+    background-color: #00838d;
+    border-radius: 0 4px 0 32px;
+  }
+
+  .go-arrow {
+    margin-top: -4px;
+    margin-right: -4px;
+    color: white;
+    font-family: courier, sans;
+  }
+
+  .card1 {
+    display: block;
+    position: relative;
+    max-width: 320px;
+    background-color: #f8fafc;
+    border-radius: 4px;
+    padding: 32px 24px;
+    margin: 12px;
+    text-decoration: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+
+  .card1:before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    /* covers full card */
+    background: #00838d;
+    transform: scale(0);
+    transform-origin: top right;
+    transition: transform 0.3s ease-out;
+    border-radius: inherit;
+    z-index: -1;
+  }
+
+  .card1:hover:before {
+    transform: scale(1);
+  }
+
+  .card1:hover p {
+    transition: all 0.3s ease-out;
+    color: rgba(255, 255, 255, 0.8);
+  }
+
+  .card1:hover h3 {
+    transition: all 0.3s ease-out;
+    color: #fff;
+  }
+
+  .card2 {
+    display: block;
+    position: relative;
+    max-width: 320px;
+    background-color: #f8fafc;
+    border-radius: 4px;
+    padding: 32px 24px;
+    margin: 12px;
+    text-decoration: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+
+  .card2:hover {
+    transition: all 0.2s ease-out;
+    box-shadow: 0px 4px 8px rgba(38, 38, 38, 0.2);
+    top: -4px;
+    border: 1px solid #ccc;
+    background-color: white;
+  }
+
+  .card2:before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    /* covers full card */
+    background: #00838d;
+    transform: scale(0);
+    transform-origin: top right;
+    transition: transform 0.3s ease-out;
+    border-radius: inherit;
+    z-index: -1;
+  }
+
+  .card2:hover:before {
+    transform: scale(1);
+  }
+
+  .card3 {
+    display: block;
+    position: relative;
+    max-width: 320px;
+    background-color: #f8fafc;
+    border-radius: 4px;
+    padding: 32px 24px;
+    margin: 12px;
+    text-decoration: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+
+  .card3 .go-corner {
+    opacity: 0.7;
+  }
+
+  .card3:hover {
+    border: 1px solid #00838d;
+    box-shadow: 0px 0px 999px 999px rgba(255, 255, 255, 0.5);
+    z-index: 500;
+  }
+
+  .card3:hover p {
+    color: #00838d;
+  }
+
+  .card3:hover .go-corner {
+    transition: opactiy 0.3s linear;
+    opacity: 1;
+  }
+
+  .card4 {
+    display: block;
+    position: relative;
+    max-width: 320px;
+    background-color: #f8fafc;
+    border-radius: 4px;
+    padding: 32px 24px;
+    margin: 12px;
+    text-decoration: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+
+  .card4 .go-corner {
+    background-color: #00838d;
+    height: 100%;
+    width: 16px;
+    padding-right: 9px;
+    border-radius: 0;
+    transform: skew(6deg);
+    margin-right: -36px;
+    align-items: start;
+    background-image: linear-gradient(-45deg, #8f479a 1%, #dc2a74 100%);
+  }
+
+  .card4 .go-arrow {
+    transform: skew(-6deg);
+    margin-left: -2px;
+    margin-top: 9px;
+    opacity: 0;
+  }
+
+  .card4:hover {
+    border: 1px solid #cd3d73;
+  }
+
+  .card4 h3 {
+    margin-top: 8px;
+  }
+
+  .card4:hover .go-corner {
+    margin-right: -12px;
+  }
+
+  .card4:hover .go-arrow {
+    opacity: 1;
+  }
+</style>
+<!-- Css for Cards -->
+
+<!-- New UI -->
+<div class="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-4">
+  <div class="card">
+    <div class="card1">
+      <p1 class="font-semibold">My Performance</p1>
+
+      <p class="small">₹ Total Booking: <span id="totalBooking"></span></p>
+      <p class="small">% Total Commission: <span id="totalCommission"></span></p>
+      <p class="small">🏆 My Bookings: <span id="mybooking"></span></p>
+
     </div>
-
-    <!-- Row 2 -->
-    <div class="flex items-center justify-between py-2 border-b border-black/10">
-      <div class="flex items-center gap-3">
-        <span class="text-xl opacity-60 ">%</span>
-        <h3 class="text-xs font-semibold tracking-wide ">
-          TOTAL COMMISSION
-        </h3>
-      </div>
-      <p id="totalCommission" class="text-sm text-white"></p>
-    </div>
-
-    <!-- Row 3 -->
-    <div class="flex items-center justify-between py-2">
-      <div class="flex items-center gap-3">
-        <span class="text-xl opacity-60">🏆</span>
-        <h3 class="text-xs font-semibold tracking-wide ">
-          MY BOOKINGS
-        </h3>
-      </div>
-      <p id="mybooking" class="text-sm  text-white"></p>
-    </div>
-
   </div>
+  <div class="card">
+    <a class="card1" href="advisor_payment_summary">
+      <p1 class="font-semibold">Advisor Performance</p1>
 
-  <!-- Combined Compact Card -->
-  <div class="bg-gradient-to-r from-yellow-200 to-gray-800 
-            text-black p-4 rounded-2xl shadow-lg">
+      <p class="small">₹ Total Booking: <span id="teamtotalBooking"></span></p>
+      <p class="small">% Total Commission: <span id="teamtotalCommission"></span></p>
+      <p class="small">🏆 Team Bookings: <span id="teambooking"></span></p>
 
-    <!-- Row 1 -->
-    <div class="flex items-center justify-between py-2 border-b border-black/10">
-      <div class="flex items-center gap-3">
-        <span class="text-xl opacity-60 ">₹</span>
-        <h3 class="text-xs font-semibold  tracking-wide">
-          ADVISOR'S TOTAL BOOKING AMOUNT
-        </h3>
+      <div class="go-corner">
+        <div class="go-arrow">→</div>
       </div>
-      <p id="teamtotalBooking" class="text-sm  text-white"></p>
-    </div>
-
-    <!-- Row 2 -->
-    <div class="flex items-center justify-between py-2 border-b border-black/10">
-      <div class="flex items-center gap-3">
-        <span class="text-xl opacity-60 ">%</span>
-        <h3 class="text-xs font-semibold tracking-wide ">
-          ADVISOR'S TOTAL COMMISSION AMOUNT
-        </h3>
-      </div>
-      <p id="teamtotalCommission" class="text-sm text-white"></p>
-    </div>
-
-    <!-- Row 3 -->
-    <div class="flex items-center justify-between py-2">
-      <div class="flex items-center gap-3">
-        <span class="text-xl opacity-60">🏆</span>
-        <h3 class="text-xs font-semibold tracking-wide ">
-          TEAM BOOKINGS
-        </h3>
-      </div>
-      <p id="teambooking" class="text-sm  text-white"></p>
-    </div>
-
+    </a>
   </div>
+  <div class="card">
+    <a class="card1" href="team_performance">
+      <p1 class="font-semibold">Advisor Insights</p1>
 
-  <!-- Combined Compact Card -->
-  <div class="bg-gradient-to-r from-yellow-200 to-gray-800 
-            text-black p-4 rounded-2xl shadow-lg 
-            h-full flex flex-col">
+      <p class="small">👥 Total Advisors: <span id="totalAdvisors"></span></p>
+      <p class="small">⭐ Top Advisor: <span id="topAdvisor"></span></p>
 
-    <!-- Row 1 -->
-    <div class="flex items-center justify-between flex-1 border-b border-black/10">
-      <div class="flex items-center gap-2">
-        <span class="text-lg opacity-60">₹</span>
-        <h3 class="text-xs font-semibold tracking-wide">
-          TOTAL BOOKING AMOUNT
-        </h3>
+      <div class="go-corner">
+        <div class="go-arrow">→</div>
       </div>
-      <p id="total_booking_amount" class="text-sm font-semibold text-white"></p>
-    </div>
-
-    <!-- Row 2 -->
-    <div class="flex items-center justify-between flex-1">
-      <div class="flex items-center gap-2">
-        <span class="text-lg opacity-60">%</span>
-        <h3 class="text-xs font-semibold tracking-wide">
-          TOTAL COMMISSION AMOUNT
-        </h3>
-      </div>
-      <p id="total_commission_amount" class="text-sm font-semibold text-white"></p>
-    </div>
-
+    </a>
   </div>
+  <div class="card">
+    <a class="card1" href="list_customer_booking">
+      <p1 class="font-bold pb-1">Overall Summary</p1>
 
-  <!-- Combined Compact Card -->
-  <div class="bg-gradient-to-r from-yellow-200 to-gray-800 
-            text-black p-4 rounded-2xl shadow-lg 
-            h-full flex flex-col">
+      <p class="small py-1">₹ Total Booking: <span id="total_booking_amount"></span></p>
+      <p class="small py-1">% Total Commission: <span id="total_commission_amount"></span></p>
 
-    <!-- Row 1 -->
-    <div class="flex items-center justify-between flex-1 border-b border-black/10">
-      <div class="flex items-center gap-2">
-        <span class="text-lg opacity-60">₹</span>
-        <h3 class="text-xs font-semibold tracking-wide">
-          TOTAL ADVISORS
-        </h3>
+      <div class="go-corner">
+        <div class="go-arrow">→</div>
       </div>
-      <p id="totalAdvisors" class="text-sm font-semibold text-white"></p>
-    </div>
-
-    <!-- Row 2 -->
-    <div class="flex items-center justify-between flex-1">
-      <div class="flex items-center gap-2">
-        <span class="text-lg opacity-60">%</span>
-        <h3 class="text-xs font-semibold tracking-wide">
-          TOP ADVISOR
-        </h3>
-      </div>
-      <p id="topAdvisor" class="text-sm font-semibold text-white"></p>
-    </div>
+    </a>
   </div>
 </div>
+
+<!-- New UI -->
+
 
 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
 
