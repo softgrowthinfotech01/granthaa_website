@@ -13,7 +13,7 @@
   <select name="site_location" id="site_location" class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-green-400 outline-none ">
     <option>Loading....</option>
 </select>  
-</div>
+</div>   
     
     <!-- Full Name -->
     <div>
