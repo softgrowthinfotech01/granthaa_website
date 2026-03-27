@@ -2,7 +2,6 @@
 
 <!-- Css for Cards -->
 <style>
-  /* From Uiverse.io by Prince4fff */
   .card p {
     font-size: 19px;
     font-weight: 500;
@@ -95,7 +94,22 @@
     overflow: hidden;
   }
 
-  .card2:hover {
+  .card4 {
+  display: block;
+    position: relative;
+    max-width: 320px;
+    background-color: #f8fafc;
+    border-radius: 4px;
+    padding: 32px 24px;
+    margin: 12px;
+    text-decoration: none;
+    z-index: 0;
+    overflow: hidden;
+
+  min-height: 148px;
+}
+
+  .card4:hover {
     transition: all 0.2s ease-out;
     box-shadow: 0px 4px 8px rgba(38, 38, 38, 0.2);
     top: -4px;
@@ -103,7 +117,7 @@
     background-color: white;
   }
 
-  .card2:before {
+  .card4:before {
     content: "";
     position: absolute;
     inset: 0;
@@ -116,88 +130,8 @@
     z-index: -1;
   }
 
-  .card2:hover:before {
+  .card4:hover:before {
     transform: scale(1);
-  }
-
-  .card3 {
-    display: block;
-    position: relative;
-    max-width: 320px;
-    background-color: #f8fafc;
-    border-radius: 4px;
-    padding: 32px 24px;
-    margin: 12px;
-    text-decoration: none;
-    z-index: 0;
-    overflow: hidden;
-  }
-
-  .card3 .go-corner {
-    opacity: 0.7;
-  }
-
-  .card3:hover {
-    border: 1px solid #00838d;
-    box-shadow: 0px 0px 999px 999px rgba(255, 255, 255, 0.5);
-    z-index: 500;
-  }
-
-  .card3:hover p {
-    color: #00838d;
-  }
-
-  .card3:hover .go-corner {
-    transition: opactiy 0.3s linear;
-    opacity: 1;
-  }
-
-  .card4 {
-    display: block;
-    position: relative;
-    max-width: 320px;
-    background-color: #f8fafc;
-    border-radius: 4px;
-    padding: 32px 24px;
-    margin: 12px;
-    text-decoration: none;
-    z-index: 0;
-    overflow: hidden;
-  }
-
-  .card4 .go-corner {
-    background-color: #00838d;
-    height: 100%;
-    width: 16px;
-    padding-right: 9px;
-    border-radius: 0;
-    transform: skew(6deg);
-    margin-right: -36px;
-    align-items: start;
-    background-image: linear-gradient(-45deg, #8f479a 1%, #dc2a74 100%);
-  }
-
-  .card4 .go-arrow {
-    transform: skew(-6deg);
-    margin-left: -2px;
-    margin-top: 9px;
-    opacity: 0;
-  }
-
-  .card4:hover {
-    border: 1px solid #cd3d73;
-  }
-
-  .card4 h3 {
-    margin-top: 8px;
-  }
-
-  .card4:hover .go-corner {
-    margin-right: -12px;
-  }
-
-  .card4:hover .go-arrow {
-    opacity: 1;
   }
 </style>
 <!-- Css for Cards -->
@@ -240,11 +174,11 @@
     </a>
   </div>
   <div class="card">
-    <a class="card1" href="list_customer_booking">
-      <p1 class="font-bold pb-1">Overall Summary</p1>
+    <a class="card4" href="list_customer_booking">
+      <p1 class="font-bold">Overall Summary</p1>
 
-      <p class="small py-1">₹ Total Booking: <span id="total_booking_amount"></span></p>
-      <p class="small py-1">% Total Commission: <span id="total_commission_amount"></span></p>
+      <p class="small py-2">₹ Total Booking: <span id="total_booking_amount"></span></p>
+      <p class="small mb-[30px]">% Total Commission: <span id="total_commission_amount"></span></p>
 
       <div class="go-corner">
         <div class="go-arrow">→</div>
@@ -252,7 +186,6 @@
     </a>
   </div>
 </div>
-
 <!-- New UI -->
 
 
