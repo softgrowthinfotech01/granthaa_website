@@ -41,7 +41,7 @@
       <!-- Username -->
       <div>
         <label class="block text-sm text-gray-200 mb-1">Username</label>
-        <input id="email" type="text"
+        <input id="login" type="text"
           class="w-full bg-transparent border-b border-gray-400 text-white px-2 py-2
                  focus:outline-none focus:border-yellow-400">
       </div>
@@ -95,7 +95,7 @@ console.log(url);
 document.getElementById("loginForm").addEventListener("submit", async function (e) {
     e.preventDefault();
 
-    const email = document.getElementById("email").value.trim();
+    const login = document.getElementById("login").value.trim();
     const password = document.getElementById("password").value.trim();
     const errorBox = document.getElementById("error");
     const loginBtn = this.querySelector("button");
@@ -103,7 +103,7 @@ document.getElementById("loginForm").addEventListener("submit", async function (
     errorBox.innerText = "";
 
     // ✅ Basic Validation
-    if (!email || !password) {
+    if (!login || !password) {
         errorBox.innerText = "Please enter username and password";
         return;
     }
@@ -119,7 +119,7 @@ document.getElementById("loginForm").addEventListener("submit", async function (
                 "Content-Type": "application/json",
                 "Accept": "application/json"
             },
-            body: JSON.stringify({ email, password })
+            body: JSON.stringify({ login, password })
         });
 
         let data;
