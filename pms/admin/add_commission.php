@@ -10,7 +10,7 @@
 
 </head>
 
-<body>
+<body class="bg-gray-200">
     <!--Container -->
     <div class="mx-auto">
         <!--Screen-->
@@ -28,60 +28,108 @@
                 <div id="mainContent"
                     class="w-full md:w-[80%] lg:w-[75%] mx-3 md:mx-auto my-4
                         transition-all duration-300">
-                    <form id="commissionForm" class="w-full px-4 rounded-lg bg-gray-200 p-6 border shadow-xl">
-                        <div class="personal-details">
-                            <h5 class="text-xl font-bold text-heading p-1">Set Leader Commission</h5>
-                            <div class="grid grid-cols-1 md:grid-cols-2 mx-1 md:mx-0">
-                                <div class="mb-5 col-span-1 px-1">
-                                    <label for="site" class="block mb-2.5 text-sm font-medium text-heading">Site Location</label>
-                                    <select name="location_id" id="location_id" class="block w-full px-3 py-2.5 rounded-lg bg-white border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand shadow-xs placeholder:text-body focus:outline-none focus:ring-2 focus:ring-gray-600">
-                                        <option selected>Choose a site location</option>
-                                        <option value="">Loading...</option>
+                  <form id="commissionForm" class="w-full bg-white p-6 md:p-8 rounded-2xl shadow-lg border border-gray-200">
 
-                                    </select>
-                                </div>
-                                <div class="mb-5 col-span-1 px-1">
-                                    <label for="leader" class="block mb-2.5 text-sm font-medium text-heading">Select Leader</label>
-                                    <select name="user_id" id="user_id" class="block w-full px-3 py-2.5 rounded-lg bg-white border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand shadow-xs placeholder:text-body focus:outline-none focus:ring-2 focus:ring-gray-600">
-                                        <option selected>Choose a Leader</option>
-                                        <option value="">Loading...</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="grid grid-cols-1 md:grid-cols-2 mx-1 md:mx-0">
-                                <div class="mb-5  px-1">
-                                    <label class="block mb-2.5 text-sm font-medium text-heading">Commission Type</label>
-                                    <div class="flex gap-4">
-                                        <div class="flex items-center">
-                                            <input name="commission_type" value="percent" type="radio" id="percentage" class="w-4 h-4" checked />
-                                            <label for="percentage" class="ml-2 text-sm font-medium text-heading">Percentage</label>
-                                        </div>
-                                        <div class="flex items-center">
-                                            <input name="commission_type" value="amount" type="radio" id="amount" class="w-4 h-4" />
-                                            <label for="amount" class="ml-2 text-sm font-medium text-heading">Amount</label>
-                                        </div>
-                                    </div>
-                                </div>
+    <!-- TITLE -->
+    <div class="mb-5 text-center">
+        <h2 class="text-xl md:text-2xl font-bold text-gray-800">
+            Set Leader Commission
+        </h2>
+        <p class="text-sm text-gray-500">Assign commission to leader</p>
+    </div>
 
-                            </div>
-                            <div class="grid grid-cols-1 md:grid-cols-2 mx-1 md:mx-0">
-                                <div class="mb-5 px-1">
-                                    <label for="commission" class="block mb-2.5 text-sm font-medium text-heading">Commission Value</label>
-                                    <input name="commission_value" type="text" id="commission_value" class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body focus:outline-none focus:ring-2 focus:ring-gray-600" placeholder="Enter commission value" required />
-                                </div>
-                            </div>
-                        </div>
+    <!-- ROW 1 -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
 
-                        <hr class="border-white-300 mb-3">
-                        <div class="flex justify-center gap-2">
-                            <button type="submit" class="w-full md:w-[20%] text-white bg-blue-600 box-border border border-transparent hover:bg-blue-400 rounded-lg focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none">Save</button>
-                            <button type="button"
-                                onclick="confirmReset()"
-                                class="w-full md:w-[20%] text-gray-700 bg-white hover:bg-gray-200 rounded-lg text-sm px-5 py-2.5">
-                                Reset
-                            </button>
-                        </div>
-                    </form>
+        <div>
+            <label class="block mb-1 text-sm font-medium text-gray-700">
+                Site Location
+            </label>
+
+            <select name="location_id" id="location_id"
+                class="w-full px-3 py-2.5 border border-gray-400 rounded-lg bg-white text-sm focus:ring-2 focus:ring-blue-500 outline-none">
+                <option selected>Choose a site location</option>
+                <option value="">Loading...</option>
+            </select>
+        </div>
+
+        <div>
+            <label class="block mb-1 text-sm font-medium text-gray-700">
+                Select Leader
+            </label>
+
+            <select name="user_id" id="user_id"
+                class="w-full px-3 py-2.5 border border-gray-400 rounded-lg bg-white text-sm focus:ring-2 focus:ring-blue-500 outline-none">
+                <option selected>Choose a Leader</option>
+                <option value="">Loading...</option>
+            </select>
+        </div>
+
+    </div>
+
+    <!-- ROW 2 -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+
+        <div>
+            <label class="block mb-2 text-sm font-medium text-gray-700">
+                Commission Type
+            </label>
+
+        <div class="flex flex-wrap gap-2 justify-start">
+
+    <!-- Percentage -->
+    <label class="flex items-center gap-2 px-3 py-2 border rounded-md cursor-pointer hover:bg-blue-100">
+        
+        <input type="radio" name="commission_type" value="percent" id="percentage"
+            class="accent-blue-600" checked>
+
+        <span class="text-blue-600 font-bold text-sm">%</span>
+        <span class="text-sm">Percentage</span>
+    </label>
+
+    <!-- Amount -->
+    <label class="flex items-center gap-2 px-3 py-2 border rounded-md cursor-pointer hover:bg-blue-100">
+        
+        <input type="radio" name="commission_type" value="amount" id="amount"
+            class="accent-blue-600">
+
+        <span class="text-green-600 font-bold text-sm">₹</span>
+        <span class="text-sm">Amount</span>
+    </label>
+
+</div>
+        </div>
+
+    </div>
+
+    <!-- ROW 3 -->
+    <div class="mt-4">
+        <label class="block mb-1 text-sm font-medium text-gray-700">
+            Commission Value
+        </label>
+
+        <input name="commission_value" type="text" id="commission_value"
+            class="w-full px-3 py-2.5 border border-gray-400 rounded-lg bg-white text-sm focus:ring-2 focus:ring-blue-500 outline-none"
+            placeholder="Enter commission value" required />
+    </div>
+
+    <!-- BUTTONS -->
+    <div class="mt-6 flex flex-col md:flex-row justify-center gap-3">
+
+        <button type="submit"
+            class="w-full md:w-[180px] bg-blue-600 hover:bg-blue-500 text-white rounded-lg px-4 py-2.5 transition shadow">
+            Save
+        </button>
+
+        <button type="button"
+            onclick="confirmReset()"
+            class="w-full md:w-[180px] bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg px-4 py-2.5 border">
+            Reset
+        </button>
+
+    </div>
+
+</form>
                 </div>
                 <!--/Main-->
             </div>

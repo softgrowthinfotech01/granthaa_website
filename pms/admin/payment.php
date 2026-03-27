@@ -11,185 +11,150 @@
 
 </head>
 
-<body>
+<body class="bg-gray-200">
 
-    <div class="mx-auto">
+ <div class="mx-auto">
 
-        <div class="flex flex-col">
+    <div class="flex flex-col min-h-screen">
 
-            <?php include "header.php"; ?>
+        <?php include "header.php"; ?>
 
-            <div class="flex">
+        <div class="flex flex-1 flex-col md:flex-row">
 
-                <?php include 'sidebar.php'; ?>
+            <?php include 'sidebar.php'; ?>
 
-                <!-- Main Content -->
-                <div id="mainContent"
-                    class="w-full md:w-[80%] lg:w-[75%] mx-3 md:mx-auto my-4
-                            transition-all duration-300">
+            <!-- MAIN -->
+            <div id="mainContent"
+                class="w-full md:w-[80%] lg:w-[60%] xl:w-[50%] 
+                mx-auto my-6 px-3">
 
-                    <form class="w-full px-4 rounded-lg bg-gray-200 p-6 border shadow-xl" method="post" id="paymentForm">
+                <!-- CARD -->
+                <form method="post" id="paymentForm"
+                    class="bg-white p-5 md:p-6 rounded-2xl shadow-lg border border-gray-200">
 
-                        <h5 class="text-xl font-bold text-heading p-1 mb-4">
+                    <!-- TITLE -->
+                    <div class="mb-5 text-center">
+                        <h2 class="text-xl md:text-2xl font-bold text-gray-800">
                             Add Payment
-                        </h5>
+                        </h2>
+                        <p class="text-sm text-gray-500">Enter payment details</p>
+                    </div>
 
-                        <div class="grid grid-cols-1 md:grid-cols-2">
+                    <!-- GRID -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
 
-                            <!-- USER ID -->
-                            <div class="mb-5 px-1">
-                                <label class="block mb-2.5 text-sm font-medium text-heading">
-                                    Leader Name
-                                </label>
-
-                                <select name="user_id" id="user_id"
-                                    class="block w-full px-3 py-2.5 rounded-lg bg-white border border-default-medium text-heading text-sm shadow-xs"
-                                    required>
-
-                                    <option value="">Loading...</option>
-
-                                </select>
-                            </div>
-
-                            <div class="mb-5 px-1">
-                                <label class="block mb-2.5 text-sm font-medium text-heading">
-                                    Select Booking
-                                </label>
-
-                                <select id="booking_id" name="booking_id"
-                                    class="block w-full px-3 py-2.5 rounded-lg bg-white border border-default-medium text-heading text-sm shadow-xs"
-                                    required>
-
-                                    <option value="">Select Booking</option>
-
-                                </select>
-                            </div>
-
-                            <!-- Total Commission -->
-                            <div class="mb-5 px-1">
-                                <label class="block mb-2.5 text-sm font-medium text-heading">
-                                    Total Commission
-                                </label>
-
-                                <input name="total_commission" type="text" id="total_commission"
-                                    class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm block w-full px-3 py-2.5 shadow-xs"
-                                    placeholder="Enter amount" readonly />
-                            </div>
-
-                            <!-- Total Paid -->
-                            <div class="mb-5 px-1">
-                                <label class="block mb-2.5 text-sm font-medium text-heading">
-                                    Total Paid
-                                </label>
-
-                                <input name="total_paid" type="number" id="total_paid"
-                                    class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm block w-full px-3 py-2.5 shadow-xs"
-                                    placeholder="Enter amount" readonly />
-                            </div>
-
-                            <!-- Balance -->
-                            <div class="mb-5 px-1">
-                                <label class="block mb-2.5 text-sm font-medium text-heading">
-                                    Balance
-                                </label>
-
-                                <input name="balance" type="number" id="balance"
-                                    class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm block w-full px-3 py-2.5 shadow-xs"
-                                    placeholder="Enter amount" readonly />
-                            </div>
-
-                            <!-- AMOUNT -->
-                            <div class="mb-5 px-1">
-                                <label class="block mb-2.5 text-sm font-medium text-heading">
-                                    Payment Amount
-                                </label>
-
-                                <input name="amount" type="number" id="amount"
-                                    class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm block w-full px-3 py-2.5 shadow-xs"
-                                    placeholder="Enter amount" required />
-                            </div>
-
-                            <!-- PAYMENT MODE -->
-                            <div class="mb-5 px-1">
-
-                                <label class="block mb-2.5 text-sm font-medium text-heading">
-                                    Payment Mode
-                                </label>
-
-                                <select name="payment_mode" id="payment_mode"
-                                    class="block w-full px-3 py-2.5 rounded-lg bg-white border border-default-medium text-heading text-sm shadow-xs">
-
-                                    <option selected>Select Payment Mode</option>
-                                    <option value="cash">Cash</option>
-                                    <option value="cheque">Cheque</option>
-                                    <option value="online_transfer">Online Transfer</option>
-                                    <option value="upi">UPI</option>
-
-                                </select>
-
-                            </div>
-
-                            <!-- REFERENCE NUMBER -->
-                            <div class="mb-5 px-1">
-
-                                <label class="block mb-2.5 text-sm font-medium text-heading">
-                                    Reference Number
-                                </label>
-
-                                <input name="reference_no" type="text" id="reference_no"
-                                    class="rounded-lg bg-neutral-secondary-medium border border-default-medium text-heading text-sm block w-full px-3 py-2.5 shadow-xs"
-                                    placeholder="Enter transaction reference" />
-
-                            </div>
-
-                            <!-- REMARK -->
-                            <div class="mb-5 px-1 md:col-span-2">
-
-                                <label class="block mb-2.5 text-sm font-medium text-heading">
-                                    Remark
-                                </label>
-
-                                <textarea name="remark" id="remark" rows="3"
-                                    class="rounded-lg bg-white border border-default-medium text-heading text-sm block w-full px-3 py-2.5 shadow-xs"
-                                    placeholder="Enter remark"></textarea>
-
-                            </div>
-
+                        <!-- USER -->
+                        <div>
+                            <label class="block mb-1 text-sm text-gray-700">Leader Name</label>
+                            <select name="user_id" id="user_id"
+                                class="w-full px-3 py-2.5 rounded-lg border border-gray-300 bg-white text-sm focus:ring-2 focus:ring-blue-500 outline-none"
+                                required>
+                                <option value="">Loading...</option>
+                            </select>
                         </div>
 
-                        <hr class="border-white-300 mb-3">
-
-                        <div class="flex justify-center gap-3">
-
-                            <button type="submit"
-                                class="w-full md:w-[20%] text-white bg-blue-600 hover:bg-blue-500 rounded-lg text-sm px-4 py-2.5">
-
-                                Save Payment
-
-                            </button>
-
-                            <button type="button"
-                                onclick="confirmReset()"
-                                class="w-full md:w-[20%] text-gray-700 bg-white hover:bg-gray-200 rounded-lg text-sm px-4 py-2.5">
-
-                                Reset
-
-                            </button>
-
+                        <!-- BOOKING -->
+                        <div>
+                            <label class="block mb-1 text-sm text-gray-700">Select Booking</label>
+                            <select id="booking_id" name="booking_id"
+                                class="w-full px-3 py-2.5 rounded-lg border border-gray-300 bg-white text-sm focus:ring-2 focus:ring-blue-500 outline-none"
+                                required>
+                                <option value="">Select Booking</option>
+                            </select>
                         </div>
 
-                    </form>
+                        <!-- TOTAL COMMISSION -->
+                        <div>
+                            <label class="block mb-1 text-sm text-gray-700">Total Commission</label>
+                            <input name="total_commission" type="text" id="total_commission"
+                                class="w-full px-3 py-2.5 rounded-lg border border-gray-200 bg-gray-100 text-sm"
+                                readonly />
+                        </div>
 
+                        <!-- TOTAL PAID -->
+                        <div>
+                            <label class="block mb-1 text-sm text-gray-700">Total Paid</label>
+                            <input name="total_paid" type="number" id="total_paid"
+                                class="w-full px-3 py-2.5 rounded-lg border border-gray-200 bg-gray-100 text-sm"
+                                readonly />
+                        </div>
 
-                </div>
+                        <!-- BALANCE -->
+                        <div>
+                            <label class="block mb-1 text-sm text-gray-700">Balance</label>
+                            <input name="balance" type="number" id="balance"
+                                class="w-full px-3 py-2.5 rounded-lg border border-gray-200 bg-gray-100 text-sm"
+                                readonly />
+                        </div>
+
+                        <!-- AMOUNT -->
+                        <div>
+                            <label class="block mb-1 text-sm text-gray-700">Payment Amount</label>
+                            <input name="amount" type="number" id="amount"
+                                class="w-full px-3 py-2.5 rounded-lg border border-gray-300 text-sm focus:ring-2 focus:ring-blue-500 outline-none"
+                                placeholder="Enter amount" required />
+                        </div>
+
+                        <!-- PAYMENT MODE -->
+                        <div>
+                            <label class="block mb-1 text-sm text-gray-700">Payment Mode</label>
+                            <select name="payment_mode" id="payment_mode"
+                                class="w-full px-3 py-2.5 rounded-lg border border-gray-300 bg-white text-sm focus:ring-2 focus:ring-blue-500 outline-none">
+                                <option selected>Select Payment Mode</option>
+                                <option value="cash">Cash</option>
+                                <option value="cheque">Cheque</option>
+                                <option value="online_transfer">Online Transfer</option>
+                                <option value="upi">UPI</option>
+                            </select>
+                        </div>
+
+                        <!-- REFERENCE -->
+                        <div>
+                            <label class="block mb-1 text-sm text-gray-700">Reference Number</label>
+                            <input name="reference_no" type="text" id="reference_no"
+                                class="w-full px-3 py-2.5 rounded-lg border border-gray-300 text-sm focus:ring-2 focus:ring-blue-500 outline-none"
+                                placeholder="Enter transaction reference" />
+                        </div>
+
+                        <!-- REMARK -->
+                        <div class="md:col-span-2">
+                            <label class="block mb-1 text-sm text-gray-700">Remark</label>
+                            <textarea name="remark" id="remark" rows="3"
+                                class="w-full px-3 py-2.5 rounded-lg border border-gray-300 text-sm focus:ring-2 focus:ring-blue-500 outline-none"
+                                placeholder="Enter remark"></textarea>
+                        </div>
+
+                    </div>
+
+                    <hr class="my-6">
+
+                    <!-- BUTTONS -->
+                    <div class="flex flex-col md:flex-row justify-center gap-3">
+
+                        <button type="submit"
+                            class="w-full md:w-[180px] bg-blue-600 hover:bg-blue-500 text-white rounded-lg px-4 py-2.5 transition">
+                            Save Payment
+                        </button>
+
+                        <button type="button"
+                            onclick="confirmReset()"
+                            class="w-full md:w-[180px] bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-lg px-4 py-2.5 border">
+                            Reset
+                        </button>
+
+                    </div>
+
+                </form>
 
             </div>
 
-            <?php include 'footer.php'; ?>
-
         </div>
 
+        <?php include 'footer.php'; ?>
+
     </div>
+
+</div>
 
     <script>
         function confirmReset() {

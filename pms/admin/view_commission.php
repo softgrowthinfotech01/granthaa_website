@@ -12,7 +12,7 @@
     <link href="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.css" rel="stylesheet" />
 </head>
 
-<body>
+<body class="bg-gray-200">
 
 <div class="mx-auto">
 <div class="flex flex-col min-h-screen">
@@ -24,63 +24,95 @@
 <?php include "sidebar.php"; ?>
 
 <!-- MAIN -->
-<div class="w-full md:w-[90%] lg:w-[75%] xl:w-[75%] mx-3 md:mx-auto my-4 self-start rounded-lg bg-slate-100 p-4 md:p-6 border shadow-xs">
+<div class="w-full md:w-[90%] lg:w-[75%] xl:w-[75%] mx-auto my-6 px-3">
 
-    <!-- TOP -->
-    <div class="mb-4 flex flex-col md:flex-row justify-between items-stretch md:items-center gap-3">
+    <!-- CARD -->
+    <div class="bg-white rounded-2xl shadow-lg border border-gray-200 p-4 md:p-6">
 
-        <input
-            type="text"
-            id="searchInput"
-            placeholder="Search by Name..."
-            class="px-3 py-2 border rounded w-full md:w-1/3">
+        <!-- TITLE -->
+        <div class="mb-5 text-center">
+            <h2 class="text-xl md:text-2xl font-bold text-gray-800">
+                Leader Commission List
+            </h2>
+            <p class="text-sm text-gray-500">
+                Manage all commission records
+            </p>
+        </div>
 
-        <div class="flex flex-col md:flex-row items-start md:items-center gap-2 text-sm w-full md:w-auto">
-            <span>Show</span>
-            <select id="perPageSelect" class="px-2 py-1 border rounded w-full md:w-16">
-                <option value="5">5</option>
-                <option value="10">10</option>
-                <option value="25">25</option>
-                <option value="50">50</option>
-            </select>
-            <span>entries</span>
+        <!-- TOP CONTROLS -->
+        <div class="mb-5 flex flex-col md:flex-row justify-between items-stretch md:items-center gap-3">
+
+            <!-- Search -->
+            <input
+                type="text"
+                id="searchInput"
+                placeholder="Search by Name or Location"
+                class="w-full md:w-1/3 px-3 py-2.5 border border-gray-300 rounded-lg bg-white text-sm focus:ring-2 focus:ring-blue-500 outline-none">
+
+            <!-- Per Page -->
+            <div class="flex items-center gap-2 ">
+                <span class="text-gray-600 text-sm">Show</span>
+
+                <select id="perPageSelect"
+                    class="px-3 py-2 border border-gray-300 rounded-lg bg-white text-sm focus:ring-2 focus:ring-blue-500 outline-none">
+                    <option value="5">5</option>
+                    <option value="10">10</option>
+                    <option value="25">25</option>
+                    <option value="50">50</option>
+                </select>
+
+                <span class="text-sm text-gray-600">entries</span>
+            </div>
+
+        </div>
+
+  
+
+        <!-- TABLE -->
+        <div class="w-full overflow-x-auto rounded-lg border border-gray-200">
+
+            <table class="w-full text-sm text-left text-gray-800">
+
+                <!-- Hide header on mobile -->
+                <thead class="text-xs text-gray-600 uppercase bg-gray-100 hidden md:table-header-group">
+                    <tr>
+                        <th class="px-4 py-3">#</th>
+                        <th class="px-4 py-3">Site Location</th>
+                        <th class="px-4 py-3">Leader Name</th>
+                        <th class="px-4 py-3">Commission Type</th>
+                        <th class="px-4 py-3">Commission Value</th>
+                        <th class="px-4 py-3">Created At</th>
+                        <th class="px-4 py-3">Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody id="locationTableBody" class="divide-y divide-gray-200">
+                    <tr>
+                        <td colspan="7" class="text-center py-6 text-gray-500">
+                            Loading...
+                        </td>
+                    </tr>
+                </tbody>
+
+            </table>
+                  <!-- LOADER -->
+        <div id="tableLoader" class="hidden text-center py-6">
+            <div class="inline-block animate-spin rounded-full h-8 w-8 border-4 border-blue-500 border-t-transparent"></div>
+            <p class="mt-2 text-gray-500">Loading...</p>
+        </div>
+        </div>
+
+        <!-- PAGINATION -->
+        <div id="paginationControls"
+            class="flex flex-wrap justify-center items-center gap-2 mt-6">
+        </div>
+
+        <!-- RESULT -->
+        <div id="resultInfo"
+            class="text-sm text-gray-500 mt-2 text-center">
         </div>
 
     </div>
-
-    <!-- LOADER -->
-    <div id="tableLoader" class="hidden text-center py-6">
-        <div class="inline-block animate-spin rounded-full h-8 w-8 border-4 border-blue-500 border-t-transparent"></div>
-        <p class="mt-2 text-gray-600">Loading...</p>
-    </div>
-
-    <!-- TABLE -->
-    <div class="w-full overflow-x-auto">
-        <table class="w-full text-md text-left text-gray-600">
-
-            <!-- Hide header on mobile -->
-            <thead class="text-xs text-gray-700 uppercase bg-gray-100 hidden md:table-header-group">
-                <tr>
-                    <th class="px-4 py-3">#</th>
-                    <th class="px-4 py-3">Site Location</th>
-                    <th class="px-4 py-3">Leader Name</th>
-                    <th class="px-4 py-3">Commission Type</th>
-                    <th class="px-4 py-3">Commission Value</th>
-                    <th class="px-4 py-3">Created At</th>
-                    <th class="px-4 py-3">Actions</th>
-                </tr>
-            </thead>
-
-            <tbody id="locationTableBody">
-                <tr>
-                    <td colspan="3" class="text-center py-4">Loading...</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <div id="paginationControls" class="flex flex-wrap justify-center gap-2 mt-4"></div>
-    <div id="resultInfo" class="text-sm text-gray-600 mt-2 text-center"></div>
 
 </div>
 
@@ -174,12 +206,12 @@ ${new Date(loc.created_at).toLocaleDateString()}
 
 <td class="px-4 py-2 flex flex-col md:flex-row gap-2 md:table-cell">
 <a href="update_commission.php?id=${loc.id}" 
-class="w-full md:w-auto text-center px-3 py-1.5 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-500">
+class="w-full mx-1 md:w-auto text-center px-3 py-1.5 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-500">
 Edit
 </a>
 
 <button onclick="deleteCommission(${loc.id})"
-class="w-full md:w-auto px-3 py-1.5 text-sm font-medium text-white bg-red-600 rounded-md hover:bg-red-500">
+class="w-full mx-1 md:w-auto px-3 py-1.5 text-sm font-medium text-white bg-red-600 rounded-md hover:bg-red-500">
 Delete
 </button>
 </td>

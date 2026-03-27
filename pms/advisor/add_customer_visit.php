@@ -12,9 +12,9 @@
 <label class="text-sm font-semibold text-gray-700">Site Location</label>
   <select name="site_location" id="site_location" class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-green-400 outline-none ">
     <option>Loading....</option>
-</select>
-</div>
-
+</select>  
+</div>   
+    
     <!-- Full Name -->
     <div>
       <label class="block text-gray-900 font-semibold mb-1">Full Name</label>
@@ -44,7 +44,7 @@
         pattern="[0-9]{12}"
         title="Aadhar Card number must be exactly 12 digits"
         class="w-full border border-gray-300 p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400">
-    </div>
+    </div>   
 
     <!-- Gender -->
     <div>

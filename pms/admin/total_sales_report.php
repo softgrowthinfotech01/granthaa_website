@@ -9,56 +9,63 @@
     <script src="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.js"></script>
 </head>
 
-<body>
+<body class="bg-gray-200">
     <!--Container -->
-    <div class="mx-auto">
-        <!--Screen-->
-        <div class="flex flex-col min-h-screen">
-            <!--Header Section Starts Here-->
-            <?php include "header.php"; ?>
-            <!--/Header-->
+ <div class="mx-auto">
+    <div class="flex flex-col min-h-screen">
 
-            <div class="flex flex-1 flex-col md:flex-row">
-                <!--Sidebar-->
-                <?php include "sidebar.php"; ?>
-                <!--/Sidebar-->
+        <?php include "header.php"; ?>
 
-                <!--Main-->
-                <div class="w-full md:w-[80%] lg:w-[75%] xl:w-[80%] 
-                            mx-auto my-4 self-start 
-                            rounded-lg bg-slate-100 
-                            p-4 md:p-6 
-                            border border-default 
-                            shadow-xs hover:bg-neutral-secondary-medium">
+        <div class="flex flex-1 flex-col md:flex-row">
 
-                    <h2 class="p-2 text-xl text-gray-600">Total Sales Report</h2>
+            <?php include "sidebar.php"; ?>
 
-                    <div class="mb-4 flex flex-col md:flex-row justify-between items-start md:items-center gap-3">
+            <!-- MAIN -->
+            <div id="mainContent"
+                class="w-full md:w-[80%] lg:w-[75%] xl:w-[80%] 
+                mx-auto my-6 px-3">
+
+                <!-- CARD -->
+                <div class="bg-white p-5 md:p-6 rounded-2xl shadow-lg border border-gray-200">
+
+                    <!-- TITLE -->
+                    <div class="mb-5 text-center">
+                        <h2 class="text-xl md:text-2xl font-bold text-gray-800">
+                            Total Sales Report
+                        </h2>
+                        <p class="text-sm text-gray-500">Overview of sales data</p>
+                    </div>
+
+                    <!-- TOP CONTROLS -->
+                    <div class="mb-5 flex flex-col md:flex-row justify-between items-stretch md:items-center gap-3">
+
                         <!-- Search -->
-                        <input type="text" id="searchInput" placeholder="Search location..."
-                            class="px-3 py-2 border rounded w-full md:w-1/3">
+                        <input type="text"
+                            id="searchInput"
+                            placeholder="Search location or site name"
+                            class="px-3 py-2.5 border border-gray-300 rounded-lg w-full md:w-1/3 focus:ring-2 focus:ring-blue-500 outline-none">
 
-                        <!-- Per Page Select -->
-                        <div class="flex items-center gap-2">
-                            <label>Show:</label>
-                            <select id="perPageSelect" class="px-2 py-1 border rounded">
+                        <!-- Per Page -->
+                        <div class="flex items-center gap-2 text-sm justify-between md:justify-start">
+                            <span class="text-gray-600">Show</span>
+                            <select id="perPageSelect"
+                                class="px-2 py-1.5 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 outline-none">
                                 <option value="5">5</option>
                                 <option value="10">10</option>
                                 <option value="25">25</option>
                                 <option value="50">50</option>
                             </select>
-                            <span>entries</span>
+                            <span class="text-gray-600">entries</span>
                         </div>
+
                     </div>
 
-                    <div id="tableLoader" class="hidden text-center py-6">
-                        <div class="inline-block animate-spin rounded-full h-8 w-8 border-4 border-blue-500 border-t-transparent"></div>
-                        <p class="mt-2 text-gray-600">Loading...</p>
-                    </div>
+                  
 
-                    <!-- Desktop Table -->
-                    <div class="hidden md:block w-full overflow-x-auto">
+                    <!-- DESKTOP TABLE -->
+                    <div class="hidden md:block w-full overflow-x-auto rounded-lg border border-gray-200">
                         <table class="w-full text-sm text-left text-gray-600">
+
                             <thead class="text-xs text-gray-700 uppercase bg-gray-100">
                                 <tr>
                                     <th class="px-4 py-3">Site Name</th>
@@ -66,30 +73,49 @@
                                     <th class="px-4 py-3">Site Location</th>
                                     <th class="px-4 py-3">Total Amount</th>
                                     <th class="px-4 py-3">Balance Amount</th>
+                                    <th class="px-4 py-3"></th>
                                 </tr>
                             </thead>
-                            <tbody id="locationTableBody">
+
+                            <tbody id="locationTableBody" class="divide-y">
                                 <tr>
-                                    <td colspan="5" class="text-center py-4">Loading...</td>
+                                    <td colspan="5" class="text-center py-4 text-gray-500">
+                                        Loading...
+                                    </td>
                                 </tr>
                             </tbody>
+
                         </table>
+
+                          <!-- LOADER -->
+                    <div id="tableLoader" class="hidden text-center py-6">
+                        <div class="inline-block animate-spin rounded-full h-8 w-8 border-4 border-blue-500 border-t-transparent"></div>
+                        <p class="mt-2 text-gray-500">Loading...</p>
+                    </div>
                     </div>
 
-                    <!-- Mobile Card View -->
-                    <div id="mobileCardContainer" class="md:hidden flex flex-col gap-4"></div>
+                    <!-- MOBILE CARDS -->
+                    <div id="mobileCardContainer" class="md:hidden flex flex-col gap-3"></div>
 
-                    <div id="paginationControls" class="flex flex-wrap justify-center gap-2 mt-4"></div>
-                    <div id="resultInfo" class="text-sm text-gray-600 mt-2 text-center"></div>
+                    <!-- PAGINATION -->
+                    <div id="paginationControls"
+                        class="flex flex-wrap justify-center gap-2 mt-5"></div>
+
+                    <!-- RESULT -->
+                    <div id="resultInfo"
+                        class="text-sm text-gray-500 mt-2 text-center"></div>
+
                 </div>
-                <!--/Main-->
-            </div>
 
-            <!--Footer-->
-            <?php include "footer.php"; ?>
-            <!--/footer-->
+            </div>
+            <!--/Main-->
+
         </div>
+
+        <?php include "footer.php"; ?>
+
     </div>
+</div>
 
    <script>
 let currentPage = 1;
@@ -179,23 +205,45 @@ async function fetchLocations(page = 1) {
             `;
 
             // MOBILE CARD
-            mobileContainer.innerHTML += `
-                <div class="bg-white rounded-xl shadow border p-4">
-                    <div class="flex justify-between">
-                        <h3 class="font-semibold">${item.buyer_name}</h3>
-                        <span>${new Date(item.created_at).toLocaleDateString()}</span>
-                    </div>
+           mobileContainer.innerHTML += `
+    <div class="bg-white rounded-xl shadow border p-4">
 
-                    <p class="text-sm text-gray-600">${item.project_name}</p>
+        <div class="flex justify-between">
+            <h3 class="font-semibold">${item.buyer_name}</h3>
+            <span>${new Date(item.created_at).toLocaleDateString()}</span>
+        </div>
 
-                    <p class="text-sm mt-2">₹${item.total_booking_amount}</p>
+        <p class="text-sm text-gray-600">${item.project_name}</p>
 
-                    <button onclick="toggleDetails(${index})"
-                        class="mt-2 bg-blue-600 text-white px-2 py-1 rounded w-full">
-                        View Details
-                    </button>
-                </div>
-            `;
+        <p class="text-sm mt-2">₹${item.total_booking_amount}</p>
+
+        <button onclick="toggleMobileDetails(${index})"
+            class="mt-2 bg-blue-600 text-white px-2 py-1 rounded w-full">
+            View Details
+        </button>
+
+        <!-- MOBILE DETAILS -->
+       <div id="mobile-details-${index}" class="hidden mt-3 text-sm text-gray-700 bg-gray-50 p-2">
+
+            <div class="grid grid-cols-2 gap-2">
+                <p><b>Buyer:</b> ${item.buyer_name}</p>
+                <p><b>Mobile:</b> ${item.mobile}</p>
+                <p><b>Email:</b> ${item.email}</p>
+
+                <p><b>Plot:</b> ${item.plot_number}</p>
+                <p><b>Project:</b> ${item.project_name}</p>
+                <p><b>Payment:</b> ${item.payment_mode}</p>
+
+                <p><b>Advance:</b> ₹${item.advance_amount}</p>
+                <p><b>Total:</b> ₹${item.total_booking_amount}</p>
+
+                <p><b>Leader Comm:</b> ₹${item.leader_commission_amount}</p>
+                <p><b>Adviser Comm:</b> ₹${item.adviser_commission_amount}</p>
+            </div>
+
+        </div>
+    </div>
+`;
         });
 
         resultInfo.innerHTML = `Page ${paginationData.current_page} of ${paginationData.last_page}`;
@@ -227,6 +275,12 @@ async function fetchLocations(page = 1) {
 function toggleDetails(index) {
     const row = document.getElementById("details-" + index);
     row.classList.toggle("hidden");
+}
+
+// toggle for mobile
+function toggleMobileDetails(index) {
+    const el = document.getElementById("mobile-details-" + index);
+    el.classList.toggle("hidden");
 }
 
 // SEARCH

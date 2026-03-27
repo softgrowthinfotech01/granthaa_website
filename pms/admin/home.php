@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="keywords" content="tailwind,tailwindcss,tailwind css,css,starter template,free template,admin templates, admin template, admin dashboard, free tailwind templates, tailwind example">
-    
+
     <!-- Css -->
     <link rel="stylesheet" href="../style.css">
 
@@ -50,230 +50,172 @@
 
                         <!-- GRID WRAPPER -->
                         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
-                            <div class="pl-2 h-40 bg-sky-500 rounded-lg shadow-md ">
-                                <div class="flex flex flex-col items-center gap-3  w-full h-full px-5 bg-white rounded-lg">
-                                    <div class="flex items-center w-full h-full px-5 bg-white rounded-xl">
-                                        <!-- Title -->
-                                        <p class="text-gray-800 text-sm font-medium">
+
+                            <div class="pl-2 h-40 bg-sky-500 rounded-lg shadow-md">
+                                <div class="flex flex-col justify-between h-full p-2 bg-white rounded-lg">
+                                    <!-- Leaders -->
+                                    <div>
+                                        <p class="text-gray-500 text-xs font-medium">
                                             Total Leaders
                                         </p>
-                                        <!-- Amount -->
-                                        <p id="total_leaders"
-                                            class="text-2xl font-semibold text-sky-500 ml-3">
-                                            00
-                                        </p>
-                                        <!-- Icon -->
-                                        <svg viewBox="0 0 24 24"
-                                            class="h-9 w-9 ml-auto opacity-80">
-                                            <defs>
-                                                <linearGradient id="leaderGrad" x1="0" y1="0" x2="1" y2="1">
-                                                    <stop offset="0%" stop-color="#06b6d4" />
-                                                    <stop offset="100%" stop-color="#3b82f6" />
-                                                </linearGradient>
-                                            </defs>
-                                            <circle cx="9" cy="7" r="3" fill="url(#leaderGrad)" />
-                                            <circle cx="17" cy="9" r="2.5" fill="#60a5fa" />
-                                            <path d="M3 20c0-3.5 3-6 6-6s6 2.5 6 6"
-                                                fill="url(#leaderGrad)" opacity="0.8" />
-                                        </svg>
+                                        <div class="flex items-center justify-between mt-1">
+                                            <p id="total_leaders"
+                                                class="text-lg font-semibold text-sky-500">
+                                                0
+                                            </p>
+                                            <svg viewBox="0 0 24 24"
+                                                class="h-[40%] w-[40%] max-h-8 max-w-8 opacity-80">
+                                                <circle cx="9" cy="7" r="3" fill="#3b82f6" />
+                                                <circle cx="17" cy="9" r="2.5" fill="#60a5fa" />
+                                            </svg>
+                                        </div>
                                     </div>
-                                    <div class="flex items-center w-full h-full px-5 bg-white rounded-xl">
-                                        <!-- Title -->
-                                        <p class="text-gray-800 text-sm font-medium">
+
+                                    <!-- Divider -->
+                                    <div class="border-t"></div>
+
+                                    <!-- Sites -->
+                                    <div>
+                                        <p class="text-gray-500 text-xs font-medium">
                                             Total Sites
                                         </p>
-                                        <!-- Amount -->
-                                        <p id="total_sites"
-                                            class="text-2xl font-semibold text-sky-500 ml-3">
-                                            00
-                                        </p>
-                                        <!-- Icon -->
-                                        <svg viewBox="0 0 24 24" class="h-10 w-10 ml-auto">
-                                            <defs>
-                                                <linearGradient id="siteGrad" x1="0" y1="0" x2="1" y2="1">
-                                                    <stop offset="0%" stop-color="#6366f1" />
-                                                    <stop offset="100%" stop-color="#8b5cf6" />
-                                                </linearGradient>
-                                            </defs>
-                                            <path d="M12 21s6-5.5 6-10a6 6 0 10-12 0c0 4.5 6 10 6 10z" fill="url(#siteGrad)" />
-                                            <circle cx="12" cy="11" r="2.5" fill="#fff" />
-                                        </svg>
+                                        <div class="flex items-center justify-between mt-1">
+                                            <p id="total_sites"
+                                                class="text-lg font-semibold text-sky-500">
+                                                0
+                                            </p>
+                                            <svg viewBox="0 0 24 24"
+                                                class="h-5 w-5 opacity-80 shrink-0">
+                                                <path d="M12 21s6-5.5 6-10a6 6 0 10-12 0c0 4.5 6 10 6 10z"
+                                                    fill="#8b5cf6" />
+                                            </svg>
+                                        </div>
                                     </div>
-                                    <div class="flex items-center w-full h-full px-5 bg-white rounded-xl">
-                                        <!-- Title -->
-                                        <p class="text-gray-800 text-sm font-medium">
+
+                                    <!-- Divider -->
+                                    <div class="border-t"></div>
+
+                                    <!-- Bookings -->
+                                    <div>
+                                        <p class="text-gray-500 text-xs font-medium">
                                             Total Bookings
                                         </p>
-                                        <!-- Amount -->
-                                        <p id="total_bookings"
-                                            class="text-2xl font-semibold text-sky-500 ml-3">
-                                            00
-                                        </p>
-                                        <!-- Icon -->
-                                        <svg viewBox="0 0 24 24" class="h-10 w-10 ml-auto">
-                                            <rect x="3" y="5" width="18" height="16" rx="3" fill="#34d399" />
-                                            <rect x="3" y="9" width="18" height="2" fill="#059669" />
-                                            <circle cx="8" cy="14" r="1.5" fill="#065f46" />
-                                            <circle cx="12" cy="14" r="1.5" fill="#065f46" />
-                                            <circle cx="16" cy="14" r="1.5" fill="#065f46" />
-                                        </svg>
-                                    </div>
-                                </div>
-                            </div>
-                            <a href="view-booking-summary">
-                                <div class="pl-2 h-20 bg-sky-500 rounded-lg shadow-md">
-                                    <div class="flex w-full h-full py-2 px-4 bg-white rounded-lg justify-between">
-                                        <div class="my-auto">
-                                            <p class="font-bold"> Total Leaders</p>
-                                            <p id="total_leaders" class="text-lg text-sky-500">00.00</p>
-                                        </div>
-                                        <div class="my-auto">
-                                            <svg viewBox="0 0 24 24" class="h-10 w-10">
-                                                <defs>
-                                                    <linearGradient id="leaderGrad" x1="0" y1="0" x2="1" y2="1">
-                                                        <stop offset="0%" stop-color="#06b6d4" />
-                                                        <stop offset="100%" stop-color="#3b82f6" />
-                                                    </linearGradient>
-                                                </defs>
-                                                <circle cx="9" cy="7" r="3" fill="url(#leaderGrad)" />
-                                                <circle cx="17" cy="9" r="2.5" fill="#60a5fa" />
-                                                <path d="M3 20c0-3.5 3-6 6-6s6 2.5 6 6" fill="url(#leaderGrad)" opacity="0.8" />
+                                        <div class="flex items-center justify-between mt-1 mb-1">
+                                            <p id="total_bookings"
+                                                class="text-lg font-semibold text-sky-500">
+                                                0
+                                            </p>
+                                            <svg viewBox="0 0 24 24"
+                                                class="h-5 w-5 opacity-80 shrink-0">
+                                                <rect x="3" y="5" width="18" height="16" rx="3"
+                                                    fill="#34d399" />
+                                                <rect x="3" y="9" width="18" height="2"
+                                                    fill="#059669" />
                                             </svg>
                                         </div>
                                     </div>
                                 </div>
-                            </a>
-                            <a href="view_location">
-                            <div class="pl-2 h-20 bg-sky-500 rounded-lg shadow-md">
-                                <div class="flex w-full h-full py-2 px-4 bg-white rounded-lg justify-between">
-                                    <div class="my-auto">
-                                        <p class="font-bold">Total Sites</p>
-                                        <p id="total_sites" class="text-lg text-sky-500">00.00</p>
-                                    </div>
-                                    <div class="my-auto">
-                                        <svg viewBox="0 0 24 24" class="h-10 w-10">
-                                            <defs>
-                                                <linearGradient id="siteGrad" x1="0" y1="0" x2="1" y2="1">
-                                                    <stop offset="0%" stop-color="#6366f1" />
-                                                    <stop offset="100%" stop-color="#8b5cf6" />
-                                                </linearGradient>
-                                            </defs>
-                                            <path d="M12 21s6-5.5 6-10a6 6 0 10-12 0c0 4.5 6 10 6 10z" fill="url(#siteGrad)" />
-                                            <circle cx="12" cy="11" r="2.5" fill="#fff" />
-                                        </svg>
-                                    </div>
-                                </div>
                             </div>
-                            </a>
-                             <a href="">
-                            <div class="pl-2 h-20 bg-sky-500 rounded-lg shadow-md">
-                                <div class="flex w-full h-full py-2 px-4 bg-white rounded-lg justify-between">
-                                    <div class="my-auto">
-                                        <p class="font-bold">Total Bookings</p>
-                                        <p id="total_bookings" class="text-lg text-sky-500">00.00</p>
-                                    </div>
-                                    <div class="my-auto">
-                                        <svg viewBox="0 0 24 24" class="h-10 w-10">
-                                            <rect x="3" y="5" width="18" height="16" rx="3" fill="#34d399" />
-                                            <rect x="3" y="9" width="18" height="2" fill="#059669" />
-                                            <circle cx="8" cy="14" r="1.5" fill="#065f46" />
-                                            <circle cx="12" cy="14" r="1.5" fill="#065f46" />
-                                            <circle cx="16" cy="14" r="1.5" fill="#065f46" />
-                                        </svg>
-                                    </div>
-                                </div>
-                            </div>
-                            </a>
-                             <a href="">
-                            <div class="pl-2 h-20 bg-sky-500 rounded-lg shadow-md">
-                                <div class="flex w-full h-full py-2 px-4 bg-white rounded-lg justify-between">
-                                    <div class="my-auto">
-                                        <p class="font-bold">Total Booking Sales</p>
-                                        <p id="total_sales_value" class="text-lg text-sky-500">00.00</p>
-                                    </div>
-                                    <div class="my-auto">
-                                        <svg viewBox="0 0 24 24" class="h-10 w-10">
-                                            <defs>
-                                                <linearGradient id="moneyGrad" x1="0" y1="0" x2="1" y2="1">
-                                                    <stop offset="0%" stop-color="#22c55e" />
-                                                    <stop offset="100%" stop-color="#16a34a" />
-                                                </linearGradient>
-                                            </defs>
-                                            <rect x="3" y="6" width="18" height="12" rx="3" fill="url(#moneyGrad)" />
-                                            <circle cx="12" cy="12" r="3" fill="#bbf7d0" />
-                                        </svg>
-                                    </div>
-                                </div>
-                            </div>
-                            </a>
-                             <a href="view-booking-summary">
-                            <div class="pl-2 h-20 bg-sky-500 rounded-lg shadow-md">
-                                <div class="flex w-full h-full py-2 px-4 bg-white rounded-lg justify-between">
-                                    <div class="my-auto">
-                                        <p class="font-bold">Total Commissions</p>
-                                        <p id="total_commissions" class="text-lg text-sky-500">00.00</p>
-                                    </div>
-                                    <div class="my-auto">
-                                        <svg viewBox="0 0 24 24" class="h-10 w-10">
-                                            <defs>
-                                                <linearGradient id="clockGrad" x1="0" y1="0" x2="1" y2="1">
-                                                    <stop offset="0%" stop-color="#f59e0b" />
-                                                    <stop offset="100%" stop-color="#f97316" />
-                                                </linearGradient>
-                                            </defs>
-                                            <circle cx="12" cy="12" r="9" fill="url(#clockGrad)" />
-                                            <path d="M12 7v5l3 2" stroke="#fff" stroke-width="2" fill="none" />
-                                        </svg>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="pl-2 h-20 bg-sky-500 rounded-lg shadow-md">
-                                <div class="flex w-full h-full py-2 px-4 bg-white rounded-lg justify-between">
-                                    <div class="my-auto">
-                                        <p class="font-bold">Pending Commissions</p>
-                                        <p id="pending_commissions" class="text-lg text-sky-500">00.00</p>
-                                    </div>
-                                    <div class="my-auto">
-                                        <svg viewBox="0 0 24 24" class="h-10 w-10">
-                                            <defs>
-                                                <linearGradient id="clockGrad" x1="0" y1="0" x2="1" y2="1">
-                                                    <stop offset="0%" stop-color="#f59e0b" />
-                                                    <stop offset="100%" stop-color="#f97316" />
-                                                </linearGradient>
-                                            </defs>
-                                            <circle cx="12" cy="12" r="9" fill="url(#clockGrad)" />
-                                            <path d="M12 7v5l3 2" stroke="#fff" stroke-width="2" fill="none" />
-                                        </svg>
-                                    </div>
-                                </div>
-                            </div>
-                            </a>
-                             <a href="view_payment">
-                            <div class="pl-2 h-20 bg-sky-500 rounded-lg shadow-md">
-                                <div class="flex w-full h-full py-2 px-4 bg-white rounded-lg justify-between">
-                                    <div class="my-auto">
-                                        <p class="font-bold">Paid Commissions</p>
-                                        <p id="paid_commissions" class="text-lg text-sky-500">00.00</p>
-                                    </div>
-                                    <div class="my-auto">
-                                        <svg viewBox="0 0 24 24" class="h-10 w-10">
-                                            <defs>
-                                                <linearGradient id="walletGrad" x1="0" y1="0" x2="1" y2="1">
-                                                    <stop offset="0%" stop-color="#10b981" />
-                                                    <stop offset="100%" stop-color="#059669" />
-                                                </linearGradient>
-                                            </defs>
 
-                                            <rect x="3" y="6" width="18" height="12" rx="3" fill="url(#walletGrad)" />
-                                            <path d="M15 10h4v4h-4a2 2 0 010-4z" fill="#d1fae5" />
-                                            <circle cx="16.5" cy="12" r="0.8" fill="#059669" />
-                                        </svg>
+                            <!--  -->
+                            <div class="pl-2 h-40 bg-sky-500 rounded-lg shadow-md">
+                                <div class="flex flex-col justify-between h-full p-4 bg-white rounded-lg">
+                                    <!-- Top Section -->
+                                    <div>
+                                        <p class="text-gray-500 text-sm font-medium">
+                                            Total Booking Value
+                                        </p>
+                                        <div class="flex items-center justify-between mt-1">
+                                            <p id="total_sales_value"
+                                                class="text-xl font-semibold text-sky-500">
+                                                ₹ 00
+                                            </p>
+                                            <svg viewBox="0 0 24 24"
+                                                class="h-5 w-5 text-green-600">
+                                                <rect x="3" y="6" width="18" height="12" rx="3"
+                                                    fill="currentColor" />
+                                                <circle cx="12" cy="12" r="3" fill="#bbf7d0" />
+                                            </svg>
+                                        </div>
+                                    </div>
+
+                                    <!-- Divider -->
+                                    <div class="border-t"></div>
+
+                                    <!-- Bottom Section -->
+                                    <div>
+                                        <p class="text-gray-500 text-sm font-medium">
+                                            Total Commissions
+                                        </p>
+                                        <div class="flex items-center justify-between mt-1">
+                                            <p id="total_commissions"
+                                                class="text-xl font-semibold text-sky-500">
+                                                ₹ 00
+                                            </p>
+                                            <div class="bg-purple-100 p-1.5 rounded-lg">
+                                                <svg viewBox="0 0 24 24"
+                                                    class="h-5 w-5 text-purple-600">
+                                                    <circle cx="12" cy="12" r="9" fill="currentColor" />
+                                                    <path d="M12 7v5l3 2"
+                                                        stroke="#fff"
+                                                        stroke-width="2"
+                                                        fill="none" />
+                                                </svg>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                                </a>
 
+                            <!--  -->
+                            <div class="pl-2 h-40 bg-sky-500 rounded-lg shadow-md">
+                                <div class="flex flex-col justify-between h-full p-4 bg-white rounded-lg">
+                                    <!-- Pending -->
+                                    <div>
+                                        <p class="text-gray-500 text-sm font-medium">
+                                            Pending Commissions
+                                        </p>
+                                        <div class="flex items-center justify-between mt-1">
+                                            <p id="pending_commissions"
+                                                class="text-xl font-semibold text-sky-500">
+                                                ₹ 00
+                                            </p>
+                                            <svg viewBox="0 0 24 24"
+                                                class="h-5 w-5 text-orange-600">
+                                                <circle cx="12" cy="12" r="9" fill="currentColor" />
+                                                <path d="M12 7v5l3 2"
+                                                    stroke="#fff"
+                                                    stroke-width="2"
+                                                    fill="none" />
+                                            </svg>
+                                        </div>
+                                    </div>
 
+                                    <!-- Divider -->
+                                    <div class="border-t"></div>
+
+                                    <!-- Paid -->
+                                    <div>
+                                        <p class="text-gray-500 text-sm font-medium">
+                                            Paid Commissions
+                                        </p>
+                                        <div class="flex items-center justify-between mt-1">
+                                            <p id="paid_commissions"
+                                                class="text-xl font-semibold text-sky-500">
+                                                ₹ 00
+                                            </p>
+                                            <svg viewBox="0 0 24 24"
+                                                class="h-5 w-5 text-green-600">
+                                                <circle cx="12" cy="12" r="9" fill="currentColor" />
+                                                <path d="M8 12l2.5 2.5L16 9"
+                                                    stroke="#fff"
+                                                    stroke-width="2"
+                                                    fill="none" />
+                                            </svg>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
@@ -285,7 +227,8 @@
                             </div>
 
                             <!-- COMMISSION SPLIT -->
-                            <div class="bg-white p-4 rounded-xl shadow flex justify-center">
+                            <div class="bg-white p-4 rounded-xl shadow flex flex-col justify-center items-center">
+                                <h3 class="text-lg font-semibold mb-3">Commission Status</h3>
                                 <canvas id="commissionChart" style="max-width: 280px; max-height: 280px;"></canvas>
                             </div>
 
@@ -310,7 +253,11 @@
                                     <tbody id="recentBookingsTable"></tbody>
 
                                 </table>
-                                <a href="bookings" class="text-blue-500 text-sm float-right">View All →</a>
+                                <a href="total_sales_report"
+                                    class="inline-block bg-blue-500 text-white text-sm px-4 py-2 rounded-lg shadow
+                                     hover:bg-blue-600 transition float-right m-2">
+                                    View All →
+                                </a>
                             </div>
 
                         </div>
@@ -334,6 +281,11 @@
                                     <tbody id="recentPaymentsTable"></tbody>
 
                                 </table>
+                                <a href="view_payment"
+                                    class="inline-block bg-blue-500 text-white text-sm px-4 py-2 rounded-lg shadow
+                                     hover:bg-blue-600 transition float-right m-2">
+                                    View All →
+                                </a>
                             </div>
 
                         </div>
@@ -349,6 +301,8 @@
         </div>
 
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
@@ -483,7 +437,8 @@
 
             const token = localStorage.getItem("auth_token");
 
-            const res = await fetch(url + "commission-split", {
+            // ✅ Use existing dashboard API
+            const res = await fetch(url + "admdashboard", {
                 headers: {
                     "Authorization": "Bearer " + token
                 }
@@ -492,23 +447,24 @@
             const result = await res.json();
             const d = result.data;
 
-            // ✅ FIX: convert to number
-            const leader = Number(d.leader);
-            const adviser = Number(d.adviser);
-            const total = leader + adviser;
+            // ✅ Use existing fields
+            const paid = Number(d.total_paid);
+            const pending = Number(d.pending_commissions);
+            const total = paid + pending;
 
             const ctx = document.getElementById("commissionChart").getContext("2d");
 
-            // 🎨 Gradients
+            // 🎨 Paid (green)
             const gradient1 = ctx.createLinearGradient(0, 0, 0, 400);
-            gradient1.addColorStop(0, "#36D1DC");
-            gradient1.addColorStop(1, "#5B86E5");
+            gradient1.addColorStop(0, "#34d399");
+            gradient1.addColorStop(1, "#059669");
 
+            // 🎨 Pending (orange)
             const gradient2 = ctx.createLinearGradient(0, 0, 0, 400);
-            gradient2.addColorStop(0, "#FF758C");
-            gradient2.addColorStop(1, "#FF7EB3");
+            gradient2.addColorStop(0, "#fbbf24");
+            gradient2.addColorStop(1, "#f97316");
 
-            // 🔥 Inner Circle Plugin (FIXED)
+            // 🔥 Inner Circle Plugin
             const innerCirclePlugin = {
                 id: 'innerCircle',
                 beforeDraw(chart) {
@@ -516,28 +472,25 @@
                         ctx
                     } = chart;
                     const meta = chart.getDatasetMeta(0);
-                    if (!meta || !meta.data || !meta.data[0]) return;
+                    if (!meta?.data?.[0]) return;
 
                     const x = meta.data[0].x;
                     const y = meta.data[0].y;
+                    const innerRadius = meta.data[0].innerRadius;
 
                     ctx.save();
 
-                    // 🎯 PERFECT INNER RADIUS (no weird shape)
-                    const innerRadius = meta.data[0].innerRadius;
-
-                    // 🧊 Draw inner circle slightly smaller (gap maintained)
+                    // Inner circle
                     ctx.beginPath();
                     ctx.arc(x, y, innerRadius - 10, 0, 2 * Math.PI);
-                    ctx.fillStyle = "#f8fafc"; // clean background
+                    ctx.fillStyle = "#f8fafc";
                     ctx.fill();
 
-                    // subtle border
                     ctx.strokeStyle = "#e5e7eb";
                     ctx.lineWidth = 2;
                     ctx.stroke();
 
-                    // 💰 TEXT (DYNAMIC)
+                    // Dynamic center
                     const centerData = chart.$centerText || {
                         title: "Total Commission",
                         value: total
@@ -547,7 +500,7 @@
 
                     ctx.fillStyle = "#111";
                     ctx.font = "bold 22px sans-serif";
-                    ctx.fillText("₹" + Number(centerData.value).toLocaleString(), x, y - 8);
+                    ctx.fillText("₹" + centerData.value.toLocaleString(), x, y - 8);
 
                     ctx.fillStyle = "#666";
                     ctx.font = "13px sans-serif";
@@ -560,9 +513,9 @@
             const chart = new Chart(ctx, {
                 type: "doughnut",
                 data: {
-                    labels: ["Leader", "Adviser"],
+                    labels: ["Paid", "Pending"], // ✅ changed
                     datasets: [{
-                        data: [leader, adviser],
+                        data: [paid, pending], // ✅ changed
                         backgroundColor: [gradient1, gradient2],
                         borderWidth: 0,
                         hoverOffset: 20
@@ -587,16 +540,12 @@
                         }
                     },
 
-                    // 🔥 Hover center update
                     onHover: (event, elements, chart) => {
                         if (elements.length) {
                             const index = elements[0].index;
-                            const label = chart.data.labels[index];
-                            const value = chart.data.datasets[0].data[index];
-
                             chart.$centerText = {
-                                title: label,
-                                value: value
+                                title: chart.data.labels[index],
+                                value: chart.data.datasets[0].data[index]
                             };
                         } else {
                             chart.$centerText = {
@@ -611,7 +560,6 @@
                 plugins: [innerCirclePlugin]
             });
 
-            // 🔥 Update center dynamically
             chart.$centerText = {
                 title: "Total Commission",
                 value: total
@@ -622,7 +570,6 @@
         document.addEventListener("DOMContentLoaded", function() {
             loadRecentBookings();
             loadRecentPayments(); // 👈 ADD THIS
-            loadAlerts();
             loadSalesChart(); // 👈 NEW
             loadCommissionChart();
         });
