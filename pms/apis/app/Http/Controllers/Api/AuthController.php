@@ -4,8 +4,11 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
@@ -84,4 +87,110 @@ class AuthController extends Controller
             'message' => 'Logged out successfully'
         ]);
     }
+
+    public function forgotPassword(Request $request)
+{
+    $request->validate([
+        'email' => 'required|email|exists:users,email'
+    ]);
+
+    $user = User::where('email', $request->email)->first();
+
+    // Generate token
+    $token = Str::random(60);
+
+    // Delete old tokens
+    DB::table('password_reset_tokens')
+        ->where('email', $request->email)
+        ->delete();
+
+    // Insert new token
+    DB::table('password_reset_tokens')->insert([
+        'email' => $request->email,
+        'token' => Hash::make($token),
+        'created_at' => Carbon::now()
+    ]);
+
+    // 👉 Later send email / SMS here
+
+    return response()->json([
+        'status' => true,
+        'message' => 'Password reset token generated',
+        'token' => $token // for testing (remove in production)
+    ]);
+}
+
+public function verifyResetToken(Request $request)
+{
+    $request->validate([
+        'email' => 'required|email',
+        'token' => 'required'
+    ]);
+
+    $record = DB::table('password_reset_tokens')
+        ->where('email', $request->email)
+        ->first();
+
+    if (!$record) {
+        return response()->json([
+            'status' => false,
+            'message' => 'Invalid token'
+        ]);
+    }
+
+    if (!Hash::check($request->token, $record->token)) {
+        return response()->json([
+            'status' => false,
+            'message' => 'Token mismatch'
+        ]);
+    }
+
+    return response()->json([
+        'status' => true,
+        'message' => 'Token verified'
+    ]);
+}
+
+public function resetPassword(Request $request)
+{
+    // print_r("hello");exit;
+    $request->validate([
+        'email' => 'required|email',
+        'token' => 'required',
+        'password' => 'required|min:6'
+    ]);
+// print_r($request->email);exit;
+    $record = DB::table('password_reset_tokens')
+        ->where('email', $request->email)
+        ->first();
+
+    if (!$record) {
+        return response()->json([
+            'status' => false,
+            'message' => 'Invalid request'
+        ]);
+    }
+
+    if (!Hash::check($request->token, $record->token)) {
+        return response()->json([
+            'status' => false,
+            'message' => 'Invalid token'
+        ]);
+    }
+
+    // Update password
+    User::where('email', $request->email)->update([
+        'password' => Hash::make($request->password)
+    ]);
+
+    // Delete token after reset
+    DB::table('password_reset_tokens')
+        ->where('email', $request->email)
+        ->delete();
+
+    return response()->json([
+        'status' => true,
+        'message' => 'Password reset successfully'
+    ]);
+}
 }
