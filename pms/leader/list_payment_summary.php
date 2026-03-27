@@ -124,108 +124,89 @@
 
 <?php include 'footer.php'; ?>
 <script>
-    function formatCurrency(value) {
-        return '₹' + Number(value || 0).toLocaleString('en-IN');
-    }
 
-    function formatDate(dateString) {
-        if (!dateString) return '-';
-        const date = new Date(dateString);
-        return date.toLocaleDateString('en-GB');
-    }
+const token = localStorage.getItem("token");
 
-    function normalizeRecords(data) {
-        if (Array.isArray(data)) return data;
-        if (data && Array.isArray(data.data)) return data.data;
-        if (data && Array.isArray(data.records)) return data.records;
-        if (data && typeof data === 'object') return [data];
-        return [];
-    }
+function formatCurrency(value) {
+    return '₹' + Math.abs(Number(value || 0)).toLocaleString('en-IN');
+}
 
-    async function loadPaymentRecords() {
+function formatDate(dateString) {
+    if (!dateString) return '-';
+    return new Date(dateString).toLocaleDateString('en-GB');
+}
 
-        const token = localStorage.getItem("auth_token");
-const user = JSON.parse(localStorage.getItem("auth_user"));
+async function loadPaymentRecords() {
 
-        if (!token) {
-            alert("Session expired. Please login again.");
-            window.location.href = "../login";
+    try {
+
+        const response = await fetch(
+            url + "commission/payments/created-by/2",
+            {
+                headers: {
+                    "Authorization": "Bearer " + token,
+                    "Accept": "application/json"
+                }
+            }
+        );
+
+        const result = await response.json();
+
+        console.log("API:", result);
+
+        const records = result?.data?.data || [];
+
+        if ($.fn.DataTable.isDataTable('#paymentTable')) {
+            $('#paymentTable').DataTable().destroy();
+        }
+
+        const tbody = document.querySelector('#paymentTable tbody');
+        tbody.innerHTML = '';
+
+        if (!records.length) {
+            tbody.innerHTML = `
+                <tr>
+                    <td colspan="7" class="text-center py-6">
+                        No commission payments found
+                    </td>
+                </tr>`;
             return;
         }
 
-        try {
-            const response = await fetch(url + `commission/payments/created-by/${user.id}`, {
-                method: "GET",
-                headers: {
-                    "Accept": "application/json",
-                    "Authorization": "Bearer " + token
-                }
-            });
+        records.forEach((item, index) => {
 
-            if (response.status === 401) {
-                localStorage.removeItem("token");
-                window.location.href = "login.html";
-                return;
-            }
-
-            const data = await response.json();
-            console.log("API response:", data);
-
-            const records = normalizeRecords(data);
-
-            if ($.fn.DataTable.isDataTable('#paymentTable')) {
-                $('#paymentTable').DataTable().destroy();
-            }
-
-            const tbody = document.querySelector('#paymentTable tbody');
-            tbody.innerHTML = '';
-
-            if (!records.length) {
-                tbody.innerHTML = `
-                    <tr>
-                        <td colspan="9" class="text-center py-6 text-slate-400">
-                            No payment records found
-                        </td>
-                    </tr>
-                `;
-                return;
-            }
-
-            records.forEach((item, index) => {
-                tbody.innerHTML += `
-                    <tr>
-                        <td>${index + 1}</td>
-                        <td>${item.advisor_name ?? item.advisor ?? '-'}</td>
-                        <td>${item.customer ?? '-'}</td>
-                        <td>${item.plot_number ?? '-'}</td>
-                        <td class="text-right">${formatCurrency(item.amount)}</td>
-                        <td class="text-right">${formatCurrency(item.commission)}</td>
-                        <td class="text-right text-emerald-400">${formatCurrency(item.paid)}</td>
-                        <td class="text-right text-rose-400">${formatCurrency(item.balance)}</td>
-                        <td>${formatDate(item.date)}</td>
-                    </tr>
-                `;
-            });
-
-            $('#paymentTable').DataTable({
-                pageLength: 10,
-                lengthMenu: [10, 25, 50, 100],
-                responsive: true,
-                autoWidth: false
-            });
-
-        } catch (error) {
-            console.error('Error loading payment records:', error);
-
-            document.querySelector('#paymentTable tbody').innerHTML = `
+            tbody.innerHTML += `
                 <tr>
-                    <td colspan="9" class="text-center py-6 text-red-400">
-                        Failed to load payment records
-                    </td>
+                    <td>${index + 1}</td>
+                    <td>${formatCurrency(item.amount)}</td>
+                    <td>${item.payment_mode ?? '-'}</td>
+                    <td>${item.reference_no ?? '-'}</td>
+                    <td>${item.remark ?? '-'}</td>
+                    <td>${formatDate(item.created_at)}</td>
                 </tr>
             `;
-        }
-    }
+        });
 
-    document.addEventListener('DOMContentLoaded', loadPaymentRecords);
+        $('#paymentTable').DataTable({
+            pageLength: 10,
+            ordering: true,
+            searching: true,
+            responsive: true
+        });
+
+    } catch (error) {
+
+        console.error(error);
+
+        document.querySelector('#paymentTable tbody').innerHTML = `
+            <tr>
+                <td colspan="7" class="text-center text-red-500">
+                    Failed to load commission payments
+                </td>
+            </tr>`;
+    }
+}
+
+document.addEventListener("DOMContentLoaded", loadPaymentRecords);
+
 </script>
