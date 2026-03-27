@@ -133,6 +133,10 @@
   .card4:hover:before {
     transform: scale(1);
   }
+  .card4:hover p {
+    transition: all 0.3s ease-out;
+    color: rgba(255, 255, 255, 0.8);
+  }
 </style>
 <!-- Css for Cards -->
 
