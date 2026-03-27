@@ -55,7 +55,7 @@ class AuthController extends Controller
     // detect email or mobile
     $field = filter_var($request->login, FILTER_VALIDATE_EMAIL)
                 ? 'email'
-                : 'mobile_number';
+                : 'contact_no';
 
     $user = User::where($field, $request->login)->first();
 
