@@ -88,79 +88,75 @@
 
 </div>
 
+
+<!-- Forgot Password Modal -->
 <!-- Forgot Password Modal -->
 <div id="forgotModal"
 class="hidden fixed inset-0 z-50 flex items-center justify-center">
 
-  <!-- Background Overlay -->
-  <div class="absolute inset-0 bg-black/85"></div>
+  <!-- Dark Background -->
+  <div class="absolute inset-5 bg-gary-500"></div>
 
   <!-- Modal Card -->
-  <div class="relative w-full max-w-md bg-sky-500
-              bg-gray-900 border border-yellow-400/40
-              rounded-xl shadow-[0_0_40px_rgba(0,0,0,0.8)]
-              p-8">
+  <div class="relative bg-gray-500 rounded-xl shadow-2xl
+              border border-yellow-400/40 p-8 w-full max-w-md
+              animate-fadeIn">
 
-    <!-- Title -->
-    <h3 class="text-yellow-400 text-xl text-center font-semibold mb-6 tracking-widest">
-      RESET PASSWORD
+    <h3 class="text-yellow-400 text-xl text-center font-semibold mb-6 tracking-wide">
+      Reset Password
     </h3>
 
     <!-- Email -->
     <input id="reset_email"
       placeholder="Enter Registered Email"
-      class="w-full bg-transparent border-b border-gray-500
+      class="w-full bg-gray-800 border border-gray-600
              text-white placeholder-gray-400
-             focus:outline-none focus:border-yellow-400
-             py-2 mb-4">
+             rounded-md px-3 py-2 mb-4
+             focus:outline-none focus:border-yellow-400">
 
     <!-- Generate Token -->
-    <button onclick="sendResetToken()"
+    <button id="tokenBtn" onclick="sendResetToken()"
       class="w-full bg-yellow-400 text-black py-2.5 rounded-md
-             font-semibold tracking-widest
-             hover:bg-yellow-500 transition duration-300">
-      GENERATE TOKEN
+             font-semibold tracking-widest hover:bg-yellow-500 transition">
+      Generate Token
     </button>
 
     <!-- Divider -->
-    <div class="my-6 h-px bg-yellow-400/30"></div>
+    <div class="my-6 h-px bg-yellow-400/40"></div>
 
-    <!-- Password -->
+    <!-- New Password -->
     <input id="new_password"
       type="password"
       placeholder="New Password"
-      class="w-full bg-transparent border-b border-gray-500
+      class="w-full bg-gray-800 border border-gray-600
              text-white placeholder-gray-400
-             focus:outline-none focus:border-yellow-400
-             py-2 mb-3">
+             rounded-md px-3 py-2 mb-3
+             focus:outline-none focus:border-yellow-400">
 
     <!-- Confirm Password -->
     <input id="confirm_password"
       type="password"
       placeholder="Confirm Password"
-      class="w-full bg-transparent border-b border-gray-500
+      class="w-full bg-gray-800 border border-gray-600
              text-white placeholder-gray-400
-             focus:outline-none focus:border-yellow-400
-             py-2 mb-5">
+             rounded-md px-3 py-2 mb-5
+             focus:outline-none focus:border-yellow-400">
 
-    <!-- Reset -->
+    <!-- Reset Button -->
     <button onclick="resetPassword()"
       class="w-full bg-green-500 text-black py-2.5 rounded-md
-             font-semibold tracking-widest
-             hover:bg-green-600 transition duration-300">
-      RESET PASSWORD
+             font-semibold tracking-widest hover:bg-green-600 transition">
+      Reset Password
     </button>
 
     <!-- Close -->
     <button onclick="closeForgotModal()"
-      class="w-full mt-5 text-center text-gray-400 hover:text-white text-sm">
+      class="w-full mt-4 text-center text-gray-400 hover:text-white text-sm">
       Cancel
     </button>
 
   </div>
-
 </div>
-
 <script src="url.js"></script>
 <script>
 function togglePassword(){
@@ -168,11 +164,17 @@ function togglePassword(){
   pass.type = pass.type === "password" ? "text" : "password";
 }
 </script>
-
 <script>
+
+/* ================================
+   LOGIN API
+================================ */
+
 const API_URL = url + "login";
-console.log(url);
-document.getElementById("loginForm").addEventListener("submit", async function (e) {
+
+document.getElementById("loginForm")
+.addEventListener("submit", async function (e) {
+
     e.preventDefault();
 
     const login = document.getElementById("login").value.trim();
@@ -182,144 +184,206 @@ document.getElementById("loginForm").addEventListener("submit", async function (
 
     errorBox.innerText = "";
 
-    // ✅ Basic Validation
     if (!login || !password) {
         errorBox.innerText = "Please enter username and password";
         return;
     }
 
-    // ✅ Disable button while loading
     loginBtn.disabled = true;
     loginBtn.innerText = "Logging in...";
 
     try {
-        const response = await fetch(API_URL, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Accept": "application/json"
+
+        const response = await fetch(API_URL,{
+            method:"POST",
+            headers:{
+                "Content-Type":"application/json",
+                "Accept":"application/json"
             },
-            body: JSON.stringify({ login, password })
+            body:JSON.stringify({login,password})
         });
 
-        let data;
-        try {
-            data = await response.json();
-        } catch {
-            throw { message: "Invalid server response" };
-        }
+        const data = await response.json();
 
-        if (!response.ok) {
+        if(!response.ok){
             throw data;
         }
 
-        // ✅ Save token & user
-        localStorage.setItem("auth_token", data.token);
-        localStorage.setItem("auth_user", JSON.stringify(data.user));
+        localStorage.setItem("auth_token",data.token);
+        localStorage.setItem("auth_user",JSON.stringify(data.user));
 
-        // ✅ Redirect based on role
-        switch (data.user.role) {
+        switch(data.user.role){
             case "admin":
-                window.location.href = "admin/";
+                window.location.href="admin/";
                 break;
             case "leader":
-                window.location.href = "leader/";
+                window.location.href="leader/";
                 break;
             case "adviser":
-                window.location.href = "advisor/";
+                window.location.href="advisor/";
                 break;
             case "customer":
-                window.location.href = "customer/";
+                window.location.href="customer/";
                 break;
             default:
-                errorBox.innerText = "Unknown user role";
+                errorBox.innerText="Unknown user role";
         }
 
-    } catch (err) {
+    }catch(err){
         errorBox.innerText = err?.message || "Login failed";
-    } finally {
-        loginBtn.disabled = false;
-        loginBtn.innerText = "LOGIN";
     }
+    finally{
+        loginBtn.disabled=false;
+        loginBtn.innerText="LOGIN";
+    }
+
 });
 
-// for modal open and close
+
+/* ================================
+   MODAL CONTROL
+================================ */
+
 function openForgotModal(){
-    document.getElementById("forgotModal").style.display="flex";
+    document.getElementById("forgotModal").classList.remove("hidden");
 }
 
 function closeForgotModal(){
-    document.getElementById("forgotModal").style.display="none";
+    document.getElementById("forgotModal").classList.add("hidden");
 }
 
+// close when clicking outside
+document.getElementById("forgotModal")
+.addEventListener("click",function(e){
+    if(e.target===this){
+        closeForgotModal();
+    }
+});
 
-// reset token
 
-let resetToken = "";
+/* ================================
+   TOKEN GENERATION (ONLY ONCE)
+================================ */
+
+let resetToken="";
+let tokenGenerated=false;
 
 async function sendResetToken(){
 
-    const email=document.getElementById("reset_email").value;
+    if(tokenGenerated){
+        alert("Token already generated!");
+        return;
+    }
 
-    const response = await fetch(url+"forgot-password",{
-        method:"POST",
-        headers:{
-            "Content-Type":"application/json",
-            "Accept":"application/json"
-        },
-        body:JSON.stringify({email})
-    });
+    const email=document.getElementById("reset_email").value.trim();
 
-    const data = await response.json();
+    if(email===""){
+        alert("Enter registered email");
+        return;
+    }
 
-    if(data.status){
+    const btn=document.getElementById("tokenBtn");
 
-        resetToken=data.token;
+    btn.disabled=true;
+    btn.innerText="Generating...";
 
-        alert("Reset Token:\n"+data.token);
+    try{
 
-    }else{
-        alert(data.message);
+        const response=await fetch(url+"forgot-password",{
+            method:"POST",
+            headers:{
+                "Content-Type":"application/json",
+                "Accept":"application/json"
+            },
+            body:JSON.stringify({email})
+        });
+
+        const data=await response.json();
+
+        if(data.status){
+
+            resetToken=data.token;
+
+            alert("Reset Token:\n"+data.token);
+
+            tokenGenerated=true;
+
+            btn.innerText="Token Generated ✅";
+            btn.classList.add("opacity-50","cursor-not-allowed");
+
+        }else{
+            btn.disabled=false;
+            btn.innerText="Generate Token";
+            alert(data.message);
+        }
+
+    }catch{
+        btn.disabled=false;
+        btn.innerText="Generate Token";
+        alert("Server error");
     }
 }
 
-// reset password
+
+/* ================================
+   RESET PASSWORD
+================================ */
+
 async function resetPassword(){
 
-    const email=document.getElementById("reset_email").value;
-    const password=document.getElementById("new_password").value;
-    const confirm=document.getElementById("confirm_password").value;
+    const email=document.getElementById("reset_email").value.trim();
+    const password=document.getElementById("new_password").value.trim();
+    const confirm=document.getElementById("confirm_password").value.trim();
 
     if(password!==confirm){
         alert("Passwords do not match");
         return;
     }
 
-    const response = await fetch(url+"reset-password",{
-        method:"POST",
-        headers:{
-            "Content-Type":"application/json",
-            "Accept":"application/json"
-        },
-        body:JSON.stringify({
-            email:email,
-            token:resetToken,
-            password:password,
-            password_confirmation:confirm
-        })
-    });
-
-    const data = await response.json();
-
-    if(data.status){
-        alert("Password Reset Successful ✅");
-
-        closeForgotModal();
-    }else{
-        alert(data.message);
+    if(resetToken===""){
+        alert("Generate token first");
+        return;
     }
-}
-</script>
 
-</body>
-</html>
+    try{
+
+        const response=await fetch(url+"reset-password",{
+            method:"POST",
+            headers:{
+                "Content-Type":"application/json",
+                "Accept":"application/json"
+            },
+            body:JSON.stringify({
+                email:email,
+                token:resetToken,
+                password:password,
+                password_confirmation:confirm
+            })
+        });
+
+        const data=await response.json();
+
+        if(data.status){
+
+            alert("Password Reset Successful ✅");
+
+            closeForgotModal();
+
+            // reset modal state
+            tokenGenerated=false;
+            resetToken="";
+
+            document.getElementById("tokenBtn").disabled=false;
+            document.getElementById("tokenBtn").innerText="Generate Token";
+
+        }else{
+            alert(data.message);
+        }
+
+    }catch{
+        alert("Server error");
+    }
+
+}
+
+</script>
