@@ -242,7 +242,7 @@ public function show($id){
     {
         $auth = auth()->user();
 
-        if (!$auth || $auth->role !== 'admin') {
+        if (!$auth || !in_array($auth->role, ['admin', 'leader'])) {
             return response()->json([
                 'message' => 'Only admin can update commission'
             ], 403);
