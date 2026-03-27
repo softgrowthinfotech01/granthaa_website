@@ -171,7 +171,7 @@ const user = JSON.parse(localStorage.getItem("auth_user"));
             const data = await response.json();
             console.log("API response:", data.data);
 
-            const records = normalizeRecords(data);
+            const records = normalizeRecords(data.data);
 
             if ($.fn.DataTable.isDataTable('#paymentTable')) {
                 $('#paymentTable').DataTable().destroy();
