@@ -20,10 +20,13 @@ Route::post('/forgot-password', [AuthController::class, 'forgotPassword']);
 Route::post('/verify-reset-token', [AuthController::class, 'verifyResetToken']);
 Route::post('/reset-password', [AuthController::class, 'resetPassword']);
 
+
 Route::middleware('auth:sanctum')->group(function () {
 
     Route::post('/logout', [AuthController::class, 'logout']);
 
+    // individual user reset password
+    Route::post('/change-password', [AuthController::class,'changePassword']);
     Route::post('/referrals', [ReferralController::class, 'store']);
     Route::post('/refered', [ReferralController::class, 'index']);
     Route::get('/referrals', [ReferralController::class, 'myReferrals']);

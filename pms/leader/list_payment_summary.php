@@ -123,7 +123,6 @@
 </style>
 
 <?php include 'footer.php'; ?>
-
 <script>
     function formatCurrency(value) {
         return '₹' + Number(value || 0).toLocaleString('en-IN');
@@ -144,10 +143,32 @@
     }
 
     async function loadPaymentRecords() {
-        try {
-            const response = await fetch(url + "commission/leader-adviser-details");
-            const data = await response.json();
 
+        const token = localStorage.getItem("auth_token");
+const user = JSON.parse(localStorage.getItem("auth_user"));
+
+        if (!token) {
+            alert("Session expired. Please login again.");
+            window.location.href = "../login";
+            return;
+        }
+
+        try {
+            const response = await fetch(url + `commission/payments/created-by/${user.id}`, {
+                method: "GET",
+                headers: {
+                    "Accept": "application/json",
+                    "Authorization": "Bearer " + token
+                }
+            });
+
+            if (response.status === 401) {
+                localStorage.removeItem("token");
+                window.location.href = "login.html";
+                return;
+            }
+
+            const data = await response.json();
             console.log("API response:", data);
 
             const records = normalizeRecords(data);
@@ -173,15 +194,15 @@
             records.forEach((item, index) => {
                 tbody.innerHTML += `
                     <tr>
-                        <td class="px-4 py-3">${index + 1}</td>
-                        <td class="px-4 py-3">${item.advisor_name ?? item.advisor ?? '-'}</td>
-                        <td class="px-4 py-3">${item.customer ?? '-'}</td>
-                        <td class="px-4 py-3">${item.plot_number ?? '-'}</td>
-                        <td class="px-4 py-3 text-right">${formatCurrency(item.amount)}</td>
-                        <td class="px-4 py-3 text-right">${formatCurrency(item.commission)}</td>
-                        <td class="px-4 py-3 text-right text-emerald-400">${formatCurrency(item.paid)}</td>
-                        <td class="px-4 py-3 text-right text-rose-400">${formatCurrency(item.balance)}</td>
-                        <td class="px-4 py-3">${formatDate(item.date)}</td>
+                        <td>${index + 1}</td>
+                        <td>${item.advisor_name ?? item.advisor ?? '-'}</td>
+                        <td>${item.customer ?? '-'}</td>
+                        <td>${item.plot_number ?? '-'}</td>
+                        <td class="text-right">${formatCurrency(item.amount)}</td>
+                        <td class="text-right">${formatCurrency(item.commission)}</td>
+                        <td class="text-right text-emerald-400">${formatCurrency(item.paid)}</td>
+                        <td class="text-right text-rose-400">${formatCurrency(item.balance)}</td>
+                        <td>${formatDate(item.date)}</td>
                     </tr>
                 `;
             });
@@ -189,27 +210,13 @@
             $('#paymentTable').DataTable({
                 pageLength: 10,
                 lengthMenu: [10, 25, 50, 100],
-                ordering: true,
-                searching: true,
                 responsive: true,
-                autoWidth: false,
-                language: {
-                    search: "Search:",
-                    lengthMenu: "_MENU_ entries per page",
-                    info: "Showing _START_ to _END_ of _TOTAL_ entries",
-                    paginate: {
-                        previous: "‹",
-                        next: "›"
-                    },
-                    emptyTable: "No payment records found"
-                },
-                columnDefs: [
-                    { targets: [4, 5, 6, 7], className: 'text-right' }
-                ]
+                autoWidth: false
             });
 
         } catch (error) {
             console.error('Error loading payment records:', error);
+
             document.querySelector('#paymentTable tbody').innerHTML = `
                 <tr>
                     <td colspan="9" class="text-center py-6 text-red-400">
@@ -220,7 +227,5 @@
         }
     }
 
-    document.addEventListener('DOMContentLoaded', function () {
-        loadPaymentRecords();
-    });
+    document.addEventListener('DOMContentLoaded', loadPaymentRecords);
 </script>
