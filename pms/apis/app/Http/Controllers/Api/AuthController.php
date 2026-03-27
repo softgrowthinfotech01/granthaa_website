@@ -18,7 +18,8 @@ class AuthController extends Controller
         $validated = $request->validate([
             'name'      => 'required|string|max:255',
             'email'     => 'required|email|unique:users,email',
-            'aadhaar_number'  => 'required|digits:12',
+            'contact_no' => 'required|digit:10',
+            'aadhaar_number'  => 'required|digit:12',
             'password'  => 'required|min:6',
             'role'      => 'nullable|in:admin,leader,adviser,customer',
             'parent_id' => 'nullable|exists:users,id'
@@ -28,6 +29,7 @@ class AuthController extends Controller
             'user_code' => 'ADM001',
             'name'      => $validated['name'],
             'email'     => $validated['email'],
+            'contact_no'     => $validated['contact_no'],
             'aadhaar_number'     => $validated['aadhaar_number'],
             'password'  => Hash::make($validated['password']),
             'role'      => $validated['role'] ?? 'admin',
@@ -44,27 +46,32 @@ class AuthController extends Controller
      * Login user
      */
     public function login(Request $request)
-    {
-        $request->validate([
-            'email'    => 'required|email',
-            'password' => 'required'
-        ]);
+{
+    $request->validate([
+        'login' => 'required', // email OR mobile
+        'password' => 'required'
+    ]);
 
-        $user = User::where('email', $request->email)->first();
+    // detect email or mobile
+    $field = filter_var($request->login, FILTER_VALIDATE_EMAIL)
+                ? 'email'
+                : 'mobile_number';
 
-        if (! $user || ! Hash::check($request->password, $user->password)) {
-            throw ValidationException::withMessages([
-                'email' => ['Invalid credentials'],
-            ]);
-        }
+    $user = User::where($field, $request->login)->first();
 
-        $token = $user->createToken('api-token')->plainTextToken;
-
-        return response()->json([
-            'token' => $token,
-            'user'  => $user
+    if (! $user || ! Hash::check($request->password, $user->password)) {
+        throw ValidationException::withMessages([
+            'login' => ['Invalid credentials'],
         ]);
     }
+
+    $token = $user->createToken('api-token')->plainTextToken;
+
+    return response()->json([
+        'token' => $token,
+        'user'  => $user
+    ]);
+}
 
     /**
      * Logout user
