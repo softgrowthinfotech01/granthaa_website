@@ -14,6 +14,7 @@ use App\Models\WalletTransaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 
 class BookingController extends Controller
 {
@@ -79,33 +80,46 @@ class BookingController extends Controller
 
                 $commission_amount = round($commissionAmount, 2);
 
-                $newUser = User::where(function ($q) use ($request) {
-                    $q->where('email', $request->email)
-                        ->orWhere('contact_no', $request->mobile);
-                })
+                $newUser = User::where('email', $request->email)
+                    ->orWhere('contact_no', $request->mobile)
                     ->first();
 
                 if ($newUser) {
 
-                    // ❌ If email matches but mobile different
-                    if ($newUser->email == $request->email && $newUser->contact_no != $request->mobile) {
-                        throw new \Exception("Email already exists with different mobile number.");
+                    // ❌ email same but mobile different
+                    if (
+                        $newUser->email == $request->email &&
+                        $newUser->contact_no != $request->mobile
+                    ) {
+
+                        throw new \Exception(
+                            "Email already exists with different mobile number."
+                        );
                     }
 
-                    // ❌ If mobile matches but email different
-                    if ($newUser->contact_no == $request->mobile && $newUser->email != $request->email) {
-                        throw new \Exception("Mobile already exists with different email.");
+                    // ❌ mobile same but email different
+                    if (
+                        $newUser->contact_no == $request->mobile &&
+                        $newUser->email != $request->email
+                    ) {
+
+                        throw new \Exception(
+                            "Mobile already exists with different email."
+                        );
                     }
-                }
-                if (!$newUser) {
+
+                    // ✅ SAME USER FOUND → reuse
+                } else {
+
+                    // ✅ CREATE NEW USER
                     $userCode = $this->generateUserCode('customer');
-                    // print_r($userCode);exit;
+
                     $newUser = User::create([
                         'user_code' => $userCode,
                         'name' => $request->buyer_name,
                         'email' => $request->email,
-                        'aadhaar_number ' => $request->aadhaar_number,
-                        'password' => Hash::make($request->password ?? 'password'),
+                        'aadhaar_number' => $request->aadhar_number,
+                        'password' => Hash::make('password'),
                         'role' => 'customer',
                         'contact_no' => $request->mobile,
                         'city' => $request->city,
@@ -705,71 +719,71 @@ class BookingController extends Controller
             ], 500);
         }
     }
-public function admdashboard()
-{
-    $totalLeaders = User::where('role', 'leader')->count();
+    public function admdashboard()
+    {
+        $totalLeaders = User::where('role', 'leader')->count();
 
-    $totalAdvisers = User::where('role', 'adviser')->count(); // ✅ NEW
+        $totalAdvisers = User::where('role', 'adviser')->count(); // ✅ NEW
 
-    $totalCustomers = User::where('role', 'customer')->count(); // ✅ NEW
+        $totalCustomers = User::where('role', 'customer')->count(); // ✅ NEW
 
-    $totalSites = LocationMaster::count();
+        $totalSites = LocationMaster::count();
 
-    $totalBookings = Booking::count();
+        $totalBookings = Booking::count();
 
-    $totalSalesValue = Booking::sum('total_booking_amount'); // ✅ FIXED (better than commission)
+        $totalSalesValue = Booking::sum('total_booking_amount'); // ✅ FIXED (better than commission)
 
-    // ✅ Commission totals
-    $totalCommission = CommissionLedger::where('type', 'commission')->sum('amount');
+        // ✅ Commission totals
+        $totalCommission = CommissionLedger::where('type', 'commission')->sum('amount');
 
-    $totalPaid = abs(
-        CommissionLedger::where('type', 'payment')->sum('amount')
-    );
+        $totalPaid = abs(
+            CommissionLedger::where('type', 'payment')->sum('amount')
+        );
 
-    $pendingCommissions = $totalCommission - $totalPaid;
+        $pendingCommissions = $totalCommission - $totalPaid;
 
-    // ✅ Today stats
-    $todayBookings = Booking::whereDate('created_at', today())->count();
+        // ✅ Today stats
+        $todayBookings = Booking::whereDate('created_at', today())->count();
 
-    $todaySales = Booking::whereDate('created_at', today())
-        ->sum('total_booking_amount');
+        $todaySales = Booking::whereDate('created_at', today())
+            ->sum('total_booking_amount');
 
-    // ✅ Top Leader (by sales)
-    $topLeader = Booking::select('leader_id', DB::raw('SUM(total_booking_amount) as total'))
-        ->groupBy('leader_id')
-        ->orderByDesc('total')
-        ->first();
+        // ✅ Top Leader (by sales)
+        $topLeader = Booking::select('leader_id', DB::raw('SUM(total_booking_amount) as total'))
+            ->groupBy('leader_id')
+            ->orderByDesc('total')
+            ->first();
 
-    $topLeaderName = null;
+        $topLeaderName = null;
 
-    if ($topLeader) {
-        $leader = User::find($topLeader->leader_id);
-        $topLeaderName = $leader?->name;
+        if ($topLeader) {
+            $leader = User::find($topLeader->leader_id);
+            $topLeaderName = $leader?->name;
+        }
+
+        return response()->json([
+            'status' => true,
+            'data' => [
+                'total_leaders' => $totalLeaders,
+                'total_advisers' => $totalAdvisers, // ✅ NEW
+                'total_customers' => $totalCustomers, // ✅ NEW
+
+                'total_sites' => $totalSites,
+
+                'total_bookings' => $totalBookings,
+                'today_bookings' => $todayBookings, // ✅ NEW
+
+                'total_sales_value' => $totalSalesValue,
+                'today_sales' => $todaySales, // ✅ NEW
+
+                'total_commission' => $totalCommission, // ✅ NEW
+                'total_paid' => $totalPaid, // ✅ NEW
+                'pending_commissions' => $pendingCommissions,
+
+                'top_leader_name' => $topLeaderName // ✅ NEW
+            ]
+        ]);
     }
-
-    return response()->json([
-        'status' => true,
-        'data' => [
-            'total_leaders' => $totalLeaders,
-            'total_advisers' => $totalAdvisers, // ✅ NEW
-            'total_customers' => $totalCustomers, // ✅ NEW
-
-            'total_sites' => $totalSites,
-
-            'total_bookings' => $totalBookings,
-            'today_bookings' => $todayBookings, // ✅ NEW
-
-            'total_sales_value' => $totalSalesValue,
-            'today_sales' => $todaySales, // ✅ NEW
-
-            'total_commission' => $totalCommission, // ✅ NEW
-            'total_paid' => $totalPaid, // ✅ NEW
-            'pending_commissions' => $pendingCommissions,
-
-            'top_leader_name' => $topLeaderName // ✅ NEW
-        ]
-    ]);
-}
 
     public function adviserPerformance(Request $request)
     {
@@ -848,240 +862,240 @@ public function admdashboard()
         ]);
     }
 
-public function leaderSummary()
-{
-    $leaders = User::where('role', 'leader')->get();
+    public function leaderSummary()
+    {
+        $leaders = User::where('role', 'leader')->get();
 
-    $data = [];
+        $data = [];
 
-    foreach ($leaders as $leader) {
+        foreach ($leaders as $leader) {
 
-        // Leader bookings (self + advisers)
-        $bookings = Booking::where(function ($q) use ($leader) {
-            $q->where('leader_id', $leader->id)
-              ->orWhere('created_by', $leader->id);
+            // Leader bookings (self + advisers)
+            $bookings = Booking::where(function ($q) use ($leader) {
+                $q->where('leader_id', $leader->id)
+                    ->orWhere('created_by', $leader->id);
+            })->get();
+
+            $totalPlots = $bookings->count();
+
+            $totalBookingAmount = $bookings->sum(function ($b) {
+                return (float) $b->total_booking_amount;
+            });
+
+            $totalCommission = $bookings->sum(function ($b) {
+                return (float) $b->commission_amount;
+            });
+
+            // Paid amount from ledger
+            $paidAmount = abs(
+                CommissionLedger::where('user_id', $leader->id)
+                    ->where('type', 'payment')
+                    ->sum('amount')
+            );
+
+            $balance = $totalCommission - $paidAmount;
+
+            $data[] = [
+                'leader_id' => $leader->id,
+                'leader_name' => $leader->name,
+                'total_plots' => $totalPlots,
+                'total_booking_amount' => $totalBookingAmount,
+                'total_commission' => $totalCommission,
+                'paid_amount' => $paidAmount,
+                'balance_amount' => $balance
+            ];
+        }
+
+        return response()->json([
+            'status' => true,
+            'data' => $data
+        ]);
+    }
+
+    public function leaderDetails($leaderId)
+    {
+        $bookings = Booking::where(function ($q) use ($leaderId) {
+            $q->where('leader_id', $leaderId)
+                ->orWhere('created_by', $leaderId);
         })->get();
 
-        $totalPlots = $bookings->count();
+        $data = [];
+        // print_r($bookings);exit;
 
-        $totalBookingAmount = $bookings->sum(function ($b) {
-            return (float) $b->total_booking_amount;
-        });
+        foreach ($bookings as $b) {
 
-        $totalCommission = $bookings->sum(function ($b) {
-            return (float) $b->commission_amount;
-        });
+            $role = $b->adviser_id ? 'Adviser' : 'Leader';
+            $userId = $b->leader_id;
 
-        // Paid amount from ledger
-        $paidAmount = abs(
-            CommissionLedger::where('user_id', $leader->id)
-            ->where('type', 'payment')
-            ->sum('amount')
-        );
+            $paid = abs(
+                CommissionLedger::where('user_id', $userId)
+                    ->where('booking_id', $b->id)
+                    ->where('type', 'payment') // ✅ IMPORTANT FIX
+                    ->sum('amount')
+            );
 
-        $balance = $totalCommission - $paidAmount;
+            $booking_amount =  (float) $b->total_booking_amount;
 
-        $data[] = [
-            'leader_id' => $leader->id,
-            'leader_name' => $leader->name,
-            'total_plots' => $totalPlots,
-            'total_booking_amount' => $totalBookingAmount,
-            'total_commission' => $totalCommission,
-            'paid_amount' => $paidAmount,
-            'balance_amount' => $balance
-        ];
+            $commission = $role === 'Leader'
+                ? (float) $b->leader_commission_amount + (float) $b->adviser_commission_amount
+                : (float) $b->adviser_commission_amount;
+
+            $totalcommission = (float) $b->commission_amount;
+
+            $balance = $commission - $paid;
+            $totalbalance = $totalcommission - $paid;
+
+            $data[] = [
+                'booking_id' => $b->id,
+                'buyer_name' => $b->buyer_name,
+                'role' => $role,
+                'plot_number' => $b->plot_number,
+                'booking_amount' => $booking_amount,
+                'commission' => $commission,
+                'total_commission' => $totalcommission,
+                'paid' => $paid,
+                'balance' => $balance,
+                'total_balance' => $totalbalance
+            ];
+        }
+        // print_r($data);exit;
+
+        return response()->json([
+            'status' => true,
+            'data' => $data
+        ]);
     }
 
-    return response()->json([
-        'status' => true,
-        'data' => $data
-    ]);
-}
+    public function adviserDetails($adviserId)
+    {
+        $bookings = Booking::where('adviser_id', $adviserId)->get();
 
-public function leaderDetails($leaderId)
-{
-    $bookings = Booking::where(function ($q) use ($leaderId) {
-        $q->where('leader_id', $leaderId)
-          ->orWhere('created_by', $leaderId);
-    })->get();
+        $data = [];
 
-    $data = [];
-    // print_r($bookings);exit;
+        foreach ($bookings as $b) {
 
-    foreach ($bookings as $b) {
+            $paid = abs(
+                CommissionLedger::where('user_id', $adviserId)
+                    ->where('booking_id', $b->id)
+                    ->where('type', 'payment')
+                    ->sum('amount')
+            );
 
-        $role = $b->adviser_id ? 'Adviser' : 'Leader';
-        $userId = $b->leader_id;
+            $commission = (float) $b->adviser_commission_amount;
 
-        $paid = abs(
-            CommissionLedger::where('user_id', $userId)
-            ->where('booking_id', $b->id)
-            ->where('type', 'payment') // ✅ IMPORTANT FIX
-            ->sum('amount')
-        );
+            $balance = $commission - $paid;
 
-        $booking_amount =  (float) $b->total_booking_amount ;
+            $data[] = [
+                'booking_id' => $b->id,
+                'buyer_name' => $b->buyer_name,
+                'plot_number' => $b->plot_number,
+                'commission' => $commission,
+                'paid' => $paid,
+                'balance' => $balance
+            ];
+        }
 
-        $commission = $role === 'Leader'
-            ? (float) $b->leader_commission_amount + (float) $b->adviser_commission_amount
-            : (float) $b->adviser_commission_amount;
-
-        $totalcommission = (float) $b->commission_amount;
-
-        $balance = $commission - $paid;
-        $totalbalance = $totalcommission - $paid;
-
-        $data[] = [
-            'booking_id' => $b->id,
-            'buyer_name' => $b->buyer_name,
-            'role' => $role,
-            'plot_number' => $b->plot_number,
-            'booking_amount' => $booking_amount,
-            'commission' => $commission,
-            'total_commission' => $totalcommission,
-            'paid' => $paid,
-            'balance' => $balance,
-            'total_balance' => $totalbalance
-        ];
-    }
-    // print_r($data);exit;
-
-    return response()->json([
-        'status' => true,
-        'data' => $data
-    ]);
-}
-
-public function adviserDetails($adviserId)
-{
-    $bookings = Booking::where('adviser_id', $adviserId)->get();
-
-    $data = [];
-
-    foreach ($bookings as $b) {
-
-        $paid = abs(
-            CommissionLedger::where('user_id', $adviserId)
-                ->where('booking_id', $b->id)
-                ->where('type', 'payment')
-                ->sum('amount')
-        );
-
-        $commission = (float) $b->adviser_commission_amount;
-
-        $balance = $commission - $paid;
-
-        $data[] = [
-            'booking_id' => $b->id,
-            'buyer_name' => $b->buyer_name,
-            'plot_number' => $b->plot_number,
-            'commission' => $commission,
-            'paid' => $paid,
-            'balance' => $balance
-        ];
+        return response()->json([
+            'status' => true,
+            'data' => $data
+        ]);
     }
 
-    return response()->json([
-        'status' => true,
-        'data' => $data
-    ]);
-}
+    public function recentPayments()
+    {
+        $payments = CommissionLedger::where('type', 'payment')
+            ->with('user') // relation needed
+            ->latest()
+            ->take(5)
+            ->get();
 
-public function recentPayments()
-{
-    $payments = CommissionLedger::where('type', 'payment')
-        ->with('user') // relation needed
-        ->latest()
-        ->take(5)
-        ->get();
+        return response()->json([
+            'status' => true,
+            'data' => $payments
+        ]);
+    }
 
-    return response()->json([
-        'status' => true,
-        'data' => $payments
-    ]);
-}
-
-public function salesTrend()
-{
-    $data = Booking::select(
+    public function salesTrend()
+    {
+        $data = Booking::select(
             DB::raw('DATE(created_at) as date'),
             DB::raw('SUM(total_booking_amount) as total')
         )
-        ->groupBy('date')
-        ->orderBy('date', 'asc')
-        ->get();
+            ->groupBy('date')
+            ->orderBy('date', 'asc')
+            ->get();
 
-    return response()->json([
-        'status' => true,
-        'data' => $data
-    ]);
-}
+        return response()->json([
+            'status' => true,
+            'data' => $data
+        ]);
+    }
 
-public function commissionSplit()
-{
-    $leader = Booking::sum('leader_commission_amount');
-    $adviser = Booking::sum('adviser_commission_amount');
+    public function commissionSplit()
+    {
+        $leader = Booking::sum('leader_commission_amount');
+        $adviser = Booking::sum('adviser_commission_amount');
 
-    return response()->json([
-        'status' => true,
-        'data' => [
-            'leader' => $leader,
-            'adviser' => $adviser,
-            'company' => 0 // optional if needed
-        ]
-    ]);
-}
+        return response()->json([
+            'status' => true,
+            'data' => [
+                'leader' => $leader,
+                'adviser' => $adviser,
+                'company' => 0 // optional if needed
+            ]
+        ]);
+    }
 
 
-public function dashboardAlerts()
-{
-    $alerts = [];
+    public function dashboardAlerts()
+    {
+        $alerts = [];
 
-    // 🔴 High Pending Commission Leaders
-    $leaders = User::where('role', 'leader')->get();
+        // 🔴 High Pending Commission Leaders
+        $leaders = User::where('role', 'leader')->get();
 
-    foreach ($leaders as $leader) {
+        foreach ($leaders as $leader) {
 
-        $totalCommission = Booking::where('leader_id', $leader->id)
-            ->sum(DB::raw('leader_commission_amount + adviser_commission_amount'));
+            $totalCommission = Booking::where('leader_id', $leader->id)
+                ->sum(DB::raw('leader_commission_amount + adviser_commission_amount'));
 
-        $paid = abs(
-            CommissionLedger::where('user_id', $leader->id)
-                ->where('type', 'payment')
-                ->sum('amount')
-        );
+            $paid = abs(
+                CommissionLedger::where('user_id', $leader->id)
+                    ->where('type', 'payment')
+                    ->sum('amount')
+            );
 
-        $balance = $totalCommission - $paid;
+            $balance = $totalCommission - $paid;
 
-        if ($balance > 50000) {
-            $alerts[] = "⚠️ {$leader->name} has pending commission ₹{$balance}";
+            if ($balance > 50000) {
+                $alerts[] = "⚠️ {$leader->name} has pending commission ₹{$balance}";
+            }
         }
-    }
 
-    // 🟡 Advisers with ZERO bookings
-    $advisers = User::where('role', 'adviser')->get();
+        // 🟡 Advisers with ZERO bookings
+        $advisers = User::where('role', 'adviser')->get();
 
-    foreach ($advisers as $adv) {
+        foreach ($advisers as $adv) {
 
-        $count = Booking::where('adviser_id', $adv->id)->count();
+            $count = Booking::where('adviser_id', $adv->id)->count();
 
-        if ($count == 0) {
-            $alerts[] = "⚠️ Adviser {$adv->name} has no bookings";
+            if ($count == 0) {
+                $alerts[] = "⚠️ Adviser {$adv->name} has no bookings";
+            }
         }
+
+        // 🔵 No payments today
+        $todayPayments = CommissionLedger::where('type', 'payment')
+            ->whereDate('created_at', today())
+            ->count();
+
+        if ($todayPayments == 0) {
+            $alerts[] = "⚠️ No payments recorded today";
+        }
+
+        return response()->json([
+            'status' => true,
+            'data' => $alerts
+        ]);
     }
-
-    // 🔵 No payments today
-    $todayPayments = CommissionLedger::where('type', 'payment')
-        ->whereDate('created_at', today())
-        ->count();
-
-    if ($todayPayments == 0) {
-        $alerts[] = "⚠️ No payments recorded today";
-    }
-
-    return response()->json([
-        'status' => true,
-        'data' => $alerts
-    ]);
-}
 }
