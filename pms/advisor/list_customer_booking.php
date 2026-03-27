@@ -193,6 +193,10 @@ document.addEventListener("DOMContentLoaded", function() {
                 commission_Amount = row.adviser_commission_value;
             }
 
+            let dob = row.dob ?
+                            new Date(row.dob).toLocaleDateString('en-GB') :
+                            '';
+
             tbody.innerHTML += `
             <tr class="border-b bg-white">
                 <td class="p-2 text-center">
@@ -246,7 +250,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     <div><strong>Remark:</strong> ${row.remark ?? ''}</div>
                     <div><strong>Pincode:</strong> ${row.pincode ?? ''}</div>
                     <div><strong>Mobile Number:</strong> ${row.mobile ?? ''}</div>
-                    <div><strong>DOB:</strong> ${row.dob ?? ''}</div>
+                    <div><strong>DOB:</strong> ${dob ?? ''}</div>
                     </div>
                 </td>
             </tr>

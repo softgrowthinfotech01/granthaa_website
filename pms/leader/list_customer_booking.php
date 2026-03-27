@@ -8,37 +8,37 @@
     </h2>
 
     <!-- ✅ SEARCH (OUTSIDE SCROLL) -->
-<div class="mb-4 grid grid-cols-1 sm:grid-cols-2 items-center gap-3">
+    <div class="mb-4 grid grid-cols-1 sm:grid-cols-2 items-center gap-3">
 
-    <!-- LEFT SIDE -->
-    <div class="flex flex-wrap justify-start sm:justify-center gap-3">
-        <input type="text" id="searchInput"
-            placeholder="Search buyer / project / mobile"
-            class="border p-2 rounded w-64">
+        <!-- LEFT SIDE -->
+        <div class="flex flex-wrap justify-start sm:justify-center gap-3">
+            <input type="text" id="searchInput"
+                placeholder="Search buyer / project / mobile"
+                class="border p-2 rounded w-64">
 
-        <button id="searchBtn"
-            class="bg-blue-500 text-white px-4 py-1 rounded">
-            Search
-        </button>
+            <button id="searchBtn"
+                class="bg-blue-500 text-white px-4 py-1 rounded">
+                Search
+            </button>
+        </div>
+
+        <!-- RIGHT SIDE -->
+        <div class="flex justify-end sm:justify-center gap-2">
+            <span class="text-sm text-gray-600">Show:</span>
+            <select id="perPage" class="border p-2 rounded">
+                <option value="10">10</option>
+                <option value="25">25</option>
+                <option value="50">50</option>
+            </select>
+        </div>
+
     </div>
-
-    <!-- RIGHT SIDE -->
-    <div class="flex justify-end sm:justify-center gap-2">
-        <span class="text-sm text-gray-600">Show:</span>
-        <select id="perPage" class="border p-2 rounded">
-            <option value="10">10</option>
-            <option value="25">25</option>
-            <option value="50">50</option>
-        </select>
-    </div>
-
-</div>
 
     <!-- ✅ ONLY TABLE SCROLLS -->
     <div class="w-full overflow-x-auto">
 
         <table id="example" style="width:100%; padding-top: 1em; padding-bottom: 1em;">
-               <thead class="bg-gradient-to-r from-gray-100 to-gray-200 text-gray-700">
+            <thead class="bg-gradient-to-r from-gray-100 to-gray-200 text-gray-700">
                 <tr>
                     <!-- <th class="p-3 font-semibold text-left">ID</th> -->
                     <th data-priority="1" class="p-3 font-semibold text-left"></th>
@@ -51,7 +51,7 @@
                     <th data-priority="5" class="p-3 font-semibold text-left">Commission Amount</th>
                     <th data-priority="6" class="p-3 font-semibold text-left">Email</th>
                     <th data-priority="12" class="p-3 font-semibold text-left">Action</th>
-                  
+
                 </tr>
             </thead>
 
@@ -115,7 +115,7 @@
         }
 
         async function loadBookings(page = 1) {
-    currentPage = page;
+            currentPage = page;
 
             await loadLocations();
 
@@ -150,6 +150,10 @@
                     bookings.forEach((row) => {
 
                         let commission_Amount = row.commission_amount ?? 0;
+
+                        let dob = row.dob ?
+                            new Date(row.dob).toLocaleDateString('en-GB') :
+                            '';
 
                         tbody.innerHTML += `
                 <tr class="border-b bg-white">
@@ -204,7 +208,7 @@
                     <div><strong>Remark:</strong> ${row.remark ?? ''}</div>
                     <div><strong>Pincode:</strong> ${row.pincode ?? ''}</div>
                     <div><strong>Mobile Number:</strong> ${row.mobile ?? ''}</div>
-                    <div><strong>DOB:</strong> ${row.dob ?? ''}</div>
+                    <div><strong>DOB:</strong> ${dob ?? ''}</div>
                     <div><strong>Address:</strong> ${row.address ?? ''}</div>
                     <div><strong>Pan:</strong> ${row.pan_number ?? ''}</div>
 
@@ -216,38 +220,38 @@
         </tr>
     `;
                     });
-                
-                const pagination = document.getElementById("pagination");
-pagination.innerHTML = "";
 
-const totalPages = response.data?.last_page || 1;
-const current = response.data?.current_page || 1;
+                    const pagination = document.getElementById("pagination");
+                    pagination.innerHTML = "";
 
-// Previous Button
-if (current > 1) {
-    pagination.innerHTML += `
+                    const totalPages = response.data?.last_page || 1;
+                    const current = response.data?.current_page || 1;
+
+                    // Previous Button
+                    if (current > 1) {
+                        pagination.innerHTML += `
         <button onclick="changePage(${current - 1})"
             class="px-3 py-1 bg-gray-200 rounded">Prev</button>
     `;
-}
+                    }
 
-// Page Numbers
-for (let i = 1; i <= totalPages; i++) {
-    pagination.innerHTML += `
+                    // Page Numbers
+                    for (let i = 1; i <= totalPages; i++) {
+                        pagination.innerHTML += `
         <button onclick="changePage(${i})"
             class="px-3 py-1 rounded ${i === current ? 'bg-blue-500 text-white' : 'bg-gray-200'}">
             ${i}
         </button>
     `;
-}
+                    }
 
-// Next Button
-if (current < totalPages) {
-    pagination.innerHTML += `
+                    // Next Button
+                    if (current < totalPages) {
+                        pagination.innerHTML += `
         <button onclick="changePage(${current + 1})"
             class="px-3 py-1 bg-gray-200 rounded">Next</button>
     `;
-}
+                    }
                 });
         }
         window.toggleRow = function(id) {
