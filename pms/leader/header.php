@@ -76,29 +76,29 @@
     class="fixed inset-0 bg-black/50 hidden z-20 transition-opacity duration-300">
   </div>
 
-<div class="flex h-screen overflow-hidden">
+  <div class="flex h-screen overflow-hidden">
 
     <?php include 'sidebar.php'; ?>
 
     <div class="flex-1 flex flex-col overflow-hidden">
 
-<header class="bg-gray-200 shadow px-4 sm:px-6 py-4 flex justify-between items-center">
-      
-          <!-- Desktop toggle -->
-          <button onclick="toggleSidebar()" class="hidden md:block text-2xl">
-            ☰
-          </button>
+      <header class="bg-gray-200 shadow px-4 sm:px-6 py-4 flex justify-between items-center">
 
-          <!-- Mobile toggle -->
-          <button onclick="toggleMobileSidebar()" class="md:hidden text-xl">
-            ☰
-          </button>
+        <!-- Desktop toggle -->
+        <button onclick="toggleSidebar()" class="hidden md:block text-2xl">
+          ☰
+        </button>
 
-          <!-- Project Name -->
-          <div class="absolute left-1/2 transform -translate-x-1/2 text-center">
-            <img src="../images/logo_icon.png" alt="Granthaa Land Developer Pvt Ltd"
-              class="h-23 w-70 sidebar-logo transition-all duration-300 ">
-          </div>
+        <!-- Mobile toggle -->
+        <button onclick="toggleMobileSidebar()" class="md:hidden text-xl">
+          ☰
+        </button>
+
+        <!-- Project Name -->
+        <div class="absolute left-1/2 transform -translate-x-1/2 text-center">
+          <img src="../images/logo_icon.png" alt="Granthaa Land Developer Pvt Ltd"
+            class="h-23 w-70 sidebar-logo transition-all duration-300 ">
+        </div>
 
 
 
@@ -140,6 +140,11 @@
                 </p>
               </div>
 
+              <a href="profile" style="cursor: pointer;"
+                class="block px-4 py-2 text-blue-500 hover:bg-gray-100 transition text-center">
+                Profile
+              </a>
+              <hr>
               <a onclick="logout()" style="cursor: pointer;"
                 class="block px-4 py-2 text-red-500 hover:bg-gray-100 transition text-center">
                 Logout
@@ -150,27 +155,27 @@
           </div>
           <script src="../url.js"></script>
           <script>
-
             //  Customer Data
-            document.addEventListener("DOMContentLoaded", function () {
+            document.addEventListener("DOMContentLoaded", function() {
 
               // get user object from localStorage
-              console.log(localStorage.getItem("auth_user"));  //debug
+              console.log(localStorage.getItem("auth_user")); //debug
               const userData = JSON.parse(localStorage.getItem("auth_user") || "{}")
               document.getElementById("userCode").textContent = userData.user_code || "";
               document.getElementById("userName").textContent = userData.name || "";
               document.getElementById("userEmail").textContent = userData.email || "";
             });
+
             function logout() {
 
               const token = localStorage.getItem("auth_token");
               fetch(url + "logout", {
-                method: "POST",
-                headers: {
-                  "Authorization": "Bearer " + token,
-                  "Accept": "application/json"
-                }
-              })
+                  method: "POST",
+                  headers: {
+                    "Authorization": "Bearer " + token,
+                    "Accept": "application/json"
+                  }
+                })
                 .then(() => {
                   // remove only auth data
                   localStorage.removeItem("auth_token");
@@ -206,7 +211,6 @@
             //     alert("Unauthorized access");
             //     window.location.href = "../login.php";
             // }
-
           </script>
 
         </div>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Booking;
 use App\Models\Referral;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -479,5 +480,58 @@ public function myReferrals()
                         ->get();
 
     return response()->json($referrals);
+}
+
+// user profile
+public function profile(Request $request)
+{
+    $user = $request->user();
+
+    $summary = [];
+
+    switch ($user->role) {
+
+        case 'admin':
+            $summary = [
+                'total_users' => User::count(),
+                'leaders' => User::whereRole('leader')->count(),
+                'advisers' => User::whereRole('adviser')->count(),
+                'customers' => User::whereRole('customer')->count(),
+            ];
+        break;
+
+        case 'leader':
+            $summary = [
+                'team_advisers' => User::where('created_by',$user->id)
+                                        ->whereRole('adviser')->count(),
+
+                'team_customers' => User::where('created_by',$user->id)
+                                        ->whereRole('customer')->count(),
+
+                'bookings' => Booking::where('created_by',$user->id)->count(),
+            ];
+        break;
+
+        case 'adviser':
+            $summary = [
+                'team_customers' => User::where('created_by',$user->id)
+                                        ->whereRole('customer')->count(),
+
+                'bookings' => Booking::where('created_by',$user->id)->count(),
+            ];
+        break;
+
+        case 'customer':
+            $summary = [
+                'bookings' => Booking::where('created_by',$user->id)->count(),
+            ];
+        break;
+    }
+
+    return response()->json([
+        'status' => true,
+        'user' => $user,
+        'summary' => $summary
+    ]);
 }
 }

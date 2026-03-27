@@ -80,6 +80,9 @@ Route::middleware(['auth:sanctum', 'role:admin,leader,adviser,customer'])->group
     Route::put('/site-location/{id}', [LocationMasterController::class, 'update']);
     Route::delete('/site-location/{id}', [LocationMasterController::class, 'destroy']);
 
+    // profile 
+    Route::get('/profile', [UserController::class, 'profile']);
+
     Route::prefix('commission')->group(function () {
 
         Route::post('/payment', [CommissionPaymentController::class, 'store']);

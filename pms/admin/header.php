@@ -69,19 +69,31 @@
                 </div>
 
                 <!-- DROPDOWN -->
-                <div id="ProfileDropDown"
-                    class="hidden absolute right-0 mt-3 w-52 bg-white border rounded-xl shadow-2xl overflow-hidden z-50">
+                 <!-- Dropdown -->
+            <div id="ProfileDropDown"
+              class="hidden absolute right-0 mt-3 bg-white rounded-xl shadow-lg w-56 z-50">
 
+              <div class="p-4 border-b text-center">
+                <img src="../images/profile.png"
+                  class="w-16 h-16 mx-auto rounded-full object-cover border-2 border-green-600 mb-2">
 
-                    <hr>
+                <p id="userCode" class="font-semibold text-gray-800"></p>
+                <p id="userName" class="text-lg font-semibold text-gray-500"></p>
+                <p id="userEmail"
+                  class="text-sm font-semibold text-gray-500 break-all">
+                </p>
+              </div>
 
-                    <a onclick="logout()"
-                        class="flex items-center gap-2 px-4 py-3 hover:bg-red-50 text-red-600 cursor-pointer">
-                        <i class="fa-solid fa-right-from-bracket"></i>
-                        Logout
-                    </a>
+              <a href="profile" style="cursor: pointer;"
+                class="block px-4 py-2 text-blue-500 hover:bg-gray-100 transition text-center">
+                Profile
+              </a> <hr>
+              <a onclick="logout()" style="cursor: pointer;"
+                class="block px-4 py-2 text-red-500 hover:bg-gray-100 transition text-center">
+                Logout
+              </a>
 
-                </div>
+            </div>
 
             </div>
 
@@ -96,6 +108,18 @@
 <script src="../url.js"></script>
 
 <script>
+
+    //  Customer Data
+          document.addEventListener("DOMContentLoaded", function() {
+
+            // get user object from localStorage
+            // console.log(localStorage.getItem("auth_user")); //debug
+            const userData = JSON.parse(localStorage.getItem("auth_user") || "{}")
+            document.getElementById("userCode").textContent = userData.user_code || "";
+            document.getElementById("userName").textContent = userData.name || "";
+            document.getElementById("userEmail").textContent = userData.email || "";
+          });
+
     function toggleAlerts() {
         const dropdown = document.getElementById("alertDropdown");
         const dot = document.getElementById("alertDot");
