@@ -319,7 +319,7 @@
                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 16v-5" />
                 <path stroke-linecap="round" stroke-linejoin="round" d="M17 16v-2" />
               </svg>
-              <span class="sidebar-text">Transaction Summary</span>
+              <span class="sidebar-text">Commission Transaction Summary</span>
             </span>
 
             <svg class="menu-arrow w-4 h-4 transition-transform transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -336,7 +336,7 @@
                   <path d="M4 12h16" />
                 </svg>
 
-                <span class="sidebar-text">Team Transaction Summary</span>
+                <span class="sidebar-text">All Commission Transactions</span>
               </a>
             </li>
             <li>
@@ -347,7 +347,7 @@
                   <path d="M4 12h16" />
                 </svg>
 
-                <span class="sidebar-text">Advisor Transaction Summary</span>
+                <span class="sidebar-text">Advisor's Commission Transactions</span>
               </a>
             </li>
           </ul>

@@ -132,6 +132,7 @@ table.dataTable tbody tr:hover td {
 
 <?php include 'footer.php'; ?>
 <script>
+
 function formatCurrency(value) {
     return '₹' + Number(value || 0).toLocaleString('en-IN');
 }
@@ -139,7 +140,7 @@ function formatCurrency(value) {
 function formatDate(dateString) {
     if (!dateString) return '-';
     const date = new Date(dateString);
-    return date.toLocaleDateString('en-GB');
+    return date.toLocaleDateString('en-IN');
 }
 
 function normalizeRecords(data) {
@@ -150,17 +151,14 @@ function normalizeRecords(data) {
 }
 
 let bookingsMap = {};
-let usersMap = {}; // 🔥 NEW
+let usersMap = {};
 
 /* ================= LOAD BOOKINGS ================= */
 async function loadBookingsMap() {
-
     const token = localStorage.getItem("auth_token");
 
     const res = await fetch(url + "bookings?per_page=1000", {
-        headers: {
-            "Authorization": "Bearer " + token
-        }
+        headers: { "Authorization": "Bearer " + token }
     });
 
     const data = await res.json();
@@ -171,26 +169,21 @@ async function loadBookingsMap() {
     });
 }
 
-
-/* ================= LOAD USERS (ADVISORS) ================= */
+/* ================= LOAD USERS ================= */
 async function loadUsersMap() {
-
     const token = localStorage.getItem("auth_token");
 
     const res = await fetch(url + "users?role=adviser&per_page=1000", {
-        headers: {
-            "Authorization": "Bearer " + token
-        }
+        headers: { "Authorization": "Bearer " + token }
     });
 
     const data = await res.json();
     let users = data.data?.data ?? [];
 
     users.forEach(u => {
-        usersMap[u.id] = u;
+        usersMap[parseInt(u.id)] = u;
     });
 }
-
 
 /* ================= MAIN LOAD ================= */
 async function loadPaymentRecords() {
@@ -206,21 +199,23 @@ async function loadPaymentRecords() {
 
     try {
 
-        // 🔥 LOAD ALL DATA FIRST
         await loadBookingsMap();
         await loadUsersMap();
 
         const response = await fetch(url + `commission/payments/created-by/${user.id}`, {
-            method: "GET",
             headers: {
-                "Accept": "application/json",
-                "Authorization": "Bearer " + token
+                "Authorization": "Bearer " + token,
+                "Accept": "application/json"
             }
         });
 
         const data = await response.json();
-        const records = normalizeRecords(data.data);
+        let records = normalizeRecords(data.data);
 
+        // ✅ SORT NEW → OLD
+        records.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+
+        // ✅ DESTROY DATATABLE BEFORE RELOAD
         if ($.fn.DataTable.isDataTable('#paymentTable')) {
             $('#paymentTable').DataTable().destroy();
         }
@@ -239,72 +234,84 @@ async function loadPaymentRecords() {
             return;
         }
 
-        records.forEach((item, index) => {
+        // ✅ GROUP BY BOOKING (for correct running balance)
+        let grouped = {};
 
-            const booking = bookingsMap[item.booking_id] || {};
-
-            // 🔥 GET ADVISOR
-            const advisor = usersMap[booking.adviser_id] || {};
-
-            let paid = Math.abs(parseFloat(item.amount) || 0);
-            let total = parseFloat(booking.total_booking_amount) || 0;
-            let commission = parseFloat(booking.commission_amount) || 0;
-
-            let balance = total - paid;
-
-            tbody.innerHTML += `
-                <tr>
-                    <td>${index + 1}</td>
-
-                    <!-- ✅ ADVISOR NAME -->
-                    <td>
-                        ${advisor.name ?? '-'}
-                    </td>
-
-                    <!-- ✅ CUSTOMER -->
-                    <td>
-                        ${booking.user_code ?? ''} - ${booking.buyer_name ?? '-'}
-                    </td>
-
-                    <!-- ✅ PLOT -->
-                    <td>${booking.plot_number ?? '-'}</td>
-
-                    <!-- ✅ BOOKING -->
-                    <td class="text-right font-semibold">
-                        ${formatCurrency(total)}
-                    </td>
-
-                    <!-- ✅ COMMISSION -->
-                    <td class="text-right text-blue-600">
-                        ${formatCurrency(commission)}
-                    </td>
-
-                    <!-- ✅ PAID -->
-                    <td class="text-right text-green-600 font-semibold">
-                        ${formatCurrency(paid)}
-                    </td>
-
-                    <!-- ✅ BALANCE -->
-                    <td class="text-right text-red-500 font-semibold">
-                        ${formatCurrency(balance)}
-                    </td>
-
-                    <!-- ✅ DATE -->
-                    <td>${formatDate(item.created_at)}</td>
-                </tr>
-            `;
+        records.forEach(r => {
+            if (!grouped[r.booking_id]) grouped[r.booking_id] = [];
+            grouped[r.booking_id].push(r);
         });
 
+        let rowIndex = 1;
+
+        // 🔥 LOOP GROUPS
+        Object.keys(grouped).forEach(bookingId => {
+
+            let booking = bookingsMap[bookingId] || {};
+            let commission = parseFloat(booking.commission_amount) || 0;
+
+            let balance = commission;
+
+            // 🔥 IMPORTANT: reverse for calculation (old → new)
+            let sortedAsc = grouped[bookingId].sort(
+                (a, b) => new Date(a.created_at) - new Date(b.created_at)
+            );
+
+            sortedAsc.forEach(item => {
+
+                let advisor = usersMap[parseInt(item.created_by)] || {};
+
+                let paid = Math.abs(parseFloat(item.amount) || 0);
+
+                balance = balance - paid;
+
+                tbody.innerHTML += `
+                    <tr>
+                        <td>${rowIndex++}</td>
+
+                        <td>${advisor.name ?? '-'}</td>
+
+                        <td>
+                            ${booking.user_code ?? ''} - ${booking.buyer_name ?? '-'}
+                        </td>
+
+                        <td>${booking.plot_number ?? '-'}</td>
+
+                        <td class="text-right font-semibold">
+                            ${formatCurrency(booking.total_booking_amount)}
+                        </td>
+
+                        <td class="text-right text-blue-600">
+                            ${formatCurrency(commission)}
+                        </td>
+
+                        <td class="text-right text-green-600 font-semibold">
+                            ${formatCurrency(paid)}
+                        </td>
+
+                        <td class="text-right text-red-500 font-semibold">
+                            ${formatCurrency(balance)}
+                        </td>
+
+                        <td>${formatDate(item.created_at)}</td>
+                    </tr>
+                `;
+            });
+
+        });
+
+        // ✅ INIT DATATABLE
         $('#paymentTable').DataTable({
             pageLength: 10,
             lengthMenu: [10, 25, 50, 100],
             responsive: true,
-            autoWidth: false
+            autoWidth: false,
+            order: [[8, 'desc']] // sort by date column
         });
 
     } catch (error) {
 
-        console.error('Error loading payment records:', error);
+        console.error(error);
 
         document.querySelector('#paymentTable tbody').innerHTML = `
             <tr>
@@ -318,4 +325,5 @@ async function loadPaymentRecords() {
 
 /* ================= INIT ================= */
 document.addEventListener('DOMContentLoaded', loadPaymentRecords);
+
 </script>
