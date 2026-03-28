@@ -369,9 +369,11 @@ class CommissionPaymentController extends Controller
         $totalCommission = Booking::where('adviser_id', $adviserId)
             ->sum('adviser_commission_amount');
 
-        $paidAmount = CommissionLedger::where('user_id', $adviserId)
-            ->where('type', 'payment')
-            ->sum('amount');
+        $paidAmount = abs(
+        CommissionLedger::where('user_id', $adviserId)
+        ->where('type', 'payment')
+        ->sum('amount')
+        );
 
         $summary = [
             'total_plots' => $totalPlots,
