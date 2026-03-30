@@ -41,7 +41,7 @@
       <!-- Username -->
       <div>
         <label class="block text-sm text-gray-200 mb-1">Username</label>
-        <input id="login" type="text"
+        <input id="login" type="text" placeholder="Enter username or Mobile number"
           class="w-full bg-transparent border-b border-gray-400 text-white px-2 py-2
                  focus:outline-none focus:border-yellow-400">
       </div>
@@ -50,7 +50,7 @@
       <div class="relative">
         <label class="block text-sm text-gray-200 mb-1">Password</label>
 
-        <input type="password" id="password"
+        <input type="password" id="password" placeholder="Enter password"
           class="w-full bg-transparent border-b border-gray-400 text-white px-2 py-2
                  focus:outline-none focus:border-yellow-400 pr-10">
 
