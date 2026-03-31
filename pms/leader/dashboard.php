@@ -134,6 +134,25 @@
   transition: all 0.3s ease-out;
   color: #fff;
 }
+.card1,
+.card4 {
+    position: relative;
+    z-index: 1;
+}
+
+.card1:before,
+.card4:before {
+    z-index: 0;
+}
+
+.card1 h3,
+.card p1,
+.card1 p,
+.card4 h3,
+.card4 p {
+    position: relative;
+    z-index: 2;
+}
 </style>
 <!-- Css for Cards -->
 
