@@ -198,7 +198,7 @@
       <p1 class="font-bold">Overall Summary</p1>
 
       <p class="small py-2">₹ Total Booking: <span id="total_booking_amount"></span></p>
-      <p class="small mb-[30px]">% Total Commission: <span id="total_commission_amount"></span></p>
+      <p class="small">% Total Commission: <span id="total_commission_amount"></span></p>
 
       <div class="go-corner">
         <div class="go-arrow">→</div>
