@@ -131,7 +131,7 @@
 
                                     <div>
                                         <label class="block mb-1 text-sm font-medium text-gray-700">Pincode</label>
-                                        <input name="pin_code" type="text" id="pin_code"
+                                        <input name="pin_code" type="text" id="pin_code" maxlength="6"
                                             class="w-full px-3 py-2.5 border border-gray-400 rounded-lg bg-white text-sm focus:ring-2 focus:ring-blue-500 outline-none"
                                             placeholder="Enter pincode" required>
                                     </div>
@@ -332,7 +332,7 @@
                         alert(data.message || "Something went wrong");
                     }
 
-                    return;
+                    window.location.href = "view_leader.php";
                 }
 
                 alert("✅ " + data.message);
@@ -392,12 +392,13 @@
 
             const value = this.value;
 
+            if (value === "") return; 
+
             const ifscRegex = /^[A-Z]{4}0[A-Z0-9]{6}$/;
 
             if (!ifscRegex.test(value)) {
                 alert("Invalid IFSC code");
             }
-
         });
 
         // for branch and bank name allow only letters and spaces
@@ -412,6 +413,20 @@
 
         document.getElementById("branch").addEventListener("input", function() {
             allowOnlyLetters(this);
+        });
+
+        // Pincode Validation
+        const pincodeInput = document.getElementById("pin_code");
+
+        pincodeInput.addEventListener("input", function() {
+            this.value = this.value.replace(/\D/g, '').slice(0, 6);
+        });
+
+        pincodeInput.addEventListener("blur", function() {
+            if (value === "") return;
+            if (!/^[0-9]{6}$/.test(this.value)) {
+                alert("Invalid pincode");
+            }
         });
     </script>
 
