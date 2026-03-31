@@ -207,7 +207,7 @@
                         <option value="upi">UPI</option>
                     </select>
                 </div>
-                
+
                 <!-- Advance -->
                 <div class="space-y-2">
                     <label class="text-sm font-semibold text-gray-700">Advance Booking Amount</label>
@@ -330,7 +330,7 @@ transition transform hover:scale-[1.02]">
             this.value = this.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
         });
 
-        document.getElementById("advance_amount").addEventListener("input", function () {
+        document.getElementById("advance_amount").addEventListener("input", function() {
 
             let total = parseFloat(document.getElementById("total_booking_amount").value) || 0;
             let advance = parseFloat(this.value) || 0;
@@ -345,14 +345,14 @@ transition transform hover:scale-[1.02]">
         document.getElementById("bookingForm").addEventListener("submit", async function(e) {
             e.preventDefault();
 
-            
-                let total = parseFloat(document.getElementById("total_booking_amount").value) || 0;
-                let advance = parseFloat(document.getElementById("advance_amount").value) || 0;
 
-                if (advance > total) {
-                    alert("Advance cannot be greater than total amount");
-                    return;
-                }
+            let total = parseFloat(document.getElementById("total_booking_amount").value) || 0;
+            let advance = parseFloat(document.getElementById("advance_amount").value) || 0;
+
+            if (advance > total) {
+                alert("Advance cannot be greater than total amount");
+                return;
+            }
 
             if (user.role !== "leader") {
                 alert("You are not allowed to create Booking");
@@ -379,6 +379,14 @@ transition transform hover:scale-[1.02]">
 
             if (!pinCode.test(pin)) {
                 alert("Invalid Pincode. Pincode must be only 6 digits");
+                return;
+            }
+
+            // Email Validation
+            let email = document.getElementById("email").value.trim();
+
+            if (!email.includes("@") || !email.includes(".")) {
+                alert("Email must contain @ and .");
                 return;
             }
 
@@ -411,33 +419,33 @@ transition transform hover:scale-[1.02]">
 
                 const data = await response.json();
 
-  if (!response.ok || data.status === false) {
+                if (!response.ok || data.status === false) {
 
-                        if (data.errors) {
-                            let msg = "";
-                            Object.values(data.errors)
-                                .forEach(e => msg += e[0] + "\n");
+                    if (data.errors) {
+                        let msg = "";
+                        Object.values(data.errors)
+                            .forEach(e => msg += e[0] + "\n");
 
-                            alert(msg);
+                        alert(msg);
 
-                        } else if (data.error) {
-                            // ✅ YOUR CASE
-                            alert(data.error);
+                    } else if (data.error) {
+                        // ✅ YOUR CASE
+                        alert(data.error);
 
-                        } else if (data.message) {
-                            alert(data.message);
+                    } else if (data.message) {
+                        alert(data.message);
 
-                        } else {
-                            alert("Something went wrong");
-                        }
-
-                        return;
+                    } else {
+                        alert("Something went wrong");
                     }
 
-                    alert("✅ Booking Created Successfully");
-                    this.reset();
+                    return;
+                }
 
-                } catch (error) {
+                alert("✅ Booking Created Successfully");
+                this.reset();
+
+            } catch (error) {
                 console.error(error);
                 alert("Server error occurred");
             }
