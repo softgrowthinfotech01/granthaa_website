@@ -158,13 +158,7 @@
 
          const roleBox = document.getElementById("roleActions");
 
-         if (user.role === "admin") {
-             roleBox.innerHTML += `
-        <button onclick="location.href='users'"
-        class="px-4 py-2 bg-purple-600 text-white rounded-lg">
-            👥 Manage Users
-        </button>`;
-         }
+      
 
          if (user.role === "leader") {
              roleBox.innerHTML += `
