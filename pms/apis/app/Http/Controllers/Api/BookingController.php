@@ -450,7 +450,7 @@ class BookingController extends Controller
         // Authorization
         if (
             $user->role !== 'admin' &&
-            $booking->user_code !== $user->user_code
+            $booking->created_by != $user->id
         ) {
             abort(403, 'Unauthorized');
         }
