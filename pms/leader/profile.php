@@ -3,6 +3,7 @@
 <div class="max-w-6xl mx-auto px-4 py-6">
 
     <!-- PROFILE HEADER -->
+
     <div class="bg-white rounded-xl shadow p-6 flex items-center gap-6">
 
         <img id="profileImage"
@@ -17,8 +18,8 @@
                class="text-sm text-white bg-indigo-500 inline-block px-3 py-1 rounded mt-1">
             </p>
 
-            <p id="email" class="text-gray-600 mt-2"></p>
-            <p id="mobile" class="text-gray-600"></p>
+            <p id="email" class="text-gray-600 font-semibold mt-2"></p>
+            <p id="mobile" class="text-gray-600 font-semibold"></p>
         </div>
 
     </div>
@@ -109,6 +110,8 @@ const token = localStorage.getItem("auth_token");
 
 async function loadProfile(){
 
+
+
     const res = await fetch(url+"profile",{
         headers:{
             "Authorization":"Bearer "+token,
@@ -121,8 +124,10 @@ async function loadProfile(){
     const user = data.user;
     const summary = data.summary;
 
+    window.currentUserId = user.id;
+
  // HEADER
-document.getElementById('name').innerText = safe(user.name);
+document.getElementById('name').innerText = safe(user.name).toUpperCase();
 document.getElementById('role').innerText = safe(user.role?.toUpperCase());
 document.getElementById('email').innerText = safe(user.email);
 document.getElementById('mobile').innerText = safe(user.contact_no);
@@ -131,7 +136,7 @@ document.getElementById('mobile').innerText = safe(user.contact_no);
 document.getElementById('profileImage').src =
     user.profile_image
         ? base_url + "storage/" + user.profile_image
-        : "https://ui-avatars.com/api/?name=" + encodeURIComponent(user.name);
+        : "https://ui-avatars.com/api/?background=4f46e5&color=fff&name=" + encodeURIComponent(user.name);
         
 // DETAILS
 user_code.innerText = safe(user.user_code);
@@ -172,7 +177,7 @@ document.addEventListener('DOMContentLoaded',loadProfile);
 <script>
 
 function editProfile(){
-    window.location.href = "edit-profile";
+    window.location.href = "edit_profile?id=" + window.currentUserId;
 }
 
 function changePassword(){
@@ -218,6 +223,8 @@ function loadRoleActions(role){
             </button>`;
     }
 }
+
+window.addEventListener("focus", loadProfile);
 </script>
 
 <?php include 'footer.php'; ?>
