@@ -444,15 +444,13 @@ class BookingController extends Controller
 
     public function update(Request $request, $id)
     {
-        $booking = Booking::whereNull('deleted_at')->with('user')->findOrFail($id);
+        $booking = Booking::whereNull('deleted_at')->with('booking')->findOrFail($id);
         $user = auth()->user();
 
         // Authorization
         if (
             $user->role !== 'admin' &&
-            $booking->created_by !== $user->id &&
-            $booking->leader_id !== $user->id &&
-            $booking->adviser_id !== $user->id
+            $booking->user_id !== $user->id
         ) {
             abort(403, 'Unauthorized');
         }
@@ -540,8 +538,8 @@ public function destroy($id)
         |--------------------------------------------------------------------------
         */
         if (
-            $user->role !== 'admin' &&
-            $booking->created_by !== $user->id
+            $user->role != 'admin' &&
+            $booking->created_by != $user->id
         ) {
             abort(403,'Unauthorized');
         }
