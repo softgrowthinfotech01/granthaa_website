@@ -28,7 +28,7 @@ Route::middleware('auth:sanctum')->group(function () {
     // individual user reset password
     Route::post('/change-password', [AuthController::class,'changePassword']);
     Route::post('/referrals', [ReferralController::class, 'store']);
-    Route::post('/refered', [ReferralController::class, 'index']);
+    Route::get('/refered', [ReferralController::class, 'index']);
     Route::get('/referrals', [ReferralController::class, 'myReferrals']);
     Route::get('/referrals/{id}', [ReferralController::class, 'show']);
 
