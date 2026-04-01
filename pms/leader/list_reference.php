@@ -2,40 +2,40 @@
 
 <div class="max-w-7xl mx-auto bg-white p-4 sm:p-6 rounded-2xl shadow-xl">
 
-        <h2 class="text-xl sm:text-2xl font-bold mb-4 text-center">
-Referral Records</h2>
+    <h2 class="text-xl sm:text-2xl font-bold mb-4 text-center">
+        Referral Records</h2>
 
 
-       <div class="mb-4 grid grid-cols-1 sm:grid-cols-2 items-center gap-3">
+    <div class="mb-4 grid grid-cols-1 sm:grid-cols-2 items-center gap-3">
 
-    <!-- LEFT SIDE -->
-    <div class="flex flex-wrap justify-start sm:justify-center gap-3">
-        <input type="text" id="searchInput"
-            placeholder="name / contact / email"
-            class="border p-2 rounded w-64">
+        <!-- LEFT SIDE -->
+        <div class="flex flex-wrap justify-start sm:justify-center gap-3">
+            <input type="text" id="searchInput"
+                placeholder="name / contact / email"
+                class="border p-2 rounded w-64">
 
-        <button id="searchBtn"
-            class="bg-blue-500 text-white px-4 py-1 rounded">
-            Search
-        </button>
+            <button id="searchBtn"
+                class="bg-blue-500 text-white px-4 py-1 rounded">
+                Search
+            </button>
+        </div>
+
+        <!-- RIGHT SIDE -->
+        <div class="flex justify-end sm:justify-center gap-2">
+            <span class="text-sm text-gray-600">Show:</span>
+            <select id="perPage" class="border p-2 rounded">
+                <option value="10">10</option>
+                <option value="25">25</option>
+                <option value="50">50</option>
+            </select>
+        </div>
+
     </div>
-
-    <!-- RIGHT SIDE -->
-    <div class="flex justify-end sm:justify-center gap-2">
-        <span class="text-sm text-gray-600">Show:</span>
-        <select id="perPage" class="border p-2 rounded">
-            <option value="10">10</option>
-            <option value="25">25</option>
-            <option value="50">50</option>
-        </select>
-    </div>
-
-</div>
 
     <div class="w-full overflow-x-auto">
 
-        <table class="min-w-[700px] w-full text-sm border border-gray-200">
-            <thead class="bg-gray-100 text-gray-700">
+        <table class="w-full">
+            <thead class="bg-gradient-to-r from-gray-100 to-gray-200 text-gray-700">
                 <tr>
                     <th class="p-3 text-left">Sr No</th>
                     <th class="p-3 text-left">Referred Name</th>
@@ -43,17 +43,15 @@ Referral Records</h2>
                     <th class="p-3 text-left">Email</th>
                     <th class="p-3 text-left">Status</th>
                     <th class="p-3 text-left">Date</th>
+                    <th class="p-3 text-left">Booking Link</th>
                 </tr>
             </thead>
 
-            <tbody id="paymentData" class="divide-y divide-gray-200">
-
-            </tbody>
-
+            <tbody id="paymentData" class="divide-y divide-gray-200"></tbody>
         </table>
     </div>
 
-        <div id="pagination" class="mt-4 flex justify-center items-center gap-2"></div>
+    <div id="pagination" class="mt-4 flex justify-center items-center gap-2"></div>
 
 
 </div>
@@ -105,21 +103,33 @@ Referral Records</h2>
                         let srNo = (currentPage - 1) * perPage + (i + 1);
 
                         tbody.innerHTML += `
-        <tr>
-            <td class="p-3">${srNo}</td>
-            <td class="p-3">${row.referred_name}</td>
-            <td class="p-3">${row.referred_contact}</td>
-            <td class="p-3">${row.referred_email}</td>
-            <td class="p-3">
-                <span class="px-2 py-1 rounded text-white ${
-                    row.status === 'converted' ? 'bg-green-500' : 'bg-yellow-500'
-                }">
-                    ${row.status}
-                </span>
-            </td>
-            <td class="p-3">${formatDate(row.created_at)}</td>
-        </tr>
-    `;
+<tr>
+    <td class="p-3">${srNo}</td>
+    <td class="p-3">${row.referred_name}</td>
+    <td class="p-3">${row.referred_contact}</td>
+    <td class="p-3">${row.referred_email}</td>
+    <td class="p-3">
+        <span class="px-2 py-1 rounded text-white ${
+            row.status === 'converted' ? 'bg-green-500' : 'bg-yellow-500'
+        }">
+            ${row.status}
+        </span>
+    </td>
+    <td class="p-3">${formatDate(row.created_at)}</td>
+    <td class="p-3">
+        ${
+            row.status === "converted"
+            ? `<button class="bg-gray-400 text-white px-3 py-2 rounded-lg cursor-not-allowed" disabled>
+                    Already Booked
+               </button>`
+            : `<a href="reference_booking.php?reference_id=${row.id}" 
+                  class="inline-block bg-blue-600 text-white px-3 py-2 rounded-lg hover:bg-blue-700 transition">
+                    Create Booking
+               </a>`
+        }
+    </td>
+</tr>
+`;
                     });
 
                     renderPagination(response.data.links);
