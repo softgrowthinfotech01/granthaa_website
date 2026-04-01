@@ -442,27 +442,62 @@ class BookingController extends Controller
         return response()->json($booking);
     }
 
-    public function update(Request $request, $id)
-    {
-        $booking = Booking::whereNull('deleted_at')->with('booking')->findOrFail($id);
-        $user = auth()->user();
+public function update(Request $request, $id)
+{
+    $booking = Booking::whereNull('deleted_at')
+        ->with('booking')
+        ->findOrFail($id);
 
-        // Authorization
-        if (
-            $user->role !== 'admin' &&
-            $booking->created_by != $user->id
-        ) {
-            abort(403, 'Unauthorized');
-        }
+    $user = auth()->user();
+
+    // Authorization
+    if ($user->role !== 'admin' && $booking->created_by != $user->id) {
+        abort(403, 'Unauthorized');
+    }
+
+    try {
 
         DB::transaction(function () use ($request, $booking) {
 
-            // Duplicate Plot Check
-            if ($request->plot_number && $request->site_location) {
+            /*
+            |--------------------------------------------------------------------------
+            | Financial Lock Check
+            |--------------------------------------------------------------------------
+            */
+            $hasPayment = BookingPayment::where('booking_id', $booking->id)->exists();
+            $hasCommission = CommissionLedger::where('booking_id', $booking->id)->exists();
+
+            $canEditPlot = !$hasPayment && !$hasCommission;
+
+            /*
+            |--------------------------------------------------------------------------
+            | Block Plot Change After Transaction
+            |--------------------------------------------------------------------------
+            */
+            if (
+                !$canEditPlot &&
+                ($request->filled('plot_number') || $request->filled('site_location'))
+            ) {
+                throw new \Exception(
+                    'Booking is having transactions. Plot cannot be changed.'
+                );
+            }
+
+            /*
+            |--------------------------------------------------------------------------
+            | Duplicate Plot Check
+            |--------------------------------------------------------------------------
+            */
+            if (
+                $canEditPlot &&
+                $request->filled('plot_number') &&
+                $request->filled('site_location')
+            ) {
 
                 $exists = Booking::where('site_location', $request->site_location)
                     ->where('plot_number', $request->plot_number)
-                    ->where('id', '!=', $booking->id)
+                    ->whereNull('deleted_at')
+                    ->where('id', '<>', $booking->id)
                     ->exists();
 
                 if ($exists) {
@@ -470,17 +505,11 @@ class BookingController extends Controller
                 }
             }
 
-            // Lock Financial Fields
-            $hasPayment = BookingPayment::where('booking_id', $booking->id)->exists();
-            $hasCommission = CommissionLedger::where('booking_id', $booking->id)->exists();
-
-            if ($hasPayment || $hasCommission) {
-                $request->request->remove('plot_number');
-                $request->request->remove('site_location');
-                $request->request->remove('total_booking_amount');
-            }
-
-            // Update Customer
+            /*
+            |--------------------------------------------------------------------------
+            | Update Customer
+            |--------------------------------------------------------------------------
+            */
             if ($booking->user) {
                 $booking->user->update(array_filter([
                     'name' => $request->buyer_name,
@@ -491,17 +520,33 @@ class BookingController extends Controller
                 ]));
             }
 
-            // Update Booking
-            $booking->update($request->only([
+            /*
+            |--------------------------------------------------------------------------
+            | Update Booking
+            |--------------------------------------------------------------------------
+            */
+            $updateData = $request->only([
                 'buyer_name',
                 'mobile',
                 'address',
                 'city',
                 'state',
                 'remark'
-            ]));
+            ]);
 
-            // Sync Advance Payment
+            if ($canEditPlot) {
+                $updateData['plot_number'] = $request->plot_number;
+                $updateData['site_location'] = $request->site_location;
+                $updateData['total_booking_amount'] = $request->total_booking_amount;
+            }
+
+            $booking->update(array_filter($updateData));
+
+            /*
+            |--------------------------------------------------------------------------
+            | Advance Payment Sync
+            |--------------------------------------------------------------------------
+            */
             if ($request->advance_amount) {
 
                 BookingPayment::updateOrCreate(
@@ -523,238 +568,227 @@ class BookingController extends Controller
             'status' => true,
             'message' => 'Booking updated successfully'
         ]);
+
+    } catch (\Illuminate\Database\QueryException $e) {
+
+        if ($e->errorInfo[1] == 1062) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Plot already booked for this site.'
+            ], 422);
+        }
+
+        throw $e;
+
+    } catch (\Exception $e) {
+
+        return response()->json([
+            'status' => false,
+            'message' => $e->getMessage()
+        ], 422);
     }
-
-public function destroy($id)
-{
-    DB::transaction(function () use ($id) {
-
-        $booking = Booking::findOrFail($id);
-        $user = auth()->user();
-
-        /*
-        |--------------------------------------------------------------------------
-        | Permission Check
-        |--------------------------------------------------------------------------
-        */
-        if (
-            $user->role != 'admin' &&
-            $booking->created_by != $user->id
-        ) {
-            abort(403,'Unauthorized');
-        }
-
-        /*
-        |--------------------------------------------------------------------------
-        | Prevent Double Delete
-        |--------------------------------------------------------------------------
-        */
-        if ($booking->deleted_at) {
-            throw new Exception('Booking already deleted.');
-        }
-
-        /*
-        |--------------------------------------------------------------------------
-        | Reverse Payments
-        |--------------------------------------------------------------------------
-        */
-        $payments = BookingPayment::where('booking_id',$booking->id)->get();
-
-        foreach($payments as $payment){
-            BookingPayment::create([
-                'booking_id'=>$booking->id,
-                'user_id'=>$payment->user_id,
-                'received_by'=>auth()->id(),
-                'amount'=> -$payment->amount,
-                'payment_type'=>'reversal',
-                'payment_mode'=>$payment->payment_mode,
-                'remark'=>'Booking delete payment reversal'
-            ]);
-        }
-
-        /*
-        |--------------------------------------------------------------------------
-        | Reverse Commission
-        |--------------------------------------------------------------------------
-        */
-        $ledgers = CommissionLedger::where('booking_id',$booking->id)
-            ->where('type','commission')
-            ->get();
-
-        foreach($ledgers as $ledger){
-            CommissionLedger::create([
-                'user_id'=>$ledger->user_id,
-                'booking_id'=>$booking->id,
-                'type'=>'reversal',
-                'amount'=> -$ledger->amount,
-                'remark'=>'Commission reversed due to booking delete'
-            ]);
-        }
-
-        /*
-        |--------------------------------------------------------------------------
-        | Reverse Referral Wallet
-        |--------------------------------------------------------------------------
-        */
-        $referral = Referral::where('booking_id',$booking->id)->first();
-
-        if($referral && $referral->incentive_amount > 0){
-
-            $referrer = User::findOrFail($referral->referrer_id);
-
-            if($referrer->wallet_balance < $referral->incentive_amount){
-                throw new Exception('Wallet already used.');
-            }
-
-            $referrer->decrement(
-                'wallet_balance',
-                $referral->incentive_amount
-            );
-
-            WalletTransaction::create([
-                'user_id'=>$referrer->id,
-                'amount'=>$referral->incentive_amount,
-                'type'=>'debit',
-                'remark'=>'Referral reversed due to booking delete'
-            ]);
-
-            // keep incentive amount for restore
-            $referral->update([
-                'status'=>'deleted'
-            ]);
-        }
-
-        /*
-        |--------------------------------------------------------------------------
-        | Soft Delete Booking
-        |--------------------------------------------------------------------------
-        */
-        $booking->delete();
-    });
-
-    return response()->json([
-        'status'=>true,
-        'message'=>'Booking moved to trash'
-    ]);
 }
 
-public function restore($id)
-{
-    DB::transaction(function () use ($id){
+    public function destroy($id)
+    {
+        DB::transaction(function () use ($id) {
 
-        $booking = Booking::withTrashed()->findOrFail($id);
+            $booking = Booking::findOrFail($id);
+            $user = auth()->user();
 
-        if(!$booking->trashed()){
-            throw new Exception('Booking not deleted.');
-        }
+            if (
+                $user->role != 'admin' &&
+                $booking->created_by != $user->id
+            ) {
+                abort(403, 'Unauthorized');
+            }
 
-        /*
-        |--------------------------------------------------------------------------
-        | Restore Booking
-        |--------------------------------------------------------------------------
-        */
-        $booking->restore();
+            if ($booking->deleted_at) {
+                throw new Exception('Booking already deleted.');
+            }
 
-        /*
-        |--------------------------------------------------------------------------
-        | Remove Reversal Entries
-        |--------------------------------------------------------------------------
-        */
-        BookingPayment::where('booking_id',$booking->id)
-            ->where('payment_type','reversal')
-            ->delete();
+            $payments = BookingPayment::where('booking_id', $booking->id)->get();
 
-        CommissionLedger::where('booking_id',$booking->id)
-            ->where('type','reversal')
-            ->delete();
+            foreach ($payments as $payment) {
+                BookingPayment::create([
+                    'booking_id' => $booking->id,
+                    'user_id' => $payment->user_id,
+                    'received_by' => auth()->id(),
+                    'amount' => -$payment->amount,
+                    'payment_type' => 'reversal',
+                    'payment_mode' => $payment->payment_mode,
+                    'remark' => 'Booking delete payment reversal'
+                ]);
+            }
 
-        /*
-        |--------------------------------------------------------------------------
-        | Restore Referral Wallet
-        |--------------------------------------------------------------------------
-        */
-        $referral = Referral::where('booking_id',$booking->id)->first();
+            $ledgers = CommissionLedger::where('booking_id', $booking->id)
+                ->where('type', 'commission')
+                ->get();
 
-        if($referral && $referral->status === 'deleted'){
+            foreach ($ledgers as $ledger) {
+                CommissionLedger::create([
+                    'user_id' => $ledger->user_id,
+                    'booking_id' => $booking->id,
+                    'type' => 'reversal',
+                    'amount' => -$ledger->amount,
+                    'remark' => 'Commission reversed due to booking delete'
+                ]);
+            }
 
-            $referrer = User::find($referral->referrer_id);
+            $referral = Referral::where('booking_id', $booking->id)->first();
 
-            if($referrer){
-                $referrer->increment(
+            if ($referral && $referral->incentive_amount > 0) {
+
+                $referrer = User::findOrFail($referral->referrer_id);
+
+                if ($referrer->wallet_balance < $referral->incentive_amount) {
+                    throw new Exception('Wallet already used.');
+                }
+
+                $referrer->decrement(
                     'wallet_balance',
                     $referral->incentive_amount
                 );
 
                 WalletTransaction::create([
-                    'user_id'=>$referrer->id,
-                    'amount'=>$referral->incentive_amount,
-                    'type'=>'credit',
-                    'remark'=>'Referral restored after booking restore'
+                    'user_id' => $referrer->id,
+                    'amount' => $referral->incentive_amount,
+                    'type' => 'debit',
+                    'remark' => 'Referral reversed due to booking delete'
+                ]);
+
+                // keep incentive amount for restore
+                $referral->update([
+                    'status' => 'deleted'
                 ]);
             }
 
-            $referral->update([
-                'status'=>'converted'
-            ]);
-        }
-    });
+            $booking->delete();
+        });
 
-    return response()->json([
-        'status'=>true,
-        'message'=>'Booking restored successfully'
-    ]);
-}
+        return response()->json([
+            'status' => true,
+            'message' => 'Booking moved to trash'
+        ]);
+    }
 
-public function forceDelete($id)
-{
-    DB::transaction(function () use ($id){
+    public function restore($id)
+    {
+        DB::transaction(function () use ($id) {
 
-        if(auth()->user()->role !== 'admin'){
-            abort(403,'Unauthorized');
-        }
+            $booking = Booking::withTrashed()->findOrFail($id);
 
-        $booking = Booking::withTrashed()->findOrFail($id);
+            if (!$booking->trashed()) {
+                throw new Exception('Booking not deleted.');
+            }
 
-        if(!$booking->trashed()){
-            throw new Exception('Only trashed bookings can be permanently deleted.');
-        }
+            /*
+        |--------------------------------------------------------------------------
+        | Restore Booking
+        |--------------------------------------------------------------------------
+        */
+            $booking->restore();
 
-        /*
+            /*
+        |--------------------------------------------------------------------------
+        | Remove Reversal Entries
+        |--------------------------------------------------------------------------
+        */
+            BookingPayment::where('booking_id', $booking->id)
+                ->where('payment_type', 'reversal')
+                ->delete();
+
+            CommissionLedger::where('booking_id', $booking->id)
+                ->where('type', 'reversal')
+                ->delete();
+
+            /*
+        |--------------------------------------------------------------------------
+        | Restore Referral Wallet
+        |--------------------------------------------------------------------------
+        */
+            $referral = Referral::where('booking_id', $booking->id)->first();
+
+            if ($referral && $referral->status === 'deleted') {
+
+                $referrer = User::find($referral->referrer_id);
+
+                if ($referrer) {
+                    $referrer->increment(
+                        'wallet_balance',
+                        $referral->incentive_amount
+                    );
+
+                    WalletTransaction::create([
+                        'user_id' => $referrer->id,
+                        'amount' => $referral->incentive_amount,
+                        'type' => 'credit',
+                        'remark' => 'Referral restored after booking restore'
+                    ]);
+                }
+
+                $referral->update([
+                    'status' => 'converted'
+                ]);
+            }
+        });
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Booking restored successfully'
+        ]);
+    }
+
+    public function forceDelete($id)
+    {
+        DB::transaction(function () use ($id) {
+
+            if (auth()->user()->role !== 'admin') {
+                abort(403, 'Unauthorized');
+            }
+
+            $booking = Booking::withTrashed()->findOrFail($id);
+
+            if (!$booking->trashed()) {
+                throw new Exception('Only trashed bookings can be permanently deleted.');
+            }
+
+            /*
         |--------------------------------------------------------------------------
         | Delete Financial Records
         |--------------------------------------------------------------------------
         */
-        BookingPayment::where('booking_id',$booking->id)->delete();
+            BookingPayment::where('booking_id', $booking->id)->delete();
 
-        CommissionLedger::where('booking_id',$booking->id)->delete();
+            CommissionLedger::where('booking_id', $booking->id)->delete();
 
-        Referral::where('booking_id',$booking->id)
-            ->update([
-                'booking_id'=>null,
-                'status'=>'pending'
-            ]);
+            Referral::where('booking_id', $booking->id)
+                ->update([
+                    'booking_id' => null,
+                    'status' => 'pending'
+                ]);
 
-        /*
+            /*
         |--------------------------------------------------------------------------
         | Permanent Delete
         |--------------------------------------------------------------------------
         */
-        $booking->forceDelete();
-    });
+            $booking->forceDelete();
+        });
 
-    return response()->json([
-        'status'=>true,
-        'message'=>'Booking permanently deleted'
-    ]);
-}
+        return response()->json([
+            'status' => true,
+            'message' => 'Booking permanently deleted'
+        ]);
+    }
 
-public function trash()
-{
-    return response()->json([
-        'status'=>true,
-        'data'=>Booking::onlyTrashed()->latest()->get()
-    ]);
-}
+    public function trash()
+    {
+        return response()->json([
+            'status' => true,
+            'data' => Booking::onlyTrashed()->latest()->get()
+        ]);
+    }
 
     public function dashboard()
     {
