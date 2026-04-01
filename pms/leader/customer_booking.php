@@ -403,8 +403,10 @@ transition transform hover:scale-[1.02]">
                 return;
             }
 
+            let contactNumber = document.querySelector("input[name='mobile']").value;
+
             formData.set("role", "customer");
-            formData.set("password", "password");
+            formData.set("password", contactNumber);
             formData.set("created_by", user.id);
             console.log(formData);
             try {
