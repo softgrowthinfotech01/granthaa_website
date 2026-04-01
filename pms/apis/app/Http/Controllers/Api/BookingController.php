@@ -120,7 +120,7 @@ class BookingController extends Controller
                         'name' => $request->buyer_name,
                         'email' => $request->email,
                         'aadhaar_number' => $request->aadhar_number,
-                        'password' => Hash::make('password'),
+                        'password' => $request->mobile,
                         'role' => 'customer',
                         'contact_no' => $request->mobile,
                         'city' => $request->city,
@@ -450,7 +450,7 @@ class BookingController extends Controller
         // Authorization
         if (
             $user->role !== 'admin' &&
-            $booking->user_id !== $user->id
+            $booking->user_code !== $user->user_code
         ) {
             abort(403, 'Unauthorized');
         }
