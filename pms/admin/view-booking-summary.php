@@ -327,7 +327,7 @@
                         <tr>
                             <th class="p-3 text-left">Buyer</th>
                             <th class="p-3 text-left">Role</th>
-                            <th class="p-3 text-left">Plot</th>
+                            <th class="p-3 text-left">Plot No.</th>
                             <th class="p-3 text-left">Booking</th>
                             <th class="p-3 text-left">Commission</th>
                             <th class="p-3 text-left">Paid</th>

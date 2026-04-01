@@ -290,7 +290,7 @@ fixed md:relative transform md:translate-x-0 -translate-x-full z-40 overflow-hid
                             Total Commission Report
                         </a>
                     </li>
-                    <li class="border-t">
+                    <!-- <li class="border-t">
                         <a href="leader_business_report" data-name="Leader-wise Business Report"
                             class="block px-10 py-3 bg-gray-500 text-black text-sm font-semibold">
                             <i class="fas fa-angle-right mx-1"></i>
@@ -303,7 +303,7 @@ fixed md:relative transform md:translate-x-0 -translate-x-full z-40 overflow-hid
                             <i class="fas fa-angle-right mx-1"></i>
                             Advisor-wise Business Report
                         </a>
-                    </li>
+                    </li> -->
                 </ul>
             </li>
 

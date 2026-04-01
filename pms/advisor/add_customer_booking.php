@@ -383,8 +383,13 @@ transition transform hover:scale-[1.02]">
                 }
 
                 let formData = new FormData(this);
+
+                let contactNumber = document.querySelector("input[name='mobile']").value;
+
+                console.log(formData);
+
                 formData.set("created_by", user.id);
-                formData.set("password", "password");
+                formData.set("password", contactNumber);
                 formData.set("role", "customer");
 
                 try {

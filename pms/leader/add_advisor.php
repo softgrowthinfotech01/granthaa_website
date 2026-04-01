@@ -197,11 +197,11 @@ transition transform hover:scale-[1.02]">
       return;
     }
 
-    console.log(formData);
+    let contactNumber = document.querySelector("input[name='contact_no']").value;
 
     // FORCE VALUES
     formData.set("role", "adviser");
-    formData.set("password", "password");
+    formData.set("password", contactNumber);
     formData.set("created_by", user.id);
 
     try {
