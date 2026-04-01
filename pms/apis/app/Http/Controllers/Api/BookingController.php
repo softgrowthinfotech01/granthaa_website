@@ -444,7 +444,7 @@ class BookingController extends Controller
 
     public function update(Request $request, $id)
     {
-        $booking = Booking::whereNull('deleted_at')->with('user')->findOrFail($id);
+        $booking = Booking::whereNull('deleted_at')->with('booking')->findOrFail($id);
         $user = auth()->user();
 
         // Authorization
