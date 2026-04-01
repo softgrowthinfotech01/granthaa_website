@@ -11,6 +11,7 @@ use App\Models\Referral;
 use App\Models\User;
 use App\Models\UserLocationCommission;
 use App\Models\WalletTransaction;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -127,6 +128,7 @@ class BookingController extends Controller
                         'address' => $request->address,
                         'pin_code' => $request->pincode,
                         'created_by' => $leader->id
+
                     ]);
                 }
 
@@ -228,6 +230,18 @@ class BookingController extends Controller
                     }
                 }
 
+                // 🚫 Prevent duplicate booking for same plot & location
+                $existingBooking = Booking::whereNull('deleted_at')->where('plot_number', $request->plot_number)
+                    ->where('site_location', $request->site_location)
+                    ->lockForUpdate() // prevents race condition
+                    ->first();
+
+                if ($existingBooking) {
+                    throw new \Exception(
+                        "This plot number is already booked for the selected site location."
+                    );
+                }
+
                 // 2️⃣ Create Booking
                 $booking = Booking::create([
                     'user_id' => $newUser->id,
@@ -278,6 +292,7 @@ class BookingController extends Controller
                     'total_booking_amount' => $totalBookingAmount,
                     'payment_mode' => $request->payment_mode,
                     'remark' => $request->remark,
+                    'referral_id' => $request->referral_id,
                 ]);
 
                 // AFTER Booking::create()
@@ -366,7 +381,7 @@ class BookingController extends Controller
         $user = auth()->user();
 
         // ✅ Only define once
-        $query = Booking::with(['leader', 'location']);
+        $query = Booking::whereNull('deleted_at')->with(['leader', 'location']);
 
         // 🔐 Role Based Filter
         if ($user->role === 'leader') {
@@ -412,7 +427,7 @@ class BookingController extends Controller
 
     public function show($id)
     {
-        $booking = Booking::with('leader')->findOrFail($id);
+        $booking = Booking::whereNull('deleted_at')->with('leader')->findOrFail($id);
 
         return response()->json($booking);
     }
@@ -422,68 +437,326 @@ class BookingController extends Controller
     {
         $user = auth()->user();
         //  print_r($user);exit;
-        $booking = Booking::where('email', $user->email)->get();
+        $booking = Booking::whereNull('deleted_at')->where('user_id', $user->id)->get();
         // print_r($booking);exit;
         return response()->json($booking);
     }
 
     public function update(Request $request, $id)
     {
-        // dd($request->all());
-        $request->validate([
-            'buyer_name' => 'sometimes|required|string',
-            'mobile' => 'sometimes|required|string',
-            'pan_number' => 'sometimes|required|string',
-            'aadhar_number' => 'sometimes|required|string',
-            'address' => 'sometimes|required|string',
-            'plot_number' => 'sometimes|required|string',
+        $booking = Booking::whereNull('deleted_at')->with('user')->findOrFail($id);
+        $user = auth()->user();
+
+        // Authorization
+        if (
+            $user->role !== 'admin' &&
+            $booking->created_by !== $user->id &&
+            $booking->leader_id !== $user->id &&
+            $booking->adviser_id !== $user->id
+        ) {
+            abort(403, 'Unauthorized');
+        }
+
+        DB::transaction(function () use ($request, $booking) {
+
+            // Duplicate Plot Check
+            if ($request->plot_number && $request->site_location) {
+
+                $exists = Booking::where('site_location', $request->site_location)
+                    ->where('plot_number', $request->plot_number)
+                    ->where('id', '!=', $booking->id)
+                    ->exists();
+
+                if ($exists) {
+                    throw new \Exception('Plot already booked.');
+                }
+            }
+
+            // Lock Financial Fields
+            $hasPayment = BookingPayment::where('booking_id', $booking->id)->exists();
+            $hasCommission = CommissionLedger::where('booking_id', $booking->id)->exists();
+
+            if ($hasPayment || $hasCommission) {
+                $request->request->remove('plot_number');
+                $request->request->remove('site_location');
+                $request->request->remove('total_booking_amount');
+            }
+
+            // Update Customer
+            if ($booking->user) {
+                $booking->user->update(array_filter([
+                    'name' => $request->buyer_name,
+                    'contact_no' => $request->mobile,
+                    'address' => $request->address,
+                    'city' => $request->city,
+                    'state' => $request->state,
+                ]));
+            }
+
+            // Update Booking
+            $booking->update($request->only([
+                'buyer_name',
+                'mobile',
+                'address',
+                'city',
+                'state',
+                'remark'
+            ]));
+
+            // Sync Advance Payment
+            if ($request->advance_amount) {
+
+                BookingPayment::updateOrCreate(
+                    [
+                        'booking_id' => $booking->id,
+                        'payment_type' => 'advance'
+                    ],
+                    [
+                        'user_id' => $booking->user_id,
+                        'received_by' => auth()->id(),
+                        'amount' => $request->advance_amount,
+                        'payment_mode' => $request->payment_mode
+                    ]
+                );
+            }
+        });
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Booking updated successfully'
         ]);
+    }
+
+public function destroy($id)
+{
+    DB::transaction(function () use ($id) {
 
         $booking = Booking::findOrFail($id);
+        $user = auth()->user();
 
-        $booking->update($request->only([
-            'buyer_name',
-            'mobile',
-            'dob',
-            'pan_number',
-            'aadhar_number',
-            'address',
-            'city',
-            'state',
-            'pincode',
-            'advance_amount',
+        /*
+        |--------------------------------------------------------------------------
+        | Permission Check
+        |--------------------------------------------------------------------------
+        */
+        if (
+            $user->role !== 'admin' &&
+            $booking->created_by !== $user->id
+        ) {
+            abort(403,'Unauthorized');
+        }
 
-            'site_location',
-            'project_name',
-            'plot_number',
-            'khasara_number',
-            'ph_number',
-            'mouza',
-            'tahsil',
-            'district',
-            'square_feet',
-            'square_meter',
-            'total_booking_amount',
-            'payment_mode',
-            'remark'
-        ]));
+        /*
+        |--------------------------------------------------------------------------
+        | Prevent Double Delete
+        |--------------------------------------------------------------------------
+        */
+        if ($booking->deleted_at) {
+            throw new Exception('Booking already deleted.');
+        }
 
-        return response()->json([
-            'status' => true,
-            'message' => 'Booking Updated Successfully',
-            'data' => $booking
-        ]);
-    }
+        /*
+        |--------------------------------------------------------------------------
+        | Reverse Payments
+        |--------------------------------------------------------------------------
+        */
+        $payments = BookingPayment::where('booking_id',$booking->id)->get();
 
-    public function destroy($id)
-    {
-        Booking::findOrFail($id)->delete();
+        foreach($payments as $payment){
+            BookingPayment::create([
+                'booking_id'=>$booking->id,
+                'user_id'=>$payment->user_id,
+                'received_by'=>auth()->id(),
+                'amount'=> -$payment->amount,
+                'payment_type'=>'reversal',
+                'payment_mode'=>$payment->payment_mode,
+                'remark'=>'Booking delete payment reversal'
+            ]);
+        }
 
-        return response()->json([
-            'status' => true,
-            'message' => 'Booking Deleted'
-        ]);
-    }
+        /*
+        |--------------------------------------------------------------------------
+        | Reverse Commission
+        |--------------------------------------------------------------------------
+        */
+        $ledgers = CommissionLedger::where('booking_id',$booking->id)
+            ->where('type','commission')
+            ->get();
+
+        foreach($ledgers as $ledger){
+            CommissionLedger::create([
+                'user_id'=>$ledger->user_id,
+                'booking_id'=>$booking->id,
+                'type'=>'reversal',
+                'amount'=> -$ledger->amount,
+                'remark'=>'Commission reversed due to booking delete'
+            ]);
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Reverse Referral Wallet
+        |--------------------------------------------------------------------------
+        */
+        $referral = Referral::where('booking_id',$booking->id)->first();
+
+        if($referral && $referral->incentive_amount > 0){
+
+            $referrer = User::findOrFail($referral->referrer_id);
+
+            if($referrer->wallet_balance < $referral->incentive_amount){
+                throw new Exception('Wallet already used.');
+            }
+
+            $referrer->decrement(
+                'wallet_balance',
+                $referral->incentive_amount
+            );
+
+            WalletTransaction::create([
+                'user_id'=>$referrer->id,
+                'amount'=>$referral->incentive_amount,
+                'type'=>'debit',
+                'remark'=>'Referral reversed due to booking delete'
+            ]);
+
+            // keep incentive amount for restore
+            $referral->update([
+                'status'=>'deleted'
+            ]);
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Soft Delete Booking
+        |--------------------------------------------------------------------------
+        */
+        $booking->delete();
+    });
+
+    return response()->json([
+        'status'=>true,
+        'message'=>'Booking moved to trash'
+    ]);
+}
+
+public function restore($id)
+{
+    DB::transaction(function () use ($id){
+
+        $booking = Booking::withTrashed()->findOrFail($id);
+
+        if(!$booking->trashed()){
+            throw new Exception('Booking not deleted.');
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Restore Booking
+        |--------------------------------------------------------------------------
+        */
+        $booking->restore();
+
+        /*
+        |--------------------------------------------------------------------------
+        | Remove Reversal Entries
+        |--------------------------------------------------------------------------
+        */
+        BookingPayment::where('booking_id',$booking->id)
+            ->where('payment_type','reversal')
+            ->delete();
+
+        CommissionLedger::where('booking_id',$booking->id)
+            ->where('type','reversal')
+            ->delete();
+
+        /*
+        |--------------------------------------------------------------------------
+        | Restore Referral Wallet
+        |--------------------------------------------------------------------------
+        */
+        $referral = Referral::where('booking_id',$booking->id)->first();
+
+        if($referral && $referral->status === 'deleted'){
+
+            $referrer = User::find($referral->referrer_id);
+
+            if($referrer){
+                $referrer->increment(
+                    'wallet_balance',
+                    $referral->incentive_amount
+                );
+
+                WalletTransaction::create([
+                    'user_id'=>$referrer->id,
+                    'amount'=>$referral->incentive_amount,
+                    'type'=>'credit',
+                    'remark'=>'Referral restored after booking restore'
+                ]);
+            }
+
+            $referral->update([
+                'status'=>'converted'
+            ]);
+        }
+    });
+
+    return response()->json([
+        'status'=>true,
+        'message'=>'Booking restored successfully'
+    ]);
+}
+
+public function forceDelete($id)
+{
+    DB::transaction(function () use ($id){
+
+        if(auth()->user()->role !== 'admin'){
+            abort(403,'Unauthorized');
+        }
+
+        $booking = Booking::withTrashed()->findOrFail($id);
+
+        if(!$booking->trashed()){
+            throw new Exception('Only trashed bookings can be permanently deleted.');
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Delete Financial Records
+        |--------------------------------------------------------------------------
+        */
+        BookingPayment::where('booking_id',$booking->id)->delete();
+
+        CommissionLedger::where('booking_id',$booking->id)->delete();
+
+        Referral::where('booking_id',$booking->id)
+            ->update([
+                'booking_id'=>null,
+                'status'=>'pending'
+            ]);
+
+        /*
+        |--------------------------------------------------------------------------
+        | Permanent Delete
+        |--------------------------------------------------------------------------
+        */
+        $booking->forceDelete();
+    });
+
+    return response()->json([
+        'status'=>true,
+        'message'=>'Booking permanently deleted'
+    ]);
+}
+
+public function trash()
+{
+    return response()->json([
+        'status'=>true,
+        'data'=>Booking::onlyTrashed()->latest()->get()
+    ]);
+}
 
     public function dashboard()
     {
@@ -507,11 +780,11 @@ class BookingController extends Controller
                     ->where('created_by', $user->id)
                     ->count();
 
-                $totalBookingAmount = Booking::sum('total_booking_amount');
-                $totalBooking = Booking::count();
+                $totalBookingAmount = Booking::whereNull('deleted_at')->sum('total_booking_amount');
+                $totalBooking = Booking::whereNull('deleted_at')->count();
                 $totalSite = UserLocationCommission::count();
 
-                $totalCommissionAmount = Booking::sum(
+                $totalCommissionAmount = Booking::whereNull('deleted_at')->sum(
                     DB::raw('leader_commission_amount + adviser_commission_amount')
                 );
 
@@ -519,7 +792,7 @@ class BookingController extends Controller
                     CommissionLedger::where('type', 'payment')->sum('amount')
                 );
 
-                $topAdvisor = Booking::select('user_code', DB::raw('SUM(advance_amount) as total'))
+                $topAdvisor = Booking::whereNull('deleted_at')->select('user_code', DB::raw('SUM(advance_amount) as total'))
                     ->groupBy('user_code')
                     ->orderByDesc('total')
                     ->first();
@@ -545,19 +818,19 @@ class BookingController extends Controller
                     ->pluck('id')
                     ->push($user->id);
 
-                $my_total_booking = Booking::where('leader_id', $user->id)
+                $my_total_booking = Booking::whereNull('deleted_at')->where('leader_id', $user->id)
                     ->whereNull('adviser_id')
                     ->count();
 
-                $my_total_booking_amount = Booking::where('leader_id', $user->id)
+                $my_total_booking_amount = Booking::whereNull('deleted_at')->where('leader_id', $user->id)
                     ->whereNull('adviser_id')
                     ->sum('total_booking_amount');
 
-                $team_total_booking = Booking::where('leader_id', $user->id)
+                $team_total_booking = Booking::whereNull('deleted_at')->where('leader_id', $user->id)
                     ->whereNotNull('adviser_id')
                     ->count();
 
-                $team_total_booking_amount = Booking::where('leader_id', $user->id)
+                $team_total_booking_amount = Booking::whereNull('deleted_at')->where('leader_id', $user->id)
                     ->whereNotNull('adviser_id')
                     ->sum('total_booking_amount');
 
@@ -567,19 +840,19 @@ class BookingController extends Controller
 
                 $totalSite = UserLocationCommission::where('user_id', $user->id)->count();
 
-                $my_commission = Booking::where('leader_id', $user->id)
+                $my_commission = Booking::whereNull('deleted_at')->where('leader_id', $user->id)
                     ->whereNull('adviser_id') // only leader deals
                     ->sum('leader_commission_amount');
 
-                $team_commission = Booking::where('leader_id', $user->id)
+                $team_commission = Booking::whereNull('deleted_at')->where('leader_id', $user->id)
                     ->whereNotNull('adviser_id') // adviser deals
                     ->sum('leader_commission_amount');
 
-                $team_adviser_commission = Booking::where('leader_id', $user->id)
+                $team_adviser_commission = Booking::whereNull('deleted_at')->where('leader_id', $user->id)
                     ->whereNotNull('adviser_id')
                     ->sum('adviser_commission_amount');
 
-                $totalCommissionAmount = Booking::where('leader_id', $user->id)
+                $totalCommissionAmount = Booking::whereNull('deleted_at')->where('leader_id', $user->id)
                     ->sum(DB::raw('leader_commission_amount + adviser_commission_amount'));
 
                 $totalPaidAmt = abs(
@@ -588,7 +861,7 @@ class BookingController extends Controller
                         ->sum('amount')
                 );
 
-                $topAdvisor = Booking::where('leader_id', $user->id)
+                $topAdvisor = Booking::whereNull('deleted_at')->where('leader_id', $user->id)
                     ->whereNotNull('adviser_id') // only adviser bookings
                     ->select('adviser_id', DB::raw('SUM(total_booking_amount) as total'))
                     ->groupBy('adviser_id')
@@ -621,10 +894,10 @@ class BookingController extends Controller
             // ===============================
             elseif ($user->role === 'adviser') {
 
-                $totalBookingAmount = Booking::where('adviser_id', $user->id)
+                $totalBookingAmount = Booking::whereNull('deleted_at')->where('adviser_id', $user->id)
                     ->sum('total_booking_amount');
 
-                $totalBooking = Booking::where('adviser_id', $user->id)->count();
+                $totalBooking = Booking::whereNull('deleted_at')->where('adviser_id', $user->id)->count();
 
                 $totalSite = UserLocationCommission::where('user_id', $user->id)->count();
 
@@ -632,7 +905,7 @@ class BookingController extends Controller
 
                 $totalCustomers = User::where('created_by', $user->id)->count();
 
-                $totalCommissionAmount = Booking::where('adviser_id', $user->id)
+                $totalCommissionAmount = Booking::whereNull('deleted_at')->where('adviser_id', $user->id)
                     ->sum('adviser_commission_amount');
 
                 $totalPaidAmt = abs(
@@ -641,7 +914,7 @@ class BookingController extends Controller
                         ->sum('amount')
                 );
 
-                $topAdvisor = Booking::where('adviser_id', $user->id)
+                $topAdvisor = Booking::whereNull('deleted_at')->where('adviser_id', $user->id)
                     ->select('user_code', DB::raw('SUM(total_booking_amount) as total'))
                     ->groupBy('user_code')
                     ->first();
@@ -665,15 +938,15 @@ class BookingController extends Controller
             // ===============================
             elseif ($user->role === 'customer') {
 
-                $totalBooking = Booking::where('user_code', $user->user_code)->count();
+                $totalBooking = Booking::whereNull('deleted_at')->where('user_code', $user->user_code)->count();
 
-                $totalBookingAmount = Booking::where('user_code', $user->user_code)
+                $totalBookingAmount = Booking::whereNull('deleted_at')->where('user_code', $user->user_code)
                     ->sum('total_booking_amount');
 
                 $totalPaidAmt = BookingPayment::where('user_id', $user->id)
                     ->sum('amount');
 
-                $totalSite = Booking::where('user_code', $user->user_code)
+                $totalSite = Booking::whereNull('deleted_at')->where('user_code', $user->user_code)
                     ->distinct('site_location')
                     ->count('site_location');
 
@@ -729,9 +1002,9 @@ class BookingController extends Controller
 
         $totalSites = LocationMaster::count();
 
-        $totalBookings = Booking::count();
+        $totalBookings = Booking::whereNull('deleted_at')->count();
 
-        $totalSalesValue = Booking::sum('total_booking_amount'); // ✅ FIXED (better than commission)
+        $totalSalesValue = Booking::whereNull('deleted_at')->sum('total_booking_amount'); // ✅ FIXED (better than commission)
 
         // ✅ Commission totals
         $totalCommission = CommissionLedger::where('type', 'commission')->sum('amount');
@@ -743,13 +1016,13 @@ class BookingController extends Controller
         $pendingCommissions = $totalCommission - $totalPaid;
 
         // ✅ Today stats
-        $todayBookings = Booking::whereDate('created_at', today())->count();
+        $todayBookings = Booking::whereNull('deleted_at')->whereDate('created_at', today())->count();
 
-        $todaySales = Booking::whereDate('created_at', today())
+        $todaySales = Booking::whereNull('deleted_at')->whereDate('created_at', today())
             ->sum('total_booking_amount');
 
         // ✅ Top Leader (by sales)
-        $topLeader = Booking::select('leader_id', DB::raw('SUM(total_booking_amount) as total'))
+        $topLeader = Booking::whereNull('deleted_at')->select('leader_id', DB::raw('SUM(total_booking_amount) as total'))
             ->groupBy('leader_id')
             ->orderByDesc('total')
             ->first();
@@ -817,7 +1090,7 @@ class BookingController extends Controller
     {
         $user = auth()->user();
 
-        $query = Booking::query();
+        $query = Booking::whereNull('deleted_at')->query();
 
         // Role filter
         if ($user->role === 'leader') {
@@ -839,7 +1112,7 @@ class BookingController extends Controller
 
     public function projectsByCustomer($userId)
     {
-        $projects = Booking::where('user_id', $userId)
+        $projects = Booking::whereNull('deleted_at')->where('user_id', $userId)
             ->select('project_name')
             ->distinct()
             ->get();
@@ -852,7 +1125,7 @@ class BookingController extends Controller
 
     public function plots($userId, $project)
     {
-        $plots = Booking::where('user_id', $userId)
+        $plots = Booking::whereNull('deleted_at')->where('user_id', $userId)
             ->where('project_name', $project)
             ->get();
 
@@ -871,7 +1144,7 @@ class BookingController extends Controller
         foreach ($leaders as $leader) {
 
             // Leader bookings (self + advisers)
-            $bookings = Booking::where(function ($q) use ($leader) {
+            $bookings = Booking::whereNull('deleted_at')->where(function ($q) use ($leader) {
                 $q->where('leader_id', $leader->id)
                     ->orWhere('created_by', $leader->id);
             })->get();
@@ -914,7 +1187,7 @@ class BookingController extends Controller
 
     public function leaderDetails($leaderId)
     {
-        $bookings = Booking::where(function ($q) use ($leaderId) {
+        $bookings = Booking::whereNull('deleted_at')->where(function ($q) use ($leaderId) {
             $q->where('leader_id', $leaderId)
                 ->orWhere('created_by', $leaderId);
         })->get();
@@ -968,7 +1241,7 @@ class BookingController extends Controller
 
     public function adviserDetails($adviserId)
     {
-        $bookings = Booking::where('adviser_id', $adviserId)->get();
+        $bookings = Booking::whereNull('deleted_at')->where('adviser_id', $adviserId)->get();
 
         $data = [];
 
@@ -1017,7 +1290,7 @@ class BookingController extends Controller
 
     public function salesTrend()
     {
-        $data = Booking::select(
+        $data = Booking::whereNull('deleted_at')->select(
             DB::raw('DATE(created_at) as date'),
             DB::raw('SUM(total_booking_amount) as total')
         )
@@ -1033,8 +1306,8 @@ class BookingController extends Controller
 
     public function commissionSplit()
     {
-        $leader = Booking::sum('leader_commission_amount');
-        $adviser = Booking::sum('adviser_commission_amount');
+        $leader = Booking::whereNull('deleted_at')->sum('leader_commission_amount');
+        $adviser = Booking::whereNull('deleted_at')->sum('adviser_commission_amount');
 
         return response()->json([
             'status' => true,
@@ -1056,7 +1329,7 @@ class BookingController extends Controller
 
         foreach ($leaders as $leader) {
 
-            $totalCommission = Booking::where('leader_id', $leader->id)
+            $totalCommission = Booking::whereNull('deleted_at')->where('leader_id', $leader->id)
                 ->sum(DB::raw('leader_commission_amount + adviser_commission_amount'));
 
             $paid = abs(
@@ -1077,7 +1350,7 @@ class BookingController extends Controller
 
         foreach ($advisers as $adv) {
 
-            $count = Booking::where('adviser_id', $adv->id)->count();
+            $count = Booking::whereNull('deleted_at')->where('adviser_id', $adv->id)->count();
 
             if ($count == 0) {
                 $alerts[] = "⚠️ Adviser {$adv->name} has no bookings";

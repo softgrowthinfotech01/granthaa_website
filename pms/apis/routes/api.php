@@ -43,7 +43,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/bookings', [BookingController::class, 'store']);
     Route::get('/bookings/{id}', [BookingController::class, 'show']);
     Route::patch('/bookings/{id}', [BookingController::class, 'update']);
-    Route::delete('/bookings/{id}', [BookingController::class, 'destroy']);
+    Route::delete('/bookings/{id}', [BookingController::class, 'destroy']); // soft delete
+    Route::post('booking/{id}/restore', [BookingController::class,'restore']); // restore
+Route::delete('booking/{id}/force-delete', [BookingController::class,'forceDelete']); // permemet delete
     Route::get('/mybookings', [BookingController::class, 'mybookings']);
     Route::get('/booking-summary/{id}', [BookingPaymentController::class, 'getBookingSummary']);//to fetch paid, total, balance amount
     Route::get('/dashboard', [BookingController::class, 'dashboard']);

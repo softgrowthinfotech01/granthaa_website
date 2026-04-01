@@ -290,13 +290,14 @@ class UserController extends Controller
 
         // Admin can update anyone
         // Others can update only their created users
-        if ($auth->role != 'admin' && $user->created_by != $auth->id) {
+        // print_r($user->id);exit;
+        if ($auth->role != 'admin' && $user->id != $auth->id) {
             return response()->json(['message' => 'Unauthorized'], 403);
         }
 
         $rules = [
             'name' => 'sometimes|required|string|max:200',
-            'email' => 'sometimes|required|email|unique:users,email,' . $id,
+            // 'email' => 'sometimes|required|email|unique:users,email,' . $id,
             'aadhaar_number' => 'sometimes|required|digits:12',
             'password' => 'nullable|min:6',
             'age' => 'nullable|integer|min:18',
