@@ -540,8 +540,8 @@ public function destroy($id)
         |--------------------------------------------------------------------------
         */
         if (
-            $user->role !== 'admin' &&
-            $booking->created_by !== $user->id
+            $user->role != 'admin' &&
+            $booking->created_by != $user->id
         ) {
             abort(403,'Unauthorized');
         }
