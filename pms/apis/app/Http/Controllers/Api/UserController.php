@@ -291,7 +291,7 @@ class UserController extends Controller
         // Admin can update anyone
         // Others can update only their created users
         // print_r($user->id);exit;
-        if ($auth->role != 'admin' && $user->id != $auth->id) {
+        if ($auth->role != 'admin' && $user->id != $auth->id  && $user->id != $auth->created_by) {
             return response()->json(['message' => 'Unauthorized'], 403);
         }
 
