@@ -201,13 +201,6 @@ function loadRoleActions(role){
             </button>`;
     }
 
-    if(role === "leader"){
-        roleBox.innerHTML += `
-            <button onclick="location.href='team'"
-            class="px-4 py-2 bg-emerald-600 text-white rounded-lg">
-                👨‍💼 View Team
-            </button>`;
-    }
 
     if(role === "adviser"){
         roleBox.innerHTML += `

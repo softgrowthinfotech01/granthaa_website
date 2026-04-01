@@ -290,25 +290,10 @@
             mobileInput.setCustomValidity("");
             pincodeInput.setCustomValidity("");
 
-            // ✅ Email validation
-            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailPattern.test(email)) {
-                emailInput.setCustomValidity("Enter a valid email address");
-                emailInput.reportValidity();
-                return;
-            }
-
             // ✅ Age validation
             if (isNaN(age) || age < 1 || age > 150) {
                 ageInput.setCustomValidity("Age must be between 1 and 150");
                 ageInput.reportValidity();
-                return;
-            }
-
-            // ✅ Mobile validation
-            if (!/^[0-9]{10}$/.test(mobile)) {
-                mobileInput.setCustomValidity("Mobile number must be exactly 10 digits");
-                mobileInput.reportValidity();
                 return;
             }
 
@@ -377,6 +362,7 @@
                         document.getElementById("current_image").src =
                             url + "storage/" + result.data.image + "?t=" + new Date().getTime();
                     }
+                    window.location.href = "view_leader.php";
 
                 } else {
                     alert(result.message || "Update failed");

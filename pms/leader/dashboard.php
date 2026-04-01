@@ -96,47 +96,63 @@
 
   .card4 {
   display: block;
-    position: relative;
-    max-width: 320px;
-    background-color: #f8fafc;
-    border-radius: 4px;
-    padding: 32px 24px;
-    margin: 12px;
-    text-decoration: none;
-    z-index: 0;
-    overflow: hidden;
+  position: relative;
+  max-width: 320px;
+  background-color: #f8fafc;
+  border-radius: 4px;
+  padding: 32px 24px;
+  margin: 12px;
+  text-decoration: none;
+  z-index: 0;
+  overflow: hidden;
 
   min-height: 148px;
 }
 
-  .card4:hover {
-    transition: all 0.2s ease-out;
-    box-shadow: 0px 4px 8px rgba(38, 38, 38, 0.2);
-    top: -4px;
-    border: 1px solid #ccc;
-    background-color: white;
-  }
+.card4:before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: #00838d;
+  transform: scale(0);
+  transform-origin: top right;
+  transition: transform 0.3s ease-out;
+  border-radius: inherit;
+  z-index: -1;
+}
 
-  .card4:before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    /* covers full card */
-    background: #00838d;
-    transform: scale(0);
-    transform-origin: top right;
-    transition: transform 0.3s ease-out;
-    border-radius: inherit;
-    z-index: -1;
-  }
+.card4:hover:before {
+  transform: scale(1);
+}
 
-  .card4:hover:before {
-    transform: scale(1);
-  }
-  .card4:hover p {
-    transition: all 0.3s ease-out;
-    color: rgba(255, 255, 255, 0.8);
-  }
+.card4:hover p {
+  transition: all 0.3s ease-out;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.card4:hover h3 {
+  transition: all 0.3s ease-out;
+  color: #fff;
+}
+.card1,
+.card4 {
+    position: relative;
+    z-index: 1;
+}
+
+.card1:before,
+.card4:before {
+    z-index: 0;
+}
+
+.card1 h3,
+.card p1,
+.card1 p,
+.card4 h3,
+.card4 p {
+    position: relative;
+    z-index: 2;
+}
 </style>
 <!-- Css for Cards -->
 
@@ -182,7 +198,7 @@
       <p1 class="font-bold">Overall Summary</p1>
 
       <p class="small py-2">₹ Total Booking: <span id="total_booking_amount"></span></p>
-      <p class="small mb-[30px]">% Total Commission: <span id="total_commission_amount"></span></p>
+      <p class="small">% Total Commission: <span id="total_commission_amount"></span></p>
 
       <div class="go-corner">
         <div class="go-arrow">→</div>

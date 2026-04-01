@@ -160,6 +160,72 @@
   $("#updateForm").submit(function(e) {
     e.preventDefault();
 
+    // ===== VALIDATIONS (ADDED ONLY) =====
+
+    let email = $("#email").val();
+    let phone = $("#contact_no").val();
+    let pancard = $("#pancard_number").val().toUpperCase();
+    let aadhaar = $("#aadhaar_number").val();
+    let gender = $("#gender").val();
+    let address = $("#address").val();
+    let bankName = $("#bank_name").val();
+    let accountNo = $("#bank_account_no").val();
+    let ifsc = $("#bank_ifsc_code").val();
+
+    // Email
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      alert("Invalid Email");
+      return;
+    }
+
+    // Phone
+    if (!/^[0-9]{10}$/.test(phone)) {
+      alert("Phone must be 10 digits");
+      return;
+    }
+
+    // PAN
+    if (!/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/.test(pancard)) {
+      alert("Invalid PAN (ABCDE1234F)");
+      return;
+    }
+
+    // Aadhaar
+    if (!/^[0-9]{12}$/.test(aadhaar)) {
+      alert("Aadhaar must be 12 digits");
+      return;
+    }
+
+    // Gender
+    if (!gender) {
+      alert("Please select gender");
+      return;
+    }
+
+    // Address
+    if (!address.trim()) {
+      alert("Address required");
+      return;
+    }
+
+    // Bank Name
+    if (!/^[A-Za-z\s&]+$/.test(bankName)) {
+      alert("Invalid Bank Name");
+      return;
+    }
+
+    // Account Number
+    if (!/^[0-9]{9,18}$/.test(accountNo)) {
+      alert("Account number must be 9-18 digits");
+      return;
+    }
+
+    // IFSC
+    if (!/^[A-Za-z]{4}0[A-Za-z0-9]{6}$/.test(ifsc)) {
+      alert("Invalid IFSC (HDFC0001234)");
+      return;
+    }
+
     $.ajax({
       url: url + "users/" + id,
       type: "PATCH",

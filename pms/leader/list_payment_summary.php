@@ -1,5 +1,19 @@
 <?php include 'header.php'; ?>
 
+<style>
+    .w-full.overflow-x-auto {
+        padding-bottom: 25px;
+    }
+
+    .dataTables_wrapper .dataTables_paginate {
+        margin-top: 15px;
+    }
+
+    .dataTables_wrapper .dataTables_info {
+        margin-top: 15px;
+    }
+</style>
+
 <div class="max-w-7xl mx-auto bg-white p-4 sm:p-6 rounded-2xl shadow-xl">
 
     <h2 class="text-xl sm:text-2xl font-bold mb-4 text-center text-gray-800">
@@ -10,7 +24,7 @@
         All advisor transaction records
     </p>
 
-    <div class="w-full overflow-x-auto">
+    <div class="w-full overflow-x-auto mb-6">
 
         <table id="paymentTable"
             class="min-w-[700px] w-full text-sm border border-gray-200 rounded-xl overflow-hidden">
@@ -40,282 +54,306 @@
 <script src="https://cdn.datatables.net/1.13.8/js/jquery.dataTables.min.js"></script>
 
 <style>
+    /* Wrapper */
+    .dataTables_wrapper {
+        color: #374151 !important;
+        font-size: 14px;
+    }
 
-/* Wrapper */
-.dataTables_wrapper {
-    color: #374151 !important;
-    font-size: 14px;
-}
+    /* Top controls layout */
+    .dataTables_wrapper .dataTables_length,
+    .dataTables_wrapper .dataTables_filter {
+        margin-bottom: 12px;
+    }
 
-/* Top controls layout */
-.dataTables_wrapper .dataTables_length,
-.dataTables_wrapper .dataTables_filter {
-    margin-bottom: 12px;
-}
+    /* Align like Tailwind */
+    .dataTables_wrapper .dataTables_filter {
+        text-align: right;
+    }
 
-/* Align like Tailwind */
-.dataTables_wrapper .dataTables_filter {
-    text-align: right;
-}
+    /* Inputs */
+    .dataTables_length select,
+    .dataTables_filter input {
+        border: 1px solid #a7a8aa !important;
+        border-radius: 8px !important;
+        padding: 6px 10px !important;
+        background: white !important;
+        color: #111827 !important;
+        outline: none;
+    }
 
-/* Inputs */
-.dataTables_length select,
-.dataTables_filter input {
-    border: 1px solid #a7a8aa !important;
-    border-radius: 8px !important;
-    padding: 6px 10px !important;
-    background: white !important;
-    color: #111827 !important;
-    outline: none;
-}
+    /* Table */
+    table.dataTable {
+        border-collapse: collapse !important;
+    }
 
-/* Table */
-table.dataTable {
-    border-collapse: collapse !important;
-}
+    /* Header */
+    table.dataTable thead th {
+        background-color: #e7e7e8 !important;
+        color: #374151 !important;
+        font-weight: 600 !important;
+        border-bottom: 1px solid #000000 !important;
+        text-align: center !important;
+    }
 
-/* Header */
-table.dataTable thead th {
-    background-color: #e7e7e8 !important;
-    color: #374151 !important;
-    font-weight: 600 !important;
-    border-bottom: 1px solid #000000 !important;
-    text-align: center !important;
-}
+    /* Body */
+    table.dataTable tbody td {
+        background-color: #fdfdfd !important;
+        border-bottom: 1px solid #000000 !important;
+        text-align: center !important;
+    }
 
-/* Body */
-table.dataTable tbody td {
-    background-color: #fdfdfd !important;
-    border-bottom: 1px solid #000000 !important;
-     text-align: center !important;
-}
+    /* Hover */
+    table.dataTable tbody tr:hover td {
+        background-color: #f9fafb !important;
+    }
 
-/* Hover */
-table.dataTable tbody tr:hover td {
-    background-color: #f9fafb !important;
-}
+    /* Pagination */
+    .dataTables_wrapper .dataTables_paginate {
+        margin-top: 12px;
+    }
 
-/* Pagination */
-.dataTables_wrapper .dataTables_paginate {
-    margin-top: 12px;
-}
+    /* Buttons */
+    .dataTables_wrapper .dataTables_paginate .paginate_button {
+        border: 1px solid #d1d5db !important;
+        border-radius: 6px !important;
+        padding: 4px 10px !important;
+        margin: 0 2px;
+        background: white !important;
+        color: #374151 !important;
+    }
 
-/* Buttons */
-.dataTables_wrapper .dataTables_paginate .paginate_button {
-    border: 1px solid #d1d5db !important;
-    border-radius: 6px !important;
-    padding: 4px 10px !important;
-    margin: 0 2px;
-    background: white !important;
-    color: #374151 !important;
-}
+    /* Active */
+    .dataTables_wrapper .dataTables_paginate .paginate_button.current {
+        background: #3b82f6 !important;
+        color: white !important;
+        border: none !important;
+    }
 
-/* Active */
-.dataTables_wrapper .dataTables_paginate .paginate_button.current {
-    background: #3b82f6 !important;
-    color: white !important;
-    border: none !important;
-}
+    /* Hover */
+    .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+        background: #e5e7eb !important;
+    }
 
-/* Hover */
-.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
-    background: #e5e7eb !important;
-}
-
-/* Info text */
-.dataTables_info {
-    color: #6b7280 !important;
-    margin-top: 10px;
-}
-
+    /* Info text */
+    .dataTables_info {
+        color: #6b7280 !important;
+        margin-top: 10px;
+    }
 </style>
 
 <?php include 'footer.php'; ?>
 <script>
-function formatCurrency(value) {
-    return '₹' + Number(value || 0).toLocaleString('en-IN');
-}
-
-function formatDate(dateString) {
-    if (!dateString) return '-';
-    const date = new Date(dateString);
-    return date.toLocaleDateString('en-GB');
-}
-
-function normalizeRecords(data) {
-    if (Array.isArray(data)) return data;
-    if (data && Array.isArray(data.data)) return data.data;
-    if (data && typeof data === 'object') return [data];
-    return [];
-}
-
-let bookingsMap = {};
-let usersMap = {}; // 🔥 NEW
-
-/* ================= LOAD BOOKINGS ================= */
-async function loadBookingsMap() {
-
-    const token = localStorage.getItem("auth_token");
-
-    const res = await fetch(url + "bookings?per_page=1000", {
-        headers: {
-            "Authorization": "Bearer " + token
-        }
-    });
-
-    const data = await res.json();
-    let bookings = data.data?.data ?? [];
-
-    bookings.forEach(b => {
-        bookingsMap[b.id] = b;
-    });
-}
-
-
-/* ================= LOAD USERS (ADVISORS) ================= */
-async function loadUsersMap() {
-
-    const token = localStorage.getItem("auth_token");
-
-    const res = await fetch(url + "users?role=adviser&per_page=1000", {
-        headers: {
-            "Authorization": "Bearer " + token
-        }
-    });
-
-    const data = await res.json();
-    let users = data.data?.data ?? [];
-
-    users.forEach(u => {
-        usersMap[u.id] = u;
-    });
-}
-
-
-/* ================= MAIN LOAD ================= */
-async function loadPaymentRecords() {
-
-    const token = localStorage.getItem("auth_token");
-    const user = JSON.parse(localStorage.getItem("auth_user"));
-
-    if (!token || !user) {
-        alert("Session expired. Please login again.");
-        window.location.href = "../login";
-        return;
+    function formatCurrency(value) {
+        return '₹' + Number(value || 0).toLocaleString('en-IN');
     }
 
-    try {
+    function formatDate(dateString) {
+        if (!dateString) return '-';
+        const date = new Date(dateString);
+        return date.toLocaleDateString('en-IN');
+    }
 
-        // 🔥 LOAD ALL DATA FIRST
-        await loadBookingsMap();
-        await loadUsersMap();
+    function normalizeRecords(data) {
+        if (Array.isArray(data)) return data;
+        if (data && Array.isArray(data.data)) return data.data;
+        if (data && typeof data === 'object') return [data];
+        return [];
+    }
 
-        const response = await fetch(url + `commission/payments/created-by/${user.id}`, {
-            method: "GET",
+    let bookingsMap = {};
+    let usersMap = {};
+
+    /* ================= LOAD BOOKINGS ================= */
+    async function loadBookingsMap() {
+        const token = localStorage.getItem("auth_token");
+
+        const res = await fetch(url + "bookings?per_page=1000", {
             headers: {
-                "Accept": "application/json",
                 "Authorization": "Bearer " + token
             }
         });
 
-        const data = await response.json();
-        const records = normalizeRecords(data.data);
+        const data = await res.json();
+        let bookings = data.data?.data ?? [];
 
-        if ($.fn.DataTable.isDataTable('#paymentTable')) {
-            $('#paymentTable').DataTable().destroy();
+        bookings.forEach(b => {
+            bookingsMap[b.id] = b;
+        });
+    }
+
+    /* ================= LOAD USERS ================= */
+    async function loadUsersMap() {
+        const token = localStorage.getItem("auth_token");
+
+        const res = await fetch(url + "users?role=adviser&per_page=1000", {
+            headers: {
+                "Authorization": "Bearer " + token
+            }
+        });
+
+        const data = await res.json();
+        let users = data.data?.data ?? [];
+
+        users.forEach(u => {
+            usersMap[parseInt(u.id)] = u;
+        });
+    }
+
+    /* ================= MAIN LOAD ================= */
+    async function loadPaymentRecords() {
+
+        const token = localStorage.getItem("auth_token");
+        const user = JSON.parse(localStorage.getItem("auth_user"));
+
+        if (!token || !user) {
+            alert("Session expired. Please login again.");
+            window.location.href = "../login";
+            return;
         }
 
-        const tbody = document.querySelector('#paymentTable tbody');
-        tbody.innerHTML = '';
+        try {
 
-        if (!records.length) {
-            tbody.innerHTML = `
+            await loadBookingsMap();
+            await loadUsersMap();
+
+            const response = await fetch(url + `commission/payments/created-by/${user.id}`, {
+                headers: {
+                    "Authorization": "Bearer " + token,
+                    "Accept": "application/json"
+                }
+            });
+
+            const data = await response.json();
+            let records = normalizeRecords(data.data);
+
+            // ✅ SORT NEW → OLD
+            records.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+
+            // ✅ DESTROY DATATABLE BEFORE RELOAD
+            if ($.fn.DataTable.isDataTable('#paymentTable')) {
+                $('#paymentTable').DataTable().destroy();
+            }
+
+            const tbody = document.querySelector('#paymentTable tbody');
+            tbody.innerHTML = '';
+
+            if (!records.length) {
+                tbody.innerHTML = `
                 <tr>
                     <td colspan="9" class="text-center py-6 text-gray-400">
                         No payment records found
                     </td>
                 </tr>
             `;
-            return;
-        }
+                return;
+            }
 
-        records.forEach((item, index) => {
+            // ✅ GROUP BY BOOKING (for correct running balance)
+            let grouped = {};
 
-            const booking = bookingsMap[item.booking_id] || {};
+            records.forEach(r => {
+                if (!grouped[r.booking_id]) grouped[r.booking_id] = [];
+                grouped[r.booking_id].push(r);
+            });
 
-            // 🔥 GET ADVISOR
-            const advisor = usersMap[booking.adviser_id] || {};
+            let rowIndex = 1;
 
-            let paid = Math.abs(parseFloat(item.amount) || 0);
-            let total = parseFloat(booking.total_booking_amount) || 0;
-            let commission = parseFloat(booking.commission_amount) || 0;
+            // 🔥 LOOP GROUPS
+            Object.keys(grouped).forEach(bookingId => {
 
-            let balance = total - paid;
+                let booking = bookingsMap[bookingId] || {};
+                let commission = parseFloat(booking.commission_amount) || 0;
 
-            tbody.innerHTML += `
-                <tr>
-                    <td>${index + 1}</td>
+                let balance = commission;
 
-                    <!-- ✅ ADVISOR NAME -->
-                    <td>
-                        ${advisor.name ?? '-'}
-                    </td>
+                // 🔥 IMPORTANT: reverse for calculation (old → new)
+                let sortedAsc = grouped[bookingId].sort(
+                    (a, b) => new Date(a.created_at) - new Date(b.created_at)
+                );
 
-                    <!-- ✅ CUSTOMER -->
-                    <td>
-                        ${booking.user_code ?? ''} - ${booking.buyer_name ?? '-'}
-                    </td>
+                sortedAsc.forEach(item => {
 
-                    <!-- ✅ PLOT -->
-                    <td>${booking.plot_number ?? '-'}</td>
+                    let advisorId = Number(item.user_id || item.created_by);
+                    let advisor = usersMap[advisorId] || {};
 
-                    <!-- ✅ BOOKING -->
-                    <td class="text-right font-semibold">
-                        ${formatCurrency(total)}
-                    </td>
+                    let paid = Math.abs(parseFloat(item.amount) || 0);
 
-                    <!-- ✅ COMMISSION -->
-                    <td class="text-right text-blue-600">
-                        ${formatCurrency(commission)}
-                    </td>
+                    balance = balance - paid;
 
-                    <!-- ✅ PAID -->
-                    <td class="text-right text-green-600 font-semibold">
-                        ${formatCurrency(paid)}
-                    </td>
+                    tbody.innerHTML += `
+                    <tr>
+                        <td>${rowIndex++}</td>
 
-                    <!-- ✅ BALANCE -->
-                    <td class="text-right text-red-500 font-semibold">
-                        ${formatCurrency(balance)}
-                    </td>
+                        <td>${advisor.name ?? '-'}</td>
 
-                    <!-- ✅ DATE -->
-                    <td>${formatDate(item.created_at)}</td>
-                </tr>
-            `;
-        });
+                        <td>
+                            ${booking.user_code ?? ''} - ${booking.buyer_name ?? '-'}
+                        </td>
 
-        $('#paymentTable').DataTable({
-            pageLength: 10,
-            lengthMenu: [10, 25, 50, 100],
-            responsive: true,
-            autoWidth: false
-        });
+                        <td>${booking.plot_number ?? '-'}</td>
 
-    } catch (error) {
+                        <td class="text-right font-semibold">
+                            ${formatCurrency(booking.total_booking_amount)}
+                        </td>
 
-        console.error('Error loading payment records:', error);
+                        <td class="text-right text-blue-600">
+                            ${formatCurrency(commission)}
+                        </td>
 
-        document.querySelector('#paymentTable tbody').innerHTML = `
+                        <td class="text-right text-green-600 font-semibold">
+                            ${formatCurrency(paid)}
+                        </td>
+
+                        <td class="text-right text-red-500 font-semibold">
+                            ${formatCurrency(balance)}
+                        </td>
+
+                        <td>${formatDate(item.created_at)}</td>
+                    </tr>
+                `;
+                });
+
+            });
+
+            // ✅ INIT DATATABLE
+            let table = $('#paymentTable').DataTable({
+                pageLength: 10,
+                lengthMenu: [10, 25, 50, 100],
+                responsive: true,
+                autoWidth: false,
+                order: [
+                    [8, 'desc']
+                ]
+            });
+
+            // ✅ FIX SERIAL NUMBER AFTER SORT / SEARCH
+            table.on('order.dt search.dt', function() {
+                let i = 1;
+
+                table.cells(null, 0, {
+                        search: 'applied',
+                        order: 'applied'
+                    })
+                    .every(function() {
+                        this.data(i++);
+                    });
+            }).draw();
+
+        } catch (error) {
+
+            console.error(error);
+
+            document.querySelector('#paymentTable tbody').innerHTML = `
             <tr>
                 <td colspan="9" class="text-center py-6 text-red-500">
                     Failed to load payment records
                 </td>
             </tr>
         `;
+        }
     }
-}
 
-/* ================= INIT ================= */
-document.addEventListener('DOMContentLoaded', loadPaymentRecords);
+    /* ================= INIT ================= */
+    document.addEventListener('DOMContentLoaded', loadPaymentRecords);
 </script>
