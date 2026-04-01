@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Mail\PasswordResetMail;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 
@@ -88,37 +90,33 @@ class AuthController extends Controller
         ]);
     }
 
-    public function forgotPassword(Request $request)
-    {
-        $request->validate([
-            'email' => 'required|email|exists:users,email'
-        ]);
+public function forgotPassword(Request $request)
+{
+    $request->validate([
+        'email' => 'required|email|exists:users,email'
+    ]);
 
-        $user = User::where('email', $request->email)->first();
+    $token = rand(100000,999999); // OTP
 
-        // Generate token
-        $token = Str::random(60);
+    DB::table('password_reset_tokens')
+        ->where('email', $request->email)
+        ->delete();
 
-        // Delete old tokens
-        DB::table('password_reset_tokens')
-            ->where('email', $request->email)
-            ->delete();
+    DB::table('password_reset_tokens')->insert([
+        'email' => $request->email,
+        'token' => Hash::make($token),
+        'created_at' => now()
+    ]);
 
-        // Insert new token
-        DB::table('password_reset_tokens')->insert([
-            'email' => $request->email,
-            'token' => Hash::make($token),
-            'created_at' => Carbon::now()
-        ]);
+    // ✅ SEND MAIL
+    Mail::to($request->email)
+        ->send(new PasswordResetMail($request->email, $token));
 
-        // 👉 Later send email / SMS here
-
-        return response()->json([
-            'status' => true,
-            'message' => 'Password reset token generated',
-            'token' => $token // for testing (remove in production)
-        ]);
-    }
+    return response()->json([
+        'status' => true,
+        'message' => 'OTP sent to email'
+    ]);
+}
 
     public function verifyResetToken(Request $request)
     {
@@ -130,6 +128,18 @@ class AuthController extends Controller
         $record = DB::table('password_reset_tokens')
             ->where('email', $request->email)
             ->first();
+
+            if (Carbon::parse($record->created_at)->addMinutes(10)->isPast()) {
+
+                DB::table('password_reset_tokens')
+                    ->where('email',$request->email)
+                    ->delete();
+
+                return response()->json([
+                    'status'=>false,
+                    'message'=>'Token expired'
+                ]);
+            }
 
         if (!$record) {
             return response()->json([
@@ -163,6 +173,14 @@ class AuthController extends Controller
         $record = DB::table('password_reset_tokens')
             ->where('email', $request->email)
             ->first();
+
+            if (Carbon::parse($record->created_at)->addMinutes(10)->isPast()) {
+
+                return response()->json([
+                    'status'=>false,
+                    'message'=>'Token expired'
+                ]);
+            }
 
         if (!$record) {
             return response()->json([

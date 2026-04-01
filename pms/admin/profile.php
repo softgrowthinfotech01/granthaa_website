@@ -128,7 +128,7 @@
 
          const user = data.user;
          const summary = data.summary;
-
+ 
          // HEADER
          document.getElementById('name').innerText = safe(user.name);
          document.getElementById('role').innerText = safe(user.role?.toUpperCase());

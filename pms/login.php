@@ -1,291 +1,305 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<title>User Login | Granthaa Land Developer Pvt Ltd</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <title>User Login | Granthaa Land Developer Pvt Ltd</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css">
+<style>
+    @keyframes fadeIn{
+  from{opacity:0; transform:scale(.9);}
+  to{opacity:1; transform:scale(1);}
+}
 
-<!-- <script src="https://cdn.tailwindcss.com"></script> -->
+.animate-fadeIn{
+  animation:fadeIn .3s ease;
+}
+</style>
+    <!-- <script src="https://cdn.tailwindcss.com"></script> -->
 </head>
 
 <body class="min-h-screen flex items-center justify-center 
              bg-gradient-to-br from-gray-900 via-gray-800 to-black">
 
-<!-- Wrapper -->
-<div class="w-full max-w-md">
+    <!-- Wrapper -->
+    <div class="w-full max-w-md">
 
-  <!-- Card -->
-  <div class="bg-white/10 backdrop-blur-md rounded-xl shadow-2xl p-8 border border-white/20">
+        <!-- Card -->
+        <div class="bg-white/10 backdrop-blur-md rounded-xl shadow-2xl p-8 border border-white/20">
 
-    <!-- Logo -->
-    <div class="flex justify-center mb-3">
-      <img src="images/logo.png" alt="Logo" class="h-25 w-60 rounded-lg border-2 border-yellow-400 shadow-md">
-    </div>
+            <!-- Logo -->
+            <div class="flex justify-center mb-3">
+                <img src="images/logo.png" alt="Logo" class="h-25 w-60 rounded-lg border-2 border-yellow-400 shadow-md">
+            </div>
 
-    <!-- Heading -->
-    <h2 class="text-center text-xl font-serif font-semibold tracking-widest text-yellow-400">
-      SOFTWARE LOGIN
-    </h2>
-    <p class="text-center text-md text-gray-300 mt-1">
-      Granthaa Land Developer Pvt Ltd
-    </p>
-<p id="error" class="text-center text-red-600 mt-2"></p>
-    <!-- Divider -->
-    <div class="my-6 h-px bg-yellow-400/40"></div>
+            <!-- Heading -->
+            <h2 class="text-center text-xl font-serif font-semibold tracking-widest text-yellow-400">
+                SOFTWARE LOGIN
+            </h2>
+            <p class="text-center text-md text-gray-300 mt-1">
+                Granthaa Land Developer Pvt Ltd
+            </p>
+            <p id="error" class="text-center text-red-600 mt-2"></p>
+            <!-- Divider -->
+            <div class="my-6 h-px bg-yellow-400/40"></div>
 
-    <!-- Form -->
-    <form id="loginForm" class="space-y-5">
+            <!-- Form -->
+            <form id="loginForm" class="space-y-5">
 
-      <!-- Username -->
-      <div>
-        <label class="block text-sm text-gray-200 mb-1">Username</label>
-        <input id="login" type="text" placeholder="Enter username or Mobile number"
-          class="w-full bg-transparent border-b border-gray-400 text-white px-2 py-2
+                <!-- Username -->
+                <div>
+                    <label class="block text-sm text-gray-200 mb-1">Username</label>
+                    <input id="login" type="text"
+                        class="w-full bg-transparent border-b border-gray-400 text-white px-2 py-2
                  focus:outline-none focus:border-yellow-400">
-      </div>
+                </div>
 
-      <!-- Password -->
-      <div class="relative">
-        <label class="block text-sm text-gray-200 mb-1">Password</label>
+                <!-- Password -->
+                <div class="relative">
+                    <label class="block text-sm text-gray-200 mb-1">Password</label>
 
-        <input type="password" id="password" placeholder="Enter password"
-          class="w-full bg-transparent border-b border-gray-400 text-white px-2 py-2
+                    <input type="password" id="password"
+                        class="w-full bg-transparent border-b border-gray-400 text-white px-2 py-2
                  focus:outline-none focus:border-yellow-400 pr-10">
 
-        <!-- Show password -->
-        <button type="button" onclick="togglePassword()"
-          class="absolute right-2 top-8 text-gray-300 hover:text-yellow-400">
-          👁
-        </button>
-      </div>
+                    <!-- Show password -->
+                    <button type="button" onclick="togglePassword()"
+                        class="absolute right-2 top-8 text-gray-300 hover:text-yellow-400">
+                        👁
+                    </button>
+                </div>
 
-      <!-- Login Button -->
-      <button type="submit"
-        class="w-full mt-4 bg-yellow-400 text-black py-2.5 rounded-md
+                <!-- Login Button -->
+                <button type="submit"
+                    class="w-full mt-4 bg-yellow-400 text-black py-2.5 rounded-md
                font-semibold tracking-widest hover:bg-yellow-500 transition">
-        LOGIN
-      </button>
+                    LOGIN
+                </button>
 
-    </form>
+            </form>
 
-<p class="text-center mt-4">
-  <a href="#" onclick="openForgotModal()" 
-     class="text-yellow-400 text-sm hover:underline">
-     Forgot Password?
-  </a>
-</p>
+            <p class="text-center mt-4">
+                <a href="#" onclick="openForgotModal()"
+                    class="text-yellow-400 text-sm hover:underline">
+                    Forgot Password?
+                </a>
+            </p>
 
-    <!-- Footer -->
-    <p class="text-center text-xs text-gray-400 mt-6">
-      © 2026 <span class=" ">
-      Developed By <a href="https://softgrowthinfotech.com/" target="_blank">Softgrowth Infotech</a>
-    </span>.
-    </p>
+            <!-- Footer -->
+            <p class="text-center text-xs text-gray-400 mt-6">
+                © 2026 <span class=" ">
+                    Developed By <a href="https://softgrowthinfotech.com/" target="_blank">Softgrowth Infotech</a>
+                </span>.
+            </p>
 
-  </div> 
+        </div>
 
-</div>
+    </div>
 
 
-<!-- Forgot Password Modal -->
-<!-- Forgot Password Modal -->
-<div id="forgotModal"
-class="hidden fixed inset-0 z-50 flex items-center justify-center">
+    <!-- Forgot Password Modal -->
+    <!-- Forgot Password Modal -->
+    <div id="forgotModal"
+        class="hidden fixed inset-0 z-50 flex items-center justify-center">
 
-  <!-- Dark Background -->
-  <div class="absolute inset-5 bg-gary-500"></div>
+        <!-- Dark Background -->
+        <div class="absolute inset-5 bg-gary-500"></div>
 
-  <!-- Modal Card -->
-  <div class="relative bg-gray-500 rounded-xl shadow-2xl
+        <!-- Modal Card -->
+        <div class="relative bg-gray-500 rounded-xl shadow-2xl
               border border-yellow-400/40 p-8 w-full max-w-md
               animate-fadeIn">
 
-    <h3 class="text-yellow-400 text-xl text-center font-semibold mb-6 tracking-wide">
-      Reset Password
-    </h3>
+            <h3 class="text-yellow-400 text-xl text-center font-semibold mb-6 tracking-wide">
+                Reset Password
+            </h3>
 
-    <!-- Email -->
-    <input id="reset_email"
-      placeholder="Enter Registered Email"
-      class="w-full bg-gray-800 border border-gray-600
+            <!-- Email -->
+            <input id="reset_email"
+                placeholder="Enter Registered Email"
+                class="w-full bg-gray-800 border border-gray-600
              text-white placeholder-gray-400
              rounded-md px-3 py-2 mb-4
              focus:outline-none focus:border-yellow-400">
 
-    <!-- Generate Token -->
-    <button id="tokenBtn" onclick="sendResetToken()"
-      class="w-full bg-yellow-400 text-black py-2.5 rounded-md
+            <!-- OTP -->
+            <input id="reset_token"
+                placeholder="Enter OTP received on Email"
+                class="w-full bg-gray-800 border border-gray-600
+         text-white placeholder-gray-400
+         rounded-md px-3 py-2 mb-4
+         focus:outline-none focus:border-yellow-400 hidden">
+
+            <!-- Generate Token -->
+            <button id="tokenBtn" onclick="sendResetToken()"
+                class="w-full bg-yellow-400 text-black py-2.5 rounded-md
              font-semibold tracking-widest hover:bg-yellow-500 transition">
-      Generate Token
-    </button>
+                Generate Token
+            </button>
 
-    <!-- Divider -->
-    <div class="my-6 h-px bg-yellow-400/40"></div>
+            <!-- Divider -->
+            <div class="my-6 h-px bg-yellow-400/40"></div>
 
-    <!-- New Password -->
-    <input id="new_password"
-      type="password"
-      placeholder="New Password"
-      class="w-full bg-gray-800 border border-gray-600
-             text-white placeholder-gray-400
-             rounded-md px-3 py-2 mb-3
-             focus:outline-none focus:border-yellow-400">
+            <div id="resetSection" class="hidden">
 
-    <!-- Confirm Password -->
-    <input id="confirm_password"
-      type="password"
-      placeholder="Confirm Password"
-      class="w-full bg-gray-800 border border-gray-600
-             text-white placeholder-gray-400
-             rounded-md px-3 py-2 mb-5
-             focus:outline-none focus:border-yellow-400">
+                <input id="new_password" type="password"
+                    placeholder="New Password"
+                    class="w-full bg-gray-800 border border-gray-600
+text-white rounded-md px-3 py-2 mb-3">
 
-    <!-- Reset Button -->
-    <button onclick="resetPassword()"
-      class="w-full bg-green-500 text-black py-2.5 rounded-md
-             font-semibold tracking-widest hover:bg-green-600 transition">
-      Reset Password
-    </button>
+                <input id="confirm_password" type="password"
+                    placeholder="Confirm Password"
+                    class="w-full bg-gray-800 border border-gray-600
+text-white rounded-md px-3 py-2 mb-5">
 
-    <!-- Close -->
-    <button onclick="closeForgotModal()"
-      class="w-full mt-4 text-center text-gray-400 hover:text-white text-sm">
-      Cancel
-    </button>
+                <button onclick="resetPassword()"
+                    class="w-full bg-green-500 text-black py-2.5 rounded-md
+font-semibold tracking-widest hover:bg-green-600 transition">
+                    Reset Password
+                </button>
 
-  </div>
-</div>
-<script src="url.js"></script>
-<script>
-function togglePassword(){
-  const pass = document.getElementById("password");
-  pass.type = pass.type === "password" ? "text" : "password";
-}
-</script>
-<script>
+            </div>
+            <!-- Close -->
+            <button onclick="closeForgotModal()"
+                class="w-full mt-4 text-center text-gray-400 hover:text-white text-sm">
+                Cancel
+            </button>
 
-/* ================================
+        </div>
+    </div>
+    <script src="url.js"></script>
+    <script>
+        function togglePassword() {
+            const pass = document.getElementById("password");
+            pass.type = pass.type === "password" ? "text" : "password";
+        }
+    </script>
+    <script>
+        /* ================================
    LOGIN API
 ================================ */
 
-const API_URL = url + "login";
+        const API_URL = url + "login";
 
-document.getElementById("loginForm")
-.addEventListener("submit", async function (e) {
+        document.getElementById("loginForm")
+            .addEventListener("submit", async function(e) {
 
-    e.preventDefault();
+                e.preventDefault();
 
-    const login = document.getElementById("login").value.trim();
-    const password = document.getElementById("password").value.trim();
-    const errorBox = document.getElementById("error");
-    const loginBtn = this.querySelector("button");
+                const login = document.getElementById("login").value.trim();
+                const password = document.getElementById("password").value.trim();
+                const errorBox = document.getElementById("error");
+                const loginBtn = this.querySelector("button");
 
-    errorBox.innerText = "";
+                errorBox.innerText = "";
 
-    if (!login || !password) {
-        errorBox.innerText = "Please enter username and password";
-        return;
-    }
+                if (!login || !password) {
+                    errorBox.innerText = "Please enter username and password";
+                    return;
+                }
 
-    loginBtn.disabled = true;
-    loginBtn.innerText = "Logging in...";
+                loginBtn.disabled = true;
+                loginBtn.innerText = "Logging in...";
 
-    try {
+                try {
 
-        const response = await fetch(API_URL,{
-            method:"POST",
-            headers:{
-                "Content-Type":"application/json",
-                "Accept":"application/json"
-            },
-            body:JSON.stringify({login,password})
-        });
+                    const response = await fetch(API_URL, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Accept": "application/json"
+                        },
+                        body: JSON.stringify({
+                            login,
+                            password
+                        })
+                    });
 
-        const data = await response.json();
+                    const data = await response.json();
 
-        if(!response.ok){
-            throw data;
+                    if (!response.ok) {
+                        throw data;
+                    }
+
+                    localStorage.setItem("auth_token", data.token);
+                    localStorage.setItem("auth_user", JSON.stringify(data.user));
+
+                    switch (data.user.role) {
+                        case "admin":
+                            window.location.href = "admin/";
+                            break;
+                        case "leader":
+                            window.location.href = "leader/";
+                            break;
+                        case "adviser":
+                            window.location.href = "advisor/";
+                            break;
+                        case "customer":
+                            window.location.href = "customer/";
+                            break;
+                        default:
+                            errorBox.innerText = "Unknown user role";
+                    }
+
+                } catch (err) {
+                    errorBox.innerText = err?.message || "Login failed";
+                } finally {
+                    loginBtn.disabled = false;
+                    loginBtn.innerText = "LOGIN";
+                }
+
+            });
+
+
+        /* ================================
+           MODAL CONTROL
+        ================================ */
+
+        function openForgotModal() {
+            document.getElementById("forgotModal").classList.remove("hidden");
         }
 
-        localStorage.setItem("auth_token",data.token);
-        localStorage.setItem("auth_user",JSON.stringify(data.user));
-
-        switch(data.user.role){
-            case "admin":
-                window.location.href="admin/";
-                break;
-            case "leader":
-                window.location.href="leader/";
-                break;
-            case "adviser":
-                window.location.href="advisor/";
-                break;
-            case "customer":
-                window.location.href="customer/";
-                break;
-            default:
-                errorBox.innerText="Unknown user role";
+        function closeForgotModal() {
+            document.getElementById("forgotModal").classList.add("hidden");
         }
 
-    }catch(err){
-        errorBox.innerText = err?.message || "Login failed";
-    }
-    finally{
-        loginBtn.disabled=false;
-        loginBtn.innerText="LOGIN";
-    }
-
-});
+        // close when clicking outside
+        document.getElementById("forgotModal")
+            .addEventListener("click", function(e) {
+                if (e.target === this) {
+                    closeForgotModal();
+                }
+            });
 
 
-/* ================================
-   MODAL CONTROL
-================================ */
+        /* ================================
+           TOKEN GENERATION (ONLY ONCE)
+        ================================ */
 
-function openForgotModal(){
-    document.getElementById("forgotModal").classList.remove("hidden");
-}
-
-function closeForgotModal(){
-    document.getElementById("forgotModal").classList.add("hidden");
-}
-
-// close when clicking outside
-document.getElementById("forgotModal")
-.addEventListener("click",function(e){
-    if(e.target===this){
-        closeForgotModal();
-    }
-});
-
-
-/* ================================
-   TOKEN GENERATION (ONLY ONCE)
-================================ */
-
-let resetToken="";
-let tokenGenerated=false;
+        let resetToken = "";
+        let tokenGenerated = false;
 
 async function sendResetToken(){
 
-    if(tokenGenerated){
-        alert("Token already generated!");
-        return;
-    }
-
     const email=document.getElementById("reset_email").value.trim();
+    const btn=document.getElementById("tokenBtn");
 
     if(email===""){
         alert("Enter registered email");
         return;
     }
 
-    const btn=document.getElementById("tokenBtn");
+    const emailRegex=/^\S+@\S+\.\S+$/;
+
+    if(!emailRegex.test(email)){
+        alert("Enter valid email");
+        return;
+    }
 
     btn.disabled=true;
-    btn.innerText="Generating...";
+    btn.innerText="Sending OTP...";
 
     try{
 
@@ -302,14 +316,15 @@ async function sendResetToken(){
 
         if(data.status){
 
-            resetToken=data.token;
+            alert("OTP sent to your email ✅");
 
-            alert("Reset Token:\n"+data.token);
+            document.getElementById("reset_token")
+                .classList.remove("hidden");
 
-            tokenGenerated=true;
+            document.getElementById("resetSection")
+                .classList.remove("hidden");
 
-            btn.innerText="Token Generated ✅";
-            btn.classList.add("opacity-50","cursor-not-allowed");
+            btn.innerText="OTP Sent ✅";
 
         }else{
             btn.disabled=false;
@@ -325,65 +340,83 @@ async function sendResetToken(){
 }
 
 
-/* ================================
-   RESET PASSWORD
-================================ */
+        /* ================================
+           RESET PASSWORD
+        ================================ */
 
-async function resetPassword(){
+        async function resetPassword() {
 
-    const email=document.getElementById("reset_email").value.trim();
-    const password=document.getElementById("new_password").value.trim();
-    const confirm=document.getElementById("confirm_password").value.trim();
+            const email = document.getElementById("reset_email").value.trim();
+            const token = document.getElementById("reset_token").value.trim();
+            const password = document.getElementById("new_password").value.trim();
+            const confirm = document.getElementById("confirm_password").value.trim();
 
-    if(password!==confirm){
-        alert("Passwords do not match");
-        return;
-    }
+            if (!token) {
+                alert("Enter OTP first");
+                return;
+            }
 
-    if(resetToken===""){
-        alert("Generate token first");
-        return;
-    }
+            if (password !== confirm) {
+                alert("Passwords do not match");
+                return;
+            }
 
-    try{
+            try {
 
-        const response=await fetch(url+"reset-password",{
-            method:"POST",
-            headers:{
-                "Content-Type":"application/json",
-                "Accept":"application/json"
-            },
-            body:JSON.stringify({
-                email:email,
-                token:resetToken,
-                password:password,
-                password_confirmation:confirm
-            })
-        });
+                const response = await fetch(url + "reset-password", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Accept": "application/json"
+                    },
+                    body: JSON.stringify({
+                        email,
+                        token,
+                        password
+                    })
+                });
 
-        const data=await response.json();
+                const data = await response.json();
 
-        if(data.status){
+                if (data.status) {
 
-            alert("Password Reset Successful ✅");
+                    alert("Password Reset Successful ✅");
 
-            closeForgotModal();
+                    closeForgotModal();
 
-            // reset modal state
-            tokenGenerated=false;
-            resetToken="";
+                    // clear fields
+                    document.getElementById("reset_email").value = "";
+                    document.getElementById("reset_token").value = "";
+                    document.getElementById("new_password").value = "";
+                    document.getElementById("confirm_password").value = "";
 
-            document.getElementById("tokenBtn").disabled=false;
-            document.getElementById("tokenBtn").innerText="Generate Token";
+                } else {
+                    alert(data.message);
+                }
 
-        }else{
-            alert(data.message);
+            } catch {
+                alert("Server error");
+            }
+
+            if (data.status) {
+
+                alert("Password Reset Successful ✅");
+
+                closeForgotModal();
+
+                document.getElementById("reset_email").value = "";
+                document.getElementById("reset_token").value = "";
+                document.getElementById("new_password").value = "";
+                document.getElementById("confirm_password").value = "";
+
+                document.getElementById("reset_token")
+                    .classList.add("hidden");
+
+                document.getElementById("resetSection")
+                    .classList.add("hidden");
+
+                document.getElementById("tokenBtn").disabled = false;
+                document.getElementById("tokenBtn").innerText = "Generate Token";
+            }
         }
-
-    }catch{
-        alert("Server error");
-    }
-
-}
-
-</script>
+    </script>

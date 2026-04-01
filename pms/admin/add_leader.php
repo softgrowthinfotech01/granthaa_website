@@ -298,9 +298,11 @@
             }
 
             let formData = new FormData(form);
+            
+            let contactNumber = document.querySelector("input[name='contact_no']").value;
 
             formData.set("role", "leader");
-            formData.set("password", "password123");
+            formData.set("password", contactNumber);
             formData.set("created_by", user.id);
 
             try {
