@@ -89,12 +89,6 @@
                         class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-green-400 outline-none">
                 </div>
 
-                <!-- Advance -->
-                <div class="space-y-2">
-                    <label class="text-sm font-semibold text-gray-700">Advance Booking Amount</label>
-                    <input type="number" id="advance_amount" name="advance_amount"
-                        class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-green-400 outline-none">
-                </div>
 
             </div>
         </div>
@@ -183,6 +177,13 @@
                 <div class="space-y-2">
                     <label class="text-sm font-semibold text-gray-700">Total Amount</label>
                     <input type="number" id="total_booking_amount" name="total_booking_amount"
+                        class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-green-400 outline-none">
+                </div>
+
+                <!-- Advance -->
+                <div class="space-y-2">
+                    <label class="text-sm font-semibold text-gray-700">Advance Booking Amount</label>
+                    <input type="number" id="advance_amount" name="advance_amount"
                         class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-green-400 outline-none">
                 </div>
 
