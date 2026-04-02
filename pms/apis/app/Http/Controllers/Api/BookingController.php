@@ -474,15 +474,22 @@ public function update(Request $request, $id)
             | Block Plot Change After Transaction
             |--------------------------------------------------------------------------
             */
-            $plotChanged =
-                $request->plot_number != $booking->plot_number ||
-                $request->site_location != $booking->site_location;
+            if (!$canEditPlot) {
 
-            if (!$canEditPlot && $plotChanged) {
-                throw new \Exception(
-                    'Booking is having transactions. Plot cannot be changed.'
-                );
-            }
+    $tempBooking = clone $booking;
+
+    // apply only incoming values
+    $tempBooking->fill($request->only([
+        'plot_number',
+        'site_location'
+    ]));
+
+    if ($tempBooking->isDirty(['plot_number', 'site_location'])) {
+        throw new \Exception(
+            'Booking is having transactions. Plot cannot be changed.'
+        );
+    }
+}
 
             /*
             |--------------------------------------------------------------------------
