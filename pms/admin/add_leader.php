@@ -83,6 +83,13 @@
                                             class="w-full border border-gray-400 rounded-lg bg-white text-sm focus:ring-2 focus:ring-blue-500 outline-none p-2 bg-white">
                                     </div>
 
+                                    <div>
+                                        <label class="block mb-1 text-sm font-medium text-gray-700">Pan Card</label>
+                                        <input name="age" type="text" id="pancard_number"
+                                            class="w-full px-3 py-2.5 border border-gray-400 rounded-lg bg-white text-sm focus:ring-2 focus:ring-blue-500 outline-none"
+                                            placeholder="Enter pancard_number number" required>
+                                    </div>
+
                                 </div>
                             </div>
 
