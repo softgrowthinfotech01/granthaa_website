@@ -514,7 +514,7 @@ public function update(Request $request, $id)
             if ($booking->user) {
                 $booking->user->update(array_filter([
                     'name' => $request->buyer_name,
-                    'contact_no' => $request->mobile,
+                    // 'contact_no' => $request->mobile,
                     'address' => $request->address,
                     'city' => $request->city,
                     'state' => $request->state,
@@ -1123,7 +1123,7 @@ public function update(Request $request, $id)
     {
         $user = auth()->user();
 
-        $query = Booking::whereNull('deleted_at');
+        $query = Booking::whereNull('deleted_at')->query();
 
         // Role filter
         if ($user->role === 'leader') {
@@ -1337,7 +1337,7 @@ public function update(Request $request, $id)
         ]);
     }
 
-   public function commissionSplit()
+public function commissionSplit()
 {
     $leader = auth()->user();
 
@@ -1359,8 +1359,8 @@ public function update(Request $request, $id)
     return response()->json([
         'status' => true,
         'data' => [
-            'leader' => $leaderCommission,
-            'adviser' => $adviserCommission,
+            'leader_commission' => $leaderCommission,
+            'adviser_commission' => $adviserCommission,
             'total_network_commission' => $total
         ]
     ]);

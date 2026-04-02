@@ -7,7 +7,9 @@ use App\Models\Booking;
 use App\Models\Referral;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -164,10 +166,10 @@ class UserController extends Controller
                 'address'    => 'required|string',
                 'pin_code'   => 'nullable|string|max:10',
                 'image'      => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
-                'pancard_number'  => 'nullable|string',
+                'pancard_number'  => 'required|string|unique:users,pancard_number',
                 'bank_name'  => 'required|string',
                 'bank_branch'  => 'required|string',
-                'bank_account_no'  => 'required|string',
+                'bank_account_no'  => 'required|string|unique:users,bank_account_no',
                 'bank_ifsc_code'  => 'required|string',
             ];
         }
@@ -236,6 +238,43 @@ class UserController extends Controller
     }
 
     public function myNetwork(Request $request)
+    {
+        $auth = auth()->user();
+
+        if (!$auth) {
+            return response()->json(['message' => 'Unauthenticated'], 401);
+        }
+
+        $query = User::where('created_by', $auth->id);
+
+        // 🔎 Search
+        if ($request->filled('search')) {
+            $search = $request->search;
+
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%")
+                    ->orWhere('email', 'like', "%{$search}%")
+                    ->orWhere('role', 'like', "%{$search}%");
+            });
+        }
+
+        // 📄 Pagination
+        $perPage = $request->per_page ?? 10;
+
+        $users = $query->orderBy('id', 'desc')
+            ->paginate($perPage)
+            ->withQueryString();
+
+        return response()->json([
+            'message' => 'My network fetched successfully',
+            'data' => $users
+        ]);
+    }
+
+    /**
+     * Update User
+     */
+public function update(Request $request, $id)
 {
     $auth = auth()->user();
 
@@ -243,100 +282,102 @@ class UserController extends Controller
         return response()->json(['message' => 'Unauthenticated'], 401);
     }
 
-    $query = User::where('created_by', $auth->id);
+    $user = User::find($id);
 
-    // 🔎 Search
-    if ($request->filled('search')) {
-        $search = $request->search;
-
-        $query->where(function ($q) use ($search) {
-            $q->where('name', 'like', "%{$search}%")
-              ->orWhere('email', 'like', "%{$search}%")
-              ->orWhere('role', 'like', "%{$search}%");
-        });
+    if (!$user) {
+        return response()->json(['message' => 'User not found'], 404);
     }
 
-    // 📄 Pagination
-    $perPage = $request->per_page ?? 10;
+    if ($auth->role != 'admin' && $user->id != $auth->id && $user->created_by != $auth->id) {
+        return response()->json(['message' => 'Unauthorized'], 403);
+    }
 
-    $users = $query->orderBy('id', 'desc')
-                   ->paginate($perPage)
-                   ->withQueryString();
+    $rules = [
+        'name' => 'sometimes|required|string|max:200',
+        'aadhaar_number' => 'sometimes|required|digits:12',
+        'password' => 'nullable|min:6',
+        'age' => 'nullable|integer|min:18',
+        'gender' => 'nullable|in:male,female,others',
+        'contact_no' => 'nullable|string|max:15',
+        'city' => 'nullable|string',
+        'state' => 'nullable|string',
+        'address' => 'nullable|string',
+        'pin_code' => 'nullable|string|max:10',
+        'image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+        'bank_name' => 'nullable|string',
+        'bank_branch' => 'nullable|string',
+        'bank_account_no' => 'nullable|string|unique:users,bank_account_no,' . $id,
+        'bank_ifsc_code' => 'nullable|string',
+        'pancard_number' => 'nullable|string|unique:users,pancard_number,' . $id,
+    ];
 
-    return response()->json([
-        'message' => 'My network fetched successfully',
-        'data' => $users
-    ]);
-}
+    $validated = $request->validate($rules);
 
-    /**
-     * Update User
-     */
-    public function update(Request $request, $id)
-    {
+    DB::beginTransaction();
 
-        $auth = auth()->user();
+    try {
 
-        if (!$auth) {
-            return response()->json(['message' => 'Unauthenticated'], 401);
-        }
-
-        $user = User::find($id);
-
-        if (!$user) {
-            return response()->json(['message' => 'User not found'], 404);
-        }
-        // dd($auth->id, $user->created_by);
-
-        // Admin can update anyone
-        // Others can update only their created users
-        // print_r($user->id);exit;
-        if ($auth->role != 'admin' && $user->id != $auth->id && $user->created_by != $auth->id) {
-            return response()->json(['message' => 'Unauthorized'], 403);
-        }
-
-        $rules = [
-            'name' => 'sometimes|required|string|max:200',
-            // 'email' => 'sometimes|required|email|unique:users,email,' . $id,
-            'aadhaar_number' => 'sometimes|required|digits:12',
-            'password' => 'nullable|min:6',
-            'age' => 'nullable|integer|min:18',
-            'gender' => 'nullable|in:male,female,others',
-            'contact_no' => 'nullable|string|max:15',
-            'city' => 'nullable|string',
-            'state' => 'nullable|string',
-            'address' => 'nullable|string',
-            'pin_code' => 'nullable|string|max:10',
-            'image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
-            'bank_name' => 'nullable|string',
-            'bank_branch' => 'nullable|string',
-            'bank_account_no' => 'nullable|string',
-            'bank_ifsc_code' => 'nullable|string',
-            'pancard_number' => 'nullable|string',
-        ];
-
-        $validated = $request->validate($rules);
-
-        // Image upload
-        if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('leaders', 'public');
-            $validated['profile_image'] = $imagePath;
-        }
-
-        // Password update
+        /*
+        |--------------------------------
+        | PASSWORD HASH FIRST
+        |--------------------------------
+        */
         if (!empty($validated['password'])) {
             $validated['password'] = Hash::make($validated['password']);
         } else {
             unset($validated['password']);
         }
 
+        /*
+        |--------------------------------
+        | IMAGE UPDATE
+        |--------------------------------
+        */
+        /*
+|--------------------------------
+| IMAGE UPDATE
+|--------------------------------
+*/
+// dd($request->all(), $request->hasFile('image'));
+if ($request->hasFile('image')) {
+
+    // delete old image
+    if ($user->profile_image &&
+        Storage::disk('public')->exists($user->profile_image)) {
+
+        Storage::disk('public')->delete($user->profile_image);
+    }
+
+    // store new image
+    $imagePath = $request->file('image')
+        ->store('leaders', 'public');
+
+    // IMPORTANT FIX
+    $validated['profile_image'] = $imagePath;
+
+    // remove wrong key
+    unset($validated['image']);
+}
+
+        /*
+        |--------------------------------
+        | SINGLE UPDATE ONLY
+        |--------------------------------
+        */
         $user->update($validated);
 
-        return response()->json([
-            'message' => 'User updated successfully',
-            'data' => $user
-        ]);
+        DB::commit();
+
+    } catch (\Exception $e) {
+        DB::rollBack();
+        throw $e;
     }
+
+    return response()->json([
+        'message' => 'User updated successfully',
+        'data' => $user->fresh()
+    ]);
+}
 
     public function createCustomer(array $data, $createdBy)
     {
@@ -394,145 +435,145 @@ class UserController extends Controller
     }
 
     /**
- * Get Users By Role (Dynamic)
- */
-public function getUsersByRole(Request $request)
-{
-    $auth = auth()->user();
+     * Get Users By Role (Dynamic)
+     */
+    public function getUsersByRole(Request $request)
+    {
+        $auth = auth()->user();
 
-    if (!$auth) {
+        if (!$auth) {
+            return response()->json([
+                'message' => 'Unauthenticated'
+            ], 401);
+        }
+
+        // Validate role parameter
+        $request->validate([
+            'role' => 'required|in:admin,leader,adviser,customer'
+        ]);
+
+        $role = $request->role;
+
+        $query = User::where('role', $role);
+
+        // 🔐 Role-based restriction
+        if ($auth->role !== 'admin') {
+            $query->where('created_by', $auth->id);
+        }
+
+        // 🔎 Optional Search
+        if ($request->filled('search')) {
+            $search = $request->search;
+
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%")
+                    ->orWhere('email', 'like', "%{$search}%")
+                    ->orWhere('user_code', 'like', "%{$search}%")
+                    ->orWhere('contact_no', 'like', "%{$search}%");
+            });
+        }
+
+        // 📄 Pagination
+        $perPage = $request->per_page ?? 10;
+
+        $users = $query->orderBy('id', 'desc')
+            ->paginate($perPage)
+            ->withQueryString();
+
         return response()->json([
-            'message' => 'Unauthenticated'
-        ], 401);
+            'message' => ucfirst($role) . ' users fetched successfully',
+            'data' => $users
+        ]);
     }
 
-    // Validate role parameter
-    $request->validate([
-        'role' => 'required|in:admin,leader,adviser,customer'
-    ]);
+    public function submitReferral(Request $request)
+    {
+        $request->validate([
+            'referrer_id' => 'required|exists:users,id',
+            'referred_name' => 'required',
+            'referred_contact' => 'required',
+            'referred_email' => 'nullable|email'
+        ]);
 
-    $role = $request->role;
+        $customer = User::where('id', $request->referrer_id)
+            ->where('role', 'customer')
+            ->firstOrFail();
 
-    $query = User::where('role', $role);
+        Referral::create([
+            'referrer_id' => $customer->id,
+            'referred_name' => $request->referred_name,
+            'referred_contact' => $request->referred_contact,
+            'referred_email' => $request->referred_email,
+            'assigned_to' => $customer->created_by, // 👈 IMPORTANT
+            'status' => 'pending'
+        ]);
 
-    // 🔐 Role-based restriction
-    if ($auth->role !== 'admin') {
-        $query->where('created_by', $auth->id);
+        return response()->json([
+            'message' => 'Referral submitted successfully'
+        ]);
     }
 
-    // 🔎 Optional Search
-    if ($request->filled('search')) {
-        $search = $request->search;
+    public function myReferrals()
+    {
+        $user = auth()->user();
 
-        $query->where(function ($q) use ($search) {
-            $q->where('name', 'like', "%{$search}%")
-              ->orWhere('email', 'like', "%{$search}%")
-              ->orWhere('user_code', 'like', "%{$search}%")
-              ->orWhere('contact_no', 'like', "%{$search}%");
-        });
+        $referrals = Referral::where('assigned_to', $user->id)
+            ->where('status', 'pending')
+            ->get();
+
+        return response()->json($referrals);
     }
 
-    // 📄 Pagination
-    $perPage = $request->per_page ?? 10;
+    // user profile
+    public function profile(Request $request)
+    {
+        $user = $request->user();
 
-    $users = $query->orderBy('id', 'desc')
-                   ->paginate($perPage)
-                   ->withQueryString();
+        $summary = [];
 
-    return response()->json([
-        'message' => ucfirst($role) . ' users fetched successfully',
-        'data' => $users
-    ]);
-}
+        switch ($user->role) {
 
-public function submitReferral(Request $request)
-{
-    $request->validate([
-        'referrer_id' => 'required|exists:users,id',
-        'referred_name' => 'required',
-        'referred_contact' => 'required',
-        'referred_email' => 'nullable|email'
-    ]);
+            case 'admin':
+                $summary = [
+                    'total_users' => User::count(),
+                    'leaders' => User::whereRole('leader')->count(),
+                    'advisers' => User::whereRole('adviser')->count(),
+                    'customers' => User::whereRole('customer')->count(),
+                ];
+                break;
 
-    $customer = User::where('id', $request->referrer_id)
-                    ->where('role','customer')
-                    ->firstOrFail();
+            case 'leader':
+                $summary = [
+                    'team_advisers' => User::where('created_by', $user->id)
+                        ->whereRole('adviser')->count(),
 
-    Referral::create([
-        'referrer_id' => $customer->id,
-        'referred_name' => $request->referred_name,
-        'referred_contact' => $request->referred_contact,
-        'referred_email' => $request->referred_email,
-        'assigned_to' => $customer->created_by, // 👈 IMPORTANT
-        'status' => 'pending'
-    ]);
+                    'team_customers' => User::where('created_by', $user->id)
+                        ->whereRole('customer')->count(),
 
-    return response()->json([
-        'message' => 'Referral submitted successfully'
-    ]);
-}
+                    'bookings' => Booking::where('created_by', $user->id)->count(),
+                ];
+                break;
 
-public function myReferrals()
-{
-    $user = auth()->user();
+            case 'adviser':
+                $summary = [
+                    'team_customers' => User::where('created_by', $user->id)
+                        ->whereRole('customer')->count(),
 
-    $referrals = Referral::where('assigned_to', $user->id)
-                        ->where('status','pending')
-                        ->get();
+                    'bookings' => Booking::where('created_by', $user->id)->count(),
+                ];
+                break;
 
-    return response()->json($referrals);
-}
+            case 'customer':
+                $summary = [
+                    'bookings' => Booking::where('created_by', $user->id)->count(),
+                ];
+                break;
+        }
 
-// user profile
-public function profile(Request $request)
-{
-    $user = $request->user();
-
-    $summary = [];
-
-    switch ($user->role) {
-
-        case 'admin':
-            $summary = [
-                'total_users' => User::count(),
-                'leaders' => User::whereRole('leader')->count(),
-                'advisers' => User::whereRole('adviser')->count(),
-                'customers' => User::whereRole('customer')->count(),
-            ];
-        break;
-
-        case 'leader':
-            $summary = [
-                'team_advisers' => User::where('created_by',$user->id)
-                                        ->whereRole('adviser')->count(),
-
-                'team_customers' => User::where('created_by',$user->id)
-                                        ->whereRole('customer')->count(),
-
-                'bookings' => Booking::where('created_by',$user->id)->count(),
-            ];
-        break;
-
-        case 'adviser':
-            $summary = [
-                'team_customers' => User::where('created_by',$user->id)
-                                        ->whereRole('customer')->count(),
-
-                'bookings' => Booking::where('created_by',$user->id)->count(),
-            ];
-        break;
-
-        case 'customer':
-            $summary = [
-                'bookings' => Booking::where('created_by',$user->id)->count(),
-            ];
-        break;
+        return response()->json([
+            'status' => true,
+            'user' => $user,
+            'summary' => $summary
+        ]);
     }
-
-    return response()->json([
-        'status' => true,
-        'user' => $user,
-        'summary' => $summary
-    ]);
-}
 }

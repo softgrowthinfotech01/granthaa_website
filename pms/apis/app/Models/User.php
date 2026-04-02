@@ -164,4 +164,14 @@ return [
 ];
 
 }
+
+public function getProfileImageUrlAttribute()
+{
+    if (!$this->profile_image) {
+        return null;
+    }
+
+    return asset('storage/' . $this->profile_image);
+}
+
 }
