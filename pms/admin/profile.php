@@ -21,7 +21,7 @@
             <?php include "sidebar.php"; ?>
 
             <!-- MAIN CONTENT -->
-            <div id="mainContent" class="flex-1 w-full my-6 px-3 md:px-6">
+            <div id="mainContent" class="flex-1 w-full my-6 px-3 md:px-6"> 
 
                 <div class="max-w-5xl mx-auto space-y-6">
 
