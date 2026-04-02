@@ -1,225 +1,208 @@
- <div class="mx-auto">
-     <div class="flex flex-col min-h-screen">
+<!DOCTYPE html>
+<html lang="en">
 
-         <?php include "header.php"; ?>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Profile</title>
 
-         <div class="flex flex-1">
+    <link rel="stylesheet" href="../style.css">
+</head>
 
-             <?php include "sidebar.php"; ?>
+<body class="bg-gray-200">
 
-             <div class="mx-auto py-4">
+<div class="mx-auto">
+    <div class="flex flex-col min-h-screen">
 
-                 <!-- PROFILE HEADER -->
-                 <div class="bg-white rounded-xl shadow p-6 flex items-center gap-6">
+        <?php include "header.php"; ?>
 
-                     <img id="profileImage"
-                         class="w-24 h-24 rounded-full object-cover border"
-                         src="" />
+        <div class="flex flex-1">
 
-                     <div>
-                         <h2 id="name" class="text-2xl font-bold text-gray-800"></h2>
+            <?php include "sidebar.php"; ?>
 
-                         <p id="role"
-                             class="text-sm text-white bg-indigo-500 inline-block px-3 py-1 rounded mt-1">
-                         </p>
+            <!-- MAIN CONTENT -->
+            <div id="mainContent" class="flex-1 w-full my-6 px-3 md:px-6">
 
-                         <p id="email" class="text-gray-600 mt-2"></p>
-                         <p id="mobile" class="text-gray-600"></p>
-                     </div>
+                <div class="max-w-5xl mx-auto space-y-6">
 
-                 </div>
+                    <!-- PROFILE HEADER -->
+                    <div class="bg-white rounded-xl shadow p-6 flex flex-col sm:flex-row items-center sm:items-start gap-4">
 
-                 <!-- SUMMARY CARDS -->
-                 <div id="summaryCards"
-                     class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6"></div>
+                        <img id="profileImage"
+                            class="w-20 h-20 sm:w-24 sm:h-24 rounded-full object-cover border"
+                            src="" />
 
+                        <div>
+                            <h2 id="name" class="text-2xl font-bold text-gray-800"></h2>
 
-                 <!-- PERSONAL DETAILS -->
-                 <div class="bg-white shadow rounded-xl p-6 mt-6">
+                            <p id="role"
+                                class="text-sm text-white font-semibold bg-indigo-500 inline-block px-3 py-1 rounded mt-1">
+                            </p>
 
-                     <h3 class="text-lg font-semibold mb-4">Personal Details</h3>
+                            <p id="email" class="text-gray-600 mt-2 font-semibold"></p>
+                            <p id="mobile" class="text-gray-600 font-semibold"></p>
+                        </div>
 
-                     <div class="grid md:grid-cols-2 gap-4 text-gray-700">
+                    </div>
 
-                         <p><b>User Code:</b> <span id="user_code"></span></p>
-                         <p><b>Aadhaar:</b> <span id="aadhaar"></span></p>
-                         <p><b>Gender:</b> <span id="gender"></span></p>
-                         <p><b>Age:</b> <span id="age"></span></p>
-                         <p><b>City:</b> <span id="city"></span></p>
-                         <p><b>State:</b> <span id="state"></span></p>
-                         <p><b>Address:</b> <span id="address"></span></p>
+                    <!-- SUMMARY -->
+                    <div id="summaryCards"
+                        class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-4"></div>
 
-                     </div>
-                 </div>
+                    <!-- PERSONAL DETAILS -->
+                    <div class="bg-white shadow rounded-xl p-6">
 
+                        <h3 class="text-lg font-semibold mb-4">Personal Details</h3>
 
-                 <!-- BANK DETAILS -->
-                 <div class="bg-white shadow rounded-xl p-6 mt-6">
+                        <div class="grid md:grid-cols-2 gap-4 text-gray-700">
 
-                     <h3 class="text-lg font-semibold mb-4">Bank Details</h3>
+                            <p><b>User Code:</b> <span id="user_code"></span></p>
+                            <p><b>Aadhaar:</b> <span id="aadhaar"></span></p>
+                            <p><b>Gender:</b> <span id="gender"></span></p>
+                            <p><b>Age:</b> <span id="age"></span></p>
+                            <p><b>City:</b> <span id="city"></span></p>
+                            <p><b>State:</b> <span id="state"></span></p>
+                            <p><b>Address:</b> <span id="address"></span></p>
 
-                     <div class="grid md:grid-cols-2 gap-4 text-gray-700">
+                        </div>
+                    </div>
 
-                         <p><b>Bank Name:</b> <span id="bank_name"></span></p>
-                         <p><b>Branch:</b> <span id="bank_branch"></span></p>
-                         <p><b>Account No:</b> <span id="account_no"></span></p>
-                         <p><b>IFSC:</b> <span id="ifsc"></span></p>
+                    <!-- BANK DETAILS -->
+                    <div class="bg-white shadow rounded-xl p-6">
 
-                     </div>
-                 </div>
+                        <h3 class="text-lg font-semibold mb-4">Bank Details</h3>
 
-                 <!-- ACTION BUTTONS -->
-                 <div class="bg-white rounded-xl shadow p-5 mt-6">
+                        <div class="grid md:grid-cols-2 gap-4 text-gray-700">
 
-                     <h3 class="text-lg font-semibold mb-4">Account Actions</h3>
+                            <p><b>Bank Name:</b> <span id="bank_name"></span></p>
+                            <p><b>Branch:</b> <span id="bank_branch"></span></p>
+                            <p><b>Account No:</b> <span id="account_no"></span></p>
+                            <p><b>IFSC:</b> <span id="ifsc"></span></p>
 
-                     <div class="flex flex-wrap gap-3">
+                        </div>
+                    </div>
 
-                         <button onclick="editProfile()"
-                             class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700">
-                             ✏️ Edit Profile
-                         </button>
+                    <!-- ACTION BUTTONS -->
+                    <div class="bg-white rounded-xl shadow p-5">
 
-                         <button onclick="changePassword()"
-                             class="px-4 py-2 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600">
-                             🔒 Change Password
-                         </button>
+                        <h3 class="text-lg font-semibold mb-4">Account Actions</h3>
 
-                         <button onclick="uploadPhoto()"
-                             class="px-4 py-2 bg-sky-500 text-white rounded-lg hover:bg-sky-600">
-                             📷 Upload Photo
-                         </button>
+                        <div class="flex flex-col sm:flex-row flex-wrap gap-3">
 
-                         <button onclick="logoutUser()"
-                             class="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600">
-                             🚪 Logout
-                         </button>
+                            <button onclick="editProfile()"
+                                class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700">
+                                ✏️ Edit Profile
+                            </button>
 
-                         <!-- ROLE BASED ACTION -->
-                         <div id="roleActions"></div>
+                            <button onclick="changePassword()"
+                                class="px-4 py-2 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600">
+                                🔒 Change Password
+                            </button>
 
-                     </div>
-                 </div>
-             </div>
-         </div>
-     </div>
- </div>
+                            <button onclick="uploadPhoto()"
+                                class="px-4 py-2 bg-sky-500 text-white rounded-lg hover:bg-sky-600">
+                                📷 Upload Photo
+                            </button>
 
- <script>
-     function safe(value) {
-         if (value === null || value === undefined || value === "") {
-             return "-";
-         }
-         return value;
-     }
+                            <button onclick="logoutUser()"
+                                class="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600">
+                                🚪 Logout
+                            </button>
 
-     const token = localStorage.getItem("auth_token");
+                            <div id="roleActions"></div>
 
-     async function loadProfile() {
+                        </div>
+                    </div>
 
-         const res = await fetch(url + "profile", {
-             headers: {
-                 "Authorization": "Bearer " + token,
-                 "Accept": "application/json"
-             }
-         });
+                </div>
+            </div>
+        </div>
 
-         const data = await res.json();
+        <?php include 'footer.php'; ?>
 
-         const user = data.user;
-         const summary = data.summary;
- 
-         // HEADER
-         document.getElementById('name').innerText = safe(user.name);
-         document.getElementById('role').innerText = safe(user.role?.toUpperCase());
-         document.getElementById('email').innerText = safe(user.email);
-         document.getElementById('mobile').innerText = safe(user.contact_no);
+    </div>
+</div>
 
-         // PROFILE IMAGE
-         document.getElementById('profileImage').src =
-             user.profile_image ?
-             base_url + "storage/" + user.profile_image :
-             "https://ui-avatars.com/api/?name=" + encodeURIComponent(user.name);
+<script>
+function safe(value) {
+    return (value === null || value === undefined || value === "") ? "-" : value;
+}
 
-         // DETAILS
-         user_code.innerText = safe(user.user_code);
-         aadhaar.innerText = safe(user.aadhaar_number);
-         gender.innerText = safe(user.gender);
-         age.innerText = safe(user.age);
-         city.innerText = safe(user.city);
-         state.innerText = safe(user.state);
-         address.innerText = safe(user.address);
+const token = localStorage.getItem("auth_token");
 
-         // BANK DETAILS
-         bank_name.innerText = safe(user.bank_name);
-         bank_branch.innerText = safe(user.bank_branch);
-         account_no.innerText = safe(user.bank_account_no);
-         ifsc.innerText = safe(user.bank_ifsc_code);
+async function loadProfile() {
 
-         const roleBox = document.getElementById("roleActions");
+    const res = await fetch(url + "profile", {
+        headers: {
+            "Authorization": "Bearer " + token,
+            "Accept": "application/json"
+        }
+    });
 
-      
+    const data = await res.json();
+    const user = data.user;
+    const summary = data.summary;
 
-         if (user.role === "leader") {
-             roleBox.innerHTML += `
-        <button onclick="location.href='team'"
-        class="px-4 py-2 bg-emerald-600 text-white rounded-lg">
-            👨‍💼 View Team
-        </button>`;
-         }
+    document.getElementById('name').innerText = safe(user.name);
+    document.getElementById('role').innerText = safe(user.role?.toUpperCase());
+    document.getElementById('email').innerText = safe(user.email);
+    document.getElementById('mobile').innerText = safe(user.contact_no);
 
-         if (user.role === "adviser") {
-             roleBox.innerHTML += `
-        <button onclick="location.href='customers'"
-        class="px-4 py-2 bg-teal-600 text-white rounded-lg">
-            👨‍👩‍👧 My Customers
-        </button>`;
-         }
+    document.getElementById('profileImage').src =
+        user.profile_image
+            ? base_url + "storage/" + user.profile_image
+            : "https://ui-avatars.com/api/?name=" + encodeURIComponent(user.name);
 
-         if (user.role === "customer") {
-             roleBox.innerHTML += `
-        <button onclick="location.href='bookings'"
-        class="px-4 py-2 bg-blue-600 text-white rounded-lg">
-            📑 My Bookings
-        </button>`;
-         }
+    user_code.innerText = safe(user.user_code);
+    aadhaar.innerText = safe(user.aadhaar_number);
+    gender.innerText = safe(user.gender);
+    age.innerText = safe(user.age);
+    city.innerText = safe(user.city);
+    state.innerText = safe(user.state);
+    address.innerText = safe(user.address);
 
-         // SUMMARY CARDS
-         let cardsHTML = "";
+    bank_name.innerText = safe(user.bank_name);
+    bank_branch.innerText = safe(user.bank_branch);
+    account_no.innerText = safe(user.bank_account_no);
+    ifsc.innerText = safe(user.bank_ifsc_code);
 
-         Object.entries(summary).forEach(([key, value]) => {
-             cardsHTML += `
+    const roleBox = document.getElementById("roleActions");
+
+    if (user.role === "leader") {
+        roleBox.innerHTML += `<button onclick="location.href='team'" class="px-4 py-2 bg-emerald-600 text-white rounded-lg">👨‍💼 View Team</button>`;
+    }
+
+    if (user.role === "adviser") {
+        roleBox.innerHTML += `<button onclick="location.href='customers'" class="px-4 py-2 bg-teal-600 text-white rounded-lg">👨‍👩‍👧 My Customers</button>`;
+    }
+
+    if (user.role === "customer") {
+        roleBox.innerHTML += `<button onclick="location.href='bookings'" class="px-4 py-2 bg-blue-600 text-white rounded-lg">📑 My Bookings</button>`;
+    }
+
+    let cardsHTML = "";
+    Object.entries(summary).forEach(([key, value]) => {
+        cardsHTML += `
             <div class="bg-white shadow rounded-xl p-4 text-center">
                 <p class="text-sm text-gray-700">${key.replace('_',' ').toUpperCase()}</p>
                 <h3 class="text-2xl font-bold text-indigo-600">${value}</h3>
-            </div>
-        `;
-         });
+            </div>`;
+    });
 
-         document.getElementById('summaryCards').innerHTML = cardsHTML;
-     }
+    document.getElementById('summaryCards').innerHTML = cardsHTML;
+}
 
-     document.addEventListener('DOMContentLoaded', loadProfile);
- </script>
+document.addEventListener('DOMContentLoaded', loadProfile);
 
- <script>
-     function editProfile() {
-         window.location.href = "edit-profile";
-     }
+function editProfile() { window.location.href = "edit_profile"; }
+function changePassword() { window.location.href = "change-password"; }
+function uploadPhoto() { window.location.href = "upload-photo"; }
 
-     function changePassword() {
-         window.location.href = "change-password";
-     }
+function logoutUser() {
+    localStorage.clear();
+    window.location.href = "../login";
+}
+</script>
 
-     function uploadPhoto() {
-         window.location.href = "upload-photo";
-     }
-
-     function logoutUser() {
-         localStorage.removeItem("auth_token");
-         localStorage.removeItem("auth_user");
-         window.location.href = "../login";
-     }
- </script>
-
- <?php include 'footer.php'; ?>
+</body>
+</html>
