@@ -135,11 +135,11 @@ document.getElementById('email').innerText = safe(user.email);
 document.getElementById('mobile').innerText = safe(user.contact_no);
 
 // PROFILE IMAGE
-const imagePath = user.profile_image?.replace(/\\/g, '/');
+const imagePath = "storage/app/public/" + user.profile_image?.replace(/\\/g, '/');
 
 document.getElementById('profileImage').src =
     imagePath
-        ? base_url + imagePath + "?t=" + new Date().getTime()
+        ? base_url + imagePath
         : "https://ui-avatars.com/api/?background=4f46e5&color=fff&name=" + encodeURIComponent(user.name);
 // DETAILS
 user_code.innerText = safe(user.user_code);

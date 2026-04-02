@@ -39,8 +39,6 @@
             <p><b>Aadhaar:</b> <span id="aadhaar"></span></p>
             <p><b>Gender:</b> <span id="gender"></span></p>
             <p><b>Age:</b> <span id="age"></span></p>
-            <p><b>City:</b> <span id="city"></span></p>
-            <p><b>State:</b> <span id="state"></span></p>
             <p><b>Address:</b> <span id="address"></span></p>
 
         </div>
@@ -122,7 +120,7 @@ async function loadProfile(){
     const summary = data.summary;
 
  // HEADER
-document.getElementById('name').innerText = safe(user.name);
+document.getElementById('name').innerText = safe(user.name.toUpperCase());
 document.getElementById('role').innerText = safe(user.role?.toUpperCase());
 document.getElementById('email').innerText = safe(user.email);
 document.getElementById('mobile').innerText = safe(user.contact_no);
@@ -138,8 +136,6 @@ user_code.innerText = safe(user.user_code);
 aadhaar.innerText = safe(user.aadhaar_number);
 gender.innerText = safe(user.gender);
 age.innerText = safe(user.age);
-city.innerText = safe(user.city);
-state.innerText = safe(user.state);
 address.innerText = safe(user.address);
 
 // BANK DETAILS
@@ -170,7 +166,7 @@ document.addEventListener('DOMContentLoaded',loadProfile);
 <script>
 
 function editProfile(){
-    window.location.href = "edit-profile";
+    window.location.href = "edit_profile";
 }
 
 function changePassword(){
@@ -207,7 +203,7 @@ if(user.role === "leader"){
 
 if(user.role === "adviser"){
     roleBox.innerHTML += `
-        <button onclick="location.href='customers'"
+        <button onclick="location.href='list_customer_booking'"
         class="px-4 py-2 bg-teal-600 text-white rounded-lg">
             👨‍👩‍👧 My Customers
         </button>`;

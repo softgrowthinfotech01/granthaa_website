@@ -12,7 +12,7 @@
              text-yellow-500 drop-shadow-sm">
         GRANTHAA
       </h1>
-      <!-- <img src="../images/logo.png" 
+      <!-- <img src="../images/logo.png"
        alt="Granthaa Land Developer Pvt Ltd"
        class="h-25 w-60 sidebar-logo transition-all duration-300 border-2 border-yellow-400 rounded-lg "> -->
 
@@ -256,7 +256,7 @@
                 <path stroke-linecap="round" stroke-linejoin="round" d="M7 15h3" />
                 <path stroke-linecap="round" stroke-linejoin="round" d="M14 15h3" />
               </svg>
-              <span class="sidebar-text">Booking Payment</span>
+              <span class="sidebar-text">Plot Booking Payment</span>
             </span>
 
             <svg class="menu-arrow w-4 h-4 transition-transform transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -500,7 +500,7 @@
           "Authorization": "Bearer " + token,
           "Accept": "application/json"
         }
-      }) 
+      })  
       .then(() => {
         // remove only auth data
         localStorage.removeItem("auth_token");

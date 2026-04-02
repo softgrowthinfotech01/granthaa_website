@@ -99,8 +99,8 @@
                             <td class="p-3">${advisor.contact_no ?? ''}</td>
                             <td class="p-3">${advisor.address ?? ''}</td>
                             <td class="p-3">
-                                <span class="px-3 py-1 rounded-full bg-gray-100 text-gray-700 text-xs font-semibold">
-                                    ${advisor.pancard_number ?? ''}
+                                <span class="px-3 py-1 rounded-full bg-blue-100 text-gray-700 text-xs font-semibold">
+                                    ${advisor.pancard_number ? advisor.pancard_number.toUpperCase() : ''}
                                 </span>
                             </td>
                             <td class="p-3">${advisor.bank_name ?? ''}</td>
