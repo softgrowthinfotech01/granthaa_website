@@ -76,128 +76,128 @@
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 
 <script>
-function update_customer_booking(id) {
-    window.location.href = "update_customer_booking.php?id=" + id;
-}
+    function update_customer_booking(id) {
+        window.location.href = "update_customer_booking.php?id=" + id;
+    }
 
-function deleteBooking(id) {
-    if (!confirm("Are you sure you want to delete this booking?")) return;
+    function deleteBooking(id) {
+        if (!confirm("Are you sure you want to delete this booking?")) return;
 
-    const token = localStorage.getItem("auth_token");
+        const token = localStorage.getItem("auth_token");
 
-    fetch(url + "bookings/" + id, {
-        method: "DELETE",
-        headers: {
-            "Authorization": "Bearer " + token,
-            "Accept": "application/json"
-        }
-    })
-    .then(res => res.json())
-    .then(data => {
-        alert(data.message || "Booking deleted successfully");
-        location.reload();
-    })
-    .catch(err => {
-        console.error("Delete error:", err);
-        alert("Delete failed");
-    });
-}
+        fetch(url + "bookings/" + id, {
+                method: "DELETE",
+                headers: {
+                    "Authorization": "Bearer " + token,
+                    "Accept": "application/json"
+                }
+            })
+            .then(res => res.json())
+            .then(data => {
+                alert(data.message || "Booking deleted successfully");
+                location.reload();
+            })
+            .catch(err => {
+                console.error("Delete error:", err);
+                alert("Delete failed");
+            });
+    }
 </script>
 
 
 <script>
-document.addEventListener("DOMContentLoaded", function() {
+    document.addEventListener("DOMContentLoaded", function() {
 
-    let allBookings = [];
-    let filteredBookings = [];
-    let currentPage = 1;
-    let perPage = 10;
+        let allBookings = [];
+        let filteredBookings = [];
+        let currentPage = 1;
+        let perPage = 10;
 
-    const token = localStorage.getItem('auth_token');
-    if (!token) {
-        alert("Please login first");
-        window.location.href = "../login";
-        return;
-    }
+        const token = localStorage.getItem('auth_token');
+        if (!token) {
+            alert("Please login first");
+            window.location.href = "../login";
+            return;
+        }
 
-    let locationsMap = {};
+        let locationsMap = {};
 
-    function loadLocations() {
-        return fetch(url + "site-location", {
-            headers: {
-                "Authorization": "Bearer " + token
-            }
-        })
-        .then(res => res.json())
-        .then(response => {
-            const locations = response.data ?? [];
-            locations.forEach(loc => {
-                locationsMap[loc.id] = loc.site_location;
+        function loadLocations() {
+            return fetch(url + "site-location", {
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+                .then(res => res.json())
+                .then(response => {
+                    const locations = response.data ?? [];
+                    locations.forEach(loc => {
+                        locationsMap[loc.id] = loc.site_location;
+                    });
+                });
+        }
+
+        async function loadBookings() {
+
+            await loadLocations();
+
+            fetch(`${url}bookings?per_page=1000`, {
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+                .then(res => res.json())
+                .then(response => {
+
+                    allBookings = response.data?.data ?? response.data ?? [];
+                    applyFilters();
+
+                });
+        }
+
+        /* ================= FILTER ================= */
+        function applyFilters() {
+
+            let search = document.getElementById("searchInput").value.toLowerCase();
+            perPage = parseInt(document.getElementById("perPage").value);
+
+            filteredBookings = allBookings.filter(row => {
+
+                return (
+                    (row.buyer_name || '').toLowerCase().includes(search) ||
+                    (row.project_name || '').toLowerCase().includes(search) ||
+                    (row.mobile || '').toLowerCase().includes(search)
+                );
             });
-        });
-    }
 
-    async function loadBookings() {
+            currentPage = 1;
+            renderTable();
+        }
 
-        await loadLocations();
+        /* ================= RENDER ================= */
+        function renderTable() {
 
-        fetch(`${url}bookings?per_page=1000`, {
-            headers: {
-                "Authorization": "Bearer " + token
-            }
-        })
-        .then(res => res.json())
-        .then(response => {
+            const tbody = document.getElementById("customerData");
+            tbody.innerHTML = "";
 
-            allBookings = response.data?.data ?? response.data ?? [];
-            applyFilters();
+            let start = (currentPage - 1) * perPage;
+            let paginated = filteredBookings.slice(start, start + perPage);
 
-        });
-    }
+            paginated.forEach((row) => {
 
-    /* ================= FILTER ================= */
-    function applyFilters() {
+                let commission_Amount = 0;
 
-        let search = document.getElementById("searchInput").value.toLowerCase();
-        perPage = parseInt(document.getElementById("perPage").value);
+                if (row.commission_type === "percent") {
+                    commission_Amount = (row.total_booking_amount * row.adviser_commission_value) / 100;
+                } else {
+                    commission_Amount = row.adviser_commission_value;
+                }
 
-        filteredBookings = allBookings.filter(row => {
+                let dob = row.dob ?
+                    new Date(row.dob).toLocaleDateString('en-GB') :
+                    '';
 
-            return (
-                (row.buyer_name || '').toLowerCase().includes(search) ||
-                (row.project_name || '').toLowerCase().includes(search) ||
-                (row.mobile || '').toLowerCase().includes(search)
-            );
-        });
-
-        currentPage = 1;
-        renderTable();
-    }
-
-    /* ================= RENDER ================= */
-    function renderTable() {
-
-        const tbody = document.getElementById("customerData");
-        tbody.innerHTML = "";
-
-        let start = (currentPage - 1) * perPage;
-        let paginated = filteredBookings.slice(start, start + perPage);
-
-        paginated.forEach((row) => {
-
-            let commission_Amount = 0;
-
-            if (row.commission_type === "percent") {
-                commission_Amount = (row.total_booking_amount * row.adviser_commission_value) / 100;
-            } else {
-                commission_Amount = row.adviser_commission_value;
-            }
-
-            let dob = row.dob ?
-                            new Date(row.dob).toLocaleDateString('en-GB') :
-                            '';
-
-            tbody.innerHTML += `
+                tbody.innerHTML += `
             <tr class="border-b bg-white">
                 <td class="p-2 text-center">
                     <button onclick="toggleRow(${row.id})"
@@ -250,22 +250,22 @@ document.addEventListener("DOMContentLoaded", function() {
                     <div><strong>Remark:</strong> ${row.remark ?? ''}</div>
                     <div><strong>Pincode:</strong> ${row.pincode ?? ''}</div>
                     <div><strong>Mobile Number:</strong> ${row.mobile ?? ''}</div>
-                    <div><strong>DOB:</strong> ${dob ?? ''}</div>
+                    <div><strong>Created On:</strong> ${row.created_at ? new Date(row.created_at).toLocaleDateString("en-IN") : ''}</div>
                     </div>
                 </td>
             </tr>
             `;
-        });
+            });
 
-        renderPagination();
-    }
+            renderPagination();
+        }
 
-    /* ================= PAGINATION ================= */
-    function renderPagination() {
+        /* ================= PAGINATION ================= */
+        function renderPagination() {
 
-        let totalPages = Math.ceil(filteredBookings.length / perPage);
+            let totalPages = Math.ceil(filteredBookings.length / perPage);
 
-        document.getElementById("pagination").innerHTML = `
+            document.getElementById("pagination").innerHTML = `
             <button ${currentPage == 1 ? 'disabled' : ''}
                 onclick="changePage(${currentPage - 1})"
                 class="bg-gray-300 px-4 py-2 rounded">
@@ -280,41 +280,41 @@ document.addEventListener("DOMContentLoaded", function() {
                 Next
             </button>
         `;
-    }
-
-    /* ================= EVENTS ================= */
-
-    document.getElementById("searchBtn").addEventListener("click", applyFilters);
-
-    document.getElementById("searchInput").addEventListener("keyup", function(e) {
-        if (e.key === "Enter") applyFilters();
-    });
-
-    document.getElementById("perPage").addEventListener("change", applyFilters);
-
-    window.changePage = function(page) {
-        currentPage = page;
-        renderTable();
-    }
-
-    window.toggleRow = function(id) {
-
-        const row = document.getElementById("expand-" + id);
-        const button = event.target;
-
-        if (row.classList.contains("hidden")) {
-            row.classList.remove("hidden");
-            button.innerHTML = "−";
-            button.classList.replace("bg-green-500", "bg-red-500");
-        } else {
-            row.classList.add("hidden");
-            button.innerHTML = "+";
-            button.classList.replace("bg-red-500", "bg-green-500");
         }
-    }
 
-    /* ================= INIT ================= */
-    loadBookings();
+        /* ================= EVENTS ================= */
 
-});
+        document.getElementById("searchBtn").addEventListener("click", applyFilters);
+
+        document.getElementById("searchInput").addEventListener("keyup", function(e) {
+            if (e.key === "Enter") applyFilters();
+        });
+
+        document.getElementById("perPage").addEventListener("change", applyFilters);
+
+        window.changePage = function(page) {
+            currentPage = page;
+            renderTable();
+        }
+
+        window.toggleRow = function(id) {
+
+            const row = document.getElementById("expand-" + id);
+            const button = event.target;
+
+            if (row.classList.contains("hidden")) {
+                row.classList.remove("hidden");
+                button.innerHTML = "−";
+                button.classList.replace("bg-green-500", "bg-red-500");
+            } else {
+                row.classList.add("hidden");
+                button.innerHTML = "+";
+                button.classList.replace("bg-red-500", "bg-green-500");
+            }
+        }
+
+        /* ================= INIT ================= */
+        loadBookings();
+
+    });
 </script>
