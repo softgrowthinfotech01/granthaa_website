@@ -192,7 +192,7 @@
                 </div>
 
                 <div class="space-y-2">
-                    <label class="text-sm font-semibold text-gray-700">Total Booking Amount</label>
+                    <label class="text-sm font-semibold text-gray-700">Total Amount</label>
                     <input name="total_booking_amount" id="total_booking_amount" type="number"
                         class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-yellow-400 outline-none">
                 </div>
