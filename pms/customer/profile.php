@@ -14,11 +14,11 @@
             <h2 id="name" class="text-2xl font-bold text-gray-800"></h2>
 
             <p id="role"
-               class="text-sm text-white bg-indigo-500 inline-block px-3 py-1 rounded mt-1">
+               class="text-sm text-white font-semibold bg-purple-700 inline-block px-3 py-1 rounded mt-1">
             </p>
 
-            <p id="email" class="text-gray-600 mt-2"></p>
-            <p id="mobile" class="text-gray-600"></p>
+            <p id="email" class="text-gray-600 mt-2 font-semibold"></p>
+            <p id="mobile" class="text-gray-600 font-semibold"></p>
         </div>
 
     </div>
@@ -37,8 +37,7 @@
 
             <p><b>User Code:</b> <span id="user_code"></span></p>
             <p><b>Aadhaar:</b> <span id="aadhaar"></span></p>
-            <p><b>Gender:</b> <span id="gender"></span></p>
-            <p><b>Age:</b> <span id="age"></span></p>
+            
             <p><b>City:</b> <span id="city"></span></p>
             <p><b>State:</b> <span id="state"></span></p>
             <p><b>Address:</b> <span id="address"></span></p>
@@ -47,20 +46,7 @@
     </div>
 
 
-    <!-- BANK DETAILS -->
-    <div class="bg-white shadow rounded-xl p-6 mt-6">
-
-        <h3 class="text-lg font-semibold mb-4">Bank Details</h3>
-
-        <div class="grid md:grid-cols-2 gap-4 text-gray-700">
-
-            <p><b>Bank Name:</b> <span id="bank_name"></span></p>
-            <p><b>Branch:</b> <span id="bank_branch"></span></p>
-            <p><b>Account No:</b> <span id="account_no"></span></p>
-            <p><b>IFSC:</b> <span id="ifsc"></span></p>
-
-        </div>
-    </div>
+    
 
     <!-- ACTION BUTTONS -->
 <div class="bg-white rounded-xl shadow p-5 mt-6">
@@ -122,7 +108,7 @@ async function loadProfile(){
     const summary = data.summary;
 
  // HEADER
-document.getElementById('name').innerText = safe(user.name);
+document.getElementById('name').innerText = safe(user.name.toUpperCase());
 document.getElementById('role').innerText = safe(user.role?.toUpperCase());
 document.getElementById('email').innerText = safe(user.email);
 document.getElementById('mobile').innerText = safe(user.contact_no);
@@ -136,17 +122,11 @@ document.getElementById('profileImage').src =
 // DETAILS
 user_code.innerText = safe(user.user_code);
 aadhaar.innerText = safe(user.aadhaar_number);
-gender.innerText = safe(user.gender);
-age.innerText = safe(user.age);
+
 city.innerText = safe(user.city);
 state.innerText = safe(user.state);
 address.innerText = safe(user.address);
 
-// BANK DETAILS
-bank_name.innerText = safe(user.bank_name);
-bank_branch.innerText = safe(user.bank_branch);
-account_no.innerText = safe(user.bank_account_no);
-ifsc.innerText = safe(user.bank_ifsc_code);
 
     // SUMMARY CARDS
     let cardsHTML = "";
@@ -154,8 +134,8 @@ ifsc.innerText = safe(user.bank_ifsc_code);
     Object.entries(summary).forEach(([key,value])=>{
         cardsHTML += `
             <div class="bg-white shadow rounded-xl p-4 text-center">
-                <p class="text-sm text-gray-500">${key.replace('_',' ')}</p>
-                <h3 class="text-2xl font-bold text-indigo-600">${value}</h3>
+                <p class="text-sm text-gray-800">${key.replace('_',' ').toUpperCase()}</p>
+                <h3 class="text-2xl font-bold text-purple-700">${value}</h3>
             </div>
         `;
     });
@@ -170,7 +150,7 @@ document.addEventListener('DOMContentLoaded',loadProfile);
 <script>
 
 function editProfile(){
-    window.location.href = "edit-profile";
+    window.location.href = "edit_profile";
 }
 
 function changePassword(){

@@ -150,8 +150,8 @@ ifsc.innerText = safe(user.bank_ifsc_code);
     Object.entries(summary).forEach(([key,value])=>{
         cardsHTML += `
             <div class="bg-white shadow rounded-xl p-4 text-center">
-                <p class="text-sm text-gray-500">${key.replace('_',' ')}</p>
-                <h3 class="text-2xl font-bold text-indigo-600">${value}</h3>
+                <p class="text-sm text-gray-800">${key.replace('_',' ').toUpperCase()}</p>
+                <h3 class="text-2xl font-bold text-green-600">${value}</h3>
             </div>
         `;
     });
