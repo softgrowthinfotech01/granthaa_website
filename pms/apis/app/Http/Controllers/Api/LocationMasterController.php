@@ -73,6 +73,12 @@ class LocationMasterController extends Controller
             'site_location' => 'required|string|max:255'
         ]);
 
+        
+        $locationexist = LocationMaster::where('site_location',$request->site_location)->exists();
+         if ($locationexist) {
+            return response()->json(['message' => 'Site Location Already Exist'], 409);
+        }
+
         $location = LocationMaster::create([
             'site_location' => $request->site_location
         ]);
