@@ -5,31 +5,47 @@
     padding:10px;
     border-radius:8px;
     outline:none;
+    font-size:14px;
+}
+
+@media (min-width:640px){
+    .input{
+        padding:12px;
+        font-size:15px;
+    }
 }
 .input:focus{
     border-color:#6366f1;
     box-shadow:0 0 0 2px rgba(99,102,241,0.2);
 }
+@media (max-width:640px){
+    .sticky-save{
+        position:sticky;
+        bottom:0;
+        background:white;
+        padding:10px;
+    }
+}
 </style>
 
 <?php include 'header.php'; ?>
 
-<div class="max-w-5xl mx-auto px-4 py-6">
+<div class="max-w-5xl mx-auto px-3 sm:px-4 py-4 sm:py-6">
 
     <!-- PAGE TITLE -->
-    <div class="flex justify-between items-center mb-6">
-        <h2 class="text-2xl font-bold text-gray-800">✏️ Edit Profile</h2>
+    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-5">
+        <h2 class="text-xl sm:text-2xl font-bold text-gray-800">✏️ Edit Profile</h2>
 
         <a href="profile"
-           class="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600">
+           class="px-4 py-2 text-sm sm:text-base bg-gray-500 text-white rounded-lg hover:bg-gray-600">
            ← Back to Profile
         </a>
     </div>
-<!-- FORM CARD -->
-<div class="bg-white shadow-lg rounded-xl p-6">
 
-    <form id="editProfileForm" class="grid md:grid-cols-2 gap-5">
+    <!-- FORM CARD -->
+    <div class="bg-white shadow-lg rounded-xl p-4 sm:p-6">
 
+        <form id="editProfileForm" class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
         <!-- NAME -->
         <div>
             <label class="block text-sm font-semibold text-gray-700 mb-1">Full Name</label>
@@ -123,19 +139,19 @@
         </div>
 
         <!-- BUTTONS -->
-        <div class="md:col-span-2 flex justify-end gap-3 mt-4">
+       <div class="md:col-span-2 flex flex-col sm:flex-row justify-end gap-3 mt-4">
 
-            <a href="profile"
-               class="px-5 py-2 bg-gray-400 text-white rounded-lg hover:bg-gray-500">
-               Cancel
-            </a>
+    <a href="profile"
+       class="w-full sm:w-auto text-center px-5 py-2 bg-gray-400 text-white rounded-lg hover:bg-gray-500">
+       Cancel
+    </a>
 
-            <button type="button" onclick="updateProfile()"
-                class="px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 shadow">
-                💾 Save Changes
-            </button>
+    <button type="button" onclick="updateProfile()"
+        class="w-full sm:w-auto px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 shadow">
+        💾 Save Changes
+    </button>
 
-        </div>
+</div>
 
     </form>
 

@@ -97,8 +97,10 @@
 </div>
 
 </div>
+<script src="../url.js"></script>
 
 <script>
+    // IMAGES
     function safe(value){
     if(value === null || value === undefined || value === ""){
         return "-";
@@ -133,11 +135,12 @@ document.getElementById('email').innerText = safe(user.email);
 document.getElementById('mobile').innerText = safe(user.contact_no);
 
 // PROFILE IMAGE
+const imagePath = user.profile_image?.replace(/\\/g, '/');
+
 document.getElementById('profileImage').src =
-    user.profile_image
-        ? base_url + "storage/" + user.profile_image
+    imagePath
+        ? base_url + imagePath + "?t=" + new Date().getTime()
         : "https://ui-avatars.com/api/?background=4f46e5&color=fff&name=" + encodeURIComponent(user.name);
-        
 // DETAILS
 user_code.innerText = safe(user.user_code);
 aadhaar.innerText = safe(user.aadhaar_number);
@@ -185,7 +188,7 @@ function changePassword(){
 }
 
 function uploadPhoto(){
-    window.location.href = "upload-photo";
+    window.location.href = "upload_photo";
 }
 
 function logoutUser(){
