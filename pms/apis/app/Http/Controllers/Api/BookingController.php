@@ -381,7 +381,9 @@ class BookingController extends Controller
         $user = auth()->user();
 
         // ✅ Only define once
-        $query = Booking::whereNull('deleted_at')->with(['leader', 'location']);
+        $query = Booking::whereNull('deleted_at')->with(['leader','location','payments' => function($q){
+    $q->where('payment_type','!=','reversal');
+}]);
 
         // 🔐 Role Based Filter
         if ($user->role === 'leader') {
@@ -829,14 +831,17 @@ public function update(Request $request, $id)
                 );
 
                 $totalPaidAmt = abs(
-                    CommissionLedger::where('type', 'payment')->sum('amount')
+                    CommissionLedger::where('type','payment')
+    ->where('amount','>',0)->sum('amount')
                 );
 
-                $topAdvisor = Booking::whereNull('deleted_at')->select('user_code', DB::raw('SUM(advance_amount) as total'))
-                    ->groupBy('user_code')
-                    ->orderByDesc('total')
-                    ->first();
-
+$topAdvisor = BookingPayment::where('payment_type','!=','reversal')
+    ->where('amount','>',0)
+    ->select('user_id', DB::raw('SUM(amount) as total'))
+    ->groupBy('user_id')
+    ->orderByDesc('total')
+    ->first();
+    
                 $response['data'] = [
                     'total_advisors' => $totalAdvisors,
                     'total_booking_amount' => $totalBookingAmount,
@@ -898,6 +903,7 @@ public function update(Request $request, $id)
                 $totalPaidAmt = abs(
                     CommissionLedger::whereIn('user_id', $teamIds)
                         ->where('type', 'payment')
+                        ->where('amount','>',0)
                         ->sum('amount')
                 );
 
@@ -951,6 +957,7 @@ public function update(Request $request, $id)
                 $totalPaidAmt = abs(
                     CommissionLedger::where('user_id', $user->id)
                         ->where('type', 'payment')
+                        ->where('amount','>',0)
                         ->sum('amount')
                 );
 
@@ -1047,10 +1054,10 @@ public function update(Request $request, $id)
         $totalSalesValue = Booking::whereNull('deleted_at')->sum('total_booking_amount'); // ✅ FIXED (better than commission)
 
         // ✅ Commission totals
-        $totalCommission = CommissionLedger::where('type', 'commission')->sum('amount');
+        $totalCommission = CommissionLedger::where('type', 'commission')->where('amount','>',0)->sum('amount');
 
         $totalPaid = abs(
-            CommissionLedger::where('type', 'payment')->sum('amount')
+                 CommissionLedger::where('type', 'payment')->where('amount','>',0)->sum('amount')
         );
 
         $pendingCommissions = $totalCommission - $totalPaid;
@@ -1203,6 +1210,7 @@ public function update(Request $request, $id)
             $paidAmount = abs(
                 CommissionLedger::where('user_id', $leader->id)
                     ->where('type', 'payment')
+                    ->where('amount','>',0)
                     ->sum('amount')
             );
 
@@ -1244,6 +1252,7 @@ public function update(Request $request, $id)
                 CommissionLedger::where('user_id', $userId)
                     ->where('booking_id', $b->id)
                     ->where('type', 'payment') // ✅ IMPORTANT FIX
+                    ->where('amount','>',0)
                     ->sum('amount')
             );
 
@@ -1291,6 +1300,7 @@ public function update(Request $request, $id)
                 CommissionLedger::where('user_id', $adviserId)
                     ->where('booking_id', $b->id)
                     ->where('type', 'payment')
+                    ->where('amount','>',0)
                     ->sum('amount')
             );
 
@@ -1351,6 +1361,7 @@ public function commissionSplit()
     // print_r($leader);exit;
     $leaderCommission = CommissionLedger::where('user_id', $leader->id)
         ->where('type', 'commission')
+        ->where('amount','>',0)
         ->sum('amount');
 
     $adviserIds = User::where('created_by', $leader->id)
@@ -1359,6 +1370,7 @@ public function commissionSplit()
 
     $adviserCommission = CommissionLedger::whereIn('user_id', $adviserIds)
         ->where('type', 'commission')
+        ->where('amount','>',0)
         ->sum('amount');
 
     $total = $leaderCommission + $adviserCommission;
@@ -1389,6 +1401,7 @@ public function commissionSplit()
             $paid = abs(
                 CommissionLedger::where('user_id', $leader->id)
                     ->where('type', 'payment')
+                    ->where('amount','>',0)
                     ->sum('amount')
             );
 
@@ -1412,7 +1425,7 @@ public function commissionSplit()
         }
 
         // 🔵 No payments today
-        $todayPayments = CommissionLedger::where('type', 'payment')
+        $todayPayments = CommissionLedger::where('type', 'payment')->where('amount','>',0)
             ->whereDate('created_at', today())
             ->count();
 
