@@ -4,24 +4,23 @@
 
     <h2 class="text-2xl font-bold mb-4 text-center">Booking Payment Records</h2>
 
-    <!-- Horizontal scroll wrapper -->
-<div class="w-full overflow-x-scroll overflow-y-auto max-h-[500px]">
-        <div class="flex flex-wrap justify-between items-center gap-3 mb-4">
+     <!-- Horizontal scroll wrapper -->
+  <div class="mb-4 grid grid-cols-1 sm:grid-cols-2 items-center gap-3">
 
     <!-- LEFT SIDE -->
-    <div class="flex gap-3">
+    <div class="flex flex-wrap justify-start sm:justify-center gap-3">
         <input type="text" id="searchInput"
-            placeholder="Search buyer / project / mobile"
+            placeholder="Customer / project / mobile"
             class="border p-2 rounded w-64">
 
         <button id="searchBtn"
-            class="bg-blue-500 text-white px-4 rounded">
+            class="bg-blue-500 text-white px-4 py-1 rounded">
             Search
         </button>
     </div>
 
     <!-- RIGHT SIDE -->
-    <div class="flex items-center gap-2">
+    <div class="flex justify-end sm:justify-center gap-2">
         <span class="text-sm text-gray-600">Show:</span>
         <select id="perPage" class="border p-2 rounded">
             <option value="10">10</option>
@@ -31,6 +30,7 @@
     </div>
 
 </div>
+ <div class="w-full overflow-x-auto">
 
         <table id="example" class="min-w-[900px] w-full" style="width:100%; padding-top: 1em;  padding-bottom: 1em;">
 

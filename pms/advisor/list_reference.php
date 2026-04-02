@@ -4,31 +4,32 @@
 
     <h2 class="text-2xl font-bold mb-4 text-center">Referral Records</h2>
 
-    <div class="w-full overflow-x-auto">
+     <div class="mb-4 grid grid-cols-1 sm:grid-cols-2 items-center gap-3">
 
-        <div class="flex justify-between flex-wrap mb-4 mr-4">
+        <!-- LEFT SIDE -->
+        <div class="flex flex-wrap justify-start sm:justify-center gap-3">
+            <input type="text" id="searchInput"
+                placeholder="name / contact / email"
+                class="border p-2 rounded w-64">
 
-            <div>
-                <input type="text" id="searchInput"
-                    placeholder="Search reference / remark"
-                    class="border p-2 rounded w-64">
-
-                <button id="searchBtn"
-                    class="bg-blue-500 text-white px-4 py-2 rounded">
-                    Search
-                </button>
-            </div>
-
-            <div>
-                <select id="perPage" class="border p-2 rounded">
-                    <option value="10">10</option>
-                    <option value="25">25</option>
-                    <option value="50">50</option>
-                </select>
-            </div>
-
+            <button id="searchBtn"
+                class="bg-blue-500 text-white px-4 py-1 rounded">
+                Search
+            </button>
         </div>
 
+        <!-- RIGHT SIDE -->
+        <div class="flex justify-end sm:justify-center gap-2">
+            <span class="text-sm text-gray-600">Show:</span>
+            <select id="perPage" class="border p-2 rounded">
+                <option value="10">10</option>
+                <option value="25">25</option>
+                <option value="50">50</option>
+            </select>
+        </div>
+
+    </div>
+ <div class="w-full overflow-x-auto">
         <table class="w-full">
             <thead class="bg-gradient-to-r from-gray-100 to-gray-200 text-gray-700">
                 <tr>
