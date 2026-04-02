@@ -500,7 +500,7 @@
           "Authorization": "Bearer " + token,
           "Accept": "application/json"
         }
-      })
+      }) 
       .then(() => {
         // remove only auth data
         localStorage.removeItem("auth_token");
