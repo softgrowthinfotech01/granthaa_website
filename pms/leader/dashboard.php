@@ -314,7 +314,7 @@
     // ✅ FIX: convert to number
     const leader = Number(d.leader_commission);
     const adviser = Number(d.adviser_commission);
-    const total = leader_commission + adviser_commission;
+    const total = leader + adviser;
 
     const ctx = document.getElementById("commissionChart").getContext("2d");
 
