@@ -25,17 +25,48 @@
       display: none;
     }
 
-    #sidebar {
-      -ms-overflow-style: none;
-      /* IE & Edge */
-      scrollbar-width: none;
-      /* Firefox */
-    }
+   /* MOBILE → hide scrollbar */
+@media (max-width: 640px) {
 
-    #sidebar::-webkit-scrollbar {
-      display: none;
-      /* Chrome, Safari */
-    }
+  #sidebar {
+    -ms-overflow-style: none;  /* IE & Edge */
+    scrollbar-width: none;     /* Firefox */
+  }
+
+  #sidebar::-webkit-scrollbar {
+    display: none;             /* Chrome, Safari */
+  }
+
+
+
+}
+
+/* DESKTOP → show scrollbar */
+@media (min-width: 641px) {
+
+  #sidebar {
+    overflow-y: auto;
+    scrollbar-width: thin; /* Firefox */
+       overflow-x: hidden !important;  
+   
+  }
+
+  #sidebar::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  #sidebar::-webkit-scrollbar-thumb {
+    background-color: #cbd5e1; /* Tailwind gray-300 */
+    border-radius: 6px;
+  }
+
+  #sidebar::-webkit-scrollbar-thumb:hover {
+    background-color: #94a3b8; /* darker */
+  }
+  
+
+}
+
 
     /* Menu items */
     .menu-item {
