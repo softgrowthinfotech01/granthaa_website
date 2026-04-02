@@ -1351,6 +1351,7 @@ public function update(Request $request, $id)
         ->pluck('id');
 
     $adviserCommission = CommissionLedger::whereIn('user_id', $adviserIds)
+        ->where('type', 'commission')
         ->sum('amount');
 
     $total = $leaderCommission + $adviserCommission;
