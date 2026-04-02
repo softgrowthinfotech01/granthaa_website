@@ -571,6 +571,10 @@ public function update(Request $request, $id)
                         'payment_mode' => $request->payment_mode
                     ]
                 );
+
+                $booking->update([
+                    'advance_amount' => $request->advance_amount
+                ]);
             }
         });
 
