@@ -14,11 +14,11 @@
             <h2 id="name" class="text-2xl font-bold text-gray-800"></h2>
 
             <p id="role"
-               class="text-sm text-white bg-indigo-500 inline-block px-3 py-1 rounded mt-1">
+               class="text-sm font-semibold text-white bg-green-600 inline-block px-3 py-1 rounded mt-1">
             </p>
 
-            <p id="email" class="text-gray-600 mt-2"></p>
-            <p id="mobile" class="text-gray-600"></p>
+            <p id="email" class="text-gray-600 font-semibold mt-2"></p>
+            <p id="mobile" class="text-gray-600 font-semibold"></p>
         </div>
 
     </div>
