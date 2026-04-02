@@ -1339,8 +1339,8 @@ public function update(Request $request, $id)
 
     public function commissionSplit()
     {
-        $leader = Booking::whereNull('deleted_at')->sum('leader_commission_amount');
-        $adviser = Booking::whereNull('deleted_at')->sum('adviser_commission_amount');
+        $leader = Booking::whereNull('deleted_at')->where('created_by', $user->id)->sum('leader_commission_amount');
+        $adviser = Booking::whereNull('deleted_at')->where('created_by', $user->id)->sum('adviser_commission_amount');
 
         return response()->json([
             'status' => true,
