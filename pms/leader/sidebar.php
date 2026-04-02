@@ -492,18 +492,28 @@
 
 <script>
   function logout() {
-    const token = localStorage.getItem("auth_token");
 
-    fetch("http://localhost/api/logout", {
-      method: "POST",
-      headers: {
-        "Authorization": "Bearer " + token,
-        "Accept": "application/json"
-      }
-    }).finally(() => {
-      localStorage.clear();
-      window.location.href = "../login.php";
-    });
+    const token = localStorage.getItem("auth_token");
+    fetch(url + "logout", {
+        method: "POST",
+        headers: {
+          "Authorization": "Bearer " + token,
+          "Accept": "application/json"
+        }
+      }) 
+      .then(() => {
+        // remove only auth data
+        localStorage.removeItem("auth_token");
+        localStorage.removeItem("auth_user");
+        window.location.href = "../login.php";
+      })
+      .catch(() => {
+        // logout even if API fails
+        localStorage.removeItem("auth_token");
+        localStorage.removeItem("auth_user");
+        window.location.href = "../login.php";
+      });
+
   }
 
   const user = JSON.parse(localStorage.getItem("auth_user"));
