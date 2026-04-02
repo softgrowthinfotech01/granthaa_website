@@ -30,7 +30,7 @@
   }
 
   #sidebar::-webkit-scrollbar {
-    display: none;             /* Chrome, Safari */
+    display: none;            
   }
 
 }
@@ -40,7 +40,7 @@
 
   #sidebar {
     overflow-y: auto;
-    scrollbar-width: thin; /* Firefox */
+    scrollbar-width: thin; 
   }
 
   #sidebar::-webkit-scrollbar {
@@ -48,12 +48,12 @@
   }
 
   #sidebar::-webkit-scrollbar-thumb {
-    background-color: #cbd5e1; /* Tailwind gray-300 */
+    background-color: #cbd5e1;
     border-radius: 6px;
   }
 
   #sidebar::-webkit-scrollbar-thumb:hover {
-    background-color: #94a3b8; /* darker */
+    background-color: #94a3b8; 
   }
 
 }
