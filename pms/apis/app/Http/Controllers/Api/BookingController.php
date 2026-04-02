@@ -1123,7 +1123,7 @@ public function update(Request $request, $id)
     {
         $user = auth()->user();
 
-        $query = Booking::whereNull('deleted_at')->query();
+        $query = Booking::whereNull('deleted_at');
 
         // Role filter
         if ($user->role === 'leader') {
