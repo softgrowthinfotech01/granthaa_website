@@ -93,20 +93,7 @@
         </div>
 
       
-        <!-- CITY -->
-        <div>
-            <label class="block text-sm font-semibold text-gray-700 mb-1">City</label>
-            <input type="text" id="city"
-                class="input">
-        </div>
-
-        <!-- STATE -->
-        <div>
-            <label class="block text-sm font-semibold text-gray-700 mb-1">State</label>
-            <input type="text" id="state"
-                class="input">
-        </div>
-
+       
         <!-- ADDRESS -->
         <div class="md:col-span-2">
             <label class="block text-sm font-semibold text-gray-700 mb-1">Address</label>
@@ -164,9 +151,7 @@
 <script>
 
 const token = localStorage.getItem("auth_token");
-const params = new URLSearchParams(window.location.search);
-const userId = params.get("id");
-
+let currentUserId = null;
 
 // ================= LOAD PROFILE =================
 async function loadEditProfile(){
@@ -188,6 +173,9 @@ async function loadEditProfile(){
 
         const user = data.user || data.data;
 
+
+currentUserId = user.id;
+
 // BASIC
 document.getElementById("name").value = user.name || "";
 document.getElementById("email").value = user.email || "";
@@ -199,8 +187,6 @@ document.getElementById("aadhaar_number").value = user.aadhaar_number || "";
 document.getElementById("gender").value = user.gender || "";
 document.getElementById("age").value = user.age || "";
 
-document.getElementById("city").value = user.city || "";
-document.getElementById("state").value = user.state || "";
 document.getElementById("address").value = user.address || "";
 
 // BANK
@@ -236,8 +222,6 @@ async function updateProfile(){
     aadhaar_number: document.getElementById("aadhaar_number").value.trim(),
     gender: document.getElementById("gender").value,
     age: document.getElementById("age").value,
-    city: document.getElementById("city").value.trim(),
-    state: document.getElementById("state").value.trim(),
     address: document.getElementById("address").value.trim(),
 
     // BANK
@@ -259,7 +243,7 @@ async function updateProfile(){
 
         console.log("Sending:", bodyData);
 
-        const res = await fetch(url + "users/" + userId, {
+        const res = await fetch(url + "users/" + currentUserId, {
             method: "PATCH",
             headers:{
                 "Authorization":"Bearer " + token,
