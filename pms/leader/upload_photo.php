@@ -128,7 +128,7 @@ async function uploadPhoto(){
             alert("Profile image updated ✅");
 
             setTimeout(() => {
-                window.location.href = "profile";
+                
             }, 500);
 
         } else {
