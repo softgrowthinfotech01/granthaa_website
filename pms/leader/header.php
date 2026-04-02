@@ -21,21 +21,42 @@
       width: 5rem !important;
     }
 
-    .sidebar-collapsed .sidebar-text {
-      display: none;
-    }
+  /* MOBILE → hide scrollbar */
+@media (max-width: 640px) {
 
-    #sidebar {
-      -ms-overflow-style: none;
-      /* IE & Edge */
-      scrollbar-width: none;
-      /* Firefox */
-    }
+  #sidebar {
+    -ms-overflow-style: none;  /* IE & Edge */
+    scrollbar-width: none;     /* Firefox */
+  }
 
-    #sidebar::-webkit-scrollbar {
-      display: none;
-      /* Chrome, Safari */
-    }
+  #sidebar::-webkit-scrollbar {
+    display: none;             /* Chrome, Safari */
+  }
+
+}
+
+/* DESKTOP → show scrollbar */
+@media (min-width: 641px) {
+
+  #sidebar {
+    overflow-y: auto;
+    scrollbar-width: thin; /* Firefox */
+  }
+
+  #sidebar::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  #sidebar::-webkit-scrollbar-thumb {
+    background-color: #cbd5e1; /* Tailwind gray-300 */
+    border-radius: 6px;
+  }
+
+  #sidebar::-webkit-scrollbar-thumb:hover {
+    background-color: #94a3b8; /* darker */
+  }
+
+}
 
     /* Menu items */
     .menu-item {
