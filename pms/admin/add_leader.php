@@ -163,7 +163,7 @@
 
                                     <div>
                                         <label class="block mb-1 text-sm font-medium text-gray-700">Account Number</label>
-                                        <input name="bank_account_no" type="text" id="account_number"
+                                        <input name="bank_account_no" type="text" id="account_number" maxlength="16"
                                             class="w-full px-3 py-2.5 border border-gray-400 rounded-lg bg-white text-sm focus:ring-2 focus:ring-blue-500 outline-none"
                                             placeholder="Enter account number" required>
                                     </div>
@@ -298,7 +298,7 @@
             }
 
             let formData = new FormData(form);
-            
+
             let contactNumber = document.querySelector("input[name='contact_no']").value;
 
             formData.set("role", "leader");
@@ -334,12 +334,12 @@
                         alert(data.message || "Something went wrong");
                     }
 
-                    window.location.href = "view_leader.php";
+                    return;
                 }
 
                 alert("✅ " + data.message);
 
-                form.reset();
+                window.location.href = "view_leader.php";
 
             } catch (error) {
                 console.error(error);
@@ -378,28 +378,16 @@
 
         ifscInput.addEventListener("input", function() {
 
-            let value = this.value.toUpperCase();
-
-            // allow only A-Z and 0-9
-            value = value.replace(/[^A-Z0-9]/g, '');
-
-            // limit to 11 characters
-            value = value.slice(0, 11);
-
-            this.value = value;
-
-        });
-
-        ifscInput.addEventListener("blur", function() {
-
             const value = this.value;
 
-            if (value === "") return; 
+            // only validate when length is 11
+            if (value.length === 11) {
 
-            const ifscRegex = /^[A-Z]{4}0[A-Z0-9]{6}$/;
+                const ifscRegex = /^[A-Z]{4}0[A-Z0-9]{6}$/;
 
-            if (!ifscRegex.test(value)) {
-                alert("Invalid IFSC code");
+                if (!ifscRegex.test(value)) {
+                    alert("Invalid IFSC code");
+                }
             }
         });
 
@@ -408,28 +396,20 @@
         function allowOnlyLetters(input) {
             input.value = input.value.replace(/[^a-zA-Z0-9\s]/g, '');
         }
-
         document.getElementById("bank_name").addEventListener("input", function() {
             allowOnlyLetters(this);
         });
-
         document.getElementById("branch").addEventListener("input", function() {
             allowOnlyLetters(this);
         });
 
         // Pincode Validation
-        const pincodeInput = document.getElementById("pin_code");
+        const pincode = document.getElementById("pin_code").value.trim();
 
-        pincodeInput.addEventListener("input", function() {
-            this.value = this.value.replace(/\D/g, '').slice(0, 6);
-        });
-
-        pincodeInput.addEventListener("blur", function() {
-            if (value === "") return;
-            if (!/^[0-9]{6}$/.test(this.value)) {
-                alert("Invalid pincode");
-            }
-        });
+        if (!/^[0-9]{6}$/.test(pincode)) {
+            alert("Invalid pincode");
+            return;
+        }
     </script>
 
 
