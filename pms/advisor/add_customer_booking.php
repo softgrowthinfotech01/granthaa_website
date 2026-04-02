@@ -131,7 +131,7 @@ class="w-full border border-gray-300 px-5 py-3 rounded-xl bg-gray-100 outline-no
 
 
                 <div class="space-y-2">
-                    <label class="text-sm font-semibold text-gray-700">Commission Type</label>
+                    <label class="text-sm font-semibold text-gray-700">Commission Value</label>
                     <input id="commission_value" name="commission_value" type="text" placeholder="commission value..."
                         readonly class="w-full border border-gray-300 px-5 py-3 rounded-xl bg-gray-100 outline-none ">
                 </div>

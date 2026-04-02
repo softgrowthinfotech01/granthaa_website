@@ -18,7 +18,7 @@
             <div class="grid md:grid-cols-3 gap-2">
 
                 <!-- Agent -->
-           
+
                 <!-- Buyer -->
                 <div class="space-y-2">
                     <label class="text-sm font-semibold text-gray-700">Buyer Name</label>
@@ -89,12 +89,6 @@
                         class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-green-400 outline-none">
                 </div>
 
-                <!-- Advance -->
-                <div class="space-y-2">
-                    <label class="text-sm font-semibold text-gray-700">Advance Booking Amount</label>
-                    <input type="number" id="advance_amount" name="advance_amount"
-                        class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-green-400 outline-none">
-                </div>
 
             </div>
         </div>
@@ -119,8 +113,15 @@
 
                 <div class="space-y-2">
                     <label class="text-sm font-semibold text-gray-700">Commission Type</label>
-                    <input type="text" value="Percent (%) or Amount (₹)" readonly
-                        class="w-full border border-gray-300 px-5 py-3 rounded-xl bg-gray-100 outline-none ">
+                    <input id="commission_type" name="commission_type" type="text" placeholder="commission type..."
+                        readonly class="w-full border border-gray-300 px-5 py-3 rounded-xl bg-gray-100 outline-none ">
+                </div>
+
+
+                <div class="space-y-2">
+                    <label class="text-sm font-semibold text-gray-700">Commission Value</label>
+                    <input id="commission_value" name="commission_value" type="text" placeholder="commission value..."
+                        readonly class="w-full border border-gray-300 px-5 py-3 rounded-xl bg-gray-100 outline-none ">
                 </div>
 
 
@@ -186,6 +187,13 @@
                         class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-green-400 outline-none">
                 </div>
 
+                <!-- Advance -->
+                <div class="space-y-2">
+                    <label class="text-sm font-semibold text-gray-700">Advance Booking Amount</label>
+                    <input type="number" id="advance_amount" name="advance_amount"
+                        class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-green-400 outline-none">
+                </div>
+
                 <div class="space-y-2">
                     <label class="text-sm font-semibold text-gray-700">Payment Mode</label>
                     <select id="payment_mode" name="payment_mode"
@@ -244,7 +252,6 @@
 
         /* ================= LOAD SITE LOCATIONS ================= */
         function loadLocations(selectedLocation = null) {
-
             fetch(url + "my-commissions", {
                     method: "GET",
                     headers: {
@@ -261,23 +268,32 @@
                     select.innerHTML = `<option value="">Select Site Location</option>`;
 
                     commissions.forEach(c => {
-
                         if (!c.location) return;
 
                         select.innerHTML += `
-<option value="${c.location.id}">
-${c.location.site_location}
-</option>
-`;
-
+                <option value="${c.location.id}"
+                data-type="${c.commission_type}"
+                data-value="${c.commission_value}">
+                ${c.location.site_location}
+                </option>
+            `;
                     });
 
+                    // ✅ SET SELECTED + FILL COMMISSION
                     if (selectedLocation) {
                         select.value = selectedLocation;
+
+                        const selectedOption = select.querySelector(`option[value="${selectedLocation}"]`);
+
+                        if (selectedOption) {
+                            document.getElementById("commission_type").value =
+                                selectedOption.getAttribute("data-type") || "";
+
+                            document.getElementById("commission_value").value =
+                                selectedOption.getAttribute("data-value") || "";
+                        }
                     }
-
                 });
-
         }
 
         // ================= FETCH BOOKING =================

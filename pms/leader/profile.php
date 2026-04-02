@@ -15,7 +15,7 @@
             <h2 id="name" class="text-2xl font-bold text-gray-800"></h2>
 
             <p id="role"
-               class="text-sm text-white bg-indigo-500 inline-block px-3 py-1 rounded mt-1">
+               class="text-sm text-gray-800 font-semibold bg-yellow-500 inline-block px-3 py-1 rounded mt-1">
             </p>
 
             <p id="email" class="text-gray-600 font-semibold mt-2"></p>
@@ -162,8 +162,8 @@ ifsc.innerText = safe(user.bank_ifsc_code);
     Object.entries(summary || {}).forEach(([key,value])=>{
         cardsHTML += `
             <div class="bg-white shadow rounded-xl p-4 text-center">
-                <p class="text-sm text-gray-500">${key.replace('_',' ')}</p>
-                <h3 class="text-2xl font-bold text-indigo-600">${safe(value)}</h3>
+                <p class="text-sm text-gray-800">${key.replace('_',' ').toUpperCase()}</p>
+                <h3 class="text-2xl font-bold text-yellow-600">${safe(value)}</h3>
             </div>
         `;
     });

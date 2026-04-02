@@ -5,26 +5,33 @@
     <h2 class="text-2xl font-bold mb-4 text-center">Customer and Plot Details</h2>
 
     <!-- Horizontal scroll wrapper -->
-    <div class="w-full overflow-x-auto">
-        <div class="flex justify-between flex-wrap mb-4 mr-4">
-            <div class="">
-                <input type="text" id="searchInput" placeholder="Search buyer / project / mobile"
-                    class="border p-2 rounded w-64">
+    <div class="mb-4 grid grid-cols-1 sm:grid-cols-2 items-center gap-3">
 
-                <button id="searchBtn" class="bg-blue-500 text-white px-4 py-2 rounded">
-                    Search
-                </button>
-            </div>
-            <div class="">
-                <select id="perPage" class="border p-2 rounded">
-                    <option value="10">10</option>
-                    <option value="25">25</option>
-                    <option value="50">50</option>
-                </select>
-            </div>
+        <!-- LEFT SIDE -->
+        <div class="flex flex-wrap justify-start sm:justify-center gap-3">
+            <input type="text" id="searchInput"
+                placeholder="Search buyer / project / mobile"
+                class="border p-2 rounded w-64">
+
+            <button id="searchBtn"
+                class="bg-blue-500 text-white px-4 py-1 rounded">
+                Search
+            </button>
         </div>
 
+        <!-- RIGHT SIDE -->
+        <div class="flex justify-end sm:justify-center gap-2">
+            <span class="text-sm text-gray-600">Show:</span>
+            <select id="perPage" class="border p-2 rounded">
+                <option value="10">10</option>
+                <option value="25">25</option>
+                <option value="50">50</option>
+            </select>
+        </div>
 
+    </div>
+
+     <div class="w-full overflow-x-auto">
         <table id="example" class="" style="width:100%; padding-top: 1em;  padding-bottom: 1em;">
 
             <thead class="bg-gradient-to-r from-gray-100 to-gray-200 text-gray-700">
@@ -177,11 +184,25 @@
         /* ================= RENDER ================= */
         function renderTable() {
 
-            const tbody = document.getElementById("customerData");
-            tbody.innerHTML = "";
+    const tbody = document.getElementById("customerData");
+    tbody.innerHTML = "";
 
-            let start = (currentPage - 1) * perPage;
-            let paginated = filteredBookings.slice(start, start + perPage);
+    let start = (currentPage - 1) * perPage;
+    let paginated = filteredBookings.slice(start, start + perPage);
+
+    // ✅ NOW check
+    if (paginated.length === 0) {
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="10" class="text-center p-4 text-gray-500">
+                    No records found
+                </td>
+            </tr>
+        `;
+
+        document.getElementById("pagination").innerHTML = "";
+        return;
+    }
 
             paginated.forEach((row) => {
 
