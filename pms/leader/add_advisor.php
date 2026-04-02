@@ -222,7 +222,7 @@ transition transform hover:scale-[1.02]">
       }
 
       alert('adviser created successfully');
-      document.getElementById('advisorForm').reset();
+       window.location.href = "list_advisor.php";
 
     } catch (error) {
       console.error(error);
