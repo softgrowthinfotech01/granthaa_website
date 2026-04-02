@@ -97,6 +97,19 @@
                     const tbody = document.getElementById("paymentData");
                     tbody.innerHTML = "";
 
+                    if (referrals.length === 0) {
+                        tbody.innerHTML = `
+        <tr>
+            <td colspan="7" class="text-center p-4 text-gray-500">
+                No records found
+            </td>
+        </tr>
+    `;
+
+                        document.getElementById("pagination").innerHTML = "";
+                        return;
+                    }
+
                     referrals.forEach((row, i) => {
 
                         let srNo = (currentPage - 1) * perPage + (i + 1);

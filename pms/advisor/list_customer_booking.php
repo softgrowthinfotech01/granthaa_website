@@ -184,11 +184,25 @@
         /* ================= RENDER ================= */
         function renderTable() {
 
-            const tbody = document.getElementById("customerData");
-            tbody.innerHTML = "";
+    const tbody = document.getElementById("customerData");
+    tbody.innerHTML = "";
 
-            let start = (currentPage - 1) * perPage;
-            let paginated = filteredBookings.slice(start, start + perPage);
+    let start = (currentPage - 1) * perPage;
+    let paginated = filteredBookings.slice(start, start + perPage);
+
+    // ✅ NOW check
+    if (paginated.length === 0) {
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="10" class="text-center p-4 text-gray-500">
+                    No records found
+                </td>
+            </tr>
+        `;
+
+        document.getElementById("pagination").innerHTML = "";
+        return;
+    }
 
             paginated.forEach((row) => {
 
