@@ -1337,20 +1337,33 @@ public function update(Request $request, $id)
         ]);
     }
 
-    public function commissionSplit()
-    {
-        $leader = Booking::whereNull('deleted_at')->where('created_by', $user->id)->sum('leader_commission_amount');
-        $adviser = Booking::whereNull('deleted_at')->where('created_by', $user->id)->sum('adviser_commission_amount');
+   public function commissionSplit()
+{
+    $leader = auth()->user();
 
-        return response()->json([
-            'status' => true,
-            'data' => [
-                'leader' => $leader,
-                'adviser' => $adviser,
-                'company' => 0 // optional if needed
-            ]
-        ]);
-    }
+    // print_r($leader);exit;
+    $leaderCommission = CommissionLedger::where('user_id', $leader->id)
+        ->where('type', 'commission')
+        ->sum('amount');
+
+    $adviserIds = User::where('created_by', $leader->id)
+        ->where('role', 'adviser')
+        ->pluck('id');
+
+    $adviserCommission = CommissionLedger::whereIn('user_id', $adviserIds)
+        ->sum('amount');
+
+    $total = $leaderCommission + $adviserCommission;
+
+    return response()->json([
+        'status' => true,
+        'data' => [
+            'leader' => $leaderCommission,
+            'adviser' => $adviserCommission,
+            'total_network_commission' => $total
+        ]
+    ]);
+}
 
 
     public function dashboardAlerts()
