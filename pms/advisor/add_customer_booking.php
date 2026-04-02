@@ -34,17 +34,17 @@ class="w-full border border-gray-300 px-5 py-3 rounded-xl bg-gray-100 outline-no
                 <!-- Mobile -->
                 <div class="space-y-2">
                     <label class="text-sm font-semibold text-gray-700">Mobile Number</label>
-                    <input type="number" name="mobile" id="mobile"   maxlength="10"
-    pattern="[0-9]{10}"
-    inputmode="numeric"
+                    <input type="number" name="mobile" id="mobile" maxlength="10"
+                        pattern="[0-9]{10}"
+                        inputmode="numeric"
                         class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-green-400 outline-none">
                 </div>
 
                 <!-- DOB -->
                 <div class="space-y-2">
                     <label class="text-sm font-semibold text-gray-700">Date of Birth</label>
-                    <input type="date" name="dob" id="dob"  min="1900-01-01"
-    max="2026-12-31"
+                    <input type="date" name="dob" id="dob" min="1900-01-01"
+                        max="2026-12-31"
                         class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-green-400 outline-none">
                 </div>
 
@@ -58,9 +58,9 @@ class="w-full border border-gray-300 px-5 py-3 rounded-xl bg-gray-100 outline-no
                 <!-- PAN -->
                 <div class="space-y-2">
                     <label class="text-sm font-semibold text-gray-700">PAN Number</label>
-                    <input type="text" required name="pan_number" id="pan_number"   maxlength="10"
-    pattern="[A-Z]{5}[0-9]{4}[A-Z]{1}"
-   
+                    <input type="text" required name="pan_number" id="pan_number" maxlength="10"
+                        pattern="[A-Z]{5}[0-9]{4}[A-Z]{1}"
+
                         class="w-full border border-gray-300 px-5 py-3 rounded-xl uppercase focus:ring-2 focus:ring-green-400 outline-none">
                 </div>
 
@@ -95,9 +95,9 @@ class="w-full border border-gray-300 px-5 py-3 rounded-xl bg-gray-100 outline-no
                 <!-- Pincode -->
                 <div class="space-y-2">
                     <label class="text-sm font-semibold text-gray-700">Pincode</label>
-                    <input type="number" name="pincode" id="pincode"  maxlength="6"
-    pattern="[0-9]{6}"
-    inputmode="numeric"
+                    <input type="number" name="pincode" id="pincode" maxlength="6"
+                        pattern="[0-9]{6}"
+                        inputmode="numeric"
                         class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-green-400 outline-none">
                 </div>
 
@@ -252,7 +252,7 @@ transition transform hover:scale-[1.02]">
 
 <script src="../url.js"></script>
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
+    document.addEventListener("DOMContentLoaded", function() {
 
         const token = localStorage.getItem("auth_token");
         const authUser = JSON.parse(localStorage.getItem("auth_user"));
@@ -271,12 +271,12 @@ transition transform hover:scale-[1.02]">
         function loadAdvisorLocations() {
 
             fetch(url + "my-commissions", {
-                method: "GET",
-                headers: {
-                    Authorization: "Bearer " + token,
-                    Accept: "application/json"
-                }
-            })
+                    method: "GET",
+                    headers: {
+                        Authorization: "Bearer " + token,
+                        Accept: "application/json"
+                    }
+                })
                 .then(res => res.json())
                 .then(response => {
 
@@ -316,7 +316,7 @@ transition transform hover:scale-[1.02]">
         ================================*/
         document
             .getElementById("site_location")
-            .addEventListener("change", function () {
+            .addEventListener("change", function() {
 
                 const selected =
                     this.options[this.selectedIndex];
@@ -354,7 +354,7 @@ transition transform hover:scale-[1.02]">
 
             });
 
-        document.getElementById("advance_amount").addEventListener("input", function () {
+        document.getElementById("advance_amount").addEventListener("input", function() {
 
             let total = parseFloat(document.getElementById("total_booking_amount").value) || 0;
             let advance = parseFloat(this.value) || 0;
@@ -370,7 +370,7 @@ transition transform hover:scale-[1.02]">
         ================================*/
         document
             .getElementById("bookingForm")
-            .addEventListener("submit", async function (e) {
+            .addEventListener("submit", async function(e) {
 
                 e.preventDefault();
 
@@ -395,8 +395,7 @@ transition transform hover:scale-[1.02]">
                 try {
 
                     const response = await fetch(
-                        url + "bookings",
-                        {
+                        url + "bookings", {
                             method: "POST",
                             headers: {
                                 Authorization: "Bearer " + token,
@@ -444,58 +443,58 @@ transition transform hover:scale-[1.02]">
     });
 
 
-//  for mobile number validation
+    //  for mobile number validation
 
 
-    document.getElementById("mobile").addEventListener("input", function () {
-    // Remove anything that's not a number
-    this.value = this.value.replace(/\D/g, "");
+    document.getElementById("mobile").addEventListener("input", function() {
+        // Remove anything that's not a number
+        this.value = this.value.replace(/\D/g, "");
 
-    // Limit to 10 digits
-    if (this.value.length > 10) {
-        this.value = this.value.slice(0, 10);
-    }
-});
-
-
-// pin code validation
-
-document.getElementById("pincode").addEventListener("input", function () {
-    // Allow only digits
-    this.value = this.value.replace(/\D/g, "");
-
-    // Limit to 6 digits
-    if (this.value.length > 6) {
-        this.value = this.value.slice(0, 6);
-    }
-});
-
-//  for pan card validation
-document.getElementById("pan_number").addEventListener("input", function () {
-    // Convert to uppercase
-    this.value = this.value.toUpperCase();
-
-    // Allow only letters and numbers
-    this.value = this.value.replace(/[^A-Z0-9]/g, "");
-
-    // Limit to 10 characters
-    if (this.value.length > 10) {
-        this.value = this.value.slice(0, 10);
-    }
-});
-
-// dob year 4 digit validation
-document.getElementById("dob").addEventListener("input", function () {
-    let value = this.value;
-
-    // Check year length
-    if (value) {
-        let year = value.split("-")[0];
-        if (year.length > 4) {
-            this.value = "";
+        // Limit to 10 digits
+        if (this.value.length > 10) {
+            this.value = this.value.slice(0, 10);
         }
-    }
-});
+    });
+
+
+    // pin code validation
+
+    document.getElementById("pincode").addEventListener("input", function() {
+        // Allow only digits
+        this.value = this.value.replace(/\D/g, "");
+
+        // Limit to 6 digits
+        if (this.value.length > 6) {
+            this.value = this.value.slice(0, 6);
+        }
+    });
+
+    //  for pan card validation
+    document.getElementById("pan_number").addEventListener("input", function() {
+        // Convert to uppercase
+        this.value = this.value.toUpperCase();
+
+        // Allow only letters and numbers
+        this.value = this.value.replace(/[^A-Z0-9]/g, "");
+
+        // Limit to 10 characters
+        if (this.value.length > 10) {
+            this.value = this.value.slice(0, 10);
+        }
+    });
+
+    // dob year 4 digit validation
+    document.getElementById("dob").addEventListener("input", function() {
+        let value = this.value;
+
+        // Check year length
+        if (value) {
+            let year = value.split("-")[0];
+            if (year.length > 4) {
+                this.value = "";
+            }
+        }
+    });
 </script>
 
 
