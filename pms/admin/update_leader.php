@@ -277,6 +277,10 @@
             }
         }
 
+        document.getElementById("pancard_number").addEventListener("input", function() {
+            this.value = this.value.toUpperCase();
+        });
+
         // 🔹 Update Leader with FULL VALIDATION
         async function updateLeader() {
 
@@ -298,19 +302,23 @@
             mobileInput.setCustomValidity("");
             pincodeInput.setCustomValidity("");
 
-            // Pan Validation
-            document.getElementById("pancard_number").addEventListener("input", function() {
-                let pan = this.value.toUpperCase();
-                this.value = pan; // auto uppercase
+            // Pan validation
+            const panInput = document.getElementById("pancard_number");
 
-                const panRegex = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
+            // ✅ Force uppercase in field
+            panInput.value = panInput.value.toUpperCase();
 
-                if (!panRegex.test(pan)) {
-                    this.setCustomValidity("Invalid PAN format (e.g., ABCDE1234F)");
-                } else {
-                    this.setCustomValidity("");
-                }
-            });
+            const pan = panInput.value.trim();
+
+            const panRegex = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
+
+            if (!panRegex.test(pan)) {
+                panInput.setCustomValidity("Invalid PAN format (ABCDE1234F)");
+                panInput.reportValidity();
+                return;
+            } else {
+                panInput.setCustomValidity("");
+            }
 
             // ✅ Age validation
             if (isNaN(age) || age < 1 || age > 150) {
