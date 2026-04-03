@@ -170,9 +170,9 @@
 
                                     <div>
                                         <label class="block mb-1 text-sm font-medium text-gray-700">Account Number</label>
-                                        <input name="bank_account_no" type="text" id="account_number"   maxlength="18"
-       inputmode="numeric"
-       pattern="[0-9]{9,18}"
+                                        <input name="bank_account_no" type="text" id="account_number" maxlength="18"
+                                            inputmode="numeric"
+                                            pattern="[0-9]{9,18}"
                                             class="w-full px-3 py-2.5 border border-gray-400 rounded-lg bg-white text-sm focus:ring-2 focus:ring-blue-500 outline-none"
                                             placeholder="Enter account number" required>
                                     </div>
@@ -368,6 +368,20 @@
 
 
     <script>
+        // Pan Validation
+        document.getElementById("pan_number").addEventListener("input", function() {
+            let pan = this.value.toUpperCase();
+            this.value = pan; // auto uppercase
+
+            const panRegex = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
+
+            if (!panRegex.test(pan)) {
+                this.setCustomValidity("Invalid PAN format (e.g., ABCDE1234F)");
+            } else {
+                this.setCustomValidity("");
+            }
+        });
+
         // Account number max 18 digits
         const accountInput = document.getElementById("account_number");
 
@@ -421,19 +435,19 @@
         }
     </script>
 
-<script>
-document.getElementById("account_number").addEventListener("input", function(e){
+    <script>
+        document.getElementById("account_number").addEventListener("input", function(e) {
 
-    // remove non-numeric characters
-    this.value = this.value.replace(/\D/g, "");
+            // remove non-numeric characters
+            this.value = this.value.replace(/\D/g, "");
 
-    // limit to 18 digits
-    if(this.value.length > 18){
-        this.value = this.value.slice(0, 18);
-    }
+            // limit to 18 digits
+            if (this.value.length > 18) {
+                this.value = this.value.slice(0, 18);
+            }
 
-});
-</script>
+        });
+    </script>
 </body>
 
 </html>

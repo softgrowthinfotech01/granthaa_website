@@ -25,170 +25,177 @@
                 <!--/Sidebar-->
 
                 <!--Main-->
-             <div id="mainContent"
-    class="w-full md:w-[80%] lg:w-[70%] mx-auto my-6 px-3">
+                <div id="mainContent"
+                    class="w-full md:w-[80%] lg:w-[70%] mx-auto my-6 px-3">
 
-    <form class="w-full bg-white p-6 md:p-8 rounded-2xl shadow-lg border border-gray-200"
-        method="post" id="userForm" enctype="multipart/form-data">
+                    <form class="w-full bg-white p-6 md:p-8 rounded-2xl shadow-lg border border-gray-200"
+                        method="post" id="userForm" enctype="multipart/form-data">
 
-        <!-- TITLE -->
-        <div class="mb-6 text-center">
-            <h2 class="text-xl md:text-2xl font-bold text-gray-800">
-                Update Leader Details
-            </h2>
-            <p class="text-sm text-gray-500">Edit leader information</p>
-        </div>
+                        <!-- TITLE -->
+                        <div class="mb-6 text-center">
+                            <h2 class="text-xl md:text-2xl font-bold text-gray-800">
+                                Update Leader Details
+                            </h2>
+                            <p class="text-sm text-gray-500">Edit leader information</p>
+                        </div>
 
-        <!-- PERSONAL -->
-        <div class="mb-6">
-            <h5 class="text-md font-semibold text-gray-700 mb-3">Personal Details</h5>
+                        <!-- PERSONAL -->
+                        <div class="mb-6">
+                            <h5 class="text-md font-semibold text-gray-700 mb-3">Personal Details</h5>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
 
-                <div>
-                    <label class="block text-sm text-gray-700 mb-1">Leader Code</label>
-                    <input type="text" id="user_code"
-                        class="w-full px-3 py-2.5 rounded-lg bg-gray-100 border border-gray-200 text-gray-700 text-sm cursor-not-allowed"
-                        readonly />
+                                <div>
+                                    <label class="block text-sm text-gray-700 mb-1">Leader Code</label>
+                                    <input type="text" id="user_code"
+                                        class="w-full px-3 py-2.5 rounded-lg bg-gray-100 border border-gray-200 text-gray-700 text-sm cursor-not-allowed"
+                                        readonly />
+                                </div>
+
+                                <div>
+                                    <label class="block text-sm text-gray-700 mb-1">Full Name</label>
+                                    <input type="text" id="name"
+                                        class="w-full px-3 py-2.5 border border-gray-400 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 outline-none"
+                                        required />
+                                </div>
+
+                                <div>
+                                    <label class="block text-sm text-gray-700 mb-1">Age</label>
+                                    <input name="age" type="text" maxlength="2" pattern="[0-9]{2}" inputmode="numeric" id="age"
+                                        class="w-full px-3 py-2.5 border border-gray-400 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 outline-none"
+                                        required />
+                                </div>
+
+                                <div>
+                                    <label class="block text-sm text-gray-700 mb-1">Gender</label>
+                                    <select id="gender"
+                                        class="w-full px-3 py-2.5 border border-gray-400 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 outline-none">
+                                        <option selected>Choose a gender</option>
+                                        <option value="male">Male</option>
+                                        <option value="female">Female</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                </div>
+
+                                <div>
+                                    <label class="block mb-1 text-sm font-medium text-gray-700">Pan Card</label>
+                                    <input name="pancard_number" type="text" id="pancard_number"
+                                        class="w-full px-3 py-2.5 border border-gray-400 rounded-lg bg-white text-sm focus:ring-2 focus:ring-blue-500 outline-none"
+                                        placeholder="Enter pancard_number number" required>
+                                </div>
+
+                            </div>
+
+                            <!-- IMAGE -->
+                            <div class="mt-4">
+                                <label class="block text-sm text-gray-700 mb-2">Current Image</label>
+
+                                <img id="current_image"
+                                    src=""
+                                    class="w-28 h-28 object-cover rounded-lg border mb-3"
+                                    alt="Leader Image">
+
+                                <label class="block text-sm text-gray-700 mb-1">Upload New Image</label>
+                                <input accept=".jpg,.jpeg,.png"
+                                    class="w-full px-3 py-2 border border-gray-400 rounded-lg text-sm bg-white"
+                                    id="file_input" type="file">
+                            </div>
+                        </div>
+
+                        <hr class="mb-6">
+
+                        <!-- CONTACT -->
+                        <div class="mb-6">
+                            <h5 class="text-md font-semibold text-gray-700 mb-3">Contact Details</h5>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+                                <div>
+                                    <label class="block text-sm text-gray-700 mb-1">Mobile</label>
+                                    <input id="mobile"
+                                        class="w-full px-3 py-2.5 rounded-lg bg-gray-100 border border-gray-200 text-gray-700 text-sm cursor-not-allowed"
+                                        readonly />
+                                </div>
+
+                                <div>
+                                    <label class="block text-sm text-gray-700 mb-1">Email</label>
+                                    <input id="email"
+                                        class="w-full px-3 py-2.5 rounded-lg bg-gray-100 border border-gray-200 text-gray-700 text-sm cursor-not-allowed"
+                                        readonly />
+                                </div>
+
+                                <div>
+                                    <label class="block text-sm text-gray-700 mb-1">City</label>
+                                    <input id="city"
+                                        class="w-full px-3 py-2.5 border border-gray-400 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 outline-none"
+                                        required />
+                                </div>
+
+                                <div>
+                                    <label class="block text-sm text-gray-700 mb-1">State</label>
+                                    <input id="state"
+                                        class="w-full px-3 py-2.5 border border-gray-400 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 outline-none"
+                                        required />
+                                </div>
+
+                                <div>
+                                    <label class="block text-sm text-gray-700 mb-1">Address</label>
+                                    <input id="address"
+                                        class="w-full px-3 py-2.5 border border-gray-400 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 outline-none"
+                                        required />
+                                </div>
+
+                                <div>
+                                    <label class="block text-sm text-gray-700 mb-1">Pincode</label>
+                                    <input id="pincode"
+                                        class="w-full px-3 py-2.5 border border-gray-400 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 outline-none"
+                                        required />
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <hr class="mb-6">
+
+                        <!-- BANK -->
+                        <div class="mb-6">
+                            <h5 class="text-md font-semibold text-gray-700 mb-3">Bank Details</h5>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+                                <input id="bank_name" placeholder="Bank Name"
+                                    class="w-full px-3 py-2.5 border border-gray-400 rounded-lg text-sm" />
+
+                                <input id="branch" placeholder="Branch"
+                                    class="w-full px-3 py-2.5 border border-gray-400 rounded-lg text-sm" />
+
+                                <input id="account_number" placeholder="Account Number"
+                                    class="w-full px-3 py-2.5 border border-gray-400 rounded-lg text-sm" />
+
+                                <input id="ifsc_code" placeholder="IFSC Code"
+                                    class="w-full px-3 py-2.5 border border-gray-400 rounded-lg text-sm" />
+
+                            </div>
+                        </div>
+
+                        <!-- BUTTONS -->
+                        <div class="flex flex-col md:flex-row justify-center gap-3">
+
+                            <button type="button" onclick="updateLeader()"
+                                class="w-full md:w-[180px] bg-blue-600 hover:bg-blue-500 text-white rounded-lg px-4 py-2.5 transition shadow">
+                                Update
+                            </button>
+
+                            <button type="button"
+                                onclick="window.location.href='view_leader.php'"
+                                class="w-full md:w-[180px] bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-lg px-4 py-2.5 border">
+                                Back
+                            </button>
+
+                        </div>
+
+                    </form>
                 </div>
-
-                <div>
-                    <label class="block text-sm text-gray-700 mb-1">Full Name</label>
-                    <input type="text" id="name"
-                        class="w-full px-3 py-2.5 border border-gray-400 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 outline-none"
-                        required />
-                </div>
-
-                <div>
-                    <label class="block text-sm text-gray-700 mb-1">Age</label>
-                    <input name="age" type="text" maxlength="2" pattern="[0-9]{2}" inputmode="numeric" id="age"
-                        class="w-full px-3 py-2.5 border border-gray-400 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 outline-none"
-                        required />
-                </div>
-
-                <div>
-                    <label class="block text-sm text-gray-700 mb-1">Gender</label>
-                    <select id="gender"
-                        class="w-full px-3 py-2.5 border border-gray-400 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 outline-none">
-                        <option selected>Choose a gender</option>
-                        <option value="male">Male</option>
-                        <option value="female">Female</option>
-                        <option value="other">Other</option>
-                    </select>
-                </div>
-
-            </div>
-
-            <!-- IMAGE -->
-            <div class="mt-4">
-                <label class="block text-sm text-gray-700 mb-2">Current Image</label>
-
-                <img id="current_image"
-                    src=""
-                    class="w-28 h-28 object-cover rounded-lg border mb-3"
-                    alt="Leader Image">
-
-                <label class="block text-sm text-gray-700 mb-1">Upload New Image</label>
-                <input accept=".jpg,.jpeg,.png"
-                    class="w-full px-3 py-2 border border-gray-400 rounded-lg text-sm bg-white"
-                    id="file_input" type="file">
-            </div>
-        </div>
-
-        <hr class="mb-6">
-
-        <!-- CONTACT -->
-        <div class="mb-6">
-            <h5 class="text-md font-semibold text-gray-700 mb-3">Contact Details</h5>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-
-                <div>
-                    <label class="block text-sm text-gray-700 mb-1">Mobile</label>
-                    <input id="mobile"
-                        class="w-full px-3 py-2.5 rounded-lg bg-gray-100 border border-gray-200 text-gray-700 text-sm cursor-not-allowed"
-                        readonly />
-                </div>
-
-                <div>
-                    <label class="block text-sm text-gray-700 mb-1">Email</label>
-                    <input id="email"
-                        class="w-full px-3 py-2.5 rounded-lg bg-gray-100 border border-gray-200 text-gray-700 text-sm cursor-not-allowed"
-                        readonly />
-                </div>
-
-                <div>
-                    <label class="block text-sm text-gray-700 mb-1">City</label>
-                    <input id="city"
-                        class="w-full px-3 py-2.5 border border-gray-400 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 outline-none"
-                        required />
-                </div>
-
-                <div>
-                    <label class="block text-sm text-gray-700 mb-1">State</label>
-                    <input id="state"
-                        class="w-full px-3 py-2.5 border border-gray-400 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 outline-none"
-                        required />
-                </div>
-
-                <div>
-                    <label class="block text-sm text-gray-700 mb-1">Address</label>
-                    <input id="address"
-                        class="w-full px-3 py-2.5 border border-gray-400 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 outline-none"
-                        required />
-                </div>
-
-                <div>
-                    <label class="block text-sm text-gray-700 mb-1">Pincode</label>
-                    <input id="pincode"
-                        class="w-full px-3 py-2.5 border border-gray-400 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 outline-none"
-                        required />
-                </div>
-
-            </div>
-        </div>
-
-        <hr class="mb-6">
-
-        <!-- BANK -->
-        <div class="mb-6">
-            <h5 class="text-md font-semibold text-gray-700 mb-3">Bank Details</h5>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-
-                <input id="bank_name" placeholder="Bank Name"
-                    class="w-full px-3 py-2.5 border border-gray-400 rounded-lg text-sm" />
-
-                <input id="branch" placeholder="Branch"
-                    class="w-full px-3 py-2.5 border border-gray-400 rounded-lg text-sm" />
-
-                <input id="account_number" placeholder="Account Number"
-                    class="w-full px-3 py-2.5 border border-gray-400 rounded-lg text-sm" />
-
-                <input id="ifsc_code" placeholder="IFSC Code"
-                    class="w-full px-3 py-2.5 border border-gray-400 rounded-lg text-sm" />
-
-            </div>
-        </div>
-
-        <!-- BUTTONS -->
-        <div class="flex flex-col md:flex-row justify-center gap-3">
-
-            <button type="button" onclick="updateLeader()"
-                class="w-full md:w-[180px] bg-blue-600 hover:bg-blue-500 text-white rounded-lg px-4 py-2.5 transition shadow">
-                Update
-            </button>
-
-            <button type="button"
-                onclick="window.location.href='view_leader.php'"
-                class="w-full md:w-[180px] bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-lg px-4 py-2.5 border">
-                Back
-            </button>
-
-        </div>
-
-    </form>
-</div>
                 <!--/Main-->
             </div>
             <!--Footer-->
@@ -243,6 +250,7 @@
                 document.getElementById("name").value = user.name ?? "";
                 document.getElementById("age").value = user.age ?? "";
                 document.getElementById("gender").value = user.gender ?? "";
+                document.getElementById("pancard_number").value = user.pancard_number ?? "";
                 document.getElementById("mobile").value = user.contact_no ?? "";
                 document.getElementById("email").value = user.email ?? "";
                 document.getElementById("city").value = user.city ?? "";
@@ -289,6 +297,20 @@
             ageInput.setCustomValidity("");
             mobileInput.setCustomValidity("");
             pincodeInput.setCustomValidity("");
+
+            // Pan Validation
+            document.getElementById("pan_number").addEventListener("input", function() {
+                let pan = this.value.toUpperCase();
+                this.value = pan; // auto uppercase
+
+                const panRegex = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
+
+                if (!panRegex.test(pan)) {
+                    this.setCustomValidity("Invalid PAN format (e.g., ABCDE1234F)");
+                } else {
+                    this.setCustomValidity("");
+                }
+            });
 
             // ✅ Age validation
             if (isNaN(age) || age < 1 || age > 150) {
