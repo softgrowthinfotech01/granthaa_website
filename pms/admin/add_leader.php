@@ -264,6 +264,23 @@
                 emailInput.setCustomValidity("");
             }
 
+            // ✅ PAN VALIDATION (ADD HERE)
+            const panInput = document.getElementById("pancard_number");
+
+            // force uppercase
+            panInput.value = panInput.value.toUpperCase();
+
+            const pan = panInput.value.trim();
+            const panRegex = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
+
+            if (!panRegex.test(pan)) {
+                panInput.setCustomValidity("Invalid PAN format (ABCDE1234F)");
+                panInput.reportValidity();
+                return; // 🚨 STOP FORM SUBMIT
+            } else {
+                panInput.setCustomValidity("");
+            }
+
             // ACCOUNT NUMBER VALIDATION
             const accountNumber = document.getElementById("account_number").value.trim();
 
@@ -368,20 +385,6 @@
 
 
     <script>
-        // Pan Validation
-        document.getElementById("pan_number").addEventListener("input", function() {
-            let pan = this.value.toUpperCase();
-            this.value = pan; // auto uppercase
-
-            const panRegex = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
-
-            if (!panRegex.test(pan)) {
-                this.setCustomValidity("Invalid PAN format (e.g., ABCDE1234F)");
-            } else {
-                this.setCustomValidity("");
-            }
-        });
-
         // Account number max 18 digits
         const accountInput = document.getElementById("account_number");
 
