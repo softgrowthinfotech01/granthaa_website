@@ -381,9 +381,9 @@ class BookingController extends Controller
         $user = auth()->user();
 
         // ✅ Only define once
-        $query = Booking::whereNull('deleted_at')->with(['leader','location','payments' => function($q){
-    $q->where('payment_type','!=','reversal');
-}]);
+        $query = Booking::whereNull('deleted_at')->with(['leader', 'location', 'payments' => function ($q) {
+            $q->where('payment_type', '!=', 'reversal');
+        }]);
 
         // 🔐 Role Based Filter
         if ($user->role === 'leader') {
@@ -444,164 +444,173 @@ class BookingController extends Controller
         return response()->json($booking);
     }
 
-public function update(Request $request, $id)
-{
-    $booking = Booking::whereNull('deleted_at')
-        ->with('booking')
-        ->findOrFail($id);
+    public function update(Request $request, $id)
+    {
+        $booking = Booking::whereNull('deleted_at')
+            ->with('booking')
+            ->findOrFail($id);
 
-    $user = auth()->user();
+        $user = auth()->user();
 
-    // Authorization
-    if ($user->role !== 'admin' && $booking->created_by != $user->id) {
-        abort(403, 'Unauthorized');
-    }
+        // Authorization
+        if ($user->role !== 'admin' && $booking->created_by != $user->id) {
+            abort(403, 'Unauthorized');
+        }
 
-    try {
+        try {
 
-        DB::transaction(function () use ($request, $booking) {
+            DB::transaction(function () use ($request, $booking) {
 
-            /*
+                /*
             |--------------------------------------------------------------------------
             | Financial Lock Check
             |--------------------------------------------------------------------------
             */
-            $hasPayment = BookingPayment::where('booking_id', $booking->id)->exists();
-            $hasCommission = CommissionLedger::where('booking_id', $booking->id)->exists();
+                $hasPayment = BookingPayment::where('booking_id', $booking->id)->exists();
+                $hasCommission = CommissionLedger::where('booking_id', $booking->id)->exists();
 
-            $canEditPlot = !$hasPayment && !$hasCommission;
+                $canEditPlot = !$hasPayment && !$hasCommission;
 
-            /*
+                /*
             |--------------------------------------------------------------------------
             | Block Plot Change After Transaction
             |--------------------------------------------------------------------------
             */
-            if (!$canEditPlot) {
+                if (!$canEditPlot) {
 
-    $tempBooking = clone $booking;
+                    $tempBooking = clone $booking;
 
-    // apply only incoming values
-    $tempBooking->fill($request->only([
-        'plot_number',
-        'site_location'
-    ]));
+                    // apply only incoming values
+                    $tempBooking->fill($request->only([
+                        'plot_number',
+                        'site_location'
+                    ]));
 
-    if ($tempBooking->isDirty(['plot_number', 'site_location'])) {
-        throw new \Exception(
-            'Booking is having transactions. Plot cannot be changed.'
-        );
-    }
-}
+                    if ($tempBooking->isDirty(['plot_number', 'site_location'])) {
+                        throw new \Exception(
+                            'Booking is having transactions. Plot cannot be changed.'
+                        );
+                    }
+                }
 
-            /*
+
+                $totalAmountChanged =
+                    $request->filled('total_booking_amount') &&
+                    $request->total_booking_amount != $booking->total_booking_amount;
+
+                if (!$canEditPlot && $totalAmountChanged) {
+                    throw new \Exception(
+                        'Transactions exist. Total booking amount cannot be changed.'
+                    );
+                }
+
+                /*
             |--------------------------------------------------------------------------
             | Duplicate Plot Check
             |--------------------------------------------------------------------------
             */
-            if (
-                $canEditPlot &&
-                $request->filled('plot_number') &&
-                $request->filled('site_location')
-            ) {
+                if (
+                    $canEditPlot &&
+                    $request->filled('plot_number') &&
+                    $request->filled('site_location')
+                ) {
 
-                $exists = Booking::where('site_location', $request->site_location)
-                    ->where('plot_number', $request->plot_number)
-                    ->whereNull('deleted_at')
-                    ->where('id', '<>', $booking->id)
-                    ->exists();
+                    $exists = Booking::where('site_location', $request->site_location)
+                        ->where('plot_number', $request->plot_number)
+                        ->whereNull('deleted_at')
+                        ->where('id', '<>', $booking->id)
+                        ->exists();
 
-                if ($exists) {
-                    throw new \Exception('Plot already booked.');
+                    if ($exists) {
+                        throw new \Exception('Plot already booked.');
+                    }
                 }
-            }
 
-            /*
+                /*
             |--------------------------------------------------------------------------
             | Update Customer
             |--------------------------------------------------------------------------
             */
-            if ($booking->user) {
-                $booking->user->update(array_filter([
-                    'name' => $request->buyer_name,
-                    // 'contact_no' => $request->mobile,
-                    'address' => $request->address,
-                    'city' => $request->city,
-                    'state' => $request->state,
-                ]));
-            }
+                if ($booking->user) {
+                    $booking->user->update(array_filter([
+                        'name' => $request->buyer_name,
+                        // 'contact_no' => $request->mobile,
+                        'address' => $request->address,
+                        'city' => $request->city,
+                        'state' => $request->state,
+                    ]));
+                }
 
-            /*
+                /*
             |--------------------------------------------------------------------------
             | Update Booking
             |--------------------------------------------------------------------------
             */
-            $updateData = $request->only([
-                'buyer_name',
-                'mobile',
-                'address',
-                'city',
-                'state',
-                'remark'
-            ]);
+                $updateData = $request->only([
+                    'buyer_name',
+                    'mobile',
+                    'address',
+                    'city',
+                    'state',
+                    'remark'
+                ]);
 
-            if ($canEditPlot) {
-                $updateData['plot_number'] = $request->plot_number;
-                $updateData['site_location'] = $request->site_location;
-                $updateData['total_booking_amount'] = $request->total_booking_amount;
-            }
+                if ($canEditPlot) {
+                    $updateData['plot_number'] = $request->plot_number;
+                    $updateData['site_location'] = $request->site_location;
+                    $updateData['total_booking_amount'] = $request->total_booking_amount;
+                }
 
-            $booking->update(array_filter($updateData));
+                $booking->update(array_filter($updateData));
 
-            /*
+                /*
             |--------------------------------------------------------------------------
             | Advance Payment Sync
             |--------------------------------------------------------------------------
             */
-            if ($request->advance_amount) {
+                if ($request->advance_amount) {
 
-                BookingPayment::updateOrCreate(
-                    [
-                        'booking_id' => $booking->id,
-                        'payment_type' => 'advance'
-                    ],
-                    [
-                        'user_id' => $booking->user_id,
-                        'received_by' => auth()->id(),
-                        'amount' => $request->advance_amount,
-                        'payment_mode' => $request->payment_mode
-                    ]
-                );
+                    BookingPayment::updateOrCreate(
+                        [
+                            'booking_id' => $booking->id,
+                            'payment_type' => 'advance'
+                        ],
+                        [
+                            'user_id' => $booking->user_id,
+                            'received_by' => auth()->id(),
+                            'amount' => $request->advance_amount,
+                            'payment_mode' => $request->payment_mode
+                        ]
+                    );
 
-                $booking->update([
-                    'advance_amount' => $request->advance_amount
-                ]);
+                    $booking->update([
+                        'advance_amount' => $request->advance_amount
+                    ]);
+                }
+            });
+
+            return response()->json([
+                'status' => true,
+                'message' => 'Booking updated successfully'
+            ]);
+        } catch (\Illuminate\Database\QueryException $e) {
+
+            if ($e->errorInfo[1] == 1062) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Plot already booked for this site.'
+                ], 422);
             }
-        });
 
-        return response()->json([
-            'status' => true,
-            'message' => 'Booking updated successfully'
-        ]);
+            throw $e;
+        } catch (\Exception $e) {
 
-    } catch (\Illuminate\Database\QueryException $e) {
-
-        if ($e->errorInfo[1] == 1062) {
             return response()->json([
                 'status' => false,
-                'message' => 'Plot already booked for this site.'
+                'message' => $e->getMessage()
             ], 422);
         }
-
-        throw $e;
-
-    } catch (\Exception $e) {
-
-        return response()->json([
-            'status' => false,
-            'message' => $e->getMessage()
-        ], 422);
     }
-}
 
     public function destroy($id)
     {
@@ -835,17 +844,17 @@ public function update(Request $request, $id)
                 );
 
                 $totalPaidAmt = abs(
-                    CommissionLedger::where('type','payment')
-    ->where('amount','>',0)->sum('amount')
+                    CommissionLedger::where('type', 'payment')
+                        ->where('amount', '>', 0)->sum('amount')
                 );
 
-$topAdvisor = BookingPayment::where('payment_type','!=','reversal')
-    ->where('amount','>',0)
-    ->select('user_id', DB::raw('SUM(amount) as total'))
-    ->groupBy('user_id')
-    ->orderByDesc('total')
-    ->first();
-    
+                $topAdvisor = BookingPayment::where('payment_type', '!=', 'reversal')
+                    ->where('amount', '>', 0)
+                    ->select('user_id', DB::raw('SUM(amount) as total'))
+                    ->groupBy('user_id')
+                    ->orderByDesc('total')
+                    ->first();
+
                 $response['data'] = [
                     'total_advisors' => $totalAdvisors,
                     'total_booking_amount' => $totalBookingAmount,
@@ -907,7 +916,7 @@ $topAdvisor = BookingPayment::where('payment_type','!=','reversal')
                 $totalPaidAmt = abs(
                     CommissionLedger::whereIn('user_id', $teamIds)
                         ->where('type', 'payment')
-                        ->where('amount','>',0)
+                        ->where('amount', '>', 0)
                         ->sum('amount')
                 );
 
@@ -961,7 +970,7 @@ $topAdvisor = BookingPayment::where('payment_type','!=','reversal')
                 $totalPaidAmt = abs(
                     CommissionLedger::where('user_id', $user->id)
                         ->where('type', 'payment')
-                        ->where('amount','>',0)
+                        ->where('amount', '>', 0)
                         ->sum('amount')
                 );
 
@@ -1058,10 +1067,10 @@ $topAdvisor = BookingPayment::where('payment_type','!=','reversal')
         $totalSalesValue = Booking::whereNull('deleted_at')->sum('total_booking_amount'); // ✅ FIXED (better than commission)
 
         // ✅ Commission totals
-        $totalCommission = CommissionLedger::where('type', 'commission')->where('amount','>',0)->sum('amount');
+        $totalCommission = CommissionLedger::where('type', 'commission')->where('amount', '>', 0)->sum('amount');
 
         $totalPaid = abs(
-                 CommissionLedger::where('type', 'payment')->where('amount','>',0)->sum('amount')
+            CommissionLedger::where('type', 'payment')->where('amount', '>', 0)->sum('amount')
         );
 
         $pendingCommissions = $totalCommission - $totalPaid;
@@ -1214,7 +1223,7 @@ $topAdvisor = BookingPayment::where('payment_type','!=','reversal')
             $paidAmount = abs(
                 CommissionLedger::where('user_id', $leader->id)
                     ->where('type', 'payment')
-                    ->where('amount','>',0)
+                    ->where('amount', '>', 0)
                     ->sum('amount')
             );
 
@@ -1256,7 +1265,7 @@ $topAdvisor = BookingPayment::where('payment_type','!=','reversal')
                 CommissionLedger::where('user_id', $userId)
                     ->where('booking_id', $b->id)
                     ->where('type', 'payment') // ✅ IMPORTANT FIX
-                    ->where('amount','>',0)
+                    ->where('amount', '>', 0)
                     ->sum('amount')
             );
 
@@ -1304,7 +1313,7 @@ $topAdvisor = BookingPayment::where('payment_type','!=','reversal')
                 CommissionLedger::where('user_id', $adviserId)
                     ->where('booking_id', $b->id)
                     ->where('type', 'payment')
-                    ->where('amount','>',0)
+                    ->where('amount', '>', 0)
                     ->sum('amount')
             );
 
@@ -1358,36 +1367,36 @@ $topAdvisor = BookingPayment::where('payment_type','!=','reversal')
         ]);
     }
 
-public function commissionSplit()
-{
-    $leader = auth()->user();
+    public function commissionSplit()
+    {
+        $leader = auth()->user();
 
-    // print_r($leader);exit;
-    $leaderCommission = CommissionLedger::where('user_id', $leader->id)
-        ->where('type', 'commission')
-        ->where('amount','>',0)
-        ->sum('amount');
+        // print_r($leader);exit;
+        $leaderCommission = CommissionLedger::where('user_id', $leader->id)
+            ->where('type', 'commission')
+            ->where('amount', '>', 0)
+            ->sum('amount');
 
-    $adviserIds = User::where('created_by', $leader->id)
-        ->where('role', 'adviser')
-        ->pluck('id');
+        $adviserIds = User::where('created_by', $leader->id)
+            ->where('role', 'adviser')
+            ->pluck('id');
 
-    $adviserCommission = CommissionLedger::whereIn('user_id', $adviserIds)
-        ->where('type', 'commission')
-        ->where('amount','>',0)
-        ->sum('amount');
+        $adviserCommission = CommissionLedger::whereIn('user_id', $adviserIds)
+            ->where('type', 'commission')
+            ->where('amount', '>', 0)
+            ->sum('amount');
 
-    $total = $leaderCommission + $adviserCommission;
+        $total = $leaderCommission + $adviserCommission;
 
-    return response()->json([
-        'status' => true,
-        'data' => [
-            'leader_commission' => $leaderCommission,
-            'adviser_commission' => $adviserCommission,
-            'total_network_commission' => $total
-        ]
-    ]);
-}
+        return response()->json([
+            'status' => true,
+            'data' => [
+                'leader_commission' => $leaderCommission,
+                'adviser_commission' => $adviserCommission,
+                'total_network_commission' => $total
+            ]
+        ]);
+    }
 
 
     public function dashboardAlerts()
@@ -1405,7 +1414,7 @@ public function commissionSplit()
             $paid = abs(
                 CommissionLedger::where('user_id', $leader->id)
                     ->where('type', 'payment')
-                    ->where('amount','>',0)
+                    ->where('amount', '>', 0)
                     ->sum('amount')
             );
 
@@ -1429,7 +1438,7 @@ public function commissionSplit()
         }
 
         // 🔵 No payments today
-        $todayPayments = CommissionLedger::where('type', 'payment')->where('amount','>',0)
+        $todayPayments = CommissionLedger::where('type', 'payment')->where('amount', '>', 0)
             ->whereDate('created_at', today())
             ->count();
 
