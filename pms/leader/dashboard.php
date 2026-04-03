@@ -52,6 +52,7 @@
     text-decoration: none;
     z-index: 0;
     overflow: hidden;
+    min-height: 148px;
   }
 
   .card1:before {

@@ -466,7 +466,7 @@ class BookingController extends Controller
             | Financial Lock Check
             |--------------------------------------------------------------------------
             */
-                $hasPayment = BookingPayment::where('booking_id', $booking->id) ->where('amount', '>', 0)->exists();
+                $hasPayment = BookingPayment::where('booking_id', $booking->id)->where('amount', '>', 0)->exists();
                 $hasCommission = CommissionLedger::where('booking_id', $booking->id)->where('type', 'payment')->exists();
 
                 $canEditPlot = !$hasPayment && !$hasCommission;
@@ -549,9 +549,25 @@ class BookingController extends Controller
                 $updateData = $request->only([
                     'buyer_name',
                     'mobile',
+                    'dob',
+                    'email',
+                    'pan_number',
+                    'aadhar_number',
                     'address',
                     'city',
                     'state',
+                    'pincode',
+                    'project_name',
+                    'plot_number',
+                    'khasara_number',
+                    'ph_number',
+                    'mouza',
+                    'tahsil',
+                    'district',
+                    'square_feet',
+                    'square_meter',
+                    'total_booking_amount',
+                    'payment_mode',
                     'remark'
                 ]);
 
@@ -563,58 +579,58 @@ class BookingController extends Controller
 
                 if ($canEditPlot && $totalAmountChanged) {
 
-    $newAmount = (float) $request->total_booking_amount;
+                    $newAmount = (float) $request->total_booking_amount;
 
-    /*
+                    /*
     |--------------------------------------------------------------------------
     | Leader Commission Recalculate
     |--------------------------------------------------------------------------
     */
-    if ($booking->leader_commission_type === 'percent') {
-        $leaderCommission =
-            ($newAmount * $booking->leader_commission_value) / 100;
-    } else {
-        $leaderCommission = $booking->leader_commission_value;
-    }
+                    if ($booking->leader_commission_type === 'percent') {
+                        $leaderCommission =
+                            ($newAmount * $booking->leader_commission_value) / 100;
+                    } else {
+                        $leaderCommission = $booking->leader_commission_value;
+                    }
 
-    /*
+                    /*
     |--------------------------------------------------------------------------
     | Adviser Commission Recalculate
     |--------------------------------------------------------------------------
     */
-    if ($booking->adviser_commission_type === 'percent') {
-        $adviserCommission =
-            ($newAmount * $booking->adviser_commission_value) / 100;
-    } else {
-        $adviserCommission = $booking->adviser_commission_value;
-    }
+                    if ($booking->adviser_commission_type === 'percent') {
+                        $adviserCommission =
+                            ($newAmount * $booking->adviser_commission_value) / 100;
+                    } else {
+                        $adviserCommission = $booking->adviser_commission_value;
+                    }
 
-    /*
+                    /*
     |--------------------------------------------------------------------------
     | Update Booking Commission Columns
     |--------------------------------------------------------------------------
     */
-    $booking->update([
-        'leader_commission_amount' => $leaderCommission,
-        'adviser_commission_amount' => $adviserCommission,
-        'commission_amount' => abs($leaderCommission) + abs($adviserCommission)
-    ]);
+                    $booking->update([
+                        'leader_commission_amount' => $leaderCommission,
+                        'adviser_commission_amount' => $adviserCommission,
+                        'commission_amount' => abs($leaderCommission) + abs($adviserCommission)
+                    ]);
 
-    /*
+                    /*
     |--------------------------------------------------------------------------
     | Update Commission Ledger (ONLY commission type)
     |--------------------------------------------------------------------------
     */
-    CommissionLedger::where('booking_id', $booking->id)
-        ->where('type', 'commission')
-        ->where('user_id', $booking->leader_id)
-        ->update(['amount' => $leaderCommission]);
+                    CommissionLedger::where('booking_id', $booking->id)
+                        ->where('type', 'commission')
+                        ->where('user_id', $booking->leader_id)
+                        ->update(['amount' => $leaderCommission]);
 
-    CommissionLedger::where('booking_id', $booking->id)
-        ->where('type', 'commission')
-        ->where('user_id', $booking->adviser_id)
-        ->update(['amount' => $adviserCommission]);
-}
+                    CommissionLedger::where('booking_id', $booking->id)
+                        ->where('type', 'commission')
+                        ->where('user_id', $booking->adviser_id)
+                        ->update(['amount' => $adviserCommission]);
+                }
 
                 $booking->update(array_filter($updateData));
 

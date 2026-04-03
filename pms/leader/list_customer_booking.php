@@ -8,10 +8,10 @@
     </h2>
 
     <!-- ✅ SEARCH (OUTSIDE SCROLL) -->
-    <div class="mb-4 grid grid-cols-1 sm:grid-cols-2 items-center gap-3">
+    <div class="mb-4 flex flex-col sm:flex-row justify-between items-center gap-6">
 
         <!-- LEFT SIDE -->
-        <div class="flex flex-wrap justify-start sm:justify-center gap-3">
+        <div class="flex flex-wrap gap-3">
             <input type="text" id="searchInput"
                 placeholder="Search buyer / project / mobile"
                 class="border p-2 rounded w-64">
@@ -23,7 +23,7 @@
         </div>
 
         <!-- RIGHT SIDE -->
-        <div class="flex justify-end sm:justify-center gap-2">
+        <div class="flex items-center gap-2">
             <span class="text-sm text-gray-600">Show:</span>
             <select id="perPage" class="border p-2 rounded">
                 <option value="10">10</option>

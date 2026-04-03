@@ -87,13 +87,6 @@
                         class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-yellow-400 outline-none">
                 </div>
 
-                <!-- Advance -->
-                <div class="space-y-2">
-                    <label class="text-sm font-semibold text-gray-700">Advance Booking Amount</label>
-                    <input type="number" id="advance_amount" name="advance_amount"
-                        class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-yellow-400 outline-none">
-                </div>
-
             </div>
         </div>
 
@@ -116,7 +109,13 @@
 
                 <div class="space-y-2">
                     <label class="text-sm font-semibold text-gray-700">Commission Type</label>
-                    <input type="text" id="commission_type" name="commission_type" readonly
+                    <input type="text" id="commission_type" name="commission_type" placeholder="commission type" readonly
+                        class="w-full border border-gray-300 px-5 py-3 rounded-xl bg-gray-100 outline-none cursor-not-allowed">
+                </div>
+
+                <div class="space-y-2">
+                    <label class="text-sm font-semibold text-gray-700">Commission Value</label>
+                    <input name="commission_value" id="commission_value" type="text" placeholder="commission value" readonly
                         class="w-full border border-gray-300 px-5 py-3 rounded-xl bg-gray-100 outline-none cursor-not-allowed">
                 </div>
 
@@ -177,6 +176,13 @@
                 <div class="space-y-2">
                     <label class="text-sm font-semibold text-gray-700">Total Amount</label>
                     <input type="number" id="total_booking_amount" name="total_booking_amount"
+                        class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-yellow-400 outline-none">
+                </div>
+
+                <!-- Advance -->
+                <div class="space-y-2">
+                    <label class="text-sm font-semibold text-gray-700">Advance Booking Amount</label>
+                    <input type="number" id="advance_amount" name="advance_amount"
                         class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-yellow-400 outline-none">
                 </div>
 
