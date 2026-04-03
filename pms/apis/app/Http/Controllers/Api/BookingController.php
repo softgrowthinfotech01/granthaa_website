@@ -466,7 +466,7 @@ class BookingController extends Controller
             | Financial Lock Check
             |--------------------------------------------------------------------------
             */
-                $hasPayment = BookingPayment::where('booking_id', $booking->id)->exists();
+                $hasPayment = BookingPayment::where('booking_id', $booking->id) ->where('amount', '>', 0)->exists();
                 $hasCommission = CommissionLedger::where('booking_id', $booking->id)->where('type', 'payment')->exists();
 
                 $canEditPlot = !$hasPayment && !$hasCommission;
