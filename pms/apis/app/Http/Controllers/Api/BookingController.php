@@ -467,7 +467,7 @@ class BookingController extends Controller
             |--------------------------------------------------------------------------
             */
                 $hasPayment = BookingPayment::where('booking_id', $booking->id)->exists();
-                $hasCommission = CommissionLedger::where('booking_id', $booking->id)->exists();
+                $hasCommission = CommissionLedger::where('booking_id', $booking->id)->where('type', 'payment')->exists();
 
                 $canEditPlot = !$hasPayment && !$hasCommission;
 
