@@ -597,6 +597,7 @@ class BookingController extends Controller
     $booking->update([
         'leader_commission_amount' => $leaderCommission,
         'adviser_commission_amount' => $adviserCommission,
+        'commission_amount' => abs($leaderCommission) + abs($adviserCommission)
     ]);
 
     /*
