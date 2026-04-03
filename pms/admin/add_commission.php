@@ -259,7 +259,7 @@
                 }
 
                 alert('Commission saved successfully');
-                document.getElementById('commissionForm').reset();
+                window.location.href = "view_commission.php";
 
             } catch (error) {
                 console.error(error);
