@@ -299,7 +299,7 @@
             pincodeInput.setCustomValidity("");
 
             // Pan Validation
-            document.getElementById("pan_number").addEventListener("input", function() {
+            document.getElementById("pancard_number").addEventListener("input", function() {
                 let pan = this.value.toUpperCase();
                 this.value = pan; // auto uppercase
 
@@ -352,6 +352,7 @@
                 formData.append("email", email);
                 formData.append("age", age);
                 formData.append("gender", document.getElementById("gender").value);
+                formData.append("pancard_number", document.getElementById("pancard_number").value);
                 formData.append("contact_no", mobile);
                 formData.append("city", document.getElementById("city").value);
                 formData.append("state", document.getElementById("state").value);
@@ -382,7 +383,7 @@
 
                     if (result.data?.profile_image) {
                         document.getElementById("current_image").src =
-                            url + "storage/" + result.data.image + "?t=" + new Date().getTime();
+                            url + "storage/" + result.data.profile_image + "?t=" + new Date().getTime();
                     }
                     window.location.href = "view_leader.php";
 
