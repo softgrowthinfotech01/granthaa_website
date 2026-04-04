@@ -1024,7 +1024,7 @@ class BookingController extends Controller
                     'top_advisor' => $topAdvisor,
                     'my_commission' => $totalmyCommissionAmount,
                     'my_paid_amt' => $mytotalPaidAmt,
-                    'my_balance_commission' => $totalmyCommissionAmount - $mytotalPaidAmt,
+                    'my_balance_commission' => $totalCommissionAmount - $mytotalPaidAmt,
                     'team_commission' => $team_adviser_commission,
                     'total_commission_amount' => $my_commission + $team_commission + $team_adviser_commission,
                 ];
