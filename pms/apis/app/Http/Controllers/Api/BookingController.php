@@ -996,6 +996,12 @@ class BookingController extends Controller
         ->where('type', 'commission')
         ->sum('amount');
 
+        $mytotalPaidAmt = abs(
+        CommissionLedger::where('user_id', $user->id)
+            ->where('type', 'payment')
+            ->sum('amount')
+    );
+
                 $topAdvisor = Booking::whereNull('deleted_at')->where('leader_id', $user->id)
                     ->whereNotNull('adviser_id') // only adviser bookings
                     ->select('adviser_id', DB::raw('SUM(total_booking_amount) as total'))
@@ -1017,7 +1023,8 @@ class BookingController extends Controller
                     'total_balanceamt' => $totalCommissionAmount - $totalPaidAmt,
                     'top_advisor' => $topAdvisor,
                     'my_commission' => $totalmyCommissionAmount,
-                    'my_balance_commission' => $totalmyCommissionAmount - $totalPaidAmt,
+                    'my_paid_amt' => $mytotalPaidAmt,
+                    'my_balance_commission' => $totalmyCommissionAmount - $mytotalPaidAmt,
                     'team_commission' => $team_adviser_commission,
                     'total_commission_amount' => $my_commission + $team_commission + $team_adviser_commission,
                 ];
