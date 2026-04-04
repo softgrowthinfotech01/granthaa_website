@@ -145,6 +145,11 @@ class User extends Authenticatable
         return $this->hasMany(CommissionLedger::class);
     }
 
+    public function referralSettings()
+{
+    return $this->hasMany(ReferralSetting::class);
+}
+
     public function commissionSummary()
 {
 
