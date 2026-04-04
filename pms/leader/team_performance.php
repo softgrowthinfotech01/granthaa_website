@@ -15,11 +15,10 @@
         <tr>
           <th data-priority="1" class="p-3 font-semibold">Advisor Code</th>
           <th data-priority="2" class="p-3 font-semibold">Advisor Name</th>
-          <th data-priority="3" class="p-3 font-semibold">Location</th>
-          <th data-priority="4" class="p-3 font-semibold">Total Deals</th>
-          <th data-priority="5" class="p-3 font-semibold">Total Booking Amount</th>
-          <th data-priority="6" class="p-3 font-semibold">Commission</th>
-          <th data-priority="7" class="p-3 font-semibold">Rank</th>
+          <th data-priority="3" class="p-3 font-semibold">Total Deals</th>
+          <th data-priority="4" class="p-3 font-semibold">Total Booking Amount</th>
+          <th data-priority="5" class="p-3 font-semibold">Commission</th>
+          <th data-priority="6" class="p-3 font-semibold">Rank</th>
         </tr>
       </thead>
 
@@ -105,8 +104,7 @@ let commission = parseFloat(advisor.total_commission ?? 0);
 
                 table.row.add([
                     advisor.user_code ?? '',
-                    advisor.name ?? '',
-                    advisor.city ?? '-', 
+                    advisor.name ?? '', 
                     totalDeals,
                     "₹ " + bookingAmount.toLocaleString(),
                     "₹ " + commission.toLocaleString(undefined, {minimumFractionDigits: 2}),

@@ -306,7 +306,7 @@
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
               d="M3 3v18h18M7 13l3-3 4 4 5-5" />
           </svg>
-              <span class="sidebar-text">Performance</span>
+              <span class="sidebar-text">Performance & Commission</span>
             </span>
 
             <svg class="menu-arrow w-4 h-4 transition-transform transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -323,7 +323,7 @@
                   <path d="M4 12h16" />
                 </svg>
 
-                <span class="sidebar-text">My Performance</span>
+                <span class="sidebar-text">My Commission Record</span>
               </a>
             </li>
             <li>
