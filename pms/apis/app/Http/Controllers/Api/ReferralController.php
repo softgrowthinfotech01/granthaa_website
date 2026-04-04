@@ -5,6 +5,7 @@ namespace App\Http\Controllers\api;
 use App\Http\Controllers\Controller;
 use App\Models\Referral;
 use App\Models\ReferralLedger;
+use App\Models\ReferralSetting;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -57,8 +58,6 @@ class ReferralController extends Controller
             'data' => $referrals
         ]);
     }
-
- use App\Models\ReferralSetting;
 
 public function store(Request $request)
 {

@@ -10,11 +10,12 @@ class ReferralSettingController extends Controller
 {
     public function store(Request $request)
     {
-        $request->validate([
-            'location_id' => 'required|exists:locations,id',
-            'type'        => 'required|in:fixed,percentage',
-            'value'       => 'required|numeric|min:0'
-        ]);
+    $request->validate([
+    'location_id'    => 'required|exists:locations,id',
+    'target_user_id' => 'nullable|exists:users,id', // can be null for general
+    'type'           => 'required|in:fixed,percentage',
+    'value'          => 'required|numeric|min:0'
+]);
 
         $user = auth()->user();
 
@@ -25,16 +26,17 @@ class ReferralSettingController extends Controller
             ], 403);
         }
 
-        $setting = ReferralSetting::updateOrCreate(
-            [
-                'user_id'     => $user->id,
-                'location_id' => $request->location_id
-            ],
-            [
-                'type'  => $request->type,
-                'value' => $request->value
-            ]
-        );
+$setting = ReferralSetting::updateOrCreate(
+    [
+        'user_id'        => $user->id,
+        'location_id'    => $request->location_id,
+        'target_user_id' => $request->target_user_id
+    ],
+    [
+        'type'  => $request->type,
+        'value' => $request->value
+    ]
+);
 
         return response()->json([
             'status' => true,
