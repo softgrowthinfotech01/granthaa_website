@@ -78,16 +78,10 @@
                                     </div>
 
                                     <div>
-                                        <label class="block mb-1 text-sm font-medium text-gray-700">Upload Image</label>
-                                        <input name="image" type="file" id="file_input"
-                                            class="w-full border border-gray-400 rounded-lg bg-white text-sm focus:ring-2 focus:ring-blue-500 outline-none p-2 bg-white">
-                                    </div>
-
-                                    <div>
                                         <label class="block mb-1 text-sm font-medium text-gray-700">Pan Card</label>
-                                        <input name="pancard_number" type="text" id="pancard_number"
+                                        <input name="pancard_number" type="text" id="pancard_number" maxlength="10"
                                             class="w-full px-3 py-2.5 border border-gray-400 rounded-lg bg-white text-sm focus:ring-2 focus:ring-blue-500 outline-none"
-                                            placeholder="Enter pancard_number number" required>
+                                            placeholder="Enter pan card number" required>
                                     </div>
 
                                 </div>
@@ -179,7 +173,7 @@
 
                                     <div>
                                         <label class="block mb-1 text-sm font-medium text-gray-700">IFSC Code</label>
-                                        <input name="bank_ifsc_code" type="text" id="ifsc_code"
+                                        <input name="bank_ifsc_code" type="text" id="ifsc_code" maxlength="11"
                                             class="w-full px-3 py-2.5 border border-gray-400 rounded-lg bg-white text-sm focus:ring-2 focus:ring-blue-500 outline-none"
                                             placeholder="Enter IFSC code" required>
                                     </div>
@@ -225,6 +219,11 @@
         console.log("Add Leader page loaded");
     </script>
     <script>
+
+        document.getElementById("pancard_number").addEventListener("input", function() {
+            this.value = this.value.toUpperCase();
+        });
+
         document.getElementById("userForm").addEventListener("submit", async function(e) {
 
             e.preventDefault();
@@ -287,26 +286,6 @@
             if (accountNumber.length < 9 || accountNumber.length > 18) {
                 alert("Account number must be between 9-18 digits");
                 return;
-            }
-
-            // IMAGE VALIDATION
-            const file = fileInput.files[0];
-
-            if (file) {
-
-                const allowedTypes = ["image/jpeg", "image/png"];
-
-                if (!allowedTypes.includes(file.type)) {
-                    alert("Only JPG, JPEG and PNG files are allowed.");
-                    return;
-                }
-
-                const maxSize = 2 * 1024 * 1024;
-
-                if (file.size > maxSize) {
-                    alert("Image size must be less than 2MB.");
-                    return;
-                }
             }
 
             const token = localStorage.getItem('auth_token');
@@ -417,8 +396,25 @@
             }
         });
 
-        // for branch and bank name allow only letters and spaces
+        // Pan validation
+        const panInput = document.getElementById("pancard_number");
 
+        // ✅ Force uppercase in field
+        panInput.value = panInput.value.toUpperCase();
+
+        const pan = panInput.value.trim();
+
+        const panRegex = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
+
+        if (!panRegex.test(pan)) {
+            panInput.setCustomValidity("Invalid PAN format (ABCDE1234F)");
+            panInput.reportValidity();
+            return;
+        } else {
+            panInput.setCustomValidity("");
+        }
+
+        // for branch and bank name allow only letters and spaces
         function allowOnlyLetters(input) {
             input.value = input.value.replace(/[^a-zA-Z0-9\s]/g, '');
         }

@@ -58,7 +58,7 @@ class UserController extends Controller
 
         // Admin can view anyone
         if ($auth->role != 'admin' && $user->created_by != $auth->id && $auth->id != $user->id) {
-            return response()->json(['message' => 'Unauthorized chekc this'], 403);
+            return response()->json(['message' => 'Unauthorized check this'], 403);
         }
 
 
@@ -160,7 +160,7 @@ class UserController extends Controller
             $rules += [
                 'age'        => 'required|integer|min:18',
                 'gender'     => 'required|in:male,female,others',
-                'contact_no' => 'required|string|max:15',
+                'contact_no' => 'required|string|max:15|unique:users,contact_no',
                 'city'       => 'nullable|string',
                 'state'      => 'nullable|string',
                 'address'    => 'required|string',
@@ -298,7 +298,7 @@ public function update(Request $request, $id)
         'password' => 'nullable|min:6',
         'age' => 'nullable|integer|min:18',
         'gender' => 'nullable|in:male,female,others',
-        'contact_no' => 'nullable|string|max:15',
+        'contact_no' => 'nullable|string|max:15|unique:users,contact_no',
         'city' => 'nullable|string',
         'state' => 'nullable|string',
         'address' => 'nullable|string',
