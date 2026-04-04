@@ -916,7 +916,7 @@ class BookingController extends Controller
 
                 $totalPaidAmt = abs(
                     CommissionLedger::where('type', 'payment')
-                        ->where('amount', '<', 0)->sum('amount')
+                        ->where('amount', '>', 0)->sum('amount')
                 );
 
                 $topAdvisor = BookingPayment::where('payment_type', '!=', 'reversal')
@@ -1141,7 +1141,7 @@ class BookingController extends Controller
         $totalCommission = CommissionLedger::where('type', 'commission')->where('amount', '>', 0)->sum('amount');
 
         $totalPaid = abs(
-            CommissionLedger::where('type', 'payment')->where('amount', '>', 0)->sum('amount')
+            CommissionLedger::where('type', 'payment')->where('amount', '<', 0)->sum('amount')
         );
 
         $pendingCommissions = $totalCommission - $totalPaid;
