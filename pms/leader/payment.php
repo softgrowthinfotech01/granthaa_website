@@ -206,7 +206,7 @@ transition transform hover:scale-[1.02]">
                 return;
             }
 
-            alert("Payment recorded successfully");
+           alert(`Payment of ₹${amount} recorded successfully`);
 
             document.getElementById("paymentForm").reset();
 

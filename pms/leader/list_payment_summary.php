@@ -1,4 +1,3 @@
-<?php include 'header.php'; ?>
 
 <style>
     .w-full.overflow-x-auto {
@@ -12,49 +11,7 @@
     .dataTables_wrapper .dataTables_info {
         margin-top: 15px;
     }
-</style>
-
-<div class="max-w-7xl mx-auto bg-white p-4 sm:p-6 rounded-2xl shadow-xl">
-
-    <h2 class="text-xl sm:text-2xl font-bold mb-4 text-center text-gray-800">
-        Team Transaction Summary
-    </h2>
-
-    <p class="text-gray-500 text-center text-sm mb-4">
-        All advisor transaction records
-    </p>
-
-    <div class="w-full overflow-x-auto mb-6">
-
-        <table id="paymentTable"
-            class="min-w-[700px] w-full text-sm border border-gray-200 rounded-xl overflow-hidden">
-
-            <thead class="bg-gray-200 text-gray-700">
-                <tr>
-                    <th class="p-3 text-left">#</th>
-                    <th class="p-3 text-left">Advisor</th>
-                    <th class="p-3 text-left">Customer</th>
-                    <th class="p-3 text-left">Plot No.</th>
-                    <th class="p-3 text-right">Booking</th>
-                    <th class="p-3 text-right">Commission</th>
-                    <th class="p-3 text-right">Paid</th>
-                    <th class="p-3 text-right">Balance</th>
-                    <th class="p-3 text-left">Date</th>
-                </tr>
-            </thead>
-
-            <tbody class="divide-y divide-gray-700"></tbody>
-
-        </table>
-    </div>
-
-</div>
-<link rel="stylesheet" href="https://cdn.datatables.net/1.13.8/css/jquery.dataTables.min.css">
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.8/js/jquery.dataTables.min.js"></script>
-
-<style>
-    /* Wrapper */
+      /* Wrapper */
     .dataTables_wrapper {
         color: #374151 !important;
         font-size: 14px;
@@ -141,6 +98,50 @@
         margin-top: 10px;
     }
 </style>
+
+<?php include 'header.php'; ?>
+
+<div class="max-w-7xl mx-auto bg-white p-4 sm:p-6 rounded-2xl shadow-xl">
+
+    <h2 class="text-xl sm:text-2xl font-bold mb-4 text-center text-gray-800">
+        Team Transaction Summary
+    </h2>
+
+    <p class="text-gray-500 text-center text-sm mb-4">
+        All advisor transaction records
+    </p>
+
+    <div class="w-full overflow-x-auto mb-6">
+
+        <table id="paymentTable"
+            class="min-w-[700px] w-full text-sm border border-gray-200 rounded-xl overflow-hidden">
+
+            <thead class="bg-gray-200 text-gray-700">
+                <tr>
+                    <th class="p-3 text-left">#</th>
+                    <th class="p-3 text-left">Advisor</th>
+                    <th class="p-3 text-left">Customer</th>
+                    <th class="p-3 text-left">Plot No.</th>
+                    <th class="p-3 text-right">Booking Amt</th>
+                    <th class="p-3 text-right">Total Commission</th>
+                    <th class="p-3 text-right">Advisor's Comm</th>
+                    <th class="p-3 text-right">Paid (Advisor)</th>
+                    <th class="p-3 text-right">Balance (Advisor)</th>
+                    <th class="p-3 text-left">Date</th>
+                </tr>
+            </thead>
+
+            <tbody class="divide-y divide-gray-700"></tbody>
+
+        </table>
+    </div>
+
+</div>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.8/css/jquery.dataTables.min.css">
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.8/js/jquery.dataTables.min.js"></script>
+
+
 
 <?php include 'footer.php'; ?>
 <script>
@@ -263,9 +264,13 @@
             Object.keys(grouped).forEach(bookingId => {
 
                 let booking = bookingsMap[bookingId] || {};
-                let commission = parseFloat(booking.commission_amount) || 0;
+               let totalCommission = parseFloat(booking.commission_amount) || 0;
 
-                let balance = commission;
+// ✅ NEW (IMPORTANT)
+let advisorCommission = parseFloat(booking.adviser_commission_amount) || 0;
+
+// ✅ balance should be based on advisor commission
+let balance = advisorCommission;
 
                 // 🔥 IMPORTANT: reverse for calculation (old → new)
                 let sortedAsc = grouped[bookingId].sort(
@@ -297,17 +302,25 @@
                             ${formatCurrency(booking.total_booking_amount)}
                         </td>
 
-                        <td class="text-right text-blue-600">
-                            ${formatCurrency(commission)}
-                        </td>
+                       <!-- Total Commission -->
+<td class="text-right text-blue-600">
+    ${formatCurrency(totalCommission)}
+</td>
 
-                        <td class="text-right text-green-600 font-semibold">
-                            ${formatCurrency(paid)}
-                        </td>
+<!-- ✅ Advisor Commission -->
+<td class="text-right text-green-600 font-semibold">
+    ${formatCurrency(advisorCommission)}
+</td>
 
-                        <td class="text-right text-red-500 font-semibold">
-                            ${formatCurrency(balance)}
-                        </td>
+<!-- ✅ Paid -->
+<td class="text-right text-yellow-600 font-semibold">
+    ${formatCurrency(paid)}
+</td>
+
+<!-- ✅ Balance -->
+<td class="text-right text-red-500 font-semibold">
+    ${formatCurrency(balance)}
+</td>
 
                         <td>${formatDate(item.created_at)}</td>
                     </tr>
