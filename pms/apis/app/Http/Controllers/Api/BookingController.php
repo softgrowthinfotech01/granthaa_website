@@ -916,11 +916,11 @@ class BookingController extends Controller
 
                 $totalPaidAmt = abs(
                     CommissionLedger::where('type', 'payment')
-                        ->where('amount', '>', 0)->sum('amount')
+                        ->where('amount', '<', 0)->sum('amount')
                 );
 
                 $topAdvisor = BookingPayment::where('payment_type', '!=', 'reversal')
-                    ->where('amount', '>', 0)
+                    ->where('amount', '<', 0)
                     ->select('user_id', DB::raw('SUM(amount) as total'))
                     ->groupBy('user_id')
                     ->orderByDesc('total')
@@ -996,6 +996,12 @@ class BookingController extends Controller
         ->where('type', 'commission')
         ->sum('amount');
 
+        $mytotalPaidAmt = abs(
+        CommissionLedger::where('user_id', $user->id)
+            ->where('type', 'payment')
+            ->sum('amount')
+    );
+
                 $topAdvisor = Booking::whereNull('deleted_at')->where('leader_id', $user->id)
                     ->whereNotNull('adviser_id') // only adviser bookings
                     ->select('adviser_id', DB::raw('SUM(total_booking_amount) as total'))
@@ -1017,7 +1023,8 @@ class BookingController extends Controller
                     'total_balanceamt' => $totalCommissionAmount - $totalPaidAmt,
                     'top_advisor' => $topAdvisor,
                     'my_commission' => $totalmyCommissionAmount,
-                    'my_balance_commission' => $totalmyCommissionAmount - $totalPaidAmt,
+                    'my_paid_amt' => $mytotalPaidAmt,
+                    'my_balance_commission' => $totalCommissionAmount - $mytotalPaidAmt,
                     'team_commission' => $team_adviser_commission,
                     'total_commission_amount' => $my_commission + $team_commission + $team_adviser_commission,
                 ];
@@ -1142,10 +1149,12 @@ class BookingController extends Controller
         $totalSalesValue = Booking::whereNull('deleted_at')->sum('total_booking_amount'); // ✅ FIXED (better than commission)
 
         // ✅ Commission totals
-        $totalCommission = CommissionLedger::where('type', 'commission')->where('amount', '>', 0)->sum('amount');
+        $totalCommission = CommissionLedger::where('type', 'commission')->where('amount', '>', 0)->whereHas('booking')->sum('amount');
 
         $totalPaid = abs(
-            CommissionLedger::where('type', 'payment')->where('amount', '>', 0)->sum('amount')
+            CommissionLedger::where('type', 'payment')->where('created_by', 1)->where('amount', '<', 0)->whereHas('booking', function ($q) {
+            $q->whereNull('deleted_at');
+        })->sum('amount')
         );
 
         $pendingCommissions = $totalCommission - $totalPaid;
@@ -1168,6 +1177,7 @@ class BookingController extends Controller
             $leader = User::find($topLeader->leader_id);
             $topLeaderName = $leader?->name;
         }
+        
 
         return response()->json([
             'status' => true,
@@ -1513,7 +1523,7 @@ class BookingController extends Controller
         }
 
         // 🔵 No payments today
-        $todayPayments = CommissionLedger::where('type', 'payment')->where('amount', '>', 0)
+        $todayPayments = CommissionLedger::where('type', 'payment')->where('amount', '<', 0)
             ->whereDate('created_at', today())
             ->count();
 
