@@ -336,11 +336,11 @@ const gradientPaid = ctx.createLinearGradient(0, 0, 0, 400);
 gradientPaid.addColorStop(0, "#34d399");
 gradientPaid.addColorStop(1, "#059669");
 
-const gradientBalance = ctx.createLinearGradient(0, 0, 0, 400);
+const gradientBalance = ctx.createLinearGradient(0, 0, 0, 400);   
 gradientBalance.addColorStop(0, "#f87171");
 gradientBalance.addColorStop(1, "#dc2626");
 
-  const chart = new Chart(ctx, {
+  const chart = new Chart(ctx, {   
   
     type: "doughnut",
     data: {
