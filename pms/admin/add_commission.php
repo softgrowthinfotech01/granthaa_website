@@ -108,7 +108,7 @@
             Commission Value
         </label>
 
-        <input name="commission_value" type="text" id="commission_value"
+        <input name="commission_value" type="number" id="commission_value"
             class="w-full px-3 py-2.5 border border-gray-400 rounded-lg bg-white text-sm focus:ring-2 focus:ring-blue-500 outline-none"
             placeholder="Enter commission value" required />
     </div>

@@ -84,11 +84,11 @@ $(document).ready(function() {
 
             advisors.forEach(function(advisor) {
 
-                let bookingAmount = parseFloat(advisor.total_booking_amount ?? 0);
-                let totalDeals = advisor.total_deals ?? 0;
+              let bookingAmount = parseFloat(advisor.total_booking_amount ?? 0);
+let totalDeals = advisor.total_deals ?? 0;
 
-                // Example commission 5%
-                let commission = bookingAmount * 0.05;
+// ✅ Use API commission instead of calculating
+let commission = parseFloat(advisor.total_commission ?? 0);
 
                 // Rank badge
                 let rankBadge = '';

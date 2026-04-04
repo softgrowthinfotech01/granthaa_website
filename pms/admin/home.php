@@ -334,7 +334,7 @@
                     document.querySelector('#total_sales_value').textContent = "₹ " + Number(data.data.total_sales_value).toLocaleString("en-IN");
                     document.querySelector('#pending_commissions').textContent = "₹ " + data.data.pending_commissions.toLocaleString("en-IN");
                     document.querySelector('#paid_commissions').textContent = "₹ " + data.data.total_paid.toLocaleString("en-IN");
-                    document.querySelector('#total_commissions').textContent = "₹ " + data.data.total_commission.toLocaleString("en-IN");
+                    document.querySelector('#total_commissions').textContent = "₹ " + Number(data.data.total_commission).toLocaleString("en-IN");
                 })
                 .catch(error => console.error('Error fetching dashboard data:', error));
         });
