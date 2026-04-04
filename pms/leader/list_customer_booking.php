@@ -72,10 +72,6 @@
 
 <!-- jQuery -->
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-
-
-<script src="../url.js"></script>
-
 <script>
     function viewBooking(id) {
         window.location.href = "update_customer_booking.php?id=" + id;
@@ -122,7 +118,7 @@
             const searchValue = document.getElementById("searchInput").value.trim();
             const perPage = document.getElementById("perPage").value;
 
-            fetch(`${url}bookings?page=${currentPage}&per_page=${perPage}&search=${searchValue}`, {
+            fetch(`${url}mybookings?page=${currentPage}&per_page=${perPage}&search=${searchValue}`, {
                     method: "GET",
                     headers: {
                         "Authorization": "Bearer " + token,
@@ -132,7 +128,7 @@
                 .then(res => res.json())
                 .then(response => {
 
-                    const bookings = response.data?.data ?? response.data ?? [];
+                    const bookings = response ?? response.data ?? [];
                     const tbody = document.getElementById("customerData");
                     tbody.innerHTML = "";
 
