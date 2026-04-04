@@ -11,7 +11,7 @@ class ReferralSettingController extends Controller
     public function store(Request $request)
     {
     $request->validate([
-    'location_id'    => 'required|exists:locations,id',
+    'location_id'    => 'required|exists:location_master,id',
     'target_user_id' => 'nullable|exists:users,id', // can be null for general
     'type'           => 'required|in:fixed,percentage',
     'value'          => 'required|numeric|min:0'
