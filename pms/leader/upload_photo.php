@@ -8,10 +8,10 @@
             <h2 class="text-xl sm:text-2xl font-bold text-gray-800">
                 📷 Upload Profile Photo
             </h2>
-<a href="profile"
-   class="inline-flex items-center gap-1 px-5 py-2 text-md sm:text-sm bg-gray-500 text-white rounded-md hover:bg-gray-600">
-   ← Back
-</a>
+            <a href="profile"
+                class="inline-flex items-center gap-1 px-5 py-2 text-md sm:text-sm bg-gray-500 text-white rounded-md hover:bg-gray-600">
+                ← Back
+            </a>
         </div>
 
         <!-- CARD -->
@@ -20,8 +20,8 @@
             <!-- IMAGE PREVIEW -->
             <div class="flex justify-center mb-5 sm:mb-6">
                 <img id="previewImage"
-                     class="w-24 h-24 sm:w-32 sm:h-32 rounded-full object-cover border"
-                     src="">
+                    class="w-24 h-24 sm:w-32 sm:h-32 rounded-full object-cover border"
+                    src="">
             </div>
 
             <!-- FILE INPUT -->
@@ -41,102 +41,95 @@
 </div>
 <?php include 'footer.php'; ?>
 
-
-<script src="../url.js"></script>
-
 <script>
+    const token = localStorage.getItem("auth_token");
 
-const token = localStorage.getItem("auth_token");
+    // ================= LOAD CURRENT IMAGE =================
+    let currentUserId = null;
 
-// ================= LOAD CURRENT IMAGE =================
-let currentUserId = null;
+    async function loadProfileImage() {
 
-async function loadProfileImage(){
+        try {
+            const res = await fetch(url + "profile", {
+                headers: {
+                    "Authorization": "Bearer " + token
+                }
+            });
 
-    try {
-        const res = await fetch(url + "profile", {
-            headers:{
-                "Authorization":"Bearer " + token
-            }
-        });
+            const data = await res.json();
+            const user = data.user;
 
-        const data = await res.json();
-        const user = data.user;
+            // ✅ STORE USER ID HERE
+            currentUserId = user.id;
 
-        // ✅ STORE USER ID HERE
-        currentUserId = user.id;
+            document.getElementById("previewImage").src =
+                user.profile_image ?
+                base_url + "storage/app/public/" + user.profile_image :
+                "https://ui-avatars.com/api/?background=4f46e5&color=fff&name=" + encodeURIComponent(user.name);
 
-       document.getElementById("previewImage").src =
-    user.profile_image
-        ? base_url + user.profile_image + "?t=" + new Date().getTime()
-        : "https://ui-avatars.com/api/?background=4f46e5&color=fff&name=" + encodeURIComponent(user.name);
-
-    } catch (err) {
-        console.error(err);
+        } catch (err) {
+            console.error(err);
+        }
     }
-}
-document.addEventListener("DOMContentLoaded", loadProfileImage);
+    document.addEventListener("DOMContentLoaded", loadProfileImage);
 
 
-// ================= IMAGE PREVIEW =================
-document.getElementById("profile_image").addEventListener("change", function(e){
+    // ================= IMAGE PREVIEW =================
+    document.getElementById("profile_image").addEventListener("change", function(e) {
 
-    const file = e.target.files[0];
+        const file = e.target.files[0];
 
-    if(file){
-        document.getElementById("previewImage").src = URL.createObjectURL(file);
-    }
+        if (file) {
+            document.getElementById("previewImage").src = URL.createObjectURL(file);
+        }
 
-});
+    });
 
 
-// ================= UPLOAD IMAGE =================
-async function uploadPhoto(){
+    // ================= UPLOAD IMAGE =================
+async function uploadPhoto() {
 
     const file = document.getElementById("profile_image").files[0];
 
-    if(!file){
+    if (!file) {
         alert("Select image ❗");
         return;
     }
 
-    if(!currentUserId){
+    if (!currentUserId) {
         alert("User not loaded ❗");
         return;
     }
 
     const formData = new FormData();
-    formData.append("profile_image", file);
-
-    // Laravel PATCH fix
+    formData.append("image", file);
     formData.append("_method", "PATCH");
 
     try {
 
         const res = await fetch(url + "users/" + currentUserId, {
             method: "POST",
-            headers:{
-                "Authorization":"Bearer " + token
+            headers: {
+                "Authorization": "Bearer " + token,
+                "Accept": "application/json"
             },
             body: formData
         });
 
         const data = await res.json();
-        console.log("Response:", data);
+        console.log(data);
 
-        if(res.ok){
+        if (res.ok) {
             alert("Profile image updated ✅");
 
-            setTimeout(() => {
-                
-            }, 500);
-
+            // reload image instantly
+            loadProfileImage();
         } else {
             alert(data.message || "Upload failed ❌");
         }
 
     } catch (err) {
-        console.error("ERROR:", err);
+        console.error(err);
         alert("Something went wrong ❌");
     }
 }
