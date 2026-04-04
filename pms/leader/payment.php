@@ -58,7 +58,7 @@
                 <!-- AMOUNT -->
                 <div class="space-y-2">
                     <label class="text-sm font-semibold text-gray-700">Payment Amount</label>
-                    <input type="number" name="amount" id="amount" required
+                    <input type="number" name="amount" id="amount" max="balance" required
                         class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-yellow-400 outline-none">
                 </div>
 
@@ -164,9 +164,17 @@ transition transform hover:scale-[1.02]">
     }
 
     // Submit
-    document.getElementById('paymentForm').addEventListener('submit', async function(e) {
+ document.getElementById('paymentForm').addEventListener('submit', async function(e) {
 
-        e.preventDefault();
+    e.preventDefault(); // ✅ move this to top
+
+    let amount = parseFloat(document.getElementById("amount").value || 0);
+    let balance = parseFloat(document.getElementById("balance").value || 0);
+
+    if (amount > balance) {
+        alert("Payment exceeds remaining balance!");
+        return;
+    }
 
         const token = localStorage.getItem('auth_token');
         const user = JSON.parse(localStorage.getItem('auth_user'));
@@ -293,9 +301,28 @@ document.getElementById("booking_id").addEventListener("change", function () {
 
     document.getElementById("total_commission").value = selected.dataset.commission;
     document.getElementById("total_paid").value = selected.dataset.paid;
-    document.getElementById("balance").value = selected.dataset.balance;
+    let totalCommission = parseFloat(selected.dataset.commission || 0);
+let totalPaid = parseFloat(selected.dataset.paid || 0);
 
-    document.getElementById("amount").value = selected.dataset.balance;
+let balance = totalCommission - totalPaid;
+
+// Prevent negative already
+if (balance < 0) balance = 0;
+
+document.getElementById("total_commission").value = totalCommission;
+document.getElementById("total_paid").value = totalPaid;
+document.getElementById("balance").value = balance;
+
+
+// ✅ Set max dynamically
+let amountInput = document.getElementById("amount");
+amountInput.value = balance;
+amountInput.max = balance;
+
+// Auto-fill amount safely
+document.getElementById("amount").value = balance;
+
+ 
 
 });
     </script>
