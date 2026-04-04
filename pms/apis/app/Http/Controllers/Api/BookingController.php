@@ -1152,7 +1152,7 @@ class BookingController extends Controller
         $totalCommission = CommissionLedger::where('type', 'commission')->where('amount', '>', 0)->whereHas('booking')->sum('amount');
 
         $totalPaid = abs(
-            CommissionLedger::where('type', 'payment')->where('amount', '<', 0)->sum('amount')
+            CommissionLedger::where('type', 'payment')->where('amount', '<', 0)->whereHas('booking')->sum('amount')
         );
 
         $pendingCommissions = $totalCommission - $totalPaid;
