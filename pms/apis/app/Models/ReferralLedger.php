@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class ReferralLedger extends Model
 {
+
+    protected $table = 'referral_ledger';
+    
     protected $fillable = [
         'user_id',
         'booking_id',
