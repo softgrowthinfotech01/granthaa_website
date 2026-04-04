@@ -255,9 +255,10 @@ class CommissionPaymentController extends Controller
     {
         $perPage = min(max((int)$request->get('per_page', 10), 1), 100);
 
-        $query = CommissionLedger::where('created_by', $userId)
+$query = CommissionLedger::with('booking')
+    ->where('created_by', $userId)
     ->where('type', 'payment')
-    ->whereHas('user');
+    ->whereHas('booking');
 
         if ($request->search) {
             $query->where('reference_no', 'like', '%' . $request->search . '%');
