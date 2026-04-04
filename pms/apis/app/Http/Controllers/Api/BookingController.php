@@ -8,6 +8,7 @@ use App\Models\BookingPayment;
 use App\Models\CommissionLedger;
 use App\Models\LocationMaster;
 use App\Models\Referral;
+use App\Models\ReferralLedger;
 use App\Models\User;
 use App\Models\UserLocationCommission;
 use App\Models\WalletTransaction;
@@ -299,27 +300,54 @@ class BookingController extends Controller
 
                 if ($request->referral_id) {
 
-                    $incentive = ($totalBookingAmount * 5) / 100;
+              // 🔍 STEP 1: Find matching referral
+    $referral = Referral::where('referred_contact', $booking->customer_contact)
+        ->where('status', 'pending')
+        ->first();
 
-                    $referrer = User::find($referral->referrer_id);
+    if (!$referral) {
+        return;
+    }
 
-                    if ($referrer) {
+    // 🔒 STEP 2: Prevent duplicate incentive
+    $alreadyPaid = ReferralLedger::where('booking_id', $booking->id)
+        ->where('type', 'incentive')
+        ->exists();
 
-                        $referrer->increment('wallet_balance', $incentive);
+    if ($alreadyPaid) {
+        return;
+    }
 
-                        WalletTransaction::create([
-                            'user_id' => $referrer->id,
-                            'amount' => $incentive,
-                            'type' => 'credit',
-                            'remark' => 'Referral Booking Incentive'
-                        ]);
-                    }
+    // 🔄 STEP 3: Mark referral as converted
+    $referral->update([
+        'status'     => 'converted',
+        'booking_id' => $booking->id
+    ]);
 
-                    $referral->update([
-                        'status' => 'converted',
-                        'booking_id' => $booking->id, // ✅ now booking exists
-                        'incentive_amount' => $incentive
-                    ]);
+    // 💰 STEP 4: Calculate incentive
+    $amount = 0;
+
+    if ($referral->incentive_type === 'fixed') {
+        $amount = $referral->incentive_value;
+    } elseif ($referral->incentive_type === 'percentage') {
+        $amount = ($booking->amount * $referral->incentive_value) / 100;
+    }
+
+    // ❌ If no incentive defined → skip
+    if ($amount <= 0) {
+        return;
+    }
+
+    // 🧾 STEP 5: Add to ledger
+    ReferralLedger::create([
+        'user_id'    => $referral->referrer_id,
+        'referral_id'=> $referral->id, // if you added this column
+        'booking_id' => $booking->id,
+        'type'       => 'incentive',
+        'amount'     => $amount,
+        'remark'     => 'Referral incentive for booking #' . $booking->id,
+        'created_by' => auth()->id()
+    ]);
                 }
 
                 // ✅ Store advance payment in booking_payments table
@@ -916,11 +944,11 @@ class BookingController extends Controller
 
                 $totalPaidAmt = abs(
                     CommissionLedger::where('type', 'payment')
-                        ->where('amount', '<', 0)->sum('amount')
+                        ->where('amount', '>', 0)->sum('amount')
                 );
 
                 $topAdvisor = BookingPayment::where('payment_type', '!=', 'reversal')
-                    ->where('amount', '<', 0)
+                    ->where('amount', '>', 0)
                     ->select('user_id', DB::raw('SUM(amount) as total'))
                     ->groupBy('user_id')
                     ->orderByDesc('total')
@@ -992,15 +1020,15 @@ class BookingController extends Controller
                 );
 
                 $totalmyCommissionAmount =
-    CommissionLedger::where('user_id', $user->id)
-        ->where('type', 'commission')
-        ->sum('amount');
+                    CommissionLedger::where('user_id', $user->id)
+                    ->where('type', 'commission')
+                    ->sum('amount');
 
-        $mytotalPaidAmt = abs(
-        CommissionLedger::where('user_id', $user->id)
-            ->where('type', 'payment')
-            ->sum('amount')
-    );
+                $mytotalPaidAmt = abs(
+                    CommissionLedger::where('user_id', $user->id)
+                        ->where('type', 'payment')
+                        ->sum('amount')
+                );
 
                 $topAdvisor = Booking::whereNull('deleted_at')->where('leader_id', $user->id)
                     ->whereNotNull('adviser_id') // only adviser bookings
@@ -1152,9 +1180,7 @@ class BookingController extends Controller
         $totalCommission = CommissionLedger::where('type', 'commission')->where('amount', '>', 0)->whereHas('booking')->sum('amount');
 
         $totalPaid = abs(
-            CommissionLedger::where('type', 'payment')->where('created_by', 1)->where('amount', '<', 0)->whereHas('booking', function ($q) {
-            $q->whereNull('deleted_at');
-        })->sum('amount')
+            CommissionLedger::where('type', 'payment')->where('amount', '<', 0)->sum('amount')
         );
 
         $pendingCommissions = $totalCommission - $totalPaid;
@@ -1177,7 +1203,6 @@ class BookingController extends Controller
             $leader = User::find($topLeader->leader_id);
             $topLeaderName = $leader?->name;
         }
-        
 
         return response()->json([
             'status' => true,
@@ -1523,7 +1548,7 @@ class BookingController extends Controller
         }
 
         // 🔵 No payments today
-        $todayPayments = CommissionLedger::where('type', 'payment')->where('amount', '<', 0)
+        $todayPayments = CommissionLedger::where('type', 'payment')->where('amount', '>', 0)
             ->whereDate('created_at', today())
             ->count();
 

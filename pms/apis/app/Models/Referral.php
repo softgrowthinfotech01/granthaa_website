@@ -10,15 +10,19 @@ class Referral extends Model
     use HasFactory;
 
     protected $fillable = [
-        'referrer_id',
-        'referred_name',
-        'referred_contact',
-        'referred_email',
-        'assigned_to',
-        'status',
-        'booking_id',
-        'incentive_amount'
-    ];
+    'referrer_id',
+    'referred_name',
+    'referred_contact',
+    'referred_email',
+    'assigned_to',
+    'status',
+    'booking_id',
+    'incentive_amount',
+
+    // 🔥 NEW
+    'incentive_type',
+    'incentive_value'
+];
 
     /*
     |--------------------------------------------------------------------------
