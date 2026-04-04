@@ -1336,7 +1336,7 @@ class BookingController extends Controller
                 CommissionLedger::where('user_id', $userId)
                     ->where('booking_id', $b->id)
                     ->where('type', 'payment') // ✅ IMPORTANT FIX
-                    ->where('amount', '>', 0)
+                    ->where('amount', '<', 0)
                     ->sum('amount')
             );
 
