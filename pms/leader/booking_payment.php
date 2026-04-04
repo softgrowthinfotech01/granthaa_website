@@ -90,10 +90,10 @@
                 <!-- PAYMENT MODE -->
                 <div class="space-y-2">
                     <label class="text-sm font-semibold text-gray-700">Payment Mode</label>
-                    <select name="payment_mode" id="payment_mode"
+                    <select name="payment_mode" id="payment_mode" required
                         class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-yellow-400 outline-none">
 
-                        <option>Select Payment Mode</option>
+                        <option value="" disabled selected hidden>Select Payment Mode</option>  
                         <option value="cash">Cash</option>
                         <option value="cheque">Cheque</option>
                         <option value="online_transfer">Online Transfer</option>

@@ -65,10 +65,10 @@
                 <!-- PAYMENT MODE -->
                 <div class="space-y-2">
                     <label class="text-sm font-semibold text-gray-700">Payment Mode</label>
-                    <select name="payment_mode" id="payment_mode"
+                    <select name="payment_mode" id="payment_mode" required
                         class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-yellow-400 outline-none">
 
-                        <option>Select Payment Mode</option>
+                       <option value="" disabled selected hidden>Select Payment Mode</option>
                         <option value="cash">Cash</option>
                         <option value="cheque">Cheque</option>
                         <option value="online_transfer">Online Transfer</option>
@@ -76,6 +76,17 @@
 
                     </select>
                 </div>
+
+                <div class="space-y-2">
+    <label class="text-sm font-semibold text-gray-700">Payment Type</label>
+    <select name="payment_type" id="payment_type" required
+        class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-yellow-400 outline-none">
+
+        <option value="" disabled hidden>Select Payment Type</option>
+        <option value="full">Full</option>
+        <option value="installment">Installment</option>
+    </select>
+</div>
 
                 <!-- REFERENCE NUMBER -->
                 <div class="space-y-2">
@@ -97,14 +108,14 @@
         <!-- BUTTON -->
         <div class="flex justify-center gap-2 mt-2">
 
-            <button
-                class="bg-yellow-500 hover:bg-yellow-600 px-4 py-4 rounded-xl
-text-black font-semibold text-lg shadow-md hover:shadow-xl
-transition transform hover:scale-[1.02]">
+      <button type="submit"
+    class="bg-yellow-500 hover:bg-yellow-600 px-4 py-4 rounded-xl
+    text-black font-semibold text-lg shadow-md hover:shadow-xl
+    transition transform hover:scale-[1.02]">
 
-                Record Payment
+    Record Payment
 
-            </button>
+</button>
 
             <button type="button" onclick="confirmReset()"
                 class="bg-red-500 hover:bg-red-600 px-4 py-4 rounded-xl
@@ -164,63 +175,96 @@ transition transform hover:scale-[1.02]">
     }
 
     // Submit
- document.getElementById('paymentForm').addEventListener('submit', async function(e) {
+ let isSubmitting = false;
 
-    e.preventDefault(); // ✅ move this to top
+document.getElementById('paymentForm').addEventListener('submit', async function(e) {
+
+    e.preventDefault();
+
+    // 🚫 prevent double click
+    if (isSubmitting) return;
+    isSubmitting = true;
+
+    let submitBtn = document.querySelector("#paymentForm button[type='submit']");
+    submitBtn.disabled = true;
+    submitBtn.innerText = "Processing...";
 
     let amount = parseFloat(document.getElementById("amount").value || 0);
     let balance = parseFloat(document.getElementById("balance").value || 0);
 
     if (amount > balance) {
         alert("Payment exceeds remaining balance!");
+
+        isSubmitting = false;
+        submitBtn.disabled = false;
+        submitBtn.innerText = "Record Payment";
         return;
     }
 
-        const token = localStorage.getItem('auth_token');
-        const user = JSON.parse(localStorage.getItem('auth_user'));
+    const token = localStorage.getItem('auth_token');
+    const user = JSON.parse(localStorage.getItem('auth_user'));
 
-        if (!token || !user) {
-            alert('Please login first');
-            window.location.href = '../login';
+    if (!token || !user) {
+        alert('Please login first');
+        window.location.href = '../login';
+        return;
+    }
+
+    let form = document.getElementById('paymentForm');
+    let formData = new FormData(form);
+
+// ✅ VERY IMPORTANT
+formData.set("created_by", user.id);
+formData.set("booking_id", document.getElementById("booking_id").value);
+
+    try {
+
+        const response = await fetch(url + "commission/payment", {
+            method: "POST",
+            headers: {
+                "Authorization": "Bearer " + token,
+                "Accept": "application/json"
+            },
+            body: formData
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            alert(data.message || "Payment failed");
+
+            isSubmitting = false;
+            submitBtn.disabled = false;
+            submitBtn.innerText = "Record Payment";
             return;
         }
 
-        let form = document.getElementById('paymentForm');
-        let formData = new FormData(form);
+        alert(`Payment of ₹${amount} recorded successfully`);
 
-        try {
+        form.reset();
 
-            const response = await fetch(url + "commission/payment", {
-                method: "POST",
-                headers: {
-                    "Authorization": "Bearer " + token,
-                    "Accept": "application/json"
-                },
-                body: formData
-            });
+        // ✅ success state
+        submitBtn.innerText = "Saved ✔";
 
-            const data = await response.json();
+        // 🔄 reset button after delay
+        setTimeout(() => {
+            isSubmitting = false;
+            submitBtn.disabled = false;
+            submitBtn.innerText = "Record Payment";
+        }, 1500);
 
-            if (!response.ok) {
-                alert(data.message || "Payment failed");
-                return;
-            }
+    } catch (error) {
 
-           alert(`Payment of ₹${amount} recorded successfully`);
+        console.error(error);
+        alert("Server error");
 
-            document.getElementById("paymentForm").reset();
+        isSubmitting = false;
+        submitBtn.disabled = false;
+        submitBtn.innerText = "Record Payment";
+    }
 
-        } catch (error) {
+});
 
-            console.error(error);
-            alert("Server error");
-
-        }
-
-    });
-</script>
-  
-<script>
         document.addEventListener("DOMContentLoaded", loadUsers);
 
         async function loadUsers() {
@@ -322,7 +366,26 @@ amountInput.max = balance;
 // Auto-fill amount safely
 document.getElementById("amount").value = balance;
 
- 
+ // ✅ FULL PAYMENT LOGIC (ADD HERE)
+document.getElementById("amount").addEventListener("input", function () {
+
+    let amount = parseFloat(this.value) || 0;
+    let balance = parseFloat(document.getElementById("balance").value) || 0;
+
+    let paymentType = document.getElementById("payment_type");
+    let fullOption = paymentType.querySelector('option[value="full"]');
+
+    if (Math.abs(balance - amount) <= 0.01) {
+        fullOption.disabled = false;
+        paymentType.value = "full"; // auto select
+    } else {
+        fullOption.disabled = true;
+
+        if (paymentType.value === "full") {
+            paymentType.value = "";
+        }
+    }
+});
 
 });
     </script>

@@ -98,9 +98,9 @@
                         <!-- PAYMENT MODE -->
                         <div>
                             <label class="block mb-1 text-sm text-gray-700">Payment Mode</label>
-                            <select name="payment_mode" id="payment_mode"
+                            <select name="payment_mode" id="payment_mode" required
                                 class="w-full px-3 py-2.5 rounded-lg border border-gray-300 bg-white text-sm focus:ring-2 focus:ring-blue-500 outline-none">
-                                <option selected disabled>Select Payment Mode</option>
+                                <option value="" disabled selected hidden>Select Payment Mode</option>
                                 <option value="cash">Cash</option>
                                 <option value="cheque">Cheque</option>
                                 <option value="online_transfer">Online Transfer</option>
@@ -163,72 +163,106 @@
             }
         }
 
-        document.getElementById("paymentForm").addEventListener("submit", async function(e) {
+      let isSubmitting = false;
 
-            e.preventDefault();
+document.getElementById("paymentForm").addEventListener("submit", async function(e) {
+
+    e.preventDefault();
+
+    // 🚫 prevent double click
+    if (isSubmitting) return;
+    isSubmitting = true;
+
+    let submitBtn = document.querySelector("button[type='submit']");
+    submitBtn.disabled = true;
+    submitBtn.innerText = "Processing...";
 
     let amount = parseFloat(document.getElementById("amount").value);
     let balance = parseFloat(document.getElementById("balance").value);
 
     if (amount > balance) {
         alert("Amount cannot exceed balance");
+
+        // 🔄 reset
+        isSubmitting = false;
+        submitBtn.disabled = false;
+        submitBtn.innerText = "Save Payment";
         return;
     }
 
-            const form = document.getElementById("paymentForm");
+    const form = document.getElementById("paymentForm");
 
-            const token = localStorage.getItem('auth_token');
-            const user = JSON.parse(localStorage.getItem('auth_user'));
+    const token = localStorage.getItem('auth_token');
+    const user = JSON.parse(localStorage.getItem('auth_user'));
 
-            if (!token || !user) {
-                alert("Please login first");
-                window.location.href = "../login";
-                return;
-            }
+    if (!token || !user) {
+        alert("Please login first");
+        window.location.href = "../login";
+        return;
+    }
 
-            let booking_id = document.getElementById("booking_id").value;
+    let booking_id = document.getElementById("booking_id").value;
 
-            if (!booking_id) {
-                alert("Please select a booking");
-                return;
-            }
+    if (!booking_id) {
+        alert("Please select a booking");
 
-            let formData = new FormData(form);
+        isSubmitting = false;
+        submitBtn.disabled = false;
+        submitBtn.innerText = "Save Payment";
+        return;
+    }
 
-            formData.set("created_by", user.id);
-            formData.set("booking_id", booking_id);
+    let formData = new FormData(form);
+    formData.set("created_by", user.id);
+    formData.set("booking_id", booking_id);
 
-            try {
+    try {
 
-                const response = await fetch(url + "commission/payment", {
-                    method: "POST",
-                    headers: {
-                        "Authorization": "Bearer " + token,
-                        "Accept": "application/json"
-                    },
-                    body: formData
-                });
-
-                const data = await response.json();
-
-                if (!response.ok) {
-                    alert(data.message || "Error");
-                    return;
-                }
-
-                alert("✅ " + data.message);
-
-                form.reset();
-
-            } catch (error) {
-                console.error(error);
-                alert("Server error");
-            }
-
+        const response = await fetch(url + "commission/payment", {
+            method: "POST",
+            headers: {
+                "Authorization": "Bearer " + token,
+                "Accept": "application/json"
+            },
+            body: formData
         });
-    </script>
 
-    <script>
+        const data = await response.json();
+
+        if (!response.ok) {
+            alert(data.message || "Error");
+
+            isSubmitting = false;
+            submitBtn.disabled = false;
+            submitBtn.innerText = "Save Payment";
+            return;
+        }
+
+  alert("✅ " + data.message);
+
+form.reset();
+
+// 🔥 Show success temporarily
+submitBtn.innerText = "Saved ✔";
+
+// 🔄 Reset button after 1.5 sec
+setTimeout(() => {
+    isSubmitting = false;
+    submitBtn.disabled = false;
+    submitBtn.innerText = "Save Payment";
+}, 1500);
+
+    } catch (error) {
+        console.error(error);
+        alert("Server error");
+
+        isSubmitting = false;
+        submitBtn.disabled = false;
+        submitBtn.innerText = "Save Payment";
+    }
+
+});
+   
         document.addEventListener("DOMContentLoaded", loadUsers);
 
         async function loadUsers() {
