@@ -1149,7 +1149,7 @@ class BookingController extends Controller
         $totalSalesValue = Booking::whereNull('deleted_at')->sum('total_booking_amount'); // ✅ FIXED (better than commission)
 
         // ✅ Commission totals
-        $totalCommission = CommissionLedger::with('booking')->where('type', 'commission')->where('amount', '>', 0)->sum('amount');
+        $totalCommission = CommissionLedger::where('type', 'commission')->where('amount', '>', 0)->whereHas('booking')->sum('amount');
 
         $totalPaid = abs(
             CommissionLedger::where('type', 'payment')->where('amount', '<', 0)->sum('amount')
