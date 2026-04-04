@@ -3,7 +3,7 @@
 <div class="max-w-7xl mx-auto bg-white p-4 rounded-2xl shadow-xl">
 
     <h2 class="text-2xl font-bold mb-4 text-center">
-        Team Performance & Bookings
+        My Commission Records
     </h2>
 
     <!-- Table Wrapper -->
@@ -99,14 +99,31 @@
                 let paid = parseFloat(row.paid || 0);
                 let balance = parseFloat(row.balance || 0);
 
+        let balanceHtml = balance === 0
+  ? `<span class="bg-green-100 text-green-700 px-2 py-1 rounded-full text-sm font-semibold">
+       ✔ Paid
+     </span>`
+  : `<span class="text-red-500 font-bold">
+       ₹ ${balance.toLocaleString('en-IN')}
+     </span>`;
                 table.row.add([
-                    serial,
-                    row.buyer_name ?? '-',
-                    row.plot_number ?? '-',
-                    "₹ " + total.toFixed(2),
-                    "₹ " + paid.toFixed(2),
-                    "₹ " + balance.toFixed(2),
-                ]);
+    serial,
+    `${row.buyer_name ?? '-'} (${row.role ?? '-'})`,
+    row.plot_number ?? '-',
+
+    // 🔵 Total Commission
+    `<span class="text-blue-600 font-semibold">
+        ₹ ${total.toLocaleString('en-IN')}
+     </span>`,
+
+    // 🟢 Paid
+    `<span class="text-green-600 font-bold">
+        ₹ ${paid.toLocaleString('en-IN')}
+     </span>`,
+
+    // 🔥 Balance (fixed)
+    balanceHtml
+]);
 
             });
 

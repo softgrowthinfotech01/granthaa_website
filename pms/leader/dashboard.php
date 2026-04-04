@@ -271,102 +271,131 @@
 
 
   // CHARTS
-  async function loadTeamChart() {
+async function loadTeamChart() {
 
-    const token = localStorage.getItem("auth_token");
-    const user = JSON.parse(localStorage.getItem("auth_user"));
-    const leaderId = user?.id;
+  const token = localStorage.getItem("auth_token");
 
-    const res = await fetch(url + "leader-details/" + leaderId, {
-      headers: {
-        "Authorization": "Bearer " + token
-      }
-    });
+  const res = await fetch(url + "dashboard", {
+    headers: {
+      "Authorization": "Bearer " + token
+    }
+  });
 
-    const result = await res.json();
-    const data = result.data || [];
+  const result = await res.json();
+  const d = result.data;
 
-    let total = 0;
-    let paid = 0;
-    let balance = 0;
+  // ✅ Use dashboard values
+  const total = Number(d.total_commission_amount || 0);
+  const paid = Number(d.my_paid_amt || 0);
+  const balance = Number(d.my_balance_commission || 0);
 
-    data.forEach(row => {
-      total += Number(row.total_commission || 0);
-      paid += Number(row.paid || 0);
-      balance += Number(row.balance || 0);
-    });
+  const ctx = document.getElementById("teamChart").getContext("2d");
 
-    const ctx = document.getElementById("teamChart").getContext("2d");
+ const centerTextPlugin = {
+  id: 'centerText',
+  beforeDraw(chart) {
+    const { ctx } = chart;
+    const meta = chart.getDatasetMeta(0);
 
-    const totalSum = paid + balance; 
+    if (!meta?.data?.length) return;
 
-    const centerTextPlugin = {
-      id: 'centerText',
-      beforeDraw(chart) {
-        const {
-          ctx
-        } = chart;
-        const meta = chart.getDatasetMeta(0);
+    const x = meta.data[0].x;
+    const y = meta.data[0].y;
+    const innerRadius = meta.data[0].innerRadius;
 
-        if (!meta?.data?.length) return;
+    ctx.save();
+ctx.beginPath();
+ctx.arc(x, y, innerRadius - 8, 0, 2 * Math.PI);
+ctx.fillStyle = "#ffffff";
+ctx.fill();
 
-        const x = meta.data[0].x;
-        const y = meta.data[0].y;
-        const innerRadius = meta.data[0].innerRadius;
+ctx.strokeStyle = "#e5e7eb";
+ctx.lineWidth = 2;
+ctx.stroke();
 
-        ctx.save();
-
-        ctx.beginPath();
-        ctx.arc(x, y, innerRadius - 10, 0, 2 * Math.PI);
-        ctx.fillStyle = "#f8fafc";
-        ctx.fill();
-
-        ctx.textAlign = "center";
-
-        ctx.fillStyle = "#111";
-        ctx.font = "bold 20px sans-serif";
-        ctx.fillText("₹" + totalSum.toLocaleString(), x, y - 5);
-
-        ctx.fillStyle = "#666";
-        ctx.font = "13px sans-serif";
-        ctx.fillText("Total", x, y + 15);
-
-        ctx.restore();
-      }
+    // 🔥 dynamic center text
+    const centerData = chart.$centerText || {
+      title: "Total",
+      value: total
     };
 
-    const chart = new Chart(ctx, {
-      type: "doughnut",
-      data: {
-        labels: ["Paid", "Balance"],
-        datasets: [{
-          data: [paid, balance],
-          backgroundColor: ["#FF6384", "#36A2EB"],
-          borderWidth: 0,
-          hoverOffset: 5
-        }]
-      },
-      options: {
-        cutout: "70%",
-        radius: "85%",
-        plugins: {
-          legend: {
-            position: "top"
-          },
-          tooltip: {
-            callbacks: {
-              label: function(context) {
-                return `${context.label}: ₹${Number(context.raw).toLocaleString()}`;
-              }
-            }
-          }
-        }
-      },
+    ctx.textAlign = "center";
 
-      plugins: [centerTextPlugin]
+    ctx.fillStyle = "#111";
+    ctx.font = "bold 20px sans-serif";
+    ctx.fillText("₹" + Number(centerData.value).toLocaleString(), x, y - 5);
 
-    });
+    ctx.fillStyle = "#666";
+    ctx.font = "13px sans-serif";
+    ctx.fillText(centerData.title, x, y + 15);
+
+    ctx.restore();
   }
+};
+const gradientPaid = ctx.createLinearGradient(0, 0, 0, 400);
+gradientPaid.addColorStop(0, "#34d399");
+gradientPaid.addColorStop(1, "#059669");
+
+const gradientBalance = ctx.createLinearGradient(0, 0, 0, 400);   
+gradientBalance.addColorStop(0, "#f87171");
+gradientBalance.addColorStop(1, "#dc2626");
+
+  const chart = new Chart(ctx, {   
+  
+    type: "doughnut",
+    data: {
+      labels: ["Received Amt", "Balance Amt"],
+      datasets: [{
+  data: [paid, balance],
+  backgroundColor: [gradientPaid, gradientBalance],
+  borderWidth: 0,
+  hoverOffset: 15
+}]
+    },
+    options: {
+      cutout: "70%",
+      radius: "85%",
+      plugins: {
+        legend: { position: "top" },
+        tooltip: {
+  callbacks: {
+    label: function(context) {
+      const value = Number(context.raw);
+      const percent = ((value / total) * 100).toFixed(1);
+
+      return `${context.label}: ₹${value.toLocaleString()} (${percent}%)`;
+    }
+  }
+}
+      },
+onHover: (event, elements, chart) => {
+  if (elements.length) {
+    const index = elements[0].index;
+    const label = chart.data.labels[index];
+    const value = chart.data.datasets[0].data[index];
+
+    chart.$centerText = {
+      title: label,
+      value: value
+    };
+  } else {
+    chart.$centerText = {
+      title: "Total Commission",
+      value: total
+    };
+  }
+
+  chart.draw();
+}
+      
+    },
+    plugins: [centerTextPlugin]
+  });
+  chart.$centerText = {
+  title: "Total",
+  value: total
+};
+}
 
   async function loadCommissionChart() {
 
