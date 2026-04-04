@@ -125,180 +125,165 @@
     <script src="../url.js"></script>
 
     <script>
-        let currentPage = 1;
-        let currentSearch = '';
-        let currentPerPage = 5;
-        let searchTimeout;
+let currentPage = 1;
+let currentSearch = '';
+let currentPerPage = 5;
+let searchTimeout;
 
-        const token = localStorage.getItem("auth_token");
+let allPayments = []; // store all data
 
-        if (!token) {
-            alert("Please login first");
-            window.location.href = "../login";
-        }
+const token = localStorage.getItem("auth_token");
 
-        async function fetchPayments(page = 1) {
+if (!token) {
+    alert("Please login first");
+    window.location.href = "../login";
+}
 
-            currentPage = page;
+// ✅ Fetch ALL data (ignore backend pagination)
+async function fetchPayments(page = 1) {
 
-            const loader = document.getElementById('tableLoader');
-            const tbody = document.getElementById('paymentTableBody');
-            const pagination = document.getElementById('paginationControls');
+    currentPage = page;
 
-            try {
+    const loader = document.getElementById('tableLoader');
+    const tbody = document.getElementById('paymentTableBody');
+    const pagination = document.getElementById('paginationControls');
 
-                loader.classList.remove('hidden');
-                tbody.innerHTML = '';
-                pagination.innerHTML = '';
+    try {
 
-                const response = await fetch(
-                    url + `commission/payments?page=${page}&search=${currentSearch}&per_page=${currentPerPage}`, {
-                        method: "GET",
-                        headers: {
-                            "Accept": "application/json",
-                            "Authorization": "Bearer " + token
-                        }
-                    }
-                );
+        loader.classList.remove('hidden');
+        tbody.innerHTML = '';
+        pagination.innerHTML = '';
 
-                const result = await response.json();
-
-                if (!response.ok) {
-                    alert(result.message || "Failed to fetch payments");
-                    return;
+        const response = await fetch(
+            url + `commission/payments?search=${currentSearch}&per_page=1000`, // 👈 get max data
+            {
+                method: "GET",
+                headers: {
+                    "Accept": "application/json",
+                    "Authorization": "Bearer " + token
                 }
-
-                const paginationData = result.data;
-                const payments = result?.data?.data ?? [];
-
-                if (payments.length === 0) {
-
-                    tbody.innerHTML = `
-<tr>
-<td colspan="8" class="text-center py-4">No records found</td>
-</tr>`;
-
-                } else {
-
-                    let rows = "";
-                    let serial = (paginationData.current_page - 1) * paginationData.per_page;
-
-                    payments.forEach((pay) => {
-
-                        // Skip advisors
-                        if (pay.user?.role === 'adviser') {
-                            return;
-                        }
-
-                        serial++;
-
-                        rows += `
-    <tr class="border-b">
-
-    <td class="px-4 py-2">
-    ${serial}
-    </td>
-
-    <td class="px-4 py-2">
-    ${pay.user?.name ?? pay.user_id}
-    </td>
-
-    <td class="px-4 py-2 text-green-600 font-semibold">
-    ₹ ${Math.abs(pay.amount)}
-    </td>
-
-    <td class="px-4 py-2">${pay.payment_mode ?? ''}</td>
-
-    <td class="px-4 py-2">${pay.reference_no ?? ''}</td>
-
-    <td class="px-4 py-2">${pay.remark ?? ''}</td>
-
-    <td class="px-4 py-2">
-    ${new Date(pay.created_at).toLocaleDateString()}
-    </td>
-
-    </tr>
-    `;
-                    });
-
-                    tbody.innerHTML = rows;
-
-                }
-
-                document.getElementById('resultInfo').innerHTML =
-                    `Showing ${paginationData.from} to ${paginationData.to} of ${paginationData.total} entries`;
-
-                if (paginationData.prev_page_url) {
-
-                    pagination.innerHTML += `
-<button onclick="fetchPayments(${paginationData.current_page - 1})"
-class="px-3 py-1 bg-gray-300 rounded hover:bg-gray-400">
-
-Prev
-
-</button>`;
-                }
-
-                for (let i = 1; i <= paginationData.last_page; i++) {
-
-                    pagination.innerHTML += `
-<button onclick="fetchPayments(${i})"
-class="px-3 py-1 rounded ${
-i === paginationData.current_page
-? 'bg-blue-600 text-white'
-: 'bg-gray-200 hover:bg-gray-300'
-}">
-${i}
-</button>`;
-                }
-
-                if (paginationData.next_page_url) {
-
-                    pagination.innerHTML += `
-<button onclick="fetchPayments(${paginationData.current_page + 1})"
-class="px-3 py-1 bg-gray-300 rounded hover:bg-gray-400">
-
-Next
-
-</button>`;
-                }
-
-            } catch (error) {
-
-                console.error("Error fetching payments:", error);
-                alert("Server error");
-
-            } finally {
-
-                loader.classList.add('hidden');
-
             }
+        );
 
+        const result = await response.json();
+
+        if (!response.ok) {
+            alert(result.message || "Failed to fetch payments");
+            return;
         }
 
-        document.getElementById('searchInput')
-            .addEventListener('keyup', function() {
+        // ✅ store all data
+        allPayments = result?.data?.data ?? [];
 
-                clearTimeout(searchTimeout);
+        // ✅ remove advisors
+        const filteredPayments = allPayments.filter(
+            pay => pay.user?.role !== 'adviser'
+        );
 
-                searchTimeout = setTimeout(() => {
+        // ✅ manual pagination
+        const start = (currentPage - 1) * currentPerPage;
+        const end = start + parseInt(currentPerPage);
 
-                    currentSearch = this.value.trim();
-                    fetchPayments(1);
+        const paginatedPayments = filteredPayments.slice(start, end);
 
-                }, 400);
+        if (paginatedPayments.length === 0) {
+            tbody.innerHTML = `
+            <tr>
+                <td colspan="7" class="text-center py-4">No records found</td>
+            </tr>`;
+        } else {
 
+            let rows = "";
+            let serial = start; // ✅ correct serial
+
+            paginatedPayments.forEach((pay) => {
+
+                serial++;
+
+                rows += `
+                <tr class="border-b">
+
+                <td class="px-4 py-2">
+                ${serial}
+                </td>
+
+                <td class="px-4 py-2">
+                ${pay.user?.name ?? pay.user_id}
+                </td>
+
+                <td class="px-4 py-2 text-green-600 font-semibold">
+                ₹ ${Math.abs(pay.amount)}
+                </td>
+
+                <td class="px-4 py-2">${pay.payment_mode ?? ''}</td>
+
+                <td class="px-4 py-2">${pay.reference_no ?? ''}</td>
+
+                <td class="px-4 py-2">${pay.remark ?? ''}</td>
+
+                <td class="px-4 py-2">
+                ${new Date(pay.created_at).toLocaleDateString()}
+                </td>
+
+                </tr>
+                `;
             });
 
-        document.getElementById('perPageSelect')
-            .addEventListener('change', function() {
+            tbody.innerHTML = rows;
+        }
 
-                currentPerPage = this.value;
-                fetchPayments(1);
+        // ✅ pagination based on filtered data
+        const totalPages = Math.ceil(filteredPayments.length / currentPerPage);
 
-            });
+        for (let i = 1; i <= totalPages; i++) {
+            pagination.innerHTML += `
+            <button onclick="fetchPayments(${i})"
+            class="px-3 py-1 rounded ${
+                i === currentPage
+                ? 'bg-blue-600 text-white'
+                : 'bg-gray-200 hover:bg-gray-300'
+            }">
+            ${i}
+            </button>`;
+        }
 
-        fetchPayments();
+        // ✅ result info
+        document.getElementById('resultInfo').innerHTML =
+            `Showing ${start + 1} to ${Math.min(end, filteredPayments.length)} of ${filteredPayments.length} entries`;
+
+    } catch (error) {
+        console.error("Error fetching payments:", error);
+        alert("Server error");
+    } finally {
+        loader.classList.add('hidden');
+    }
+}
+
+// 🔍 search
+document.getElementById('searchInput')
+    .addEventListener('keyup', function () {
+
+        clearTimeout(searchTimeout);
+
+        searchTimeout = setTimeout(() => {
+
+            currentSearch = this.value.trim();
+            fetchPayments(1);
+
+        }, 400);
+    });
+
+// 📄 per page
+document.getElementById('perPageSelect')
+    .addEventListener('change', function () {
+
+        currentPerPage = parseInt(this.value);
+        fetchPayments(1);
+
+    });
+
+// 🚀 initial load
+fetchPayments();
     </script>
 
 </body>
