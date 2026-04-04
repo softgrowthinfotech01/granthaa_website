@@ -987,7 +987,7 @@ class BookingController extends Controller
                 $totalPaidAmt = abs(
                     CommissionLedger::whereIn('user_id', $teamIds)
                         ->where('type', 'payment')
-                        ->where('amount', '>', 0)
+                        ->where('amount', '<', 0)
                         ->sum('amount')
                 );
 
@@ -1041,7 +1041,7 @@ class BookingController extends Controller
                 $totalPaidAmt = abs(
                     CommissionLedger::where('user_id', $user->id)
                         ->where('type', 'payment')
-                        ->where('amount', '>', 0)
+                        ->where('amount', '<', 0)
                         ->sum('amount')
                 );
 
@@ -1294,7 +1294,7 @@ class BookingController extends Controller
             $paidAmount = abs(
                 CommissionLedger::where('user_id', $leader->id)
                     ->where('type', 'payment')
-                    ->where('amount', '>', 0)
+                    ->where('amount', '<', 0)
                     ->sum('amount')
             );
 
@@ -1384,7 +1384,7 @@ class BookingController extends Controller
                 CommissionLedger::where('user_id', $adviserId)
                     ->where('booking_id', $b->id)
                     ->where('type', 'payment')
-                    ->where('amount', '>', 0)
+                    ->where('amount', '<', 0)
                     ->sum('amount')
             );
 
@@ -1485,7 +1485,7 @@ class BookingController extends Controller
             $paid = abs(
                 CommissionLedger::where('user_id', $leader->id)
                     ->where('type', 'payment')
-                    ->where('amount', '>', 0)
+                    ->where('amount', '<', 0)
                     ->sum('amount')
             );
 
