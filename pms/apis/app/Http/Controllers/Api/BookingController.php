@@ -1152,7 +1152,9 @@ class BookingController extends Controller
         $totalCommission = CommissionLedger::where('type', 'commission')->where('amount', '>', 0)->whereHas('booking')->sum('amount');
 
         $totalPaid = abs(
-            CommissionLedger::where('type', 'payment')->where('amount', '<', 0)->whereHas('booking')->sum('amount')
+            CommissionLedger::where('type', 'payment')->where('created_by', 1)->where('amount', '<', 0)->whereHas('booking', function ($q) {
+            $q->whereNull('deleted_at');
+        })->sum('amount')
         );
 
         $pendingCommissions = $totalCommission - $totalPaid;
@@ -1175,6 +1177,7 @@ class BookingController extends Controller
             $leader = User::find($topLeader->leader_id);
             $topLeaderName = $leader?->name;
         }
+        
 
         return response()->json([
             'status' => true,
