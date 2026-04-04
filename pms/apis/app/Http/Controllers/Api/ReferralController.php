@@ -5,6 +5,7 @@ namespace App\Http\Controllers\api;
 use App\Http\Controllers\Controller;
 use App\Models\Referral;
 use App\Models\ReferralLedger;
+use App\Models\ReferralSetting;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -58,8 +59,6 @@ class ReferralController extends Controller
         ]);
     }
 
- use App\Models\ReferralSetting;
-
 public function store(Request $request)
 {
     $request->merge([
@@ -70,7 +69,7 @@ public function store(Request $request)
         'referred_name'    => 'required|string',
         'referred_contact' => 'required|string',
         'referred_email'   => 'nullable|email',
-        'location_id'      => 'required|exists:locations,id' // 🔥 NEW
+        'location_id'      => 'required|exists:location_master,id' // 🔥 NEW
     ]);
 
     $customer = auth()->user();
@@ -109,23 +108,25 @@ public function store(Request $request)
     $leaderId = $customer->created_by;
 
     // 🔥 FETCH INCENTIVE SETTING
-    $setting = ReferralSetting::where('user_id', $leaderId)
-        ->where('location_id', $request->location_id)
-        ->first();
+$setting = ReferralSetting::where('location_id', $request->location_id)
+    ->where(function ($q) use ($customer) {
+        $q->where('target_user_id', $customer->id)
+          ->orWhereNull('target_user_id');
+    })
+    ->orderByRaw('target_user_id IS NULL')
+    ->first();
 
     // 🔥 CREATE REFERRAL WITH SNAPSHOT
-    $referral = Referral::create([
-        'referrer_id'       => $customer->id,
-        'referred_name'     => $request->referred_name,
-        'referred_contact'  => $request->referred_contact,
-        'referred_email'    => $request->referred_email,
-        'assigned_to'       => $leaderId,
-        'status'            => 'pending',
-
-        // 🔥 SNAPSHOT STORED HERE
-        'incentive_type'    => $setting->type ?? null,
-        'incentive_value'   => $setting->value ?? 0,
-    ]);
+$referral = Referral::create([
+    'referrer_id'      => $customer->id,
+    'referred_name'    => $request->referred_name,
+    'referred_contact' => $request->referred_contact,
+    'referred_email'   => $request->referred_email,
+    'assigned_to'      => $leaderId,
+    'status'           => 'pending',
+    'incentive_type'   => $setting->type ?? null,
+    'incentive_value'  => $setting->value ?? 0
+]);
 
     return response()->json([
         'status' => true,
@@ -219,7 +220,7 @@ public function store(Request $request)
 public function saveSetting(Request $request)
 {
     $request->validate([
-        'location_id' => 'required|exists:locations,id',
+        'location_id' => 'required|exists:location_master,id',
         'type'        => 'required|in:fixed,percentage',
         'value'       => 'required|numeric|min:0'
     ]);
