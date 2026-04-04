@@ -300,56 +300,51 @@ class BookingController extends Controller
 
                 if ($request->referral_id) {
 
-              // 🔍 STEP 1: Find matching referral
-    $referral = Referral::where('referred_contact', $booking->customer_contact)
-        ->where('status', 'pending')
-        ->first();
+                    // 🔍 Find matching referral by contact and pending status
+                    $referral = Referral::where('referred_contact', $booking->mobile)
+                        ->where('status', 'pending')
+                        ->first();
 
-    if (!$referral) {
-        return;
-    }
+                    if (!$referral) {
+                        // No pending referral found, skip incentive
+                    } else {
+                        // 🔒 Prevent duplicate incentive for this booking
+                        $alreadyPaid = ReferralLedger::where('booking_id', $booking->id)
+                            ->where('type', 'incentive')
+                            ->exists();
 
-    // 🔒 STEP 2: Prevent duplicate incentive
-    $alreadyPaid = ReferralLedger::where('booking_id', $booking->id)
-        ->where('type', 'incentive')
-        ->exists();
+                        if (!$alreadyPaid) {
 
-    if ($alreadyPaid) {
-        return;
-    }
+                            // 🔄 Mark referral as converted
+                            $referral->update([
+                                'status'     => 'converted',
+                                'booking_id' => $booking->id
+                            ]);
 
-    // 🔄 STEP 3: Mark referral as converted
-    $referral->update([
-        'status'     => 'converted',
-        'booking_id' => $booking->id
-    ]);
+                            // 💰 Calculate incentive amount
+                            $amount = 0;
 
-    // 💰 STEP 4: Calculate incentive
-    $amount = 0;
+                            if ($referral->incentive_type === 'amount') {
+                                $amount = $referral->incentive_value;
+                            } elseif ($referral->incentive_type === 'percent') {
+                                $amount = ($booking->total_booking_amount * $referral->incentive_value) / 100;
+                            }
 
-    if ($referral->incentive_type === 'fixed') {
-        $amount = $referral->incentive_value;
-    } elseif ($referral->incentive_type === 'percentage') {
-        $amount = ($booking->amount * $referral->incentive_value) / 100;
-    }
-
-    // ❌ If no incentive defined → skip
-    if ($amount <= 0) {
-        return;
-    }
-
-    // 🧾 STEP 5: Add to ledger
-    ReferralLedger::create([
-        'user_id'    => $referral->referrer_id,
-        'referral_id'=> $referral->id, // if you added this column
-        'booking_id' => $booking->id,
-        'type'       => 'incentive',
-        'amount'     => $amount,
-        'remark'     => 'Referral incentive for booking #' . $booking->id,
-        'created_by' => auth()->id()
-    ]);
+                            if ($amount > 0) {
+                                // 🧾 Create ledger entry
+                                ReferralLedger::create([
+                                    'user_id'     => $referral->referrer_id,
+                                    'referral_id' => $referral->id,
+                                    'booking_id'  => $booking->id,
+                                    'type'        => 'incentive',
+                                    'amount'      => round($amount, 2),
+                                    'remark'      => 'Referral incentive for booking #' . $booking->id,
+                                    'created_by'  => auth()->id()
+                                ]);
+                            }
+                        }
+                    }
                 }
-
                 // ✅ Store advance payment in booking_payments table
                 $advanceAmount = (float) str_replace(['₹', ',', ' '], '', $request->advance_amount);
                 if ($advanceAmount > 0) {
