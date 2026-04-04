@@ -108,13 +108,12 @@ public function store(Request $request)
     $leaderId = $customer->created_by;
 
     // 🔥 FETCH INCENTIVE SETTING
-$setting = ReferralSetting::where('user_id', $leaderId)
-    ->where('location_id', $request->location_id)
+$setting = ReferralSetting::where('location_id', $request->location_id)
     ->where(function ($q) use ($customer) {
-        $q->where('target_user_id', $customer->id) // specific
-          ->orWhereNull('target_user_id');        // fallback
+        $q->where('target_user_id', $customer->id)
+          ->orWhereNull('target_user_id');
     })
-    ->orderByRaw('target_user_id IS NULL') // prioritize specific over general
+    ->orderByRaw('target_user_id IS NULL')
     ->first();
 
     // 🔥 CREATE REFERRAL WITH SNAPSHOT
