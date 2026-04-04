@@ -96,64 +96,65 @@
   }
 
   .card4 {
-  display: block;
-  position: relative;
-  max-width: 320px;
-  background-color: #f8fafc;
-  border-radius: 4px;
-  padding: 32px 24px;
-  margin: 12px;
-  text-decoration: none;
-  z-index: 0;
-  overflow: hidden;
+    display: block;
+    position: relative;
+    max-width: 320px;
+    background-color: #f8fafc;
+    border-radius: 4px;
+    padding: 32px 24px;
+    margin: 12px;
+    text-decoration: none;
+    z-index: 0;
+    overflow: hidden;
 
-  min-height: 148px;
-}
+    min-height: 148px;
+  }
 
-.card4:before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: #00838d;
-  transform: scale(0);
-  transform-origin: top right;
-  transition: transform 0.3s ease-out;
-  border-radius: inherit;
-  z-index: -1;
-}
+  .card4:before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: #00838d;
+    transform: scale(0);
+    transform-origin: top right;
+    transition: transform 0.3s ease-out;
+    border-radius: inherit;
+    z-index: -1;
+  }
 
-.card4:hover:before {
-  transform: scale(1);
-}
+  .card4:hover:before {
+    transform: scale(1);
+  }
 
-.card4:hover p {
-  transition: all 0.3s ease-out;
-  color: rgba(255, 255, 255, 0.8);
-}
+  .card4:hover p {
+    transition: all 0.3s ease-out;
+    color: rgba(255, 255, 255, 0.8);
+  }
 
-.card4:hover h3 {
-  transition: all 0.3s ease-out;
-  color: #fff;
-}
-.card1,
-.card4 {
+  .card4:hover h3 {
+    transition: all 0.3s ease-out;
+    color: #fff;
+  }
+
+  .card1,
+  .card4 {
     position: relative;
     z-index: 1;
-}
+  }
 
-.card1:before,
-.card4:before {
+  .card1:before,
+  .card4:before {
     z-index: 0;
-}
+  }
 
-.card1 h3,
-.card p1,
-.card1 p,
-.card4 h3,
-.card4 p {
+  .card1 h3,
+  .card p1,
+  .card1 p,
+  .card4 h3,
+  .card4 p {
     position: relative;
     z-index: 2;
-}
+  }
 </style>
 <!-- Css for Cards -->
 
@@ -212,10 +213,10 @@
 
 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
 
-  <!-- SALES TREND -->
-  <div class="bg-white p-4 rounded-xl shadow">
-    <h3 class="text-lg font-semibold mb-3">📈 Sales Trend</h3>
-    <canvas id="salesChart"></canvas>
+  <!-- TEAM COMMISSION SUMMARY -->
+  <div class="bg-white p-4 rounded-xl shadow flex flex-col justify-center items-center">
+    <h3 class="text-lg font-semibold mb-3">Commission Summary</h3>
+    <canvas id="teamChart" style="max-width: 280px; max-height: 280px;"></canvas>
   </div>
 
   <!-- COMMISSION SPLIT -->
@@ -270,32 +271,100 @@
 
 
   // CHARTS
-  async function loadSalesChart() {
+  async function loadTeamChart() {
 
     const token = localStorage.getItem("auth_token");
+    const user = JSON.parse(localStorage.getItem("auth_user"));
+    const leaderId = user?.id;
 
-    const res = await fetch(url + "sales-trend", {
+    const res = await fetch(url + "leader-details/" + leaderId, {
       headers: {
         "Authorization": "Bearer " + token
       }
     });
 
     const result = await res.json();
+    const data = result.data || [];
 
-    const labels = result.data.map(d => d.date);
-    const values = result.data.map(d => d.total);
+    let total = 0;
+    let paid = 0;
+    let balance = 0;
 
-    new Chart(document.getElementById("salesChart"), {
-      type: "line",
-      data: {
-        labels: labels,
-        datasets: [{
-          label: "Sales",
-          data: values,
-          borderWidth: 2,
-          tension: 0.3
-        }]
+    data.forEach(row => {
+      total += Number(row.total_commission || 0);
+      paid += Number(row.paid || 0);
+      balance += Number(row.balance || 0);
+    });
+
+    const ctx = document.getElementById("teamChart").getContext("2d");
+
+    const totalSum = paid + balance; 
+
+    const centerTextPlugin = {
+      id: 'centerText',
+      beforeDraw(chart) {
+        const {
+          ctx
+        } = chart;
+        const meta = chart.getDatasetMeta(0);
+
+        if (!meta?.data?.length) return;
+
+        const x = meta.data[0].x;
+        const y = meta.data[0].y;
+        const innerRadius = meta.data[0].innerRadius;
+
+        ctx.save();
+
+        ctx.beginPath();
+        ctx.arc(x, y, innerRadius - 10, 0, 2 * Math.PI);
+        ctx.fillStyle = "#f8fafc";
+        ctx.fill();
+
+        ctx.textAlign = "center";
+
+        ctx.fillStyle = "#111";
+        ctx.font = "bold 20px sans-serif";
+        ctx.fillText("₹" + totalSum.toLocaleString(), x, y - 5);
+
+        ctx.fillStyle = "#666";
+        ctx.font = "13px sans-serif";
+        ctx.fillText("Total", x, y + 15);
+
+        ctx.restore();
       }
+    };
+
+    const chart = new Chart(ctx, {
+      type: "doughnut",
+      data: {
+        labels: ["Paid", "Balance"],
+        datasets: [{
+          data: [paid, balance],
+          backgroundColor: ["#FF6384", "#36A2EB"],
+          borderWidth: 0,
+          hoverOffset: 5
+        }]
+      },
+      options: {
+        cutout: "70%",
+        radius: "85%",
+        plugins: {
+          legend: {
+            position: "top"
+          },
+          tooltip: {
+            callbacks: {
+              label: function(context) {
+                return `${context.label}: ₹${Number(context.raw).toLocaleString()}`;
+              }
+            }
+          }
+        }
+      },
+
+      plugins: [centerTextPlugin]
+
     });
   }
 
@@ -440,7 +509,7 @@
 
 
   document.addEventListener("DOMContentLoaded", function() {
-    loadSalesChart();
+    loadTeamChart();
     loadCommissionChart();
   });
 </script>
