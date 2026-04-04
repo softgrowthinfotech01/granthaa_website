@@ -69,7 +69,7 @@ public function store(Request $request)
         'referred_name'    => 'required|string',
         'referred_contact' => 'required|string',
         'referred_email'   => 'nullable|email',
-        'location_id'      => 'required|exists:locations,id' // 🔥 NEW
+        'location_id'      => 'required|exists:location_master,id' // 🔥 NEW
     ]);
 
     $customer = auth()->user();
@@ -218,7 +218,7 @@ public function store(Request $request)
 public function saveSetting(Request $request)
 {
     $request->validate([
-        'location_id' => 'required|exists:locations,id',
+        'location_id' => 'required|exists:location_master,id',
         'type'        => 'required|in:fixed,percentage',
         'value'       => 'required|numeric|min:0'
     ]);
