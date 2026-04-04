@@ -290,10 +290,17 @@ let balance = advisorCommission;
                     <tr>
                         <td>${rowIndex++}</td>
 
-                        <td>${advisor.name ?? '-'}</td>
+                       <td>
+  ${advisor.name ?? '-'} 
+  <span class="text-xs text-gray-700">
+    (${advisor.user_code ?? '-'})
+  </span>
+</td>
 
                         <td>
-                            ${booking.user_code ?? ''} - ${booking.buyer_name ?? '-'}
+                         ${booking.buyer_name ?? '-'}
+                           <span class="text-xs text-gray-700">
+                           (${booking.user_code ?? '-'})</span> 
                         </td>
 
                         <td>${booking.plot_number ?? '-'}</td>

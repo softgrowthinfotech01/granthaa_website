@@ -100,7 +100,7 @@
                             <label class="block mb-1 text-sm text-gray-700">Payment Mode</label>
                             <select name="payment_mode" id="payment_mode"
                                 class="w-full px-3 py-2.5 rounded-lg border border-gray-300 bg-white text-sm focus:ring-2 focus:ring-blue-500 outline-none">
-                                <option selected>Select Payment Mode</option>
+                                <option selected disabled>Select Payment Mode</option>
                                 <option value="cash">Cash</option>
                                 <option value="cheque">Cheque</option>
                                 <option value="online_transfer">Online Transfer</option>
