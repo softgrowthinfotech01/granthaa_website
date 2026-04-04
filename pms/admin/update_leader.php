@@ -85,21 +85,6 @@
                                 </div>
 
                             </div>
-
-                            <!-- IMAGE -->
-                            <div class="mt-4">
-                                <label class="block text-sm text-gray-700 mb-2">Current Image</label>
-
-                                <img id="current_image"
-                                    src=""
-                                    class="w-28 h-28 object-cover rounded-lg border mb-3"
-                                    alt="Leader Image">
-
-                                <label class="block text-sm text-gray-700 mb-1">Upload New Image</label>
-                                <input accept=".jpg,.jpeg,.png"
-                                    class="w-full px-3 py-2 border border-gray-400 rounded-lg text-sm bg-white"
-                                    id="file_input" type="file">
-                            </div>
                         </div>
 
                         <hr class="mb-6">
@@ -262,16 +247,6 @@
                 document.getElementById("account_number").value = user.bank_account_no ?? "";
                 document.getElementById("ifsc_code").value = user.bank_ifsc_code ?? "";
 
-                // ✅ Show current image
-                if (user.profile_image) {
-
-                    document.getElementById("current_image").src =
-                        url + "storage/" + user.profile_image;
-
-                } else {
-                    document.getElementById("current_image").style.display = "none";
-                }
-
             } catch (error) {
                 console.error("Load error:", error);
             }
@@ -334,22 +309,6 @@
                 return;
             }
 
-            // ✅ Image Validation (JPG, JPEG, PNG - Max 5MB)
-            if (file) {
-                const allowedTypes = ["image/jpeg", "image/png"];
-
-                if (!allowedTypes.includes(file.type)) {
-                    alert("Only JPG, JPEG and PNG files are allowed.");
-                    return;
-                }
-
-                const maxSize = 5 * 1024 * 1024; // 5MB
-                if (file.size > maxSize) {
-                    alert("Image size must be less than 5MB.");
-                    return;
-                }
-            }
-
             try {
                 const formData = new FormData();
 
@@ -371,9 +330,6 @@
                 formData.append("bank_account_no", document.getElementById("account_number").value);
                 formData.append("bank_ifsc_code", document.getElementById("ifsc_code").value);
 
-                if (file) {
-                    formData.append("image", file);
-                }
 
                 const response = await fetch(url + `users/${id}`, {
                     method: "POST", // Important for file + PATCH
@@ -388,11 +344,6 @@
 
                 if (response.ok) {
                     alert("Leader updated successfully");
-
-                    if (result.data?.profile_image) {
-                        document.getElementById("current_image").src =
-                            url + "storage/" + result.data.profile_image + "?t=" + new Date().getTime();
-                    }
                     window.location.href = "view_leader.php";
 
                 } else {
