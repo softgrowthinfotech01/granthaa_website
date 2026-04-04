@@ -439,7 +439,7 @@ class BookingController extends Controller
     {
         $user = auth()->user();
         //  print_r($user);exit;
-        $booking = Booking::whereNull('deleted_at')->where('user_id', $user->id)->get();
+        $booking = Booking::whereNull('deleted_at')->where('created_by', $user->id)->get();
         // print_r($booking);exit;
         return response()->json($booking);
     }
@@ -1141,7 +1141,7 @@ class BookingController extends Controller
         $totalCommission = CommissionLedger::where('type', 'commission')->where('amount', '>', 0)->sum('amount');
 
         $totalPaid = abs(
-            CommissionLedger::where('type', 'payment')->where('amount', '>', 0)->sum('amount')
+            CommissionLedger::where('type', 'payment')->where('amount', '<', 0)->sum('amount')
         );
 
         $pendingCommissions = $totalCommission - $totalPaid;
