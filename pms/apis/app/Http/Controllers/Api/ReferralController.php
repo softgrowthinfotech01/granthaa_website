@@ -108,28 +108,26 @@ public function store(Request $request)
     $leaderId = $customer->created_by;
 
     // 🔥 FETCH INCENTIVE SETTING
-    $setting = ReferralSetting::where('user_id', $leaderId)
+$setting = ReferralSetting::where('user_id', $leaderId)
     ->where('location_id', $request->location_id)
-    ->where(function($q) use ($customer) {
+    ->where(function ($q) use ($customer) {
         $q->where('target_user_id', $customer->id) // specific
-          ->orWhereNull('target_user_id');       // fallback
+          ->orWhereNull('target_user_id');        // fallback
     })
-    ->orderByRaw('target_user_id IS NULL') // prioritize specific
+    ->orderByRaw('target_user_id IS NULL') // prioritize specific over general
     ->first();
 
     // 🔥 CREATE REFERRAL WITH SNAPSHOT
-    $referral = Referral::create([
-        'referrer_id'       => $customer->id,
-        'referred_name'     => $request->referred_name,
-        'referred_contact'  => $request->referred_contact,
-        'referred_email'    => $request->referred_email,
-        'assigned_to'       => $leaderId,
-        'status'            => 'pending',
-
-        // 🔥 SNAPSHOT STORED HERE
-        'incentive_type'    => $setting->type ?? null,
-        'incentive_value'   => $setting->value ?? 0,
-    ]);
+$referral = Referral::create([
+    'referrer_id'      => $customer->id,
+    'referred_name'    => $request->referred_name,
+    'referred_contact' => $request->referred_contact,
+    'referred_email'   => $request->referred_email,
+    'assigned_to'      => $leaderId,
+    'status'           => 'pending',
+    'incentive_type'   => $setting->type ?? null,
+    'incentive_value'  => $setting->value ?? 0
+]);
 
     return response()->json([
         'status' => true,
