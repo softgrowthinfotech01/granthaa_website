@@ -65,6 +65,14 @@
         class="w-full border border-gray-300 p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400"></textarea>
     </div>
 
+    <!-- remark -->
+    <div class="md:col-span-2">
+  <label class="block text-gray-900 font-semibold mb-1">Remark</label>
+  <textarea name="remark" rows="3"
+    placeholder="Enter visit remark"
+    class="w-full border border-gray-300 p-2 rounded-lg focus:ring-2 focus:ring-yellow-400"></textarea>
+</div>
+
     <!-- Submit Button -->
     <div class="md:col-span-2 text-right mt-4 gap-2">
       <button type="submit"
@@ -87,57 +95,124 @@ transition transform hover:scale-[1.02]">
 <?php include 'footer.php'; ?>
 
 
-   <script src="../url.js"></script>
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
+   <script>
 
-        const token = localStorage.getItem('auth_token');
-        const user = JSON.parse(localStorage.getItem('auth_user'));
+document.addEventListener("DOMContentLoaded", function () {
 
-        if (!token || !user) {
-            alert("Please login first");
-            window.location.href = "../login";
-            return;
+    const token = localStorage.getItem('auth_token');
+    const user = JSON.parse(localStorage.getItem('auth_user'));
+
+    if (!token || !user) {
+        alert("Please login first");
+        window.location.href = "../login";
+        return;
+    }
+
+    /* ================= LOAD SITE LOCATIONS ================= */
+
+    function loadSiteLocations() {
+
+        fetch(url + "my-commissions", {
+            method: "GET",
+            headers: {
+                "Authorization": "Bearer " + token,
+                "Accept": "application/json"
+            }
+        })
+        .then(res => res.json())
+        .then(response => {
+
+            const commissions = response.data?.data ?? [];
+            const select = document.getElementById("site_location");
+
+            select.innerHTML = `<option value="">Select Site Location</option>`;
+
+            commissions.forEach(commission => {
+
+                if (commission.location) {
+                    select.innerHTML += `
+                        <option value="${commission.location.id}">
+                            ${commission.location.site_location}
+                        </option>`;
+                }
+            });
+        });
+    }
+
+    loadSiteLocations();
+
+
+    /* ================= CUSTOMER VISIT SUBMIT ================= */
+
+    const form = document.getElementById("customerForm");
+
+    form.addEventListener("submit", async function(e) {
+
+        e.preventDefault();
+
+        const formData = new FormData(form);
+
+        // Current datetime
+        const now = new Date();
+        const visited_at =
+            now.getFullYear() + "-" +
+            String(now.getMonth()+1).padStart(2,'0') + "-" +
+            String(now.getDate()).padStart(2,'0') + " " +
+            String(now.getHours()).padStart(2,'0') + ":" +
+            String(now.getMinutes()).padStart(2,'0') + ":" +
+            String(now.getSeconds()).padStart(2,'0');
+
+        const payload = {
+            name: formData.get("name"),
+            email: formData.get("email"),
+            contact_no: formData.get("contact_no"),
+            aadhaar_number: formData.get("aadhaar_number"),
+            gender: formData.get("gender"),
+            address: formData.get("address"),
+            site_location: formData.get("site_location"),
+            visited_at: visited_at,
+            remark: "Initial visit"
+        };
+
+        console.log("Payload:", payload);
+
+        try {
+
+            const response = await fetch(url + "customer-visits", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": "Bearer " + token,
+                    "Accept": "application/json"
+                },
+                body: JSON.stringify(payload)
+            });
+
+            const result = await response.json();
+
+            console.log(result);
+
+            if (result.status) {
+
+                alert(result.message);
+
+                form.reset();
+
+            } else {
+
+                alert(result.message || "Failed to save customer");
+
+            }
+
+        } catch (error) {
+
+            console.error(error);
+            alert("Server error occurred");
+
         }
 
-        // ================= LOAD SITE LOCATIONS =================
-        function loadSiteLocations() {
+    });
 
-            fetch(url + "my-commissions", {
-                    method: "GET",
-                    headers: {
-                        "Authorization": "Bearer " + token,
-                        "Accept": "application/json"
-                    }
-                })
-                .then(res => res.json())
-                .then(response => {
-
-                    console.log("MY COMMISSIONS:", response);
-
-                    const commissions = response.data?.data ?? [];
-                    const select = document.getElementById("site_location");
-
-                    select.innerHTML = `<option value="">Select Site Location</option>`;
-
-                    commissions.forEach(commission => {
-
-                        if (commission.location) {
-                            select.innerHTML += `
-                    <option 
-                        value="${commission.location.id}"
-                        data-type="${commission.commission_type}"
-                        data-value="${commission.commission_value}"
-                    >
-                        ${commission.location.site_location}
-                    </option>
-                `;
-                        }
-
-                    });
-                });
-        }
-        loadSiteLocations();
 });
 
 </script>

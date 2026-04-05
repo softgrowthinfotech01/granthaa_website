@@ -69,7 +69,7 @@ $existingVisit = CustomerVisit::where(function($query) use ($request) {
           ->orWhere('aadhaar_number', $request->aadhaar_number);
 })
 ->where('site_location', $request->site_location) // only same site
-->whereNull('released_at') // only active visits
+->whereNull('released') // only active visits
 ->first();
 
 if ($existingVisit) {
@@ -78,6 +78,19 @@ if ($existingVisit) {
         'error' => 'This user already has a visit registered for this site location. Please use another email, contact, or Aadhaar.'
     ], 422);
 }
+
+// dd([
+//     'name' => $request->name,
+//     'email' => $request->email,
+//     'contact_no' => $request->contact_no,
+//     'aadhaar_number' => $request->aadhaar_number,
+//     'gender' => $request->gender,
+//     'address' => $request->address,
+//     'site_location' => $request->site_location,
+//     'remark' => $request->remark,
+//     'created_by' => $creator->id,
+//     'visited_at' => now()
+// ]);
 
     $visit = CustomerVisit::create([
         'name' => $request->name,

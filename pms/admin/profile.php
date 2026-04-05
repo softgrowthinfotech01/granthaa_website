@@ -148,10 +148,27 @@ async function loadProfile() {
     document.getElementById('email').innerText = safe(user.email);
     document.getElementById('mobile').innerText = safe(user.contact_no);
 
+// PROFILE IMAGE
+function getInitials(name) {
+    if (!name) return "U";
+    return name
+        .split(" ")
+        .map(word => word[0])
+        .join("")
+        .substring(0, 2)
+        .toUpperCase();
+}
+
+if (user.profile_image) {
+    const cleanPath = user.profile_image.replace(/\\/g, '/');
+    document.getElementById('profileImage').src = base_url + "storage/app/public/" + cleanPath;
+} else {
+    const initials = getInitials(user.name);
+
     document.getElementById('profileImage').src =
-        user.profile_image
-            ? base_url + "storage/" + user.profile_image
-            : "https://ui-avatars.com/api/?name=" + encodeURIComponent(user.name);
+        `https://ui-avatars.com/api/?name=${initials}&background=4f46e5&color=fff&size=128`;
+}
+
 
     user_code.innerText = safe(user.user_code);
     aadhaar.innerText = safe(user.aadhaar_number);
@@ -196,7 +213,7 @@ document.addEventListener('DOMContentLoaded', loadProfile);
 
 function editProfile() { window.location.href = "edit_profile"; }
 function changePassword() { window.location.href = "change-password"; }
-function uploadPhoto() { window.location.href = "upload-photo"; }
+function uploadPhoto() { window.location.href = "upload_photo"; }
 
 function logoutUser() {
     localStorage.clear();
