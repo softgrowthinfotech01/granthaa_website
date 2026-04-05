@@ -92,7 +92,7 @@ flex flex-col justify-between flex-shrink-0">
                   <path d="M4 12h16" />
                 </svg>
 
-                <span class="sidebar-text">View Customer Bookings</span>
+                <span class="sidebar-text">View Customer deleted Bookings</span>
               </a>
             </li>
 

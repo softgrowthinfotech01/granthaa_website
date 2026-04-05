@@ -156,7 +156,7 @@
                 .then(res => res.json())
                 .then(response => {
 
-                    allBookings = response.data?.data ?? response.data ?? [];
+                    allBookings = response.data ?? response.data ?? [];
                     applyFilters();
 
                 });
