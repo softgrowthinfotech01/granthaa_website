@@ -1492,60 +1492,37 @@ class BookingController extends Controller
         ]);
     }
 
-public function commissionSplit()
-{
-    $leader = auth()->user();
+    public function commissionSplit()
+    {
+        $leader = auth()->user();
 
-    /*
-    |--------------------------------------------------------------------------
-    | Leader Commission (ONLY ACTIVE BOOKINGS)
-    |--------------------------------------------------------------------------
-    */
-    $leaderCommission = CommissionLedger::where('user_id', $leader->id)
-        ->whereHas('booking', function ($q) {
-            $q->whereNull('deleted_at');
-        })
-        ->sum('amount');
+        // print_r($leader);exit;
+        $leaderCommission = CommissionLedger::whereHas('booking')->where('user_id', $leader->id)
+            ->where('type', 'commission')
+            ->where('amount', '>', 0)
+            ->sum('amount');
 
+        $adviserIds = User::where('created_by', $leader->id)
+            ->where('role', 'adviser')
+            ->pluck('id');
 
-    /*
-    |--------------------------------------------------------------------------
-    | Adviser IDs Under Leader
-    |--------------------------------------------------------------------------
-    */
-    $adviserIds = User::where('created_by', $leader->id)
-        ->where('role', 'adviser')
-        ->pluck('id');
+        $adviserCommission = CommissionLedger::whereHas('booking')->whereIn('user_id', $adviserIds)
+            ->where('type', 'commission')
+            ->where('amount', '>', 0)
+            ->sum('amount');
 
+        $total = $leaderCommission + $adviserCommission;
 
-    /*
-    |--------------------------------------------------------------------------
-    | Adviser Commission (ONLY ACTIVE BOOKINGS)
-    |--------------------------------------------------------------------------
-    */
-    $adviserCommission = CommissionLedger::whereIn('user_id', $adviserIds)
-        ->whereHas('booking', function ($q) {
-            $q->whereNull('deleted_at');
-        })
-        ->sum('amount');
+        return response()->json([
+            'status' => true,
+            'data' => [
+                'leader_commission' => $leaderCommission,
+                'adviser_commission' => $adviserCommission,
+                'total_network_commission' => $total
+            ]
+        ]);
+    }
 
-
-    /*
-    |--------------------------------------------------------------------------
-    | Total Network Commission
-    |--------------------------------------------------------------------------
-    */
-    $total = $leaderCommission + $adviserCommission;
-
-    return response()->json([
-        'status' => true,
-        'data' => [
-            'leader_commission' => (float) $leaderCommission,
-            'adviser_commission' => (float) $adviserCommission,
-            'total_network_commission' => (float) $total,
-        ]
-    ]);
-}
 
     public function dashboardAlerts()
     {
