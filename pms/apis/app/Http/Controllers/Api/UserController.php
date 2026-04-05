@@ -151,7 +151,7 @@ class UserController extends Controller
             'name' => 'required|string|max:200',
             'email'      => 'required|email|unique:users,email',
             'aadhaar_number'   => 'required|digits:12|unique:users,aadhaar_number',
-            'password'   => 'required|min:6',
+            'password'   => 'nullable|min:6',
             'role'       => 'required|in:leader,adviser,customer',
         ];
 
