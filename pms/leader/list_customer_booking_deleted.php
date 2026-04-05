@@ -50,7 +50,7 @@
                     <th data-priority="11" class="p-3 font-semibold text-left">Commission Value</th>
                     <th data-priority="5" class="p-3 font-semibold text-left">Commission Amount</th>
                     <th data-priority="6" class="p-3 font-semibold text-left">Email</th>
-                    <th data-priority="12" class="p-3 font-semibold text-left">Action</th>
+                    <!-- <th data-priority="12" class="p-3 font-semibold text-left">Action</th> -->
 
                 </tr>
             </thead>
@@ -72,11 +72,6 @@
 
 <!-- jQuery -->
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-<script>
-    function viewBooking(id) {
-        window.location.href = "update_customer_booking.php?id=" + id;
-    }
-</script>
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {
@@ -168,20 +163,6 @@
                     <td class="p-1">${row.commission_value ?? ''}</td>
                     <td class="p-1">${commission_Amount}</td>
                     <td class="p-1">${row.email ?? ''}</td>
-
-                    <td class="p-1">
-                        <div class="flex gap-2">
-                            <button class="bg-blue-500 text-white px-4 py-1 rounded"
-                                onclick="viewBooking(${row.id})">
-                                Update
-                            </button>
-
-                            <button class="bg-red-500 text-white px-4 py-1 rounded"
-                                onclick="deleteBooking(${row.id})">
-                                Cancel
-                            </button>
-                        </div>
-                    </td>
                 </tr>
 
         <tr id="expand-${row.id}" class="hidden bg-gray-50">
@@ -282,42 +263,4 @@
 
         loadBookings();
     });
-</script>
-
-<script>
-    function deleteBooking(id) {
-
-        const token = localStorage.getItem('auth_token');
-
-        if (!token) {
-            alert("Please login first");
-            window.location.href = "../login";
-            return;
-        }
-
-        if (!confirm("Are you sure you want to Cancel this booking?")) {
-            return;
-        }
-
-        fetch(url + "bookings/" + id, {
-                method: "POST", // safer for Laravel
-                headers: {
-                    "Authorization": "Bearer " + token,
-                    "Accept": "application/json"
-                },
-                body: new URLSearchParams({
-                    _method: "DELETE"
-                })
-            })
-            .then(res => res.json())
-            .then(data => {
-                alert("Booking Deleted Successfully");
-                location.reload();
-            })
-            .catch(error => {
-                console.error(error);
-                alert("Delete failed");
-            });
-
-    }
 </script>
