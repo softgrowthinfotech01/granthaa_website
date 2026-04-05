@@ -82,34 +82,49 @@ class BookingController extends Controller
 
                 $commission_amount = round($commissionAmount, 2);
 
-                $newUser = User::where('email', $request->email)
-                    ->orWhere('contact_no', $request->mobile)
+                $newUser = User::where(function ($query) use ($request) {
+                    $query->where('email', $request->email)
+                        ->orWhere('contact_no', $request->mobile)
+                        ->orWhere('aadhaar_number', $request->aadhar_number);
+                })
                     ->first();
 
-                if ($newUser) {
 
-                    // ❌ email same but mobile different
+                if ($newUser) {
+                    // Check role
+                    if ($newUser->role !== 'customer') {
+                        throw new \Exception("Booking can only be created for customer users.");
+                    }
+
+                    // ❌ email same but mobile or aadhaar different
                     if (
                         $newUser->email == $request->email &&
-                        $newUser->contact_no != $request->mobile
+                        ($newUser->contact_no != $request->mobile || $newUser->aadhaar_number != $request->aadhar_number)
                     ) {
-
                         throw new \Exception(
-                            "Email already exists with different mobile number."
+                            "Email already exists with different mobile number or Aadhaar number."
                         );
                     }
 
-                    // ❌ mobile same but email different
+                    // ❌ mobile same but email or aadhaar different
                     if (
                         $newUser->contact_no == $request->mobile &&
-                        $newUser->email != $request->email
+                        ($newUser->email != $request->email || $newUser->aadhaar_number != $request->aadhar_number)
                     ) {
-
                         throw new \Exception(
-                            "Mobile already exists with different email."
+                            "Mobile number already exists with different email or Aadhaar number."
                         );
                     }
 
+                    // ❌ Aadhaar same but email or mobile different
+                    if (
+                        $newUser->aadhaar_number == $request->aadhar_number &&
+                        ($newUser->email != $request->email || $newUser->contact_no != $request->mobile)
+                    ) {
+                        throw new \Exception(
+                            "Aadhaar number already exists with different email or mobile number."
+                        );
+                    }
                     // ✅ SAME USER FOUND → reuse
                 } else {
 
@@ -300,51 +315,56 @@ class BookingController extends Controller
 
                 if ($request->referral_id) {
 
-                    // 🔍 Find matching referral by contact and pending status
-                    $referral = Referral::where('referred_contact', $booking->mobile)
+                    // 🔍 STEP 1: Find matching referral
+                    $referral = Referral::where('referred_contact', $booking->customer_contact)
                         ->where('status', 'pending')
                         ->first();
 
                     if (!$referral) {
-                        // No pending referral found, skip incentive
-                    } else {
-                        // 🔒 Prevent duplicate incentive for this booking
-                        $alreadyPaid = ReferralLedger::where('booking_id', $booking->id)
-                            ->where('type', 'incentive')
-                            ->exists();
-
-                        if (!$alreadyPaid) {
-
-                            // 🔄 Mark referral as converted
-                            $referral->update([
-                                'status'     => 'converted',
-                                'booking_id' => $booking->id
-                            ]);
-
-                            // 💰 Calculate incentive amount
-                            $amount = 0;
-
-                            if ($referral->incentive_type === 'amount') {
-                                $amount = $referral->incentive_value;
-                            } elseif ($referral->incentive_type === 'percent') {
-                                $amount = ($booking->total_booking_amount * $referral->incentive_value) / 100;
-                            }
-
-                            if ($amount > 0) {
-                                // 🧾 Create ledger entry
-                                ReferralLedger::create([
-                                    'user_id'     => $referral->referrer_id,
-                                    'referral_id' => $referral->id,
-                                    'booking_id'  => $booking->id,
-                                    'type'        => 'incentive',
-                                    'amount'      => round($amount, 2),
-                                    'remark'      => 'Referral incentive for booking #' . $booking->id,
-                                    'created_by'  => auth()->id()
-                                ]);
-                            }
-                        }
+                        return;
                     }
+
+                    // 🔒 STEP 2: Prevent duplicate incentive
+                    $alreadyPaid = ReferralLedger::where('booking_id', $booking->id)
+                        ->where('type', 'incentive')
+                        ->exists();
+
+                    if ($alreadyPaid) {
+                        return;
+                    }
+
+                    // 🔄 STEP 3: Mark referral as converted
+                    $referral->update([
+                        'status'     => 'converted',
+                        'booking_id' => $booking->id
+                    ]);
+
+                    // 💰 STEP 4: Calculate incentive
+                    $amount = 0;
+
+                    if ($referral->incentive_type === 'fixed') {
+                        $amount = $referral->incentive_value;
+                    } elseif ($referral->incentive_type === 'percentage') {
+                        $amount = ($booking->amount * $referral->incentive_value) / 100;
+                    }
+
+                    // ❌ If no incentive defined → skip
+                    if ($amount <= 0) {
+                        return;
+                    }
+
+                    // 🧾 STEP 5: Add to ledger
+                    ReferralLedger::create([
+                        'user_id'    => $referral->referrer_id,
+                        'referral_id' => $referral->id, // if you added this column
+                        'booking_id' => $booking->id,
+                        'type'       => 'incentive',
+                        'amount'     => $amount,
+                        'remark'     => 'Referral incentive for booking #' . $booking->id,
+                        'created_by' => auth()->id()
+                    ]);
                 }
+
                 // ✅ Store advance payment in booking_payments table
                 $advanceAmount = (float) str_replace(['₹', ',', ' '], '', $request->advance_amount);
                 if ($advanceAmount > 0) {

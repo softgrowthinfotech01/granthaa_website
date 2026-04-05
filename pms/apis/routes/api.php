@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\ReferralController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\CommissionPaymentController;
 use App\Http\Controllers\Api\BookingPaymentController;
+use App\Http\Controllers\Api\CustomerVisitController;
 use App\Http\Controllers\Api\ReferralSettingController;
 use App\Http\Controllers\BookingPaymentController as ControllersBookingPaymentController;
 use Illuminate\Support\Facades\Route;
@@ -133,6 +134,12 @@ Route::middleware(['auth:sanctum', 'role:admin,leader,adviser,customer'])->group
     Route::post('/referral-setting', [ReferralSettingController::class, 'store']);
     Route::get('/wallet', [ReferralController::class, 'wallet']);
     Route::get('/ledger', [ReferralController::class, 'ledger']);
+
+
+    Route::get('customer-visits', [CustomerVisitController::class, 'index']);
+    Route::get('customer-visits/{id}', [CustomerVisitController::class, 'show']);
+    Route::post('customer-visits', [CustomerVisitController::class, 'store']);
+    Route::post('/customer-visits/{id}/release', [CustomerVisitController::class, 'release']);
 });
 
 Route::middleware('auth:sanctum')->get('/test-auth', function () {
