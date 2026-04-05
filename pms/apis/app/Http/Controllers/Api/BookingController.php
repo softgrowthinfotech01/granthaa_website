@@ -1492,22 +1492,13 @@ class BookingController extends Controller
         ]);
     }
 
-    public function commissionSplit()
+public function commissionSplit()
 {
     $leader = auth()->user();
 
     /*
     |--------------------------------------------------------------------------
-    | Leader Commission (NET LEDGER BALANCE)
-    |--------------------------------------------------------------------------
-    */
-    $leaderCommission = CommissionLedger::where('user_id', $leader->id)
-        ->sum('amount');
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | Adviser IDs Under Leader
+    | Adviser IDs
     |--------------------------------------------------------------------------
     */
     $adviserIds = User::where('created_by', $leader->id)
@@ -1517,27 +1508,63 @@ class BookingController extends Controller
 
     /*
     |--------------------------------------------------------------------------
-    | Adviser Commission (NET LEDGER BALANCE)
+    | LEADER COMMISSION
     |--------------------------------------------------------------------------
     */
-    $adviserCommission = CommissionLedger::whereIn('user_id', $adviserIds)
+    $leaderEarned = CommissionLedger::where('user_id', $leader->id)
+        ->where('type', 'commission')
+        ->sum('amount');
+
+    $leaderPaid = CommissionLedger::where('user_id', $leader->id)
+        ->where('type', 'payment')
+        ->sum('amount');
+
+    $leaderBalance = CommissionLedger::where('user_id', $leader->id)
         ->sum('amount');
 
 
     /*
     |--------------------------------------------------------------------------
-    | Total Network Commission
+    | ADVISER COMMISSION
     |--------------------------------------------------------------------------
     */
-    $total = $leaderCommission + $adviserCommission;
+    $adviserEarned = CommissionLedger::whereIn('user_id', $adviserIds)
+        ->where('type', 'commission')
+        ->sum('amount');
+
+    $adviserPaid = CommissionLedger::whereIn('user_id', $adviserIds)
+        ->where('type', 'payment')
+        ->sum('amount');
+
+    $adviserBalance = CommissionLedger::whereIn('user_id', $adviserIds)
+        ->sum('amount');
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | TOTAL NETWORK BALANCE
+    |--------------------------------------------------------------------------
+    */
+    $totalNetworkBalance = $leaderBalance + $adviserBalance;
 
 
     return response()->json([
         'status' => true,
         'data' => [
-            'leader_commission' => (float) $leaderCommission,
-            'adviser_commission' => (float) $adviserCommission,
-            'total_network_commission' => (float) $total,
+
+            'leader' => [
+                'earned' => (float)$leaderEarned,
+                'paid' => (float)abs($leaderPaid),
+                'balance' => (float)$leaderBalance,
+            ],
+
+            'advisers' => [
+                'earned' => (float)$adviserEarned,
+                'paid' => (float)abs($adviserPaid),
+                'balance' => (float)$adviserBalance,
+            ],
+
+            'total_network_balance' => (float)$totalNetworkBalance,
         ]
     ]);
 }
