@@ -156,10 +156,12 @@
                 .then(res => res.json())
                 .then(response => {
 
-                    allBookings = response.data ?? response.data ?? [];
-                    applyFilters();
+    allBookings = Array.isArray(response)
+        ? response
+        : (response.data ?? []);
 
-                });
+    applyFilters();
+});
         }
 
         /* ================= FILTER ================= */
