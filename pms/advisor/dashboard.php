@@ -22,16 +22,20 @@
 </div>
 
 <!-- TOTAL BOOKINGS -->
-<div class="relative bg-gradient-to-br from-blue-900 to-blue-400
-            text-white p-6 rounded-2xl shadow-lg overflow-hidden">
+<a href="list_customer_booking.php" class="block">
+  <div class="relative bg-gradient-to-br from-blue-900 to-blue-400
+              text-white p-6 rounded-2xl shadow-lg overflow-hidden">
 
-  <div class="absolute top-5 right-5 opacity-90 text-6xl font-bold ">🧾</div>
+    <div class="absolute top-5 right-5 opacity-90 text-6xl font-bold ">🧾</div>
 
-  <h3 class="text-sm tracking-widest font-semibold">TOTAL BOOKINGS</h3>
-  <p class="text-3xl font-bold mt-2" id="totalBookings"></p>
-</div>
+    <h3 class="text-sm tracking-widest font-semibold">TOTAL BOOKINGS</h3>
+    <p class="text-3xl font-bold mt-2" id="totalBookings"></p>
+
+  </div>
+</a>
 
 <!-- TOTAL BOOKING AMOUNT -->
+ <a href="list_booking_payments.php" class="block">
 <div class="relative bg-gradient-to-br from-purple-900 to-purple-400
             text-white p-6 rounded-2xl shadow-lg overflow-hidden">
 
@@ -39,9 +43,10 @@
 
   <h3 class="text-sm tracking-widest font-semibold">TOTAL BOOKING AMOUNT</h3>
   <p class="text-2xl font-bold mt-3" id="totalBookingAmount"></p>
-</div>
+</div></a>
 
 <!-- TOTAL COMMISSION AMOUNT -->
+  <a href="list_booking_payments.php" class="block">
 <div class="relative bg-gradient-to-br from-orange-900 to-orange-400
             text-white p-6 rounded-2xl shadow-lg overflow-hidden">
 
@@ -49,9 +54,10 @@
 
   <h3 class="text-sm tracking-widest font-semibold">TOTAL COMMISSION AMOUNT</h3>
   <p class="text-2xl font-bold mt-3" id="totalCommissionAmount"></p>
-</div>
+</div></a>
 
 <!-- BALANCE COMMISSION AMOUNT -->
+  <a href="list_booking_payments.php" class="block">
 <div class="relative bg-gradient-to-br from-red-900 to-red-400
             text-white p-6 rounded-2xl shadow-lg overflow-hidden">
 
@@ -59,9 +65,10 @@
 
   <h3 class="text-sm tracking-widest font-semibold">BALANCE COMMISSION  AMOUNT</h3>
   <p class="text-2xl font-bold mt-3" id="balanceCommissionAmount"></p>
-</div>
+</div></a>
 
 <!-- RECEIVED COMMISSION AMOUNT -->
+  <a href="list_booking_payments.php" class="block">
 <div class="relative bg-gradient-to-br from-blue-900 via-blue-600 to-blue-400
             text-white p-6 rounded-2xl shadow-lg overflow-hidden">
 
@@ -69,7 +76,7 @@
 
   <h3 class="text-sm tracking-widest font-semibold">RECEIVED COMMISSION AMOUNT</h3>
   <p class="text-2xl font-bold mt-3" id="receivedCommissionAmount"></p>
-</div>
+</div></a>
 
 
 
