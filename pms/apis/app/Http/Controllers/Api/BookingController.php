@@ -1498,11 +1498,13 @@ public function commissionSplit()
 
     /*
     |--------------------------------------------------------------------------
-    | Leader Total Commission (ONLY EARNED)
+    | Leader Commission (ONLY ACTIVE BOOKINGS)
     |--------------------------------------------------------------------------
     */
     $leaderCommission = CommissionLedger::where('user_id', $leader->id)
-        ->where('type', 'commission')
+        ->whereHas('booking', function ($q) {
+            $q->whereNull('deleted_at');
+        })
         ->sum('amount');
 
 
@@ -1518,11 +1520,13 @@ public function commissionSplit()
 
     /*
     |--------------------------------------------------------------------------
-    | Adviser Total Commission (ONLY EARNED)
+    | Adviser Commission (ONLY ACTIVE BOOKINGS)
     |--------------------------------------------------------------------------
     */
     $adviserCommission = CommissionLedger::whereIn('user_id', $adviserIds)
-        ->where('type', 'commission')
+        ->whereHas('booking', function ($q) {
+            $q->whereNull('deleted_at');
+        })
         ->sum('amount');
 
 
@@ -1533,19 +1537,15 @@ public function commissionSplit()
     */
     $total = $leaderCommission + $adviserCommission;
 
-
     return response()->json([
         'status' => true,
         'data' => [
-            'leader_commission' => (float)$leaderCommission,
-            'adviser_commission' => (float)$adviserCommission,
-            'total_network_commission' => (float)$total,
+            'leader_commission' => (float) $leaderCommission,
+            'adviser_commission' => (float) $adviserCommission,
+            'total_network_commission' => (float) $total,
         ]
     ]);
 }
-
-
-
 
     public function dashboardAlerts()
     {
