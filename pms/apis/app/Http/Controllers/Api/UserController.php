@@ -151,7 +151,7 @@ class UserController extends Controller
             'name' => 'required|string|max:200',
             'email'      => 'required|email|unique:users,email',
             'aadhaar_number'   => 'required|digits:12|unique:users,aadhaar_number',
-            'password'   => 'required|min:6',
+            'password'   => 'nullable|min:6',
             'role'       => 'required|in:leader,adviser,customer',
         ];
 
@@ -193,7 +193,7 @@ class UserController extends Controller
             'name'    => $validated['name'],
             'email'        => $validated['email'],
             'aadhaar_number'        => $validated['aadhaar_number'],
-            'password'     => Hash::make($validated['password']),
+            'password'     => Hash::make($validated['contact_no']),
             'role'         => $validated['role'],
             'age'          => $validated['age'] ?? null,
             'gender'       => $validated['gender'] ?? null,
@@ -328,16 +328,6 @@ public function update(Request $request, $id)
             unset($validated['password']);
         }
 
-        /*
-        |--------------------------------
-        | IMAGE UPDATE
-        |--------------------------------
-        */
-        /*
-|--------------------------------
-| IMAGE UPDATE
-|--------------------------------
-*/
 // dd($request->all(), $request->hasFile('image'));
 if ($request->hasFile('image')) {
 

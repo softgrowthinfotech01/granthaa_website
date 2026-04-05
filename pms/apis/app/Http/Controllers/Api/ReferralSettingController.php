@@ -13,7 +13,7 @@ class ReferralSettingController extends Controller
     $request->validate([
     'location_id'    => 'required|exists:location_master,id',
     'target_user_id' => 'nullable|exists:users,id', // can be null for general
-    'type'           => 'required|in:fixed,percentage',
+    'type'           => 'required|in:amount,percent',
     'value'          => 'required|numeric|min:0'
 ]);
 

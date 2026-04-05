@@ -214,8 +214,6 @@
     </script>
     <script src="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.js"></script>
 
-    <script src="../url.js"></script>
-
     <script>
         const token = localStorage.getItem("auth_token");
 
@@ -254,7 +252,6 @@
                 document.getElementById("age").value = user.age ?? "";
                 document.getElementById("gender").value = user.gender ?? "";
                 document.getElementById("pancard_number").value = user.pancard_number ?? "";
-                document.getElementById("mobile").value = user.contact_no ?? "";
                 document.getElementById("email").value = user.email ?? "";
                 document.getElementById("city").value = user.city ?? "";
                 document.getElementById("state").value = user.state ?? "";
@@ -281,13 +278,11 @@
             const ageInput = document.getElementById("age");
             const mobileInput = document.getElementById("mobile");
             const pincodeInput = document.getElementById("pincode");
-            const fileInput = document.getElementById("file_input");
 
             const email = emailInput.value.trim();
             const age = ageInput.value.trim();
             const mobile = mobileInput.value.trim();
             const pincode = pincodeInput.value.trim();
-            const file = fileInput.files[0];
 
             // Clear previous errors
             emailInput.setCustomValidity("");
@@ -338,7 +333,6 @@
                 formData.append("age", age);
                 formData.append("gender", document.getElementById("gender").value);
                 formData.append("pancard_number", document.getElementById("pancard_number").value);
-                formData.append("contact_no", mobile);
                 formData.append("city", document.getElementById("city").value);
                 formData.append("state", document.getElementById("state").value);
                 formData.append("address", document.getElementById("address").value);
@@ -350,7 +344,7 @@
 
 
                 const response = await fetch(url + `users/${id}`, {
-                    method: "POST", // Important for file + PATCH
+                    method: "PATCH", // Important for file + PATCH
                     headers: {
                         "Authorization": "Bearer " + token,
                         "Accept": "application/json"

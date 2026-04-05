@@ -487,6 +487,15 @@ class BookingController extends Controller
         return response()->json($booking);
     }
 
+    public function mydelbookings()
+    {
+        $user = auth()->user();
+        //  print_r($user);exit;
+        $booking =  Booking::onlyTrashed()->where('created_by', $user->id)->get();
+        // print_r($booking);exit;
+        return response()->json($booking);
+    }
+
     public function cstbookings()
     {
         $user = auth()->user();
