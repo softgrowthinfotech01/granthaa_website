@@ -41,10 +41,8 @@
                     <th class="p-3 text-left">Sr No</th>
                     <th class="p-3 text-left">Referrer</th>
                     <th class="p-3 text-left">Referred Customer</th>
-                    <th class="p-3 text-left">Location</th>
-                    <th class="p-3 text-left">Type</th>
-                    <th class="p-3 text-left">Value</th>
-                    <th class="p-3 text-left">Commission</th>
+                    <th class="p-3 text-left">Contact</th>
+                    <th class="p-3 text-left">Email</th>
                     <th class="p-3 text-left">Status</th>
                     <th class="p-3 text-left">Date</th>
                     <th class="p-3 text-left">Action</th>
@@ -71,12 +69,9 @@ document.addEventListener("DOMContentLoaded", function() {
         return;
     }
 
-    let currentPageUrl = url + "referred"; // ✅ correct API
+    let currentPageUrl = url + "refered";
 
-    // =========================
-    // 🔹 LOAD REFERRALS
-    // =========================
-    function loadReferrals(apiUrl = currentPageUrl) {
+    async function loadReferrals(apiUrl = currentPageUrl) {
 
         const search = document.getElementById("searchInput").value;
         const perPage = document.getElementById("perPage").value;
@@ -84,27 +79,36 @@ document.addEventListener("DOMContentLoaded", function() {
         let separator = apiUrl.includes("?") ? "&" : "?";
         let finalUrl = `${apiUrl}${separator}search=${search}&per_page=${perPage}`;
 
-        fetch(finalUrl, {
-            headers: {
-                "Authorization": "Bearer " + token,
-                "Accept": "application/json"
-            }
-        })
-        .then(res => res.json())
-        .then(response => {
+        try {
 
-            console.log(response); // 🔍 DEBUG
+            // ✅ CALL BOTH APIs
+            const [refRes, settingRes] = await Promise.all([
+                fetch(finalUrl, {
+                    headers: {
+                        "Authorization": "Bearer " + token,
+                        "Accept": "application/json"
+                    }
+                }),
+                fetch(url + "referral-setting", {
+                    headers: {
+                        "Authorization": "Bearer " + token,
+                        "Accept": "application/json"
+                    }
+                })
+            ]);
 
-            const data = response.data || {};
-            const referrals = data.data || [];
+            const refData = await refRes.json();
+            const settingData = await settingRes.json();
 
-            const currentPage = data.current_page || 1;
-            const perPageVal = data.per_page || 10;
+            const referrals = refData.data?.data || [];
+            const settings = settingData.data?.data || [];
+
+            const currentPage = refData.data?.current_page || 1;
+            const perPageVal = refData.data?.per_page || 10;
 
             const tbody = document.getElementById("paymentData");
             tbody.innerHTML = "";
 
-            // ✅ NO RECORDS
             if (referrals.length === 0) {
                 tbody.innerHTML = `
                     <tr>
@@ -113,7 +117,6 @@ document.addEventListener("DOMContentLoaded", function() {
                         </td>
                     </tr>
                 `;
-                document.getElementById("pagination").innerHTML = "";
                 return;
             }
 
@@ -121,29 +124,27 @@ document.addEventListener("DOMContentLoaded", function() {
 
                 let srNo = (currentPage - 1) * perPageVal + (i + 1);
 
+                // ✅ MATCH SETTING
+                const setting = settings.find(s => 
+                    s.target_user_id == row.referrer_id
+                );
+
+                const type = setting?.type;
+                const value = setting?.value;
+
                 tbody.innerHTML += `
 <tr>
     <td class="p-3">${srNo}</td>
 
     <td class="p-3 font-semibold text-blue-600">
-        ${row.referrer_name ?? '-'}
+        ${row.referrer?.name ?? '-'}
     </td>
 
     <td class="p-3">${row.referred_name ?? '-'}</td>
 
-    <td class="p-3">${row.location_name ?? '-'}</td>
+    <td class="p-3">${row.referred_contact ?? '-'}</td>
 
-    <td class="p-3">
-        ${row.commission_type === 'percentage' ? 'Percentage (%)' : 'Fixed ₹'}
-    </td>
-
-    <td class="p-3">
-        ${row.commission_value ?? '-'}
-    </td>
-
-    <td class="p-3 font-bold text-green-600">
-        ₹${row.calculated_commission ?? 0}
-    </td>
+    <td class="p-3">${row.referred_email ?? '-'}</td>
 
     <td class="p-3">
         <span class="px-2 py-1 rounded text-white ${
@@ -171,20 +172,19 @@ document.addEventListener("DOMContentLoaded", function() {
                 `;
             });
 
-            renderPagination(data.links || []);
-        });
+            renderPagination(refData.data.links || []);
+
+        } catch (error) {
+            console.error(error);
+            alert("Error loading data");
+        }
     }
 
-    // =========================
-    // 🔹 PAGINATION
-    // =========================
     function renderPagination(links) {
-
         const pagination = document.getElementById("pagination");
         pagination.innerHTML = "";
 
         links.forEach(link => {
-
             let btn = document.createElement("button");
 
             btn.innerText = link.label.replace(/&laquo;|&raquo;/g, "");
@@ -196,40 +196,21 @@ document.addEventListener("DOMContentLoaded", function() {
                 btn.classList.add("bg-blue-500", "text-white");
             }
 
-            btn.onclick = () => {
-                loadReferrals(link.url);
-            };
+            btn.onclick = () => loadReferrals(link.url);
 
             pagination.appendChild(btn);
         });
     }
 
-    // =========================
-    // 🔹 DATE FORMAT
-    // =========================
     function formatDate(dateStr) {
         if (!dateStr) return '-';
         const date = new Date(dateStr);
         return date.toLocaleDateString("en-IN");
     }
 
-    // =========================
-    // 🔹 SEARCH
-    // =========================
-    document.getElementById("searchBtn").addEventListener("click", function() {
-        loadReferrals();
-    });
+    document.getElementById("searchBtn").addEventListener("click", () => loadReferrals());
+    document.getElementById("perPage").addEventListener("change", () => loadReferrals());
 
-    // =========================
-    // 🔹 PER PAGE
-    // =========================
-    document.getElementById("perPage").addEventListener("change", function() {
-        loadReferrals();
-    });
-
-    // =========================
-    // 🔹 INITIAL LOAD
-    // =========================
     loadReferrals();
 
 });

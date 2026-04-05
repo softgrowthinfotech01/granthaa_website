@@ -157,9 +157,8 @@
         const location_id = document.getElementById("location_id").value;
         const target_user_id = document.getElementById("customerDropdown").value;
 
-        const type = document.querySelector('input[name="commission_type"]:checked').value === 'percent' ?
-            'percentage' :
-            'fixed';
+        const type =
+    document.querySelector('input[name="commission_type"]:checked').value;
 
         const value = document.querySelector('input[name="commission_value"]').value;
 
