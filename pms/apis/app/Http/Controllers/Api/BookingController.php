@@ -1498,7 +1498,17 @@ public function commissionSplit()
 
     /*
     |--------------------------------------------------------------------------
-    | Adviser IDs
+    | Leader Total Commission (ONLY EARNED)
+    |--------------------------------------------------------------------------
+    */
+    $leaderCommission = CommissionLedger::where('user_id', $leader->id)
+        ->where('type', 'commission')
+        ->sum('amount');
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Adviser IDs Under Leader
     |--------------------------------------------------------------------------
     */
     $adviserIds = User::where('created_by', $leader->id)
@@ -1508,66 +1518,33 @@ public function commissionSplit()
 
     /*
     |--------------------------------------------------------------------------
-    | LEADER COMMISSION
+    | Adviser Total Commission (ONLY EARNED)
     |--------------------------------------------------------------------------
     */
-    $leaderEarned = CommissionLedger::where('user_id', $leader->id)
+    $adviserCommission = CommissionLedger::whereIn('user_id', $adviserIds)
         ->where('type', 'commission')
-        ->sum('amount');
-
-    $leaderPaid = CommissionLedger::where('user_id', $leader->id)
-        ->where('type', 'payment')
-        ->sum('amount');
-
-    $leaderBalance = CommissionLedger::where('user_id', $leader->id)
         ->sum('amount');
 
 
     /*
     |--------------------------------------------------------------------------
-    | ADVISER COMMISSION
+    | Total Network Commission
     |--------------------------------------------------------------------------
     */
-    $adviserEarned = CommissionLedger::whereIn('user_id', $adviserIds)
-        ->where('type', 'commission')
-        ->sum('amount');
-
-    $adviserPaid = CommissionLedger::whereIn('user_id', $adviserIds)
-        ->where('type', 'payment')
-        ->sum('amount');
-
-    $adviserBalance = CommissionLedger::whereIn('user_id', $adviserIds)
-        ->sum('amount');
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | TOTAL NETWORK BALANCE
-    |--------------------------------------------------------------------------
-    */
-    $totalNetworkBalance = $leaderBalance + $adviserBalance;
+    $total = $leaderCommission + $adviserCommission;
 
 
     return response()->json([
         'status' => true,
         'data' => [
-
-            'leader' => [
-                'earned' => (float)$leaderEarned,
-                'paid' => (float)abs($leaderPaid),
-                'balance' => (float)$leaderBalance,
-            ],
-
-            'advisers' => [
-                'earned' => (float)$adviserEarned,
-                'paid' => (float)abs($adviserPaid),
-                'balance' => (float)$adviserBalance,
-            ],
-
-            'total_network_balance' => (float)$totalNetworkBalance,
+            'leader_commission' => (float)$leaderCommission,
+            'adviser_commission' => (float)$adviserCommission,
+            'total_network_commission' => (float)$total,
         ]
     ]);
 }
+
+
 
 
     public function dashboardAlerts()
