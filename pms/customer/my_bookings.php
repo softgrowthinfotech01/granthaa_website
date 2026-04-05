@@ -153,7 +153,7 @@ renderTable();
       }
     };
 
-
+ 
   });
 
   async function fetchBookings() {
@@ -162,7 +162,7 @@ renderTable();
 
       const token = localStorage.getItem("auth_token");
 
-      const response = await fetch(url + "mybookings", {
+      const response = await fetch(url + "cstbookings", {
         method: "GET",
         headers: {
           "Authorization": "Bearer " + token,

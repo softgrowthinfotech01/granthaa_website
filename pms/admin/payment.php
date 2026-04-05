@@ -95,6 +95,17 @@
                                 placeholder="Enter amount" required />
                         </div>
 
+                        <div>
+    <label class="block mb-1 text-sm text-gray-700">Payment Type</label>
+    <select name="payment_type" id="payment_type" required
+        class="w-full px-3 py-2.5 rounded-lg border border-gray-300 text-sm focus:ring-2 focus:ring-blue-500 outline-none">
+
+        <option value="" disabled selected hidden>Select Payment Type</option>
+        <option value="full">Full</option>
+        <option value="installment">Installment</option>
+    </select>
+</div>
+
                         <!-- PAYMENT MODE -->
                         <div>
                             <label class="block mb-1 text-sm text-gray-700">Payment Mode</label>
@@ -179,15 +190,22 @@ document.getElementById("paymentForm").addEventListener("submit", async function
 
     let amount = parseFloat(document.getElementById("amount").value);
     let balance = parseFloat(document.getElementById("balance").value);
+    let paymentType = document.getElementById("payment_type").value;
+
+    // ✅ VALIDATION (NOW CORRECT)
+    if (!paymentType) {
+        alert("Select payment type");
+        return resetBtn();
+    }
+
+    if (paymentType === "full" && Math.abs(balance - amount) > 0.01) {
+        alert("Full payment must match balance");
+        return resetBtn();
+    }
 
     if (amount > balance) {
         alert("Amount cannot exceed balance");
-
-        // 🔄 reset
-        isSubmitting = false;
-        submitBtn.disabled = false;
-        submitBtn.innerText = "Save Payment";
-        return;
+        return resetBtn();
     }
 
     const form = document.getElementById("paymentForm");
@@ -205,11 +223,7 @@ document.getElementById("paymentForm").addEventListener("submit", async function
 
     if (!booking_id) {
         alert("Please select a booking");
-
-        isSubmitting = false;
-        submitBtn.disabled = false;
-        submitBtn.innerText = "Save Payment";
-        return;
+        return resetBtn();
     }
 
     let formData = new FormData(form);
@@ -231,39 +245,32 @@ document.getElementById("paymentForm").addEventListener("submit", async function
 
         if (!response.ok) {
             alert(data.message || "Error");
-
-            isSubmitting = false;
-            submitBtn.disabled = false;
-            submitBtn.innerText = "Save Payment";
-            return;
+            return resetBtn();
         }
 
-  alert("✅ " + data.message);
+        alert("✅ " + data.message);
 
-form.reset();
+        form.reset();
 
-// 🔥 Show success temporarily
-submitBtn.innerText = "Saved ✔";
+        submitBtn.innerText = "Saved ✔";
 
-// 🔄 Reset button after 1.5 sec
-setTimeout(() => {
-    isSubmitting = false;
-    submitBtn.disabled = false;
-    submitBtn.innerText = "Save Payment";
-}, 1500);
+        setTimeout(() => {
+            resetBtn();
+        }, 1500);
 
     } catch (error) {
         console.error(error);
         alert("Server error");
+        resetBtn();
+    }
 
+    function resetBtn() {
         isSubmitting = false;
         submitBtn.disabled = false;
         submitBtn.innerText = "Save Payment";
     }
 
-});
-   
-        document.addEventListener("DOMContentLoaded", loadUsers);
+});        document.addEventListener("DOMContentLoaded", loadUsers);
 
         async function loadUsers() {
 
@@ -353,6 +360,29 @@ document.getElementById("booking_id").addEventListener("change", function() {
     document.getElementById("total_paid").value = paid || "";
     document.getElementById("balance").value = balance || "";
     document.getElementById("amount").value = balance || "";
+});
+
+// ✅ FULL PAYMENT LOGIC
+document.getElementById("amount").addEventListener("input", function () {
+
+    let amount = parseFloat(this.value) || 0;
+    let balance = parseFloat(document.getElementById("balance").value) || 0;
+
+    let paymentType = document.getElementById("payment_type");
+    let fullOption = paymentType.querySelector('option[value="full"]');
+
+    if (!paymentType) return;
+
+    if (Math.abs(balance - amount) <= 0.01) {
+        fullOption.disabled = false;
+        paymentType.value = "full"; // auto select
+    } else {
+        fullOption.disabled = true;
+
+        if (paymentType.value === "full") {
+            paymentType.value = "";
+        }
+    }
 });
 
     </script>

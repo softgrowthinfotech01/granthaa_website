@@ -49,6 +49,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('booking/{id}/restore', [BookingController::class,'restore']); // restore
 Route::delete('booking/{id}/force-delete', [BookingController::class,'forceDelete']); // permemet delete
     Route::get('/mybookings', [BookingController::class, 'mybookings']);
+    Route::get('/cstbookings', [BookingController::class, 'cstbookings']);
     Route::get('/booking-summary/{id}', [BookingPaymentController::class, 'getBookingSummary']);//to fetch paid, total, balance amount
     Route::get('/dashboard', [BookingController::class, 'dashboard']);
     Route::get('/admdashboard', [BookingController::class, 'admdashboard']);
