@@ -1493,35 +1493,54 @@ class BookingController extends Controller
     }
 
     public function commissionSplit()
-    {
-        $leader = auth()->user();
+{
+    $leader = auth()->user();
 
-        // print_r($leader);exit;
-        $leaderCommission = CommissionLedger::with('user')->where('user_id', $leader->id)
-            ->where('type', 'commission')
-            ->where('amount', '>', 0)
-            ->sum('amount');
+    /*
+    |--------------------------------------------------------------------------
+    | Leader Commission (NET LEDGER BALANCE)
+    |--------------------------------------------------------------------------
+    */
+    $leaderCommission = CommissionLedger::where('user_id', $leader->id)
+        ->sum('amount');
 
-        $adviserIds = User::where('created_by', $leader->id)
-            ->where('role', 'adviser')
-            ->pluck('id');
 
-        $adviserCommission = CommissionLedger::with('user')->whereIn('user_id', $adviserIds)
-            ->where('type', 'commission')
-            ->where('amount', '>', 0)
-            ->sum('amount');
+    /*
+    |--------------------------------------------------------------------------
+    | Adviser IDs Under Leader
+    |--------------------------------------------------------------------------
+    */
+    $adviserIds = User::where('created_by', $leader->id)
+        ->where('role', 'adviser')
+        ->pluck('id');
 
-        $total = $leaderCommission + $adviserCommission;
 
-        return response()->json([
-            'status' => true,
-            'data' => [
-                'leader_commission' => $leaderCommission,
-                'adviser_commission' => $adviserCommission,
-                'total_network_commission' => $total
-            ]
-        ]);
-    }
+    /*
+    |--------------------------------------------------------------------------
+    | Adviser Commission (NET LEDGER BALANCE)
+    |--------------------------------------------------------------------------
+    */
+    $adviserCommission = CommissionLedger::whereIn('user_id', $adviserIds)
+        ->sum('amount');
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Total Network Commission
+    |--------------------------------------------------------------------------
+    */
+    $total = $leaderCommission + $adviserCommission;
+
+
+    return response()->json([
+        'status' => true,
+        'data' => [
+            'leader_commission' => (float) $leaderCommission,
+            'adviser_commission' => (float) $adviserCommission,
+            'total_network_commission' => (float) $total,
+        ]
+    ]);
+}
 
 
     public function dashboardAlerts()
