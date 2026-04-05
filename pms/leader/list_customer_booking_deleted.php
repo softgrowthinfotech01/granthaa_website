@@ -1,0 +1,323 @@
+<?php include 'header.php'; ?>
+
+
+<div class="max-w-7xl mx-auto bg-white p-4 rounded-2xl shadow-xl">
+
+    <h2 class="text-2xl font-bold mb-4 text-center">
+        Customer and Plot Details
+    </h2>
+
+    <!-- ✅ SEARCH (OUTSIDE SCROLL) -->
+    <div class="mb-4 flex flex-col sm:flex-row justify-between items-center gap-6">
+
+        <!-- LEFT SIDE -->
+        <div class="flex flex-wrap gap-3">
+            <input type="text" id="searchInput"
+                placeholder="Search buyer / project / mobile"
+                class="border p-2 rounded w-64">
+
+            <button id="searchBtn"
+                class="bg-blue-500 text-white px-4 py-1 rounded">
+                Search
+            </button>
+        </div>
+
+        <!-- RIGHT SIDE -->
+        <div class="flex items-center gap-2">
+            <span class="text-sm text-gray-600">Show:</span>
+            <select id="perPage" class="border p-2 rounded">
+                <option value="10">10</option>
+                <option value="25">25</option>
+                <option value="50">50</option>
+            </select>
+        </div>
+
+    </div>
+
+    <!-- ✅ ONLY TABLE SCROLLS -->
+    <div class="w-full overflow-x-auto">
+
+        <table id="example" style="width:100%; padding-top: 1em; padding-bottom: 1em;">
+            <thead class="bg-gradient-to-r from-gray-100 to-gray-200 text-gray-700">
+                <tr>
+                    <!-- <th class="p-3 font-semibold text-left">ID</th> -->
+                    <th data-priority="1" class="p-3 font-semibold text-left"></th>
+                    <th data-priority="2" class="p-3 font-semibold text-left">Buyer Name</th>
+                    <th data-priority="7" class="p-3 font-semibold text-left">Site Location</th>
+                    <th data-priority="9" class="p-3 font-semibold text-left">Project Name</th>
+                    <th data-priority="9" class="p-3 font-semibold text-left">Total Booking Amount</th>
+                    <th data-priority="10" class="p-3 font-semibold text-left">Commission Type</th>
+                    <th data-priority="11" class="p-3 font-semibold text-left">Commission Value</th>
+                    <th data-priority="5" class="p-3 font-semibold text-left">Commission Amount</th>
+                    <th data-priority="6" class="p-3 font-semibold text-left">Email</th>
+                    <th data-priority="12" class="p-3 font-semibold text-left">Action</th>
+
+                </tr>
+            </thead>
+
+            <tbody id="customerData" class="divide-y divide-gray-200">
+                <!-- Data will be populated here via Fetch API -->
+            </tbody>
+
+        </table>
+
+    </div>
+
+    <div id="pagination" class="mt-4 flex justify-center items-center gap-2"></div>
+
+</div>
+
+<?php include 'footer.php'; ?>
+
+
+<!-- jQuery -->
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script>
+    function viewBooking(id) {
+        window.location.href = "update_customer_booking.php?id=" + id;
+    }
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+
+        const token = localStorage.getItem('auth_token');
+        if (!token) {
+            alert("Please login first");
+            window.location.href = "../login";
+            return;
+        }
+
+        let currentPage = 1;
+
+        let locationsMap = {};
+
+        function loadLocations() {
+            return fetch(url + "site-location", {
+                    headers: {
+                        "Authorization": "Bearer " + token,
+                        "Accept": "application/json"
+                    }
+                })
+                .then(res => res.json())
+                .then(response => {
+
+                    const locations = response.data ?? [];
+
+                    locations.forEach(loc => {
+                        locationsMap[loc.id] = loc.site_location;
+                    });
+                });
+        }
+
+        async function loadBookings(page = 1) {
+            currentPage = page;
+
+            await loadLocations();
+
+            const searchValue = document.getElementById("searchInput").value.trim();
+            const perPage = document.getElementById("perPage").value;
+
+            fetch(`${url}mydelbookings?page=${currentPage}&per_page=${perPage}&search=${searchValue}`, {
+                    method: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + token,
+                        "Accept": "application/json"
+                    }
+                })
+                .then(res => res.json())
+                .then(response => {
+
+                    const bookings = response ?? response.data ?? [];
+                    const tbody = document.getElementById("customerData");
+                    tbody.innerHTML = "";
+
+                    if (!bookings || bookings.length === 0) {
+                        tbody.innerHTML = `
+        <tr>
+            <td colspan="10" class="text-center py-6 text-gray-500 font-semibold">
+                No records found
+            </td>
+        </tr>
+    `;
+                        return;
+                    }
+
+                    bookings.forEach((row) => {
+
+                        let commission_Amount = row.commission_amount ?? 0;
+
+                        let dob = row.dob ?
+                            new Date(row.dob).toLocaleDateString('en-GB') :
+                            '';
+
+                        tbody.innerHTML += `
+                <tr class="border-b bg-white">
+                    <td class="p-2 text-center">
+                        <button onclick="toggleRow(${row.id})"
+                            class="w-4 h-4 flex items-center justify-center border-1 rounded-full bg-green-500 text-white text-sm">
+                            +
+                        </button>
+                    </td>
+
+                    <td class="p-1">${row.buyer_name ?? ''}</td>
+                    <td class="p-1">${locationsMap[row.site_location] ?? locationsMap[row.location_id] ?? ''}</td>
+                    <td class="p-1">${row.project_name ?? ''}</td>
+                    <td class="p-1">${row.total_booking_amount ?? ''}</td>
+                    <td class="p-1">${row.commission_type ?? ''}</td> 
+                    <td class="p-1">${row.commission_value ?? ''}</td>
+                    <td class="p-1">${commission_Amount}</td>
+                    <td class="p-1">${row.email ?? ''}</td>
+
+                    <td class="p-1">
+                        <div class="flex gap-2">
+                            <button class="bg-blue-500 text-white px-4 py-1 rounded"
+                                onclick="viewBooking(${row.id})">
+                                Update
+                            </button>
+
+                            <button class="bg-red-500 text-white px-4 py-1 rounded"
+                                onclick="deleteBooking(${row.id})">
+                                Cancel
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+
+        <tr id="expand-${row.id}" class="hidden bg-gray-50">
+            <td colspan="15" class="p-4">
+
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+                     <div><strong>Advance Booking AMT:</strong> ${row.advance_amount ?? ''}</div>
+                    <div><strong>Aadhar Number:</strong> ${row.aadhar_number ?? ''} </div>
+                    <div><strong>State:</strong>${row.state ?? ''} </div>
+                    <div><strong>City:</strong>${row.city ?? ''} </div>
+                    <div><strong>Plot No:</strong> ${row.plot_number ?? ''}</div>
+                    <div><strong>Khasara:</strong> ${row.khasara_number ?? ''}</div>
+                    <div><strong>P.H. No:</strong> ${row.ph_number ?? ''}</div>
+                    <div><strong>Mouza:</strong> ${row.mouza ?? ''}</div>
+                    <div><strong>Tahsil:</strong> ${row.tahsil ?? ''}</div>
+                    <div><strong>District:</strong> ${row.district ?? ''}</div>
+                    <div><strong>Sq. Feet:</strong> ${row.square_feet ?? ''}</div>
+                    <div><strong>Sq. Meter:</strong> ${row.square_meter ?? ''}</div>
+                    <div><strong>Payment Mode:</strong> ${row.payment_mode ?? ''}</div>
+                    <div><strong>Remark:</strong> ${row.remark ?? ''}</div>
+                    <div><strong>Pincode:</strong> ${row.pincode ?? ''}</div>
+                    <div><strong>Mobile Number:</strong> ${row.mobile ?? ''}</div>
+                    <div><strong>DOB:</strong> ${dob ?? ''}</div>
+                    <div><strong>Address:</strong> ${row.address ?? ''}</div>
+                    <div><strong>Pan:</strong> ${row.pan_number ?? ''}</div>
+
+                </div>
+
+               
+
+            </td>
+        </tr>
+    `;
+                    });
+
+                    const pagination = document.getElementById("pagination");
+                    pagination.innerHTML = "";
+
+                    const totalPages = response.data?.last_page || 1;
+                    const current = response.data?.current_page || 1;
+
+                    // Previous Button
+                    if (current > 1) {
+                        pagination.innerHTML += `
+        <button onclick="changePage(${current - 1})"
+            class="px-3 py-1 bg-gray-200 rounded">Prev</button>
+    `;
+                    }
+
+                    // Page Numbers
+                    for (let i = 1; i <= totalPages; i++) {
+                        pagination.innerHTML += `
+        <button onclick="changePage(${i})"
+            class="px-3 py-1 rounded ${i === current ? 'bg-blue-500 text-white' : 'bg-gray-200'}">
+            ${i}
+        </button>
+    `;
+                    }
+
+                    // Next Button
+                    if (current < totalPages) {
+                        pagination.innerHTML += `
+        <button onclick="changePage(${current + 1})"
+            class="px-3 py-1 bg-gray-200 rounded">Next</button>
+    `;
+                    }
+                });
+        }
+        window.toggleRow = function(id) {
+
+            const row = document.getElementById("expand-" + id);
+            const button = event.target;
+
+            if (row.classList.contains("hidden")) {
+                row.classList.remove("hidden");
+                button.innerHTML = "−";
+                button.classList.remove("bg-green-500");
+                button.classList.add("bg-red-500");
+            } else {
+                row.classList.add("hidden");
+                button.innerHTML = "+";
+                button.classList.remove("bg-red-500");
+                button.classList.add("bg-green-500");
+            }
+        }
+
+        window.changePage = function(page) {
+            loadBookings(page);
+        }
+
+        document.getElementById("searchBtn").addEventListener("click", function() {
+            loadBookings(1);
+        });
+
+        document.getElementById("perPage").addEventListener("change", function() {
+            loadBookings(1);
+        });
+
+        loadBookings();
+    });
+</script>
+
+<script>
+    function deleteBooking(id) {
+
+        const token = localStorage.getItem('auth_token');
+
+        if (!token) {
+            alert("Please login first");
+            window.location.href = "../login";
+            return;
+        }
+
+        if (!confirm("Are you sure you want to Cancel this booking?")) {
+            return;
+        }
+
+        fetch(url + "bookings/" + id, {
+                method: "POST", // safer for Laravel
+                headers: {
+                    "Authorization": "Bearer " + token,
+                    "Accept": "application/json"
+                },
+                body: new URLSearchParams({
+                    _method: "DELETE"
+                })
+            })
+            .then(res => res.json())
+            .then(data => {
+                alert("Booking Deleted Successfully");
+                location.reload();
+            })
+            .catch(error => {
+                console.error(error);
+                alert("Delete failed");
+            });
+
+    }
+</script>
