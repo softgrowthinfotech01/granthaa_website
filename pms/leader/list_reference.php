@@ -70,7 +70,7 @@
             return;
         }
 
-        let currentPageUrl = url + "referred";
+        let currentPageUrl = url + "referrals";
 
         // =========================
         // 🔹 LOAD REFERRALS
