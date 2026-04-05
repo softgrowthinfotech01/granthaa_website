@@ -37,7 +37,7 @@
 
     <div id="pagination" class="mt-4"></div>
 
-</div>
+</div> 
 
 <?php include 'footer.php'; ?>
 
