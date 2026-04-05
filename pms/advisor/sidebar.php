@@ -83,6 +83,19 @@ flex flex-col justify-between flex-shrink-0">
               </a>
             </li>
 
+            <!-- View delete leader -->
+            <li>
+              <a href="list_customer_booking_deleted"
+                class="menu-item flex items-center gap-3 <?php if ($current == 'list_customer_booking_deleted') echo 'active'; ?>">
+
+                <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path d="M4 12h16" />
+                </svg>
+
+                <span class="sidebar-text">View Customer Bookings</span>
+              </a>
+            </li>
+
           </ul>
         </li>
 
