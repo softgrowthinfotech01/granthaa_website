@@ -193,7 +193,7 @@ class UserController extends Controller
             'name'    => $validated['name'],
             'email'        => $validated['email'],
             'aadhaar_number'        => $validated['aadhaar_number'],
-            'password'     => Hash::make($validated['password']),
+            'password'     => Hash::make($validated['contact_no']),
             'role'         => $validated['role'],
             'age'          => $validated['age'] ?? null,
             'gender'       => $validated['gender'] ?? null,
