@@ -328,16 +328,6 @@ public function update(Request $request, $id)
             unset($validated['password']);
         }
 
-        /*
-        |--------------------------------
-        | IMAGE UPDATE
-        |--------------------------------
-        */
-        /*
-|--------------------------------
-| IMAGE UPDATE
-|--------------------------------
-*/
 // dd($request->all(), $request->hasFile('image'));
 if ($request->hasFile('image')) {
 
