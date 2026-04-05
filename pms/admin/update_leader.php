@@ -252,7 +252,6 @@
                 document.getElementById("age").value = user.age ?? "";
                 document.getElementById("gender").value = user.gender ?? "";
                 document.getElementById("pancard_number").value = user.pancard_number ?? "";
-                document.getElementById("mobile").value = user.contact_no ?? "";
                 document.getElementById("email").value = user.email ?? "";
                 document.getElementById("city").value = user.city ?? "";
                 document.getElementById("state").value = user.state ?? "";
@@ -334,7 +333,6 @@
                 formData.append("age", age);
                 formData.append("gender", document.getElementById("gender").value);
                 formData.append("pancard_number", document.getElementById("pancard_number").value);
-                formData.append("contact_no", mobile);
                 formData.append("city", document.getElementById("city").value);
                 formData.append("state", document.getElementById("state").value);
                 formData.append("address", document.getElementById("address").value);
