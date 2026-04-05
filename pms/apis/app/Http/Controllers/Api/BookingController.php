@@ -1492,16 +1492,19 @@ class BookingController extends Controller
         ]);
     }
 
-    public function commissionSplit()
+public function commissionSplit()
 {
     $leader = auth()->user();
 
     /*
     |--------------------------------------------------------------------------
-    | Leader Commission (NET LEDGER BALANCE)
+    | Leader Commission (ONLY ACTIVE BOOKINGS)
     |--------------------------------------------------------------------------
     */
     $leaderCommission = CommissionLedger::where('user_id', $leader->id)
+        ->whereHas('booking', function ($q) {
+            $q->whereNull('deleted_at');
+        })
         ->sum('amount');
 
 
@@ -1517,10 +1520,13 @@ class BookingController extends Controller
 
     /*
     |--------------------------------------------------------------------------
-    | Adviser Commission (NET LEDGER BALANCE)
+    | Adviser Commission (ONLY ACTIVE BOOKINGS)
     |--------------------------------------------------------------------------
     */
     $adviserCommission = CommissionLedger::whereIn('user_id', $adviserIds)
+        ->whereHas('booking', function ($q) {
+            $q->whereNull('deleted_at');
+        })
         ->sum('amount');
 
 
@@ -1531,7 +1537,6 @@ class BookingController extends Controller
     */
     $total = $leaderCommission + $adviserCommission;
 
-
     return response()->json([
         'status' => true,
         'data' => [
@@ -1541,7 +1546,6 @@ class BookingController extends Controller
         ]
     ]);
 }
-
 
     public function dashboardAlerts()
     {
