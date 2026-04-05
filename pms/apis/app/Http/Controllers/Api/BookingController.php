@@ -482,7 +482,16 @@ class BookingController extends Controller
     {
         $user = auth()->user();
         //  print_r($user);exit;
-        $booking = Booking::whereNull('deleted_at')->where('created_by', $user->id)->get();
+        $booking = Booking::onlyTrashed()->where('created_by', $user->id)->get();
+        // print_r($booking);exit;
+        return response()->json($booking);
+    }
+
+    public function mydelbookings()
+    {
+        $user = auth()->user();
+        //  print_r($user);exit;
+        $booking = Booking::where('deleted_at')->where('created_by', $user->id)->get();
         // print_r($booking);exit;
         return response()->json($booking);
     }
