@@ -99,7 +99,7 @@
                         <option value="online_transfer">Online Transfer</option>
                         <option value="upi">UPI</option>
 
-                    </select>
+                    </select> 
                 </div>
 
 
