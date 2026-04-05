@@ -420,10 +420,21 @@
 
           <ul id="Bookingpay" class="hidden">
 
-            <!-- Add Booking -->
+            <li>
+              <a href="set_reference_amt"
+                class="menu-item flex items-center gap-3 <?php if ($current == 'set_reference_amt') echo 'active'; ?>">
+
+                <svg class="w-4 h-4 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path d="M4 12h16" />
+                </svg>
+
+                <span class="sidebar-text">Set Reference Amount</span>
+              </a>
+            </li>
+
             <li>
               <a href="list_reference"
-                class="menu-item flex items-center gap-3 <?php if ($current == 'add_commission') echo 'active'; ?>">
+                class="menu-item flex items-center gap-3 <?php if ($current == 'list_reference') echo 'active'; ?>">
 
                 <svg class="w-4 h-4 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path d="M4 12h16" />

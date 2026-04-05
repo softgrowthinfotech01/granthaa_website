@@ -30,13 +30,26 @@ focus:ring-2 focus:ring-blue-400 focus:border-blue-400 outline-none">
 focus:ring-2 focus:ring-blue-400 focus:border-blue-400 outline-none">
             </div>
 
-            <!-- Location -->
+            <!-- Email -->
             <div class="space-y-2">
                 <label class="text-sm font-semibold text-gray-700">
                     Customer Email
                 </label>
                 <input type="email" id="referred_email" name="referred_email" placeholder="Enter Location" class="w-full border border-gray-300 px-4 py-3 rounded-xl
 focus:ring-2 focus:ring-blue-400 focus:border-blue-400 outline-none">
+            </div>
+
+            <!-- Location -->
+            <div class="space-y-2">
+                <label class="text-sm font-semibold text-gray-700">
+                    Site Location
+                </label>
+                <select name="location_id" id="location_id"
+                    class="w-full border border-gray-300 px-4 py-3 rounded-xl
+focus:ring-2 focus:ring-blue-400 focus:border-blue-400 outline-none">
+                    <option selected>Choose a site location</option>
+                    <option value="">Loading...</option>
+                </select>
             </div>
 
 
@@ -66,8 +79,7 @@ transition duration-300">
 <script src="../url.js"></script>
 
 <script>
-
-    document.addEventListener("DOMContentLoaded", function () {
+    document.addEventListener("DOMContentLoaded", function() {
 
         const token = localStorage.getItem("auth_token");
 
@@ -81,8 +93,47 @@ transition duration-300">
             return;
         }
 
+        // 🔹 Load Site Locations
+        async function loadLocations() {
+
+            const token = localStorage.getItem("auth_token");
+
+            try {
+
+                const response = await fetch(url + "site-location", {
+                    headers: {
+                        "Authorization": "Bearer " + token,
+                        "Accept": "application/json"
+                    }
+                });
+
+                const result = await response.json();
+
+                const locationSelect = document.getElementById("location_id");
+
+                // Reset dropdown
+                locationSelect.innerHTML = `<option value="">Choose a site location</option>`;
+
+                // Handle pagination / normal response
+                const locations = result.data?.data || result.data;
+
+                locations.forEach(loc => {
+                    locationSelect.innerHTML += `
+                <option value="${loc.id}">
+                    ${loc.site_location}
+                </option>
+            `;
+                });
+
+            } catch (error) {
+                console.error("Error loading locations:", error);
+            }
+        }
+
+        loadLocations();
+
         document.getElementById("referralForm")
-            .addEventListener("submit", async function (e) {
+            .addEventListener("submit", async function(e) {
 
                 e.preventDefault();
 
@@ -135,5 +186,4 @@ transition duration-300">
             });
 
     });
-
 </script>
