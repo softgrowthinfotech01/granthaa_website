@@ -1288,7 +1288,7 @@ class BookingController extends Controller
 
         // Role filter
         if ($user->role === 'leader') {
-            $query->where('leader_id', $user->id);
+            $query->where('created_by', $user->id);
         } elseif ($user->role === 'adviser') {
             $query->where('adviser_id', $user->id);
         }
