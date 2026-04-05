@@ -164,9 +164,9 @@
     <div class="card1">
       <p1 class="font-semibold">My Performance</p1>
 
-      <p class="small">₹ Total Booking: <span id="totalBooking"></span></p>
-      <p class="small">% Total Commission: <span id="totalCommission"></span></p>
-      <p class="small">🏆 My Bookings: <span id="mybooking"></span></p>
+      <p class="small"> Total Booking: <span id="totalBooking"></span></p>
+      <p class="small"> My Commission: <span id="totalCommission"></span></p>
+      <p class="small"> My Bookings: <span id="mybooking"></span></p>
 
     </div>
   </div>
@@ -174,9 +174,9 @@
     <a class="card1" href="advisor_payment_summary">
       <p1 class="font-semibold">Advisor Performance</p1>
 
-      <p class="small">₹ Total Booking: <span id="teamtotalBooking"></span></p>
-      <p class="small">% Total Commission: <span id="teamtotalCommission"></span></p>
-      <p class="small">🏆 Team Bookings: <span id="teambooking"></span></p>
+      <p class="small">Total Booking: <span id="teamtotalBooking"></span></p>
+      <p class="small"> Total Commission: <span id="teamtotalCommission"></span></p>
+      <p class="small"> Team Bookings: <span id="teambooking"></span></p>
 
       <div class="go-corner">
         <div class="go-arrow">→</div>
@@ -187,8 +187,8 @@
     <a class="card1" href="team_performance">
       <p1 class="font-semibold">Advisor Insights</p1>
 
-      <p class="small">👥 Total Advisors: <span id="totalAdvisors"></span></p>
-      <p class="small">⭐ Top Advisor: <span id="topAdvisor"></span></p>
+      <p class="small"> Total Advisors: <span id="totalAdvisors"></span></p>
+      <p class="small"> Top Advisor: <span id="topAdvisor"></span></p>
 
       <div class="go-corner">
         <div class="go-arrow">→</div>
@@ -199,8 +199,8 @@
     <a class="card4" href="list_customer_booking">
       <p1 class="font-bold">Overall Summary</p1>
 
-      <p class="small py-2">₹ Total Booking: <span id="total_booking_amount"></span></p>
-      <p class="small">% Total Commission: <span id="total_commission_amount"></span></p>
+      <p class="small py-2"> Total Booking: <span id="total_booking_amount"></span></p>
+      <p class="small"> Total Commission: <span id="total_commission_amount"></span></p>
 
       <div class="go-corner">
         <div class="go-arrow">→</div>
@@ -256,8 +256,7 @@
         document.querySelector('#totalAdvisors').textContent = data.data.total_advisors.toLocaleString();
         document.querySelector('#totalBooking').textContent = "₹ " + parseFloat(data.data.my_total_booking_amount).toLocaleString();
         document.querySelector('#teamtotalBooking').textContent = "₹ " + parseFloat(data.data.team_total_booking_amount).toLocaleString();
-        document.querySelector('#totalCommission').textContent = "₹ " + parseFloat(data.data.my_commission).toLocaleString();
-        document.querySelector('#teamtotalCommission').textContent = "₹ " + parseFloat(data.data.team_commission).toLocaleString();
+        document.querySelector('#totalCommission').textContent = (data.data.total_commission_amount == null) ? "-" : "₹ " + data.data.total_commission_amount.toLocaleString();       document.querySelector('#teamtotalCommission').textContent = "₹ " + parseFloat(data.data.team_commission).toLocaleString();
         document.querySelector('#topAdvisor').textContent = (data.data.top_advisor_name == null) ? "-" : data.data.top_advisor_name + " (" + data.data.user_code + ")";
         document.querySelector('#teambooking').textContent = (data.data.team_total_booking == null) ? "-" : data.data.team_total_booking;
         document.querySelector('#mybooking').textContent = (data.data.my_total_booking == null) ? "-" : data.data.my_total_booking;

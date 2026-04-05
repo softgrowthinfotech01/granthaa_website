@@ -1,7 +1,72 @@
-<?php include 'header.php'; ?>
-<div class="flex">
 
-    <div class="w-full sm:w-[95%] md:w-[80%] lg:w-[75%] mx-auto px-3 sm:px-4 my-4 sm:my-6 rounded-lg bg-slate-100 p-3 sm:p-5 md:p-6">
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Profile</title>
+
+    <link rel="stylesheet" href="../style.css">
+    
+<style>
+.input {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #9ca3af;
+    border-radius: 8px;
+    font-size: 14px;
+    background: white;
+    outline: none;
+}
+
+.input:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 2px rgba(59,130,246,0.2);
+}
+
+.label {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 4px;
+}
+
+@media (min-width:640px){
+    .input{
+        padding:12px;
+        font-size:15px;
+    }
+}
+
+@media (max-width:640px){
+    .sticky-save{
+        position:sticky;
+        bottom:0;
+        background:white;
+        padding:10px;
+    }
+}
+</style>
+</head>
+
+<body class="bg-gray-200">
+
+<div class="mx-auto">
+    <div class="flex flex-col min-h-screen">
+
+        <?php include "header.php"; ?>
+
+        <div class="flex flex-1">
+
+            <?php include "sidebar.php"; ?>
+
+            <!-- MAIN CONTENT -->
+        <div id="mainContent" class="flex-1 w-full my-6 px-3 md:px-6">
+
+    <div class="max-w-4xl lg:max-w-5xl mx-auto">
 
         <!-- HEADER -->
         <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-5">
@@ -14,7 +79,7 @@
             </a>
         </div>
 
-        <!-- CARD -->
+            <!-- CARD -->
         <div class="bg-white shadow-lg rounded-xl p-4 sm:p-6 max-w-md sm:max-w-xl mx-auto">
 
             <!-- IMAGE PREVIEW -->
@@ -37,9 +102,14 @@
         </div>
 
     </div>
-
 </div>
-<?php include 'footer.php'; ?>
+
+        </div>
+
+        <?php include 'footer.php'; ?>
+
+    </div>
+</div>
 
 <script>
     const token = localStorage.getItem("auth_token");
@@ -47,30 +117,32 @@
     // ================= LOAD CURRENT IMAGE =================
     let currentUserId = null;
 
-    async function loadProfileImage() {
+   async function loadProfileImage() {
 
-        try {
-            const res = await fetch(url + "profile", {
-                headers: {
-                    "Authorization": "Bearer " + token
-                }
-            });
+    try {
+        const res = await fetch(url + "profile", {
+            headers: {
+                "Authorization": "Bearer " + token
+            }
+        });
 
-            const data = await res.json();
-            const user = data.user;
+        const data = await res.json();
+        const user = data.user;
 
-            // ✅ STORE USER ID HERE
-            currentUserId = user.id;
+        currentUserId = user.id;
 
+        if (user.profile_image) {
+            const cleanPath = user.profile_image.replace(/\\/g, '/');
+            document.getElementById("previewImage").src = base_url + "storage/" + cleanPath;
+        } else {
             document.getElementById("previewImage").src =
-                user.profile_image ?
-                base_url + "storage/app/public/" + user.profile_image :
                 "https://ui-avatars.com/api/?background=4f46e5&color=fff&name=" + encodeURIComponent(user.name);
-
-        } catch (err) {
-            console.error(err);
         }
+
+    } catch (err) {
+        console.error(err);
     }
+}
     document.addEventListener("DOMContentLoaded", loadProfileImage);
 
 
@@ -146,3 +218,8 @@ if (res.ok) {
     }
 }
 </script>
+
+</body>
+</html>
+
+
