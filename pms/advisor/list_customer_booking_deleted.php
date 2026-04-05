@@ -46,7 +46,7 @@
                     <th data-priority="11" class="p-3 font-semibold text-left">Commission Value</th>
                     <th data-priority="11" class="p-3 font-semibold text-left">Commission Amount</th>
                     <th data-priority="5" class="p-3 font-semibold text-left">Email</th>
-                    <th data-priority="12" class="p-3 font-semibold text-left">Action</th>
+                    <!-- <th data-priority="12" class="p-3 font-semibold text-left">Action</th> -->
                     <!-- <th data-priority="13" class="p-3 font-semibold text-left">Site Location</th>
           <th data-priority="14" class="p-3 font-semibold text-left">Commission Type</th>
           <th data-priority="15" class="p-3 font-semibold text-left">Project Name</th>
@@ -81,36 +81,6 @@
 
 <!-- jQuery -->
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-
-<script>
-    function update_customer_booking(id) {
-        window.location.href = "update_customer_booking.php?id=" + id;
-    }
-
-    function deleteBooking(id) {
-        if (!confirm("Are you sure you want to delete this booking?")) return;
-
-        const token = localStorage.getItem("auth_token");
-
-        fetch(url + "bookings/" + id, {
-                method: "DELETE",
-                headers: {
-                    "Authorization": "Bearer " + token,
-                    "Accept": "application/json"
-                }
-            })
-            .then(res => res.json())
-            .then(data => {
-                alert(data.message || "Booking deleted successfully");
-                location.reload();
-            })
-            .catch(err => {
-                console.error("Delete error:", err);
-                alert("Delete failed");
-            });
-    }
-</script>
-
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {
@@ -238,19 +208,6 @@
                 <td class="p-1">${commission_Amount}</td>
                 <td class="p-1">${row.email ?? ''}</td>
 
-                <td class="p-1">
-                    <div class="flex gap-2">
-                        <button class="bg-blue-500 text-white px-4 py-1 rounded"
-                            onclick="update_customer_booking(${row.id})">
-                            Update
-                        </button>
-
-                        <button class="bg-red-500 text-white px-4 py-1 rounded"
-                            onclick="deleteBooking(${row.id})">
-                            Delete
-                        </button>
-                    </div>
-                </td>
             </tr>
 
             <tr id="expand-${row.id}" class="hidden bg-gray-50">
