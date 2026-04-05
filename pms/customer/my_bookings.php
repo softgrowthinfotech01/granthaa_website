@@ -153,7 +153,7 @@ renderTable();
       }
     };
 
-
+ 
   });
 
   async function fetchBookings() {
