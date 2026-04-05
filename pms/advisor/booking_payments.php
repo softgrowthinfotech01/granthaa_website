@@ -93,7 +93,7 @@
                     <select name="payment_mode" id="payment_mode"
                         class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-green-400 outline-none">
 
-                        <option value="">Select Payment Mode</option>
+                        <option value="" hidden disabled>Select Payment Mode</option>
                         <option value="cash">Cash</option>
                         <option value="cheque">Cheque</option>
                         <option value="online_transfer">Online Transfer</option>
@@ -115,15 +115,14 @@
 
         <!-- BUTTON -->
         <div class="flex justify-center gap-2 mt-2">
+<button type="submit"
+    class="bg-green-500 hover:bg-green-600 px-4 py-4 rounded-xl
+    text-black font-semibold text-lg shadow-md hover:shadow-xl
+    transition transform hover:scale-[1.02]">
 
-            <button
-                class="bg-green-500 hover:bg-green-600 px-4 py-4 rounded-xl
-text-black font-semibold text-lg shadow-md hover:shadow-xl
-transition transform hover:scale-[1.02]">
+    Record Payment
 
-                Record Payment
-
-            </button>
+</button>
 
             <button type="button" onclick="confirmReset()"
                 class="bg-red-500 hover:bg-red-600 px-4 py-4 rounded-xl
@@ -181,9 +180,7 @@ transition transform hover:scale-[1.02]">
             disableSelect(plotSelect);
         }
     });
-</script>
 
-<script>
     const token = localStorage.getItem("auth_token");
 
     /* ================= LOAD CUSTOMERS ================= */
@@ -381,88 +378,118 @@ transition transform hover:scale-[1.02]">
         let paymentType = document.getElementById("payment_type");
         let fullOption = paymentType.querySelector('option[value="full"]');
 
-        if (Math.abs(newBalance) > 1) {
-            fullOption.disabled = true;
+       if (Math.abs(newBalance) > 0.01) {
+    fullOption.disabled = true;
 
-            if (paymentType.value === "full") {
-                paymentType.value = "";
-            }
-        } else {
-            fullOption.disabled = false;
-        }
+    if (paymentType.value === "full") {
+        paymentType.value = "";
+    }
+} else {
+    fullOption.disabled = false;
+
+    // 🔥 auto select full
+    paymentType.value = "full";
+}
     });
 
 
     /* ================= FORM SUBMIT ================= */
-    document.getElementById("paymentForm").addEventListener("submit", async function(e) {
+    let isSubmitting = false;
 
-        e.preventDefault();
+document.getElementById("paymentForm").addEventListener("submit", async function(e) {
 
-        const bookingId = document.getElementById("plot_number").value;
-        const amount = parseFloat(document.getElementById("amount").value);
-        const balance = parseFloat(document.getElementById("balanced_amount").value);
+    e.preventDefault();
 
-        if (!bookingId) {
-            alert("Select plot first");
-            return;
-        }
+    // 🚫 prevent double click
+    if (isSubmitting) return;
+    isSubmitting = true;
 
-        if (amount <= 0) {
-            alert("Enter valid amount");
-            return;
-        }
+    let submitBtn = document.querySelector("#paymentForm button[type='submit']");
+    submitBtn.disabled = true;
+    submitBtn.innerText = "Processing...";
 
-        if (balance < 0) {
-            alert("Payment exceeds total amount");
-            return;
-        }
+    const bookingId = document.getElementById("plot_number").value;
+    const amount = parseFloat(document.getElementById("amount").value);
+    const balance = parseFloat(document.getElementById("balanced_amount").value);
 
-        const paymentType = document.getElementById("payment_type").value;
+    if (!bookingId) {
+        alert("Select plot first");
+        resetBtn();
+        return;
+    }
 
-        if (paymentType === "full" && Math.abs(balance) > 1) {
-            alert("Full payment must clear entire balance");
-            return;
-        }
+    if (amount <= 0) {
+        alert("Enter valid amount");
+        resetBtn();
+        return;
+    }
 
-        let formData = new FormData();
-        formData.append("booking_id", bookingId);
-        formData.append("amount", amount);
-        formData.append("payment_type", document.getElementById("payment_type").value);
-        formData.append("payment_mode", document.getElementById("payment_mode").value);
-        formData.append("remark", document.getElementById("remark").value);
+    if (amount > balance) {
+        alert("Payment exceeds balance");
+        resetBtn();
+        return;
+    }
 
-        try {
-            const res = await fetch(url + "book-payments", {
-                method: "POST",
-                headers: {
-                    "Authorization": "Bearer " + token
-                },
-                body: formData
-            });
+    const paymentType = document.getElementById("payment_type").value;
 
-            const result = await res.json();
+    if (paymentType === "full" && Math.abs(balance - amount) > 1) {
+        alert("Full payment must match balance");
+        resetBtn();
+        return;
+    }
 
-            if (result.status) {
+    let formData = new FormData();
+    formData.append("booking_id", bookingId);
+    formData.append("amount", amount);
+    formData.append("payment_type", paymentType);
+    formData.append("payment_mode", document.getElementById("payment_mode").value);
+    formData.append("remark", document.getElementById("remark").value);
 
-                alert("✅ Payment Recorded Successfully");
+    try {
 
-                // 🔄 reload summary
-                document.getElementById("plot_number").dispatchEvent(new Event("change"));
+        const res = await fetch(url + "book-payments", {
+            method: "POST",
+            headers: {
+                "Authorization": "Bearer " + token
+            },
+            body: formData
+        });
 
-                document.getElementById("amount").value = "";
-                document.getElementById("remark").value = "";
+        const result = await res.json();
 
-            } else {
-                alert(result.message || "Payment failed");
-            }
+       if (result.status === true || result.success === true) {
 
-        } catch (err) {
-            console.error(err);
-            alert("Server error");
-        }
-    });
+    alert("✅ Payment Recorded Successfully");
 
+    submitBtn.innerText = "Saved ✔";
 
+    document.getElementById("plot_number").dispatchEvent(new Event("change"));
+
+    document.getElementById("amount").value = "";
+    document.getElementById("remark").value = "";
+
+    setTimeout(() => {
+        resetBtn();
+    }, 1500);
+
+} else {
+    alert(result.message || "Payment failed");
+    resetBtn();
+}
+
+    } catch (err) {
+        console.error(err);
+        alert("Server error");
+        resetBtn();
+    }
+
+    function resetBtn() {
+        isSubmitting = false;
+        submitBtn.disabled = false;
+        submitBtn.innerText = "Record Payment";
+    }
+
+});
     /* ================= RESET ================= */
     function confirmReset() {
         if (confirm("Are you sure to reset?")) {

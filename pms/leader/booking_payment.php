@@ -90,10 +90,10 @@
                 <!-- PAYMENT MODE -->
                 <div class="space-y-2">
                     <label class="text-sm font-semibold text-gray-700">Payment Mode</label>
-                    <select name="payment_mode" id="payment_mode"
+                    <select name="payment_mode" id="payment_mode" required
                         class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-yellow-400 outline-none">
 
-                        <option>Select Payment Mode</option>
+                        <option value="" disabled selected hidden>Select Payment Mode</option>  
                         <option value="cash">Cash</option>
                         <option value="cheque">Cheque</option>
                         <option value="online_transfer">Online Transfer</option>
@@ -116,7 +116,7 @@
         <!-- BUTTON -->
         <div class="flex justify-center gap-2 mt-2">
 
-            <button
+            <button type="submit"
                 class="bg-yellow-500 hover:bg-yellow-600 px-4 py-4 rounded-xl
 text-black font-semibold text-lg shadow-md hover:shadow-xl
 transition transform hover:scale-[1.02]">
@@ -356,13 +356,37 @@ document.getElementById("amount").addEventListener("input", function () {
     let newBalance = total - newPaid;
 
     document.getElementById("balanced_amount").value = newBalance;
+
+    let paymentType = document.getElementById("payment_type");
+    let fullOption = paymentType.querySelector('option[value="full"]');
+
+    // ✅ FULL LOGIC
+    if (Math.abs(newBalance) <= 0.01) {
+        fullOption.disabled = false;
+        paymentType.value = "full";
+    } else {
+        fullOption.disabled = true;
+
+        if (paymentType.value === "full") {
+            paymentType.value = "";
+        }
+    }
 });
 
 
 /* ================= FORM SUBMIT ================= */
+let isSubmitting = false;
+
 document.getElementById("paymentForm").addEventListener("submit", async function(e) {
 
     e.preventDefault();
+
+    if (isSubmitting) return;
+    isSubmitting = true;
+
+    let submitBtn = document.querySelector("#paymentForm button[type='submit']");
+    submitBtn.disabled = true;
+    submitBtn.innerText = "Processing...";
 
     const bookingId = document.getElementById("plot_number").value;
     const amount = parseFloat(document.getElementById("amount").value);
@@ -370,17 +394,17 @@ document.getElementById("paymentForm").addEventListener("submit", async function
 
     if (!bookingId) {
         alert("Select plot first");
-        return;
+        return resetBtn();
     }
 
     if (amount <= 0) {
         alert("Enter valid amount");
-        return;
+        return resetBtn();
     }
 
-    if (balance < 0) {
+    if (amount > balance + parseFloat(document.getElementById("paid_amount").value)) {
         alert("Payment exceeds total amount");
-        return;
+        return resetBtn();
     }
 
     let formData = new FormData();
@@ -393,9 +417,7 @@ document.getElementById("paymentForm").addEventListener("submit", async function
     try {
         const res = await fetch(url + "book-payments", {
             method: "POST",
-            headers: {
-                "Authorization": "Bearer " + token
-            },
+            headers: { "Authorization": "Bearer " + token },
             body: formData
         });
 
@@ -403,24 +425,33 @@ document.getElementById("paymentForm").addEventListener("submit", async function
 
         if (result.status) {
 
-            alert("✅ Payment Recorded Successfully");
+            submitBtn.innerText = "Saved ✔";
 
-            // 🔄 reload summary
             document.getElementById("plot_number").dispatchEvent(new Event("change"));
 
             document.getElementById("amount").value = "";
             document.getElementById("remark").value = "";
 
+            setTimeout(resetBtn, 1500);
+
         } else {
             alert(result.message || "Payment failed");
+            resetBtn();
         }
 
     } catch (err) {
         console.error(err);
         alert("Server error");
+        resetBtn();
     }
-});
 
+    function resetBtn() {
+        isSubmitting = false;
+        submitBtn.disabled = false;
+        submitBtn.innerText = "Record Payment";
+    }
+
+});
 
 /* ================= RESET ================= */
 function confirmReset() {
