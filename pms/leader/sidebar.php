@@ -187,6 +187,19 @@
               </a>
             </li>
 
+            <!-- View delete Booking -->
+            <li>
+              <a href="list_customer_booking_deleted"
+                class="menu-item flex items-center gap-3 <?php if ($current == 'list_customer_booking_deleted') echo 'active'; ?>">
+
+                <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path d="M4 12h16" />
+                </svg>
+
+                <span class="sidebar-text">View Canceled Booking</span>
+              </a>
+            </li>
+
           </ul>
         </li>
 
