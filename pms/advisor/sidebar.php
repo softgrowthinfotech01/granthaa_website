@@ -171,6 +171,18 @@ flex flex-col justify-between flex-shrink-0">
 
           <ul id="reference" class="hidden">
 
+          <li>
+              <a href="set_reference_amt"
+                class="menu-item flex items-center gap-3 <?php if ($current == 'list_reference') echo 'active'; ?>">
+
+                <svg class="w-4 h-4 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path d="M4 12h16" />
+                </svg>
+
+                <span class="sidebar-text">Set Reference Amount</span>
+              </a>
+            </li>
+
             <!-- Sites & Commission -->
             <li>
               <a href="list_reference"
