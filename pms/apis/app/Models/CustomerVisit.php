@@ -13,7 +13,7 @@ class CustomerVisit extends Model
         'aadhaar_number',
         'gender',
         'address',
-        'site_location_id',
+        'site_location',
         'remark',
         'created_by',
         'released',
