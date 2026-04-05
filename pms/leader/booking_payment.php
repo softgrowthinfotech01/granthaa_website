@@ -352,7 +352,7 @@ document.getElementById("amount").addEventListener("input", function () {
     let paid = parseFloat(document.getElementById("paid_amount").value) || 0;
     let total = parseFloat(document.getElementById("total_amount").value) || 0;
 
-    let newPaid = paid + amount;
+    let newPaid = paid + amount; 
     let newBalance = total - newPaid;
 
     document.getElementById("balanced_amount").value = newBalance;
