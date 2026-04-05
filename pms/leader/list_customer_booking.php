@@ -178,7 +178,7 @@
 
                             <button class="bg-red-500 text-white px-4 py-1 rounded"
                                 onclick="deleteBooking(${row.id})">
-                                Delete
+                                Cancel
                             </button>
                         </div>
                     </td>
@@ -295,7 +295,7 @@
             return;
         }
 
-        if (!confirm("Are you sure you want to delete this booking?")) {
+        if (!confirm("Are you sure you want to Cancel this booking?")) {
             return;
         }
 

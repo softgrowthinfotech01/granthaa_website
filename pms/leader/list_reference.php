@@ -9,7 +9,7 @@
     <div class="mb-4 grid grid-cols-1 sm:grid-cols-2 items-center gap-3">
 
         <!-- LEFT SIDE -->
-        <div class="flex flex-wrap justify-start sm:justify-center gap-3">
+        <div class="flex flex-wrap justify-start sm:justify-start gap-3">
             <input type="text" id="searchInput"
                 placeholder="name / contact / email"
                 class="border p-2 rounded w-64">
@@ -21,7 +21,7 @@
         </div>
 
         <!-- RIGHT SIDE -->
-        <div class="flex justify-end sm:justify-center gap-2">
+        <div class="flex justify-end sm:justify-end gap-2">
             <span class="text-sm text-gray-600">Show:</span>
             <select id="perPage" class="border p-2 rounded">
                 <option value="10">10</option>
@@ -38,12 +38,15 @@
             <thead class="bg-gradient-to-r from-gray-100 to-gray-200 text-gray-700">
                 <tr>
                     <th class="p-3 text-left">Sr No</th>
-                    <th class="p-3 text-left">Referred Name</th>
-                    <th class="p-3 text-left">Contact</th>
-                    <th class="p-3 text-left">Email</th>
+                    <th class="p-3 text-left">Referrer</th>
+                    <th class="p-3 text-left">Referred Customer</th>
+                    <th class="p-3 text-left">Location</th>
+                    <th class="p-3 text-left">Type</th>
+                    <th class="p-3 text-left">Value</th>
+                    <th class="p-3 text-left">Commission</th>
                     <th class="p-3 text-left">Status</th>
                     <th class="p-3 text-left">Date</th>
-                    <th class="p-3 text-left">Booking Link</th>
+                    <th class="p-3 text-left">Action</th>
                 </tr>
             </thead>
 
@@ -67,7 +70,7 @@
             return;
         }
 
-        let currentPageUrl = url + "refered";
+        let currentPageUrl = url + "referred";
 
         // =========================
         // 🔹 LOAD REFERRALS
@@ -90,10 +93,11 @@
                 .then(res => res.json())
                 .then(response => {
 
-                    const referrals = response.data?.data ?? [];
+                    const data = response.data || {};
+                    const referrals = data.data || [];
 
-                    const currentPage = response.data.current_page;
-                    const perPage = response.data.per_page;
+                    const currentPage = data.current_page || 1;
+                    const perPage = data.per_page || 10;
 
                     const tbody = document.getElementById("paymentData");
                     tbody.innerHTML = "";
@@ -101,7 +105,7 @@
                     if (referrals.length === 0) {
                         tbody.innerHTML = `
         <tr>
-            <td colspan="7" class="text-center p-4 text-gray-500">
+            <td colspan="10" class="text-center p-4 text-gray-500">
                 No records found
             </td>
         </tr>
@@ -118,9 +122,27 @@
                         tbody.innerHTML += `
 <tr>
     <td class="p-3">${srNo}</td>
+
+    <td class="p-3 font-semibold text-blue-600">
+        ${row.referrer_name ?? '-'}
+    </td>
+
     <td class="p-3">${row.referred_name}</td>
-    <td class="p-3">${row.referred_contact}</td>
-    <td class="p-3">${row.referred_email}</td>
+
+    <td class="p-3">${row.location_name ?? '-'}</td>
+
+    <td class="p-3">
+        ${row.commission_type === 'percentage' ? 'Percentage (%)' : 'Fixed ₹'}
+    </td>
+
+    <td class="p-3">
+        ${row.commission_value ?? '-'}
+    </td>
+
+    <td class="p-3 font-bold text-green-600">
+        ₹${row.calculated_commission ?? 0}
+    </td>
+
     <td class="p-3">
         <span class="px-2 py-1 rounded text-white ${
             row.status === 'converted' ? 'bg-green-500' : 'bg-yellow-500'
@@ -128,6 +150,7 @@
             ${row.status}
         </span>
     </td>
+
     <td class="p-3">${formatDate(row.created_at)}</td>
     <td class="p-3">
         ${

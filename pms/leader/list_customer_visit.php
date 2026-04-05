@@ -26,7 +26,7 @@
                     <th class="p-3 whitespace-nowrap">Gender</th>
                     <th class="p-3 text-center whitespace-nowrap">Action</th>
                 </tr>
-            </thead>
+            </thead> 
 
             <tbody class="divide-y divide-gray-200">
             </tbody>
