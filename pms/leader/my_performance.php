@@ -97,7 +97,7 @@
                 // ✅ USE backend values directly
                 let total = parseFloat(row.total_commission || 0);
                 let paid = parseFloat(row.paid || 0);
-                let balance = parseFloat(row.balance || 0);
+                let balance = parseFloat(row.total_balance || 0);
 
         let balanceHtml = balance === 0
   ? `<span class="bg-green-100 text-green-700 px-2 py-1 rounded-full text-sm font-semibold">
