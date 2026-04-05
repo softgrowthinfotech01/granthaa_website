@@ -1497,7 +1497,7 @@ class BookingController extends Controller
         $leader = auth()->user();
 
         // print_r($leader);exit;
-        $leaderCommission = CommissionLedger::with('booking')->where('user_id', $leader->id)
+        $leaderCommission = CommissionLedger::with('user')->where('user_id', $leader->id)
             ->where('type', 'commission')
             ->where('amount', '>', 0)
             ->sum('amount');
@@ -1506,7 +1506,7 @@ class BookingController extends Controller
             ->where('role', 'adviser')
             ->pluck('id');
 
-        $adviserCommission = CommissionLedger::with('booking')->whereIn('user_id', $adviserIds)
+        $adviserCommission = CommissionLedger::with('user')->whereIn('user_id', $adviserIds)
             ->where('type', 'commission')
             ->where('amount', '>', 0)
             ->sum('amount');
