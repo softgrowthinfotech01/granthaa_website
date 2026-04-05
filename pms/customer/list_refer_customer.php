@@ -44,6 +44,7 @@
                     <th>Customer Name</th>
                     <th>Phone</th>
                     <th>Email</th>
+                    <th>Location</th>
                     <th>Status</th>
                     <th>Date</th>
                 </tr>
@@ -140,7 +141,7 @@
 
                 const response = await fetch(url + "refered", {
 
-                    method: "POST",
+                    method: "GET",
 
                     headers: {
                         "Authorization": "Bearer " + token,
@@ -195,15 +196,15 @@
             pageData.forEach(r => {
 
                 const row = `
-
 <tr>
-
 
 <td>${r.referred_name ?? "-"}</td>
 
 <td>${r.referred_contact ?? "-"}</td>
 
 <td>${r.referred_email ?? "-"}</td>
+
+<td>${r.location?.site_location ?? "-"}</td> <!-- ✅ ADD THIS -->
 
 <td>
 <span style="
@@ -218,7 +219,6 @@ ${r.status}
 <td>${new Date(r.created_at).toLocaleDateString()}</td>
 
 </tr>
-
 `;
 
                 tbody.insertAdjacentHTML("beforeend", row);
