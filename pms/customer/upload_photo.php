@@ -47,30 +47,32 @@
     // ================= LOAD CURRENT IMAGE =================
     let currentUserId = null;
 
-    async function loadProfileImage() {
+   async function loadProfileImage() {
 
-        try {
-            const res = await fetch(url + "profile", {
-                headers: {
-                    "Authorization": "Bearer " + token
-                }
-            });
+    try {
+        const res = await fetch(url + "profile", {
+            headers: {
+                "Authorization": "Bearer " + token
+            }
+        });
 
-            const data = await res.json();
-            const user = data.user;
+        const data = await res.json();
+        const user = data.user;
 
-            // ✅ STORE USER ID HERE
-            currentUserId = user.id;
+        currentUserId = user.id;
 
+        if (user.profile_image) {
+            const cleanPath = user.profile_image.replace(/\\/g, '/');
+            document.getElementById("previewImage").src = base_url + "storage/" + cleanPath;
+        } else {
             document.getElementById("previewImage").src =
-                user.profile_image ?
-                base_url + "storage/app/public/" + user.profile_image :
                 "https://ui-avatars.com/api/?background=4f46e5&color=fff&name=" + encodeURIComponent(user.name);
-
-        } catch (err) {
-            console.error(err);
         }
+
+    } catch (err) {
+        console.error(err);
     }
+}
     document.addEventListener("DOMContentLoaded", loadProfileImage);
 
 
