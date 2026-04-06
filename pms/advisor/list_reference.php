@@ -43,6 +43,7 @@
                     <th class="p-3 text-left">Referred Customer</th>
                     <th class="p-3 text-left">Contact</th>
                     <th class="p-3 text-left">Email</th>
+                    <th class="p-3 text-left">Location</th>
                     <th class="p-3 text-left">Status</th>
                     <th class="p-3 text-left">Date</th>
                     <th class="p-3 text-left">Action</th>
@@ -59,80 +60,67 @@
 </div>
 
 <script>
-document.addEventListener("DOMContentLoaded", function() {
+    document.addEventListener("DOMContentLoaded", function() {
 
-    const token = localStorage.getItem("auth_token");
+        const token = localStorage.getItem("auth_token");
 
-    if (!token) {
-        alert("Please login first");
-        window.location.href = "../login";
-        return;
-    }
+        if (!token) {
+            alert("Please login first");
+            window.location.href = "../login";
+            return;
+        }
 
-    let currentPageUrl = url + "refered";
+        let currentPageUrl = url + "refered";
 
-    async function loadReferrals(apiUrl = currentPageUrl) {
+        async function loadReferrals(apiUrl = currentPageUrl) {
 
-        const search = document.getElementById("searchInput").value;
-        const perPage = document.getElementById("perPage").value;
+            const search = document.getElementById("searchInput").value;
+            const perPage = document.getElementById("perPage").value;
 
-        let separator = apiUrl.includes("?") ? "&" : "?";
-        let finalUrl = `${apiUrl}${separator}search=${search}&per_page=${perPage}`;
+            let separator = apiUrl.includes("?") ? "&" : "?";
+            let finalUrl = `${apiUrl}${separator}search=${search}&per_page=${perPage}`;
 
-        try {
+            try {
 
-            // ✅ CALL BOTH APIs
-            const [refRes, settingRes] = await Promise.all([
-                fetch(finalUrl, {
+                const refRes = await fetch(finalUrl, {
                     headers: {
                         "Authorization": "Bearer " + token,
                         "Accept": "application/json"
                     }
-                }),
-                fetch(url + "referral-setting", {
-                    headers: {
-                        "Authorization": "Bearer " + token,
-                        "Accept": "application/json"
-                    }
-                })
-            ]);
+                });
 
-            const refData = await refRes.json();
-            const settingData = await settingRes.json();
+                const refData = await refRes.json();
 
-            const referrals = refData.data?.data || [];
-            const settings = settingData.data?.data || [];
+                const referrals = refData.data?.data || [];
 
-            const currentPage = refData.data?.current_page || 1;
-            const perPageVal = refData.data?.per_page || 10;
+                const currentPage = refData.data?.current_page || 1;
+                const perPageVal = refData.data?.per_page || 10;
 
-            const tbody = document.getElementById("paymentData");
-            tbody.innerHTML = "";
+                const tbody = document.getElementById("paymentData");
+                tbody.innerHTML = "";
 
-            if (referrals.length === 0) {
-                tbody.innerHTML = `
-                    <tr>
-                        <td colspan="10" class="text-center p-4 text-gray-500">
-                            No records found
-                        </td>
-                    </tr>
-                `;
-                return;
-            }
+                if (referrals.length === 0) {
+                    tbody.innerHTML = `
+            <tr>
+                <td colspan="9" class="text-center p-4 text-gray-500">
+                    No records found
+                </td>
+            </tr>
+            `;
+                    return;
+                }
 
-            referrals.forEach((row, i) => {
+                referrals.forEach((row, i) => {
 
-                let srNo = (currentPage - 1) * perPageVal + (i + 1);
+                    let srNo = (currentPage - 1) * perPageVal + (i + 1);
 
-                // ✅ MATCH SETTING
-                const setting = settings.find(s => 
-                    s.target_user_id == row.referrer_id
-                );
+                    // ✅ CORRECT LOCATION (INSIDE LOOP)
+                    let locationName =
+                        row.reflocation?.site_location ||
+                        row.booking?.site_location ||
+                        '-';
 
-                const type = setting?.type;
-                const value = setting?.value;
-
-                tbody.innerHTML += `
+                    tbody.innerHTML += `
 <tr>
     <td class="p-3">${srNo}</td>
 
@@ -145,6 +133,8 @@ document.addEventListener("DOMContentLoaded", function() {
     <td class="p-3">${row.referred_contact ?? '-'}</td>
 
     <td class="p-3">${row.referred_email ?? '-'}</td>
+
+    <td class="p-3">${locationName}</td>
 
     <td class="p-3">
         <span class="px-2 py-1 rounded text-white ${
@@ -159,61 +149,61 @@ document.addEventListener("DOMContentLoaded", function() {
     <td class="p-3">
         ${
             row.status === "converted"
-            ? `<button class="bg-gray-400 text-white px-3 py-2 rounded-lg cursor-not-allowed" disabled>
+            ? `<button class="bg-gray-400 text-white px-3 py-2 rounded-lg" disabled>
                     Already Booked
                </button>`
             : `<a href="reference_booking.php?reference_id=${row.id}" 
-                  class="inline-block bg-blue-600 text-white px-3 py-2 rounded-lg hover:bg-blue-700 transition">
+                  class="bg-blue-600 text-white px-3 py-2 rounded-lg">
                     Create Booking
                </a>`
         }
     </td>
 </tr>
-                `;
-            });
+`;
+                });
 
-            renderPagination(refData.data.links || []);
+                renderPagination(refData.data.links || []);
 
-        } catch (error) {
-            console.error(error);
-            alert("Error loading data");
-        }
-    }
-
-    function renderPagination(links) {
-        const pagination = document.getElementById("pagination");
-        pagination.innerHTML = "";
-
-        links.forEach(link => {
-            let btn = document.createElement("button");
-
-            btn.innerText = link.label.replace(/&laquo;|&raquo;/g, "");
-            btn.disabled = !link.url;
-
-            btn.className = "px-3 py-1 border rounded";
-
-            if (link.active) {
-                btn.classList.add("bg-blue-500", "text-white");
+            } catch (error) {
+                console.error(error);
+                alert("Error loading data");
             }
+        }
 
-            btn.onclick = () => loadReferrals(link.url);
+        function renderPagination(links) {
+            const pagination = document.getElementById("pagination");
+            pagination.innerHTML = "";
 
-            pagination.appendChild(btn);
-        });
-    }
+            links.forEach(link => {
+                let btn = document.createElement("button");
 
-    function formatDate(dateStr) {
-        if (!dateStr) return '-';
-        const date = new Date(dateStr);
-        return date.toLocaleDateString("en-IN");
-    }
+                btn.innerText = link.label.replace(/&laquo;|&raquo;/g, "");
+                btn.disabled = !link.url;
 
-    document.getElementById("searchBtn").addEventListener("click", () => loadReferrals());
-    document.getElementById("perPage").addEventListener("change", () => loadReferrals());
+                btn.className = "px-3 py-1 border rounded";
 
-    loadReferrals();
+                if (link.active) {
+                    btn.classList.add("bg-blue-500", "text-white");
+                }
 
-});
+                btn.onclick = () => loadReferrals(link.url);
+
+                pagination.appendChild(btn);
+            });
+        }
+
+        function formatDate(dateStr) {
+            if (!dateStr) return '-';
+            const date = new Date(dateStr);
+            return date.toLocaleDateString("en-IN");
+        }
+
+        document.getElementById("searchBtn").addEventListener("click", () => loadReferrals());
+        document.getElementById("perPage").addEventListener("change", () => loadReferrals());
+
+        loadReferrals();
+
+    });
 </script>
 
 <?php include 'footer.php'; ?>

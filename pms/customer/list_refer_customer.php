@@ -204,7 +204,7 @@
 
 <td>${r.referred_email ?? "-"}</td>
 
-<td>${r.location?.site_location ?? "-"}</td> <!-- ✅ ADD THIS -->
+<td>${r.reflocation?.site_location ?? "-"}</td>
 
 <td>
 <span style="
