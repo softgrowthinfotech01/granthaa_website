@@ -332,11 +332,11 @@ class BookingController extends Controller
                         // 💰 Calculate incentive
                         $amount = 0;
 
-                        if ($referral->incentive_type === 'fixed') {
+                        if ($referral->incentive_type === 'amount') {
                             $amount = $referral->incentive_value;
                         }
 
-                        if ($referral->incentive_type === 'percentage') {
+                        if ($referral->incentive_type === 'percent') {
                             $amount =
                                 ($booking->total_booking_amount * $referral->incentive_value) / 100;
                         }
