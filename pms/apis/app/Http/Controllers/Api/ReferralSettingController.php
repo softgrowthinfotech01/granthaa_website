@@ -46,17 +46,26 @@ $setting = ReferralSetting::updateOrCreate(
     }
 
     public function index() {
-        $user = auth()->user();
 
-        $query = ReferralSetting::with(['user', 'location']);
-        
-        if($user->role === "customer"){
-            $query->where('target_user_id', $user->id);
-        }
+    $user = auth()->user();
 
-        if(in_array($user->role, ["customer", "adviser"])){
-            $query->where('user_id', $user->id);
-        }
-
+    $query = ReferralSetting::with(['user', 'location']);
+    
+    // Customer → get their assigned settings
+    if($user->role === "customer"){
+        $query->where('target_user_id', $user->id);
     }
+
+    // Leader / Adviser → their own settings
+    if(in_array($user->role, ["leader", "adviser"])){
+        $query->where('user_id', $user->id);
+    }
+
+    $data = $query->get();
+
+    return response()->json([
+        'status' => true,
+        'data' => $data
+    ]);
+}
 }
