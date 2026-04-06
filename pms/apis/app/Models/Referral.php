@@ -21,7 +21,8 @@ class Referral extends Model
 
     // 🔥 NEW
     'incentive_type',
-    'incentive_value'
+    'incentive_value',
+    'location_id'
 ];
 
     /*
