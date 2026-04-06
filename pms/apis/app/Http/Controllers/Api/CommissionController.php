@@ -32,31 +32,31 @@ class CommissionController extends Controller
         // 🔥 Check user role
         $user = User::find($validated['user_id']);
 
-        if ($auth->role == 'leader') {
+        // if ($auth->role == 'leader') {
 
-            $leaderCommission = UserLocationCommission::where('user_id', $auth->id)
-                ->where('location_id', $validated['location_id'])
-                ->first();
+        //     $leaderCommission = UserLocationCommission::where('user_id', $auth->id)
+        //         ->where('location_id', $validated['location_id'])
+        //         ->first();
 
-            // Only validate if leader commission exists
-            if (
-                $leaderCommission &&
-                $leaderCommission->commission_type != $validated['commission_type']
-            ) {
+        //     // Only validate if leader commission exists
+        //     if (
+        //         $leaderCommission &&
+        //         $leaderCommission->commission_type != $validated['commission_type']
+        //     ) {
 
-                return response()->json([
-                    'status' => false,
-                    'message' => 'You can only assign ' . $leaderCommission->commission_type . ' commission'
-                ], 422);
-            }
+        //         return response()->json([
+        //             'status' => false,
+        //             'message' => 'You can only assign ' . $leaderCommission->commission_type . ' commission'
+        //         ], 422);
+        //     }
 
-            if($leaderCommission->commission_value < $validated['commission_value']){
-                   return response()->json([
-                    'status' => false,
-                    'message' => 'please set commission less than ' . $leaderCommission->commission_value . "." 
-                ], 422);
-            }
-        }
+        //     if($leaderCommission->commission_value < $validated['commission_value']){
+        //            return response()->json([
+        //             'status' => false,
+        //             'message' => 'please set commission less than ' . $leaderCommission->commission_value . "." 
+        //         ], 422);
+        //     }
+        // }
 
         if (!in_array($user->role, ['leader', 'adviser'])) {
             return response()->json([
