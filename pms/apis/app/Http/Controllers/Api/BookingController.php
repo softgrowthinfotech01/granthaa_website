@@ -77,7 +77,7 @@ class BookingController extends Controller
                 if ($request->commission_type === "percent") {
                     $commissionAmount = ($totalBookingAmount * $commissionValue) / 100;
                 } elseif ($request->commission_type === "amount") {
-                    $commissionAmount = $commissionValue;
+                    $commissionAmount = $commissionValue * $request->square_feet;
                 }
 
                 $commission_amount = round($commissionAmount, 2);
@@ -199,14 +199,14 @@ class BookingController extends Controller
                     if ($leaderCommission->commission_type == 'percent') {
                         $leaderAmount = ($totalBookingAmount * $leaderCommission->commission_value) / 100;
                     } else {
-                        $leaderAmount = $leaderCommission->commission_value;
+                        $leaderAmount = $leaderCommission->commission_value * $request->square_feet;
                     }
 
                     // Adviser commission calculation
                     if ($adviserCommission->commission_type == 'percent') {
                         $adviserAmount = ($totalBookingAmount * $adviserCommission->commission_value) / 100;
                     } else {
-                        $adviserAmount = $adviserCommission->commission_value;
+                        $adviserAmount = $adviserCommission->commission_value * $request->square_feet;
                     }
 
                     // Validation
@@ -642,7 +642,7 @@ class BookingController extends Controller
                         $leaderCommission =
                             ($newAmount * $booking->leader_commission_value) / 100;
                     } else {
-                        $leaderCommission = $booking->leader_commission_value;
+                        $leaderCommission = $booking->leader_commission_value * $request->square_feet;
                     }
 
                     /*
@@ -654,7 +654,7 @@ class BookingController extends Controller
                         $adviserCommission =
                             ($newAmount * $booking->adviser_commission_value) / 100;
                     } else {
-                        $adviserCommission = $booking->adviser_commission_value;
+                        $adviserCommission = $booking->adviser_commission_value * $request->square_feet;
                     }
 
                     /*
