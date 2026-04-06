@@ -83,7 +83,6 @@
 
 </div>
 
-<script src="../url.js"></script>
 <script>
   document.addEventListener("DOMContentLoaded", function() {
     const token = localStorage.getItem('auth_token');

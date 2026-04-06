@@ -233,31 +233,29 @@
 
         function loadSiteLocations(selectedId = null) {
 
-            fetch(url + "my-commissions", {
-                    method: "GET",
-                    headers: {
-                        "Authorization": "Bearer " + token,
-                        "Accept": "application/json"
-                    }
-                })
-                .then(res => res.json())
-                .then(response => {
+    fetch(url + "my-commissions", {
+        method: "GET",
+        headers: {
+            "Authorization": "Bearer " + token,
+            "Accept": "application/json"
+        }
+    })
+    .then(res => res.json())
+    .then(response => {
 
-                    const commissions = response.data?.data ?? [];
-                    const select = document.getElementById("site_location");
+        const commissions = response.data?.data ?? [];
+        const select = document.getElementById("site_location");
 
-                    select.innerHTML = `<option value="">Select Site Location</option>`;
+        select.innerHTML = `<option value="">Select Site Location</option>`;
 
-                    commissions.forEach(commission => {
+        commissions.forEach(commission => {
 
-                        if (commission.location) {
+            if (commission.location) {
 
-                            const isSelected =
-                                selectedId == commission.location.id ?
-                                "selected" :
-                                "";
+                const isSelected =
+                    selectedId == commission.location.id ? "selected" : "";
 
-                            select.innerHTML += `
+                select.innerHTML += `
                     <option 
                         value="${commission.location.id}"
                         data-type="${commission.commission_type}"
@@ -267,11 +265,21 @@
                         ${commission.location.site_location}
                     </option>
                 `;
-                        }
-                    });
+            }
+        });
 
-                });
+        const selectedOption = select.querySelector("option:checked");
+
+        if (selectedOption) {
+            document.getElementById("commission_type").value =
+                selectedOption.dataset.type || "";
+
+            document.getElementById("commission_value").value =
+                selectedOption.dataset.value || "";
         }
+
+    });
+}
 
         if (!token) {
             alert("Please login first");
