@@ -60,6 +60,7 @@ class BookingController extends Controller
             'commission_type' => 'required',
             'commission_value' => 'required',
             'referral_id' => 'nullable|exists:referrals,id',
+            'square_feet' => 'required',
         ]);
 
 
