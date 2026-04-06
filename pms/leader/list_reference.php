@@ -44,7 +44,6 @@
                     <th class="p-3 text-left">Contact</th>
                     <th class="p-3 text-left">Email</th>
                     <th class="p-3 text-left">Location</th>
-                    <th class="p-3 text-left">Commission</th>
                     <th class="p-3 text-left">Status</th>
                     <th class="p-3 text-left">Date</th>
                     <th class="p-3 text-left">Action</th>
@@ -134,16 +133,6 @@
 
                     const locationName = setting?.location?.name ?? '-';
 
-                    let commissionDisplay = '-';
-
-                    if (setting) {
-                        if (setting.type === 'percent') {
-                            commissionDisplay = `${setting.value}%`;
-                        } else if (setting.type === 'value'){
-                            commissionDisplay = `₹ ${setting.value}`;
-                        }
-                    }
-
                     const type = setting?.type;
                     const value = setting?.value;
 
@@ -163,9 +152,6 @@
 
     <td class="p-3">${locationName}</td>
 
-    <td class="p-3 font-semibold text-green-600">
-        ₹ ${commissionDisplay}
-    </td>
 
     <td class="p-3">
         <span class="px-2 py-1 rounded text-white ${
