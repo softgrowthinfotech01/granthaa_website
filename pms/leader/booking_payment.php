@@ -326,6 +326,22 @@ document.getElementById("plot_number").addEventListener("change", async function
 
         const data = await res.json();
 
+        let paid = parseFloat(data.paid_amount) || 0;
+
+        let paymentType = document.getElementById("payment_type");
+        let advanceOption = paymentType.querySelector('option[value="advance"]');
+
+        // ✅ Disable advance if already paid
+        if (paid > 0) {
+            advanceOption.disabled = true;
+
+            if (paymentType.value === "advance") {
+                paymentType.value = "";
+            }
+        } else {
+            advanceOption.disabled = false;
+        }
+
         document.getElementById("total_amount").value = data.total_amount ?? 0;
         document.getElementById("paid_amount").value = data.paid_amount ?? 0;
         document.getElementById("balanced_amount").value = data.balance ?? 0;
@@ -345,31 +361,31 @@ function clearAmounts() {
 }
 
 
-/* ================= LIVE BALANCE ================= */
+/* ================= PAYMENT TYPE CONTROL ================= */
+/* ================= PAYMENT TYPE CONTROL ================= */
 document.getElementById("amount").addEventListener("input", function () {
 
     let amount = parseFloat(this.value) || 0;
     let paid = parseFloat(document.getElementById("paid_amount").value) || 0;
     let total = parseFloat(document.getElementById("total_amount").value) || 0;
 
-    let newPaid = paid + amount; 
-    let newBalance = total - newPaid;
-
-    document.getElementById("balanced_amount").value = newBalance;
+    let newBalance = total - (paid + amount);
 
     let paymentType = document.getElementById("payment_type");
     let fullOption = paymentType.querySelector('option[value="full"]');
 
-    // ✅ FULL LOGIC
-    if (Math.abs(newBalance) <= 0.01) {
-        fullOption.disabled = false;
-        paymentType.value = "full";
-    } else {
+    // ✅ ONLY control payment type (no balance update)
+    if (Math.abs(newBalance) > 0.01) {
         fullOption.disabled = true;
 
         if (paymentType.value === "full") {
             paymentType.value = "";
         }
+    } else {
+        fullOption.disabled = false;
+
+        // auto select full
+        paymentType.value = "full";
     }
 });
 
