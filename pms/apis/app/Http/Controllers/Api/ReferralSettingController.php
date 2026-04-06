@@ -54,7 +54,7 @@ $setting = ReferralSetting::updateOrCreate(
             $query->where('target_user_id', $user->id);
         }
 
-        if(in_array($user->role, ["cusomer", "adviser"])){
+        if(in_array($user->role, ["customer", "adviser"])){
             $query->where('user_id', $user->id);
         }
 
