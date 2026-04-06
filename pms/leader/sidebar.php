@@ -446,7 +446,7 @@
             </li>
 
             <li>
-              <a href="view_reference_amt"
+              <a href="list_reference_amt"
                 class="menu-item flex items-center gap-3 <?php if ($current == 'view_reference_amt') echo 'active'; ?>">
 
                 <svg class="w-4 h-4 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">

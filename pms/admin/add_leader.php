@@ -263,7 +263,7 @@
                 emailInput.setCustomValidity("");
             }
 
-            // ✅ PAN VALIDATION (ADD HERE)
+            // ✅ PAN VALIDATION
             const panInput = document.getElementById("pancard_number");
 
             // force uppercase
@@ -395,24 +395,6 @@
                 }
             }
         });
-
-        // Pan validation
-        const panInput = document.getElementById("pancard_number");
-
-        // ✅ Force uppercase in field
-        panInput.value = panInput.value.toUpperCase();
-
-        const pan = panInput.value.trim();
-
-        const panRegex = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
-
-        if (!panRegex.test(pan)) {
-            panInput.setCustomValidity("Invalid PAN format (ABCDE1234F)");
-            panInput.reportValidity();
-            return;
-        } else {
-            panInput.setCustomValidity("");
-        }
 
         // for branch and bank name allow only letters and spaces
         function allowOnlyLetters(input) {

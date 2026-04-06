@@ -96,24 +96,26 @@
                                     <div class="border-t"></div>
 
                                     <!-- Bookings -->
-                                    <div>
-                                        <p class="text-gray-500 text-xs font-medium">
-                                            Total Bookings
-                                        </p>
-                                        <div class="flex items-center justify-between mt-1 mb-1">
-                                            <p id="total_bookings"
-                                                class="text-lg font-semibold text-sky-500">
-                                                0
+                                    <a href="view-booking-summary">
+                                        <div>
+                                            <p class="text-gray-500 text-xs font-medium">
+                                                Total Bookings
                                             </p>
-                                            <svg viewBox="0 0 24 24"
-                                                class="h-5 w-5 opacity-80 shrink-0">
-                                                <rect x="3" y="5" width="18" height="16" rx="3"
-                                                    fill="#34d399" />
-                                                <rect x="3" y="9" width="18" height="2"
-                                                    fill="#059669" />
-                                            </svg>
+                                            <div class="flex items-center justify-between mt-1 mb-1">
+                                                <p id="total_bookings"
+                                                    class="text-lg font-semibold text-sky-500">
+                                                    0
+                                                </p>
+                                                <svg viewBox="0 0 24 24"
+                                                    class="h-5 w-5 opacity-80 shrink-0">
+                                                    <rect x="3" y="5" width="18" height="16" rx="3"
+                                                        fill="#34d399" />
+                                                    <rect x="3" y="9" width="18" height="2"
+                                                        fill="#059669" />
+                                                </svg>
+                                            </div>
                                         </div>
-                                    </div>
+                                    </a>
                                 </div>
                             </div>
 
