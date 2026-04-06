@@ -314,47 +314,47 @@ class BookingController extends Controller
                 // AFTER Booking::create()
 
 
-if ($request->referral_id) {
+                if ($request->referral_id) {
 
-    // 🔒 Prevent duplicate incentive
-    $alreadyPaid = ReferralLedger::where('booking_id', $booking->id)
-        ->where('type', 'incentive')
-        ->exists();
+                    // 🔒 Prevent duplicate incentive
+                    $alreadyPaid = ReferralLedger::where('booking_id', $booking->id)
+                        ->where('type', 'incentive')
+                        ->exists();
 
-    if (!$alreadyPaid) {
+                    if (!$alreadyPaid) {
 
-        // 🔄 Mark referral converted
-        $referral->update([
-            'status' => 'converted',
-            'booking_id' => $booking->id
-        ]);
+                        // 🔄 Mark referral converted
+                        $referral->update([
+                            'status' => 'converted',
+                            'booking_id' => $booking->id
+                        ]);
 
-        // 💰 Calculate incentive
-        $amount = 0;
+                        // 💰 Calculate incentive
+                        $amount = 0;
 
-        if ($referral->incentive_type === 'fixed') {
-            $amount = $referral->incentive_value;
-        }
+                        if ($referral->incentive_type === 'fixed') {
+                            $amount = $referral->incentive_value;
+                        }
 
-        if ($referral->incentive_type === 'percentage') {
-            $amount =
-                ($booking->total_booking_amount * $referral->incentive_value) / 100;
-        }
+                        if ($referral->incentive_type === 'percentage') {
+                            $amount =
+                                ($booking->total_booking_amount * $referral->incentive_value) / 100;
+                        }
 
-        // 🧾 Create Ledger Entry
-        if ($amount > 0) {
-            ReferralLedger::create([
-                'user_id' => $referral->referrer_id,
-                'referral_id' => $referral->id,
-                'booking_id' => $booking->id,
-                'type' => 'incentive',
-                'amount' => round($amount, 2),
-                'remark' => 'Referral incentive for booking #' . $booking->id,
-                'created_by' => auth()->id()
-            ]);
-        }
-    }
-}
+                        // 🧾 Create Ledger Entry
+                        if ($amount > 0) {
+                            ReferralLedger::create([
+                                'user_id' => $referral->referrer_id,
+                                'referral_id' => $referral->id,
+                                'booking_id' => $booking->id,
+                                'type' => 'incentive',
+                                'amount' => round($amount, 2),
+                                'remark' => 'Referral incentive for booking #' . $booking->id,
+                                'created_by' => auth()->id()
+                            ]);
+                        }
+                    }
+                }
 
                 // ✅ Store advance payment in booking_payments table
                 $advanceAmount = (float) str_replace(['₹', ',', ' '], '', $request->advance_amount);
