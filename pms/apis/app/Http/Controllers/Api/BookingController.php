@@ -1068,11 +1068,17 @@ class BookingController extends Controller
                 $totalCommissionAmount = Booking::whereNull('deleted_at')->where('adviser_id', $user->id)
                     ->sum('adviser_commission_amount');
 
-                $totalPaidAmt = abs(
-                    CommissionLedger::where('user_id', $user->id)
-                        ->whereIn('type', ['payment', 'commission'])
-                        ->sum('amount')
-                );
+                    $paid = CommissionLedger::where('user_id', $user->id)
+                        ->whereIn('type', ['payment'])
+                        ->where('amount','<',0)
+                        ->sub('amount');
+
+                    $reversal = CommissionLedger::where('user_id', $user->id)
+                        ->whereIn('type', ['reversal'])
+                        ->where('amount','<',0)
+                        ->sub('amount');
+
+                $totalPaidAmt = abs($paid) - abs($reversal);
 
                 $topAdvisor = Booking::whereNull('deleted_at')->where('adviser_id', $user->id)
                     ->select('user_code', DB::raw('SUM(total_booking_amount) as total'))
