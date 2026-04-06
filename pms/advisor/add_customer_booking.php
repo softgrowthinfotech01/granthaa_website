@@ -199,6 +199,13 @@ class="w-full border border-gray-300 px-5 py-3 rounded-xl bg-gray-100 outline-no
                         class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-green-400 outline-none">
                 </div>
 
+                     <!-- Advance -->
+                <div class="space-y-2">
+                    <label class="text-sm font-semibold text-gray-700">Advance Booking Amount</label>
+                    <input type="number" name="advance_amount" id="advance_amount"
+                        class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-green-400 outline-none">
+                </div>
+
                 <div class="space-y-2">
                     <label class="text-sm font-semibold text-gray-700">Payment Mode</label>
                     <select name="payment_mode" id="payment_mode"
@@ -211,12 +218,7 @@ class="w-full border border-gray-300 px-5 py-3 rounded-xl bg-gray-100 outline-no
                     </select>
                 </div>
 
-                <!-- Advance -->
-                <div class="space-y-2">
-                    <label class="text-sm font-semibold text-gray-700">Advance Booking Amount</label>
-                    <input type="number" name="advance_amount" id="advance_amount"
-                        class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-green-400 outline-none">
-                </div>
+           
 
                 <div class="space-y-2 md:col-span-2">
                     <label class="text-sm font-semibold text-gray-700">Remark</label>
