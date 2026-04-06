@@ -243,7 +243,7 @@ flex flex-col justify-between flex-shrink-0">
                   <path d="M4 12h16" />
                 </svg>
 
-                <span class="sidebar-text">Add Customer</span>
+                <span class="sidebar-text">Register Customer Visit</span>
               </a>
             </li>
 
@@ -256,7 +256,7 @@ flex flex-col justify-between flex-shrink-0">
                   <path d="M4 12h16" />
                 </svg>
 
-                <span class="sidebar-text">View Customers</span>
+                <span class="sidebar-text">View Customers Visit</span>
               </a>
             </li>
 

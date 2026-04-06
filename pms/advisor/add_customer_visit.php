@@ -65,6 +65,13 @@
         class="w-full border border-gray-300 p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400"></textarea>
     </div>
 
+    <div class="md:col-span-2">
+  <label class="block text-gray-900 font-semibold mb-1">Remark</label>
+  <textarea name="remark" rows="3"
+    placeholder="Enter visit remark"
+    class="w-full border border-gray-300 p-2 rounded-lg focus:ring-2 focus:ring-green-400"></textarea>
+</div>
+
     <!-- Submit Button -->
     <div class="md:col-span-2 text-right mt-4 gap-2">
       <button type="submit"
@@ -145,6 +152,78 @@ fetch(url + "my-commissions", {
 }
 
 loadAdvisorLocations();
+
+
+    /* ================= CUSTOMER VISIT SUBMIT ================= */
+
+    const form = document.getElementById("customerForm");
+
+    form.addEventListener("submit", async function(e) {
+
+        e.preventDefault();
+
+        const formData = new FormData(form);
+
+        // Current datetime
+        const now = new Date();
+        const visited_at =
+            now.getFullYear() + "-" +
+            String(now.getMonth()+1).padStart(2,'0') + "-" +
+            String(now.getDate()).padStart(2,'0') + " " +
+            String(now.getHours()).padStart(2,'0') + ":" +
+            String(now.getMinutes()).padStart(2,'0') + ":" +
+            String(now.getSeconds()).padStart(2,'0');
+
+        const payload = {
+            name: formData.get("name"),
+            email: formData.get("email"),
+            contact_no: formData.get("contact_no"),
+            aadhaar_number: formData.get("aadhaar_number"),
+            gender: formData.get("gender"),
+            address: formData.get("address"),
+            site_location: formData.get("site_location"),
+            visited_at: visited_at,
+            remark: "Initial visit"
+        };
+
+        console.log("Payload:", payload);
+
+        try {
+
+            const response = await fetch(url + "customer-visits", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": "Bearer " + token,
+                    "Accept": "application/json"
+                },
+                body: JSON.stringify(payload)
+            });
+
+            const result = await response.json();
+
+            console.log(result);
+
+            if (result.status) {
+
+                alert(result.message);
+
+                form.reset();
+
+            } else {
+
+                alert(result.message || "Failed to save customer");
+
+            }
+
+        } catch (error) {
+
+            console.error(error);
+            alert("Server error occurred");
+
+        }
+
+    });
 
 });
 </script>

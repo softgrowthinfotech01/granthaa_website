@@ -30,7 +30,7 @@
 
             <!-- BUTTON -->
             <button onclick="uploadPhoto()"
-                class="w-full bg-indigo-600 text-white py-2 sm:py-3 text-sm sm:text-base rounded-lg hover:bg-indigo-700">
+                class="w-full bg-indigo-600 text-white py-2 sm:py-3 text-sm sm:text-base rounded-lg hover:bg-indigo-700 cursor-pointer">
                 Upload Photo
             </button>
 
