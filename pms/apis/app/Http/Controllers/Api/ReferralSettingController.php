@@ -49,7 +49,7 @@ $setting = ReferralSetting::updateOrCreate(
 
     $user = auth()->user();
 
-    $query = ReferralSetting::with(['user', 'location']);
+    $query = ReferralSetting::with(['user', 'location', 'referal']);
     
     // Customer → get their assigned settings
     if($user->role === "customer"){

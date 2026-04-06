@@ -117,14 +117,15 @@ if ($existingVisit) {
     {
         $query = CustomerVisit::with(['creator', 'location']);
 
+        
+    $user = auth()->user();
+
         // Optional filters
         if ($request->site_location) {
             $query->where('site_location', $request->site_location);
         }
-
-        if ($request->created_by) {
-            $query->where('created_by', $request->created_by);
-        }
+            $query->where('created_by', $user->id);
+        
 
         $visits = $query->orderBy('visited_at', 'desc')->get();
 

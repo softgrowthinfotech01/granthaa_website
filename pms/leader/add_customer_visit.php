@@ -32,7 +32,7 @@
     <!-- Phone -->
     <div>
       <label class="block text-gray-900 font-semibold mb-1">Phone Number</label>
-      <input type="text" name="contact_no" placeholder="Enter phone number" id="contact_no" maxlength="10"
+      <input type="text" pattern="[0-9]{10}"  name="contact_no" placeholder="Enter phone number" id="contact_no" maxlength="10"
         class="w-full border border-gray-300 p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400">
     </div>
 

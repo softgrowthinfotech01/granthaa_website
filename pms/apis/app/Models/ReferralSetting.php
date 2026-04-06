@@ -37,4 +37,10 @@ public function targetUser()
     {
         return $this->belongsTo(LocationMaster::class);
     }
+
+    // Location (if you have model)
+    public function referal()
+    {
+        return $this->belongsTo(user::class, 'target_user_id');
+    }
 }

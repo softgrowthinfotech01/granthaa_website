@@ -104,6 +104,11 @@
                         class="w-full border border-gray-300 px-5 py-3 rounded-xl focus:ring-2 focus:ring-yellow-400 outline-none">
                 </div>
 
+<<<<<<< HEAD
+=======
+               
+
+>>>>>>> 8ed5fd32bf1921f2bfe9bcdc42b95bf80cbc2134
             </div>
         </div>
 

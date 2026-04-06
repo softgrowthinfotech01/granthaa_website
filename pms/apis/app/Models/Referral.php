@@ -47,4 +47,12 @@ class Referral extends Model
     {
         return $this->belongsTo(Booking::class, 'booking_id');
     }
+    
+    // Converted booking
+    public function reflocation()
+    {
+        return $this->belongsTo(LocationMaster::class, 'booking_id');
+    }
+
+
 }
