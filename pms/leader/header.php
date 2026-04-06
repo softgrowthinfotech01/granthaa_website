@@ -67,27 +67,48 @@
 
 }
 
+/* Menu items */
+.menu-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  transition: all 0.25s ease;
+  color: #d1d5db; /* gray-300 */
+}
 
-    /* Menu items */
-    .menu-item {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 10px;
-      border-radius: 12px;
-      transition: all .3s ease;
-    }
+/* Hover */
+.menu-item:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: #fff;
+}
 
-    .menu-item:hover {
-      background: rgb(17 24 39);
-      color: white;
-    }
+/* Active (highlighted) */
+.menu-item.active {
 
-    .menu-item.active {
-      background: rgb(3 7 18);
-      ;
-      color: white;
-    }
+  font-weight: 600;
+}
+
+.menu-item.active {
+  position: relative;
+}
+
+.menu-item.active::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 6px;
+  bottom: 6px;
+  width: 4px;
+
+  border-radius: 4px;
+}
+.menu-item.parent-active {
+  background: rgba(250, 204, 21, 0.07); /* lighter */
+  color: #fde68a; /* soft yellow */
+  font-weight: 600;
+}
 
     /* Profile dropdown animation */
     #profileMenu {
