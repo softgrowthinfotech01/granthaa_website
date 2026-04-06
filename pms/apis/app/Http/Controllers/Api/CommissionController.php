@@ -49,8 +49,15 @@ class CommissionController extends Controller
                     'message' => 'You can only assign ' . $leaderCommission->commission_type . ' commission'
                 ], 422);
             }
+
+            if($leaderCommission->commission_value < $validated['commission_value']){
+                   return response()->json([
+                    'status' => false,
+                    'message' => 'please set commission less than ' . $leaderCommission->commission_type  
+                ], 422);
+            }
         }
-        
+
         if (!in_array($user->role, ['leader', 'adviser'])) {
             return response()->json([
                 'message' => 'Commission can only be set for Leader or Adviser'
