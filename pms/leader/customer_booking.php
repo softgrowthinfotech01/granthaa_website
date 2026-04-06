@@ -210,7 +210,7 @@
                         <option value="cash">Cash</option>
                         <option value="cheque">Cheque</option>
                         <option value="online_transfer">Online Transfer</option>
-                        <option value="upi">UPI</option>
+                        <option value="upi">UPI</option>    
                     </select>
                 </div>
 
