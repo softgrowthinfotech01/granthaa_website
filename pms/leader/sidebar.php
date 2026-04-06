@@ -1,4 +1,6 @@
-<?php $current = basename($_SERVER['PHP_SELF']); ?>
+<?php 
+$current = basename($_SERVER['PHP_SELF'], ".php");
+?>
 
 <aside id="sidebar"
   class="fixed md:static z-30 top-0 left-0 h-full w-55 md:w-64 bg-gray-800 text-white
@@ -26,7 +28,7 @@
         <!-- Dashboard -->
         <li>
           <a href="dashboard"
-            class="menu-item <?php if ($current == 'dashboard') echo 'active'; ?>">
+            class="menu-item <?php if ($current == 'dashboard') echo 'parent-active'; ?>">
 
             <svg class="w-6 h-6 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path d="M3 12l9-9 9 9M4 10v10h16V10" />
@@ -39,8 +41,9 @@
         <!-- Leader -->
         <li>
           <a href="javascript:void(0)"
-            onclick="toggleMenu('advisor', this)"
-            class="menu-item flex justify-between items-center">
+onclick="toggleMenu('advisor', this)"
+class="menu-item flex justify-between items-center 
+<?php if (in_array($current, ['add_advisor','list_advisor'])) echo 'parent-active'; ?>">
 
             <span class="flex items-center gap-3">
               <svg class="w-6 h-6 text-yellow-500" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
@@ -61,7 +64,7 @@
             <!-- Add Leader -->
             <li>
               <a href="add_advisor"
-                class="menu-item flex items-center gap-3 <?php if ($current == 'add_commission') echo 'active'; ?>">
+                class="menu-item flex items-center gap-3 <?php if ($current == 'add_advisor') echo 'active'; ?>">
 
                 <svg class="w-4 h-4 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path d="M4 12h16" />
@@ -74,7 +77,7 @@
             <!-- View leader -->
             <li>
               <a href="list_advisor"
-                class="menu-item flex items-center gap-3 <?php if ($current == 'view_commission') echo 'active'; ?>">
+                class="menu-item flex items-center gap-3 <?php if ($current == 'list_advisor') echo 'active'; ?>">
 
                 <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path d="M4 12h16" />
@@ -91,9 +94,9 @@
         <!-- Commission -->
         <li>
           <a href="javascript:void(0)"
-            onclick="toggleMenu('commission', this)"
-            class="menu-item flex justify-between items-center">
-
+onclick="toggleMenu('commission', this)"
+         class="menu-item flex justify-between items-center 
+<?php if (in_array($current, ['set_commission','list_commission'])) echo 'parent-active'; ?>">
             <span class="flex items-center gap-3">
               <svg class="w-6 h-6 text-yellow-500" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round"
@@ -112,7 +115,7 @@
             <!-- Add Commission -->
             <li>
               <a href="set_commission"
-                class="menu-item flex items-center gap-3 <?php if ($current == 'add_commission') echo 'active'; ?>">
+                class="menu-item flex items-center gap-3 <?php if ($current == 'set_commission') echo 'active'; ?>">
 
                 <svg class="w-4 h-4 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path d="M4 12h16" />
@@ -125,7 +128,7 @@
             <!-- View Commission -->
             <li>
               <a href="list_commission"
-                class="menu-item flex items-center gap-3 <?php if ($current == 'view_commission') echo 'active'; ?>">
+                class="menu-item flex items-center gap-3 <?php if ($current == 'list_commission') echo 'active'; ?>">
 
                 <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path d="M4 12h16" />
@@ -141,9 +144,13 @@
         <!-- Booking -->
         <li>
           <a href="javascript:void(0)"
-            onclick="toggleMenu('Booking', this)"
-            class="menu-item flex justify-between items-center">
-
+onclick="toggleMenu('Booking', this)"
+        class="menu-item flex justify-between items-center 
+<?php if (in_array($current, [
+'customer_booking',
+'list_customer_booking',
+'list_customer_booking_deleted'
+])) echo 'parent-active'; ?>">
             <span class="flex items-center gap-3">
               <svg class="w-6 h-6 text-yellow-500" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round"
@@ -164,7 +171,7 @@
             <!-- Add Booking -->
             <li>
               <a href="customer_booking"
-                class="menu-item flex items-center gap-3 <?php if ($current == 'add_commission') echo 'active'; ?>">
+                class="menu-item flex items-center gap-3 <?php if ($current == 'customer_booking') echo 'active'; ?>">
 
                 <svg class="w-4 h-4 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path d="M4 12h16" />
@@ -177,7 +184,7 @@
             <!-- View Booking -->
             <li>
               <a href="list_customer_booking"
-                class="menu-item flex items-center gap-3 <?php if ($current == 'view_commission') echo 'active'; ?>">
+                class="menu-item flex items-center gap-3 <?php if ($current == 'list_customer_booking') echo 'active'; ?>">
 
                 <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path d="M4 12h16" />
@@ -207,7 +214,8 @@
         <li>
           <a href="javascript:void(0)"
             onclick="toggleMenu('compayment', this)"
-            class="menu-item flex justify-between items-center">
+            class="menu-item flex justify-between items-center
+            <?php if (in_array($current, ['payment','list_payment'])) echo 'parent-active'; ?>">
 
             <span class="flex items-center gap-3">
               <svg class="w-6 h-6 text-yellow-500" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
@@ -230,7 +238,7 @@
             <!-- Add Payment -->
             <li>
               <a href="payment"
-                class="menu-item flex items-center gap-3 <?php if ($current == 'add_commission') echo 'active'; ?>">
+                class="menu-item flex items-center gap-3 <?php if ($current == 'payment') echo 'active'; ?>">
 
                 <svg class="w-4 h-4 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path d="M4 12h16" />
@@ -243,7 +251,7 @@
             <!-- View Payments -->
             <li>
               <a href="list_payment"
-                class="menu-item flex items-center gap-3 <?php if ($current == 'view_commission') echo 'active'; ?>">
+                class="menu-item flex items-center gap-3 <?php if ($current == 'list_payment') echo 'active'; ?>">
 
                 <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path d="M4 12h16" />
@@ -260,8 +268,8 @@
         <li>
           <a href="javascript:void(0)"
             onclick="toggleMenu('payment', this)"
-            class="menu-item flex justify-between items-center">
-
+            class="menu-item flex justify-between items-center
+            <?php if (in_array($current, ['booking_payment','list_booking_payment'])) echo 'parent-active'; ?>">
             <span class="flex items-center gap-3">
               <svg class="w-6 h-6 text-yellow-500" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
                 <rect x="3" y="5" width="18" height="14" rx="2" stroke-linecap="round" stroke-linejoin="round" />
@@ -282,7 +290,7 @@
             <!-- Add Payment -->
             <li>
               <a href="booking_payment"
-                class="menu-item flex items-center gap-3 <?php if ($current == 'add_commission') echo 'active'; ?>">
+                class="menu-item flex items-center gap-3 <?php if ($current == 'booking_payment') echo 'active'; ?>">
 
                 <svg class="w-4 h-4 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path d="M4 12h16" />
@@ -295,7 +303,7 @@
             <!-- View Payments -->
             <li>
               <a href="list_booking_payment"
-                class="menu-item flex items-center gap-3 <?php if ($current == 'view_commission') echo 'active'; ?>">
+                class="menu-item flex items-center gap-3 <?php if ($current == 'list_booking_payment') echo 'active'; ?>">
 
                 <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path d="M4 12h16" />
@@ -312,7 +320,8 @@
         <li>
           <a href="javascript:void(0)"
             onclick="toggleMenu('performance', this)"
-            class="menu-item flex justify-between items-center">
+            class="menu-item flex justify-between items-center
+               <?php if (in_array($current, ['my_performance','team_performance','sites_commission'])) echo 'parent-active'; ?>">
 
             <span class="flex items-center gap-3">
               <svg class="w-6 h-6 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -347,9 +356,22 @@
                   <path d="M4 12h16" />
                 </svg>
 
-                <span class="sidebar-text">Team Performance</span>
+                <span class="sidebar-text">Team Performance</span> 
               </a>
             </li>
+            <li>
+              <a href="sites_commission"
+                class="menu-item flex items-center gap-3 <?php if ($current == 'sites_commission') echo 'active'; ?>">
+
+                <svg class="w-4 h-4 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path d="M4 12h16" />
+                </svg>
+
+                <span class="sidebar-text">My Sites & Commission</span> 
+              </a>
+            </li>
+
+
           </ul>
         </li>
 
@@ -364,10 +386,10 @@
 
         <!-- Transaction Summary -->
         <li>
-          <a href="javascript:void(0)"
-            onclick="toggleMenu('Transactionsum', this)"
-            class="menu-item flex justify-between items-center">
-
+<a href="javascript:void(0)"
+onclick="toggleMenu('Transactionsum', this)"
+class="menu-item flex justify-between items-center 
+<?php if (in_array($current, ['list_payment_summary', 'advisor_payment_summary'])) echo 'parent-active'; ?>">
             <span class="flex items-center gap-3">
               <svg class="w-6 h-6 text-yellow-500" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
                 <rect x="3" y="4" width="18" height="16" rx="2" ry="2" stroke-linecap="round" stroke-linejoin="round" />
@@ -387,7 +409,7 @@
           <ul id="Transactionsum" class="hidden">
             <li>
               <a href="list_payment_summary"
-                class="menu-item flex items-center gap-3 <?php if ($current == 'add_commission') echo 'active'; ?>">
+                class="menu-item flex items-center gap-3 <?php if ($current == 'list_payment_summary') echo 'active'; ?>">
 
                 <svg class="w-4 h-4 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path d="M4 12h16" />
@@ -398,7 +420,7 @@
             </li>
             <li>
               <a href="advisor_payment_summary"
-                class="menu-item flex items-center gap-3 <?php if ($current == 'add_commission') echo 'active'; ?>">
+                class="menu-item flex items-center gap-3 <?php if ($current == 'advisor_payment_summary') echo 'active'; ?>">
 
                 <svg class="w-4 h-4 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path d="M4 12h16" />
@@ -412,10 +434,10 @@
 
         <!-- Reference -->
         <li>
-          <a href="javascript:void(0)"
-            onclick="toggleMenu('Bookingpay', this)"
-            class="menu-item flex justify-between items-center">
-
+      <a href="javascript:void(0)"
+onclick="toggleMenu('Bookingpay', this)"
+class="menu-item flex justify-between items-center 
+<?php if (in_array($current, ['set_reference_amt', 'list_reference_amt', 'list_reference'])) echo 'parent-active'; ?>">
             <span class="flex items-center gap-3">
               <svg class="w-6 h-6 text-yellow-500" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round"
@@ -447,7 +469,7 @@
 
             <li>
               <a href="list_reference_amt"
-                class="menu-item flex items-center gap-3 <?php if ($current == 'view_reference_amt') echo 'active'; ?>">
+                class="menu-item flex items-center gap-3 <?php if ($current == 'list_reference_amt') echo 'active'; ?>">
 
                 <svg class="w-4 h-4 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path d="M4 12h16" />
@@ -475,9 +497,12 @@
 
         <li>
           <a href="javascript:void(0)"
-            onclick="toggleMenu('visit', this)"
-            class="menu-item flex justify-between items-center">
-
+onclick="toggleMenu('visit', this)"
+        class="menu-item flex justify-between items-center 
+<?php if (in_array($current, [
+'add_customer_visit',
+'list_customer_visit'
+])) echo 'parent-active'; ?>">
             <span class="flex items-center gap-3">
               <svg class="w-6 h-6 text-yellow-500" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round"
@@ -510,7 +535,7 @@
             <!-- View leader -->
             <li>
               <a href="list_customer_visit"
-                class="menu-item flex items-center gap-3 <?php if ($current == 'list_customers_visit') echo 'active'; ?>">
+                class="menu-item flex items-center gap-3 <?php if ($current == 'list_customer_visit') echo 'active'; ?>">
 
                 <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path d="M4 12h16" />
@@ -531,7 +556,7 @@
   </div>
 
   <!-- Bottom Logout -->
-  <div class="p-3 border-t border-gray-700">
+  <div class="mt-4 p-3 border-t border-gray-700">
     <a href="" onclick="logout()"
       class="menu-item text-red-400 hover:bg-red-500 hover:text-white transition">
       <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -546,31 +571,32 @@
 <!-- Toggle -->
 
 <script>
-  function profileToggle() {
-    const profileDropdown = document.getElementById('ProfileDropDown');
-    profileDropdown.classList.toggle('hidden');
-  }
-
   function toggleMenu(menuId, el) {
 
+    const allMenus = document.querySelectorAll("aside ul[id]");
+    const allArrows = document.querySelectorAll(".menu-arrow");
+
+    // 🔴 Close all menus
+    allMenus.forEach(menu => {
+        if (menu.id !== menuId) {
+            menu.classList.add("hidden");
+        }
+    });
+
+    // 🔴 Reset all arrows
+    allArrows.forEach(a => a.classList.remove("rotate-90"));
+
+    // ✅ Open clicked menu
     const menu = document.getElementById(menuId);
-    const arrow = el.querySelector('.menu-arrow');
+    const arrow = el.querySelector(".menu-arrow");
 
-    if (!menu) {
-      console.error('Menu not found:', menuId);
-      return;
-    }
-
-    menu.classList.toggle('hidden');
+    menu.classList.toggle("hidden");
 
     if (arrow) {
-      arrow.classList.toggle('rotate-90');
+        arrow.classList.toggle("rotate-90");
     }
+}
 
-  }
-</script>
-
-<script>
   function logout() {
 
     const token = localStorage.getItem("auth_token");
