@@ -19,7 +19,7 @@
             <thead class="bg-gray-100 text-gray-700">
                 <tr>
                     <th class="p-3 whitespace-nowrap">Site Location</th>
-                    <th class="p-3 whitespace-nowrap">Name</th>
+                    <th class="p-3 whitespace-nowrap">Name</th>    
                     <th class="p-3 whitespace-nowrap">Email</th>
                     <th class="p-3 whitespace-nowrap">Phone</th>
                     <th class="p-3 whitespace-nowrap">Aadhar</th>
