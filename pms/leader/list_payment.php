@@ -37,6 +37,7 @@
             <thead class="bg-gray-100 text-gray-700">
                 <tr>
                     <th class="p-3 text-left">Advisor Name</th>
+                    <th class="p-3 text-left">Booking</th>
                     <th class="p-3 text-left">Amount</th>
                     <th class="p-3 text-left">Payment Mode</th>
                     <th class="p-3 text-left">Reference No</th>
@@ -76,46 +77,18 @@ document.addEventListener("DOMContentLoaded", function () {
         return;
     }
 
-    const userCache = {};
     let currentPage = 1;
-
-    async function getUserName(userId) {
-        if (!userId) return "-";
-
-        if (userCache[userId]) return userCache[userId];
-
-        try {
-            const response = await fetch(url + "users/" + userId, {
-                headers: {
-                    "Authorization": "Bearer " + token,
-                    "Accept": "application/json"
-                }
-            });
-
-            const result = await response.json();
-            const userData = result.data ?? result;
-            const userName = userData?.name ?? userId;
-
-            userCache[userId] = userName;
-            return userName;
-
-        } catch (error) {
-            console.error("User fetch error:", error);
-            return userId;
-        }
-    }
 
     async function loadPayments(page = 1) {
 
         currentPage = page;
 
-        // ✅ FIX: declare BEFORE fetch
         const searchValue = document.getElementById("searchInput").value.trim();
         const perPage = document.getElementById("perPage").value;
 
         try {
             const response = await fetch(
-                `${url}commission/payments/created-by/${loggedInUser.id}?page=${currentPage}&per_page=${perPage}&search=${searchValue}`,
+                `${url}commission/payments/created-by/${loggedInUser.id}?page=${currentPage}&per_page=${perPage}&search=${encodeURIComponent(searchValue)}`,
                 {
                     method: "GET",
                     headers: {
@@ -129,13 +102,14 @@ document.addEventListener("DOMContentLoaded", function () {
             console.log("Payments API:", result);
 
             const payments = result.data?.data ?? result.data ?? [];
+
             const tbody = document.getElementById("paymentData");
             tbody.innerHTML = "";
 
             if (!payments.length) {
                 tbody.innerHTML = `
                     <tr>
-                        <td colspan="6" class="text-center p-4 text-gray-500">
+                        <td colspan="7" class="text-center p-4 text-gray-500">
                             No payment records found
                         </td>
                     </tr>
@@ -147,16 +121,34 @@ document.addEventListener("DOMContentLoaded", function () {
             let rows = "";
 
             for (const row of payments) {
-                const advisorName = row.user?.name ?? await getUserName(row.user_id);
 
                 rows += `
                     <tr class="border-b bg-white">
-                        <td class="p-3">${advisorName}</td>
-                        <td class="p-3 text-green-600 font-semibold">₹ ${Math.abs(row.amount ?? 0)}</td>
+                        <td class="p-3">
+                            ${row.user?.name ?? '-'} 
+                            <span class="text-xs text-gray-500">
+                                (${row.user?.user_code ?? '-'})
+                            </span>
+                        </td>
+
+                        <td class="p-3">
+                            ${row.booking?.buyer_name ?? 'N/A'} 
+                            <span class="text-xs text-gray-500">
+                                (${row.booking?.user_code ?? '-'})
+                            </span>
+                        </td>
+
+                        <td class="p-3 text-green-600 font-semibold">
+                            ₹ ${Math.abs(row.amount ?? 0)}
+                        </td>
+
                         <td class="p-3">${row.payment_mode ?? ""}</td>
                         <td class="p-3">${row.reference_no ?? ""}</td>
                         <td class="p-3">${row.remark ?? ""}</td>
-                        <td class="p-3">${row.created_at ? new Date(row.created_at).toLocaleDateString() : ""}</td>
+
+                        <td class="p-3">
+                            ${row.created_at ? new Date(row.created_at).toLocaleDateString() : ""}
+                        </td>
                     </tr>
                 `;
             }
@@ -199,11 +191,11 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    // ✅ DELETE
+    // ✅ DELETE (FIXED)
     window.deletePayment = function(id) {
         if (!confirm("Delete this payment record?")) return;
 
-        fetch(url + "commission/ledger/" + loggedInUser.id, {
+        fetch(url + "commission/ledger/" + id, {
             method: "DELETE",
             headers: {
                 "Authorization": "Bearer " + token,
@@ -223,9 +215,23 @@ document.addEventListener("DOMContentLoaded", function () {
         loadPayments(page);
     };
 
-    // ✅ SEARCH + FILTER
+    // ✅ SEARCH BUTTON
     document.getElementById("searchBtn").addEventListener("click", () => loadPayments(1));
+
+    // ✅ PER PAGE
     document.getElementById("perPage").addEventListener("change", () => loadPayments(1));
+
+    // ✅ LIVE SEARCH (DEBOUNCE)
+    let searchTimeout;
+
+    document.getElementById("searchInput").addEventListener("keyup", function () {
+
+        clearTimeout(searchTimeout);
+
+        searchTimeout = setTimeout(() => {
+            loadPayments(1);
+        }, 400);
+    });
 
     // INITIAL LOAD
     loadPayments();

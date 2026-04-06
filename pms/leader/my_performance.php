@@ -108,7 +108,7 @@
      </span>`;
                 table.row.add([
     serial,
-    `${row.buyer_name ?? '-'} (${row.role ?? '-'})`,
+    `${row.buyer_name ?? '-'} (Cr. by ${row.role ?? '-'})`,
     row.plot_number ?? '-',
 
     // 🔵 Total Commission
