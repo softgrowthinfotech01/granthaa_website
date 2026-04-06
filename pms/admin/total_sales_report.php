@@ -160,6 +160,11 @@ async function fetchLocations(page = 1) {
 
         bookings.forEach((item, index) => {
 
+              const formattedCommission =
+    item.commission_type === "percent"
+        ? `${item.commission_value ?? 0}%`
+        : `₹${item.commission_value ?? 0}`;
+
             // MAIN ROW
             tbody.innerHTML += `
                 <tr class="border-b">
@@ -191,10 +196,10 @@ async function fetchLocations(page = 1) {
 
                             <p><b>Advance:</b> ₹${item.advance_amount}</p>
                             <p><b>Total:</b> ₹${item.total_booking_amount}</p>
-                            <p><b>Commission:</b> ${item.commission_value}%</p>
-
+                            <p><b>Commission:</b> ${formattedCommission}</p>
                             <p><b>Total Commission Amount:</b> ₹${item.commission_amount}</p>
                             
+     
 
                             <p class="col-span-2"><b>Address:</b> ${item.address}, ${item.city}</p>
                             <p class="col-span-2"><b>Remark:</b> ${item.remark}</p>
