@@ -125,7 +125,8 @@ $referral = Referral::create([
     'assigned_to'      => $leaderId,
     'status'           => 'pending',
     'incentive_type'   => $setting->type ?? null,
-    'incentive_value'  => $setting->value ?? 0
+    'incentive_value'  => $setting->value ?? 0,
+    'location_id'  => $setting->location_id ?? null
 ]);
 
     return response()->json([

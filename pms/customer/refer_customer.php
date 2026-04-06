@@ -96,39 +96,68 @@ transition duration-300">
         // 🔹 Load Site Locations
         async function loadLocations() {
 
-            const token = localStorage.getItem("auth_token");
+    const token = localStorage.getItem("auth_token");
 
-            try {
+    try {
 
-                const response = await fetch(url + "site-location", {
-                    headers: {
-                        "Authorization": "Bearer " + token,
-                        "Accept": "application/json"
-                    }
-                });
+        // 🔥 STEP 1: Get referral settings
+        const refRes = await fetch(url + "referral-setting", {
+            headers: {
+                "Authorization": "Bearer " + token,
+                "Accept": "application/json"
+            }
+        });
 
-                const result = await response.json();
+        const refResult = await refRes.json();
+        const referralData = refResult.data || [];
 
-                const locationSelect = document.getElementById("location_id");
+        console.log("Referral Data:", referralData);
 
-                // Reset dropdown
-                locationSelect.innerHTML = `<option value="">Choose a site location</option>`;
+        // 🔥 Extract location_ids
+        const locationIds = referralData.map(item => item.location_id);
 
-                // Handle pagination / normal response
-                const locations = result.data?.data || result.data;
+        // 🔥 STEP 2: Get all locations
+        const locRes = await fetch(url + "site-location", {
+            headers: {
+                "Authorization": "Bearer " + token,
+                "Accept": "application/json"
+            }
+        });
 
-                locations.forEach(loc => {
-                    locationSelect.innerHTML += `
+        const locResult = await locRes.json();
+        const allLocations = locResult.data || [];
+
+        console.log("All Locations:", allLocations);
+
+        // 🔥 STEP 3: Match locations
+        const filteredLocations = allLocations.filter(loc =>
+            locationIds.includes(loc.id.toString())
+        );
+
+        console.log("Filtered Locations:", filteredLocations);
+
+        // 🔥 STEP 4: Populate dropdown
+        const locationSelect = document.getElementById("location_id");
+
+        locationSelect.innerHTML = `<option value="">Choose a site location</option>`;
+
+        if (filteredLocations.length === 0) {
+            locationSelect.innerHTML += `<option>No locations assigned</option>`;
+            return;
+        }
+
+        filteredLocations.forEach(loc => {
+            locationSelect.innerHTML += `
                 <option value="${loc.id}">
                     ${loc.site_location}
                 </option>
             `;
-                });
+        });
 
-            } catch (error) {
-                console.error("Error loading locations:", error);
-            }
-        }
+    } catch (error) {
+        console.error("Error loading locations:", error);
+    }
+}
 
         loadLocations();
 
