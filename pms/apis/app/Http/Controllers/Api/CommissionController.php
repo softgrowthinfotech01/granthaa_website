@@ -53,7 +53,7 @@ class CommissionController extends Controller
             if($leaderCommission->commission_value < $validated['commission_value']){
                    return response()->json([
                     'status' => false,
-                    'message' => 'please set commission less than ' . $leaderCommission->commission_type  
+                    'message' => 'please set commission less than ' . $leaderCommission->commission_value . "." 
                 ], 422);
             }
         }
