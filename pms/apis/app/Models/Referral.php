@@ -21,7 +21,8 @@ class Referral extends Model
 
     // 🔥 NEW
     'incentive_type',
-    'incentive_value'
+    'incentive_value',
+    'location_id'
 ];
 
     /*
@@ -51,7 +52,7 @@ class Referral extends Model
     // Converted booking
     public function reflocation()
     {
-        return $this->belongsTo(LocationMaster::class, 'booking_id');
+        return $this->belongsTo(LocationMaster::class, 'location_id');
     }
 
 

@@ -140,7 +140,7 @@ $referral = Referral::create([
     {
         $user = auth()->user();
 
-        $query = Referral::with(['referrer', 'assignedUser', 'booking']);
+        $query = Referral::with(['referrer', 'assignedUser', 'booking', 'reflocation']);
 
         // 🔐 Admin → See all
         if ($user->role === 'admin') {
