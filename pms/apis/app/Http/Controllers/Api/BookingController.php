@@ -1015,11 +1015,15 @@ class BookingController extends Controller
                     ->where('type', 'commission')
                     ->sum('amount');
 
-                $mytotalPaidAmt = abs(
-                    CommissionLedger::where('user_id', $user->id)
+                    $paid = CommissionLedger::where('user_id', $user->id)
                         ->where('type', 'payment')
-                        ->sum('amount')
-                );
+                        ->sum('amount');
+
+                    $reversal = CommissionLedger::where('user_id', $user->id)
+                        ->where('type', 'commission')
+                        ->sum('amount');
+
+                $mytotalPaidAmt = abs($paid) - abs($reversal);
 
                 $topAdvisor = Booking::whereNull('deleted_at')->where('leader_id', $user->id)
                     ->whereNotNull('adviser_id') // only adviser bookings
@@ -1068,12 +1072,17 @@ class BookingController extends Controller
                 $totalCommissionAmount = Booking::whereNull('deleted_at')->where('adviser_id', $user->id)
                     ->sum('adviser_commission_amount');
 
-                $totalPaidAmt = abs(
-                    CommissionLedger::where('user_id', $user->id)
-                        ->whereIn('type', ['payment', 'reversal'])
-                        ->where('amount', '<', 0)
-                        ->sum('amount')
-                );
+                    $paid = CommissionLedger::where('user_id', $user->id)
+                        ->whereIn('type', ['payment'])
+                        ->where('amount','<',0)
+                        ->sum('amount');
+
+                    $reversal = CommissionLedger::where('user_id', $user->id)
+                        ->whereIn('type', ['reversal'])
+                        ->where('amount','<',0)
+                        ->sum('amount');
+
+                $totalPaidAmt = abs($paid) - abs($reversal);
 
                 $topAdvisor = Booking::whereNull('deleted_at')->where('adviser_id', $user->id)
                     ->select('user_code', DB::raw('SUM(total_booking_amount) as total'))
