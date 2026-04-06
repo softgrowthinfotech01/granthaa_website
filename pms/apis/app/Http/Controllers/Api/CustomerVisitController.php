@@ -124,7 +124,7 @@ if ($existingVisit) {
         if ($request->site_location) {
             $query->where('site_location', $request->site_location);
         }
-            $query->where('created_by', $user->created_by);
+            $query->where('created_by', $user->id);
         
 
         $visits = $query->orderBy('visited_at', 'desc')->get();
