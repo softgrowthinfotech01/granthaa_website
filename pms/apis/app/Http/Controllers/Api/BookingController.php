@@ -1023,7 +1023,7 @@ class BookingController extends Controller
                         ->where('type', 'reversal')
                         ->sum('amount');
 
-                $mytotalPaidAmt = abs($paid) - abs($reversal);
+                $mytotalPaidAmt = abs($paid) + abs($reversal);
 
                 $topAdvisor = Booking::whereNull('deleted_at')->where('leader_id', $user->id)
                     ->whereNotNull('adviser_id') // only adviser bookings
