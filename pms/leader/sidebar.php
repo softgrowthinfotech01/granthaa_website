@@ -446,6 +446,18 @@
             </li>
 
             <li>
+              <a href="view_reference_amt"
+                class="menu-item flex items-center gap-3 <?php if ($current == 'view_reference_amt') echo 'active'; ?>">
+
+                <svg class="w-4 h-4 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path d="M4 12h16" />
+                </svg>
+
+                <span class="sidebar-text">View Reference Amount</span>
+              </a>
+            </li>
+
+            <li>
               <a href="list_reference"
                 class="menu-item flex items-center gap-3 <?php if ($current == 'list_reference') echo 'active'; ?>">
 
@@ -491,7 +503,7 @@
                   <path d="M4 12h16" />
                 </svg>
 
-                <span class="sidebar-text">Add Customer</span>
+                <span class="sidebar-text">Register Customer Visits</span>
               </a>
             </li>
 
@@ -504,7 +516,7 @@
                   <path d="M4 12h16" />
                 </svg>
 
-                <span class="sidebar-text">View Customers</span>
+                <span class="sidebar-text">View Customers Visits</span>
               </a>
             </li>
 

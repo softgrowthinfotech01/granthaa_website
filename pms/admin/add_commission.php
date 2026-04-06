@@ -186,7 +186,7 @@
 
 
                 // 🔹 Load Leaders
-                const leaderRes = await fetch(url + 'by-role?role=leader', {
+                const leaderRes = await fetch(url + 'by-role?role=leader&per_page=100', {
                     headers: {
                         "Authorization": "Bearer " + token,
                         "Accept": "application/json"

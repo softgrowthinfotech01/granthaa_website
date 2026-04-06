@@ -44,4 +44,19 @@ $setting = ReferralSetting::updateOrCreate(
             'data' => $setting
         ]);
     }
+
+    public function index() {
+        $user = auth()->user();
+
+        $query = ReferralSetting::with(['user', 'location']);
+        
+        if($user->role === "customer"){
+            $query->where('target_user_id', $user->id);
+        }
+
+        if(in_array($user->role, ["cusomer", "adviser"])){
+            $query->where('user_id', $user->id);
+        }
+
+    }
 }

@@ -256,6 +256,7 @@
                 document.getElementById("city").value = user.city ?? "";
                 document.getElementById("state").value = user.state ?? "";
                 document.getElementById("address").value = user.address ?? "";
+                document.getElementById("mobile").value = user.contact_no ?? "";
                 document.getElementById("pincode").value = user.pin_code ?? "";
                 document.getElementById("bank_name").value = user.bank_name ?? "";
                 document.getElementById("branch").value = user.bank_branch ?? "";

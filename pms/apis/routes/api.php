@@ -134,6 +134,7 @@ Route::middleware(['auth:sanctum', 'role:admin,leader,adviser,customer'])->group
 
         // referance
     Route::post('/referral-setting', [ReferralSettingController::class, 'store']);
+    Route::get('/referral-setting', [ReferralSettingController::class, 'index']);
     Route::get('/wallet', [ReferralController::class, 'wallet']);
     Route::get('/ledger', [ReferralController::class, 'ledger']);
 
