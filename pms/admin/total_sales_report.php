@@ -193,8 +193,8 @@ async function fetchLocations(page = 1) {
                             <p><b>Total:</b> ₹${item.total_booking_amount}</p>
                             <p><b>Commission:</b> ${item.commission_value}%</p>
 
-                            <p><b>Leader Commission Amount:</b> ₹${item.leader_commission_amount}</p>
-                            <p><b>Adviser Commission Amount:</b> ₹${item.adviser_commission_amount}</p>
+                            <p><b>Total Commission Amount:</b> ₹${item.commission_amount}</p>
+                            
 
                             <p class="col-span-2"><b>Address:</b> ${item.address}, ${item.city}</p>
                             <p class="col-span-2"><b>Remark:</b> ${item.remark}</p>
@@ -237,8 +237,8 @@ async function fetchLocations(page = 1) {
                 <p><b>Advance:</b> ₹${item.advance_amount}</p>
                 <p><b>Total:</b> ₹${item.total_booking_amount}</p>
 
-                <p><b>Leader Commission Amount:</b> ₹${item.leader_commission_amount}</p>
-                <p><b>Adviser Commission Amount:</b> ₹${item.adviser_commission_amount}</p>
+                <p><b>Total Commission Amount:</b> ₹${item.commission_amount}</p>
+              
             </div>
 
         </div>
