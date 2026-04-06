@@ -562,127 +562,88 @@ class BookingController extends Controller
             | Duplicate Plot Check
             |--------------------------------------------------------------------------
             */
-                if (
-                    $canEditPlot &&
-                    $request->filled('plot_number') &&
-                    $request->filled('site_location')
-                ) {
-
-                    $exists = Booking::where('site_location', $request->site_location)
-                        ->where('plot_number', $request->plot_number)
-                        ->whereNull('deleted_at')
-                        ->where('id', '<>', $booking->id)
-                        ->exists();
-
-                    if ($exists) {
-                        throw new \Exception('Plot already booked.');
-                    }
-                }
-
-                /*
-            |--------------------------------------------------------------------------
-            | Update Customer
-            |--------------------------------------------------------------------------
-            */
-                if ($booking->user) {
-                    $booking->user->update(array_filter([
-                        'name' => $request->buyer_name,
-                        // 'contact_no' => $request->mobile,
-                        'address' => $request->address,
-                        'city' => $request->city,
-                        'state' => $request->state,
-                    ]));
-                }
-
-                /*
-            |--------------------------------------------------------------------------
-            | Update Booking
-            |--------------------------------------------------------------------------
-            */
-                $updateData = $request->only([
-                    'buyer_name',
-                    'mobile',
-                    'dob',
-                    'email',
-                    'pan_number',
-                    'aadhar_number',
-                    'address',
-                    'city',
-                    'state',
-                    'pincode',
-                    'project_name',
-                    'plot_number',
-                    'khasara_number',
-                    'ph_number',
-                    'mouza',
-                    'tahsil',
-                    'district',
-                    'square_feet',
-                    'square_meter',
-                    'total_booking_amount',
-                    'payment_mode',
-                    'remark'
-                ]);
-
-                if ($canEditPlot) {
-                    $updateData['plot_number'] = $request->plot_number;
-                    $updateData['site_location'] = $request->site_location;
-                    $updateData['total_booking_amount'] = $request->total_booking_amount;
-                }
-
                 if ($canEditPlot && $totalAmountChanged) {
 
                     $newAmount = (float) $request->total_booking_amount;
+                    $squareFeet = $request->square_feet ?? $booking->square_feet;
+
+                    $leaderCommission = 0;
+                    $adviserCommission = 0;
 
                     /*
     |--------------------------------------------------------------------------
-    | Leader Commission Recalculate
+    | CASE 1: Booking created by LEADER
     |--------------------------------------------------------------------------
     */
-                    if ($booking->leader_commission_type === 'percent') {
-                        $leaderCommission =
-                            ($newAmount * $booking->leader_commission_value) / 100;
-                    } else {
-                        $leaderCommission = $booking->leader_commission_value * $request->square_feet;
+                    if ($booking->created_by_role == 'leader') {
+
+                        if ($booking->leader_commission_type === 'percent') {
+                            $leaderCommission = ($newAmount * $booking->leader_commission_value) / 100;
+                        } else {
+                            $leaderCommission = $booking->leader_commission_value * $squareFeet;
+                        }
+
+                        $adviserCommission = 0;
                     }
 
                     /*
     |--------------------------------------------------------------------------
-    | Adviser Commission Recalculate
+    | CASE 2: Booking created by ADVISER
     |--------------------------------------------------------------------------
     */
-                    if ($booking->adviser_commission_type === 'percent') {
-                        $adviserCommission =
-                            ($newAmount * $booking->adviser_commission_value) / 100;
-                    } else {
-                        $adviserCommission = $booking->adviser_commission_value * $request->square_feet;
+                    if ($booking->created_by_role == 'adviser') {
+
+                        // Leader Commission
+                        if ($booking->leader_commission_type === 'percent') {
+                            $leaderAmount = ($newAmount * $booking->leader_commission_value) / 100;
+                        } else {
+                            $leaderAmount = $booking->leader_commission_value * $squareFeet;
+                        }
+
+                        // Adviser Commission
+                        if ($booking->adviser_commission_type === 'percent') {
+                            $adviserAmount = ($newAmount * $booking->adviser_commission_value) / 100;
+                        } else {
+                            $adviserAmount = $booking->adviser_commission_value * $squareFeet;
+                        }
+
+                        if ($adviserAmount > $leaderAmount) {
+                            throw new Exception("Adviser commission cannot exceed leader commission.");
+                        }
+
+                        $leaderCommission = $leaderAmount - $adviserAmount;
+                        $adviserCommission = $adviserAmount;
                     }
 
                     /*
     |--------------------------------------------------------------------------
-    | Update Booking Commission Columns
+    | Update Booking
     |--------------------------------------------------------------------------
     */
                     $booking->update([
-                        'leader_commission_amount' => $leaderCommission,
-                        'adviser_commission_amount' => $adviserCommission,
-                        'commission_amount' => abs($leaderCommission) + abs($adviserCommission)
+                        'leader_commission_amount' => round($leaderCommission, 2),
+                        'adviser_commission_amount' => round($adviserCommission, 2),
+                        'commission_amount' => round($leaderCommission + $adviserCommission, 2)
                     ]);
 
                     /*
     |--------------------------------------------------------------------------
-    | Update Commission Ledger (ONLY commission type)
+    | Update Ledger
     |--------------------------------------------------------------------------
     */
-                    CommissionLedger::where('booking_id', $booking->id)
-                        ->where('type', 'commission')
-                        ->where('user_id', $booking->leader_id)
-                        ->update(['amount' => $leaderCommission]);
+                    if ($booking->leader_id) {
+                        CommissionLedger::where('booking_id', $booking->id)
+                            ->where('type', 'commission')
+                            ->where('user_id', $booking->leader_id)
+                            ->update(['amount' => $leaderCommission]);
+                    }
 
-                    CommissionLedger::where('booking_id', $booking->id)
-                        ->where('type', 'commission')
-                        ->where('user_id', $booking->adviser_id)
-                        ->update(['amount' => $adviserCommission]);
+                    if ($booking->adviser_id) {
+                        CommissionLedger::where('booking_id', $booking->id)
+                            ->where('type', 'commission')
+                            ->where('user_id', $booking->adviser_id)
+                            ->update(['amount' => $adviserCommission]);
+                    }
                 }
 
                 $booking->update(array_filter($updateData));
@@ -743,10 +704,7 @@ class BookingController extends Controller
             $booking = Booking::findOrFail($id);
             $user = auth()->user();
 
-            if (
-                $user->role != 'admin' &&
-                $booking->created_by != $user->id
-            ) {
+            if ($user->role != 'admin' && $booking->created_by != $user->id) {
                 abort(403, 'Unauthorized');
             }
 
@@ -754,6 +712,11 @@ class BookingController extends Controller
                 throw new Exception('Booking already deleted.');
             }
 
+            /*
+        |--------------------------------------------------------------------------
+        | 1. Reverse Payments
+        |--------------------------------------------------------------------------
+        */
             $payments = BookingPayment::where('booking_id', $booking->id)->get();
 
             foreach ($payments as $payment) {
@@ -768,6 +731,11 @@ class BookingController extends Controller
                 ]);
             }
 
+            /*
+        |--------------------------------------------------------------------------
+        | 2. Reverse Commission (Leader + Adviser)
+        |--------------------------------------------------------------------------
+        */
             $ledgers = CommissionLedger::where('booking_id', $booking->id)
                 ->where('type', 'commission')
                 ->get();
@@ -782,34 +750,32 @@ class BookingController extends Controller
                 ]);
             }
 
-            $referral = Referral::where('booking_id', $booking->id)->first();
+            /*
+        |--------------------------------------------------------------------------
+        | 3. Reverse Referral (USE ReferralLedger ❗)
+        |--------------------------------------------------------------------------
+        */
+            $referralLedger = ReferralLedger::where('booking_id', $booking->id)
+                ->where('type', 'incentive')
+                ->get();
 
-            if ($referral && $referral->incentive_amount > 0) {
-
-                $referrer = User::findOrFail($referral->referrer_id);
-
-                if ($referrer->wallet_balance < $referral->incentive_amount) {
-                    throw new Exception('Wallet already used.');
-                }
-
-                $referrer->decrement(
-                    'wallet_balance',
-                    $referral->incentive_amount
-                );
-
-                WalletTransaction::create([
-                    'user_id' => $referrer->id,
-                    'amount' => $referral->incentive_amount,
-                    'type' => 'debit',
-                    'remark' => 'Referral reversed due to booking delete'
-                ]);
-
-                // keep incentive amount for restore
-                $referral->update([
-                    'status' => 'deleted'
+            foreach ($referralLedger as $entry) {
+                ReferralLedger::create([
+                    'user_id' => $entry->user_id,
+                    'referral_id' => $entry->referral_id,
+                    'booking_id' => $booking->id,
+                    'type' => 'reversal',
+                    'amount' => -$entry->amount,
+                    'remark' => 'Referral incentive reversed',
+                    'created_by' => auth()->id()
                 ]);
             }
 
+            /*
+        |--------------------------------------------------------------------------
+        | 4. Soft Delete Booking
+        |--------------------------------------------------------------------------
+        */
             $booking->delete();
         });
 
