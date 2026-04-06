@@ -1331,11 +1331,14 @@ class BookingController extends Controller
 
             // Paid amount from ledger
             $paidAmount = abs(
-                CommissionLedger::where('user_id', $leader->id)
-                    ->where('type', 'payment')
-                    ->where('amount', '<', 0)
-                    ->sum('amount')
-            );
+    CommissionLedger::where('user_id', $leader->id)
+        ->where('type', 'payment')
+        ->where('amount', '<', 0)
+        ->whereHas('booking', function ($q) {
+            $q->whereNull('deleted_at');
+        })
+        ->sum('amount')
+);
 
             $balance = $totalCommission - $paidAmount;
 
