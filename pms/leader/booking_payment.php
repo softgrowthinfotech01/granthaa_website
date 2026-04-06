@@ -360,8 +360,6 @@ function clearAmounts() {
     document.getElementById("balanced_amount").value = "";
 }
 
-
-/* ================= PAYMENT TYPE CONTROL ================= */
 /* ================= PAYMENT TYPE CONTROL ================= */
 document.getElementById("amount").addEventListener("input", function () {
 
