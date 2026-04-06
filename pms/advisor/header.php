@@ -15,6 +15,7 @@
   <link href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.dataTables.min.css" rel="stylesheet">
 
 
+ 
   <style>
     /* Sidebar collapse */
     .sidebar-collapsed {
@@ -25,26 +26,90 @@
       display: none;
     }
 
-    /* Menu items */
-    .menu-item {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 12px;
-      border-radius: 12px;
-      transition: all .3s ease;
-    }
+   /* MOBILE → hide scrollbar */
+@media (max-width: 640px) {
 
-    .menu-item:hover {
-      background: rgb(17 24 39);
-      color: white;
-    }
+  #sidebar {
+    -ms-overflow-style: none;  /* IE & Edge */
+    scrollbar-width: none;     /* Firefox */
+  }
 
-    .menu-item.active {
-      background: rgb(3 7 18);
-      ;
-      color: white;
-    }
+  #sidebar::-webkit-scrollbar {
+    display: none;             /* Chrome, Safari */
+  }
+
+
+
+}
+
+/* DESKTOP → show scrollbar */
+@media (min-width: 641px) {
+
+  #sidebar {
+    overflow-y: auto;
+    scrollbar-width: thin; /* Firefox */
+       overflow-x: hidden !important;  
+   
+  }
+
+  #sidebar::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  #sidebar::-webkit-scrollbar-thumb {
+    background-color: #cbd5e1; /* Tailwind gray-300 */
+    border-radius: 6px;
+  }
+
+  #sidebar::-webkit-scrollbar-thumb:hover {
+    background-color: #94a3b8; /* darker */
+  }
+  
+
+}
+
+/* Menu items */
+.menu-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  transition: all 0.25s ease;
+  
+}
+
+/* Hover */
+.menu-item:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: #fff;
+}
+
+/* Active (highlighted) */
+.menu-item.active {
+
+  font-weight: 600;
+}
+
+.menu-item.active {
+  position: relative;
+}
+
+.menu-item.active::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 6px;
+  bottom: 6px;
+  width: 4px;
+
+  border-radius: 4px;
+}
+.menu-item.parent-active {
+  background: rgba(250, 204, 21, 0.07); /* lighter */
+  color: #fde68a; /* soft yellow */
+  font-weight: 600;
+}
 
     /* Profile dropdown animation */
     #profileMenu {
@@ -109,7 +174,7 @@
 
             <!-- Profile Button -->
             <button onclick="toggleProfile(event)"
-              class="w-14 h-14 rounded-full border-2 border-green-600
+              class=" w-14 h-14 rounded-full border-2 border-green-600
            overflow-hidden shadow-md hover:shadow-lg transition">
 
               <img src="../images/profile.png"
