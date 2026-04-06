@@ -1,24 +1,24 @@
 <?php $current = basename($_SERVER['PHP_SELF']); ?>
 
 <aside id="sidebar"
-class="fixed md:static z-30 top-0 left-0 h-full w-55 md:w-64 bg-gray-800 text-white
+  class="fixed md:static z-30 top-0 left-0 h-full w-55 md:w-64 bg-gray-800 text-white
 transition-all duration-300 ease-in-out -translate-x-full md:translate-x-0
 flex flex-col justify-between flex-shrink-0">
 
-<!-- Top -->
-<div>
-<!-- Logo -->
-<div class=" sidebar-text p-4 flex justify-center items-center">
- <h1 class="text-2xl md:text-3xl font-serif font-semibold tracking-[0.25em]
+  <!-- Top -->
+  <div>
+    <!-- Logo -->
+    <div class=" sidebar-text p-4 flex justify-center items-center">
+      <h1 class="text-2xl md:text-3xl font-serif font-semibold tracking-[0.25em]
              text-yellow-500 drop-shadow-sm">
-    GRANTHAA
-  </h1>
-  <!-- <img src="../images/logo.png" 
+        GRANTHAA
+      </h1>
+      <!-- <img src="../images/logo.png" 
        alt="Granthaa Land Developer Pvt Ltd"
        class="h-25 w-60 sidebar-logo transition-all duration-300 border-2 border-yellow-400 rounded-lg "> -->
 
-</div>
-  <nav class="mt-6 px-2">
+    </div>
+    <nav class="mt-6 px-2">
 
       <ul class="space-y-5">
 
@@ -150,18 +150,18 @@ flex flex-col justify-between flex-shrink-0">
           </ul>
         </li>
 
-         <a href="sites_commission"
-            class="menu-item <?php if ($current == 'sites_commission') echo 'active'; ?>">
-            <svg class="w-6 h-6 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-          d="M3 3v18h18M7 13l3-3 4 4 5-5"/>
-  </svg>
-            <span class="sidebar-text">Sites & Commission</span>
-          </a>
+        <a href="sites_commission"
+          class="menu-item <?php if ($current == 'sites_commission') echo 'active'; ?>">
+          <svg class="w-6 h-6 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M3 3v18h18M7 13l3-3 4 4 5-5" />
+          </svg>
+          <span class="sidebar-text">Sites & Commission</span>
+        </a>
         </li>
 
-        
-         <!-- reference -->
+
+        <!-- reference -->
         <li>
           <a href="javascript:void(0)"
             onclick="toggleMenu('reference', this)"
@@ -184,15 +184,27 @@ flex flex-col justify-between flex-shrink-0">
 
           <ul id="reference" class="hidden">
 
-          <li>
+            <li>
               <a href="set_reference_amt"
-                class="menu-item flex items-center gap-3 <?php if ($current == 'list_reference') echo 'active'; ?>">
+                class="menu-item flex items-center gap-3 <?php if ($current == 'set_reference_amt') echo 'active'; ?>">
 
                 <svg class="w-4 h-4 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path d="M4 12h16" />
                 </svg>
 
                 <span class="sidebar-text">Set Reference Amount</span>
+              </a>
+            </li>
+
+            <li>
+              <a href="list_reference_amt"
+                class="menu-item flex items-center gap-3 <?php if ($current == 'list_reference') echo 'active'; ?>">
+
+                <svg class="w-4 h-4 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path d="M4 12h16" />
+                </svg>
+
+                <span class="sidebar-text">List Reference Amount</span>
               </a>
             </li>
 
@@ -213,7 +225,7 @@ flex flex-col justify-between flex-shrink-0">
 
         <!-- visit customer -->
 
-         <li>
+        <li>
           <a href="javascript:void(0)"
             onclick="toggleMenu('visit', this)"
             class="menu-item flex justify-between items-center">
@@ -263,25 +275,25 @@ flex flex-col justify-between flex-shrink-0">
           </ul>
         </li>
 
-       
+
 
       </ul>
 
     </nav>
 
 
-</div>
+  </div>
 
-<!-- Bottom Logout -->
-<div class="p-3 border-t border-gray-700">
-  <a onclick="logout()" style="cursor: pointer;"
-   class="menu-item text-red-400 hover:bg-red-500 hover:text-white transition">
-    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path d="M17 16l4-4m0 0l-4-4m4 4H7"/>
-    </svg>
-    <span class="sidebar-text">Logout</span>
-  </a>
-</div>
+  <!-- Bottom Logout -->
+  <div class="p-3 border-t border-gray-700">
+    <a onclick="logout()" style="cursor: pointer;"
+      class="menu-item text-red-400 hover:bg-red-500 hover:text-white transition">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path d="M17 16l4-4m0 0l-4-4m4 4H7" />
+      </svg>
+      <span class="sidebar-text">Logout</span>
+    </a>
+  </div>
 
 </aside>
 
@@ -315,26 +327,25 @@ flex flex-col justify-between flex-shrink-0">
 </script>
 
 <script>
-    function logout() {
+  function logout() {
     const token = localStorage.getItem("auth_token");
 
     fetch(url + "logout", {
-        method: "POST",
-        headers: {
-            "Authorization": "Bearer " + token,
-            "Accept": "application/json"
-        }
+      method: "POST",
+      headers: {
+        "Authorization": "Bearer " + token,
+        "Accept": "application/json"
+      }
     }).finally(() => {
-        localStorage.clear();
-        window.location.href = "../login.php";
+      localStorage.clear();
+      window.location.href = "../login.php";
     });
-}
+  }
 
-const user = JSON.parse(localStorage.getItem("auth_user"));
+  const user = JSON.parse(localStorage.getItem("auth_user"));
 
-if (!user || user.role !== "adviser") {
+  if (!user || user.role !== "adviser") {
     alert("Unauthorized access");
     window.location.href = "../login.php";
-}
-
+  }
 </script>
