@@ -50,11 +50,7 @@ class CommissionController extends Controller
                 ], 422);
             }
         }
-        if ($auth->role === 'leader') {
-            if ($comm) {
-            }
-        }
-
+        
         if (!in_array($user->role, ['leader', 'adviser'])) {
             return response()->json([
                 'message' => 'Commission can only be set for Leader or Adviser'
