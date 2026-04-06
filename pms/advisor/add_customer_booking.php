@@ -213,7 +213,7 @@ class="w-full border border-gray-300 px-5 py-3 rounded-xl bg-gray-100 outline-no
                         <option>Select Payment Mode</option>
                         <option value="cash">Cash</option>
                         <option value="cheque">Cheque</option>
-                        <option value="online_transfer">Online Transfer</option>
+                        <option value="online_transfer">Online Transfer</option>   
                         <option value="upi">UPI</option>
                     </select>
                 </div>
