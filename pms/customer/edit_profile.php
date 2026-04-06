@@ -168,7 +168,7 @@ async function updateProfile(){
     // BASIC
     name: document.getElementById("name").value.trim(),
     email: document.getElementById("email").value.trim(),
-    contact_no: document.getElementById("contact_no").value.trim(),
+    // contact_no: document.getElementById("contact_no").value.trim(),
 
     // PERSONAL
     aadhaar_number: document.getElementById("aadhaar_number").value.trim(),
