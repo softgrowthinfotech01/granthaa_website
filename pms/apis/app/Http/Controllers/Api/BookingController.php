@@ -1070,7 +1070,7 @@ class BookingController extends Controller
 
                 $totalPaidAmt = abs(
                     CommissionLedger::where('user_id', $user->id)
-                        ->where('type', 'payment')
+                        ->whereIn('type', ['payment', 'reversal'])
                         ->where('amount', '<', 0)
                         ->sum('amount')
                 );
