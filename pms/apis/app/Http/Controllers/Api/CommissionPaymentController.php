@@ -371,11 +371,18 @@ $query = CommissionLedger::with('booking')->with('user')
         $totalCommission = Booking::where('adviser_id', $adviserId)
             ->sum('adviser_commission_amount');
 
-        $paidAmount = abs(
+        $paid = abs(
         CommissionLedger::where('user_id', $adviserId)
         ->where('type', 'payment')
         ->sum('amount')
         );
+        $reversal = abs(
+        CommissionLedger::where('user_id', $adviserId)
+        ->where('type', 'reversal')
+        ->sum('amount')
+        );
+        $paidAmount = abs(
+        $paid - $reversal        );
 
         $summary = [
             'total_plots' => $totalPlots,

@@ -1007,6 +1007,9 @@ class BookingController extends Controller
                     CommissionLedger::whereIn('user_id', $teamIds)
                         ->where('type', 'payment')
                         ->where('amount', '<', 0)
+                        ->whereHas('booking', function ($q) {
+                            $q->whereNull('deleted_at');
+                        })
                         ->sum('amount')
                 );
 
@@ -1015,15 +1018,15 @@ class BookingController extends Controller
                     ->where('type', 'commission')
                     ->sum('amount');
 
-                    $paid = CommissionLedger::where('user_id', $user->id)
-                        ->where('type', 'payment')
-                        ->sum('amount');
-
-                    $reversal = CommissionLedger::where('user_id', $user->id)
-                        ->where('type', 'commission')
-                        ->sum('amount');
-
-                $mytotalPaidAmt = abs($paid) - abs($reversal);
+                    $mytotalPaidAmt = abs(
+    CommissionLedger::where('user_id', $user->id)
+        ->where('type', 'payment')
+        ->where('amount', '<', 0)
+        ->whereHas('booking', function ($q) {
+            $q->whereNull('deleted_at');
+        })
+        ->sum('amount')
+);
 
                 $topAdvisor = Booking::whereNull('deleted_at')->where('leader_id', $user->id)
                     ->whereNotNull('adviser_id') // only adviser bookings
@@ -1331,11 +1334,14 @@ class BookingController extends Controller
 
             // Paid amount from ledger
             $paidAmount = abs(
-                CommissionLedger::where('user_id', $leader->id)
-                    ->where('type', 'payment')
-                    ->where('amount', '<', 0)
-                    ->sum('amount')
-            );
+    CommissionLedger::where('user_id', $leader->id)
+        ->where('type', 'payment')
+        ->where('amount', '<', 0)
+        ->whereHas('booking', function ($q) {
+            $q->whereNull('deleted_at');
+        })
+        ->sum('amount')
+);
 
             $balance = $totalCommission - $paidAmount;
 
