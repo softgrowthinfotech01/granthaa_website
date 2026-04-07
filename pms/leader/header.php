@@ -75,7 +75,7 @@
   padding: 10px 12px;
   border-radius: 12px;
   transition: all 0.25s ease;
-  color: #d1d5db; /* gray-300 */
+  
 }
 
 /* Hover */
@@ -137,7 +137,7 @@
       <header class="bg-gray-200 shadow px-4 sm:px-6 py-4 flex justify-between items-center">
 
         <!-- Desktop toggle -->
-        <button onclick="toggleSidebar()" class="hidden md:block text-2xl">
+        <button onclick="toggleSidebar()" class="hidden md:block text-2xl cursor-pointer">
           ☰
         </button>
 
@@ -173,7 +173,7 @@
 
             <!-- Profile Button -->
             <button onclick="toggleProfile(event)" class="w-14 h-14 rounded-full border-2 border-yellow-500
-           overflow-hidden shadow-md hover:shadow-lg transition">
+           overflow-hidden shadow-md hover:shadow-lg transition cursor-pointer">
 
               <img src="../images/profile.png" class="w-full h-full object-cover" alt="Profile">
             </button>
@@ -205,7 +205,8 @@
             </div>
 
           </div>
-          <script src="../url.js"></script>
+        <script src="../url.js"></script>
+
           <script>
             //  Customer Data
             document.addEventListener("DOMContentLoaded", function() {

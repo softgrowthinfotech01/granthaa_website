@@ -280,12 +280,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
                         <div class="col-md-4">
-                          <label>Project Image 1</label>
-                          <span class="mb-2 text-danger text-center mx-1">
-                            (Max. image size should be 2mb.)
-                          </span>
-
-
+                          <label>Project Image 2</label>
+  
                           <input type="file"
                             name="project_image2"
                             class="form-control">
@@ -297,10 +293,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <?php endif; ?>
 
                         <div class="col-md-4">
-                          <label>Project Image 1</label>
-                          <span class="mb-2 text-danger text-center mx-1">
-                            (Max. image size should be 2mb.)
-                          </span>
+                          <label>Project Image 3</label>
 
                           <input type="file"
                             name="project_image3"

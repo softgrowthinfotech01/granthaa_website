@@ -1,9 +1,11 @@
-<?php $current = basename($_SERVER['PHP_SELF']); ?>
+<?php 
+$current = basename($_SERVER['PHP_SELF'], ".php");
+?>
 
 <aside id="sidebar"
   class="fixed md:static z-30 top-0 left-0 h-full w-55 md:w-64 bg-gray-800 text-white
-transition-all duration-300 ease-in-out -translate-x-full md:translate-x-0
-flex flex-col justify-between flex-shrink-0">
+  transition-all duration-300 ease-in-out -translate-x-full md:translate-x-0
+  flex flex-col justify-between shrink-0 overflow-y-auto scroll-smooth">
 
   <!-- Top -->
   <div>
@@ -25,7 +27,7 @@ flex flex-col justify-between flex-shrink-0">
         <!-- Dashboard -->
         <li>
           <a href="dashboard"
-            class="menu-item <?php if ($current == 'dashboard') echo 'active'; ?>">
+            class="menu-item <?php if ($current == 'dashboard') echo 'parent-active'; ?>">
 
             <svg class="w-6 h-6 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path d="M3 12l9-9 9 9M4 10v10h16V10" />
@@ -39,7 +41,9 @@ flex flex-col justify-between flex-shrink-0">
         <li>
           <a href="javascript:void(0)"
             onclick="toggleMenu('Customer', this)"
-            class="menu-item flex justify-between items-center">
+            class="menu-item flex justify-between items-center
+            <?php if (in_array($current, ['add_customer_booking','list_customer_booking','list_customer_booking_deleted'])) echo 'parent-active'; ?>">
+
 
             <span class="flex items-center gap-3">
               <svg class="w-6 h-6 text-yellow-500" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
@@ -60,7 +64,7 @@ flex flex-col justify-between flex-shrink-0">
             <!-- Add Leader -->
             <li>
               <a href="add_customer_booking"
-                class="menu-item flex items-center gap-3 <?php if ($current == 'add_commission') echo 'active'; ?>">
+                class="menu-item flex items-center gap-3 <?php if ($current == 'add_customer_booking') echo 'active'; ?>">
 
                 <svg class="w-4 h-4 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path d="M4 12h16" />
@@ -73,7 +77,7 @@ flex flex-col justify-between flex-shrink-0">
             <!-- View leader -->
             <li>
               <a href="list_customer_booking"
-                class="menu-item flex items-center gap-3 <?php if ($current == 'view_commission') echo 'active'; ?>">
+                class="menu-item flex items-center gap-3 <?php if ($current == 'list_customer_booking') echo 'active'; ?>">
 
                 <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path d="M4 12h16" />
@@ -104,7 +108,8 @@ flex flex-col justify-between flex-shrink-0">
         <li>
           <a href="javascript:void(0)"
             onclick="toggleMenu('booking', this)"
-            class="menu-item flex justify-between items-center">
+            class="menu-item flex justify-between items-center
+             <?php if (in_array($current, ['booking_payments','list_booking_payments'])) echo 'parent-active'; ?>">
 
             <span class="flex items-center gap-3">
               <svg class="w-6 h-6 text-yellow-500" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
@@ -151,7 +156,7 @@ flex flex-col justify-between flex-shrink-0">
         </li>
 
         <a href="sites_commission"
-          class="menu-item <?php if ($current == 'sites_commission') echo 'active'; ?>">
+          class="menu-item <?php if ($current == 'sites_commission') echo 'parent-active'; ?>">
           <svg class="w-6 h-6 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
               d="M3 3v18h18M7 13l3-3 4 4 5-5" />
@@ -165,7 +170,8 @@ flex flex-col justify-between flex-shrink-0">
         <li>
           <a href="javascript:void(0)"
             onclick="toggleMenu('reference', this)"
-            class="menu-item flex justify-between items-center">
+            class="menu-item flex justify-between items-center
+<?php if (in_array($current, ['set_reference_amt','list_reference_amt','list_reference'])) echo 'parent-active'; ?>">
 
             <span class="flex items-center gap-3">
               <svg class="w-6 h-6 text-yellow-500" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
@@ -198,7 +204,7 @@ flex flex-col justify-between flex-shrink-0">
 
             <li>
               <a href="list_reference_amt"
-                class="menu-item flex items-center gap-3 <?php if ($current == 'list_reference') echo 'active'; ?>">
+                class="menu-item flex items-center gap-3 <?php if ($current == 'list_reference_amt') echo 'active'; ?>">
 
                 <svg class="w-4 h-4 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path d="M4 12h16" />
@@ -228,7 +234,8 @@ flex flex-col justify-between flex-shrink-0">
         <li>
           <a href="javascript:void(0)"
             onclick="toggleMenu('visit', this)"
-            class="menu-item flex justify-between items-center">
+            class="menu-item flex justify-between items-center
+<?php if (in_array($current, ['add_customer_visit','list_customer_visit'])) echo 'parent-active'; ?>">
 
             <span class="flex items-center gap-3">
               <svg class="w-6 h-6 text-yellow-500" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
@@ -262,7 +269,7 @@ flex flex-col justify-between flex-shrink-0">
             <!-- View leader -->
             <li>
               <a href="list_customer_visit"
-                class="menu-item flex items-center gap-3 <?php if ($current == 'list_customers_visit') echo 'active'; ?>">
+                class="menu-item flex items-center gap-3 <?php if ($current == 'list_customer_visit') echo 'active'; ?>">
 
                 <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path d="M4 12h16" />
@@ -301,32 +308,32 @@ flex flex-col justify-between flex-shrink-0">
 
 <!-- Toggle -->
 
-<script>
-  function profileToggle() {
-    const profileDropdown = document.getElementById('ProfileDropDown');
-    profileDropdown.classList.toggle('hidden');
-  }
 
-  function toggleMenu(menuId, el) {
+<script>function toggleMenu(menuId, el) {
+
+    const allMenus = document.querySelectorAll("#sidebar ul[id]");
+    const allArrows = document.querySelectorAll("#sidebar .menu-arrow");
+
+    allMenus.forEach(menu => {
+        if (menu.id !== menuId) {
+            menu.classList.add("hidden");
+        }
+    });
+
+    allArrows.forEach(a => a.classList.remove("rotate-90"));
 
     const menu = document.getElementById(menuId);
-    const arrow = el.querySelector('.menu-arrow');
+    const arrow = el.querySelector(".menu-arrow");
 
-    if (!menu) {
-      console.error('Menu not found:', menuId);
-      return;
-    }
+    if (!menu) return;
 
-    menu.classList.toggle('hidden');
+    menu.classList.toggle("hidden");
 
     if (arrow) {
-      arrow.classList.toggle('rotate-90');
+        arrow.classList.toggle("rotate-90");
     }
+}
 
-  }
-</script>
-
-<script>
   function logout() {
     const token = localStorage.getItem("auth_token");
 
