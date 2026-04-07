@@ -94,7 +94,7 @@
             class="accent-blue-600">
 
         <span class="text-green-600 font-bold text-sm">₹</span>
-        <span class="text-sm">Amount</span>
+        <span class="text-sm">Amount / Sq Ft</span>
     </label>
 
 </div>
