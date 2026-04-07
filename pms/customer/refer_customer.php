@@ -35,7 +35,7 @@ focus:ring-2 focus:ring-blue-400 focus:border-blue-400 outline-none">
                 <label class="text-sm font-semibold text-gray-700">
                     Customer Email
                 </label>
-                <input type="email" id="referred_email" name="referred_email" placeholder="Enter Location" class="w-full border border-gray-300 px-4 py-3 rounded-xl
+                <input type="email" id="referred_email" name="referred_email" placeholder="Enter email address" class="w-full border border-gray-300 px-4 py-3 rounded-xl
 focus:ring-2 focus:ring-blue-400 focus:border-blue-400 outline-none">
             </div>
 
