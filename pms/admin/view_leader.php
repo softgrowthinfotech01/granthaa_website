@@ -286,7 +286,7 @@ async function deleteLeader(id) {
         console.error(error);
         alert("Server error");
     }
-}/
+}
 
     // <button onclick="deleteLeader(${loc.id})"
     //                         class="w-full md:w-auto px-3 py-1.5 text-sm font-medium text-white bg-red-600 rounded-md hover:bg-red-500">
