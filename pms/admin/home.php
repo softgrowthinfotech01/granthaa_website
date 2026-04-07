@@ -245,10 +245,11 @@
 
                                     <thead class="bg-gray-100 text-gray-600">
                                         <tr>
-                                            <th class="p-2">Buyer</th>
-                                            <th class="p-2">Plot</th>
-                                            <th class="p-2">Amount</th>
-                                            <th class="p-2">Date</th>
+                                         <th class="p-2">Buyer Name</th>
+<th class="p-2">Site Location</th>
+<th class="p-2">Plot No.</th>
+<th class="p-2">Booking Amount</th>
+<th class="p-2">Date</th>
                                         </tr>
                                     </thead>
 
@@ -363,10 +364,21 @@
 
                         tbody.innerHTML += `
                 <tr class="border-t hover:bg-gray-50">
-                    <td class="p-2">${b.buyer_name}</td>
-                    <td class="p-2">${b.plot_number}</td>
-                    <td class="p-2 text-green-600">₹${b.total_booking_amount}</td>
-                    <td class="p-2">${new Date(b.created_at).toLocaleDateString()}</td>
+                  <td class="p-2">${b.buyer_name}</td>
+
+<td class="p-2 text-gray-600">
+    ${b.location?.site_location ?? '-'}
+</td>
+
+<td class="p-2">${b.plot_number}</td>
+
+<td class="p-2 text-green-600 font-semibold">
+    ₹${Number(b.total_booking_amount).toLocaleString("en-IN")}
+</td>
+
+<td class="p-2">
+    ${new Date(b.created_at).toLocaleDateString()}
+</td>
                 </tr>
             `;
                     });
