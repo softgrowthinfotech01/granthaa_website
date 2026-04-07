@@ -6,14 +6,9 @@
         background: white;
     }
 
-    th,
-    td {
+    th, td {
         padding: 10px;
         border: 1px solid #ddd;
-        text-align: center;
-    }
-
-    td {
         text-align: center;
     }
 
@@ -26,17 +21,24 @@
         background: #f2f2f2;
     }
 </style>
+
 <div class="max-w-7xl mx-auto bg-white p-4 rounded-2xl shadow-xl">
     <h2 class="text-2xl font-bold mb-4 text-center"> My Referral Records </h2>
-    <div class="flex justify-between items-center mb-4"> <!-- Search (left side) --> <input id="searchInput" type="text"
-            placeholder="Search..." class="border rounded-lg px-3 py-2 w-60" /> <!-- Per Page (right side) -->
-        <div class="flex items-center gap-2"> <label for="perPage">Show</label> <select id="perPage"
-                class="border p-2 rounded">
+
+    <div class="flex justify-between items-center mb-4">
+        <input id="searchInput" type="text" placeholder="Search..." class="border rounded-lg px-3 py-2 w-60" />
+
+        <div class="flex items-center gap-2">
+            <label for="perPage">Show</label>
+            <select id="perPage" class="border p-2 rounded">
                 <option value="10">10</option>
                 <option value="25">25</option>
                 <option value="50">50</option>
-            </select> <span>entries</span> </div>
+            </select>
+            <span>entries</span>
+        </div>
     </div>
+
     <div class="w-full overflow-x-auto">
         <table>
             <thead>
@@ -46,188 +48,174 @@
                     <th>Email</th>
                     <th>Location</th>
                     <th>Status</th>
+                    <th>Commission</th> <!-- ✅ NEW -->
                     <th>Date</th>
                 </tr>
             </thead>
-            <tbody id="referralBody"> </tbody>
+            <tbody id="referralBody"></tbody>
         </table>
     </div>
-    <div class="flex justify-between items-center mt-4"> <button id="prevBtn" class="bg-gray-200 px-4 py-2 rounded">
-            Prev </button> <span id="pageInfo"></span> <button id="nextBtn" class="bg-gray-200 px-4 py-2 rounded"> Next
-        </button> </div>
-    <?php include 'footer.php'; ?>
 
-    <script src="../url.js"></script>
+    <div class="flex justify-between items-center mt-4">
+        <button id="prevBtn" class="bg-gray-200 px-4 py-2 rounded">Prev</button>
+        <span id="pageInfo"></span>
+        <button id="nextBtn" class="bg-gray-200 px-4 py-2 rounded">Next</button>
+    </div>
 
-    <script>
+<?php include 'footer.php'; ?>
 
-        let referrals = [];
-        let filteredReferrals = [];
-        let currentPage = 1;
-        let rowsPerPage = 10;
+<script src="../url.js"></script>
 
-        document.addEventListener("DOMContentLoaded", () => {
+<script>
 
-            fetchReferrals();
+let referrals = [];
+let filteredReferrals = [];
+let currentPage = 1;
+let rowsPerPage = 10;
 
-            document.getElementById("searchInput")
-                .addEventListener("input", function () {
+document.addEventListener("DOMContentLoaded", () => {
 
-                    let term = this.value.toLowerCase().trim();
+    fetchReferrals();
 
-                    if (term === "") {
-                        filteredReferrals = referrals;
-                    }
-                    else {
+    document.getElementById("searchInput").addEventListener("input", function () {
 
-                        filteredReferrals = referrals.filter(r => {
+        let term = this.value.toLowerCase().trim();
 
-                            const searchableText = [
-                                r.referred_name,
-                                r.referred_contact,
-                                r.referred_email,
-                                r.status
-                            ].join(" ").toLowerCase();
+        if (term === "") {
+            filteredReferrals = referrals;
+        } else {
+            filteredReferrals = referrals.filter(r => {
 
-                            return searchableText.includes(term) ||
-                                searchableText.startsWith(term);
+                const searchableText = [
+                    r.referred_name,
+                    r.referred_contact,
+                    r.referred_email,
+                    r.status
+                ].join(" ").toLowerCase();
 
-                        });
-
-                    }
-
-                    currentPage = 1;
-                    renderTable();
-
-                });
-
-
-            document.getElementById("perPage").addEventListener("change", function () {
-
-                rowsPerPage = parseInt(this.value);
-
-                currentPage = 1;
-
-                renderTable();
-
+                return searchableText.includes(term);
             });
+        }
 
+        currentPage = 1;
+        renderTable();
+    });
 
-            document.getElementById("prevBtn").onclick = () => {
+    document.getElementById("perPage").addEventListener("change", function () {
+        rowsPerPage = parseInt(this.value);
+        currentPage = 1;
+        renderTable();
+    });
 
-                if (currentPage > 1) {
-                    currentPage--;
-                    renderTable();
-                }
+    document.getElementById("prevBtn").onclick = () => {
+        if (currentPage > 1) {
+            currentPage--;
+            renderTable();
+        }
+    };
 
-            };
+    document.getElementById("nextBtn").onclick = () => {
+        if (currentPage < Math.ceil(filteredReferrals.length / rowsPerPage)) {
+            currentPage++;
+            renderTable();
+        }
+    };
 
-            document.getElementById("nextBtn").onclick = () => {
+});
 
-                if (currentPage < Math.ceil(filteredReferrals.length / rowsPerPage)) {
-                    currentPage++;
-                    renderTable();
-                }
+async function fetchReferrals() {
 
-            };
+    try {
 
+        const token = localStorage.getItem("auth_token");
+
+        const response = await fetch(url + "refered", {
+            method: "GET",
+            headers: {
+                "Authorization": "Bearer " + token,
+                "Accept": "application/json"
+            }
         });
 
-        async function fetchReferrals() {
+        const result = await response.json();
 
-            try {
+        referrals = result.data?.data || [];
 
-                const token = localStorage.getItem("auth_token");
-
-                const response = await fetch(url + "refered", {
-
-                    method: "GET",
-
-                    headers: {
-                        "Authorization": "Bearer " + token,
-                        "Accept": "application/json"
-                    }
-
-                });
-
-                const result = await response.json();
-
-                referrals = result.data?.data || [];
-
-                if (!Array.isArray(referrals)) {
-                    referrals = [];
-                }
-
-                filteredReferrals = referrals;
-
-                renderTable();
-
-            } catch (error) {
-
-                console.error("Error fetching referrals:", error);
-
-            }
-
+        if (!Array.isArray(referrals)) {
+            referrals = [];
         }
 
-        function renderTable() {
+        filteredReferrals = referrals;
 
-            const tbody = document.getElementById("referralBody");
+        renderTable();
 
-            tbody.innerHTML = "";
+    } catch (error) {
+        console.error("Error fetching referrals:", error);
+    }
+}
 
-            const start = (currentPage - 1) * rowsPerPage;
-            const end = start + rowsPerPage;
+function renderTable() {
 
-            const pageData = filteredReferrals.slice(start, end);
+    const tbody = document.getElementById("referralBody");
+    tbody.innerHTML = "";
 
-            if (pageData.length === 0) {
+    const start = (currentPage - 1) * rowsPerPage;
+    const end = start + rowsPerPage;
 
-                tbody.innerHTML = `
-<tr style="text-align:center;">
-<td colspan="6">No referrals found</td>
-</tr>
-`;
+    const pageData = filteredReferrals.slice(start, end);
 
-                return;
+    if (pageData.length === 0) {
+        tbody.innerHTML = `
+        <tr>
+            <td colspan="7">No referrals found</td>
+        </tr>`;
+        return;
+    }
 
+    pageData.forEach(r => {
+
+        // ✅ COMMISSION CALCULATION
+        let commission = "-";
+
+        if (r.booking) {
+            const total = parseFloat(r.booking.total_booking_amount || 0);
+            const value = parseFloat(r.incentive_value || 0);
+
+            if (r.incentive_type === 'percent') {
+                commission = "₹" + ((total * value) / 100).toFixed(2);
+            } else {
+                commission = "₹" + value.toFixed(2);
             }
-
-            pageData.forEach(r => {
-
-                const row = `
-<tr>
-
-<td>${r.referred_name ?? "-"}</td>
-
-<td>${r.referred_contact ?? "-"}</td>
-
-<td>${r.referred_email ?? "-"}</td>
-
-<td>${r.reflocation?.site_location ?? "-"}</td>
-
-<td>
-<span style="
-padding:4px 8px;
-border-radius:6px;
-background:${r.status === 'pending' ? '#ffeeba' : '#c3e6cb'};
-">
-${r.status}
-</span>
-</td>
-
-<td>${new Date(r.created_at).toLocaleDateString()}</td>
-
-</tr>
-`;
-
-                tbody.insertAdjacentHTML("beforeend", row);
-
-            });
-
-            document.getElementById("pageInfo").innerText =
-                `Page ${currentPage} of ${Math.ceil(filteredReferrals.length / rowsPerPage)}`;
-
         }
 
-    </script>
+        const row = `
+        <tr>
+            <td>${r.referred_name ?? "-"}</td>
+            <td>${r.referred_contact ?? "-"}</td>
+            <td>${r.referred_email ?? "-"}</td>
+            <td>${r.reflocation?.site_location ?? "-"}</td>
+
+            <td>
+                <span style="
+                    padding:4px 8px;
+                    border-radius:6px;
+                    background:${r.status === 'pending' ? '#ffeeba' : '#c3e6cb'};
+                ">
+                    ${r.status}
+                </span>
+            </td>
+
+            <td>${commission}</td> <!-- ✅ SHOWING ₹ -->
+
+            <td>${new Date(r.created_at).toLocaleDateString()}</td>
+        </tr>
+        `;
+
+        tbody.insertAdjacentHTML("beforeend", row);
+    });
+
+    document.getElementById("pageInfo").innerText =
+        `Page ${currentPage} of ${Math.ceil(filteredReferrals.length / rowsPerPage)}`;
+}
+
+</script>
