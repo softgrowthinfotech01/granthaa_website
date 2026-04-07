@@ -38,7 +38,7 @@
 </div>
 
 <!-- Referral Earnings -->
-<div class="relative bg-gradient-to-br from-yellow-900 to-yellow-400 text-white p-6 rounded-2xl shadow-lg overflow-hidden">
+<div class="relative bg-gradient-to-br from-green-900 to-green-400 text-white p-6 rounded-2xl shadow-lg overflow-hidden">
   <div class="absolute top-5 right-5 opacity-50 text-6xl font-bold">💰</div>
   <h3 class="text-sm tracking-widest font-semibold">TOTAL REFERRAL EARNINGS</h3>
   <p class="text-3xl font-bold mt-3" id="totalReferralAmount">₹ 0</p>
