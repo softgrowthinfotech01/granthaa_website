@@ -797,53 +797,37 @@ class BookingController extends Controller
 
             /*
         |--------------------------------------------------------------------------
-        | Restore Booking
+        | 1. Restore Booking
         |--------------------------------------------------------------------------
         */
             $booking->restore();
 
             /*
         |--------------------------------------------------------------------------
-        | Remove Reversal Entries
+        | 2. Remove Payment Reversals
         |--------------------------------------------------------------------------
         */
             BookingPayment::where('booking_id', $booking->id)
                 ->where('payment_type', 'reversal')
                 ->delete();
 
+            /*
+        |--------------------------------------------------------------------------
+        | 3. Remove Commission Reversals
+        |--------------------------------------------------------------------------
+        */
             CommissionLedger::where('booking_id', $booking->id)
                 ->where('type', 'reversal')
                 ->delete();
 
             /*
         |--------------------------------------------------------------------------
-        | Restore Referral Wallet
+        | 4. Remove Referral Reversals
         |--------------------------------------------------------------------------
         */
-            $referral = Referral::where('booking_id', $booking->id)->first();
-
-            if ($referral && $referral->status === 'deleted') {
-
-                $referrer = User::find($referral->referrer_id);
-
-                if ($referrer) {
-                    $referrer->increment(
-                        'wallet_balance',
-                        $referral->incentive_amount
-                    );
-
-                    WalletTransaction::create([
-                        'user_id' => $referrer->id,
-                        'amount' => $referral->incentive_amount,
-                        'type' => 'credit',
-                        'remark' => 'Referral restored after booking restore'
-                    ]);
-                }
-
-                $referral->update([
-                    'status' => 'converted'
-                ]);
-            }
+            ReferralLedger::where('booking_id', $booking->id)
+                ->where('type', 'reversal')
+                ->delete();
         });
 
         return response()->json([
@@ -856,25 +840,46 @@ class BookingController extends Controller
     {
         DB::transaction(function () use ($id) {
 
-            if (auth()->user()->role !== 'admin') {
+            $user = auth()->user();
+
+            if ($user->role !== 'admin') {
                 abort(403, 'Unauthorized');
             }
 
             $booking = Booking::withTrashed()->findOrFail($id);
 
             if (!$booking->trashed()) {
-                throw new Exception('Only trashed bookings can be permanently deleted.');
+                throw new Exception(
+                    'Only trashed bookings can be permanently deleted.'
+                );
             }
 
             /*
         |--------------------------------------------------------------------------
-        | Delete Financial Records
+        | 1. Delete Payments (Original + Reversal)
         |--------------------------------------------------------------------------
         */
             BookingPayment::where('booking_id', $booking->id)->delete();
 
+            /*
+        |--------------------------------------------------------------------------
+        | 2. Delete Commission Ledger (All Entries)
+        |--------------------------------------------------------------------------
+        */
             CommissionLedger::where('booking_id', $booking->id)->delete();
 
+            /*
+        |--------------------------------------------------------------------------
+        | 3. Delete Referral Ledger Entries
+        |--------------------------------------------------------------------------
+        */
+            ReferralLedger::where('booking_id', $booking->id)->delete();
+
+            /*
+        |--------------------------------------------------------------------------
+        | 4. Detach Referral Relation
+        |--------------------------------------------------------------------------
+        */
             Referral::where('booking_id', $booking->id)
                 ->update([
                     'booking_id' => null,
@@ -883,7 +888,7 @@ class BookingController extends Controller
 
             /*
         |--------------------------------------------------------------------------
-        | Permanent Delete
+        | 5. Permanently Delete Booking
         |--------------------------------------------------------------------------
         */
             $booking->forceDelete();
@@ -1018,15 +1023,15 @@ class BookingController extends Controller
                     ->where('type', 'commission')
                     ->sum('amount');
 
-                    $mytotalPaidAmt = abs(
-    CommissionLedger::where('user_id', $user->id)
-        ->where('type', 'payment')
-        ->where('amount', '<', 0)
-        ->whereHas('booking', function ($q) {
-            $q->whereNull('deleted_at');
-        })
-        ->sum('amount')
-);
+                $mytotalPaidAmt = abs(
+                    CommissionLedger::where('user_id', $user->id)
+                        ->where('type', 'payment')
+                        ->where('amount', '<', 0)
+                        ->whereHas('booking', function ($q) {
+                            $q->whereNull('deleted_at');
+                        })
+                        ->sum('amount')
+                );
 
                 $topAdvisor = Booking::whereNull('deleted_at')->where('leader_id', $user->id)
                     ->whereNotNull('adviser_id') // only adviser bookings
@@ -1075,15 +1080,15 @@ class BookingController extends Controller
                 $totalCommissionAmount = Booking::whereNull('deleted_at')->where('adviser_id', $user->id)
                     ->sum('adviser_commission_amount');
 
-                    $paid = CommissionLedger::where('user_id', $user->id)
-                        ->whereIn('type', ['payment'])
-                        ->where('amount','<',0)
-                        ->sum('amount');
+                $paid = CommissionLedger::where('user_id', $user->id)
+                    ->whereIn('type', ['payment'])
+                    ->where('amount', '<', 0)
+                    ->sum('amount');
 
-                    $reversal = CommissionLedger::where('user_id', $user->id)
-                        ->whereIn('type', ['reversal'])
-                        ->where('amount','<',0)
-                        ->sum('amount');
+                $reversal = CommissionLedger::where('user_id', $user->id)
+                    ->whereIn('type', ['reversal'])
+                    ->where('amount', '<', 0)
+                    ->sum('amount');
 
                 $totalPaidAmt = abs($paid) - abs($reversal);
 
@@ -1334,14 +1339,14 @@ class BookingController extends Controller
 
             // Paid amount from ledger
             $paidAmount = abs(
-    CommissionLedger::where('user_id', $leader->id)
-        ->where('type', 'payment')
-        ->where('amount', '<', 0)
-        ->whereHas('booking', function ($q) {
-            $q->whereNull('deleted_at');
-        })
-        ->sum('amount')
-);
+                CommissionLedger::where('user_id', $leader->id)
+                    ->where('type', 'payment')
+                    ->where('amount', '<', 0)
+                    ->whereHas('booking', function ($q) {
+                        $q->whereNull('deleted_at');
+                    })
+                    ->sum('amount')
+            );
 
             $balance = $totalCommission - $paidAmount;
 

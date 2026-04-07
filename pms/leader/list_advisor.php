@@ -115,10 +115,7 @@
                                        class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-1.5 rounded-lg shadow-sm transition">
                                        Update
                                     </a>
-                                    <button onclick="deleteAdvisor(${advisor.id})"
-                                       class="bg-red-500 hover:bg-red-600 text-white px-4 py-1.5 rounded-lg shadow-sm transition">
-                                       Delete
-                                    </button>
+                               
                                 </div>
                             </td>
                         </tr>
@@ -189,4 +186,9 @@
             }
         });
     }
+
+        //  <button onclick="deleteAdvisor(${advisor.id})"
+        //                                class="bg-red-500 hover:bg-red-600 text-white px-4 py-1.5 rounded-lg shadow-sm transition">
+        //                                Delete
+        //                             </button>
 </script>

@@ -200,10 +200,7 @@ async function fetchLocations(page = 1) {
                            class="mr-1 w-full md:w-auto text-center px-3 py-1.5 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-500">
                            Edit
                         </a>
-                        <button onclick="deleteLeader(${loc.id})"
-                            class="w-full md:w-auto px-3 py-1.5 text-sm font-medium text-white bg-red-600 rounded-md hover:bg-red-500">
-                            Delete
-                        </button>
+                    
                     </td>
 
                 </tr>
@@ -289,7 +286,12 @@ async function deleteLeader(id) {
         console.error(error);
         alert("Server error");
     }
-}
+}/
+
+    // <button onclick="deleteLeader(${loc.id})"
+    //                         class="w-full md:w-auto px-3 py-1.5 text-sm font-medium text-white bg-red-600 rounded-md hover:bg-red-500">
+    //                         Delete
+    //                     </button>
 
 </script>
 
