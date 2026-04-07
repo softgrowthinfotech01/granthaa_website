@@ -34,12 +34,12 @@
     <div class="flex gap-6">
       <label class="flex items-center gap-2">
         <input type="radio" name="commission_type" value="percent" checked>
-        <span>Percentage (%)</span>
+        <span>(%) Percentage</span>
       </label>
 
       <label class="flex items-center gap-2">
         <input type="radio" name="commission_type" value="amount">
-        <span>Fixed Amount (₹)</span>
+        <span>(₹) Amount / Sq Ft</span>
       </label>
     </div>
   </div>
