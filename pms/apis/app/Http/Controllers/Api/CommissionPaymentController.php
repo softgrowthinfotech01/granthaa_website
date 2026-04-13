@@ -279,7 +279,7 @@ $query = CommissionLedger::with('booking')->with('user')
     {
         $perPage = min(max((int)$request->get('per_page', 10), 1), 100);
 
-        $query = CommissionLedger::where('type', 'payment');
+        $query = CommissionLedger::where('type', 'payment')->whereHas('booking');
 
         // search by reference or remark
         if ($request->search) {

@@ -1460,7 +1460,7 @@ class BookingController extends Controller
 
     public function recentPayments()
     {
-        $payments = CommissionLedger::where('type', 'payment')
+        $payments = CommissionLedger::where('type', 'payment')->whereHas('booking')
             ->with('user') // relation needed
             ->latest()
             ->take(5)
