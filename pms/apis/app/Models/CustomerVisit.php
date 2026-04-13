@@ -14,6 +14,7 @@ class CustomerVisit extends Model
         'gender',
         'address',
         'site_location',
+        'photo',
         'remark',
         'created_by',
         'released',
