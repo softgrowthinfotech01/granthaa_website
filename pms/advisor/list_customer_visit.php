@@ -24,6 +24,7 @@
                     <th class="p-3 whitespace-nowrap">Phone</th>
                     <th class="p-3 whitespace-nowrap">Aadhar</th>
                     <th class="p-3 whitespace-nowrap">Gender</th>
+                     <th class="p-3 whitespace-nowrap text-center">Photo</th>
                     <th class="p-3 text-center whitespace-nowrap">Action</th>
                 </tr>
             </thead>
@@ -70,7 +71,7 @@ fetch(url+"customer-visits",{
 .then(res=>res.json())
 .then(response=>{
 
-    visitsData=response.data ?? [];
+   visitsData = response.data ?? [];
 
     renderTable(visitsData);
 });
@@ -81,7 +82,7 @@ loadVisits();
 
 
 /* ================= RENDER TABLE ================= */
-
+const imageBaseUrl = base_url + "storage/app/public/";
 function renderTable(data){
 
 const tbody=document.querySelector("#example tbody");
@@ -91,7 +92,7 @@ tbody.innerHTML="";
 if(data.length===0){
     tbody.innerHTML=`
         <tr>
-            <td colspan="7" class="text-center p-4">
+            <td colspan="8" class="text-center p-4">
                 No Records Found
             </td>
         </tr>`;
@@ -114,6 +115,16 @@ tbody.innerHTML+=`
 <td class="p-3">${v.aadhaar_number}</td>
 
 <td class="p-3 capitalize">${v.gender}</td>
+
+<td class="p-3 text-center">
+    ${
+        v.photo
+        ? `<img src="${imageBaseUrl + v.photo.replace(/\\/g,'/')}" 
+                class="w-12 h-12 object-cover rounded-full border mx-auto"
+                onerror="this.src='https://ui-avatars.com/api/?name=User&background=ccc&color=000'">`
+        : `<span class="text-gray-400">No Image</span>`
+    }
+</td>
 
 <td class="p-3 text-center">
 
@@ -172,12 +183,12 @@ document.getElementById("searchInput")
 
 const keyword=this.value.toLowerCase();
 
-const filtered=visitsData.filter(v=>
+const filtered = visitsData.filter(v =>
 
-    v.name.toLowerCase().includes(keyword) ||
-    v.email.toLowerCase().includes(keyword) ||
-    v.contact_no.toLowerCase().includes(keyword) ||
-    (v.location?.site_location ?? "")
+    (v.name || "").toLowerCase().includes(keyword) ||
+    (v.email || "").toLowerCase().includes(keyword) ||
+    (v.contact_no || "").toLowerCase().includes(keyword) ||
+    ((v.location?.site_location) || "")
         .toLowerCase()
         .includes(keyword)
 );

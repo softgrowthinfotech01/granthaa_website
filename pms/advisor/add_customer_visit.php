@@ -4,7 +4,7 @@
 
   <h2 class="text-2xl font-bold mb-6 text-gray-800 text-center">Add Customer</h2>
 
-  <form id="customerForm"
+ <form id="customerForm" enctype="multipart/form-data"
     class="grid grid-cols-1 md:grid-cols-2 gap-6">
 
     <!-- Location Dropdown -->
@@ -71,6 +71,25 @@
     placeholder="Enter visit remark"
     class="w-full border border-gray-300 p-2 rounded-lg focus:ring-2 focus:ring-green-400"></textarea>
 </div>
+
+
+
+        <!-- Selfie Capture -->
+        <div class="md:col-span-2">
+            <label class="block text-gray-900 font-semibold mb-2">Customer Selfie</label>
+
+            <input type="file"
+                name="photo"
+                id="photo"
+                accept="image/*"
+                capture="user"
+                required
+                class="w-full border border-gray-300 p-2 rounded-lg">
+
+            <p class="text-sm text-gray-500 mt-1">
+                Camera will open automatically on mobile
+            </p>
+        </div>
 
     <!-- Submit Button -->
     <div class="md:col-span-2 text-right mt-4 gap-2">
@@ -160,71 +179,54 @@ loadAdvisorLocations();
 
     form.addEventListener("submit", async function(e) {
 
-        e.preventDefault();
+    e.preventDefault();
 
-        const formData = new FormData(form);
+    const formData = new FormData(form);
 
-        // Current datetime
-        const now = new Date();
-        const visited_at =
-            now.getFullYear() + "-" +
-            String(now.getMonth()+1).padStart(2,'0') + "-" +
-            String(now.getDate()).padStart(2,'0') + " " +
-            String(now.getHours()).padStart(2,'0') + ":" +
-            String(now.getMinutes()).padStart(2,'0') + ":" +
-            String(now.getSeconds()).padStart(2,'0');
+    // Current datetime
+    const now = new Date();
+    const visited_at =
+        now.getFullYear() + "-" +
+        String(now.getMonth()+1).padStart(2,'0') + "-" +
+        String(now.getDate()).padStart(2,'0') + " " +
+        String(now.getHours()).padStart(2,'0') + ":" +
+        String(now.getMinutes()).padStart(2,'0') + ":" +
+        String(now.getSeconds()).padStart(2,'0');
 
-        const payload = {
-            name: formData.get("name"),
-            email: formData.get("email"),
-            contact_no: formData.get("contact_no"),
-            aadhaar_number: formData.get("aadhaar_number"),
-            gender: formData.get("gender"),
-            address: formData.get("address"),
-            site_location: formData.get("site_location"),
-            visited_at: visited_at,
-            remark: "Initial visit"
-        };
+    // add visited_at
+    formData.append("visited_at", visited_at);
 
-        console.log("Payload:", payload);
+    // dynamic remark
+    formData.set("remark", formData.get("remark") || "Initial visit");
 
-        try {
+    try {
 
-            const response = await fetch(url + "customer-visits", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": "Bearer " + token,
-                    "Accept": "application/json"
-                },
-                body: JSON.stringify(payload)
-            });
+        const response = await fetch(url + "customer-visits", {
+            method: "POST",
+            headers: {
+                "Authorization": "Bearer " + token,
+                "Accept": "application/json"
+            },
+            body: formData
+        });
 
-            const result = await response.json();
+        const result = await response.json();
 
-            console.log(result);
+        console.log(result);
 
-            if (result.status) {
-
-                alert(result.message);
-
-                form.reset();
-
-            } else {
-
-                alert(result.message || "Failed to save customer");
-
-            }
-
-        } catch (error) {
-
-            console.error(error);
-            alert("Server error occurred");
-
+        if (result.status) {
+            alert(result.message);
+            form.reset();
+        } else {
+            alert(result.message || "Failed to save customer");
         }
 
-    });
+    } catch (error) {
+        console.error(error);
+        alert("Server error occurred");
+    }
 
+});
 });
 </script>
 

@@ -43,6 +43,7 @@
 <?php include 'footer.php'; ?>
 
 <script>
+    
 
 document.addEventListener("DOMContentLoaded", function(){
 
@@ -82,7 +83,7 @@ loadVisits();
 
 
 /* ================= RENDER TABLE ================= */
-
+const imageBaseUrl = base_url + "storage/app/public/";
 function renderTable(data){
 
 const tbody=document.querySelector("#example tbody");
@@ -119,9 +120,9 @@ tbody.innerHTML+=`
 <td class="p-3 text-center">
     ${
         v.photo
-        ? `<img src="${base_url + v.photo}" 
+        ? `<img src="${imageBaseUrl + v.photo.replace(/\\/g,'/')}" 
                 class="w-12 h-12 object-cover rounded-full border mx-auto"
-                onerror="this.src='https://via.placeholder.com/50'">`
+                onerror="this.src='https://ui-avatars.com/api/?name=User&background=ccc&color=000'">`
         : `<span class="text-gray-400">No Image</span>`
     }
 </td>
